@@ -193,3 +193,41 @@ def test_synaptic_simulation_samples_kinetics_at_step_endpoint():
     )
 
     assert sampled_times == pytest.approx([0.0001, 0.0002])
+
+def test_double_exponential_synapse_uses_alpha_limit_for_equal_time_constants():
+    peak = 0.8e-9
+    tau = 0.001
+    synapse = DoubleExponentialSynapse(
+        onset_s=0.002,
+        peak_conductance_s=peak,
+        tau_rise_s=tau,
+        tau_decay_s=tau,
+    )
+
+    assert synapse.peak_time_s == pytest.approx(0.003)
+    assert synapse.conductance_at(synapse.peak_time_s) == pytest.approx(
+        peak, rel=1e-12
+    )
+    assert synapse.conductance_at(0.0035) == pytest.approx(
+        peak * 0.5 * math.exp(0.5), rel=1e-12
+    )
+    assert synapse.conductance_at(0.004) == pytest.approx(
+        peak * 2.0 * math.exp(-1.0), rel=1e-12
+    )
+
+
+def test_double_exponential_synapse_uses_stable_alpha_limit_for_near_equal_taus():
+    peak = 1.2e-9
+    tau_rise = 0.001
+    tau_decay = 0.001000000000001
+    synapse = DoubleExponentialSynapse(
+        onset_s=0.0,
+        peak_conductance_s=peak,
+        tau_rise_s=tau_rise,
+        tau_decay_s=tau_decay,
+    )
+
+    assert synapse.peak_time_s == pytest.approx(tau_rise, rel=1e-10)
+    assert synapse.conductance_at(synapse.peak_time_s) == pytest.approx(
+        peak, rel=1e-12
+    )
