@@ -419,3 +419,83 @@ Do this without changing the synapse, mesh, event, or solver. In parallel, inspe
 ### Core CI status
 
 Core CI run [44761340640](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761340640) was in progress at the time this entry was appended. Refresh the latest CI run after the report/raw-data commits.
+
+---
+
+## 9. NEURON probe interpolation and equal-support area audits — 2026-11-20
+
+### 9.1 Probe interpolation
+
+Execution:
+- Script: `amsn-core/examples/human_ampa_probe_interpolation_audit.py`.
+- Workflow: [44762715648 — success](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44762715648), 1/1 job.
+- Python 3.12, NEURON 9.0.2, NEURON 0.5-um max segments, dt=0.0015625 ms, 5 ms.
+- Artifact: [14642920467](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44762715648/artifacts/14642920467).
+- Code: `amsn-core/examples/human_ampa_probe_interpolation_audit.py`.
+- Three durable raw CSVs (9,603 data rows each):
+  - `amsn-core/results/human_ampa_probe_interpolation_2026-11-20_2000Hz.csv`
+  - `amsn-core/results/human_ampa_probe_interpolation_2026-11-20_4000Hz.csv`
+  - `amsn-core/results/human_ampa_probe_interpolation_2026-11-20_6000Hz.csv`
+
+Method: NEURON voltage is recorded at the nearest segment centre and linearly interpolated between the two adjacent segment-centre voltages to the exact Import3D SWC arc coordinate. The synapse remains at the nearest segment; the interpolation is a readout-only diagnostic and does not change the NEURON dynamics.
+
+Results:
+
+| AMSN mesh | q90 nearest RMS (mV) | q90 interpolated RMS (mV) | q75 nearest RMS (mV) | q75 interpolated RMS (mV) |
+|---:|---:|---:|---:|---:|
+| 2,000 Hz | 0.003851 | 0.003448 | 0.003304 | 0.003696 |
+| 4,000 Hz | 0.003699 | 0.003646 | 0.003328 | 0.003872 |
+| 6,000 Hz | 0.003670 | 0.003736 | 0.003353 | 0.003941 |
+
+NEURON readout shift RMS due to interpolation is 0.003269 mV at q90 and 0.001559 mV at q75. At q90, interpolation improves the cross-engine RMS at 2k and 4k, but slightly worsens it at 6k; at q75 it worsens the RMS at all three meshes. The effect is clearly site-dependent and cannot be treated as a global correction.
+
+The maximum absolute q90 error also changes:
+- 2k: 0.006475 -> 0.004613 mV;
+- 4k: 0.005573 -> 0.005151 mV;
+- 6k: 0.005312 -> 0.005409 mV.
+
+Interpretation: NEURON segment-centre readout is a material contributor at q90, but it does not explain all residual error and the correction is not uniformly beneficial across sites/mesh sizes. A linear interpolation is not exact continuous-cable truth, and the point process remains on the nearest segment.
+
+### 9.2 Equal-support membrane-area integration
+
+Execution:
+- Script: `amsn-core/examples/human_ampa_matched_support_area_audit.py`.
+- Workflow: [44763720776 — success](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776), 1/1 job.
+- NEURON 9.0.2, max segment length 0.5 um, Python 3.12.
+- Artifact: [14642971232](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776/artifacts/14642971232).
+- Raw summary: `amsn-core/results/human_ampa_matched_support_area_2026-11-20.csv`.
+
+Method: for q75/q90 in an unbranched section, take half the incoming and half the outgoing AMSN electrical edge lengths to define the protected node's local area support. Map the interval to the same NEURON section using Import3D arc coordinates, then sum NEURON segment areas weighted by fractional overlap of each segment's x interval.
+
+Results:
+
+| Mesh | Site | NEURON area on matched support (um²) | AMSN node area (um²) | Difference |
+|---:|---|---:|---:|---:|
+| 2k Hz | q75 | 8.753409 | 8.756880 | +0.039661% |
+| 2k Hz | q90 | 6.924175 | 6.924175 | -0.000001814% |
+| 4k Hz | q75 | 6.531920 | 6.535293 | +0.051636% |
+| 4k Hz | q90 | 5.054776 | 5.054776 | -0.000001814% |
+| 6k Hz | q75 | 5.404350 | 5.407040 | +0.049770% |
+| 6k Hz | q90 | 4.239368 | 4.239368 | -0.000001814% |
+
+The q90 matched-support area agrees essentially exactly; q75 differs by only about 0.04–0.05%. Thus the earlier apparent 6–10× discrepancy between one NEURON segment area and the AMSN node area was due to comparing different support sizes. It was not evidence that AMSN had a gross local membrane-area excess.
+
+Limits:
+- Only two unbranched basal nodes were included; soma requires separate treatment of the soma surface term and multiple proximal branch contributions.
+- NEURON segment areas are integrated by fractional segment overlap, a fine numerical estimate, not an analytic continuous-surface integral.
+- This does not test all branchpoints or all morphologies.
+
+### 9.3 Updated interpretation and next work
+
+The q90 voltage residual includes a readout-position component, but gross control-volume membrane-area mismatch is not supported at the two tested basal sites when supports are matched. The remaining candidates now include axial-resistance integration, axial discretization, branch-junction treatment, and the fact that the NEURON point process is attached to a nearest segment while the AMSN conductance is attached to an exact protected SWC vertex.
+
+Next steps:
+1. Build an equal-support axial resistance audit for incoming/outgoing basal q75/q90 edges using the same NEURON section intervals and AMSN edge geometry integrals.
+2. Preserve the distinction between local area and axial geometry; do not tune Ri or other biological parameters to force voltage agreement.
+3. Repeat probe interpolation and matched-support area at another basal branch and an apical point.
+4. Treat the 2k–6k mesh trend as site-dependent; do not select a global default solely based on q90.
+5. Only after axial, interpolation and local area terms are bounded should a numerical acceptance tolerance be proposed.
+
+### Workflow/C​​I status notes
+
+The interpolation workflow 44762715648 and matched-support area workflow 44763720776 both completed successfully (1/1). Core CI jobs triggered during this documentation sequence were cancelled by subsequent commits before the full NEURON matrix finished; their unit-test jobs completed successfully where reported. Do not claim a full comprehensive Core CI pass for the latest main head until a current Core CI run completes all four jobs.
