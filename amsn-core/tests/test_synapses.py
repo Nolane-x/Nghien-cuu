@@ -209,7 +209,7 @@ def test_double_exponential_synapse_uses_alpha_limit_for_equal_time_constants():
         peak, rel=1e-12
     )
     assert synapse.conductance_at(0.0035) == pytest.approx(
-        peak * 0.5 * math.exp(0.5), rel=1e-12
+        peak * 1.5 * math.exp(-0.5), rel=1e-12
     )
     assert synapse.conductance_at(0.004) == pytest.approx(
         peak * 2.0 * math.exp(-1.0), rel=1e-12
