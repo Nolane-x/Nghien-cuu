@@ -59,6 +59,6 @@ def run_mesh(max_electrotonic_length: float) -> tuple[int, float, float, float]:
 if __name__ == "__main__":
     print("synthetic morphology; passive parameters are generic, not human-fitted")
     print("d_lambda  compartments  Rin_MOhm  distal_to_soma  sim_seconds")
-    for d_lambda in (0.2, 0.1, 0.05):
+    for d_lambda in (0.2, 0.1, 0.05, 0.025):
         n, rin, transfer, elapsed = run_mesh(d_lambda)
         print(f"{d_lambda:7.3f}  {n:12d}  {rin:8.4f}  {transfer:14.8f}  {elapsed:11.6f}")

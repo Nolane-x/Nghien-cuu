@@ -126,4 +126,5 @@ def test_tighter_electrotonic_limit_never_reduces_node_count():
     n_coarse = len(refine_swc_morphology(morph, max_electrotonic_length=0.2).nodes)
     n_medium = len(refine_swc_morphology(morph, max_electrotonic_length=0.1).nodes)
     n_fine = len(refine_swc_morphology(morph, max_electrotonic_length=0.05).nodes)
-    assert n_coarse <= n_medium <= n_fine
+    n_finer = len(refine_swc_morphology(morph, max_electrotonic_length=0.025).nodes)
+    assert n_coarse <= n_medium <= n_fine <= n_finer
