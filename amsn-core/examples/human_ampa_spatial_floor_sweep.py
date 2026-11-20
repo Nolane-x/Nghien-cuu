@@ -261,16 +261,9 @@ def main() -> None:
             f"section={offset['section']}; x={offset['x']:.8f}"
         )
 
-    print(
-        "reference_frequency_hz,compartments,sections,max_edge_um,"
-        "max_electrotonic_length,probe,probe_swc_id,n_relative,"
-        "max_abs_error_mV,rms_error_mV,max_relative_error_pct,"
-        "relative_ge_0.1mV_pct,relative_ge_0.2mV_pct,"
-        "relative_ge_0.5mV_pct,relative_ge_1mV_pct,"
-        "error_at_0.25ms_mV,neuron_peak_mV,amsn_peak_mV,"
-        "neuron_peak_time_ms,amsn_peak_time_ms"
-    )
-
+    # Run every AMSN mesh once. Store only protected traces and scalar metadata,
+    # not the full compartment-by-time matrix.
+    mesh_runs = {}
     for frequency_hz in AMSN_REFERENCE_FREQUENCIES_HZ:
         sectioned, amsn_time_ms, amsn_voltage, _synapse = run_amsn_mesh(
             morphology, frequency_hz
@@ -282,34 +275,63 @@ def main() -> None:
             atol=1e-9,
             err_msg=f"NEURON/AMSN time grid mismatch at {frequency_hz:g} Hz",
         )
-        max_edge_um = max(sectioned.edge_arc_length_m.values()) * 1e6
-        max_electro = max(sectioned.edge_electrotonic_length.values())
+        mesh_runs[frequency_hz] = {
+            "compartments": sectioned.tree.n_compartments,
+            "sections": sectioned.section_count,
+            "max_edge_um": max(sectioned.edge_arc_length_m.values()) * 1e6,
+            "max_electrotonic": max(sectioned.edge_electrotonic_length.values()),
+            "voltage_v": amsn_voltage,
+        }
 
+    finest_frequency = max(AMSN_REFERENCE_FREQUENCIES_HZ)
+    finest_mesh = mesh_runs[finest_frequency]
+
+    print(
+        "reference_frequency_hz,compartments,sections,max_edge_um,"
+        "max_electrotonic_length,probe,probe_swc_id,n_relative,"
+        "max_abs_error_mV,rms_error_mV,max_relative_error_pct,"
+        "relative_ge_0.1mV_pct,relative_ge_0.2mV_pct,"
+        "relative_ge_0.5mV_pct,relative_ge_1mV_pct,"
+        "error_at_0.25ms_mV,neuron_peak_mV,amsn_peak_mV,"
+        "neuron_peak_time_ms,amsn_peak_time_ms,"
+        "amsn_vs_finest_max_abs_mV,amsn_vs_finest_rms_mV"
+    )
+
+    for frequency_hz in AMSN_REFERENCE_FREQUENCIES_HZ:
+        mesh = mesh_runs[frequency_hz]
         for probe_name, node_id in PROBE_ROWS:
             neuron_dv_mV = (
                 neuron_voltage[node_id] - ELEAK_MV * 1e-3
             ) * 1e3
             amsn_dv_mV = (
-                amsn_voltage[node_id] - ELEAK_MV * 1e-3
+                mesh["voltage_v"][node_id] - ELEAK_MV * 1e-3
             ) * 1e3
-            metrics = compute_metrics(
+            finest_dv_mV = (
+                finest_mesh["voltage_v"][node_id] - ELEAK_MV * 1e-3
+            ) * 1e3
+            cross = compute_metrics(
                 neuron_dv_mV, amsn_dv_mV, neuron_time_ms
             )
+            mesh_self = compute_metrics(
+                finest_dv_mV, amsn_dv_mV, neuron_time_ms
+            )
             print(
-                f"{frequency_hz:.6f},{sectioned.tree.n_compartments},"
-                f"{sectioned.section_count},{max_edge_um:.9f},"
-                f"{max_electro:.9f},{probe_name},{node_id},"
-                f"{metrics['n_relative']},{metrics['max_abs_mV']:.12f},"
-                f"{metrics['rms_mV']:.12f},{metrics['max_relative_pct']:.9f},"
-                f"{metrics['relative_ge_0.1mV_pct']:.9f},"
-                f"{metrics['relative_ge_0.2mV_pct']:.9f},"
-                f"{metrics['relative_ge_0.5mV_pct']:.9f},"
-                f"{metrics['relative_ge_1mV_pct']:.9f},"
-                f"{metrics['error_at_0_25ms_mV']:.12f},"
-                f"{metrics['reference_peak_mV']:.12f},"
-                f"{metrics['candidate_peak_mV']:.12f},"
-                f"{metrics['reference_peak_time_ms']:.7f},"
-                f"{metrics['candidate_peak_time_ms']:.7f}"
+                f"{frequency_hz:.6f},{mesh['compartments']},"
+                f"{mesh['sections']},{mesh['max_edge_um']:.9f},"
+                f"{mesh['max_electrotonic']:.9f},{probe_name},{node_id},"
+                f"{cross['n_relative']},{cross['max_abs_mV']:.12f},"
+                f"{cross['rms_mV']:.12f},{cross['max_relative_pct']:.9f},"
+                f"{cross['relative_ge_0.1mV_pct']:.9f},"
+                f"{cross['relative_ge_0.2mV_pct']:.9f},"
+                f"{cross['relative_ge_0.5mV_pct']:.9f},"
+                f"{cross['relative_ge_1mV_pct']:.9f},"
+                f"{cross['error_at_0_25ms_mV']:.12f},"
+                f"{cross['reference_peak_mV']:.12f},"
+                f"{cross['candidate_peak_mV']:.12f},"
+                f"{cross['reference_peak_time_ms']:.7f},"
+                f"{cross['candidate_peak_time_ms']:.7f},"
+                f"{mesh_self['max_abs_mV']:.12f},"
+                f"{mesh_self['rms_mV']:.12f}"
             )
 
     print()
@@ -318,22 +340,17 @@ def main() -> None:
         "neuron_dv_mV,amsn_dv_mV,error_mV,neuron_g_nS,amsn_g_aligned_nS"
     )
     for frequency_hz in AMSN_REFERENCE_FREQUENCIES_HZ:
-        sectioned, amsn_time_ms, amsn_voltage, _synapse = run_amsn_mesh(
-            morphology, frequency_hz
-        )
-        np.testing.assert_allclose(
-            amsn_time_ms, neuron_time_ms, rtol=0.0, atol=1e-9
-        )
+        mesh = mesh_runs[frequency_hz]
         for probe_name, node_id in PROBE_ROWS:
             neuron_dv_mV = (
                 neuron_voltage[node_id] - ELEAK_MV * 1e-3
             ) * 1e3
             amsn_dv_mV = (
-                amsn_voltage[node_id] - ELEAK_MV * 1e-3
+                mesh["voltage_v"][node_id] - ELEAK_MV * 1e-3
             ) * 1e3
             for i, time_ms in enumerate(neuron_time_ms):
                 print(
-                    f"{frequency_hz:.6f},{sectioned.tree.n_compartments},"
+                    f"{frequency_hz:.6f},{mesh['compartments']},"
                     f"{time_ms:.7f},{probe_name},{node_id},"
                     f"{neuron_dv_mV[i]:.12f},{amsn_dv_mV[i]:.12f},"
                     f"{amsn_dv_mV[i]-neuron_dv_mV[i]:.12f},"
