@@ -76,7 +76,7 @@ def test_neuromorpho_three_point_soma_and_wire_stems_are_detected_exactly():
     assert sum(info.wire_attachment_lengths_um.values()) == pytest.approx(
         72.224194, abs=1e-5
     )
-    assert info.root_soma_area_um2 == pytest.approx(921.346201589, abs=1e-8)
+    assert info.root_soma_area_um2 == pytest.approx(921.859209332, abs=1e-8)
 
     mapping = morphology.electrical_node_mapping()
     assert {mapping[node_id] for node_id in info.soma_node_ids} == {1}
@@ -93,7 +93,11 @@ def test_neuromorpho_cable_matches_import3d_soma_surface_and_wire_policy():
         _edge_frustum_area(morphology, node_id)
         for node_id in info.wire_attachment_node_ids
     )
-    expected_area = raw_area - omitted_wire_area
+    soma_frustum_area = distal_cylinder_morphometrics(morphology).soma_surface_area_um2
+    expected_area = (
+        raw_area - omitted_wire_area - soma_frustum_area
+        + info.root_soma_area_um2
+    )
 
     cable = morphology.to_cable_tree()
     assert cable.n_compartments == len(morphology.nodes) - 10
