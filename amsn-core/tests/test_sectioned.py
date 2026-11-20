@@ -63,6 +63,7 @@ def test_sectioned_mesh_preserves_arc_length_area_and_axial_integral():
         max_segment_length_um=100.0,
         max_electrotonic_length=0.1,
         preserve_node_ids={4, 6, 10},
+        normalize_neuromorpho_soma=False,
     )
     assert result.tree.n_compartments < len(morphology.nodes)
     assert set(result.swc_node_to_compartment) == set(morphology.nodes)
@@ -88,6 +89,7 @@ def test_preserved_nodes_and_structural_boundaries_are_exact_control_points():
         max_segment_length_um=100.0,
         max_electrotonic_length=10.0,
         preserve_node_ids={6, 11},
+        normalize_neuromorpho_soma=False,
     )
     for node_id in (1, 2, 3, 5, 6, 7, 9, 10, 11, 12):
         # Branch points, terminals, transitions and protected nodes survive.
@@ -125,12 +127,36 @@ def test_real_human_l23_morphology_reduces_electrical_compartments():
     for node_id in protected:
         assert result.swc_node_to_compartment[node_id] == f"swc_{node_id}"
         assert result.swc_node_mapping_error_um[node_id] == 0.0
+    info = morphology.detect_neuromorpho_three_point_soma()
+    assert info is not None
+    excluded_children = set(info.soma_node_ids[1:]) | set(info.wire_attachment_node_ids)
+    retained_length_um = 0.0
+    retained_area_um2 = info.root_soma_area_um2
+    retained_axial_m_inv = 0.0
+    for node in morphology.nodes.values():
+        if node.parent_id == -1 or node.node_id in excluded_children:
+            continue
+        parent = morphology.nodes[node.parent_id]
+        length_um = hypot(
+            hypot(node.x_um-parent.x_um, node.y_um-parent.y_um),
+            node.z_um-parent.z_um,
+        )
+        retained_length_um += length_um
+        retained_area_um2 += pi*(parent.radius_um+node.radius_um)*(
+            length_um**2+(node.radius_um-parent.radius_um)**2
+        )**0.5
+        retained_axial_m_inv += length_um*1e-6/(
+            pi*(parent.radius_um*1e-6)*(node.radius_um*1e-6)
+        )
+
     assert sum(result.edge_arc_length_m.values()) * 1e6 == pytest.approx(
-        morphology.summary().total_path_length_um, rel=2e-12
+        retained_length_um, rel=2e-12
     )
     assert result.tree.area_m2.sum() * 1e12 == pytest.approx(
-        morphology.summary().estimated_membrane_area_um2, rel=2e-12
+        retained_area_um2, rel=2e-12
     )
     assert sum(result.edge_axial_geometry_factor_m_inv.values()) == pytest.approx(
-        _original_edge_axial_sum(morphology), rel=2e-12
+        retained_axial_m_inv, rel=2e-12
     )
+    for node_id in (*info.soma_node_ids, *info.wire_attachment_node_ids):
+        assert result.swc_node_to_compartment[node_id] == "swc_1"

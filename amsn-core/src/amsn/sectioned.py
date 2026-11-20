@@ -245,6 +245,7 @@ def to_sectioned_cable_tree(
     passive_parameters: PassiveParameters | None = None,
     preserve_node_ids: Iterable[int] = (),
     root_soma_area_um2: float | None = None,
+    normalize_neuromorpho_soma: bool = True,
 ) -> SectionedCableResult:
     """Convert a detailed SWC polyline into a smaller electrical cable tree.
 
@@ -279,6 +280,25 @@ def to_sectioned_cable_tree(
         node_id != morphology.root_id and node.neurite_type == 1
         for node_id, node in morphology.nodes.items()
     )
+    soma_info = (
+        morphology.detect_neuromorpho_three_point_soma()
+        if normalize_neuromorpho_soma else None
+    )
+    electrical_map = morphology.electrical_node_mapping(
+        normalize_neuromorpho_soma=normalize_neuromorpho_soma
+    )
+    collapsed_to_root = {
+        node_id for node_id, electrical_id in electrical_map.items()
+        if electrical_id == morphology.root_id and node_id != morphology.root_id
+    }
+    wire_ids = (
+        set(soma_info.wire_attachment_node_ids)
+        if soma_info is not None else set()
+    )
+    soma_ids = (
+        set(soma_info.soma_node_ids)
+        if soma_info is not None else set()
+    )
     if root_soma_area_um2 is not None:
         _positive_finite("root_soma_area_um2", root_soma_area_um2)
         if has_multi_point_soma:
@@ -286,7 +306,23 @@ def to_sectioned_cable_tree(
                 "root_soma_area_um2 cannot be added to a multi-point soma"
             )
 
-    sections = _section_paths(morphology, protected)
+    # Drop only the special soma outline edges and Import3D wire connectors.
+    # The following dendritic sections remain as polylines that start at the
+    # soma electrical vertex but retain their own first SWC point coordinates.
+    sections = []
+    for path in _section_paths(morphology, protected):
+        if (
+            soma_info is not None and len(path) >= 2
+            and path[0] in soma_ids and path[1] in soma_ids
+        ):
+            continue
+        if (
+            soma_info is not None and len(path) >= 2
+            and path[0] in soma_ids and path[1] in wire_ids
+        ):
+            continue
+        sections.append(path)
+
     point_meta: dict[str, tuple[float, int]] = {
         f"swc_{morphology.root_id}": (root.radius_um, root.neurite_type)
     }
@@ -296,8 +332,14 @@ def to_sectioned_cable_tree(
     axial_by_child: dict[str, float] = {}
     arc_by_child: dict[str, float] = {}
     electro_by_child: dict[str, float] = {}
-    swc_mapping: dict[int, str] = {morphology.root_id: f"swc_{morphology.root_id}"}
+    root_name = f"swc_{morphology.root_id}"
+    swc_mapping: dict[int, str] = {morphology.root_id: root_name}
     mapping_error: dict[int, float] = {morphology.root_id: 0.0}
+    for node_id in collapsed_to_root:
+        swc_mapping[node_id] = root_name
+        # Soma outline and zero-resistance wire attachments share the soma
+        # potential exactly, although their anatomical coordinates differ.
+        mapping_error[node_id] = 0.0
 
     def register(name: str, radius_um: float, neurite_type: int) -> None:
         existing = point_meta.get(name)
@@ -340,7 +382,10 @@ def to_sectioned_cable_tree(
             if exact_vertex is not None:
                 node_id = path[exact_vertex]
                 node = morphology.nodes[node_id]
-                name = f"swc_{node_id}"
+                name = (
+                    root_name if node_id in collapsed_to_root
+                    else f"swc_{node_id}"
+                )
                 radius_um = node.radius_um
                 neurite_type = node.neurite_type
             else:
@@ -359,7 +404,8 @@ def to_sectioned_cable_tree(
                 neurite_type = child.neurite_type
                 name = f"section_{section_number}_{sample_index}"
 
-            register(name, radius_um, neurite_type)
+            if name != root_name:
+                register(name, radius_um, neurite_type)
             sample_names.append(name)
 
         # Every original sample maps to its nearest electrical point along
@@ -424,8 +470,9 @@ def to_sectioned_cable_tree(
         missing = sorted(set(morphology.nodes) - set(swc_mapping))
         raise ValueError(f"section decomposition did not map all SWC nodes: {missing[:8]}")
 
-    root_name = f"swc_{morphology.root_id}"
-    if root_soma_area_um2 is not None:
+    if soma_info is not None:
+        local_area_um2[root_name] += soma_info.root_soma_area_um2
+    elif root_soma_area_um2 is not None:
         local_area_um2[root_name] += root_soma_area_um2
     elif root.neurite_type == 1 and not has_multi_point_soma:
         local_area_um2[root_name] += 4.0 * pi * root.radius_um**2
