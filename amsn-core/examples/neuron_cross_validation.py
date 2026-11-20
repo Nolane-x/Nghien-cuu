@@ -223,7 +223,8 @@ def main() -> None:
     sections = import_swc_with_neuron()
     segment_mapping = {}
     mapping_errors = {}
-    for node_id in protected:
+    record_ids = set(injection_ids + probe_ids)
+    for node_id in record_ids:
         segment, total, geometry, centre = locate_neuron_segment(
             sections, morphology.nodes[node_id]
         )
@@ -248,7 +249,11 @@ def main() -> None:
     print("# identical passive physical parameters: Ri=.7 ohm*m; Rm=1 ohm*m^2; Cm=.01 F/m^2; Eleak=-65mV")
     print(f"# NEURON sections={len(sections)}; NEURON segments={neuron_segments}; max_segment_um={MAX_NEURON_SEGMENT_UM}")
     print(f"# AMSN fine={fine.n_compartments}; AMSN sectioned={reduced.tree.n_compartments}")
+    amsn_area_um2 = morphology.summary().estimated_membrane_area_um2
+    area_error_pct = 100.0 * (neuron_area_um2-amsn_area_um2) / amsn_area_um2
     print(f"# NEURON total segment area={neuron_area_um2:.9f} um^2")
+    print(f"# AMSN frustum geometry area={amsn_area_um2:.9f} um^2")
+    print(f"# NEURON_vs_AMSN_area_difference={area_error_pct:.6f}%")
     for name, node_id in injections + probes:
         total, geometry, centre = mapping_errors[node_id]
         print(
@@ -260,9 +265,12 @@ def main() -> None:
     previous_clamps = []
     residuals = []
     for source_name, source_id in injections:
-        probe_segments = {node_id: segment_mapping[node_id] for node_id in probe_ids}
+        record_segments = {
+            node_id: segment_mapping[node_id]
+            for node_id in set(probe_ids + [source_id])
+        }
         neuron_voltage, residual, clamp = solve_neuron(
-            segment_mapping[source_id], probe_segments, previous_clamps
+            segment_mapping[source_id], record_segments, previous_clamps
         )
         previous_clamps.append(clamp)
         residuals.append(residual)
