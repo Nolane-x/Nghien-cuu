@@ -241,6 +241,125 @@ class CableTree:
         return self.step_linear(voltage_v, dt_s, self.membrane_leak_s,
                                 source, injected_current_a)
 
+
+    def step_synaptic_conductance(
+        self,
+        voltage_v: np.ndarray,
+        dt_s: float,
+        synaptic_conductance_s: np.ndarray,
+        reversal_potential_v: float | np.ndarray,
+        injected_current_a: np.ndarray | None = None,
+    ) -> np.ndarray:
+        """Advance one implicit step with voltage-dependent synaptic current.
+
+        A synapse contributes current g_syn * (E_rev - V). Under backward
+        Euler this is represented as an added membrane conductance and source:
+        g_total = g_leak + g_syn and
+        source = g_leak*E_leak + g_syn*E_rev.
+
+        Conductances are evaluated at the beginning of the timestep (zero-order
+        hold), while voltage is implicit at the end of the timestep.
+        """
+        n = self.n_compartments
+        conductance = np.asarray(synaptic_conductance_s, dtype=float)
+        reversal = np.asarray(reversal_potential_v, dtype=float)
+        if conductance.shape != (n,):
+            raise ValueError(
+                "synaptic_conductance_s must have shape (n_compartments,)"
+            )
+        if reversal.ndim == 0:
+            reversal = np.full(n, float(reversal), dtype=float)
+        if reversal.shape != (n,):
+            raise ValueError(
+                "reversal_potential_v must be scalar or shape (n_compartments,)"
+            )
+        if not np.all(np.isfinite(conductance)) or np.any(conductance < 0.0):
+            raise ValueError(
+                "synaptic conductances must be finite and non-negative"
+            )
+        if not np.all(np.isfinite(reversal)):
+            raise ValueError("synaptic reversal potentials must be finite")
+
+        total_conductance = self.membrane_leak_s + conductance
+        membrane_source = (
+            self.membrane_leak_s * self.parameters.e_leak_v
+            + conductance * reversal
+        )
+        return self.step_linear(
+            voltage_v,
+            dt_s,
+            total_conductance,
+            membrane_source,
+            injected_current_a,
+        )
+
+    def simulate_synaptic(
+        self,
+        duration_s: float,
+        dt_s: float,
+        synaptic_conductance_fn: Callable[[float], np.ndarray],
+        reversal_potential_v: float | Sequence[float],
+        current_fn: Callable[[float], np.ndarray] | None = None,
+        initial_voltage_v: float | Sequence[float] | None = None,
+    ) -> SimulationTrace:
+        """Simulate transient voltage with time-varying synaptic conductance.
+
+        synaptic_conductance_fn(t) returns a non-negative conductance vector
+        in siemens, one value per electrical compartment. A scalar reversal
+        potential applies to every compartment, or a vector can specify a
+        different reversal potential per compartment. An optional injected
+        current callback can be combined with synaptic input.
+        """
+        if duration_s <= 0.0 or dt_s <= 0.0:
+            raise ValueError("duration_s and dt_s must be positive")
+        steps_float = duration_s / dt_s
+        steps = int(round(steps_float))
+        if not np.isclose(steps * dt_s, duration_s, rtol=1e-9, atol=1e-15):
+            raise ValueError("duration_s must be an integer multiple of dt_s")
+
+        if initial_voltage_v is None:
+            voltage = np.full(
+                self.n_compartments, self.parameters.e_leak_v, dtype=float
+            )
+        elif np.isscalar(initial_voltage_v):
+            voltage = np.full(
+                self.n_compartments, float(initial_voltage_v), dtype=float
+            )
+        else:
+            voltage = np.asarray(initial_voltage_v, dtype=float).copy()
+        if voltage.shape != (self.n_compartments,):
+            raise ValueError("initial_voltage_v has wrong shape")
+        if not np.all(np.isfinite(voltage)):
+            raise ValueError("initial_voltage_v must be finite")
+
+        reversal = np.asarray(reversal_potential_v, dtype=float)
+        if reversal.ndim != 0 and reversal.shape != (self.n_compartments,):
+            raise ValueError(
+                "reversal_potential_v must be scalar or shape (n_compartments,)"
+            )
+        if not np.all(np.isfinite(reversal)):
+            raise ValueError("reversal_potential_v must be finite")
+
+        time = np.linspace(0.0, duration_s, steps + 1)
+        trace = np.empty((steps + 1, self.n_compartments), dtype=float)
+        trace[0] = voltage
+        for step_index in range(steps):
+            now = float(time[step_index])
+            synaptic = np.asarray(synaptic_conductance_fn(now), dtype=float)
+            injected = (
+                None if current_fn is None
+                else np.asarray(current_fn(now), dtype=float)
+            )
+            voltage = self.step_synaptic_conductance(
+                voltage,
+                dt_s,
+                synaptic,
+                reversal,
+                injected,
+            )
+            trace[step_index + 1] = voltage
+        return SimulationTrace(time, trace)
+
     def simulate_passive(self, duration_s: float, dt_s: float,
                          current_fn: Callable[[float], np.ndarray] | None = None,
                          initial_voltage_v: float | Sequence[float] | None = None) -> SimulationTrace:
