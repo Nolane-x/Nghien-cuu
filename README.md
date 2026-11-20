@@ -34,6 +34,13 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 24. [Human AMPA temporal convergence report](amsn-core/research/HUMAN_AMPA_TEMPORAL_CONVERGENCE_2026-11-20.md) — sai số tự hội tụ giảm theo timestep; sai số chéo hai engine tiến tới floor gần 0,00385 mV RMS ở basal q90.
 25. [Human AMPA temporal raw CSV](amsn-core/results/human_ampa_temporal_convergence_2026-11-20.csv) — 18.615 mẫu voltage/conductance tại 5 timestep, 3 vị trí ghi.
 26. [Temporal convergence workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787) — NEURON 9.0.2, 1/1 job thành công.
+27. [Handoff — AMPA spatial-floor audit](HANDOFF_2026-11-20_AMPA-SPATIAL-FLOOR.md) — checkpoint mới nhất: sai số dư tại basal q90 và kế hoạch kiểm tra interpolation/area-lumping.
+28. [Human AMPA spatial-floor report](amsn-core/research/HUMAN_AMPA_SPATIAL_FLOOR_2026-11-20.md) — sweep 2.000–6.000 Hz ở timestep 1,5625 µs, so với NEURON 0,5 µm.
+29. [Spatial-floor raw traces — 2.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_2000Hz.csv).
+30. [Spatial-floor raw traces — 3.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_3000Hz.csv).
+31. [Spatial-floor raw traces — 4.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_4000Hz.csv).
+32. [Spatial-floor raw traces — 6.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_6000Hz.csv).
+33. [Spatial-floor workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734) — NEURON 9.0.2, 1/1 job thành công.
 
 ## Bảo toàn dữ liệu
 
@@ -60,3 +67,4 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Single-compartment voltage/current audit [run 44757208267](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44757208267) đã xanh 2/2 job trên Python 3.12/3.13; voltage sai khác cỡ 10^-15 V trong cấu hình một ngăn được kiểm soát.
 - Spatial mesh và NEURON segment refinement [run 44758746509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758746509) đã xanh; với NEURON 0,5 µm, q90 RMS mismatch khoảng 0,00384 mV ở dt=0,00625 ms.
 - Fast-AMPA temporal convergence [run 44760319787](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787) đã xanh; 5 timestep từ 0,025 đến 0,0015625 ms cho thấy sai số tự hội tụ giảm, trong khi sai số chéo hai engine gần như ổn định quanh 0,00385 mV RMS ở basal q90. Đây là kết quả số học cho một morphology và protocol, không phải xác thực sinh học.
+- Fast-AMPA spatial-floor sweep [run 44761379734](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734) đã xanh; tăng AMSN 2.000→6.000 Hz (2.541→4.287 compartment) giảm q90 RMS từ 0,003851 xuống 0,003670 mV nhưng không cải thiện source/soma cùng hướng. Chưa chọn mesh mặc định; bước kế tiếp là kiểm tra interpolation vị trí NEURON và area-lumping quanh protected control points.
