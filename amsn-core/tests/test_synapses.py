@@ -177,7 +177,7 @@ def test_synaptic_simulation_rejects_nonfinite_reversal_potential():
         )
 
 
-def test_synaptic_simulation_samples_kinetics_at_step_endpoint():
+def test_synaptic_simulation_samples_kinetics_at_step_left_edge():
     tree = _tree()
     sampled_times = []
 
@@ -192,7 +192,7 @@ def test_synaptic_simulation_samples_kinetics_at_step_endpoint():
         reversal_potential_v=0.0,
     )
 
-    assert sampled_times == pytest.approx([0.0001, 0.0002])
+    assert sampled_times == pytest.approx([0.0, 0.0001])
 
 def test_double_exponential_synapse_uses_alpha_limit_for_equal_time_constants():
     peak = 0.8e-9
