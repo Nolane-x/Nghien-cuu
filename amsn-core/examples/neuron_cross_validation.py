@@ -98,63 +98,60 @@ def import_swc_with_neuron():
         for segment in sec:
             _ = segment.area()
 
-    return sections
+    return reader, sections
 
 
-def classify_section(sec) -> int | None:
-    name = sec.name().lower()
-    if "soma" in name:
-        return 1
-    if "apic" in name:
-        return 4
-    if "dend" in name:
-        return 3
-    if "axon" in name:
-        return 2
-    return None
+def locate_neuron_segment(reader, section_by_name, node):
+    """Map a raw SWC node through Import3D's own point-to-section index.
 
-
-def locate_neuron_segment(sections, node):
-    """Find the nearest segment centre within the imported neurite class."""
-    class_sections = [
-        sec for sec in sections
-        if classify_section(sec) == node.neurite_type
-    ]
-    candidates = class_sections or sections
-    target = np.array([node.x_um, node.y_um, node.z_um], dtype=float)
-    best = None
-
-    for sec in candidates:
-        n3d = int(h.n3d(sec=sec))
-        if n3d < 1 or sec.L <= 0:
-            continue
-        segments = list(sec)
-        if not segments:
-            continue
-        for point_index in range(n3d):
-            xyz = np.array([
-                h.x3d(point_index, sec=sec),
-                h.y3d(point_index, sec=sec),
-                h.z3d(point_index, sec=sec),
-            ], dtype=float)
-            geometric_error = float(np.linalg.norm(target - xyz))
-            arc_um = float(h.arc3d(point_index, sec=sec))
-            normalized = min(1.0, max(0.0, arc_um / sec.L))
-            segment = min(
-                segments,
-                key=lambda candidate: abs(candidate.x-normalized) * sec.L,
-            )
-            centre_error = abs(segment.x * sec.L - arc_um)
-            total_error = float(np.hypot(geometric_error, centre_error))
-            key = (total_error, geometric_error, sec.name(), segment.x)
-            if best is None or key < best[0]:
-                best = (key, segment, geometric_error, centre_error)
-
-    if best is None:
+    This avoids a nearest-in-3D search that could choose an adjacent branch
+    where branches pass close to or cross one another.
+    """
+    point_index = int(reader.id2pt(node.node_id))
+    section_index = int(reader.point2sec.x[point_index])
+    section_name = f"K[{section_index}]"
+    if section_name not in section_by_name:
         raise RuntimeError(
-            f"Unable to locate SWC node {node.node_id} in NEURON geometry"
+            f"Import3D map points to missing section {section_name} "
+            f"for SWC node {node.node_id}"
         )
-    return best[1], best[0][0], best[2], best[3]
+    sec = section_by_name[section_name]
+    imported_section = reader.sections.object(section_index)
+
+    # A one-point root is represented by NEURON as a sphere-like 3-point
+    # cylinder. Its biological centre is at x=0.5, not at pt3d endpoint 0.
+    if section_index == 0 and int(imported_section.d.size()) == 1:
+        arc_um = 0.5 * sec.L
+        geometric_error = 0.0
+    else:
+        first_point_index = int(imported_section.id)
+        local_point_index = (
+            point_index - first_point_index + (1 if section_index > 0 else 0)
+        )
+        n3d = int(h.n3d(sec=sec))
+        if local_point_index < 0 or local_point_index >= n3d:
+            raise RuntimeError(
+                f"SWC node {node.node_id}: local Import3D point "
+                f"{local_point_index} outside {section_name} with {n3d} points"
+            )
+        xyz = np.array([
+            h.x3d(local_point_index, sec=sec),
+            h.y3d(local_point_index, sec=sec),
+            h.z3d(local_point_index, sec=sec),
+        ], dtype=float)
+        target = np.array([node.x_um, node.y_um, node.z_um], dtype=float)
+        geometric_error = float(np.linalg.norm(target - xyz))
+        arc_um = float(h.arc3d(local_point_index, sec=sec))
+
+    normalized = min(1.0, max(0.0, arc_um / sec.L))
+    segments = list(sec)
+    segment = min(
+        segments,
+        key=lambda candidate: abs(candidate.x-normalized) * sec.L,
+    )
+    centre_error = abs(segment.x * sec.L - arc_um)
+    total_error = float(np.hypot(geometric_error, centre_error))
+    return segment, total_error, geometric_error, centre_error, section_name, normalized
 
 
 def solve_amsn(tree, mapping, source_id, probe_ids):
@@ -220,16 +217,17 @@ def main() -> None:
     probe_ids = [node_id for _, node_id in probes]
     protected = set(injection_ids + probe_ids)
 
-    sections = import_swc_with_neuron()
+    reader, sections = import_swc_with_neuron()
+    section_by_name = {sec.name(): sec for sec in sections}
     segment_mapping = {}
     mapping_errors = {}
     record_ids = set(injection_ids + probe_ids)
     for node_id in record_ids:
-        segment, total, geometry, centre = locate_neuron_segment(
-            sections, morphology.nodes[node_id]
+        segment, total, geometry, centre, section_name, normalized = locate_neuron_segment(
+            reader, section_by_name, morphology.nodes[node_id]
         )
         segment_mapping[node_id] = segment
-        mapping_errors[node_id] = (total, geometry, centre)
+        mapping_errors[node_id] = (total, geometry, centre, section_name, normalized)
 
     fine = morphology.to_cable_tree()
     fine_mapping = {node_id: f"swc_{node_id}" for node_id in morphology.nodes}
@@ -241,9 +239,26 @@ def main() -> None:
         preserve_node_ids=protected,
     )
     neuron_segments = sum(sec.nseg for sec in sections)
-    neuron_area_um2 = sum(
-        segment.area() for sec in sections for segment in sec
-    )
+    neuron_area_um2 = sum(segment.area() for sec in sections for segment in sec)
+    neuron_pt3d_frustum_um2 = 0.0
+    neuron_pt3d_cylinder_um2 = 0.0
+    for sec in sections:
+        for point_index in range(1, int(h.n3d(sec=sec))):
+            x0, y0, z0 = (
+                h.x3d(point_index-1, sec=sec),
+                h.y3d(point_index-1, sec=sec),
+                h.z3d(point_index-1, sec=sec),
+            )
+            x1, y1, z1 = (
+                h.x3d(point_index, sec=sec),
+                h.y3d(point_index, sec=sec),
+                h.z3d(point_index, sec=sec),
+            )
+            d0 = 0.5 * h.diam3d(point_index-1, sec=sec)
+            d1 = 0.5 * h.diam3d(point_index, sec=sec)
+            length = float(np.linalg.norm([x1-x0, y1-y0, z1-z0]))
+            neuron_pt3d_cylinder_um2 += pi * (d0+d1) * length
+            neuron_pt3d_frustum_um2 += pi * (d0+d1) * np.hypot(length, d1-d0)
 
     print(f"# NEURON={neuron.__version__}; Import3D SWC; record=NMO_290988")
     print("# identical passive physical parameters: Ri=.7 ohm*m; Rm=1 ohm*m^2; Cm=.01 F/m^2; Eleak=-65mV")
@@ -254,11 +269,29 @@ def main() -> None:
     print(f"# NEURON total segment area={neuron_area_um2:.9f} um^2")
     print(f"# AMSN frustum geometry area={amsn_area_um2:.9f} um^2")
     print(f"# NEURON_vs_AMSN_area_difference={area_error_pct:.6f}%")
+    print(f"# NEURON_pt3d_cylinder_area={neuron_pt3d_cylinder_um2:.9f} um^2")
+    print(f"# NEURON_pt3d_frustum_area={neuron_pt3d_frustum_um2:.9f} um^2")
+    source_by_type = {}
+    for node in morphology.nodes.values():
+        if node.parent_id == -1:
+            continue
+        parent = morphology.nodes[node.parent_id]
+        length = float(np.linalg.norm([
+            node.x_um-parent.x_um,
+            node.y_um-parent.y_um,
+            node.z_um-parent.z_um,
+        ]))
+        area = np.pi * (parent.radius_um+node.radius_um) * np.hypot(
+            length, node.radius_um-parent.radius_um
+        )
+        source_by_type[node.neurite_type] = source_by_type.get(node.neurite_type, 0.0) + area
+    print(f"# source_SW C_frustum_area_by_child_type={source_by_type}")
     for name, node_id in injections + probes:
-        total, geometry, centre = mapping_errors[node_id]
+        total, geometry, centre, section_name, normalized = mapping_errors[node_id]
         print(
-            f"# site {name} swc_id={node_id}; mapping_total_um={total:.6f}; "
-            f"geometry_um={geometry:.6f}; segment_centre_um={centre:.6f}"
+            f"# site {name} swc_id={node_id}; section={section_name}; x={normalized:.8f}; "
+            f"mapping_total_um={total:.6f}; geometry_um={geometry:.6f}; "
+            f"segment_centre_um={centre:.6f}"
         )
     print("source,source_swc_id,probe,probe_swc_id,neuron_input_R_MOhm,amsn_fine_input_R_MOhm,amsn_sectioned_input_R_MOhm,neuron_transfer_R_MOhm,amsn_fine_transfer_R_MOhm,amsn_sectioned_transfer_R_MOhm,neuron_ratio,amsn_fine_ratio,amsn_sectioned_ratio,neuron_vs_fine_ratio_error_pct,neuron_vs_sectioned_ratio_error_pct,neuron_mapping_error_um,steady_residual_mV")
 

@@ -85,7 +85,8 @@ jobs:
           python -c "import neuron; print('NEURON', neuron.__version__)"
           python -c "from neuron import h; h.load_file('import3d.hoc'); print('Import3D available')"
       - name: Run independent passive cross-simulator experiment
-        run: python examples/neuron_cross_validation.py | tee neuron-cross-validation.txt
+        shell: bash
+        run: set -o pipefail; python examples/neuron_cross_validation.py | tee neuron-cross-validation.txt
       - name: Preserve raw NEURON output
         if: always()
         uses: actions/upload-artifact@v4
