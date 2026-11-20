@@ -144,15 +144,22 @@ def run_neuron(dt_ms, neuron_segments, previous_inputs):
     for _ in range(round(DURATION_MS / dt_ms)):
         h.fadvance()
 
+    # Copy out of NEURON Vector storage before the next finitialize().
+    # NEURON reuses/updates registered record vectors on subsequent runs;
+    # retaining them across dt trials would mutate prior result arrays.
+    time_ms = np.asarray(time_vector, dtype=float).copy()
+    voltage_arrays = {
+        node_id: np.asarray(vector, dtype=float).copy() * 1e-3
+        for node_id, vector in voltage_vectors.items()
+    }
+    conductance_s = np.asarray(conductance_vector, dtype=float).copy() * 1e-6
+
+    # Do not return or retain the hoc vectors. On destruction, NEURON removes
+    # them from its record list; the independent NumPy copies remain immutable.
     return {
-        "time_ms": np.asarray(time_vector, dtype=float),
-        "voltage_v": {
-            node_id: np.asarray(vector, dtype=float) * 1e-3
-            for node_id, vector in voltage_vectors.items()
-        },
-        "conductance_s": np.asarray(conductance_vector, dtype=float) * 1e-6,
-        # Keep recorders/vectors live until their arrays have been consumed.
-        "recorders": (time_vector, conductance_vector, voltage_vectors),
+        "time_ms": time_ms,
+        "voltage_v": voltage_arrays,
+        "conductance_s": conductance_s,
     }
 
 
