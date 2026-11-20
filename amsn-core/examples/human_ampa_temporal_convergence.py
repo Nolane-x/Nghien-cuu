@@ -180,7 +180,7 @@ def run_amsn(dt_ms, tree, synapse, amsn_indices):
     }
 
 
-def error_metrics(reference_mV, candidate_mV):
+def error_metrics(reference_mV, candidate_mV, dt_ms: float):
     error = candidate_mV - reference_mV
     mask = np.abs(reference_mV) >= RELATIVE_FLOORS_MV[0]
     relative = (
@@ -196,8 +196,8 @@ def error_metrics(reference_mV, candidate_mV):
         "max_relative_pct": float(np.max(relative)) if relative.size else 0.0,
         "ref_peak_mV": float(reference_mV[peak_ref]),
         "candidate_peak_mV": float(candidate_mV[peak_candidate]),
-        "ref_peak_time_ms": peak_ref,
-        "candidate_peak_time_ms": peak_candidate,
+        "ref_peak_time_ms": float(peak_ref * dt_ms),
+        "candidate_peak_time_ms": float(peak_candidate * dt_ms),
     }
     for floor in RELATIVE_FLOORS_MV:
         mask_floor = np.abs(reference_mV) >= floor
@@ -225,6 +225,7 @@ def compare_to_finest(current, finest, probe_id):
     return error_metrics(
         (finest_voltage - ELEAK_MV * 1e-3) * 1e3,
         (current_voltage - ELEAK_MV * 1e-3) * 1e3,
+        current["dt_ms"],
     )
 
 
@@ -306,7 +307,7 @@ def main() -> None:
             amsn_dv = (
                 amsn_run["voltage_v"][probe_id] - ELEAK_MV * 1e-3
             ) * 1e3
-            cross = error_metrics(neuron_dv, amsn_dv)
+            cross = error_metrics(neuron_dv, amsn_dv, dt_ms)
             neuron_self = compare_to_finest(neuron_run | {"dt_ms": dt_ms}, neuron_runs[finest_dt] | {"dt_ms": finest_dt}, probe_id)
             amsn_self = compare_to_finest(amsn_run | {"dt_ms": dt_ms}, amsn_runs[finest_dt] | {"dt_ms": finest_dt}, probe_id)
             print(
@@ -318,8 +319,8 @@ def main() -> None:
                 f"{cross['max_relative_at_0.5mV_pct']:.9f},"
                 f"{cross['max_relative_at_1mV_pct']:.9f},"
                 f"{cross['ref_peak_mV']:.12f},{cross['candidate_peak_mV']:.12f},"
-                f"{cross['ref_peak_time_ms']*DT_VALUES_MS[0]/DT_VALUES_MS[0]:.7f},"
-                f"{cross['candidate_peak_time_ms']*DT_VALUES_MS[0]/DT_VALUES_MS[0]:.7f},"
+                f"{cross['ref_peak_time_ms']:.7f},"
+                f"{cross['candidate_peak_time_ms']:.7f},"
                 f"{neuron_self['max_abs_mV']:.12f},{neuron_self['rms_mV']:.12f},"
                 f"{amsn_self['max_abs_mV']:.12f},{amsn_self['rms_mV']:.12f}"
             )
