@@ -1,41 +1,41 @@
 # Nghien-cuu — Nolane-x
 
-Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và kiến trúc AI của dự án Nolane-x.
+Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và kiến trúc AI của Nolane-x.
 
-> **GitHub là bản lưu chuẩn.** Không để kết quả, mã nguồn hay handoff quan trọng chỉ nằm trong hội thoại.
+> **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 ## Bắt đầu từ đây
 
-1. **[AGENTS.md](AGENTS.md)** — quy tắc bắt buộc cho mọi AI agent làm việc trong repo.
-2. **[HANDOFF.md](HANDOFF.md)** — hồ sơ nghiên cứu nền và lịch sử recovery.
-3. **[HANDOFF_2026-11-20_AMSN-CORE.md](HANDOFF_2026-11-20_AMSN-CORE.md)** — checkpoint mã nguồn AMSN Neuron Core v0.1.0.
-4. **[HANDOFF_2026-11-20_HUMAN-PASSIVE-DC.md](HANDOFF_2026-11-20_HUMAN-PASSIVE-DC.md)** — mới nhất: thí nghiệm truyền DC đa vị trí trên morphology người, CI 38/38.
-5. **[Human passive DC transfer report](amsn-core/research/HUMAN_PASSIVE_DC_TRANSFER_2026-11-20.md)** — 60 phép đo, dữ liệu CSV thô, giới hạn mô hình.
-5. **[Human morphology import report](amsn-core/research/HUMAN_MORPHOLOGY_IMPORT_2026-11-20.md)** — provenance, giấy phép và đối chiếu morphometry.
-6. **[Human morphology data](amsn-core/data/human/README.md)** — dữ liệu, giới hạn và trích dẫn bắt buộc.
-7. **[Passive mesh-sensitivity report](amsn-core/research/PASSIVE_MESH_CONVERGENCE_2026-11-20.md)** — số liệu thực nghiệm, CSV thô, CI 29/29 trên Python 3.12/3.13.
-6. **[AMSN Neuron Core](amsn-core/README.md) — mã nguồn Python, unit tests và ví dụ.
-7. **[Electrotonic discretization note](amsn-core/research/ELECTROTONIC_DISCRETIZATION_2026-11-20.md)** — công thức, API, kiểm tra số học và giới hạn.
-8. **[SWC-to-cable discretization note](research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md)** — hình học, phân bổ diện tích/điện trở và kiểm chứng giải tích.
-9. **[Human L2–3 evidence update](research/HUMAN_L23_EVIDENCE_UPDATE_2026-11-20.md)** — cập nhật nghiên cứu người từ 2025–2026.
-10. **[AMSN research dossier](research/AMSN_RESEARCH_DOSSIER.md)** — tổng hợp nghiên cứu AMSN ban đầu.
-11. **[Recovery status](research/AMSN_RECOVERY_STATUS_2026-11-20.md)** — trạng thái Alpha cũ.
+1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
+2. [HANDOFF.md](HANDOFF.md) — mục tiêu nghiên cứu tổng thể và lịch sử khôi phục.
+3. [HANDOFF_2026-11-20_HUMAN-SECTIONED-MESH.md](HANDOFF_2026-11-20_HUMAN-SECTIONED-MESH.md) — checkpoint mới nhất: section-based electrical resampling trên morphology người, 43/43 test ở Python 3.12 và 3.13.
+4. [Sectioned mesh report](amsn-core/research/SECTIONED_HUMAN_MORPHOLOGY_2026-11-20.md) — số compartment, sai số DC, công thức tích phân và giới hạn.
+5. [Raw 60-row CSV](amsn-core/results/human_sectioned_mesh_sensitivity_2026-11-20.csv) — dữ liệu đo thô so với cable 8.903 compartment.
+6. [AMSN Neuron Core](amsn-core/README.md) — mã Python, API, test và ví dụ.
+7. [Human morphology provenance](amsn-core/data/human/README.md) — nguồn NeuroMorpho, CC BY 4.0, metadata và giới hạn mẫu.
+8. [Handoff: human passive DC](HANDOFF_2026-11-20_HUMAN-PASSIVE-DC.md) — 60 phép đo truyền DC.
+9. [Handoff: human morphology CI](HANDOFF_2026-11-20_HUMAN-MORPHOLOGY-CI.md) — import morphology người, sửa soma nhiều điểm, CI.
+10. [Handoff: electrotonic discretization](HANDOFF_2026-11-20_ELECTROTONIC.md) — refinement theo chiều dài vật lý và điện học.
+11. [AMSN research dossier](research/AMSN_RESEARCH_DOSSIER.md) — tổng hợp nền nghiên cứu.
+12. [Recovery status](research/AMSN_RECOVERY_STATUS_2026-11-20.md) — trạng thái mã Alpha cũ và những gì còn lại.
 
-## Quy tắc bảo toàn dữ liệu
+## Bảo toàn dữ liệu
 
-- Ưu tiên append-only: thêm file phiên bản/ngày mới; không xóa hoặc ghi đè tùy tiện.
-- Trước khi sửa tệp có sẵn, đọc lại nội dung và blob SHA hiện tại.
-- Không force-push, reset lịch sử, xóa nhánh hoặc xóa commit.
-- Mọi kết quả phải có nguồn, phiên bản, cấu hình, seed, lệnh chạy, kết quả, giới hạn và commit SHA.
-- Phân biệt literature observation, simulation run, validated result, hypothesis và unverified historical claim.
-- Không commit credentials, secrets, dữ liệu cá nhân hoặc dữ liệu bệnh nhân định danh.
-- Không commit dữ liệu/morphology khi chưa kiểm tra license/terms.
-- Mỗi mốc quan trọng phải được lưu lên GitHub ngay trong phiên tạo ra nó.
+- Ưu tiên append-only: thêm checkpoint mới; không xóa hoặc ghi đè lịch sử nghiên cứu.
+- Đọc nội dung và blob SHA trước khi sửa file có sẵn.
+- Không force-push, reset lịch sử hoặc xóa nhánh.
+- Mọi kết quả phải có nguồn, dữ liệu, đơn vị, cấu hình, lệnh chạy, log, giới hạn và commit SHA.
+- Phân biệt giả thuyết, kết quả tái lập, kết quả đã kiểm chứng và suy luận chưa xác minh.
+- Không tuyên bố test hay thí nghiệm thành công nếu chưa có log chạy thực tế.
+- Không commit secrets, credentials hoặc dữ liệu cá nhân định danh.
+- Kiểm tra license trước khi lưu dữ liệu bên ngoài; giữ nguyên attribution.
 
-## Nghiên cứu đang ưu tiên
+## Hướng nghiên cứu ưu tiên
 
-**AMSN — Adaptive Multi-Scale Neuron:** xây dựng mô hình số đa thang có kiểm chứng cho neuron sinh học; khởi đầu bằng neuron tháp L2–3 vỏ não người, giữ rõ subtype, độ sâu, điều kiện thí nghiệm và uncertainty. Mục tiêu xa hơn là khảo sát nguyên lý tính toán sinh học để thiết kế và kiểm thử kiến trúc AI mới. Không tuyên bố mô hình sinh học vượt Transformer nếu chưa có benchmark công bằng.
+**AMSN — Adaptive Multi-Scale Neuron:** xây dựng mô hình neuron sinh học đa thang có thể kiểm chứng, bắt đầu từ morphology và điện học thụ động của neuron tháp L2–3 vỏ não người. Sau khi xác thực với simulator và dữ liệu thực nghiệm mới mở rộng sang kênh ion chủ động, synapse, calcium, plasticity, gene expression, metabolism và astrocyte coupling. Mục tiêu AI xa hơn cần benchmark công bằng; không suy diễn trí thông minh từ một neuron đơn lẻ.
 
-## Trạng thái mã nguồn
+## Trạng thái hiện tại
 
-`amsn-core/` là implementation mới v0.1.0, khác với AMSN Alpha README cũ. Core hiện có parser SWC, cable tree passive, Hines solver và HH1952 smoke test. Module mới bổ sung refinement theo `d_lambda` kết hợp giới hạn chiều dài vật lý. Đây vẫn là nền tảng số học, chưa phải neuron người đã hiệu chuẩn và chưa reproduce Eyal 2018.
+- AMSN Core có SWC parser, passive cable/Hines solver, HH1952 numerical smoke test, electrotonic discretizer và section-based resampler.
+- Một morphology người thật đã được nhập với provenance CC BY 4.0; mẫu có soma + dendrite, không có axon, dendrite completeness moderate và metadata ghi mesiotemporal sclerosis.
+- Section-based resampling giảm cable từ 8.903 xuống 700–1.565 compartments, với sai lệch DC lớn nhất dưới 0,05% trong đúng protocol thử nghiệm này. Đây chưa phải xác thực sinh học hoặc cross-simulator.
