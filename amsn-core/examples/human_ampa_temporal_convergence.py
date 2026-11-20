@@ -22,7 +22,7 @@ from amsn.sectioned import to_sectioned_cable_tree
 from amsn.synapses import DoubleExponentialSynapse
 
 
-DT_VALUES_MS = (0.00625, 0.003125, 0.0015625)
+DT_VALUES_MS = (0.025, 0.0125, 0.00625, 0.003125, 0.0015625)
 DURATION_MS = 5.0
 NEURON_MAX_SEGMENT_UM = 0.5
 AMSN_REFERENCE_FREQUENCY_HZ = 2000.0
@@ -214,14 +214,34 @@ def error_metrics(reference_mV, candidate_mV, dt_ms: float):
 
 
 def compare_to_finest(current, finest, probe_id):
-    ratio = round(
-        (DURATION_MS / current["dt_ms"])
-        / (DURATION_MS / finest["dt_ms"])
+    # The current (coarser) step must be an integer multiple of the finest dt.
+    # E.g. 0.025 ms / 0.0015625 ms = 16, so sample every 16th fine point.
+    ratio_float = current["dt_ms"] / finest["dt_ms"]
+    ratio = round(ratio_float)
+    if ratio < 1 or not np.isclose(
+        ratio_float, ratio, rtol=0.0, atol=1e-12
+    ):
+        raise RuntimeError(
+            f"non-nested timestep ratio {ratio_float:g} "
+            f"for dt={current['dt_ms']:g} ms and finest={finest['dt_ms']:g} ms"
+        )
+    current_time = np.asarray(current["time_ms"], dtype=float)
+    finest_time = np.asarray(finest["time_ms"], dtype=float)[::ratio]
+    if len(current_time) != len(finest_time):
+        raise RuntimeError(
+            "temporal grids could not be nested for convergence: "
+            f"coarse={len(current_time)}, fine_subsample={len(finest_time)}, "
+            f"ratio={ratio}"
+        )
+    np.testing.assert_allclose(
+        current_time,
+        finest_time,
+        rtol=0.0,
+        atol=1e-9,
+        err_msg="coarse and subsampled finest time grids differ",
     )
     current_voltage = current["voltage_v"][probe_id]
     finest_voltage = finest["voltage_v"][probe_id][::ratio]
-    if len(current_voltage) != len(finest_voltage):
-        raise RuntimeError("temporal grids could not be nested for convergence")
     return error_metrics(
         (finest_voltage - ELEAK_MV * 1e-3) * 1e3,
         (current_voltage - ELEAK_MV * 1e-3) * 1e3,
