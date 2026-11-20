@@ -53,7 +53,8 @@ def test_swc_file_example_is_explicitly_synthetic_and_parseable():
     morph = SWCMorphology.from_file(sample)
     summary = morph.summary()
     assert summary.node_count == 7
-    assert summary.branch_point_count == 2
+    # The root is the synthetic soma and is not counted as a neurite bifurcation.
+    assert summary.branch_point_count == 1
 
 
 def test_swc_long_chain_is_stack_safe():
