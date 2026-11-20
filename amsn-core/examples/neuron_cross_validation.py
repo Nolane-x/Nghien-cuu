@@ -118,13 +118,28 @@ def locate_neuron_segment(reader, section_by_name, node):
             f"for SWC node {node.node_id}"
         )
     name_index = int(imported_section.nameindex)
-    section_name = type_names[swc_type]
-    if name_index > 0:
-        section_name = f"{section_name}[{name_index}]"
-    if section_name not in section_by_name:
+    base_name = type_names[swc_type]
+    hoc_name = (
+        f"{base_name}[{name_index}]"
+        if name_index > 0 else base_name
+    )
+    # Import3D's hoc name() omits the [0] suffix, but Python Section.name()
+    # usually retains the array index created by "~create soma[n]".
+    candidates = [hoc_name]
+    if name_index == 0:
+        candidates.extend([f"{base_name}[0]", base_name])
+    section_name = next(
+        (candidate for candidate in candidates if candidate in section_by_name),
+        None,
+    )
+    if section_name is None:
+        same_type = sorted(
+            name for name in section_by_name
+            if name == base_name or name.startswith(base_name + "[")
+        )
         raise RuntimeError(
-            f"Import3D maps SWC node {node.node_id} to {section_name}, "
-            f"but instantiated sections are: {sorted(section_by_name)[:12]}"
+            f"Import3D maps SWC node {node.node_id} to hoc section {hoc_name}, "
+            f"but no matching Python section exists; {base_name} sections={same_type[:12]}"
         )
     sec = section_by_name[section_name]
 
@@ -244,11 +259,7 @@ def main() -> None:
         mapping_errors[node_id] = (total, geometry, centre, section_name, normalized)
 
     fine = morphology.to_cable_tree()
-    electrical_node_map = morphology.electrical_node_mapping()
-    fine_mapping = {
-        node_id: f"swc_{electrical_node_map[node_id]}"
-        for node_id in morphology.nodes
-    }
+    fine_mapping = {node_id: f"swc_{node_id}" for node_id in morphology.nodes}
     reduced = to_sectioned_cable_tree(
         morphology,
         max_segment_length_um=100.0,
@@ -282,15 +293,11 @@ def main() -> None:
     print("# identical passive physical parameters: Ri=.7 ohm*m; Rm=1 ohm*m^2; Cm=.01 F/m^2; Eleak=-65mV")
     print(f"# NEURON sections={len(sections)}; NEURON segments={neuron_segments}; max_segment_um={MAX_NEURON_SEGMENT_UM}")
     print(f"# AMSN fine={fine.n_compartments}; AMSN sectioned={reduced.tree.n_compartments}")
-    amsn_raw_geometry_area_um2 = morphology.summary().estimated_membrane_area_um2
-    amsn_electrical_area_um2 = float(fine.area_m2.sum() * 1e12)
-    area_error_pct = 100.0 * (
-        neuron_area_um2-amsn_electrical_area_um2
-    ) / amsn_electrical_area_um2
+    amsn_area_um2 = morphology.summary().estimated_membrane_area_um2
+    area_error_pct = 100.0 * (neuron_area_um2-amsn_area_um2) / amsn_area_um2
     print(f"# NEURON total segment area={neuron_area_um2:.9f} um^2")
-    print(f"# AMSN raw SWC frustum area={amsn_raw_geometry_area_um2:.9f} um^2")
-    print(f"# AMSN normalized electrical area={amsn_electrical_area_um2:.9f} um^2")
-    print(f"# NEURON_vs_AMSN_normalized_area_difference={area_error_pct:.9f}%")
+    print(f"# AMSN frustum geometry area={amsn_area_um2:.9f} um^2")
+    print(f"# NEURON_vs_AMSN_area_difference={area_error_pct:.6f}%")
     print(f"# NEURON_pt3d_cylinder_area={neuron_pt3d_cylinder_um2:.9f} um^2")
     print(f"# NEURON_pt3d_frustum_area={neuron_pt3d_frustum_um2:.9f} um^2")
     source_by_type = {}
