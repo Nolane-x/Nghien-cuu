@@ -29,6 +29,17 @@ class MorphologyError(ValueError):
     """Raised when an SWC file is structurally invalid."""
 
 
+@dataclass(frozen=True, slots=True)
+class NeuroMorphoSomaNormalization:
+    """Detected NeuroMorpho three-point soma and Import3D wire attachments."""
+
+    root_id: int
+    soma_node_ids: tuple[int, ...]
+    wire_attachment_node_ids: tuple[int, ...]
+    wire_attachment_lengths_um: dict[int, float]
+    root_soma_area_um2: float
+
+
 @dataclass(frozen=True)
 class MorphologySummary:
     node_count: int
@@ -118,8 +129,111 @@ class SWCMorphology:
             raise MorphologyError(f"disconnected nodes or cycles: {disconnected[:8]}")
 
 
+    def detect_neuromorpho_three_point_soma(
+        self, *, length_tolerance: float = 0.01
+    ) -> NeuroMorphoSomaNormalization | None:
+        """Detect the exact three-point spherical soma convention used by Import3D.
+
+        The three soma points must be the first three SWC rows; the two
+        non-root points must be direct root children without children of their
+        own; their diameters must match; and the sum of their distances from
+        the root must be within 1% of the soma diameter. Long, unbranched
+        same-type neurite roots attached to this soma are identified as
+        zero-resistance wire attachments, mirroring Import3D's section.first
+        rule. All source SWC data remain unchanged.
+        """
+        if not (0.0 < length_tolerance < 1.0):
+            raise ValueError("length_tolerance must be between 0 and 1")
+        ordered_ids = list(self.nodes)
+        soma_ids = [
+            node_id for node_id in ordered_ids
+            if self.nodes[node_id].neurite_type == 1
+        ]
+        if len(soma_ids) != 3 or ordered_ids[:3] != soma_ids:
+            return None
+
+        root_id = self.root_id
+        if soma_ids[0] != root_id:
+            return None
+        root = self.nodes[root_id]
+        other_soma_ids = soma_ids[1:]
+        if any(
+            self.nodes[node_id].parent_id != root_id
+            or self.children[node_id]
+            for node_id in other_soma_ids
+        ):
+            return None
+
+        radii = [self.nodes[node_id].radius_um for node_id in soma_ids]
+        if max(radii) - min(radii) > max(radii) * 1e-12:
+            return None
+
+        outline_length_um = 0.0
+        for node_id in other_soma_ids:
+            node = self.nodes[node_id]
+            outline_length_um += sqrt(
+                (node.x_um-root.x_um)**2
+                + (node.y_um-root.y_um)**2
+                + (node.z_um-root.z_um)**2
+            )
+        diameter_um = 2.0 * root.radius_um
+        if abs(outline_length_um / diameter_um - 1.0) >= length_tolerance:
+            return None
+
+        wire_ids: list[int] = []
+        wire_lengths: dict[int, float] = {}
+        for soma_id in soma_ids:
+            parent = self.nodes[soma_id]
+            for child_id in self.children[soma_id]:
+                child = self.nodes[child_id]
+                if child.neurite_type == 1:
+                    continue
+
+                # Import3D marks a soma-connected section as a wire when its
+                # same-type unbranched section extends for more than one edge.
+                current_id = child_id
+                same_type_edges = 0
+                while len(self.children[current_id]) == 1:
+                    next_id = self.children[current_id][0]
+                    next_node = self.nodes[next_id]
+                    if next_node.neurite_type != child.neurite_type:
+                        break
+                    same_type_edges += 1
+                    current_id = next_id
+
+                if same_type_edges > 1:
+                    wire_ids.append(child_id)
+                    wire_lengths[child_id] = sqrt(
+                        (child.x_um-parent.x_um)**2
+                        + (child.y_um-parent.y_um)**2
+                        + (child.z_um-parent.z_um)**2
+                    )
+
+        return NeuroMorphoSomaNormalization(
+            root_id=root_id,
+            soma_node_ids=tuple(soma_ids),
+            wire_attachment_node_ids=tuple(wire_ids),
+            wire_attachment_lengths_um=wire_lengths,
+            root_soma_area_um2=4.0 * pi * root.radius_um**2,
+        )
+
+    def electrical_node_mapping(
+        self, *, normalize_neuromorpho_soma: bool = True
+    ) -> dict[int, int]:
+        """Map SWC IDs to electrical vertices while preserving source geometry."""
+        mapping = {node_id: node_id for node_id in self.nodes}
+        if normalize_neuromorpho_soma:
+            info = self.detect_neuromorpho_three_point_soma()
+            if info is not None:
+                for node_id in info.soma_node_ids:
+                    mapping[node_id] = info.root_id
+                for node_id in info.wire_attachment_node_ids:
+                    mapping[node_id] = info.root_id
+        return mapping
+
     def to_cable_tree(self, max_segment_length_um: float | None = None,
-                      root_soma_area_um2: float | None = None):
+                      root_soma_area_um2: float | None = None,
+                      normalize_neuromorpho_soma: bool = True):
         """Convert an SWC tree into a node-centred passive cable tree.
 
         Each SWC edge is optionally split into shorter straight frusta. Every
@@ -146,22 +260,38 @@ class SWCMorphology:
             node_id != self.root_id and node.neurite_type == 1
             for node_id, node in self.nodes.items()
         )
+        soma_info = (
+            self.detect_neuromorpho_three_point_soma()
+            if normalize_neuromorpho_soma else None
+        )
         if root_soma_area_um2 is not None and has_multi_point_soma:
             raise ValueError(
-                "root_soma_area_um2 cannot be added to a multi-point soma; "
-                "its surface is already represented by type-1 SWC edges"
+                "root_soma_area_um2 cannot be supplied with a multi-point soma; "
+                "the source soma geometry already defines its surface"
             )
         if root_soma_area_um2 is not None and (
                 not (root_soma_area_um2 > 0)
                 or not (root_soma_area_um2 < float("inf"))):
             raise ValueError("root_soma_area_um2 must be finite and positive")
 
-        # Build a subdivided point tree without mutating the original SWC.
-        points: dict[int, tuple[float, float, float, float, int | None]] = {
-            node_id: (node.x_um, node.y_um, node.z_um, node.radius_um,
-                      None if node.parent_id == -1 else node.parent_id)
-            for node_id, node in self.nodes.items()
-        }
+        electrical_map = self.electrical_node_mapping(
+            normalize_neuromorpho_soma=normalize_neuromorpho_soma
+        )
+        # Collapse soma outline points and zero-resistance stem connectors
+        # into the single spherical soma electrical vertex.
+        points: dict[int, tuple[float, float, float, float, int | None]] = {}
+        for node_id, node in self.nodes.items():
+            electrical_id = electrical_map[node_id]
+            if electrical_id == self.root_id and node_id != self.root_id:
+                continue
+            parent_id = (
+                None if node.parent_id == -1
+                else electrical_map[node.parent_id]
+            )
+            points[electrical_id] = (
+                node.x_um, node.y_um, node.z_um, node.radius_um, parent_id
+            )
+
         edge_rows: list[tuple[int, int, float, float, float]] = []
         next_id = max(self.nodes) + 1
         stack = [self.root_id]
@@ -171,6 +301,11 @@ class SWCMorphology:
             children = self.children[parent_id]
             for child_id in children:
                 child = self.nodes[child_id]
+                electrical_parent_id = electrical_map[parent_id]
+                electrical_child_id = electrical_map[child_id]
+                if electrical_parent_id == electrical_child_id:
+                    stack.append(child_id)
+                    continue
                 dx, dy, dz = (child.x_um - parent.x_um,
                               child.y_um - parent.y_um,
                               child.z_um - parent.z_um)
@@ -181,7 +316,7 @@ class SWCMorphology:
                     )
                 n_parts = (1 if max_segment_length_um is None else
                            max(1, ceil(edge_length / max_segment_length_um)))
-                previous_id = parent_id
+                previous_id = electrical_parent_id
                 previous_radius = parent.radius_um
                 for part in range(1, n_parts + 1):
                     fraction = part / n_parts
@@ -233,11 +368,11 @@ class SWCMorphology:
             r0_m, r1_m, length_m = map(um_to_m, (r0_um, r1_um, length_um))
             axial_factor_m_inv[child_id] = length_m / (pi * r0_m * r1_m)
 
-        if root_soma_area_um2 is not None:
+        if soma_info is not None:
+            membrane_area_um2[self.root_id] += soma_info.root_soma_area_um2
+        elif root_soma_area_um2 is not None:
             membrane_area_um2[self.root_id] += root_soma_area_um2
         elif root.neurite_type == 1 and not has_multi_point_soma:
-            # A single-point soma is spherical. A multi-point soma is
-            # represented by its type-1 edges and must not receive a second sphere.
             membrane_area_um2[self.root_id] += 4.0 * pi * root.radius_um**2
 
         compartments = []
