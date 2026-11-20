@@ -8,7 +8,7 @@ section-reduced cable. This is a passive DC comparison, not a human fit.
 """
 from __future__ import annotations
 
-from math import ceil
+from math import ceil, pi
 from pathlib import Path
 
 import numpy as np
