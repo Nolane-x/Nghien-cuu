@@ -345,7 +345,16 @@ class CableTree:
         trace[0] = voltage
         for step_index in range(steps):
             now = float(time[step_index])
-            synaptic = np.asarray(synaptic_conductance_fn(now), dtype=float)
+            next_time = float(time[step_index + 1])
+            # The voltage solve is implicit at t_(n+1). Sample the continuous
+            # synaptic kinetic state at that same endpoint, matching NEURON's
+            # Exp2Syn BREAKPOINT ordering (SOLVE state, then g = B - A).
+            synaptic = np.asarray(
+                synaptic_conductance_fn(next_time), dtype=float
+            )
+            # Keep the injected-current callback's historical left-edge
+            # zero-order-hold contract; only the synaptic state is endpoint
+            # sampled by this method.
             injected = (
                 None if current_fn is None
                 else np.asarray(current_fn(now), dtype=float)
