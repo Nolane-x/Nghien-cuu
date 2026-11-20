@@ -202,3 +202,78 @@ At the time this log was first drafted, the latest run for the extended workflow
 4. After spatial mapping is isolated, repeat dt = 25, 12.5, 6.25, 3.125 and 1.5625 us on one chosen high-resolution mesh; keep event-time alignment fixed.
 5. Only when temporal and spatial error budgets are separated should an AMPA tolerance be proposed.
 6. Reproduce an original Eyal/ModelDB model with its own morphology/mechanisms before claiming a matched human L2/3 reproduction; the ModelDB GitHub mirror has no licence field and points to a 133MB upstream ZIP, so review distribution/license terms before vendoring.
+
+---
+
+## 5. Final NEURON segment-centre refinement results — 2026-11-20
+
+### Execution evidence
+
+- Script: `amsn-core/examples/human_ampa_neuron_segment_sweep.py`.
+- Successful extended workflow: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758746509
+- Result: 1/1 job; all workflow steps succeeded, including the original 100–2,000-Hz AMSN mesh sweep and the new NEURON segment-refinement sweep.
+- NEURON 9.0.2, Python 3.12.
+- Raw combined artifact: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758746509/artifacts/14640046511 (893,805 bytes).
+- The segment sweep uses the same partial human morphology, source/probes, passive parameters, AMPA event and dt=0.00625 ms. AMSN is fixed at 2,000-Hz reference frequency (2,541 compartments); only NEURON's max segment length is changed to 5, 2, 1 and 0.5 um.
+- The earlier workflow attempt 44758503143 failed because it used bitwise array equality for time grids. The script was corrected to use a 1e-12 s allclose tolerance, consistent with the other simulator time-grid checks. The failed attempt is preserved in Actions history.
+
+### Mapping and q90 error
+
+| NEURON max segment length | NEURON segment count | q90 centre mapping offset | AMSN-vs-NEURON max abs error | RMS error | Max relative error |
+|---:|---:|---:|---:|---:|---:|
+| 5 um | 2,637 | 2.424330 um | 0.139635 mV | 0.062947 mV | 18.9618% |
+| 2 um | 6,397 | 0.527632 um | 0.055024 mV | 0.039240 mV | 1.3809% |
+| 1 um | 12,685 | 0.215842 um | 0.026003 mV | 0.014339 mV | 2.9332% |
+| 0.5 um | 25,233 | 0.242787 um | 0.006433 mV | 0.003840 mV | 1.3170% |
+
+The maximum relative-error metric uses a reference EPSP deflection floor of 0.02 mV. It is not expected to decrease monotonically because the location/time of the largest relative error can change. Absolute and RMS errors provide a clearer convergence picture here.
+
+### NEURON self-convergence to the 0.5-um run
+
+This is crucial: NEURON's own segment refinement changes the measured q90 response even though the SWC source node, probe node, event and passive parameters are unchanged.
+
+| NEURON max segment length | q90 max abs difference vs NEURON 0.5 um | q90 RMS difference vs NEURON 0.5 um |
+|---:|---:|---:|
+| 5 um | 0.134360 mV | 0.062995 mV |
+| 2 um | 0.053669 mV | 0.037094 mV |
+| 1 um | 0.023560 mV | 0.015711 mV |
+| 0.5 um | 0 | 0 |
+
+Thus, the earlier comparison against 5-um NEURON included a sizeable reference-discretization error. The 5-um reference is not sufficiently refined for this fast basal q90 voltage comparison. It was incorrect to attribute the whole q90 discrepancy to AMSN's mesh.
+
+The 0.5-um NEURON run has 25,233 segments and is the finest reference in this sweep. It is still a numerical reference, not experimental truth or a mathematically exact solution.
+
+### Source and soma observations
+
+| NEURON max segment length | q75 source max abs error | q75 source RMS | Soma max abs error | Soma RMS |
+|---:|---:|---:|---:|---:|
+| 5 um | 0.045356 mV | 0.033567 mV | 0.000599 mV | 0.000468 mV |
+| 2 um | 0.049919 mV | 0.037018 mV | 0.000647 mV | 0.000507 mV |
+| 1 um | 0.014444 mV | 0.010649 mV | 0.000204 mV | 0.000158 mV |
+| 0.5 um | 0.004342 mV | 0.003300 mV | 0.000043 mV | 0.000035 mV |
+
+For the q90 at the 0.5-um NEURON setting:
+- NEURON peak = 11.241034 mV above leak, time 1.68125 ms.
+- AMSN peak = 11.244652 mV above leak, time 1.68125 ms.
+- Max absolute time-series difference = 0.006433 mV.
+- RMS time-series difference = 0.003840 mV.
+
+### Interpretation
+
+The segment-centre location discrepancy is a major contributor to the earlier q90 mismatch. Reducing NEURON's segment length from 5 to 0.5 um reduces the q90 mapping offset from 2.424 to 0.243 um and makes NEURON's own q90 trace converge substantially. Against this finest NEURON reference, the fixed 2,000-Hz AMSN mesh achieves 0.00384 mV RMS and 0.00643 mV maximum absolute difference at q90.
+
+This is strong numerical agreement for this specific passive morphology, synaptic waveform, timestep and set of protected sites. It is not a blanket claim that the entire AMSN morphology implementation is validated. More branch locations, other cells and finer timestep checks are still required.
+
+### Updated scientific conclusion
+
+- The original q90 discrepancy was a mixture of AMSN mesh error and NEURON reference segment-centre/discretization error.
+- Increasing AMSN reference frequency from 100 to 2,000 Hz materially improved source and q90 observables.
+- Refining NEURON from 5 to 0.5 um also materially changed q90 voltages; therefore a 5-um NEURON output must not be treated as ground truth for this fast EPSP.
+- A 2,000-Hz AMSN mesh vs 0.5-um NEURON reference is now the preferred candidate for the next temporal-convergence study, not yet the default for all morphologies.
+
+## 6. Comprehensive CI status at the time of handoff update
+
+Core CI run for code snapshot `cb678620cf6cbc62feec68f5f23542079d83c54b`: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758745994. Unit-test jobs were already successful on Python 3.12 and 3.13; NEURON cross-validation jobs were still in progress when this paragraph was first written. Refresh the run before reporting its final conclusion.
+
+The dedicated single-compartment workflow remains fully verified: run 44757208267 (2/2 jobs success).
+The extended AMPA spatial/mapping workflow is fully verified: run 44758746509 (1/1 job success).
