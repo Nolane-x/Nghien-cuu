@@ -6,10 +6,12 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 ## Bắt đầu từ đây
 
-1. **[HANDOFF.md](HANDOFF.md)** — bàn giao đầy đủ cho AI/phiên làm việc mới: mục tiêu, trạng thái thật, phát hiện, giới hạn, việc cần làm và quy trình tiếp tục.
-2. **[research/AMSN_RESEARCH_DOSSIER.md](research/AMSN_RESEARCH_DOSSIER.md)** — hồ sơ nghiên cứu AMSN: neuron tháp vỏ não người, công cụ mô phỏng, kiến trúc đa thang, lỗ hổng, kế hoạch kiểm chứng và benchmark AI.
-3. **[research/RESEARCH_LOG.md](research/RESEARCH_LOG.md)** — nhật ký nghiên cứu theo ngày.
-4. **[research/AMSN_RECOVERY_STATUS_2026-11-20.md](research/AMSN_RECOVERY_STATUS_2026-11-20.md)** — đối chiếu những gì còn tồn tại và những gì chưa thể xác minh trong bản Alpha cũ.
+1. **[AGENTS.md](AGENTS.md)** — quy tắc bắt buộc cho mọi AI agent làm việc trong repo.
+2. **[HANDOFF.md](HANDOFF.md)** — bàn giao đầy đủ cho AI/phiên mới: mục tiêu, trạng thái thật, phát hiện, giới hạn, việc cần làm và quy trình tiếp tục.
+3. **[research/AMSN_RESEARCH_DOSSIER.md](research/AMSN_RESEARCH_DOSSIER.md)** — hồ sơ AMSN: neuron tháp vỏ não người, công cụ mô phỏng, kiến trúc đa thang, lỗ hổng, validation và benchmark AI.
+4. **[research/RESEARCH_LOG.md](research/RESEARCH_LOG.md)** — nhật ký nghiên cứu theo ngày.
+5. **[research/AMSN_RECOVERY_STATUS_2026-11-20.md](research/AMSN_RECOVERY_STATUS_2026-11-20.md)** — trạng thái thực tế của Alpha cũ, phân biệt README claims và mã nguồn đã xác minh.
+6. **[research/EXPERIMENT_REPORT_TEMPLATE.md](research/EXPERIMENT_REPORT_TEMPLATE.md)** — mẫu báo cáo để mọi thí nghiệm có thể tái lập.
 
 ## Các nguyên tắc lưu trữ không được phá vỡ
 
@@ -30,4 +32,3 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 ## Trạng thái khởi tạo
 
 Kho này được kiểm tra ngày **20/11/2026** và GitHub báo repository rỗng trước khi lưu tài liệu nền. Các file khởi tạo trong commit đầu tiên chỉ là tài liệu nghiên cứu/handoff, không phải mã mô phỏng đã chạy.
-
