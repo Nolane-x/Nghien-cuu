@@ -257,10 +257,16 @@ def main() -> None:
     finest_time_ms = finest["time_s"] * 1e3
     for max_segment_um in NEURON_MAX_SEGMENT_LENGTHS_UM:
         trial = trials[max_segment_um]
-        if not np.array_equal(trial["time_s"], finest["time_s"]):
-            raise RuntimeError("NEURON segment sweep time grids are not identical")
-        if not np.array_equal(trial["time_s"], amsn_time_s):
-            raise RuntimeError("NEURON and AMSN time grids are not identical")
+        np.testing.assert_allclose(
+            trial["time_s"], finest["time_s"],
+            rtol=0.0, atol=1e-12,
+            err_msg="NEURON segment sweep time grids differ",
+        )
+        np.testing.assert_allclose(
+            trial["time_s"], amsn_time_s,
+            rtol=0.0, atol=1e-12,
+            err_msg="NEURON and AMSN time grids differ",
+        )
         for probe_name, node_id in PROBE_ROWS:
             neuron_dv_mV = (
                 trial["voltage_v"][node_id] - ELEAK_MV * 1e-3
