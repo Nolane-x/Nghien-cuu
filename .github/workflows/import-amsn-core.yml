@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "archives/AMSN_Neuron_Core_v0.1.0.tar.xz"
+      - "archives/amsn_core_v0_1_0_b64/READY"
 
 permissions:
   contents: write
@@ -23,15 +23,14 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 0
 
-      - name: Extract and validate archive paths
+      - name: Decode preserved archive
         shell: bash
         run: |
           set -euo pipefail
-          git show "${GITHUB_SHA}:archives/AMSN_Neuron_Core_v0.1.0.tar.xz" > /tmp/amsn-core.tar.xz
-          if tar -tJf /tmp/amsn-core.tar.xz | grep -E '(^/|(^|/)\.\.(/|$))'; then
-            echo "Unsafe archive path detected"
-            exit 1
-          fi
+          test -f archives/amsn_core_v0_1_0_b64/READY
+          cat archives/amsn_core_v0_1_0_b64/part-*.txt | base64 --decode > /tmp/amsn-core.tar.xz
+          echo "e6fc142c1fb70bf232324a0de2b9cbfdce0452d20f188fbffe13281591b68412  /tmp/amsn-core.tar.xz" | sha256sum --check
+          tar -tJf /tmp/amsn-core.tar.xz | grep -E '(^/|(^|/)\.\.(/|$))' && exit 1 || true
           mkdir -p /tmp/amsn-core-restore
           tar -xJf /tmp/amsn-core.tar.xz -C /tmp/amsn-core-restore
           test -f /tmp/amsn-core-restore/amsn-core/pyproject.toml
@@ -45,6 +44,8 @@ jobs:
             fi
           done < <(find /tmp/amsn-core-restore -type f -print0)
           cp -a /tmp/amsn-core-restore/. .
+          mkdir -p archives
+          cp /tmp/amsn-core.tar.xz archives/AMSN_Neuron_Core_v0.1.0.tar.xz
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -64,12 +65,12 @@ jobs:
           python examples/scaling_smoke.py
         working-directory: amsn-core
 
-      - name: Commit restored source and reports
+      - name: Commit restored source and archive
         shell: bash
         run: |
           set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md HANDOFF_2026-11-20_AMSN-CORE.md amsn-core .github/workflows/amsn-core.yml research/HUMAN_L23_EVIDENCE_UPDATE_2026-11-20.md research/RESEARCH_LOG_2026-11-20_AMSN-CORE.md research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md
+          git add README.md HANDOFF_2026-11-20_AMSN-CORE.md amsn-core .github/workflows/amsn-core.yml research/HUMAN_L23_EVIDENCE_UPDATE_2026-11-20.md research/RESEARCH_LOG_2026-11-20_AMSN-CORE.md research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md archives/AMSN_Neuron_Core_v0.1.0.tar.xz
           git commit -m "feat: add tested AMSN neuron core v0.1.0"
           git push origin HEAD:main
