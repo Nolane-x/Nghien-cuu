@@ -283,6 +283,9 @@ def compute_metrics(reference_mV, candidate_mV, time_ms):
         "peak_candidate_mV": float(candidate_mV[peak_candidate]),
         "peak_reference_time_ms": float(time_ms[peak_ref]),
         "peak_candidate_time_ms": float(time_ms[peak_candidate]),
+        "error_at_0_25ms_mV": float(
+            error[int(round(0.25 / DT_MS))]
+        ),
     }
     for floor in RELATIVE_FLOORS_MV:
         floor_mask = np.abs(reference_mV) >= floor
@@ -366,7 +369,7 @@ def main() -> None:
                 f"{interpolated['max_abs_mV']:.12f},"
                 f"{interpolated['rms_mV']:.12f},"
                 f"{shift['max_abs_mV']:.12f},{shift['rms_mV']:.12f},"
-                f"{interpolated['error_at_0.25ms_mV'] if 'error_at_0.25ms_mV' in interpolated else (amsn_ref[int(round(0.25/DT_MS))]-interp_ref[int(round(0.25/DT_MS))]):.12f}"
+                f"{interpolated['error_at_0_25ms_mV']:.12f}"
             )
 
     print()
