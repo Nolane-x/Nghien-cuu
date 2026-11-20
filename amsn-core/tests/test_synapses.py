@@ -175,3 +175,21 @@ def test_synaptic_simulation_rejects_nonfinite_reversal_potential():
             synaptic_conductance_fn=lambda _time: np.zeros(tree.n_compartments),
             reversal_potential_v=float("inf"),
         )
+
+
+def test_synaptic_simulation_samples_kinetics_at_step_endpoint():
+    tree = _tree()
+    sampled_times = []
+
+    def conductance_fn(time_s):
+        sampled_times.append(time_s)
+        return np.zeros(tree.n_compartments)
+
+    tree.simulate_synaptic(
+        duration_s=0.0002,
+        dt_s=0.0001,
+        synaptic_conductance_fn=conductance_fn,
+        reversal_potential_v=0.0,
+    )
+
+    assert sampled_times == pytest.approx([0.0001, 0.0002])
