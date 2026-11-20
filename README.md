@@ -8,7 +8,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
 2. [HANDOFF.md](HANDOFF.md) — mục tiêu nghiên cứu tổng thể và lịch sử khôi phục.
-3. [HANDOFF_2026-11-20_AMPA-SYNAPTIC-NUMERICS.md](HANDOFF_2026-11-20_AMPA-SYNAPTIC-NUMERICS.md) — checkpoint mới nhất: sửa quy ước lấy mẫu synapse, alpha-function limit, tham chiếu AMPA/NMDA người và trạng thái CI cần kiểm tra.
+3. [HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md](HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md) — checkpoint mới nhất đã xác minh: 65 test trên Python 3.12/3.13, NEURON 9.0.2 cross-validation và Exp2Syn timing audit đều xanh.
+   - [Handoff AMPA audit ban đầu](HANDOFF_2026-11-20_AMPA-SYNAPTIC-NUMERICS.md) — lịch sử nghiên cứu trước khi hoàn tất kernel timing.
    - [Handoff transient lịch sử](HANDOFF_2026-11-20-HUMAN-TRANSIENT.md) — pulse/step passive cross-validation với NEURON 9.0.2.
 4. [Human transient cross-validation report](amsn-core/research/HUMAN_TRANSIENT_CROSS_VALIDATION_2026-11-20.md) — 270 phép đo theo thời gian, sai lệch điện thế probe tối đa 1,48%.
 5. [Human transient raw CSV](amsn-core/results/human_transient_cross_validation_2026-11-20.csv).
@@ -27,7 +28,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 18. [AMSN research dossier](research/AMSN_RESEARCH_DOSSIER.md) — tổng hợp nền nghiên cứu.
 19. [Recovery status](research/AMSN_RECOVERY_STATUS_2026-11-20.md) — trạng thái mã Alpha cũ và những gì còn lại.
 20. [Human excitatory-synapse reference](amsn-core/research/HUMAN_EXCITATORY_SYNAPSE_REFERENCE_2026-11-20.md) — tham số AMPA/NMDA L2–3 người, độ biến thiên và giới hạn áp dụng.
-21. [AMPA numerical audit log](research/RESEARCH_LOG_2026-11-20_AMPA-NUMERICS.md) — sai số baseline, code change và validation pending.
+21. [AMPA numerical audit log](research/RESEARCH_LOG_2026-11-20_AMPA-NUMERICS.md) — baseline, thất bại kiểm thử được lưu lại, phép thử timing, kết quả cuối và giới hạn.
+22. [Exp2Syn kernel timing audit](amsn-core/examples/exp2syn_kernel_timing_audit.py) — cô lập waveform và event timing của NEURON 9.0.2, không trộn với morphology/cable.
 
 ## Bảo toàn dữ liệu
 
@@ -46,6 +48,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 ## Trạng thái hiện tại
 
-- AMSN Core có SWC parser, passive cable/Hines solver, HH1952 numerical smoke test, electrotonic discretizer, section-based resampler và conductance-based synaptic integration (double-exponential/alpha-limit).
+- AMSN Core có SWC parser, passive cable/Hines solver, HH1952 numerical smoke test, electrotonic discretizer, section-based resampler và conductance-based synaptic integration (double-exponential/alpha-limit). Synapse được lấy mẫu ở đầu bước theo kết quả kernel audit fixed-step với NEURON 9.0.2.
 - Một morphology người thật đã được nhập với provenance CC BY 4.0; mẫu có soma + dendrite, không có axon, dendrite completeness moderate và metadata ghi mesiotemporal sclerosis.
 - Section-based resampling giảm cable còn 690 compartments (92,24% ít hơn), với sai số DC tối đa dưới 0,69% so với NEURON 9.0.2 trong protocol thử nghiệm này. Diện tích điện học giữa hai simulator khớp trong 0,000001%. Đây là cross-simulator numerical validation cho một cell/thụ động, chưa phải xác thực sinh học hoặc mô hình neuron hoàn chỉnh.
+- Synaptic timing audit: với fixed-step dt=0,025 ms, NetStim start=0 và Exp2Syn 0,2/2,0 ms, conductance NEURON tại t khớp kernel AMSN tại t-dt trong 199/199 mẫu (sai số bằng 0 ở độ chính xác log). Left-edge sampling được giữ trong production solver; AMPA probe relative error hiện 7,41%, chưa có ngưỡng nghiệm thu khoa học.
+- [CI run 44754148879](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44754148879) đã xanh ở 4/4 job, gồm 65 test mỗi Python 3.12/3.13 và 2 job NEURON cross-validation.
