@@ -40,7 +40,14 @@ The importer handles CNG multi-point somata without adding a second spherical ar
 
 ## Passive transfer experiment on the human morphology
 
-Run `python examples/human_passive_transfer.py` to calculate DC transfer resistance between soma, basal and apical dendritic sites on the stored NeuroMorpho morphology. The example selects nodes deterministically by root-to-node path-distance quantiles and evaluates four electrotonic mesh levels. It uses the exact passive steady-state Hines solver; all membrane parameters remain generic and are not human-fitted. Results are numerical geometry sensitivity data, not biological electrophysiology.
+Run `python examples/human_passive_transfer.py
+python examples/human_sectioned_mesh_sensitivity.py` to calculate DC transfer resistance between soma, basal and apical dendritic sites on the stored NeuroMorpho morphology. The example selects nodes deterministically by root-to-node path-distance quantiles and evaluates four electrotonic mesh levels. It uses the exact passive steady-state Hines solver; all membrane parameters remain generic and are not human-fitted. Results are numerical geometry sensitivity data, not biological electrophysiology.
+
+## Section-based electrical resampling
+
+`amsn.sectioned.to_sectioned_cable_tree` aggregates unbranched piecewise-linear SWC chains into electrical control volumes. It keeps branch points, soma/type transitions and optional protected stimulation/recording nodes. Each new edge preserves original polyline arc length and integrates the tapered-frustum area and axial resistance along the original SWC edges. It never joins distant points with a straight chord. The result is still a 1-D cable approximation, and its voltage errors must be measured against a fine reference before use.
+
+Run `python examples/human_sectioned_mesh_sensitivity.py` to compare four physical mesh limits with the full 8,903-node cable while protecting the exact same stimulation and probe sites.
 
 ## Critical biological scope
 
