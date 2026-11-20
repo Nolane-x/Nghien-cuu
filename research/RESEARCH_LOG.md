@@ -28,14 +28,21 @@ Preserve the neuronal simulation research so a future AI session can continue wi
 ### Important correction
 The Alpha README claims “69 passing tests” and describes multiple executable modules. Those claims could not be verified because the corresponding source/test directories were empty. Do not repeat them as current results. The next session should recreate or retrieve code, run tests and record actual output.
 
-### GitHub writes
-- `README.md` created — commit `7e24a283e29169ef6c9702798ef1858caecf52d5`.
-- `HANDOFF.md` created — commit `63360012a1037628670e0e67d98103dd868b2c73`.
-- This research dossier and recovery note are being added in this checkpoint.
+### GitHub writes in this checkpoint
+- `README.md` — initial commit `7e24a283e29169ef6c9702798ef1858caecf52d5`; subsequently updated to link the AI instructions and experiment template.
+- `HANDOFF.md` — `63360012a1037628670e0e67d98103dd868b2c73`.
+- `research/AMSN_RESEARCH_DOSSIER.md` — `3ebe7594ea1b46d5f21353ab701166a563863f83`.
+- `research/AMSN_RECOVERY_STATUS_2026-11-20.md` — `449458cc1bba8363fc690d77194b07d5422d7da5`.
+- `AGENTS.md` — `143b5de37d0056f35ff80ac7ee71468181d9fee9`.
+- `research/EXPERIMENT_REPORT_TEMPLATE.md` — `b927a92e90926144c811ed97a1f5e324b34ab29f`.
+- This log is being updated to include its own initial commit and final verification.
 
-### Tests performed
-- GitHub repository metadata inspection.
-- Local filesystem/path and file-size inspection.
+### Tests and verification performed
+- GitHub repository metadata and default branch checked.
+- Empty tree confirmed before first write.
+- Local project paths, file sizes and directory contents inspected.
+- All initial documentation files were read back from GitHub and their paths/blob SHAs confirmed.
+- Latest Git tree was read back and contained all five research/handoff files plus `README.md` and `AGENTS.md`.
 - No neuron simulation, package benchmark or pytest suite executed in this checkpoint.
 
 ### Next action
