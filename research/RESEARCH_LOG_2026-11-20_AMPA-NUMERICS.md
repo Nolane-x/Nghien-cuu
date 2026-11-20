@@ -81,3 +81,76 @@ The final relevant workflow run is 44751896682 for commit bde04efe77b9c61e5d8c19
 - Baseline AMPA result: locally reproducible from GitHub Actions log, but not accepted as a validation pass.
 - Literature review: source observations recorded; no new experimental fit performed.
 - Biological calibration: not achieved.
+
+---
+
+## Final timing audit and verified result — 2026-11-20
+
+### Corrected interpretation
+
+The initial endpoint-sampling change was rejected after two independent observations:
+
+1. Full-morphology AMPA cross-validation worsened when the AMSN synaptic conductance callback was moved from the left edge to the implicit-step endpoint.
+2. A new kernel-only NEURON 9.0.2 experiment showed that the recorded Exp2Syn conductance at timestamp t matched the analytic AMSN double-exponential kernel at t - dt, not at t or t + dt.
+
+The isolated protocol was: dt=0.025 ms; NetStim start=0 ms, number=1, noise=0; Exp2Syn tau1=0.2 ms, tau2=2.0 ms; peak weight=0.8 nS; duration=5 ms. NEURON's first recorded nonzero conductance appeared at t=0.050 ms; it exactly matched the AMSN analytic kernel at t=0.025 ms. This observed one-step effective offset is specific to this fixed-step event/recording protocol and must not be generalized to all NEURON configurations without testing.
+
+### Kernel-only results
+
+199 samples met the audit's conductance floor (NEURON g >= 0.02 nS):
+
+| Alignment | Max absolute error (nS) | RMS absolute error (nS) | Max relative error |
+|---|---:|---:|---:|
+| Same timestamp t | 0.104963645496 | 0.015194879573 | 87.007470308% |
+| One step earlier t-dt | 0.000000000000 | 0.000000000000 | 0.000000000% |
+| One step later t+dt | 0.196113770015 | 0.028435257587 | 162.564504510% |
+
+Errors are reported at the script's output precision. The result establishes the effective sample alignment for this exact test setup; it does not validate the cable voltage solve by itself.
+
+### Final implementation decision
+
+- Reverted the temporary endpoint sampling change.
+- CableTree.simulate_synaptic() now samples the synaptic conductance callback at the left edge t_n, holding it constant over [t_n, t_(n+1)] for the implicit voltage solve.
+- Added/updated test_synaptic_simulation_samples_kinetics_at_step_left_edge.
+- Kept the stable alpha-function limit for equal/nearly equal rise and decay constants, plus exact/near-equal regression tests.
+- Kept amsn-core/examples/exp2syn_kernel_timing_audit.py in the NEURON CI workflow and added its raw output to the uploaded validation artifact.
+
+### Final CI evidence
+
+Workflow: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44754148879  
+Verified code/test commit: 9e07c540edb8b298f27c21e000eec9130c846fea
+
+All four jobs completed successfully:
+- Python 3.12 unit tests: 65 passed.
+- Python 3.13 unit tests: 65 passed.
+- NEURON cross-validation (3.12): all steps passed, including AMPA and kernel timing audit.
+- NEURON cross-validation (3.13): all steps passed, including AMPA and kernel timing audit.
+
+With left-edge sampling restored, both NEURON jobs reproduced the previous AMPA metrics:
+
+| Observable | Max absolute error | RMS absolute error | Max relative error |
+|---|---:|---:|---:|
+| Source deflection | 0.061120022 mV | 0.022560023 mV | 1.585947581% |
+| Probe deflection | 0.174045110 mV | 0.022578342 mV | 7.405922860% |
+| Transfer ratio | 0.026541206 | 0.003311082 | 5.913764483% |
+
+The final metrics match the pre-endpoint baseline. They are reported measurements, not a scientific acceptance pass: the AMPA script still has no declared numerical tolerance, and the maximum relative probe error remains 7.41%.
+
+Artifacts:
+- Python 3.12: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44754148879/artifacts/14637166626
+- Python 3.13: https://github.com/Nolane-x/Nghien-cuu/actions/runs/44754148879/artifacts/14637031574
+
+### Additional implementation history worth preserving
+
+- The temporary endpoint-sampling change (commit 975a21d...) was not retained in the final code; its inferior metrics and kernel audit evidence are deliberately preserved above.
+- The first alpha-limit CI attempt exposed a wrong expected value in a newly written test (elapsed time was 1.5 tau, not 0.5 tau); the test expectation was corrected in commit 6285c104....
+- Two earlier kernel-audit attempts failed on unsupported HOC conveniences (steps_per_ms, then continuerun without stdrun.hoc). The final script uses h.dt and an explicit h.fadvance() loop and is green in both NEURON matrix jobs.
+- These failures are retained in the GitHub Actions history; do not remove them from the research narrative.
+
+### Remaining limits and next steps
+
+1. The kernel-only result explains the sample alignment, but a matched single-compartment voltage experiment is still needed to isolate current evaluation and backward-Euler membrane integration from morphology.
+2. Keep the AMPA tolerance open until dt convergence and spatial mapping effects are separated; do not pick a threshold solely to make CI green.
+3. Investigate the 7.41% maximum relative probe discrepancy at the basal q75 to basal q90 path, keeping source/probe mapping offsets visible.
+4. Reproduce an original Eyal/ModelDB 238347 cell with its own morphology and mechanisms before claiming reproduction of human L2/3 biology.
+5. Only after the AMPA kernel and voltage path have explicit error budgets should voltage-dependent NMDA/Mg2+ block be added.
