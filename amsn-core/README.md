@@ -48,6 +48,12 @@ The electrical importer follows the verified NEURON Import3D three-point soma an
 
 Run `python examples/human_passive_transfer.py` and `python examples/human_sectioned_mesh_sensitivity.py` to calculate DC transfer resistance between soma, basal and apical dendritic sites on the stored NeuroMorpho morphology. The example selects nodes deterministically by root-to-node path-distance quantiles and evaluates four electrotonic mesh levels. It uses the exact passive steady-state Hines solver; all membrane parameters remain generic and are not human-fitted. Results are numerical geometry sensitivity data, not biological electrophysiology.
 
+## NEURON passive timestep and spatial convergence
+
+Run examples/neuron_convergence.py in the pinned NEURON 9.0.2 CI job. It varies dt (0.025/0.0125ms) and maximum physical segment extent (5/2.5µm), keeps the same source/probe sites and records nine checkpoints from 1 to 250ms. The 540-row raw dataset and the separately calculated time/space convergence errors are stored in results/ and research/.
+
+This convergence experiment characterizes NEURON's reference discretization. It is not the AMSN transient cross-comparison.
+
 ## NEURON passive cross-validation
 
 examples/neuron_cross_validation.py is run in GitHub Actions with NEURON 9.0.2 on Python 3.12 and 3.13. It reads the same standardized SWC through Import3D, uses matched passive SI parameters, maps identical source/probe nodes, and compares NEURON with both the 8,893-compartment AMSN cable and the 690-compartment sectioned cable.
@@ -79,6 +85,7 @@ python examples/human_morphology_inspect.py
 python examples/human_passive_transfer.py
 python examples/human_sectioned_mesh_sensitivity.py
 python examples/neuron_cross_validation.py  # requires the optional pinned NEURON package
+python examples/neuron_convergence.py  # NEURON timestep/segment sweep
 ```
 
 Requires Python >=3.10 and NumPy >=1.24. Tests run without NEURON; external NEURON reproduction is a separate milestone.
