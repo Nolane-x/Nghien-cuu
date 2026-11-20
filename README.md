@@ -41,6 +41,15 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 31. [Spatial-floor raw traces — 4.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_4000Hz.csv).
 32. [Spatial-floor raw traces — 6.000 Hz](amsn-core/results/human_ampa_spatial_floor_2026-11-20_6000Hz.csv).
 33. [Spatial-floor workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734) — NEURON 9.0.2, 1/1 job thành công.
+34. [Handoff — probe interpolation & matched area](HANDOFF_2026-11-20_AMPA-PROBE-INTERPOLATION-AREA.md) — checkpoint mới nhất: tách sai số đọc vị trí và diện tích control-volume.
+35. [Probe interpolation report](amsn-core/research/HUMAN_AMPA_PROBE_INTERPOLATION_AUDIT_2026-11-20.md) — interpolation NEURON ảnh hưởng khác nhau ở q75 và q90.
+36. [Matched-support area report](amsn-core/research/HUMAN_AMPA_MATCHED_SUPPORT_AREA_AUDIT_2026-11-20.md) — diện tích AMSN/NEURON khớp khi tích phân trên cùng miền hỗ trợ.
+37. [Probe interpolation raw — 2.000 Hz](amsn-core/results/human_ampa_probe_interpolation_2026-11-20_2000Hz.csv).
+38. [Probe interpolation raw — 4.000 Hz](amsn-core/results/human_ampa_probe_interpolation_2026-11-20_4000Hz.csv).
+39. [Probe interpolation raw — 6.000 Hz](amsn-core/results/human_ampa_probe_interpolation_2026-11-20_6000Hz.csv).
+40. [Matched-support area raw CSV](amsn-core/results/human_ampa_matched_support_area_2026-11-20.csv).
+41. [Probe interpolation workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44762715648) — 1/1 job thành công.
+42. [Matched-support area workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776) — 1/1 job thành công.
 
 ## Bảo toàn dữ liệu
 
@@ -68,3 +77,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Spatial mesh và NEURON segment refinement [run 44758746509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758746509) đã xanh; với NEURON 0,5 µm, q90 RMS mismatch khoảng 0,00384 mV ở dt=0,00625 ms.
 - Fast-AMPA temporal convergence [run 44760319787](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787) đã xanh; 5 timestep từ 0,025 đến 0,0015625 ms cho thấy sai số tự hội tụ giảm, trong khi sai số chéo hai engine gần như ổn định quanh 0,00385 mV RMS ở basal q90. Đây là kết quả số học cho một morphology và protocol, không phải xác thực sinh học.
 - Fast-AMPA spatial-floor sweep [run 44761379734](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734) đã xanh; tăng AMSN 2.000→6.000 Hz (2.541→4.287 compartment) giảm q90 RMS từ 0,003851 xuống 0,003670 mV nhưng không cải thiện source/soma cùng hướng. Chưa chọn mesh mặc định; bước kế tiếp là kiểm tra interpolation vị trí NEURON và area-lumping quanh protected control points.
+- Probe interpolation [run 44762715648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44762715648) cho thấy nội suy NEURON tới tọa độ SWC giúp q90 ở mesh 2k/4k nhưng không phải 6k, và làm xấu q75; đây là hiệu ứng phụ thuộc vị trí.
+- Matched-support area [run 44763720776](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776) cho thấy diện tích control-volume AMSN khớp NEURON trong cùng miền hỗ trợ: q90 sai khác khoảng 0,0000018%, q75 khoảng 0,04–0,05%. So một segment đơn lẻ với cả node trước đó là không cùng miền đo.
+- Bước tiếp theo là kiểm chứng axial-resistance integrals trên chính các nửa cạnh q75/q90 và mở rộng sang nhánh basal/apical khác; chưa chọn mesh mặc định và chưa tuyên bố biological validation.
