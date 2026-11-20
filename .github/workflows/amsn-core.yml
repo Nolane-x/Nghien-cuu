@@ -56,3 +56,40 @@ jobs:
           python examples/human_passive_transfer.py
           python examples/human_sectioned_mesh_sensitivity.py
         working-directory: amsn-core
+
+  neuron-cross-validation:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    defaults:
+      run:
+        working-directory: amsn-core
+    env:
+      NEURON_NOGUI: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON reference simulator
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+      - name: Verify NEURON installation
+        run: |
+          python -c "import neuron; print('NEURON', neuron.__version__)"
+          python -c "from neuron import h; h.load_file('import3d.hoc'); print('Import3D available')"
+      - name: Run independent passive cross-simulator experiment
+        run: python examples/neuron_cross_validation.py | tee neuron-cross-validation.txt
+      - name: Preserve raw NEURON output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-neuron-cross-validation-py${{ matrix.python-version }}
+          path: amsn-core/neuron-cross-validation.txt
+          if-no-files-found: ignore
