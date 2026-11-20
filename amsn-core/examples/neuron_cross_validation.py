@@ -109,30 +109,44 @@ def locate_neuron_segment(reader, section_by_name, node):
     """
     point_index = int(reader.id2pt(node.node_id))
     section_index = int(reader.point2sec.x[point_index])
-    section_name = f"K[{section_index}]"
-    if section_name not in section_by_name:
+    imported_section = reader.sections.object(section_index)
+    type_names = {1: "soma", 2: "axon", 3: "dend", 4: "apic"}
+    swc_type = int(imported_section.type)
+    if swc_type not in type_names:
         raise RuntimeError(
-            f"Import3D map points to missing section {section_name} "
+            f"Unsupported Import3D section type {swc_type} "
             f"for SWC node {node.node_id}"
         )
+    name_index = int(imported_section.nameindex)
+    section_name = type_names[swc_type]
+    if name_index > 0:
+        section_name = f"{section_name}[{name_index}]"
+    if section_name not in section_by_name:
+        raise RuntimeError(
+            f"Import3D maps SWC node {node.node_id} to {section_name}, "
+            f"but instantiated sections are: {sorted(section_by_name)[:12]}"
+        )
     sec = section_by_name[section_name]
-    imported_section = reader.sections.object(section_index)
 
-    # A one-point root is represented by NEURON as a sphere-like 3-point
+    # The one-point root is represented by NEURON as a sphere-like 3-point
     # cylinder. Its biological centre is at x=0.5, not at pt3d endpoint 0.
     if section_index == 0 and int(imported_section.d.size()) == 1:
         arc_um = 0.5 * sec.L
         geometric_error = 0.0
     else:
         first_point_index = int(imported_section.id)
+        # Import3D's first==1 omits a duplicated parent pt3d point for a wire
+        # section; otherwise local point zero is that parent duplicate.
         local_point_index = (
-            point_index - first_point_index + (1 if section_index > 0 else 0)
+            point_index - first_point_index
+            + (0 if int(imported_section.first) == 1 else 1)
         )
         n3d = int(h.n3d(sec=sec))
         if local_point_index < 0 or local_point_index >= n3d:
             raise RuntimeError(
                 f"SWC node {node.node_id}: local Import3D point "
-                f"{local_point_index} outside {section_name} with {n3d} points"
+                f"{local_point_index} outside {section_name} with {n3d} points; "
+                f"first={int(imported_section.first)}"
             )
         xyz = np.array([
             h.x3d(local_point_index, sec=sec),
