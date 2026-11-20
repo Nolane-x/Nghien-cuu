@@ -17,6 +17,7 @@ on:
     branches: [main]
     paths:
       - "amsn-core/examples/human_ampa_mesh_frequency_sweep.py"
+      - "amsn-core/examples/human_ampa_neuron_segment_sweep.py"
       - "amsn-core/src/amsn/sectioned.py"
       - "amsn-core/src/amsn/cable.py"
       - "amsn-core/src/amsn/synapses.py"
