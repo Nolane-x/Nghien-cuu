@@ -228,32 +228,49 @@ def main() -> None:
             del neuron_values, amsn_values
             gc.collect()
 
-    print("# transient-summary: relative errors only where |NEURON probe deflection| >= 0.02mV")
+    print("# transient-summary")
+    print("# source/probe relative errors include rows with |NEURON deflection| >= 0.02mV")
+    print("# transfer-ratio absolute errors include rows with |NEURON source deflection| >= 0.02mV")
+    print("# transfer-ratio relative errors additionally require |NEURON ratio| >= 0.05")
     print(
-        "protocol,observable,max_abs_error,max_rms_error,"
-        "max_relative_error_pct"
+        "protocol,observable,n_abs_samples,n_relative_samples,"
+        "max_abs_error,rms_abs_error,max_relative_error_pct"
     )
     for protocol in ("pulse", "step"):
-        metrics = {"source": [], "probe": [], "ratio": []}
-        relative = {"source": [], "probe": [], "ratio": []}
+        values_by_metric = {"source": [], "probe": [], "ratio": []}
+        relative_by_metric = {"source": [], "probe": [], "ratio": []}
         for values in comparison[protocol].values():
             n_source, a_source, n_probe, a_probe, n_ratio, a_ratio = values
-            for key, expected, actual in (
-                ("source", n_source, a_source),
-                ("probe", n_probe, a_probe),
-                ("ratio", n_ratio, a_ratio),
-            ):
-                metrics[key].append(abs(actual-expected))
-                if key != "ratio" and abs(expected) >= 0.02:
-                    relative[key].append(100.0*abs(actual-expected)/abs(expected))
-                elif key == "ratio" and abs(n_probe) >= 0.02:
-                    relative[key].append(100.0*abs(actual-expected)/max(abs(expected), 1e-30))
+            values_by_metric["source"].append((n_source, a_source))
+            values_by_metric["probe"].append((n_probe, a_probe))
+            if abs(n_source) >= 0.02:
+                values_by_metric["ratio"].append((n_ratio, a_ratio))
+
+            if abs(n_source) >= 0.02:
+                relative_by_metric["source"].append(
+                    100.0 * abs(a_source-n_source) / abs(n_source)
+                )
+            if abs(n_probe) >= 0.02:
+                relative_by_metric["probe"].append(
+                    100.0 * abs(a_probe-n_probe) / abs(n_probe)
+                )
+            if abs(n_source) >= 0.02 and abs(n_ratio) >= 0.05:
+                relative_by_metric["ratio"].append(
+                    100.0 * abs(a_ratio-n_ratio) / abs(n_ratio)
+                )
+
         for key in ("source", "probe", "ratio"):
-            errors = np.asarray(metrics[key], dtype=float)
+            pairs = values_by_metric[key]
+            errors = np.asarray(
+                [abs(actual-expected) for expected, actual in pairs],
+                dtype=float,
+            )
+            relative = relative_by_metric[key]
             print(
-                f"{protocol},{key},{np.max(errors):.9f},"
+                f"{protocol},{key},{len(errors)},{len(relative)},"
+                f"{np.max(errors):.9f},"
                 f"{np.sqrt(np.mean(errors**2)):.9f},"
-                f"{max(relative[key]) if relative[key] else 0.0:.9f}"
+                f"{max(relative) if relative else 0.0:.9f}"
             )
 
 
