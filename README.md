@@ -9,8 +9,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 1. **[AGENTS.md](AGENTS.md)** — quy tắc bắt buộc cho mọi AI agent làm việc trong repo.
 2. **[HANDOFF.md](HANDOFF.md)** — hồ sơ nghiên cứu nền và lịch sử recovery.
 3. **[HANDOFF_2026-11-20_AMSN-CORE.md](HANDOFF_2026-11-20_AMSN-CORE.md)** — checkpoint mã nguồn AMSN Neuron Core v0.1.0.
-4. **[HANDOFF_2026-11-20_HUMAN-MORPHOLOGY-CI.md](HANDOFF_2026-11-20_HUMAN-MORPHOLOGY-CI.md)** — CI đã xác nhận parser morphology người chạy được trên Python 3.12/3.13.
-5. **[Human morphology CI report](amsn-core/research/HUMAN_MORPHOLOGY_CI_VALIDATION_2026-11-20.md)** — 33/33 test trên cả hai phiên bản và các giới hạn còn lại.
+4. **[HANDOFF_2026-11-20_HUMAN-PASSIVE-DC.md](HANDOFF_2026-11-20_HUMAN-PASSIVE-DC.md)** — mới nhất: thí nghiệm truyền DC đa vị trí trên morphology người, CI 38/38.
+5. **[Human passive DC transfer report](amsn-core/research/HUMAN_PASSIVE_DC_TRANSFER_2026-11-20.md)** — 60 phép đo, dữ liệu CSV thô, giới hạn mô hình.
 5. **[Human morphology import report](amsn-core/research/HUMAN_MORPHOLOGY_IMPORT_2026-11-20.md)** — provenance, giấy phép và đối chiếu morphometry.
 6. **[Human morphology data](amsn-core/data/human/README.md)** — dữ liệu, giới hạn và trích dẫn bắt buộc.
 7. **[Passive mesh-sensitivity report](amsn-core/research/PASSIVE_MESH_CONVERGENCE_2026-11-20.md)** — số liệu thực nghiệm, CSV thô, CI 29/29 trên Python 3.12/3.13.
