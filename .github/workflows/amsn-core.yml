@@ -53,4 +53,5 @@ jobs:
           python examples/electrotonic_refinement.py
           python examples/passive_mesh_convergence.py
           python examples/human_morphology_inspect.py
+          python examples/human_passive_transfer.py
         working-directory: amsn-core

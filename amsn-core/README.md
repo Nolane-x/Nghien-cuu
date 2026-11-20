@@ -38,6 +38,10 @@ The package includes a standardized human temporal-cortex L2–3 pyramidal morph
 
 The importer handles CNG multi-point somata without adding a second spherical area at the root.
 
+## Passive transfer experiment on the human morphology
+
+Run `python examples/human_passive_transfer.py` to calculate DC transfer resistance between soma, basal and apical dendritic sites on the stored NeuroMorpho morphology. The example selects nodes deterministically by root-to-node path-distance quantiles and evaluates four electrotonic mesh levels. It uses the exact passive steady-state Hines solver; all membrane parameters remain generic and are not human-fitted. Results are numerical geometry sensitivity data, not biological electrophysiology.
+
 ## Critical biological scope
 
 The HH test uses the canonical squid giant-axon parameterization at 6.3 C. **It is not a human cortical neuron model.** The passive cable defaults are explicit generic assumptions, not fitted human L2/3 parameters. This package does not yet reproduce Eyal et al. (2018), nor does it implement synapses, active dendritic conductances, calcium, gene expression, metabolism or astrocytes.
@@ -54,6 +58,7 @@ python examples/passive_tree.py
 python examples/electrotonic_refinement.py
 python examples/passive_mesh_convergence.py
 python examples/human_morphology_inspect.py
+python examples/human_passive_transfer.py
 ```
 
 Requires Python >=3.10 and NumPy >=1.24. Tests run without NEURON; external NEURON reproduction is a separate milestone.
