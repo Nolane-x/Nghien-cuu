@@ -1,0 +1,66 @@
+name: AMSN AMPA Spatial Mesh Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "amsn-core/examples/human_ampa_mesh_frequency_sweep.py"
+      - "amsn-core/src/amsn/sectioned.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/synapses.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-ampa-spatial-mesh-audit.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "amsn-core/examples/human_ampa_mesh_frequency_sweep.py"
+      - "amsn-core/src/amsn/sectioned.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/synapses.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-ampa-spatial-mesh-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-ampa-spatial-mesh-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ampa-spatial-mesh-sweep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON reference simulator
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Verify NEURON and morphology fixture
+        run: |
+          python -c "import neuron; print('NEURON', neuron.__version__)"
+          test -s data/human/1094_Mohan_etal_2015.CNG.swc
+        working-directory: amsn-core
+      - name: Run fast-AMPA spatial mesh frequency sweep
+        shell: bash
+        run: set -o pipefail; python examples/human_ampa_mesh_frequency_sweep.py | tee ampa-spatial-mesh-sweep.txt
+        working-directory: amsn-core
+      - name: Preserve raw spatial sweep
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-ampa-spatial-mesh-sweep-py3.12
+          path: amsn-core/ampa-spatial-mesh-sweep.txt
+          if-no-files-found: ignore
