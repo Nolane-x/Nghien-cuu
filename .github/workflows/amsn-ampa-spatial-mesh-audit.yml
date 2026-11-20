@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "amsn-core/examples/human_ampa_mesh_frequency_sweep.py"
+      - "amsn-core/examples/human_ampa_neuron_segment_sweep.py"
       - "amsn-core/src/amsn/sectioned.py"
       - "amsn-core/src/amsn/cable.py"
       - "amsn-core/src/amsn/synapses.py"
@@ -57,10 +58,16 @@ jobs:
         shell: bash
         run: set -o pipefail; python examples/human_ampa_mesh_frequency_sweep.py | tee ampa-spatial-mesh-sweep.txt
         working-directory: amsn-core
+      - name: Refine NEURON segment mapping against fixed AMSN mesh
+        shell: bash
+        run: set -o pipefail; python examples/human_ampa_neuron_segment_sweep.py | tee ampa-neuron-segment-sweep.txt
+        working-directory: amsn-core
       - name: Preserve raw spatial sweep
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: amsn-ampa-spatial-mesh-sweep-py3.12
-          path: amsn-core/ampa-spatial-mesh-sweep.txt
+          path: |
+            amsn-core/ampa-spatial-mesh-sweep.txt
+            amsn-core/ampa-neuron-segment-sweep.txt
           if-no-files-found: ignore
