@@ -44,7 +44,6 @@ def main() -> None:
     connection.weight[0] = PEAK_CONDUCTANCE_S * 1e6
 
     h.dt = DT_MS
-    h.steps_per_ms = 1.0 / DT_MS
     h.secondorder = 0
     h.CVode().active(0)
 
