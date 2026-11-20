@@ -4,7 +4,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "archives/AMSN_Neuron_Core_v0.1.0.tar.gz"
+      - "archives/AMSN_Neuron_Core_v0.1.0.tar.xz"
 
 permissions:
   contents: write
@@ -27,18 +27,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git show "${GITHUB_SHA}:archives/AMSN_Neuron_Core_v0.1.0.tar.gz" > /tmp/amsn-core.tar.gz
-          if tar -tzf /tmp/amsn-core.tar.gz | grep -E '(^/|(^|/)\.\.(/|$))'; then
+          git show "${GITHUB_SHA}:archives/AMSN_Neuron_Core_v0.1.0.tar.xz" > /tmp/amsn-core.tar.xz
+          if tar -tJf /tmp/amsn-core.tar.xz | grep -E '(^/|(^|/)\.\.(/|$))'; then
             echo "Unsafe archive path detected"
             exit 1
           fi
           mkdir -p /tmp/amsn-core-restore
-          tar -xzf /tmp/amsn-core.tar.gz -C /tmp/amsn-core-restore
+          tar -xJf /tmp/amsn-core.tar.xz -C /tmp/amsn-core-restore
           test -f /tmp/amsn-core-restore/amsn-core/pyproject.toml
           test -f /tmp/amsn-core-restore/amsn-core/src/amsn/morphology.py
           test -f /tmp/amsn-core-restore/amsn-core/tests/test_cable.py
-          # Only the root README is an intentional replacement. Every other
-          # target must be new so historical research is never overwritten.
           while IFS= read -r -d '' file; do
             relative="${file#/tmp/amsn-core-restore/}"
             if [[ -e "$relative" && "$relative" != "README.md" ]]; then
@@ -48,7 +46,7 @@ jobs:
           done < <(find /tmp/amsn-core-restore -type f -print0)
           cp -a /tmp/amsn-core-restore/. .
 
-      - name: Test restored implementation
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.13"
