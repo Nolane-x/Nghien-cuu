@@ -1,0 +1,4 @@
+AMSN_Neuron_Core_v0.1.0.tar.xz
+Base64 is split into part-001.txt through part-009.txt.
+Expected decoded archive SHA256: e6fc142c1fb70bf232324a0de2b9cbfdce0452d20f188fbffe13281591b68412
+Only decode after verifying all nine Git blob SHAs against the dated handoff.
