@@ -277,3 +277,76 @@ Core CI run for code snapshot `cb678620cf6cbc62feec68f5f23542079d83c54b`: https:
 
 The dedicated single-compartment workflow remains fully verified: run 44757208267 (2/2 jobs success).
 The extended AMPA spatial/mapping workflow is fully verified: run 44758746509 (1/1 job success).
+
+---
+
+## 7. Final fast-AMPA temporal convergence — 2026-11-20
+
+### Execution evidence
+
+- Script: `amsn-core/examples/human_ampa_temporal_convergence.py`.
+- Workflow: `.github/workflows/amsn-ampa-temporal-convergence.yml`.
+- Successful workflow: [44760319787](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787), 1/1 job success.
+- Environment: Python 3.12.16, NEURON 9.0.2.
+- Code snapshot: `a78fcd1ab00d4175b60898b9ad539d84d9d8bf74`.
+- Report: `amsn-core/research/HUMAN_AMPA_TEMPORAL_CONVERGENCE_2026-11-20.md`.
+- Raw dataset: `amsn-core/results/human_ampa_temporal_convergence_2026-11-20.csv`, 18,615 data rows, committed in `4a9f966f2f883c6fc19cc93cfbf38eb96eadf8ed`.
+- CI artifact: [14640319049](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787/artifacts/14640319049).
+
+### Fixed protocol
+
+The spatial meshes are held constant throughout all trials:
+- NEURON 9.0.2: max section segment length 0.5 um, 25,233 segments.
+- AMSN: sectioned mesh at 2,000-Hz electrotonic reference, 2,541 compartments.
+
+Morphology and sites:
+- NMO_290988 / 1094_Mohan_etal_2015.CNG.swc.
+- Input basal q75 SWC node 3784.
+- Probes: basal q75 3784, soma 1, basal q90 3814.
+- NEURON mapping offsets at the selected 0.5-um mesh: source 0.079655 um, soma 0 um, q90 0.242787 um.
+
+Passive parameters and synaptic event are unchanged from the previous spatial experiment: Ri 0.7 ohm*m, Rm 1.0 ohm*m^2, Cm 0.01 F/m^2, Eleak -65 mV, AMPA-like peak conductance 0.8 nS, tau rise 0.2 ms, tau decay 2 ms, Erev 0 mV, one deterministic event at t=0. Duration 5 ms.
+
+Only dt changes: 0.025, 0.0125, 0.00625, 0.003125, 0.0015625 ms. Coarse grids are nested integer multiples of the finest grid. Each simulator is compared with its own finest-dt trace and the two simulators are compared at identical physical times.
+
+### q90 results
+
+| dt (ms) | Cross-engine max abs (mV) | Cross-engine RMS (mV) | NEURON vs finest RMS (mV) | AMSN vs finest RMS (mV) |
+|---:|---:|---:|---:|---:|
+| 0.025 | 0.006266 | 0.003798 | 0.088665 | 0.088695 |
+| 0.0125 | 0.006376 | 0.003826 | 0.041208 | 0.041222 |
+| 0.00625 | 0.006433 | 0.003840 | 0.017625 | 0.017631 |
+| 0.003125 | 0.006461 | 0.003847 | 0.005869 | 0.005871 |
+| 0.0015625 | 0.006475 | 0.003851 | 0 | 0 |
+
+Both simulators' own temporal traces converge monotonically toward the finest-dt reference as dt is reduced. Their cross-engine discrepancy stays almost constant: q90 RMS changes from 0.003798 to 0.003851 mV (~1.4%), and max absolute error from 0.006266 to 0.006475 mV (~3.3%).
+
+Interpretation: the remaining cross-engine error is close to a non-temporal floor for this fixed spatial configuration. It is likely associated with spatial representation, control-volume geometry/area allocation, mapping or other fixed formulation differences. This audit does not uniquely identify which component dominates.
+
+At the finest dt, NEURON q90 peak is 11.251039 mV above leak and AMSN is 11.254675 mV above leak; sampled peak times are 1.678125 ms and 1.6796875 ms respectively. Peak-time estimates remain quantized to the fixed time grid.
+
+The relative-error floor sensitivity is retained in the report and raw data. For q90, the max relative error at a 0.02-mV reference floor rises from 1.03% to 1.48% as dt is reduced, even while absolute/RMS error remains nearly constant. This occurs because relative error is sensitive to small denominators near EPSP onset; report absolute/RMS and relative errors with their floors together.
+
+### Harness failures and fixes preserved in Actions history
+
+- Run 44759371095 failed because the coarse/fine timestep ratio was inverted, producing `slice step = 0`.
+- Run 44760000836 corrected the ratio but showed that NEURON record vectors were retained between successive `finitialize()` calls and previous data arrays were mutated by later runs. The failing nested-grid assertion exposed this lifecycle issue.
+- The final script now computes the integer ratio as `dt_coarse / dt_finest`, verifies the nested time vectors, copies each NEURON `Vector` into independent NumPy arrays, and lets HOC record vectors be released before the next simulation.
+- Official NEURON Vector record documentation: https://www.neuronsimulator.org/en/9.0.1/progref/programming/math/vector.html.
+- Run 44760319787 completed successfully with the full five-dt sweep and raw dataset preserved.
+
+### Scientific interpretation
+
+1. The single-compartment audit establishes equivalence of the one-compartment implicit voltage/current calculation under the exact tested fixed-step protocol.
+2. The spatial sweep and NEURON segment refinement established a refined candidate spatial configuration (AMSN 2,000 Hz vs NEURON 0.5 um) for this one fast basal AMPA event.
+3. The temporal sweep demonstrates each simulator's own trace converges as dt is reduced.
+4. The q90 cross-engine error is nearly timestep-independent over the tested range. The remaining ~0.00385-mV RMS / ~0.00648-mV maximum absolute discrepancy should now be treated as a spatial/representation floor candidate, not blamed on temporal integration.
+5. This is not biological validation, not a universal tolerance and not a matched Eyal 2018 cell reproduction.
+
+### Next experiment
+
+Hold dt=0.0015625 ms and the NEURON 0.5-um reference fixed; sweep AMSN spatial reference frequency above 2,000 Hz (e.g. 2,000, 3,000 and 4,000 Hz). Keep the same source/probes and AMPA input. Measure whether the remaining q90 discrepancy decreases and how electrical compartment count scales. Follow with an independent branch and apical input. Do not alter conductance/time constants to force agreement.
+
+### Core CI status when appended
+
+After adding the temporal report to the AMSN tree, Core CI run [44760827496](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760827496) was in progress. Refresh it before claiming final comprehensive CI status. The dedicated temporal workflow itself is confirmed green.
