@@ -9,8 +9,10 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 1. **[AGENTS.md](AGENTS.md)** — quy tắc bắt buộc cho mọi AI agent làm việc trong repo.
 2. **[HANDOFF.md](HANDOFF.md)** — hồ sơ nghiên cứu nền và lịch sử recovery.
 3. **[HANDOFF_2026-11-20_AMSN-CORE.md](HANDOFF_2026-11-20_AMSN-CORE.md)** — checkpoint mã nguồn AMSN Neuron Core v0.1.0.
-4. **[HANDOFF_2026-11-20_MESH.md](HANDOFF_2026-11-20_MESH.md)** — checkpoint mới nhất, kết quả hội tụ lưới và việc cần làm tiếp.
-5. **[Passive mesh-sensitivity report](amsn-core/research/PASSIVE_MESH_CONVERGENCE_2026-11-20.md)** — số liệu thực nghiệm, CSV thô, CI 29/29 trên Python 3.12/3.13.
+4. **[HANDOFF_2026-11-20_HUMAN-MORPHOLOGY.md](HANDOFF_2026-11-20_HUMAN-MORPHOLOGY.md)** — checkpoint mới nhất về morphology người thật và soma nhiều điểm.
+5. **[Human morphology import report](amsn-core/research/HUMAN_MORPHOLOGY_IMPORT_2026-11-20.md)** — provenance, giấy phép và đối chiếu morphometry.
+6. **[Human morphology data](amsn-core/data/human/README.md)** — dữ liệu, giới hạn và trích dẫn bắt buộc.
+7. **[Passive mesh-sensitivity report](amsn-core/research/PASSIVE_MESH_CONVERGENCE_2026-11-20.md)** — số liệu thực nghiệm, CSV thô, CI 29/29 trên Python 3.12/3.13.
 6. **[AMSN Neuron Core](amsn-core/README.md) — mã nguồn Python, unit tests và ví dụ.
 7. **[Electrotonic discretization note](amsn-core/research/ELECTROTONIC_DISCRETIZATION_2026-11-20.md)** — công thức, API, kiểm tra số học và giới hạn.
 8. **[SWC-to-cable discretization note](research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md)** — hình học, phân bổ diện tích/điện trở và kiểm chứng giải tích.

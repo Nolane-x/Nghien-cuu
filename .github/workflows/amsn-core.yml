@@ -52,4 +52,5 @@ jobs:
           python examples/scaling_smoke.py
           python examples/electrotonic_refinement.py
           python examples/passive_mesh_convergence.py
+          python examples/human_morphology_inspect.py
         working-directory: amsn-core

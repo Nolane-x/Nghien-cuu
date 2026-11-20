@@ -32,6 +32,12 @@ cable = refined.to_cable_tree()
 
 The defaults mirror the widely used NEURON d_lambda example (100 Hz, 0.1) and AMSN generic passive parameters. They are numerical defaults, not human L2/3 measurements. Read `research/ELECTROTONIC_DISCRETIZATION_2026-11-20.md` for equations and limits. A d_lambda-like mesh criterion does not replace convergence testing for the observables of interest.
 
+## Real human morphology fixture
+
+The package includes a standardized human temporal-cortex L2–3 pyramidal morphology under `data/human/1094_Mohan_etal_2015.CNG.swc`. It has 8,903 points (soma + basal/apical dendrites, no axon); dendritic integrity is moderate and metadata records mesiotemporal sclerosis. It is a real morphology fixture, not a complete neuron or healthy-control cell. See `data/human/README.md` for CC BY 4.0 attribution and `research/HUMAN_MORPHOLOGY_IMPORT_2026-11-20.md` for provenance and validation.
+
+The importer handles CNG multi-point somata without adding a second spherical area at the root.
+
 ## Critical biological scope
 
 The HH test uses the canonical squid giant-axon parameterization at 6.3 C. **It is not a human cortical neuron model.** The passive cable defaults are explicit generic assumptions, not fitted human L2/3 parameters. This package does not yet reproduce Eyal et al. (2018), nor does it implement synapses, active dendritic conductances, calcium, gene expression, metabolism or astrocytes.
@@ -47,6 +53,7 @@ python examples/inspect_swc.py
 python examples/passive_tree.py
 python examples/electrotonic_refinement.py
 python examples/passive_mesh_convergence.py
+python examples/human_morphology_inspect.py
 ```
 
 Requires Python >=3.10 and NumPy >=1.24. Tests run without NEURON; external NEURON reproduction is a separate milestone.

@@ -142,6 +142,15 @@ class SWCMorphology:
                 or not (max_segment_length_um < float("inf"))):
             raise ValueError("max_segment_length_um must be finite and positive")
         root = self.nodes[self.root_id]
+        has_multi_point_soma = any(
+            node_id != self.root_id and node.neurite_type == 1
+            for node_id, node in self.nodes.items()
+        )
+        if root_soma_area_um2 is not None and has_multi_point_soma:
+            raise ValueError(
+                "root_soma_area_um2 cannot be added to a multi-point soma; "
+                "its surface is already represented by type-1 SWC edges"
+            )
         if root_soma_area_um2 is not None and (
                 not (root_soma_area_um2 > 0)
                 or not (root_soma_area_um2 < float("inf"))):
@@ -224,10 +233,12 @@ class SWCMorphology:
             r0_m, r1_m, length_m = map(um_to_m, (r0_um, r1_um, length_um))
             axial_factor_m_inv[child_id] = length_m / (pi * r0_m * r1_m)
 
-        membrane_area_um2[self.root_id] += (
-            root_soma_area_um2 if root_soma_area_um2 is not None
-            else 4.0 * pi * root.radius_um**2
-        )
+        if root_soma_area_um2 is not None:
+            membrane_area_um2[self.root_id] += root_soma_area_um2
+        elif root.neurite_type == 1 and not has_multi_point_soma:
+            # A single-point soma is spherical. A multi-point soma is
+            # represented by its type-1 edges and must not receive a second sphere.
+            membrane_area_um2[self.root_id] += 4.0 * pi * root.radius_um**2
 
         compartments = []
         for node_id, (x, y, z, radius, parent_id) in points.items():
@@ -248,7 +259,15 @@ class SWCMorphology:
 
     def summary(self) -> MorphologySummary:
         total_length = 0.0
-        area = 4.0 * pi * self.nodes[self.root_id].radius_um**2
+        root = self.nodes[self.root_id]
+        has_multi_point_soma = any(
+            node_id != self.root_id and node.neurite_type == 1
+            for node_id, node in self.nodes.items()
+        )
+        area = (
+            4.0 * pi * root.radius_um**2
+            if root.neurite_type == 1 and not has_multi_point_soma else 0.0
+        )
         by_type: dict[int, float] = {}
         for node in self.nodes.values():
             if node.node_id == self.root_id:
@@ -263,7 +282,11 @@ class SWCMorphology:
             r1, r2 = parent.radius_um, node.radius_um
             slant = sqrt(length * length + (r2 - r1) ** 2)
             area += pi * (r1 + r2) * slant
-        branch_points = sum(1 for kids in self.children.values() if len(kids) >= 2)
+        # Soma stems are not neurite bifurcations.
+        branch_points = sum(
+            1 for node_id, kids in self.children.items()
+            if self.nodes[node_id].neurite_type != 1 and len(kids) >= 2
+        )
         return MorphologySummary(
             node_count=len(self.nodes),
             edge_count=len(self.nodes) - 1,

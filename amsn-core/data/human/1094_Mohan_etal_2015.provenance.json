@@ -1,0 +1,91 @@
+{
+  "source": "NeuroMorpho.Org",
+  "source_rrid": "SCR_002145",
+  "repository_version": "8.7",
+  "repository_release_date": "2026-10-29",
+  "neuron_name": "1094_Mohan_etal_2015",
+  "neuromorpho_id": "NMO_290988",
+  "api_id": 290988,
+  "archive": "DeKock",
+  "species": "human",
+  "brain_region": [
+    "neocortex",
+    "temporal",
+    "middle temporal gyrus",
+    "Brodmann area 21",
+    "layer 2-3"
+  ],
+  "cell_type": [
+    "principal cell",
+    "pyramidal"
+  ],
+  "age_classification": "adult",
+  "age_min_years": 20,
+  "age_max_years": 58,
+  "sex_field_as_reported": "Male/Female",
+  "experiment_condition": [
+    "mesiotemporal sclerosis"
+  ],
+  "protocol": "in vitro",
+  "slicing_direction": "coronal",
+  "slicing_thickness_um": 350,
+  "stain": "biocytin",
+  "reconstruction_software": "Neurolucida",
+  "original_format": "Neurolucida.asc",
+  "standardized_file": "1094_Mohan_etal_2015.CNG.swc",
+  "structural_domains": "Dendrites, Soma, No Axon",
+  "physical_integrity": "Dendrites Moderate",
+  "shrinkage_reported": "Not reported",
+  "magnification": "100",
+  "swc_type_counts": {
+    "soma": 3,
+    "basal_dendrite": 4051,
+    "apical_dendrite": 4849,
+    "axon": 0
+  },
+  "swc_records": 8903,
+  "swc_text_characters": 321865,
+  "git_blob_sha": "7f06d10b929ec3ae215cbc0a2e3222e9bbaff46e",
+  "morphology_url": "https://neuromorpho.org/dableFiles/dekock/CNG%20version/1094_Mohan_etal_2015.CNG.swc",
+  "metadata_api_url": "https://neuromorpho.org/api/neuron/name/1094_Mohan_etal_2015",
+  "morphometry_api_url": "https://neuromorpho.org/api/morphometry/name/1094_Mohan_etal_2015",
+  "license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "required_attribution": [
+    "Mohan et al. 2015, Cerebral Cortex 25(12):4839-4853, DOI 10.1093/cercor/bhv188, PMID 26318661",
+    "NeuroMorpho.Org (RRID:SCR_002145), record NMO_290988",
+    "Tecuatl C, Ljungquist B, Ascoli GA (2024), FASEB BioAdvances 6(7):207-221, DOI 10.1096/fba.2024-00048"
+  ],
+  "retrieved_at": "2026-11-20T19:11:00+07:00",
+  "integrity": {
+    "unique_ids": 8903,
+    "roots": 1,
+    "malformed_rows": 0,
+    "missing_parents": 0,
+    "non_positive_radii": 0,
+    "disconnected_or_cycles": 0
+  },
+  "reported_morphometry": {
+    "neurite_length_um": 12611,
+    "neurite_surface_area_um2": 22768.8,
+    "neurite_volume_um3": 4826.47,
+    "soma_surface_um2": 921.346,
+    "bifurcations": 58,
+    "stems": 8
+  },
+  "reproduced_morphometry": {
+    "neurite_length_um": 12610.980996,
+    "neurite_surface_area_um2": 22768.848341,
+    "neurite_volume_um3": 4826.465631,
+    "soma_surface_um2": 921.346202,
+    "bifurcations": 58,
+    "stems": 8
+  },
+  "notes": [
+    "Partial dendritic reconstruction: axon absent and dendritic completeness marked moderate.",
+    "Metadata records mesiotemporal sclerosis; do not treat as a healthy-control morphology.",
+    "Shrinkage correction is not reported.",
+    "The standardized SWC file is unmodified.",
+    "The distal-node cylinder morphometry convention is empirically matched to this record only."
+  ]
+}
