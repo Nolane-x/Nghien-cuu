@@ -37,6 +37,10 @@ DURATION_S = 0.005
 DT_VALUES_S = (25e-6, 12.5e-6, 6.25e-6)
 VOLTAGE_RELATIVE_FLOOR_MV = 0.02
 
+# Keep HOC objects alive between dt runs and disable previous event sources
+# before reinitializing NEURON's global simulation.
+_PREVIOUS_NEURON_RUNS = []
+
 
 @dataclass
 class NeuronRun:
@@ -50,6 +54,10 @@ class NeuronRun:
 def run_neuron(dt_s: float, run_index: int) -> NeuronRun:
     """Run one isolated NEURON passive segment with one Exp2Syn event."""
     dt_ms = dt_s * 1e3
+    for previous in _PREVIOUS_NEURON_RUNS:
+        previous["stimulus"].number = 0
+        previous["netcon"].weight[0] = 0.0
+
     section = h.Section(name=f"single_compartment_audit_{run_index}")
     section.L = LENGTH_M * 1e6
     section.diam = DIAMETER_M * 1e6
@@ -103,8 +111,15 @@ def run_neuron(dt_s: float, run_index: int) -> NeuronRun:
     conductance_s = np.asarray(conductance_record, dtype=float) * 1e-6
     outward_current_a = np.asarray(current_record, dtype=float) * 1e-9
 
-    # Keep references alive until the vectors have been copied.
-    _ = (section, segment, synapse, stimulus, netcon)
+    # Keep HOC objects alive across dt runs; each earlier NetStim is disabled
+    # above so reinitializing NEURON cannot replay an old event.
+    _PREVIOUS_NEURON_RUNS.append({
+        "section": section,
+        "segment": segment,
+        "synapse": synapse,
+        "stimulus": stimulus,
+        "netcon": netcon,
+    })
     return NeuronRun(
         time_s=time_s,
         voltage_v=voltage_v,
