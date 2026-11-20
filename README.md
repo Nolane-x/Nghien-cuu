@@ -8,13 +8,14 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 1. **[AGENTS.md](AGENTS.md)** — quy tắc bắt buộc cho mọi AI agent làm việc trong repo.
 2. **[HANDOFF.md](HANDOFF.md)** — hồ sơ nghiên cứu nền và lịch sử recovery.
-3. **[HANDOFF_2026-11-20_AMSN-CORE.md](HANDOFF_2026-11-20_AMSN-CORE.md)** — checkpoint mới nhất cho AMSN Neuron Core v0.1.0, lệnh chạy, kiểm thử, giới hạn và việc tiếp theo.
-4. **[AMSN Neuron Core](amsn-core/README.md)** — mã nguồn Python đã chạy được, unit tests và ví dụ.
-5. **[SWC-to-cable discretization note](research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md)** — công thức hình học, cách phân bổ diện tích/điện trở và kiểm chứng giải tích.
-6. **[Human L2–3 evidence update](research/HUMAN_L23_EVIDENCE_UPDATE_2026-11-20.md)** — cập nhật nghiên cứu người từ 2025–2026.
-7. **[AMSN research dossier](research/AMSN_RESEARCH_DOSSIER.md)** — tổng hợp nghiên cứu AMSN ban đầu.
-8. **[Recovery status](research/AMSN_RECOVERY_STATUS_2026-11-20.md)** — trạng thái thực tế của Alpha cũ.
-9. **[Research log](research/RESEARCH_LOG.md)** — nhật ký khởi tạo; các log mới được thêm theo ngày.
+3. **[HANDOFF_2026-11-20_AMSN-CORE.md](HANDOFF_2026-11-20_AMSN-CORE.md)** — checkpoint mã nguồn AMSN Neuron Core v0.1.0.
+4. **[HANDOFF_2026-11-20_ELECTROTONIC.md](HANDOFF_2026-11-20_ELECTROTONIC.md)** — checkpoint mới nhất về chia lưới vật lý + điện học.
+5. **[AMSN Neuron Core](amsn-core/README.md)** — mã nguồn Python, unit tests và ví dụ.
+6. **[Electrotonic discretization note](amsn-core/research/ELECTROTONIC_DISCRETIZATION_2026-11-20.md)** — công thức, API, kiểm tra số học và giới hạn.
+7. **[SWC-to-cable discretization note](research/SWC_TO_CABLE_DISCRETIZATION_2026-11-20.md)** — hình học, phân bổ diện tích/điện trở và kiểm chứng giải tích.
+8. **[Human L2–3 evidence update](research/HUMAN_L23_EVIDENCE_UPDATE_2026-11-20.md)** — cập nhật nghiên cứu người từ 2025–2026.
+9. **[AMSN research dossier](research/AMSN_RESEARCH_DOSSIER.md)** — tổng hợp nghiên cứu AMSN ban đầu.
+10. **[Recovery status](research/AMSN_RECOVERY_STATUS_2026-11-20.md)** — trạng thái Alpha cũ.
 
 ## Quy tắc bảo toàn dữ liệu
 
@@ -33,4 +34,4 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 ## Trạng thái mã nguồn
 
-`amsn-core/` là implementation mới v0.1.0, khác với AMSN Alpha README cũ. Local test suite đạt 21 tests tại checkpoint 20/11/2026 (Python 3.13.5, NumPy 2.3.5, pytest 9.0.2). Đây mới là numerical foundation (SWC parsing/conversion, passive cable tree, HH1952 smoke test), **chưa** phải mô hình neuron người đã hiệu chuẩn và chưa reproduce Eyal 2018.
+`amsn-core/` là implementation mới v0.1.0, khác với AMSN Alpha README cũ. Core hiện có parser SWC, cable tree passive, Hines solver và HH1952 smoke test. Module mới bổ sung refinement theo `d_lambda` kết hợp giới hạn chiều dài vật lý. Đây vẫn là nền tảng số học, chưa phải neuron người đã hiệu chuẩn và chưa reproduce Eyal 2018.

@@ -50,4 +50,5 @@ jobs:
           python examples/inspect_swc.py
           python examples/passive_tree.py
           python examples/scaling_smoke.py
+          python examples/electrotonic_refinement.py
         working-directory: amsn-core
