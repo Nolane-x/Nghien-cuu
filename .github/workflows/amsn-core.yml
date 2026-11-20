@@ -90,6 +90,9 @@ jobs:
       - name: Run NEURON temporal and spatial convergence sweep
         shell: bash
         run: set -o pipefail; python examples/neuron_convergence.py | tee neuron-convergence.txt
+      - name: Run AMSN/NEURON transient pulse and step comparison
+        shell: bash
+        run: set -o pipefail; python examples/human_transient_cross_validation.py | tee neuron-transient.txt
       - name: Preserve raw NEURON output
         if: always()
         uses: actions/upload-artifact@v4
@@ -98,4 +101,5 @@ jobs:
           path: |
             amsn-core/neuron-cross-validation.txt
             amsn-core/neuron-convergence.txt
+            amsn-core/neuron-transient.txt
           if-no-files-found: ignore
