@@ -1,9 +1,9 @@
 # HANDOFF — Nolane-x Research
 
-**Ngày checkpoint:** 2026-11-20  
+**Ngày checkpoint ban đầu:** 2026-11-20  
 **Kho chuẩn:** https://github.com/Nolane-x/Nghien-cuu  
 **Nghiên cứu đang bàn giao:** AMSN — Adaptive Multi-Scale Neuron  
-**Mức độ chắc chắn của checkpoint:** tài liệu nghiên cứu và trạng thái filesystem đã được kiểm tra; không có mã nguồn AMSN Alpha thực thi nào được tìm thấy trong thư mục dự án còn truy cập được ở phiên này.
+**Phạm vi:** tài liệu này phản ánh snapshot ban đầu, không phải trạng thái repo mới nhất. Ở thời điểm snapshot, các thư mục nguồn AMSN Alpha cũ trống; sau đó AMSN Neuron Core đã được xây dựng lại từ đầu và có mã nguồn/test thật trong `amsn-core/`. Xem `HANDOFF_2026-11-20_MESH.md` để biết trạng thái mới nhất. Không coi code mới là recovery của Alpha cũ.
 
 ---
 
@@ -11,8 +11,9 @@
 
 Trước khi làm bất cứ việc gì:
 
-1. Đọc toàn bộ file này.
-2. Đọc `research/AMSN_RESEARCH_DOSSIER.md`.
+1. Đọc toàn bộ file này và checkpoint `HANDOFF_*.md` mới nhất.
+2. Kiểm tra trạng thái branch/commit mới nhất; các mục lịch sử phía dưới có thể đã được supersede bởi handoff mới hơn.
+3. Đọc `research/AMSN_RESEARCH_DOSSIER.md`.
 3. Đọc `research/AMSN_RECOVERY_STATUS_2026-11-20.md` và phần mới nhất trong `research/RESEARCH_LOG.md`.
 4. Kiểm tra trạng thái GitHub hiện tại (nhánh, commit mới nhất, files) trước khi ghi. Không giả định repo vẫn giống checkpoint.
 5. Tiếp tục nghiên cứu và thực hiện thí nghiệm; không chỉ lặp lại kế hoạch cho người dùng. Sau mỗi phát hiện có giá trị, ghi lại vào repo trước khi kết thúc phiên.

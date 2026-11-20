@@ -1,10 +1,11 @@
 # Instructions for AI agents working in this repository
 
 ## Start here
-1. Read `HANDOFF.md` completely.
-2. Read `research/AMSN_RESEARCH_DOSSIER.md`.
-3. Read the latest dated entries in `research/RESEARCH_LOG.md` and the latest recovery/checkpoint note.
-4. Inspect the current Git branch, latest commit and working tree before changing anything.
+1. Read `HANDOFF.md` completely for the broad research objectives and historical context.
+2. Read the newest dated `HANDOFF_*.md` checkpoint that applies to the active research topic; for AMSN, the latest checkpoint is the highest-date/latest-stage file in the repository, not necessarily the original handoff.
+3. Read `research/AMSN_RESEARCH_DOSSIER.md`.
+4. Read the latest dated research log and the report referenced by that handoff.
+5. Inspect the current Git branch, latest commit, workflow status and tree before changing anything.
 
 ## Preservation rules
 - This is the durable research record. Do not leave useful findings only in chat.
