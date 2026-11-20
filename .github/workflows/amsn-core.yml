@@ -93,6 +93,9 @@ jobs:
       - name: Run AMSN/NEURON transient pulse and step comparison
         shell: bash
         run: set -o pipefail; python examples/human_transient_cross_validation.py | tee neuron-transient.txt
+      - name: Run AMPA-like conductance cross-validation
+        shell: bash
+        run: set -o pipefail; python examples/human_ampa_synapse_cross_validation.py | tee neuron-ampa-synapse.txt
       - name: Preserve raw NEURON output
         if: always()
         uses: actions/upload-artifact@v4
@@ -102,4 +105,5 @@ jobs:
             amsn-core/neuron-cross-validation.txt
             amsn-core/neuron-convergence.txt
             amsn-core/neuron-transient.txt
+            amsn-core/neuron-ampa-synapse.txt
           if-no-files-found: ignore
