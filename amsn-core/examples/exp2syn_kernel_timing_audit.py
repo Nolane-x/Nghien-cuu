@@ -53,7 +53,8 @@ def main() -> None:
     recorded_conductance.record(mechanism._ref_g)
 
     h.finitialize(-65.0)
-    h.continuerun(DURATION_MS)
+    for _ in range(round(DURATION_MS / DT_MS)):
+        h.fadvance()
 
     times_ms = np.asarray(recorded_time, dtype=float)
     neuron_g_s = np.asarray(recorded_conductance, dtype=float) * 1e-6
