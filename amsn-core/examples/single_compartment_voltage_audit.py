@@ -210,12 +210,36 @@ def run_case(dt_s: float, run_index: int) -> None:
         same_time_kernel_s - neuron.conductance_s
     ) * 1e9
 
-    amsn_outward_current_a = (
+    previous_neuron_voltage_v = np.concatenate((
+        [neuron.voltage_v[0]], neuron.voltage_v[:-1]
+    ))
+    # NEURON's recorded BREAKPOINT current is evaluated before the membrane
+    # voltage advance in this fixed-step schedule. Reconstruct that recorded
+    # value using the current conductance and the previous-step voltage.
+    neuron_recorded_current_reconstructed_a = (
+        neuron.conductance_s
+        * (previous_neuron_voltage_v - REVERSAL_POTENTIAL_V)
+    )
+    neuron_recorded_current_error_pA = (
+        neuron.outward_current_a - neuron_recorded_current_reconstructed_a
+    ) * 1e12
+
+    # For the backward-Euler voltage equation, the synaptic current is
+    # evaluated at the end-step voltage. Compare this reconstructed current
+    # across simulators separately from NEURON's pre-update BREAKPOINT i record.
+    neuron_implicit_current_a = (
+        neuron.conductance_s
+        * (neuron.voltage_v - REVERSAL_POTENTIAL_V)
+    )
+    amsn_implicit_current_a = (
         aligned_kernel_s
         * (amsn_voltage - REVERSAL_POTENTIAL_V)
     )
-    current_error_pA = (
-        amsn_outward_current_a - neuron.outward_current_a
+    implicit_current_error_pA = (
+        amsn_implicit_current_a - neuron_implicit_current_a
+    ) * 1e12
+    end_step_vs_recorded_current_error_pA = (
+        amsn_implicit_current_a - neuron.outward_current_a
     ) * 1e12
 
     # Ignore the initial numerical zero and late values near the leak baseline
@@ -242,7 +266,56 @@ def run_case(dt_s: float, run_index: int) -> None:
     summarize("voltage_error_uV", voltage_error_uV)
     summarize("aligned_conductance_error_nS", g_error_nS)
     summarize("same_timestamp_conductance_error_nS", same_time_g_error_nS)
-    summarize("outward_current_error_pA", current_error_pA)
+    summarize(
+        "neuron_recorded_current_reconstruction_error_pA",
+        neuron_recorded_current_error_pA,
+    )
+    summarize(
+        "implicit_current_cross_engine_error_pA",
+        implicit_current_error_pA,
+    )
+    summarize(
+        "end_step_current_vs_neuron_recorded_i_pA",
+        end_step_vs_recorded_current_error_pA,
+    )
+
+    # This reduced system has identical geometry, area, passive parameters,
+    # conductance timing and a one-compartment implicit equation. These
+    # tolerances are numerical equivalence gates for this controlled audit,
+    # not accuracy claims for a branched biological morphology.
+    max_voltage_error_v = float(np.max(np.abs(voltage_error_uV))) * 1e-6
+    max_conductance_error_s = float(np.max(np.abs(g_error_nS))) * 1e-9
+    max_recorded_current_error_a = (
+        float(np.max(np.abs(neuron_recorded_current_error_pA))) * 1e-12
+    )
+    max_implicit_current_error_a = (
+        float(np.max(np.abs(implicit_current_error_pA))) * 1e-12
+    )
+    if max_voltage_error_v > 1e-9:
+        raise RuntimeError(
+            f"single-compartment voltage mismatch {max_voltage_error_v:.3e} V "
+            "exceeds 1e-9 V"
+        )
+    if max_conductance_error_s > 1e-12:
+        raise RuntimeError(
+            f"aligned conductance mismatch {max_conductance_error_s:.3e} S "
+            "exceeds 1e-12 S"
+        )
+    if max_recorded_current_error_a > 1e-15:
+        raise RuntimeError(
+            f"NEURON recorded-current reconstruction mismatch "
+            f"{max_recorded_current_error_a:.3e} A exceeds 1e-15 A"
+        )
+    if max_implicit_current_error_a > 1e-15:
+        raise RuntimeError(
+            f"implicit current mismatch {max_implicit_current_error_a:.3e} A "
+            "exceeds 1e-15 A"
+        )
+    print(
+        "# controlled_single_compartment_equivalence=PASS; "
+        "voltage<=1e-9V; aligned_g<=1e-12S; current_reconstruction<=1e-15A"
+    )
+
     if relative_voltage_error_pct.size:
         print(
             "# voltage_relative_error: "
@@ -253,10 +326,12 @@ def run_case(dt_s: float, run_index: int) -> None:
     print(
         "dt_ms,time_ms,neuron_v_mV,amsn_v_mV,voltage_error_uV,"
         "neuron_g_nS,amsn_g_aligned_nS,amsn_g_same_time_nS,"
-        "neuron_i_out_nA,amsn_i_out_nA,current_error_pA"
+        "neuron_i_recorded_nA,neuron_i_reconstructed_pre_voltage_nA,"
+        "neuron_i_implicit_post_voltage_nA,amsn_i_implicit_nA,"
+        "neuron_i_record_error_pA,implicit_current_error_pA,"
+        "end_step_vs_recorded_i_pA"
     )
     for index, time_s in enumerate(neuron.time_s):
-        amsn_current_nA = amsn_outward_current_a[index] * 1e9
         print(
             f"{dt_ms:.6f},{time_s*1e3:.6f},"
             f"{neuron_voltage_mV[index]:.12f},"
@@ -266,8 +341,12 @@ def run_case(dt_s: float, run_index: int) -> None:
             f"{aligned_kernel_s[index]*1e9:.12f},"
             f"{same_time_kernel_s[index]*1e9:.12f},"
             f"{neuron.outward_current_a[index]*1e9:.12f},"
-            f"{amsn_current_nA:.12f},"
-            f"{current_error_pA[index]:.12f}"
+            f"{neuron_recorded_current_reconstructed_a[index]*1e9:.12f},"
+            f"{neuron_implicit_current_a[index]*1e9:.12f},"
+            f"{amsn_implicit_current_a[index]*1e9:.12f},"
+            f"{neuron_recorded_current_error_pA[index]:.12f},"
+            f"{implicit_current_error_pA[index]:.12f},"
+            f"{end_step_vs_recorded_current_error_pA[index]:.12f}"
         )
 
 
