@@ -345,16 +345,16 @@ class CableTree:
         trace[0] = voltage
         for step_index in range(steps):
             now = float(time[step_index])
-            next_time = float(time[step_index + 1])
-            # The voltage solve is implicit at t_(n+1). Sample the continuous
-            # synaptic kinetic state at that same endpoint, matching NEURON's
-            # Exp2Syn BREAKPOINT ordering (SOLVE state, then g = B - A).
+            # Use a left-edge zero-order hold for membrane-current inputs.
+            # The NEURON NetStim/Exp2Syn fixed-step reference delivers the
+            # start=0 event after the initial breakpoint: the first recorded
+            # nonzero g is one dt later than the analytic event-time kernel.
+            # Sampling at t_n here matches the conductance used by NEURON for
+            # the voltage update over [t_n, t_(n+1)].
             synaptic = np.asarray(
-                synaptic_conductance_fn(next_time), dtype=float
+                synaptic_conductance_fn(now), dtype=float
             )
-            # Keep the injected-current callback's historical left-edge
-            # zero-order-hold contract; only the synaptic state is endpoint
-            # sampled by this method.
+            # Injected current follows the same left-edge convention.
             injected = (
                 None if current_fn is None
                 else np.asarray(current_fn(now), dtype=float)
