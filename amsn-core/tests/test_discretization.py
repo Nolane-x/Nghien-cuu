@@ -116,3 +116,14 @@ def test_refined_morphology_can_be_converted_to_passive_cable_tree():
         morph, max_segment_length_um=25.0, max_electrotonic_length=0.1
     )
     assert tree.n_compartments > 2
+
+def test_tighter_electrotonic_limit_never_reduces_node_count():
+    morph = SWCMorphology.from_text("""
+    1 1 0 0 0 6 -1
+    2 3 0 0 300 1.5 1
+    3 3 100 0 600 0.5 2
+    """)
+    n_coarse = len(refine_swc_morphology(morph, max_electrotonic_length=0.2).nodes)
+    n_medium = len(refine_swc_morphology(morph, max_electrotonic_length=0.1).nodes)
+    n_fine = len(refine_swc_morphology(morph, max_electrotonic_length=0.05).nodes)
+    assert n_coarse <= n_medium <= n_fine

@@ -46,6 +46,7 @@ pytest -q
 python examples/inspect_swc.py
 python examples/passive_tree.py
 python examples/electrotonic_refinement.py
+python examples/passive_mesh_convergence.py
 ```
 
 Requires Python >=3.10 and NumPy >=1.24. Tests run without NEURON; external NEURON reproduction is a separate milestone.

@@ -51,4 +51,5 @@ jobs:
           python examples/passive_tree.py
           python examples/scaling_smoke.py
           python examples/electrotonic_refinement.py
+          python examples/passive_mesh_convergence.py
         working-directory: amsn-core

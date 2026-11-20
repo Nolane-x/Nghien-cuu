@@ -10,7 +10,7 @@ if __name__ == "__main__":
     morphology = SWCMorphology.from_file(swc_path)
     refined = refine_swc_morphology(
         morphology,
-        max_segment_length_um=20.0,
+        max_segment_length_um=5.0,
         max_electrotonic_length=0.1,
         reference_frequency_hz=100.0,
         axial_resistivity_ohm_m=0.7,
