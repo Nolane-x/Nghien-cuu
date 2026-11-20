@@ -1,0 +1,59 @@
+name: AMSN Single-Compartment Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/synapses.py"
+      - "amsn-core/examples/single_compartment_voltage_audit.py"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-single-compartment-audit.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/synapses.py"
+      - "amsn-core/examples/single_compartment_voltage_audit.py"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-single-compartment-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-single-compartment-audit-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  single-compartment-audit:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON reference simulator
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run matched single-compartment voltage/current audit
+        shell: bash
+        run: set -o pipefail; python examples/single_compartment_voltage_audit.py | tee single-compartment-audit.txt
+        working-directory: amsn-core
+      - name: Preserve raw single-compartment output
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-single-compartment-py${{ matrix.python-version }}
+          path: amsn-core/single-compartment-audit.txt
+          if-no-files-found: ignore
