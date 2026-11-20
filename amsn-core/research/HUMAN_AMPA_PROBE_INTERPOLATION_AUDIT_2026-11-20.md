@@ -119,3 +119,28 @@ This diagnostic flags an important support-definition issue; it is not an area-c
 6. Only if the matched-support area differs materially should a conservative area-allocation change be proposed.
 
 Do not move synapses, alter reversal/time constants or tune parameters to force voltage agreement. First isolate location readout and area support.
+
+---
+
+## Follow-up: equal-support membrane-area audit completed
+
+The previously listed next experiment has now been implemented in `amsn-core/examples/human_ampa_matched_support_area_audit.py` and passed in [workflow 44763720776](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776).
+
+Instead of comparing one short NEURON segment's area with the whole AMSN node area, the follow-up reconstructs the AMSN support interval from half the incoming and outgoing electrical edges. It then integrates NEURON segment areas by the fractional overlap with that same interval.
+
+| AMSN mesh | Site | NEURON area on matched support (um²) | AMSN node area (um²) | Difference |
+|---:|---|---:|---:|---:|
+| 2,000 Hz | q75 / 3784 | 8.753409 | 8.756880 | +0.039661% |
+| 2,000 Hz | q90 / 3814 | 6.924175 | 6.924175 | -0.000001814% |
+| 4,000 Hz | q75 / 3784 | 6.531920 | 6.535293 | +0.051636% |
+| 4,000 Hz | q90 / 3814 | 5.054776 | 5.054776 | -0.000001814% |
+| 6,000 Hz | q75 / 3784 | 5.404350 | 5.407040 | +0.049770% |
+| 6,000 Hz | q90 / 3814 | 4.239368 | 4.239368 | -0.000001814% |
+
+This shows the earlier 6–10× area ratios were a support-domain mismatch, not evidence of incorrect AMSN local membrane-area totals. The q90 matched-support area agrees essentially exactly; q75 differs by about 0.04–0.05%.
+
+Full method, geometry intervals, limits and raw data are in:
+- `amsn-core/research/HUMAN_AMPA_MATCHED_SUPPORT_AREA_AUDIT_2026-11-20.md`
+- `amsn-core/results/human_ampa_matched_support_area_2026-11-20.csv`
+
+The interpolation conclusion remains site-dependent: interpolating the NEURON readout reduces q90 mismatch at 2k/4k but not at 6k, while q75 source mismatch worsens. It is a diagnostic readout, not a global correction.
