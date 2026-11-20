@@ -30,6 +30,10 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 20. [Human excitatory-synapse reference](amsn-core/research/HUMAN_EXCITATORY_SYNAPSE_REFERENCE_2026-11-20.md) — tham số AMPA/NMDA L2–3 người, độ biến thiên và giới hạn áp dụng.
 21. [AMPA numerical audit log](research/RESEARCH_LOG_2026-11-20_AMPA-NUMERICS.md) — baseline, thất bại kiểm thử được lưu lại, phép thử timing, kết quả cuối và giới hạn.
 22. [Exp2Syn kernel timing audit](amsn-core/examples/exp2syn_kernel_timing_audit.py) — cô lập waveform và event timing của NEURON 9.0.2, không trộn với morphology/cable.
+23. [Handoff — AMPA temporal convergence](HANDOFF_2026-11-20_AMPA-TEMPORAL-CONVERGENCE.md) — checkpoint mới nhất: audit 5 timestep trên NEURON 0,5 µm và AMSN 2.000 Hz.
+24. [Human AMPA temporal convergence report](amsn-core/research/HUMAN_AMPA_TEMPORAL_CONVERGENCE_2026-11-20.md) — sai số tự hội tụ giảm theo timestep; sai số chéo hai engine tiến tới floor gần 0,00385 mV RMS ở basal q90.
+25. [Human AMPA temporal raw CSV](amsn-core/results/human_ampa_temporal_convergence_2026-11-20.csv) — 18.615 mẫu voltage/conductance tại 5 timestep, 3 vị trí ghi.
+26. [Temporal convergence workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787) — NEURON 9.0.2, 1/1 job thành công.
 
 ## Bảo toàn dữ liệu
 
@@ -53,3 +57,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Section-based resampling giảm cable còn 690 compartments (92,24% ít hơn), với sai số DC tối đa dưới 0,69% so với NEURON 9.0.2 trong protocol thử nghiệm này. Diện tích điện học giữa hai simulator khớp trong 0,000001%. Đây là cross-simulator numerical validation cho một cell/thụ động, chưa phải xác thực sinh học hoặc mô hình neuron hoàn chỉnh.
 - Synaptic timing audit: với fixed-step dt=0,025 ms, NetStim start=0 và Exp2Syn 0,2/2,0 ms, conductance NEURON tại t khớp kernel AMSN tại t-dt trong 199/199 mẫu (sai số bằng 0 ở độ chính xác log). Left-edge sampling được giữ trong production solver; AMPA probe relative error hiện 7,41%, chưa có ngưỡng nghiệm thu khoa học.
 - [CI run 44754148879](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44754148879) đã xanh ở 4/4 job, gồm 65 test mỗi Python 3.12/3.13 và 2 job NEURON cross-validation.
+- Single-compartment voltage/current audit [run 44757208267](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44757208267) đã xanh 2/2 job trên Python 3.12/3.13; voltage sai khác cỡ 10^-15 V trong cấu hình một ngăn được kiểm soát.
+- Spatial mesh và NEURON segment refinement [run 44758746509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44758746509) đã xanh; với NEURON 0,5 µm, q90 RMS mismatch khoảng 0,00384 mV ở dt=0,00625 ms.
+- Fast-AMPA temporal convergence [run 44760319787](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760319787) đã xanh; 5 timestep từ 0,025 đến 0,0015625 ms cho thấy sai số tự hội tụ giảm, trong khi sai số chéo hai engine gần như ổn định quanh 0,00385 mV RMS ở basal q90. Đây là kết quả số học cho một morphology và protocol, không phải xác thực sinh học.
