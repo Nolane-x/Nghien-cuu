@@ -350,3 +350,72 @@ Hold dt=0.0015625 ms and the NEURON 0.5-um reference fixed; sweep AMSN spatial r
 ### Core CI status when appended
 
 After adding the temporal report to the AMSN tree, Core CI run [44760827496](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44760827496) was in progress. Refresh it before claiming final comprehensive CI status. The dedicated temporal workflow itself is confirmed green.
+
+---
+
+## 8. Final spatial-floor sweep at finest dt — 2026-11-20
+
+### Execution evidence
+
+- Script: `amsn-core/examples/human_ampa_spatial_floor_sweep.py`.
+- Workflow: `.github/workflows/amsn-ampa-spatial-floor-audit.yml`.
+- Run [44761379734](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734), conclusion success, 1/1 job.
+- NEURON 9.0.2, Python 3.12.
+- Code snapshot: `6a04ef9c41f0909200aa02a7b827389311d6c432`.
+- Raw artifact: [14640889259](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734/artifacts/14640889259).
+- Durable raw traces: four CSVs under `amsn-core/results/human_ampa_spatial_floor_2026-11-20_*`, 9,603 data rows each (38,412 total).
+
+### Controlled configuration
+
+- Same NMO_290988 partial human morphology.
+- NEURON held fixed at max segment 0.5 um (25,233 segments).
+- dt held fixed at 0.0015625 ms for 5 ms.
+- Same AMPA-like engineering event and passive parameters as the temporal sweep.
+- Source SWC 3784 (basal q75); probes 3784, soma 1, basal q90 3814.
+- Only AMSN mesh reference frequency changes: 2k, 3k, 4k, 6k Hz; max physical extent 100 um, max electrotonic extent 0.1, same protected nodes.
+
+### Results
+
+| AMSN frequency | Compartments | q90 max abs error (mV) | q90 RMS error (mV) | q90 mesh self RMS vs 6k (mV) |
+|---:|---:|---:|---:|---:|
+| 2,000 Hz | 2,541 | 0.006475 | 0.003851 | 0.000540 |
+| 3,000 Hz | 3,077 | 0.005884 | 0.003752 | 0.000267 |
+| 4,000 Hz | 3,526 | 0.005573 | 0.003699 | 0.000143 |
+| 6,000 Hz | 4,287 | 0.005312 | 0.003670 | 0 |
+
+From 2k to 6k:
+- compartment count increases by 68.7%;
+- q90 RMS cross-engine difference improves by about 4.7%;
+- q90 max absolute difference improves by about 18%;
+- q90 error at 0.25 ms improves from -0.006073 to -0.005038 mV.
+
+But source and soma RMS differences rise slightly:
+- source q75: 0.003304 → 0.003353 mV;
+- soma: 0.00003472 → 0.00004117 mV.
+
+Thus higher global mesh frequency improves the distal q90 result but not every site. The 2k-to-6k internal AMSN q90 mesh difference (0.000540 mV RMS) is far smaller than the cross-engine residual (~0.00367 mV RMS). Further global refinement is unlikely to solve the residual efficiently by itself.
+
+### Interpretation
+
+The q90 discrepancy has begun to approach a representation/measurement floor. This is consistent with the prior temporal sweep, where the cross-engine q90 RMS error remained around 0.00380–0.00385 mV despite reducing dt by 16×.
+
+Do not select 6k as a global default: it costs 68.7% more compartments than 2k while delivering only a 4.7% q90 RMS improvement and slightly worsening source/soma RMS discrepancies. The mesh trend is site-dependent.
+
+The most likely remaining candidates to investigate are:
+- NEURON's nearest segment-centre sample versus the exact SWC arc coordinate used by protected AMSN vertices;
+- per-control-volume membrane-area lumping at source/probe positions;
+- branch-junction and piecewise morphology representation differences.
+
+These are hypotheses, not identified causes.
+
+### Next precise experiment
+
+At dt=0.0015625 ms and NEURON 0.5 um, record the voltages of the two NEURON segment centres bracketing the Import3D SWC arc coordinate for source 3784 and probe 3814. Interpolate linearly between the two segment-centre voltages to the exact SWC arc coordinate. Compare that interpolated measurement to:
+1. NEURON's nearest-centre measurement;
+2. AMSN's protected SWC control-point voltage.
+
+Do this without changing the synapse, mesh, event, or solver. In parallel, inspect and report the exact proximal/distal area split on the AMSN control volumes at these sites. This is more informative than immediately increasing the whole-cell mesh frequency again.
+
+### Core CI status
+
+Core CI run [44761340640](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761340640) was in progress at the time this entry was appended. Refresh the latest CI run after the report/raw-data commits.
