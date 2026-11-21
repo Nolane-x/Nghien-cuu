@@ -37,3 +37,11 @@ Source data: direct NeuroMorpho CNG SWCs NMO_68174 and NMO_68175, unchanged and 
 
 ## Commit
 `f63b3ce89344207f504dcc47a869be59cc21f438`.
+## Fine-mesh refinement at 0.0625 µm — run 44887397930
+
+- Both NEURON 9.0.2 jobs passed 81/81 AMSN tests and 120 frequency-response rows.
+- NMO_68174: 333,452 NEURON segments; area diff −1.11863e−6%; input complex median/p95/max 0.005932/0.036530/0.047282%; transfer complex 0.001221/0.052982/0.133856%; transfer magnitude max 0.073723%; phase max 0.064037°.
+- NMO_68175: 312,745 NEURON segments; area diff −8.00770e−7%; input complex 0.013756/0.031304/0.038863%; transfer complex 0.003012/0.059594/0.099423%; transfer magnitude max 0.089533%; phase max 0.030780°.
+- Error statistics are not monotone in every percentile: NMO_68174 p95/max rise slightly while median improves; NMO_68175 p95/max improve while median rises. Do not overstate mesh convergence.
+- Raw artifacts: 14700676187 (NMO_68174) and 14700169600 (NMO_68175), run 44887397930.
+- Dedicated workflow `.github/workflows/amsn-segev-fine-mesh-frequency-audit.yml` is committed at `ff83fd7acc36da874f0ebcca7290a7bc8c80bdf4`.

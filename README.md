@@ -198,7 +198,7 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 ### Segev multi-morphology Import3D correction — verified
 
-The NMO_68175 mismatch was traced to the immediately branching axon attachment at SWC node 5851. The final soma normalizer collapses that first-point branch junction while retaining a one-point terminal neurite. Passive parameters were not changed.
+The NMO_68175 mismatch was traced to the immediately branching axon attachment at SWC node 5851. The final soma normalizer collapses that first-point branch junction while retaining a one-point terminal neurite. Passive parameters were not changed. The follow-up 0.0625 µm workflow also passed both cells with 81 tests each; remaining percentile changes are not fully monotone and are recorded in the final report.
 
 - Four-job matrix [44887065310](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310) passed on NEURON 9.0.2 (two morphologies × two mesh caps).
 - Area agreement: NMO_68174 −0.00000112%; NMO_68175 −0.00000080%.

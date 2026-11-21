@@ -87,3 +87,19 @@ Area agreement is now better than 0.0000012% on both cells. For NMO_68175 at 0.1
 - [NMO_68175, 0.125 µm artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14700104294)
 - Core CI [run 44887065325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065325), 4/4 jobs successful: 81/81 tests on Python 3.12 and 81/81 on Python 3.13; NEURON passive, temporal/spatial convergence, transient pulse/step, AMPA-like conductance, Exp2Syn event timing, matched single-compartment checks passed.
 - [Python 3.12 NEURON raw validation artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065325/artifacts/14700805022); [Python 3.13 artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065325/artifacts/14700313358).
+## Fine-mesh follow-up — 0.0625 µm (run 44887397930)
+
+Both morphology jobs passed the full 81-test AMSN suite and NEURON 9.0.2 AC audit (120 measurements per cell). Segment counts doubled from the 0.125 µm reference, while membrane areas and normalized soma/attachment geometry remained unchanged to numerical precision.
+
+| Morphology | NEURON segments | Area difference | Input complex median / p95 / max | Transfer complex median / p95 / max | Transfer magnitude max | Transfer phase max |
+|---|---:|---:|---:|---:|---:|---:|
+| NMO_68174 / cell1125 | 333,452 | −0.00000112% | 0.005932 / 0.036530 / 0.047282% | 0.001221 / 0.052982 / 0.133856% | 0.073723% | 0.064037° |
+| NMO_68175 / cell1204 | 312,745 | −0.00000080% | 0.013756 / 0.031304 / 0.038863% | 0.003012 / 0.059594 / 0.099423% | 0.089533% | 0.030780° |
+
+Mesh refinement is not monotone for every summary statistic. NMO_68174's transfer median improves from 0.001555% to 0.001221%, but p95 and max rise slightly (0.049609→0.052982%; 0.130503→0.133856%). NMO_68175's p95 and max improve (0.073511→0.059594%; 0.169384→0.099423%), while its median rises (0.002297→0.003012%). The worst pair and source/probe segment-centre offsets can change as the mesh changes. Therefore no universal 'finer is always better for every percentile' claim is justified.
+
+Raw artifacts: [NMO_68174 0.0625 µm, artifact 14700676187](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887397930/artifacts/14700676187); [NMO_68175 0.0625 µm, artifact 14700169600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887397930/artifacts/14700169600).
+
+The combined results (0.25/0.125/0.0625 µm) are in `amsn-core/results/human_segev_import3d_attachment_fix_summary_2026-11-21.csv`; the per-frequency fine-mesh table is in `amsn-core/results/human_segev_import3d_attachment_fix_0p0625_frequency_2026-11-21.csv`.
+
+Interpretation: the missing soma/axon attachment was the dominant NMO_68175 discrepancy and is now fixed. The remaining ~0.1% transfer-complex tail is small, morphology-/site-dependent and high-frequency weighted; the mesh results do not yet prove a continuum limit or experimental biological accuracy.
