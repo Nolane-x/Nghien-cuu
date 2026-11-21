@@ -34,7 +34,7 @@ from amsn.morphology import SWCMorphology
 
 BASE_MAX_SEGMENT_UM = float(os.environ.get('AMSN_NEURON_MAX_SEGMENT_UM', '0.125'))
 SOURCE_ALIGNMENT_TOLERANCE_UM = float(os.environ.get('AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM', '0.002'))
-SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM = float(os.environ.get('AMSN_SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM', '0.05'))
+SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM = float(os.environ.get('AMSN_SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM', '0.05'))
 MAX_REFINED_NSEG = int(os.environ.get('AMSN_SOURCE_ALIGNMENT_MAX_NSEG', '32767'))
 RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
@@ -64,16 +64,7 @@ def configure_reference_parameters():
 
 
 def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
-    """Choose one NEURON mesh with distinct legacy and SWC-aligned centres.
-
-    NEURON caps nseg at 32767. The earlier odd-multiple scheme preserved each
-    original segment centre exactly, but some long Segev sections could not be
-    further refined within that cap. Instead, search odd nseg values from the
-    current mesh upward, map the original legacy coordinate to its nearest
-    centre on the candidate mesh, and map the exact SWC coordinate separately.
-    Both modes then share the same final nseg; the physical remap from the old
-    legacy centre is measured and reported rather than hidden.
-    """
+    """Choose a shared NEURON mesh and distinguish source-location outcomes."""
     base_nseg = int(section.nseg)
     max_nseg = int(MAX_REFINED_NSEG)
     if not 1 <= base_nseg <= max_nseg:
@@ -88,13 +79,12 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
     base_legacy_x = (base_legacy_index + 0.5) / base_nseg
     base_aligned_x = (base_aligned_index + 0.5) / base_nseg
     base_aligned_offset_um = abs(base_aligned_x - target_x) * float(section.L)
+    base_legacy_target_offset_um = abs(base_legacy_x - target_x) * float(section.L)
 
-    # If the original mesh already places the clamp at the exact SWC node
-    # within tolerance, do not manufacture a different segment just to make
-    # the two modes look different. Record it as already aligned.
+    # Strict pre-alignment: only the requested 0.002-um tolerance qualifies.
     if (
         base_legacy_index == base_aligned_index
-        and base_aligned_offset_um <= max(tolerance_um, SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM)
+        and base_aligned_offset_um <= tolerance_um
     ):
         return {
             "nseg": base_nseg,
@@ -103,32 +93,36 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
             "aligned_offset_um": base_aligned_offset_um,
             "legacy_index": base_legacy_index,
             "legacy_x": base_legacy_x,
-            "legacy_offset_um": base_aligned_offset_um,
-            "legacy_remap_offset_um": abs(base_legacy_x - legacy_x)
-                * float(section.L),
+            "legacy_offset_um": base_legacy_target_offset_um,
+            "legacy_remap_offset_um": abs(base_legacy_x - legacy_x) * float(section.L),
             "base_nseg": base_nseg,
             "multiplier": 1.0,
             "already_aligned": True,
+            "alignment_status": "pre_aligned",
+            "best_possible_aligned_offset_um": base_aligned_offset_um,
         }
 
     first_nseg = base_nseg if base_nseg % 2 else base_nseg + 1
     best = None
+    best_possible_offset = float("inf")
+    best_possible_nseg = None
     for candidate_nseg in range(first_nseg, max_nseg + 1, 2):
         legacy_index = int(round(legacy_x * candidate_nseg - 0.5))
         aligned_index = int(round(target_x * candidate_nseg - 0.5))
         legacy_index = min(candidate_nseg - 1, max(0, legacy_index))
         aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
-        if legacy_index == aligned_index:
+        aligned_x = (aligned_index + 0.5) / candidate_nseg
+        aligned_offset_um = abs(aligned_x - target_x) * float(section.L)
+        if aligned_offset_um < best_possible_offset:
+            best_possible_offset = aligned_offset_um
+            best_possible_nseg = candidate_nseg
+
+        if legacy_index == aligned_index or aligned_offset_um > tolerance_um:
             continue
 
         legacy_x_refined = (legacy_index + 0.5) / candidate_nseg
-        aligned_x = (aligned_index + 0.5) / candidate_nseg
         legacy_remap_um = abs(legacy_x_refined - legacy_x) * float(section.L)
         legacy_offset_um = abs(legacy_x_refined - target_x) * float(section.L)
-        aligned_offset_um = abs(aligned_x - target_x) * float(section.L)
-        if aligned_offset_um > tolerance_um:
-            continue
-
         best = {
             "nseg": candidate_nseg,
             "aligned_index": aligned_index,
@@ -141,29 +135,46 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
             "base_nseg": base_nseg,
             "multiplier": candidate_nseg / base_nseg,
             "already_aligned": False,
+            "alignment_status": "distinct_aligned",
+            "best_possible_aligned_offset_um": best_possible_offset,
         }
         break
 
-    if best is None:
-        base_legacy_index = int(round(legacy_x * base_nseg - 0.5))
-        base_aligned_index = int(round(target_x * base_nseg - 0.5))
-        best_possible_offset = float("inf")
-        for candidate_nseg in range(first_nseg, max_nseg + 1, 2):
-            aligned_index = int(round(target_x * candidate_nseg - 0.5))
-            aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
-            aligned_x = (aligned_index + 0.5) / candidate_nseg
-            best_possible_offset = min(
-                best_possible_offset,
-                abs(aligned_x - target_x) * float(section.L),
-            )
-        raise RuntimeError(
-            f"could not create distinct legacy/aligned centres in {section.name()} "
-            f"within {tolerance_um:g} um under nseg cap {max_nseg}; "
-            f"base_nseg={base_nseg}; legacy_index={base_legacy_index}; "
-            f"base_aligned_index={base_aligned_index}; "
-            f"best_aligned_offset_um={best_possible_offset:.9g}"
-        )
-    return best
+    if best is not None:
+        return best
+
+    # The 0.05-um fallback is only a resolution bound, never an alignment label.
+    if (
+        base_legacy_index == base_aligned_index
+        and base_legacy_target_offset_um <= SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM
+        and best_possible_offset <= SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM
+    ):
+        return {
+            "nseg": base_nseg,
+            "aligned_index": base_aligned_index,
+            "aligned_x": base_aligned_x,
+            "aligned_offset_um": base_aligned_offset_um,
+            "legacy_index": base_legacy_index,
+            "legacy_x": base_legacy_x,
+            "legacy_offset_um": base_legacy_target_offset_um,
+            "legacy_remap_offset_um": abs(base_legacy_x - legacy_x) * float(section.L),
+            "base_nseg": base_nseg,
+            "multiplier": 1.0,
+            "already_aligned": False,
+            "alignment_status": "unresolved_nseg_cap",
+            "best_possible_aligned_offset_um": best_possible_offset,
+            "best_possible_nseg": best_possible_nseg,
+        }
+
+    raise RuntimeError(
+        f"could not create distinct legacy/aligned centres in {section.name()} "
+        f"within {tolerance_um:g} um under nseg cap {max_nseg}; "
+        f"base_nseg={base_nseg}; legacy_index={base_legacy_index}; "
+        f"base_aligned_index={base_aligned_index}; "
+        f"base_legacy_target_offset_um={base_legacy_target_offset_um:.9g}; "
+        f"best_aligned_offset_um={best_possible_offset:.9g}; "
+        f"best_possible_nseg={best_possible_nseg}"
+    )
 
 def main():
     configure_reference_parameters()
@@ -271,7 +282,7 @@ def main():
     print(
         f"# base_mesh_max_segment_um={BASE_MAX_SEGMENT_UM}; "
         f"source_alignment_tolerance_um={SOURCE_ALIGNMENT_TOLERANCE_UM}; "
-        f"already_aligned_max_offset_um={SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM}"
+        f"nseg_cap_fallback_max_offset_um={SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM}"
     )
     print(
         f"# NEURON_sections={len(sections)}; NEURON_segments={total_segments}; "
@@ -304,8 +315,8 @@ def main():
         )
 
     print(
-        "source,source_swc_id,mode,probe,probe_swc_id,"
-        "source_delta_mV,amsn_fine_source_delta_mV,source_input_error_pct,"
+        "source,source_swc_id,mode,source_alignment_status,best_possible_aligned_offset_um,"
+        "probe,probe_swc_id,source_delta_mV,amsn_fine_source_delta_mV,source_input_error_pct,"
         "neuron_probe_nearest_delta_mV,neuron_probe_interpolated_delta_mV,"
         "amsn_fine_probe_delta_mV,neuron_nearest_transfer_ratio,"
         "neuron_interpolated_transfer_ratio,amsn_fine_transfer_ratio,"
@@ -366,8 +377,10 @@ def main():
                     interpolated_ratio - amsn_ratio
                 ) / max(abs(amsn_ratio), 1e-30)
                 print(
-                    f"{source_name},{source_id},{mode},{probe_name},{probe_id},"
-                    f"{source_delta:.12g},{amsn_source_delta:.12g},"
+                    f"{source_name},{source_id},{mode},"
+                    f"{refinements[source_id]['alignment_status']},"
+                    f"{refinements[source_id]['best_possible_aligned_offset_um']:.12g},"
+                    f"{probe_name},{probe_id},{source_delta:.12g},{amsn_source_delta:.12g},"
                     f"{source_error_pct:.12g},{nearest_delta:.12g},"
                     f"{interpolated_delta:.12g},{amsn_probe_delta:.12g},"
                     f"{nearest_ratio:.12g},{interpolated_ratio:.12g},"

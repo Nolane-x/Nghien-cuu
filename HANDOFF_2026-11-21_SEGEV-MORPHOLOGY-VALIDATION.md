@@ -129,3 +129,9 @@ The first bounded nseg rerun found that NMO_68174 dend[26] is already at its SWC
 ## Pre-aligned source handling under the NEURON nseg cap
 
 NMO_68174 `dend[26]` and NMO_68175 `apic[20]` can have the original legacy centre and exact SWC coordinate resolve to the same segment even at NEURON's 32,767 nseg cap. The control now records `already_aligned=true` and preserves that segment when its centre is within 0.05 µm of the SWC target (`AMSN_SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM`). This is distinct from the 0.002 µm target tolerance used when a distinct SWC-aligned centre is constructible. A source farther than 0.05 µm still fails clearly. Inspect the output metadata and raw CSV to identify which source rows are genuine placement changes; do not infer a placement effect for a pre-aligned source where the two modes are identical.
+
+## Correction: prior Segev placement output was not a sensitivity comparison
+
+Artifacts from workflow 44888621661 show both modes used the same segment for all four Segev source sites: the broad 0.05 µm fallback labelled them all pre-aligned. These data must not be used to claim a placement effect. They only record source-centre offsets and expose the nseg cap.
+
+The updated control distinguishes `pre_aligned` (strict ≤0.002 µm), `distinct_aligned` (different segment centre on the same mesh, SWC centre ≤0.002 µm), and `unresolved_nseg_cap` (cannot separate under the cap; keep the legacy segment and record best achievable offset). The raw CSV includes alignment status and best possible offset. Do not interpret unresolved rows as aligned or as evidence of reduced error.

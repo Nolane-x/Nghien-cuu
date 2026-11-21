@@ -43,7 +43,7 @@ jobs:
       AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
       AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
       AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
-      AMSN_SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM: "0.05"
+      AMSN_SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM: "0.05"
       AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
     steps:
       - uses: actions/checkout@v4
