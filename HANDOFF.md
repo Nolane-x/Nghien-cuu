@@ -300,3 +300,8 @@ Matched-support membrane-area workflow [44904138720](https://github.com/Nolane-x
 ## Verified Segev matched-support passive operator checkpoint — 21/11/2026
 
 Matched-support passive admittance workflow [44904475571](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475571) passed 2/2 cells, and Core CI [44904475559](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475559) passed 4/4 jobs. The maximum sampled relative L2 error across DC–3 kHz was 0.0078381% for NMO_68174 and 0.0025449% for NMO_68175. Leak/capacitance diagonal errors were below 0.00025%. This is a matched-support finite-volume projection, not a native fine-grid Schur complement or biological validation. See [report](amsn-core/research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-PASSIVE-ADMITTANCE-OPERATOR.md).
+
+
+## Verified Segev native passive transient checkpoint — 21/11/2026
+
+Native transient validation [44907890895](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890895) passed 2/2 cells; Core CI [44907890934](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890934) passed 4/4 jobs. Maximum waveform NRMSE was 0.001641% (NMO_68174) and 0.002370% (NMO_68175); absolute waveform errors stayed below 5.2e-6 mV. This directly compared native NEURON segment trees against AMSN's SWC node-centred trees with backward Euler and recorded nonzero source/probe mapping offsets. See [report](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-PASSIVE-TRANSIENT.md). Next: time-step/spatial mesh factorial convergence.

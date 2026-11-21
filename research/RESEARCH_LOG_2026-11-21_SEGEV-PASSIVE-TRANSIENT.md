@@ -26,3 +26,16 @@ Pending. Inspect both raw trace CSVs, especially the source-centre offsets and a
 ## Limits
 
 This is native fine-tree NEURON versus node-centred AMSN transient comparison. It is distinct from the matched-support projected operator and is not biological validation.
+
+
+## Verified results — native passive transient comparison
+
+Workflow [44907890895](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890895) passed 2/2 cells; Core CI [44907890934](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890934) passed 4/4 jobs.
+
+NMO_68174: 9,015 trace rows, 30 summary rows; maximum nearest-centre/interpolated waveform NRMSE 0.001641% / 0.000357%; maximum peak-amplitude error 0.002166% / 0.000393%; maximum absolute waveform error 5.147e-6 / 1.531e-6 mV.
+
+NMO_68175: 9,015 trace rows, 30 summary rows; maximum NRMSE 0.002370% / 0.000791%; maximum peak error 0.003375% / 0.001106%; maximum absolute waveform error 4.424e-6 / 1.459e-6 mV.
+
+All peak-time differences were zero at the 0.05 ms sampling grid. The current pulse was confirmed as 0.01 nA for 200 intervals in NEURON, matching the AMSN 10 pA left-edge input. Source-centre and probe-centre offsets were preserved in the summary CSVs.
+
+See [HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md). Next: factorial dt/mesh convergence.

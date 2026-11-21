@@ -61,3 +61,14 @@ Both morphology jobs must pass the full 81-test AMSN suite, run NEURON 9.0.2, re
 ## Next step
 
 If native transient traces and the matched-support frequency operator agree, compare direct NEURON Impedance at the same source/probe locations against the measured transient transfer function. If residuals remain, isolate spatial versus temporal error using a dt refinement sweep and source-placement refinement. Only after this passive baseline is stable should active channels/synapses be introduced.
+
+
+## Verified results — native passive transient comparison (21/11/2026)
+
+The native transient workflow [44907890895](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890895) passed 2/2 cells, and Core CI [44907890934](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890934) passed 4/4 jobs.
+
+Both models used a 10 pA pulse from 2–12 ms, 30 ms duration, dt=0.05 ms and backward Euler. Each cell produced 9,015 trace rows and 30 summary rows. Maximum waveform NRMSE: 0.001641% (cell1125) and 0.002370% (cell1204); maximum peak-amplitude error: 0.002166% and 0.003375%; maximum absolute voltage error: 5.147e-6 mV and 4.424e-6 mV.
+
+Source-centre offsets were at most 0.003185 µm / 0.044099 µm and probe offsets 0.047808 µm / 0.044767 µm for the two cells. Linear interpolation reduced the worst NRMSE, but did not improve every individual pair. Both probe readouts remain in the raw data.
+
+Full report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md), summary [CSV](amsn-core/results/human_segev_passive_transient_summary_2026-11-21.csv). Next: run the 12-point dt/mesh convergence matrix described in the report.

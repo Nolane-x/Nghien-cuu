@@ -32,7 +32,9 @@ RM_OHM_M2 = 1.0
 CM_F_M2 = 0.01
 ELEAK_MV = -65.0
 NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.125"))
-DT_MS = 0.05
+DT_MS = float(os.environ.get("AMSN_TRANSIENT_DT_MS", "0.05"))
+if not np.isfinite(DT_MS) or DT_MS <= 0.0:
+    raise ValueError("AMSN_TRANSIENT_DT_MS must be finite and positive")
 DURATION_MS = 30.0
 PULSE_START_MS = 2.0
 PULSE_DURATION_MS = 10.0
@@ -207,6 +209,12 @@ def simulate_neuron(
 
 
 def main() -> None:
+    for boundary_ms in (PULSE_START_MS, PULSE_START_MS + PULSE_DURATION_MS, DURATION_MS):
+        quotient = boundary_ms / DT_MS
+        if not np.isclose(quotient, round(quotient), rtol=0.0, atol=1e-10):
+            raise ValueError(
+                f"transient boundary {boundary_ms:g} ms is not aligned to dt={DT_MS:g} ms"
+            )
     configure_reference()
     morphology = SWCMorphology.from_file(reference.DATA)
     reader, sections = reference.import_swc_with_neuron()

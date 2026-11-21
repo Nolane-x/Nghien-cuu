@@ -1,0 +1,129 @@
+name: AMSN Segev Native Passive Transient Time-Space Convergence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-segev-passive-transient-convergence.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-segev-passive-transient-convergence.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transient-convergence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.05"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.025"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.05"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.025"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.05"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.125"
+            dt_ms: "0.025"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.05"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.0625"
+            dt_ms: "0.025"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+      AMSN_TRANSIENT_DT_MS: ${{ matrix.dt_ms }}
+      AMSN_TRANSIENT_OUTPUT_PREFIX: "${{ matrix.morphology_label }}_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify morphology and NEURON
+        run: |
+          python -c "import neuron; print('NEURON', neuron.__version__)"
+          test -s "${{ matrix.morphology_path }}"
+        working-directory: amsn-core
+      - name: Run transient time-space convergence point
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_segev_passive_transient_audit.py | tee "${{ matrix.morphology_label }}-dt${{ matrix.dt_ms }}ms-mesh${{ matrix.mesh_cap_um }}um.log"
+        working-directory: amsn-core
+      - name: Preserve transient convergence traces and summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-dt-${{ matrix.dt_ms }}ms-mesh-${{ matrix.mesh_cap_um }}um
+          path: |
+            amsn-core/${{ matrix.morphology_label }}-dt${{ matrix.dt_ms }}ms-mesh${{ matrix.mesh_cap_um }}um.log
+            amsn-core/results/${{ matrix.morphology_label }}_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_human_passive_transient_traces_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_human_passive_transient_summary_2026-11-21.csv
+          if-no-files-found: error

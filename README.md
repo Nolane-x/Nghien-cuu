@@ -266,3 +266,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Leak/capacitance diagonal sampled relative L2 differences were below 0.00025%; axial current conservation stayed below 6.1e-21 A.
 - This is a matched-support finite-volume projection, not an exact Schur complement of the fine NEURON segment-level matrix or a biological validation.
 - Report: [HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_passive_admittance_operator_summary_2026-11-21.csv).
+
+
+### Segev native passive transient validation — verified 21/11/2026
+
+- Native transient workflow [44907890895](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890895) passed both human cells; Core CI [44907890934](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890934) passed 4/4 jobs.
+- With a 10 pA pulse from 2–12 ms, 30 ms duration and dt=0.05 ms, max waveform NRMSE was 0.001641% (cell1125) and 0.002370% (cell1204); max peak-amplitude error 0.002166% and 0.003375%. Absolute voltage differences remained below 5.2e-6 mV.
+- Each cell produced 9,015 trace rows and 30 summary rows. NEURON source/probe offsets were recorded; all were within half the 0.125 µm mesh cap. Linear interpolation improved worst-case NRMSE but is not uniformly superior for every pair.
+- Report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_passive_transient_summary_2026-11-21.csv).
+- Next: 12-job factorial convergence sweep across dt=0.1/0.05/0.025 ms and mesh=0.125/0.0625 µm.
