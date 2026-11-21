@@ -123,3 +123,10 @@ The raw artifacts were extracted and inspected, rather than relying only on work
 ## Controlled DC source-placement audit generalized to Segev morphologies
 
 The same-mesh source-placement experiment is now parameterized by morphology path/label, base mesh, source-alignment tolerance and NEURON nseg cap through environment variables. This lets it compare legacy-centre and SWC-aligned source placements on the two Segev cells without changing passive parameters or probes. It is a DC steady-state control; it does not replace the AC audit. A dedicated two-morphology workflow is added next.
+
+
+## Source-placement control: bounded NEURON nseg strategy
+
+The first Segev source-placement workflow passed all 81 tests but could not construct two distinct source centres with the old exact-preservation odd-multiple refinement under NEURON's per-section nseg cap of 32,767. The YAML path and matrix expressions have been fixed; this is a separate algorithmic limit.
+
+The source-placement helper now searches odd nseg values up to the configured cap, maps the old legacy source coordinate to the nearest centre on the final mesh, and separately maps the exact SWC arc to a distinct centre. Both modes still share the same final section nseg, morphology, cable and probe discretization. The legacy coordinate remap is recorded explicitly rather than assumed to be zero. It rejects cases that cannot meet the alignment tolerance or produce distinct centres under the cap. This bounded redesign is pending CI and a successful Segev source-placement rerun.

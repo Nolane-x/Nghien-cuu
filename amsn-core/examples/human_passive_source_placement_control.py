@@ -63,65 +63,75 @@ def configure_reference_parameters():
 
 
 def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
-    """Preserve a legacy segment centre and create a distinct SWC-aligned one.
+    """Choose one NEURON mesh with distinct legacy and SWC-aligned centres.
 
-    For odd multiplier m, nseg_new = nseg_old*m preserves the old segment
-    centres exactly: each old centre becomes the centre of the middle child
-    segment. NEURON caps nseg at 32767. The selected aligned centre must be a
-    distinct segment from the preserved legacy centre.
+    NEURON caps nseg at 32767. The earlier odd-multiple scheme preserved each
+    original segment centre exactly, but some long Segev sections could not be
+    further refined within that cap. Instead, search odd nseg values from the
+    current mesh upward, map the original legacy coordinate to its nearest
+    centre on the candidate mesh, and map the exact SWC coordinate separately.
+    Both modes then share the same final nseg; the physical remap from the old
+    legacy centre is measured and reported rather than hidden.
     """
     base_nseg = int(section.nseg)
-    if base_nseg % 2 == 0:
-        raise RuntimeError(f"{section.name()} nseg must be odd")
-    base_legacy_index = int(round(legacy_x * base_nseg - 0.5))
-    base_legacy_index = min(base_nseg - 1, max(0, base_legacy_index))
-    if abs((base_legacy_index + 0.5) / base_nseg - legacy_x) > 1e-12:
-        raise RuntimeError("legacy source is not an original segment centre")
+    max_nseg = int(MAX_REFINED_NSEG)
+    if not 1 <= base_nseg <= max_nseg:
+        raise RuntimeError(
+            f"{section.name()} base nseg {base_nseg} exceeds cap {max_nseg}"
+        )
 
-    max_multiplier = MAX_REFINED_NSEG // base_nseg
-    if max_multiplier % 2 == 0:
-        max_multiplier -= 1
-    for multiplier in range(1, max_multiplier + 1, 2):
-        candidate_nseg = base_nseg * multiplier
+    first_nseg = base_nseg if base_nseg % 2 else base_nseg + 1
+    best = None
+    for candidate_nseg in range(first_nseg, max_nseg + 1, 2):
+        legacy_index = int(round(legacy_x * candidate_nseg - 0.5))
         aligned_index = int(round(target_x * candidate_nseg - 0.5))
+        legacy_index = min(candidate_nseg - 1, max(0, legacy_index))
         aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
+        if legacy_index == aligned_index:
+            continue
+
+        legacy_x_refined = (legacy_index + 0.5) / candidate_nseg
         aligned_x = (aligned_index + 0.5) / candidate_nseg
+        legacy_remap_um = abs(legacy_x_refined - legacy_x) * float(section.L)
+        legacy_offset_um = abs(legacy_x_refined - target_x) * float(section.L)
         aligned_offset_um = abs(aligned_x - target_x) * float(section.L)
         if aligned_offset_um > tolerance_um:
             continue
 
-        legacy_index = (
-            base_legacy_index * multiplier + (multiplier - 1) // 2
-        )
-        legacy_x_refined = (legacy_index + 0.5) / candidate_nseg
-        legacy_remap_um = abs(
-            legacy_x_refined - legacy_x
-        ) * float(section.L)
-        if legacy_remap_um > 1e-10:
-            raise RuntimeError(
-                f"legacy centre not preserved in {section.name()}: "
-                f"{legacy_remap_um:.12g} um"
-            )
-        if aligned_index == legacy_index:
-            continue
-
-        return {
+        best = {
             "nseg": candidate_nseg,
             "aligned_index": aligned_index,
             "aligned_x": aligned_x,
             "aligned_offset_um": aligned_offset_um,
             "legacy_index": legacy_index,
             "legacy_x": legacy_x_refined,
-            "legacy_offset_um": abs(legacy_x_refined - target_x)
-                * float(section.L),
+            "legacy_offset_um": legacy_offset_um,
             "legacy_remap_offset_um": legacy_remap_um,
             "base_nseg": base_nseg,
-            "multiplier": multiplier,
+            "multiplier": candidate_nseg / base_nseg,
         }
-    raise RuntimeError(
-        f"could not produce distinct legacy and SWC-aligned segment centres "
-        f"within {tolerance_um:g} um under nseg cap {MAX_REFINED_NSEG}"
-    )
+        break
+
+    if best is None:
+        base_legacy_index = int(round(legacy_x * base_nseg - 0.5))
+        base_aligned_index = int(round(target_x * base_nseg - 0.5))
+        best_possible_offset = float("inf")
+        for candidate_nseg in range(first_nseg, max_nseg + 1, 2):
+            aligned_index = int(round(target_x * candidate_nseg - 0.5))
+            aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
+            aligned_x = (aligned_index + 0.5) / candidate_nseg
+            best_possible_offset = min(
+                best_possible_offset,
+                abs(aligned_x - target_x) * float(section.L),
+            )
+        raise RuntimeError(
+            f"could not create distinct legacy/aligned centres in {section.name()} "
+            f"within {tolerance_um:g} um under nseg cap {max_nseg}; "
+            f"base_nseg={base_nseg}; legacy_index={base_legacy_index}; "
+            f"base_aligned_index={base_aligned_index}; "
+            f"best_aligned_offset_um={best_possible_offset:.9g}"
+        )
+    return best
 
 def main():
     configure_reference_parameters()
@@ -147,8 +157,8 @@ def main():
             "geometry_offset_um": float(site["geometry_offset_um"]),
         }
 
-    # Refine the two dendritic source sections. Odd multiples preserve all
-    # original segment centres exactly while adding a centre near the SWC x.
+    # Refine the two dendritic source sections. Both source modes are mapped
+    # onto the same final mesh; the legacy coordinate remap is recorded.
     refinements = {}
     for source_id, info in source_geometry.items():
         refinements[source_id] = choose_nested_refinement(
@@ -251,7 +261,7 @@ def main():
             f"# source_refinement={info['source_name']}; swc_id={source_id}; "
             f"section={info['section'].name()}; "
             f"nseg={refinement['base_nseg']}->{refinement['nseg']} "
-            f"(odd_multiple={refinement['multiplier']}); "
+            f"(refinement_ratio={refinement['multiplier']:.6g}); "
             f"legacy_source_offset_um={refinement['legacy_offset_um']:.12g}; "
             f"legacy_mesh_remap_um={refinement['legacy_remap_offset_um']:.12g}; "
             f"aligned_source_offset_um={refinement['aligned_offset_um']:.12g}; "

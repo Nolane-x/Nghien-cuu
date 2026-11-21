@@ -112,3 +112,10 @@ The 0.125/0.0625 µm raw CSV artifacts were downloaded and analyzed. At 3 kHz, t
 ## Next experiment — matched source placement on Segev cells
 
 The fine-mesh raw-data inspection shows the remaining error is strongly associated with frequency and inconsistently associated with source/probe centre offset. The existing source-placement script is now parameterized for Segev morphology path/label and mesh/tolerance via environment variables. It preserves the original 0.125 µm legacy segment centres while creating a distinct SWC-aligned centre within 0.002 µm on the same refined mesh. Both source modes use the same refined morphology, passive parameters and probes. This DC test isolates source placement but is not an AC test; a separate frequency-domain control may be needed after these results.
+
+
+## Source-placement nseg-cap failure and bounded redesign
+
+The first Segev source-placement run [44888178565](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44888178565) verified both SWC files and passed 81 tests in each job, but failed during local refinement: it could not create distinct legacy and SWC-aligned centres within 0.002 µm under NEURON's 32,767 nseg per-section cap. This is not a morphology/test failure.
+
+The source-placement algorithm was revised to search candidate odd nseg values up to the hard cap, map the old legacy source coordinate to its nearest centre on the chosen shared mesh, and map the SWC coordinate to a different centre. The legacy coordinate remapping is explicitly recorded; the two modes still differ only in IClamp segment on an identical mesh. New diagnostics report the best achievable SWC-centre offset if the tolerance cannot be met. Validate the new algorithm with Core CI, then rerun both Segev cells. Keep failed runs documented.
