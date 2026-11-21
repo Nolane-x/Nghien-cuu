@@ -53,3 +53,13 @@ Next: add a 0.0625 µm mesh to inspect diminishing returns and high-frequency re
 ## 0.0625 µm next refinement
 
 A dedicated NEURON 9.0.2 workflow was added to test a 0.0625 µm maximum segment length. It reuses the same fixed-parameter AMSN/NEURON frequency-response audit, reruns the complete 74-test suite and uploads a separate raw CSV. The run is triggered by the workflow-file push. No claim is made about its result until Actions completes.
+
+## Fourth mesh — 0.0625 µm (workflow 44880843864)
+
+- Dedicated workflow succeeded; all 74 AMSN tests passed; NEURON 9.0.2; 125 sections; 201,021 segments; AMSN 8,893 compartments; 120 rows.
+- Input complex error median/p95/max: 0.002441032/0.024339286/0.025800537%.
+- Transfer complex error median/p95/max: 0.001938596/0.112636790/0.229691689%.
+- Transfer magnitude error max: 0.178790008%; phase error max: 0.117113331°.
+- Worst pair: apical q75 → apical q90 at 3 kHz; source and probe nearest-centre offsets 0.005167/0.002339 µm.
+- Versus 0.5 µm the transfer complex median/p95/max improve by ~20.42×/~6.32×/~6.93×. Aggregate median and p95 decrease at every sampled frequency through all four meshes.
+- Raw artifact 14698056883, workflow 44880843864.

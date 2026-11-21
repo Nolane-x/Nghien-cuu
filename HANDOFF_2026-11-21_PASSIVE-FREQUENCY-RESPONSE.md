@@ -5,7 +5,7 @@
 **Branch:** main  
 **Implementation commit:** 99daea4ea0cbaacc19b2e79f621e028fe5ccbf62  
 **Three-mesh convergence commit:** 62a5d288f23084001c70e7580ac334140c09b967  
-**Status:** 0.5/0.25/0.125 µm convergence matrix passed; 0.0625 µm follow-up pending.
+**Status:** four-mesh passive frequency-domain convergence verified through 0.0625 µm.
 
 ## Start here
 
@@ -32,13 +32,22 @@ The AMSN phasor is a voltage perturbation (not absolute V):
 \`(G_leak + G_axial + j 2π f C) ΔV = I\`.
 The \(e^{jωt}\) convention is documented in the method. Input/transfer impedance is \`ΔV/I\`; phase is compared modulo 360 degrees.
 
-## Verified initial result — 0.5 µm
+## Verified frequency-domain convergence — four meshes
 
-Workflow [44880205634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880205634) passed, including 74 tests. NEURON 9.0.2 used 25,233 segments; AMSN used 8,893 compartments; the audit generated 120 rows. Input complex error median/p95/max was 0.043796/0.074104/0.078027%. Transfer complex error was 0.039583/0.711515/1.592748%. Maximum transfer magnitude error was 1.094346%; phase error 0.666724°. Input impedance is much closer than the worst distal transfer measurements.
+All four mesh tests passed: [three-mesh workflow 44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) and [0.0625 µm refinement 44880843864](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880843864). Each job ran 74 AMSN tests and produced 120 raw measurements on NEURON 9.0.2.
 
-The largest transfer percentage occurred for apical q75 → basal q90 at 3,000 Hz, where transfer impedance itself is very small (~8.37e-9 MΩ in NEURON). Interpret relative error with absolute impedance.
+| NEURON max segment length | Segment count | Input complex median / p95 / max | Transfer complex median / p95 / max |
+|---:|---:|---:|---:|
+| 0.5 µm | 25,233 | 0.043796 / 0.073407 / 0.078027% | 0.039583 / 0.711515 / 1.592748% |
+| 0.25 µm | 50,353 | 0.025170 / 0.064441 / 0.068446% | 0.012377 / 0.264956 / 0.534125% |
+| 0.125 µm | 100,571 | 0.009610 / 0.036138 / 0.060370% | 0.006550 / 0.172349 / 0.273631% |
+| 0.0625 µm | 201,021 | 0.002441 / 0.024339 / 0.025801% | 0.001939 / 0.112637 / 0.229692% |
 
-The three-mesh run [44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) passed all three jobs. Segment counts were 25,233 / 50,353 / 100,571 for 0.5 / 0.25 / 0.125 µm. Transfer complex median/p95/max errors were 0.039583/0.711515/1.592748%, 0.012377/0.264956/0.534125%, and 0.006550/0.172349/0.273631%, respectively. The aggregate improvement is consistent, but not every individual pair maximum is monotone at the low end. Artifacts: [0.5 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697044290), [0.25 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877), [0.125 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070). A dedicated 0.0625 µm workflow is now committed at `.github/workflows/amsn-passive-frequency-response-refinement.yml`; its push trigger runs the finer mesh. Do not tune passive parameters or declare a production mesh yet.
+From 0.5 to 0.0625 µm, transfer complex median/p95/max improve by ~20.42×/~6.32×/~6.93×. At 0.0625 µm, transfer magnitude maximum is 0.178790% and phase maximum is 0.117113°. Worst pair: apical q75 → apical q90 at 3 kHz; its absolute transfer impedance is about 5.16e-7 MΩ, and source/probe segment-centre offsets are 0.005167/0.002339 µm.
+
+Raw artifacts: [0.5](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697044290), [0.25](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877), [0.125](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070), [0.0625](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880843864/artifacts/14698056883).
+
+All aggregate median/p95/max metrics improve with finer mesh, but some low-frequency individual maxima are not monotonic because the worst source-probe pair changes. No production mesh is declared until accuracy and compute cost are weighed.
 
 ## Validation gates
 

@@ -4,7 +4,7 @@
 **Repository:** https://github.com/Nolane-x/Nghien-cuu  
 **Implementation commit:** 99daea4ea0cbaacc19b2e79f621e028fe5ccbf62  
 **Three-mesh sweep commit:** 62a5d288f23084001c70e7580ac334140c09b967  
-**Status:** three-mesh spatial convergence sweep verified; next refinement 0.0625 µm  
+**Status:** four-mesh spatial convergence verified through 0.0625 µm; passive AC baseline locked for this morphology/configuration  
 **Scope:** one partial human temporal-cortex L2–3 pyramidal SWC morphology; passive linear membrane only.
 
 ## Research question
@@ -63,28 +63,30 @@ The largest relative transfer discrepancy is apical q75 → basal q90 at 3,000 H
 
 Input impedance remains closely aligned: global maximum complex error 0.078027%. Transfer mismatch increases with frequency; this justifies a spatial convergence sweep but does not prove the remaining error is caused only by mesh spacing.
 
-## Three-mesh spatial convergence — verified
+## Four-mesh spatial convergence — verified
 
-Workflow [44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) succeeded in all 3 jobs. Each job installed NEURON 9.0.2 and passed the complete 74-test AMSN suite. All three use the same 8,893-compartment AMSN reference, fixed passive parameters, 3 source sites, 5 probe sites and 8 frequencies (120 rows per mesh).
+Two dedicated workflows passed: [three-mesh run 44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858), then [fine-mesh run 44880843864](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880843864). All four mesh jobs passed the complete 74-test AMSN suite and the NEURON 9.0.2 audit. Each produced 120 raw source–probe–frequency rows.
 
 | NEURON maximum segment length | NEURON segments | Input complex error median / p95 / max | Transfer complex error median / p95 / max | Transfer magnitude max | Transfer phase max |
 |---:|---:|---:|---:|---:|---:|
 | 0.5 µm | 25,233 | 0.043796 / 0.073407 / 0.078027% | 0.039583 / 0.711515 / 1.592748% | 1.094346% | 0.666724° |
 | 0.25 µm | 50,353 | 0.025170 / 0.064441 / 0.068446% | 0.012377 / 0.264956 / 0.534125% | 0.436561% | 0.176708° |
 | 0.125 µm | 100,571 | 0.009610 / 0.036138 / 0.060370% | 0.006550 / 0.172349 / 0.273631% | 0.199264% | 0.152002° |
+| 0.0625 µm | 201,021 | 0.002441 / 0.024339 / 0.025801% | 0.001939 / 0.112637 / 0.229692% | 0.178790% | 0.117113° |
 
-From 0.5 to 0.125 µm, aggregate transfer-complex median error decreases about 6.04×, p95 about 4.13× and maximum about 5.82×. Input-complex maximum error decreases from 0.07803% to 0.06037%. The transfer-complex median and p95 also decrease at every tested frequency across the three meshes.
+From 0.5 to 0.0625 µm, aggregate transfer-complex median error improves about 20.42×, p95 about 6.32× and maximum about 6.93×. The transfer-complex median and p95 decrease at every tested frequency as the mesh is refined. Input-complex maximum decreases from 0.078027% to 0.025801%.
 
-Do not claim every individual pair or per-frequency maximum decreases monotonically. At low frequencies, a few maximum-error pairs are slightly larger at 0.25 µm than at 0.5 µm because the worst pair shifts with segment-centre placement; those maxima fall again at 0.125 µm. Aggregate median/p95 and the overall maximum improve consistently.
+The 0.0625 µm worst pair is apical q75 → apical q90 at 3,000 Hz: complex error 0.229692%, magnitude error 0.178790%, phase error 0.082692°. The corresponding nearest-centre offsets are 0.005167 µm at the source and 0.002339 µm at the probe. The worst pair differs from coarser meshes, as expected when the segment-centre mapping changes.
 
-At 0.125 µm the overall worst pair changes to basal q75 → apical q50 at 3,000 Hz: complex error 0.273631%, magnitude error 0.087343%, phase error 0.148513°. This is materially smaller than the 0.5 µm worst case; the earlier 1.592748% error occurred on a very weak apical q75 → basal q90 transfer.
+Do not claim every individual pair or each per-frequency maximum decreases monotonically. Some low-frequency maxima were slightly larger at 0.25 µm than at 0.5 µm because the worst pair shifts with segment-centre placement; aggregate median/p95 and overall maximum improve consistently.
 
 Raw data artifacts:
-- [0.5 µm CSV artifact 14697044290](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697044290)
-- [0.25 µm CSV artifact 14696684877](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877)
-- [0.125 µm CSV artifact 14697712070](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070)
+- [0.5 µm artifact 14697044290](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697044290)
+- [0.25 µm artifact 14696684877](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877)
+- [0.125 µm artifact 14697712070](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070)
+- [0.0625 µm artifact 14698056883](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880843864/artifacts/14698056883)
 
-The summary tables are committed in `amsn-core/results/`. A dedicated 0.0625 µm refinement workflow has been added to test whether high-frequency transfer error continues to decline; no production mesh is declared yet.
+Aggregate and per-frequency summaries are committed in `amsn-core/results/`. No production mesh is declared yet: the 0.0625 µm run is already a 201,021-segment reference and further refinement should be justified by its incremental error reduction and computational cost.
 
 ## Interpretation boundaries
 
