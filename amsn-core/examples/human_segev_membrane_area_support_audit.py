@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import csv
 import os
+from bisect import bisect_left, bisect_right
 from math import floor, ceil, pi, sqrt
 from pathlib import Path
 
@@ -65,7 +66,15 @@ def profile_area_between_x(section, profile, x0: float, x1: float) -> float:
     diameters = profile["diameter"]
     covered_um = 0.0
     area_um2 = 0.0
-    for index in range(len(arcs) - 1):
+    # Locate only pt3d intervals intersecting the requested arc range.
+    # A full-profile scan for every NEURON segment would be O(nseg * n3d)
+    # and is prohibitive for the 150k+ segment Segev meshes.
+    first_interval = max(0, bisect_right(arcs, start_um) - 1)
+    last_interval = min(
+        len(arcs) - 2,
+        max(first_interval, bisect_left(arcs, end_um)),
+    )
+    for index in range(first_interval, last_interval + 1):
         arc0 = float(arcs[index])
         arc1 = float(arcs[index + 1])
         if arc1 <= arc0 + 1e-14:
