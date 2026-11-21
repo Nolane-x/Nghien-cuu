@@ -44,3 +44,12 @@ Exact SWC ports are canonical. No weighted source mode is used in this audit, so
 ## Next
 
 Inspect the Schur identity error first; it must remain near numerical precision relative to the independent full-tree AMSN port inverse. Then examine AMSN–NEURON port admittance differences by frequency and diagonal/off-diagonal terms before any reduced operator is promoted into runtime use.
+
+
+## Completed exact passive Schur port-matrix audit — 21/11/2026
+
+Workflow [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) passed 6/6 jobs; Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed 4/4.
+
+The new Schur API reproduces the independent AMSN full-tree port inverse to a maximum relative error of 9.40e-11%. Reciprocity errors remain below 1.23e-12%. Across the 3 morphologies × 2 mesh caps, all seven-port admittance matrix errors stay below 0.0262%; impedance errors stay below 0.0895%. Every worst case occurs at 3 kHz and off-diagonal coupling errors are larger than diagonal self-admittance errors.
+
+Full report: [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md); configuration summary [CSV](amsn-core/results/human_schur_port_matrix_summary_2026-11-21.csv); frequency detail [CSV](amsn-core/results/human_schur_port_matrix_frequency_summary_2026-11-21.csv).

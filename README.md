@@ -340,3 +340,11 @@ Six configurations have been added to separate time-step and spatial mesh effect
 ### Exact passive Schur port reduction — in progress
 
 The core now exposes a frequency-dependent Schur/Kron reduction that eliminates non-port compartments while preserving chosen electrical vertices. Unit tests compare it with a dense Schur complement and the full Hines solution. A six-job human audit will compare AMSN and NEURON seven-port matrices over eight frequencies on three morphologies and two mesh caps.
+
+
+### Exact passive Schur port-matrix audit — verified 21/11/2026
+
+- Workflow [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) passed 6/6; Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed 4/4.
+- New core API: \`amsn.schur_reduce_passive_admittance\`, exact frequency-dependent Schur/Kron elimination on selected electrical ports. Its output matches an independent full-tree AMSN port solve to at most 9.40e-11%.
+- On three morphologies and two meshes, seven-port admittance errors remain below 0.0262%; impedance errors below 0.0895%. Worst cases are at 3 kHz; off-diagonal couplings are more sensitive than diagonal self-admittances.
+- Report: [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md); configuration [CSV](amsn-core/results/human_schur_port_matrix_summary_2026-11-21.csv), frequency [CSV](amsn-core/results/human_schur_port_matrix_frequency_summary_2026-11-21.csv).

@@ -355,3 +355,8 @@ Workflow [44915125555](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44915
 ## Exact passive Schur port reduction — in progress
 
 Core API amsn.schur_reduce_passive_admittance eliminates non-retained passive cable vertices and returns the frequency-dependent complex admittance on retained ports. Unit tests compare it with dense Schur and full Hines results. The six-job human audit compares seven-port AMSN and NEURON operators over eight frequencies.
+
+
+## Exact passive Schur port-matrix audit — completed 21/11/2026
+
+The new exact frequency-dependent Schur reduction is validated against an independent full-tree AMSN port impedance inverse to 9.40e-11% maximum error. The six-job human audit [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) passed 6/6, and Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed 4/4. Seven-port admittance matrix errors remain below 0.0262% and impedance errors below 0.0895%; maxima occur at 3 kHz, with off-diagonal couplings more sensitive than diagonal ports. See [report](amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md).
