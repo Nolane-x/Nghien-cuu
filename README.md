@@ -275,3 +275,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Each cell produced 9,015 trace rows and 30 summary rows. NEURON source/probe offsets were recorded; all were within half the 0.125 µm mesh cap. Linear interpolation improved worst-case NRMSE but is not uniformly superior for every pair.
 - Report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_passive_transient_summary_2026-11-21.csv).
 - Next: 12-job factorial convergence sweep across dt=0.1/0.05/0.025 ms and mesh=0.125/0.0625 µm.
+
+### Segev native transient time/space convergence — verified 21/11/2026
+
+- The 12-job matrix [44908381318](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381318) passed 12/12; Core CI [44908381336](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381336) passed 4/4.
+- Matrix: two cells × mesh 0.125/0.0625 µm × dt 0.1/0.05/0.025 ms; 126,180 trace rows and 360 summaries. Every job passed the 81-test suite and uploaded raw artifacts.
+- Temporal refinement halves pairwise waveform error as expected for backward Euler (maximum-NRMSE ratios 1.985 and 1.984). Cross-simulator residuals remain almost invariant with dt.
+- Spatial refinement is cell-specific: it improves NMO_68174 but worsens NMO_68175; interpolation is not universally superior.
+- Report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md). Data: [configuration summary CSV](amsn-core/results/human_segev_passive_transient_convergence_summary_2026-11-21.csv), [pairwise convergence CSV](amsn-core/results/human_segev_passive_transient_pairwise_convergence_2026-11-21.csv).
+- Next: isolate source placement using a charge-conserving two-segment weighted IClamp versus nearest-centre IClamp.

@@ -305,3 +305,13 @@ Matched-support passive admittance workflow [44904475571](https://github.com/Nol
 ## Verified Segev native passive transient checkpoint — 21/11/2026
 
 Native transient validation [44907890895](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890895) passed 2/2 cells; Core CI [44907890934](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44907890934) passed 4/4 jobs. Maximum waveform NRMSE was 0.001641% (NMO_68174) and 0.002370% (NMO_68175); absolute waveform errors stayed below 5.2e-6 mV. This directly compared native NEURON segment trees against AMSN's SWC node-centred trees with backward Euler and recorded nonzero source/probe mapping offsets. See [report](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-PASSIVE-TRANSIENT.md). Next: time-step/spatial mesh factorial convergence.
+
+## Verified Segev transient time/space convergence — 21/11/2026
+
+The 12-job matrix [44908381318](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381318) passed 12/12; Core CI [44908381336](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381336) passed 4/4. It produced 126,180 time-series rows and 360 summaries.
+
+Backward-Euler temporal refinement is first-order (pairwise maximum-NRMSE ratios 1.985/1.984 as dt is halved). Cross-simulator residuals barely change with dt at fixed mesh. Spatial refinement is cell-specific: it improves NMO_68174 but worsens NMO_68175, where interpolation is no longer better at 0.0625 µm. Do not choose a universal finer mesh or probe rule from these two morphologies.
+
+See [full convergence report](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md), [configuration summary](amsn-core/results/human_segev_passive_transient_convergence_summary_2026-11-21.csv), and [pairwise measurements](amsn-core/results/human_segev_passive_transient_pairwise_convergence_2026-11-21.csv).
+
+Next: test source placement by comparing nearest-centre IClamp with a charge-conserving two-centre weighted current split at the exact SWC arc.

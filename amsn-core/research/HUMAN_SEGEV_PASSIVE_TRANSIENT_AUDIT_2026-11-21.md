@@ -91,3 +91,12 @@ The next run is a 12-job factorial matrix:
 - backward-Euler dt values of 0.1, 0.05 and 0.025 ms.
 
 This separates time-integration effects from mesh/source/probe placement effects. Source offsets and waveform errors must be compared across the full matrix; do not tune Ri/Rm/Cm/Eleak.
+
+## Verified time/space convergence extension — 21/11/2026
+
+The subsequent 12-job factorial audit [44908381318](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381318) passed 12/12 and Core CI [44908381336](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44908381336) passed 4/4. It extended the original dt=0.05 ms / mesh=0.125 µm transient comparison to dt=0.1/0.05/0.025 ms and mesh=0.125/0.0625 µm.
+
+- The cross-simulator mismatch remains almost unchanged with dt at fixed mesh.
+- Pairwise time-step refinement follows backward-Euler first-order behavior: halving dt nearly halves the waveform difference between successive time grids (ratios 1.985 and 1.984).
+- Mesh refinement improves NMO_68174 but worsens NMO_68175, including a case where SWC-arc interpolation is worse than nearest-centre readout.
+- Full report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md).
