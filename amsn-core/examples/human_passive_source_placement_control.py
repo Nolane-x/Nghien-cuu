@@ -34,6 +34,7 @@ from amsn.morphology import SWCMorphology
 
 BASE_MAX_SEGMENT_UM = float(os.environ.get('AMSN_NEURON_MAX_SEGMENT_UM', '0.125'))
 SOURCE_ALIGNMENT_TOLERANCE_UM = float(os.environ.get('AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM', '0.002'))
+SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM = float(os.environ.get('AMSN_SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM', '0.05'))
 MAX_REFINED_NSEG = int(os.environ.get('AMSN_SOURCE_ALIGNMENT_MAX_NSEG', '32767'))
 RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
@@ -93,7 +94,7 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
     # the two modes look different. Record it as already aligned.
     if (
         base_legacy_index == base_aligned_index
-        and base_aligned_offset_um <= tolerance_um
+        and base_aligned_offset_um <= max(tolerance_um, SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM)
     ):
         return {
             "nseg": base_nseg,
@@ -269,7 +270,8 @@ def main():
     )
     print(
         f"# base_mesh_max_segment_um={BASE_MAX_SEGMENT_UM}; "
-        f"source_alignment_tolerance_um={SOURCE_ALIGNMENT_TOLERANCE_UM}"
+        f"source_alignment_tolerance_um={SOURCE_ALIGNMENT_TOLERANCE_UM}; "
+        f"already_aligned_max_offset_um={SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM}"
     )
     print(
         f"# NEURON_sections={len(sections)}; NEURON_segments={total_segments}; "

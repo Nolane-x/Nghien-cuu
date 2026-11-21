@@ -135,3 +135,8 @@ The source-placement helper now searches odd nseg values up to the configured ca
 ## Placement-control edge case: source already aligned
 
 On NMO_68174, one source section (dend[26]) has its original nearest segment centre only 1.535e-7 µm from the SWC target. Under the 0.002 µm tolerance it is already aligned. The control now records this explicitly and uses the same segment in both modes; it does not invent a different clamp location merely to force a difference. Other sources still require distinct legacy/aligned centres on one shared mesh. This refinement is pending CI.
+
+
+## NEURON spatial-resolution floor for source-placement control
+
+The Segev source-placement control now has a separate `AMSN_SOURCE_ALREADY_ALIGNED_MAX_OFFSET_UM` default of 0.05 µm. When the legacy nearest centre and SWC target resolve to the same segment on the base mesh and that centre offset is within this floor, both modes deliberately use the same segment and log `already_aligned=true`; no artificial source displacement is introduced. This differs from the 0.002 µm target tolerance used when a distinct aligned segment can be constructed. Any source farther than 0.05 µm that cannot be separated under NEURON's nseg cap still raises an error. The 0.05 µm floor is a pragmatic numerical-resolution rule for this control, not a universal biological tolerance.
