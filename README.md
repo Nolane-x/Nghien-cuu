@@ -249,3 +249,11 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Across 32 deterministic voltage vectors, sampled axial-operator relative L2 mean/p95/max: 0.0042137/0.0076496/0.0106860% for NMO_68174 and 0.0020482/0.0030657/0.0032929% for NMO_68175. Total-current residuals stayed below 1e-20 A.
 - This is axial-only, sampled-vector numerical validation, not a formal operator norm or biological validation. Report: [HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_full_tree_axial_matrix_summary_2026-11-21.csv).
 - Next: matched membrane-area/control-volume mapping, then full passive leak+capacitance operator.
+
+
+### Segev membrane area on matched control-volume support — verified 21/11/2026
+
+- Workflow [44904138720](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904138720) passed both cells on NEURON 9.0.2 at 0.125 µm. Total area mismatch: −1.1186e-6% (NMO_68174), −8.0077e-7% (NMO_68175).
+- Per-node support-area absolute error median/p95/p99/max: 0.00008137/0.00068466/0.00165961/0.02558449% for cell1125; 0.00008884/0.00080180/0.00193923/0.00907464% for cell1204.
+- All segment.area() values were allocated to SWC half-edge control volumes; maximum coverage closure error was below 2.3e-14%. This is the prerequisite for the next matched passive leak+capacitance operator, not a biological validation.
+- Report: [HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_membrane_area_support_summary_2026-11-21.csv).

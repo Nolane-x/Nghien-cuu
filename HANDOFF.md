@@ -290,3 +290,8 @@ The six-job matrix [44902130621](https://github.com/Nolane-x/Nghien-cuu/actions/
 ## Verified Segev axial operator checkpoint — 21/11/2026
 
 The Segev full-tree axial matrix [44903533060](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903533060) passed 2/2 jobs; original NMO_290988 regression [44903453372](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903453372) passed. The 32-vector sampled axial-operator relative L2 max is 0.0106860% (NMO_68174) and 0.0032929% (NMO_68175). This is axial-only and not a formal operator-norm or biological validation. Next, establish matched membrane-area/control-volume support before adding leak and capacitance. See [matrix report](amsn-core/research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-FULL-TREE-AXIAL-MATRIX.md).
+
+
+## Verified Segev membrane-area support checkpoint — 21/11/2026
+
+Matched-support membrane-area workflow [44904138720](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904138720) passed both Segev cells. Total area mismatch is below 1.2e-6%; maximum per-node difference is 0.0256% (NMO_68174) and 0.00908% (NMO_68175); every NEURON segment area was allocated with section coverage closure below 2.3e-14%. Next: combine this validated per-node area support with the locked axial graph to compare the passive leak+capacitance operator. See [report](amsn-core/research/HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-MEMBRANE-AREA-SUPPORT.md).

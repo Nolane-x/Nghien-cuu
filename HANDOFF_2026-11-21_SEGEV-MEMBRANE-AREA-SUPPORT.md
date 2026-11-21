@@ -51,3 +51,16 @@ The allocation is exact with respect to each measured segment total and the pt3d
 ## Next step
 
 If per-node area support is sufficiently close, build a matched-support passive admittance operator by adding leak and capacitance to the already-validated axial graph. If area differences remain localized, investigate the mapping and preserve both raw area distributions before proceeding.
+
+
+## Verified results — membrane area on matched electrical control volumes (21/11/2026)
+
+The matched-support area workflow [44904138720](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904138720) passed both Segev cells on NEURON 9.0.2 at a 0.125 µm mesh cap.
+
+Total membrane area difference: −1.1186e-6% (NMO_68174) and −8.0077e-7% (NMO_68175). Per-node absolute error median/p95/p99/max:
+- NMO_68174: 0.00008137/0.00068466/0.00165961/0.02558449%.
+- NMO_68175: 0.00008884/0.00080180/0.00193923/0.00907464%.
+
+All NEURON segment.area() values were fully allocated to mapped SWC half-edge control volumes; maximum segment/section coverage closure error was below 2.3e-14%. The maximum half-edge deviations are localized to the very short apical edges already identified in the axial audit.
+
+Full report: [HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md), summary [CSV](amsn-core/results/human_segev_membrane_area_support_summary_2026-11-21.csv). Next: matched-support passive leak+capacitance admittance operator.
