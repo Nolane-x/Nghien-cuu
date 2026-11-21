@@ -57,3 +57,17 @@ This is matched-support passive numerical validation, not a native NEURON Schur 
 ## Next step
 
 If the matched-support operator passes, compare it with direct NEURON impedance at selected exact SWC source/probe sites and verify the area-support mapping at finer meshes. If there is a residual, inspect per-node area and edge conductance contributors before considering a full Schur-complement reduction of the fine NEURON tree.
+
+
+## Verified results — matched-support passive admittance operator (21/11/2026)
+
+The passive operator workflow [44904475571](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475571) passed 2/2 Segev jobs; Core CI [44904475559](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475559) passed 4/4 jobs.
+
+With Rm=1.0 Ω·m², Cm=0.01 F/m², NEURON 9.0.2 at 0.125 µm and 32 deterministic complex voltage probes:
+- NMO_68174 maximum sampled passive-operator relative L2 error was 0.0078381% over DC–3 kHz.
+- NMO_68175 maximum was 0.0025449%.
+- Leak and capacitance diagonal sampled errors were each below 0.00025%; axial current conservation residuals were below 6.1e-21 A; constant-voltage axial nullspace residual was zero.
+
+The NEURON side is a matched-support finite-volume projection, not an exact Schur complement of the original fine segment-level matrix. This is numerical passive consistency, not biological validation.
+
+Full report: [HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_passive_admittance_operator_summary_2026-11-21.csv). Next: compare the matched-support operator to selected direct NEURON impedance and transient outputs before adding active mechanisms.

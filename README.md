@@ -257,3 +257,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Per-node support-area absolute error median/p95/p99/max: 0.00008137/0.00068466/0.00165961/0.02558449% for cell1125; 0.00008884/0.00080180/0.00193923/0.00907464% for cell1204.
 - All segment.area() values were allocated to SWC half-edge control volumes; maximum coverage closure error was below 2.3e-14%. This is the prerequisite for the next matched passive leak+capacitance operator, not a biological validation.
 - Report: [HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_membrane_area_support_summary_2026-11-21.csv).
+
+
+### Segev matched-support passive admittance operator — verified 21/11/2026
+
+- Passive operator workflow [44904475571](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475571) passed 2/2 morphology jobs; Core CI [44904475559](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475559) passed 4/4 jobs.
+- With Rm=1 Ω·m² and Cm=0.01 F/m², 32 deterministic complex voltage probes per frequency, the maximum sampled passive-operator relative L2 difference over DC–3 kHz was 0.0078381% (NMO_68174) and 0.0025449% (NMO_68175).
+- Leak/capacitance diagonal sampled relative L2 differences were below 0.00025%; axial current conservation stayed below 6.1e-21 A.
+- This is a matched-support finite-volume projection, not an exact Schur complement of the fine NEURON segment-level matrix or a biological validation.
+- Report: [HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_passive_admittance_operator_summary_2026-11-21.csv).

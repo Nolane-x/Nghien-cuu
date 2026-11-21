@@ -295,3 +295,8 @@ The Segev full-tree axial matrix [44903533060](https://github.com/Nolane-x/Nghie
 ## Verified Segev membrane-area support checkpoint — 21/11/2026
 
 Matched-support membrane-area workflow [44904138720](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904138720) passed both Segev cells. Total area mismatch is below 1.2e-6%; maximum per-node difference is 0.0256% (NMO_68174) and 0.00908% (NMO_68175); every NEURON segment area was allocated with section coverage closure below 2.3e-14%. Next: combine this validated per-node area support with the locked axial graph to compare the passive leak+capacitance operator. See [report](amsn-core/research/HUMAN_SEGEV_MEMBRANE_AREA_SUPPORT_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-MEMBRANE-AREA-SUPPORT.md).
+
+
+## Verified Segev matched-support passive operator checkpoint — 21/11/2026
+
+Matched-support passive admittance workflow [44904475571](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475571) passed 2/2 cells, and Core CI [44904475559](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475559) passed 4/4 jobs. The maximum sampled relative L2 error across DC–3 kHz was 0.0078381% for NMO_68174 and 0.0025449% for NMO_68175. Leak/capacitance diagonal errors were below 0.00025%. This is a matched-support finite-volume projection, not a native fine-grid Schur complement or biological validation. See [report](amsn-core/research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-PASSIVE-ADMITTANCE-OPERATOR.md).

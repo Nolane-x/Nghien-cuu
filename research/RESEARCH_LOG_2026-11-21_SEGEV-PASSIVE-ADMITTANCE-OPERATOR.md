@@ -24,3 +24,16 @@ Pending. The NEURON-side operator is a finite-volume projection onto the SWC nod
 ## Limits
 
 This is still a passive linear model. No active channels, synapses, spines or biological parameter fitting. No biological accuracy claim.
+
+
+## Verified results — matched-support passive admittance operator
+
+Workflow [44904475571](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475571) passed 2/2 Segev morphology jobs; Core CI [44904475559](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44904475559) passed 4/4 jobs.
+
+- NMO_68174 maximum sampled passive-operator relative L2 error over DC–3 kHz: 0.0078381%.
+- NMO_68175 maximum: 0.0025449%.
+- Leak and capacitance diagonal sampled relative L2 errors: 0.0002472% (68174) and 0.0002153% (68175).
+- Axial current conservation residual max: 3.55e-21 A and 6.04e-21 A; constant-voltage axial nullspace zero.
+- Rm=1 Ω·m², Cm=0.01 F/m²; 32 deterministic complex voltage probes per frequency, seed 20261121.
+
+This is a matched-support finite-volume passive operator, not an exact Schur complement of native fine NEURON. See [HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_PASSIVE_ADMITTANCE_OPERATOR_AUDIT_2026-11-21.md) and [summary CSV](../results/human_segev_passive_admittance_operator_summary_2026-11-21.csv).
