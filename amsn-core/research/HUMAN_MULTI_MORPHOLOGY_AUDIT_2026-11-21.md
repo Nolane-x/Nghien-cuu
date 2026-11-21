@@ -118,3 +118,8 @@ Interpretation: the missing soma/axon attachment was the dominant NMO_68175 disc
 ## Residual localization from the raw source–probe CSVs
 
 The raw artifacts were extracted and inspected, rather than relying only on workflow summaries. The [pair-residual localization note](SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md) records the worst pair at 3 kHz for both meshes, source/probe centre offsets, absolute impedance, and descriptive rank correlations. Error is consistently more associated with log-frequency (Spearman 0.747–0.833) than with either centre offset alone; the latter varies by cell and by source/probe. The 0.0625 µm worst pair changes for NMO_68175 but not NMO_68174. These are repeated-measure descriptive statistics and do not prove a causal effect. The next planned experiment is a matched-support source/probe placement audit, not blind further mesh refinement.
+
+
+## Controlled DC source-placement audit generalized to Segev morphologies
+
+The same-mesh source-placement experiment is now parameterized by morphology path/label, base mesh, source-alignment tolerance and NEURON nseg cap through environment variables. This lets it compare legacy-centre and SWC-aligned source placements on the two Segev cells without changing passive parameters or probes. It is a DC steady-state control; it does not replace the AC audit. A dedicated two-morphology workflow is added next.

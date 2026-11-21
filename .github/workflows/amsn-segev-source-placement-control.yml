@@ -1,0 +1,80 @@
+name: AMSN Segev same-mesh passive source-placement control
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-segev-source-placement-control.yml"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/examples/human_passive_source_placement_control.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-segev-source-placement-control.yml"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/examples/human_passive_source_placement_control.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-placement:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+    env:
+      AMSN_MORPHOLOGY_LABEL: \${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: \${{ matrix.morphology_path }}
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
+      AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
+      AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN tests
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify morphology source
+        run: |
+          python -c "import neuron; print('NEURON', neuron.__version__)"
+          test -s "\${{ matrix.morphology_path }}"
+        working-directory: amsn-core
+      - name: Run same-mesh legacy versus SWC-aligned placement
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_passive_source_placement_control.py | tee "\${{ matrix.morphology_label }}-source-placement.csv"
+        working-directory: amsn-core
+      - name: Preserve raw source-placement data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-\${{ matrix.morphology_label }}-source-placement-0.125um
+          path: amsn-core/\${{ matrix.morphology_label }}-source-placement.csv
+          if-no-files-found: ignore

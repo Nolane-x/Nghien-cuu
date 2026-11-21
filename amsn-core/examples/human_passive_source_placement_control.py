@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import csv
 from math import ceil
+import os
 from pathlib import Path
 
 import numpy as np
@@ -31,9 +32,9 @@ import human_fine_mesh_passive_dc_audit as fine_audit
 from amsn.morphology import SWCMorphology
 
 
-BASE_MAX_SEGMENT_UM = 0.125
-SOURCE_ALIGNMENT_TOLERANCE_UM = 0.002
-MAX_REFINED_NSEG = 32767
+BASE_MAX_SEGMENT_UM = float(os.environ.get('AMSN_NEURON_MAX_SEGMENT_UM', '0.125'))
+SOURCE_ALIGNMENT_TOLERANCE_UM = float(os.environ.get('AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM', '0.002'))
+MAX_REFINED_NSEG = int(os.environ.get('AMSN_SOURCE_ALIGNMENT_MAX_NSEG', '32767'))
 RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
 CM_F_M2 = 0.01
@@ -48,6 +49,9 @@ AREA_DIFFERENCE_SANITY_TOLERANCE_PCT = 1e-3
 
 def configure_reference_parameters():
     reference.MAX_NEURON_SEGMENT_UM = BASE_MAX_SEGMENT_UM
+    morphology_path = os.environ.get("AMSN_MORPHOLOGY_PATH")
+    if morphology_path:
+        reference.DATA = Path(morphology_path)
     reference.RI_OHM_M = RI_OHM_M
     reference.RM_OHM_M2 = RM_OHM_M2
     reference.CM_F_M2 = CM_F_M2
@@ -217,7 +221,11 @@ def main():
         )
 
     total_segments = sum(section.nseg for section in sections)
-    print(f"# NEURON={neuron.__version__}; morphology=NMO_290988")
+    morphology_label = os.environ.get("AMSN_MORPHOLOGY_LABEL", "NMO_290988")
+    print(
+        f"# NEURON={neuron.__version__}; morphology={morphology_label}; "
+        f"path={reference.DATA}"
+    )
     print(
         f"# base_mesh_max_segment_um={BASE_MAX_SEGMENT_UM}; "
         f"source_alignment_tolerance_um={SOURCE_ALIGNMENT_TOLERANCE_UM}"

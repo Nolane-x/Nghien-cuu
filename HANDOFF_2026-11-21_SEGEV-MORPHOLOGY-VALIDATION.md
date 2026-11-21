@@ -107,3 +107,8 @@ Interpretation: the missing soma/axon attachment was the dominant NMO_68175 disc
 ## Raw pair-level residual investigation
 
 The 0.125/0.0625 µm raw CSV artifacts were downloaded and analyzed. At 3 kHz, the NMO_68175 worst pair changes from basal q75 (SWC 3253) → apical q50 (12177) at 0.125 µm to apical q75 (7640) → apical q50 (12177) at 0.0625 µm. NMO_68174's worst pair remains basal q75 (1577) → apical q90 (10532). Transfer error has a strong descriptive rank association with log-frequency (Spearman 0.747–0.833) and weaker, cell-specific associations with source/probe segment-centre offsets. See [SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md](amsn-core/research/SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md). Next: matched-support source/probe placement comparison at fixed physical sites; keep Ri/Rm/Cm/Eleak unchanged.
+
+
+## Next experiment — matched source placement on Segev cells
+
+The fine-mesh raw-data inspection shows the remaining error is strongly associated with frequency and inconsistently associated with source/probe centre offset. The existing source-placement script is now parameterized for Segev morphology path/label and mesh/tolerance via environment variables. It preserves the original 0.125 µm legacy segment centres while creating a distinct SWC-aligned centre within 0.002 µm on the same refined mesh. Both source modes use the same refined morphology, passive parameters and probes. This DC test isolates source placement but is not an AC test; a separate frequency-domain control may be needed after these results.
