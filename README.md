@@ -306,3 +306,10 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 
 
 - Raw AC worst-path inspection: all four configurations peak at 3 kHz. Cell1125's worst path stays basal q75→apical q90; cell1204's nearest-source worst path changes with mesh, while weighted-source worst residual moves to basal q75→apical q90. See [worst-pair CSV](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).
+
+
+### Independent human morphology replication — 21/11/2026
+
+A third morphology is now included in the source-placement replication matrix: NMO_290988 / 1094_Mohan_etal_2015 (8,903 SWC records). It is a separate NeuroMorpho.Org/DeKock neuron record with soma and basal/apical dendrites, no axon, moderate dendritic completeness and recorded mesiotemporal sclerosis context. It is not a healthy-control sample.
+
+Workflow: [AMSN Human Morphology Source-Placement Replication](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-human-morphology-source-alignment.yml). The six jobs cover three morphology records × two mesh caps, run the full AMSN test suite, check all source/probe mappings, then run transient and AC source-placement audits.

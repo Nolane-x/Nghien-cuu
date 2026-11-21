@@ -330,3 +330,8 @@ AC source placement [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions
 ## AC source-placement worst-path localization — 21/11/2026
 
 The four raw AC matrices peak at 3 kHz and are concentrated in apical transfer paths. NMO_68174's worst path remains basal q75→apical q90; NMO_68175's worst path changes with mesh, and weighted source moves the remaining worst path to basal q75→apical q90 at both meshes. See [AC worst-pair table](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).
+
+
+## Third-morphology source-alignment replication — 21/11/2026
+
+A six-job independent morphology matrix has been added: NMO_68174, NMO_68175 and NMO_290988 / 1094_Mohan_etal_2015 at mesh caps 0.125 and 0.0625 µm. The third morphology is a distinct NeuroMorpho.Org/DeKock record but is a partial dendritic reconstruction (no axon, moderate completeness) with mesiotemporal sclerosis context; do not label it a healthy control. Each job runs all AMSN tests, validates source/probe mapping and produces both transient and AC raw measurements.

@@ -1,0 +1,160 @@
+name: AMSN Human Morphology Source-Placement Replication
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-morphology-source-alignment.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_segev_transient_source_alignment_audit.py"
+      - "amsn-core/examples/human_segev_ac_source_alignment_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-morphology-source-alignment.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_segev_transient_source_alignment_audit.py"
+      - "amsn-core/examples/human_segev_ac_source_alignment_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-alignment:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+      AMSN_TRANSIENT_DT_MS: "0.05"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify independent morphology and matched sites
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import os
+          import sys
+          from pathlib import Path
+
+          import neuron
+          from amsn.morphology import SWCMorphology
+
+          sys.path.insert(0, str(Path("examples").resolve()))
+          import neuron_cross_validation as reference
+          import human_fine_mesh_passive_dc_audit as fine_audit
+
+          morphology_path = Path(os.environ["AMSN_MORPHOLOGY_PATH"])
+          expected_records = int(os.environ["AMSN_EXPECTED_SWC_RECORDS"])
+          reference.DATA = morphology_path
+          reference.MAX_NEURON_SEGMENT_UM = float(os.environ["AMSN_NEURON_MAX_SEGMENT_UM"])
+
+          if not morphology_path.is_file():
+              raise RuntimeError(f"morphology file missing: {morphology_path}")
+          morphology = SWCMorphology.from_file(morphology_path)
+          if len(morphology.nodes) != expected_records:
+              raise RuntimeError(
+                  f"SWC record count mismatch: {len(morphology.nodes)} != {expected_records}"
+              )
+          reader, sections = reference.import_swc_with_neuron()
+          injections, probes, sites = fine_audit.build_sites(morphology, reader, sections)
+          if len(injections) != 3 or len(probes) != 5:
+              raise RuntimeError(
+                  f"expected 3 source and 5 probe sites; got {len(injections)} and {len(probes)}"
+              )
+          expected_unique_sites = len(set(node for _, node in injections + probes))
+          if expected_unique_sites != 7 or len(sites) != expected_unique_sites:
+              raise RuntimeError(
+                  f"expected 7 unique mapped SWC sites (soma is both source/probe); got {len(sites)}"
+              )
+          print(f"NEURON={neuron.__version__}")
+          print(f"morphology={os.environ['AMSN_MORPHOLOGY_LABEL']}")
+          print(f"swc_records={len(morphology.nodes)}; sections={len(sections)}")
+          print(f"NEURON_segments={sum(section.nseg for section in sections)}")
+          print(f"sources={injections}")
+          print(f"probes={probes}")
+          print(f"mapped_sites={len(sites)}; mesh_cap_um={reference.MAX_NEURON_SEGMENT_UM}")
+          PY
+        working-directory: amsn-core
+      - name: Run transient source-placement audit
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_segev_transient_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-transient-source.log"
+        working-directory: amsn-core
+      - name: Run AC source-placement audit
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_segev_ac_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-ac-source.log"
+        working-directory: amsn-core
+      - name: Preserve transient and AC raw measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-source-alignment-replication
+          path: |
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-transient-source.log
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-ac-source.log
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_source_alignment_traces_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_source_alignment_summary_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_segev_ac_source_alignment_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_segev_ac_source_alignment_summary_2026-11-21.csv
+          if-no-files-found: error
