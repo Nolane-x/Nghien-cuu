@@ -25,3 +25,16 @@ Implementation and workflow are committed. The first CI result is pending; no cr
 ## Scientific guardrails
 
 One partial morphology, passive membrane only, no fitting, no experimental validation. A successful result will validate only numerical equivalence for this specific model/configuration.
+
+## Verified 0.5 µm baseline — workflow 44880205634
+
+- NEURON 9.0.2, 125 sections, 25,233 segments; AMSN 8,893 compartments; 120 rows; 74 tests passed.
+- Input complex error median/p95/max: 0.043795832/0.074104209/0.078027291%.
+- Transfer complex error median/p95/max: 0.039582892/0.711515188/1.592748090%.
+- Transfer magnitude error max: 1.094346040%; phase error max: 0.666723670°.
+- High-frequency growth is visible: median transfer complex error rises from 0.013000318% at 0.1 Hz to 0.692482780% at 3,000 Hz.
+- Worst case: apical q75 to basal q90 at 3,000 Hz; absolute transfer impedance is ~8.37e-9 MΩ in NEURON.
+
+## Spatial convergence follow-up
+
+The audit script and workflow were parameterized in commit 62a5d288f23084001c70e7580ac334140c09b967 to run mesh caps of 0.5, 0.25 and 0.125 µm. Workflow 44880470858 is the three-mesh run. Do not select a production reference mesh until its three per-mesh CSVs are inspected.

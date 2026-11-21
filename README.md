@@ -163,6 +163,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 ### Checkpoint mới — passive frequency-domain impedance (21/11/2026)
 
 - [Handoff frequency-domain impedance](HANDOFF_2026-11-21_PASSIVE-FREQUENCY-RESPONSE.md) — checkpoint tiếp tục mới nhất.
-- [Báo cáo frequency-domain](amsn-core/research/HUMAN_PASSIVE_FREQUENCY_RESPONSE_AUDIT_2026-11-21.md) — phương pháp kiểm chứng complex input/transfer impedance và pha theo 8 tần số; kết quả chỉ được chốt sau CI.
+- [Báo cáo frequency-domain](amsn-core/research/HUMAN_PASSIVE_FREQUENCY_RESPONSE_AUDIT_2026-11-21.md) — baseline 0,5 µm đã xanh; input impedance max error 0,0780%, transfer impedance max complex error 1,5927%; ma trận ba mật độ lưới đang được kiểm tra.
 - [Mã audit](amsn-core/examples/human_passive_frequency_response_audit.py), [bộ giải complex Hines](amsn-core/src/amsn/cable.py) và [workflow](.github/workflows/amsn-passive-frequency-response-audit.yml).
-- [Raw CSV artifact](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-passive-frequency-response-audit.yml) sẽ được tải từ run tương ứng sau khi workflow hoàn tất.
+- [Baseline workflow 0,5 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880205634) — 74/74 tests pass; [raw artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880205634/artifacts/14697319208); [bảng lỗi theo tần số](amsn-core/results/human_passive_frequency_response_summary_0p5um_2026-11-21.csv). [Spatial sweep 0,5/0,25/0,125 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858).

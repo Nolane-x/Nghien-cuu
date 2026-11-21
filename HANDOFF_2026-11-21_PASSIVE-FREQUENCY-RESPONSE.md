@@ -3,8 +3,9 @@
 **Date:** 2026-11-21 (Asia/Bangkok)  
 **Repository:** https://github.com/Nolane-x/Nghien-cuu  
 **Branch:** main  
-**Base commit:** 8532c569d9539d3088e0b35958e3fdac252036c2  
-**Status at creation:** implementation committed; dedicated GitHub Actions run pending.
+**Implementation commit:** 99daea4ea0cbaacc19b2e79f621e028fe5ccbf62  
+**Three-mesh convergence commit:** 62a5d288f23084001c70e7580ac334140c09b967  
+**Status:** 0.5 µm baseline passed; 0.5/0.25/0.125 µm convergence run pending.
 
 ## Start here
 
@@ -25,11 +26,19 @@
 
 Morphology: NeuroMorpho NMO_290988, file \`1094_Mohan_etal_2015.CNG.swc\`, partial temporal-cortex L2–3 pyramidal morphology (soma and basal/apical dendrites; no axon; moderate completeness). Preserve provenance from \`amsn-core/data/human/README.md\`.
 
-Frequencies: 0.1, 1, 10, 30, 100, 300, 1,000, 3,000 Hz. Source sites: soma, basal q75, apical q75. Probe sites: soma, basal q50/q90, apical q50/q90. NEURON segment cap: 0.5 µm.
+Frequencies: 0.1, 1, 10, 30, 100, 300, 1,000, 3,000 Hz. Source sites: soma, basal q75, apical q75. Probe sites: soma, basal q50/q90, apical q50/q90. NEURON segment caps under sweep: 0.5, 0.25 and 0.125 µm.
 
 The AMSN phasor is a voltage perturbation (not absolute V):
 \`(G_leak + G_axial + j 2π f C) ΔV = I\`.
 The \(e^{jωt}\) convention is documented in the method. Input/transfer impedance is \`ΔV/I\`; phase is compared modulo 360 degrees.
+
+## Verified initial result — 0.5 µm
+
+Workflow [44880205634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880205634) passed, including 74 tests. NEURON 9.0.2 used 25,233 segments; AMSN used 8,893 compartments; the audit generated 120 rows. Input complex error median/p95/max was 0.043796/0.074104/0.078027%. Transfer complex error was 0.039583/0.711515/1.592748%. Maximum transfer magnitude error was 1.094346%; phase error 0.666724°. Input impedance is much closer than the worst distal transfer measurements.
+
+The largest transfer percentage occurred for apical q75 → basal q90 at 3,000 Hz, where transfer impedance itself is very small (~8.37e-9 MΩ in NEURON). Interpret relative error with absolute impedance.
+
+The frequency dependence suggests further spatial refinement should be tested; it does not prove the cause is mesh-only. Three-mesh run [44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) is configured for 0.5, 0.25 and 0.125 µm. Inspect all three artifacts/logs and update this handoff before changing passive parameters.
 
 ## Validation gates
 
@@ -49,9 +58,9 @@ The \(e^{jωt}\) convention is documented in the method. Input/transfer impedanc
 
 ## Next actions
 
-1. Inspect workflow logs and artifact; record input and transfer complex-error median/p95/max and per-frequency maxima.
-2. If successful, run the same protocol at 0.25 µm and 0.125 µm NEURON segment caps.
-3. Add a by-frequency/per-source report before choosing a production discretization.
+1. Inspect the 0.5/0.25/0.125 µm workflow jobs and compare error by frequency, source and probe.
+2. If convergence is monotonic, define a minimum reference mesh and quantify the remaining high-frequency floor.
+3. If discrepancy does not converge, isolate source/probe placement, section junctions and Import3D interpolation.
 4. Continue to active human cortical channels only after passive AC and transient baselines are stable.
 
 ## Source workflow and output
