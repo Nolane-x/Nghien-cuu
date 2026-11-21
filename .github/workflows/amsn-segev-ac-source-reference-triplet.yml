@@ -41,13 +41,13 @@ jobs:
           - morphology_label: NMO_68175_cell1204
             morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
     env:
-      AMSN_MORPHOLOGY_LABEL: \${{ matrix.morphology_label }}
-      AMSN_MORPHOLOGY_PATH: \${{ matrix.morphology_path }}
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
       AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
       AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
       AMSN_SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM: "0.05"
       AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
-      AMSN_AC_TRIPLET_OUTPUT: \${{ matrix.morphology_label }}-ac-source-reference-triplet.csv
+      AMSN_AC_TRIPLET_OUTPUT: ${{ matrix.morphology_label }}-ac-source-reference-triplet.csv
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -67,20 +67,20 @@ jobs:
       - name: Verify morphology and NEURON
         run: |
           python -c "import neuron; print('NEURON', neuron.__version__)"
-          test -s "\${{ matrix.morphology_path }}"
+          test -s "${{ matrix.morphology_path }}"
         working-directory: amsn-core
       - name: Compare legacy, exact-SWC and refined source references
         shell: bash
         run: |
           set -o pipefail
-          python examples/human_segev_ac_source_reference_triplet_audit.py | tee "\${{ matrix.morphology_label }}-ac-source-reference-triplet.log"
+          python examples/human_segev_ac_source_reference_triplet_audit.py | tee "${{ matrix.morphology_label }}-ac-source-reference-triplet.log"
         working-directory: amsn-core
       - name: Preserve raw triplet measurements and log
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-\${{ matrix.morphology_label }}-ac-source-reference-triplet-0.125um
+          name: amsn-${{ matrix.morphology_label }}-ac-source-reference-triplet-0.125um
           path: |
-            amsn-core/\${{ matrix.morphology_label }}-ac-source-reference-triplet.csv
-            amsn-core/\${{ matrix.morphology_label }}-ac-source-reference-triplet.log
+            amsn-core/${{ matrix.morphology_label }}-ac-source-reference-triplet.csv
+            amsn-core/${{ matrix.morphology_label }}-ac-source-reference-triplet.log
           if-no-files-found: error
