@@ -29,6 +29,7 @@ import human_fine_mesh_passive_dc_audit as fine_audit
 import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 from amsn.reduction import schur_reduce_passive_admittance
+from amsn.prima import prima_reduce_passive_cable
 
 
 RI_OHM_M = 0.7
@@ -41,6 +42,7 @@ MORPHOLOGY_LABEL = os.environ.get("AMSN_MORPHOLOGY_LABEL", "NMO_290988_Mohan2015
 MORPHOLOGY_PATH = os.environ.get("AMSN_MORPHOLOGY_PATH")
 NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.125"))
 OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
+PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
@@ -141,6 +143,87 @@ def build_neuron_port_impedance(
     return impedance_matrix
 
 
+
+def build_prima_transient_port_comparison(
+    tree,
+    reduced_model,
+    boundary_indices: list[int],
+    source_port_index: int,
+    boundary_meta: list[dict],
+) -> list[dict]:
+    """Compare PRIMA and full Hines port traces under the same current pulse."""
+    dt_s = 0.1e-3
+    duration_s = 20e-3
+    steps = round(duration_s / dt_s)
+    pulse_start_s = 2e-3
+    pulse_end_s = 12e-3
+    pulse_current_a = 10e-12
+    reversal_v = tree.parameters.e_leak_v
+    full_voltage = np.full(tree.n_compartments, reversal_v, dtype=float)
+    reduced_state = np.zeros(reduced_model.order, dtype=float)
+    full_current = np.zeros(tree.n_compartments, dtype=float)
+    port_current = np.zeros(len(boundary_indices), dtype=float)
+    full_trace = np.empty((steps, len(boundary_indices)), dtype=float)
+    reduced_trace = np.empty_like(full_trace)
+
+    for step in range(steps):
+        time_s = step * dt_s
+        full_current.fill(0.0)
+        port_current.fill(0.0)
+        if pulse_start_s <= time_s < pulse_end_s:
+            full_current[boundary_indices[source_port_index]] = pulse_current_a
+            port_current[source_port_index] = pulse_current_a
+        full_voltage = tree.step_passive(full_voltage, dt_s, full_current)
+        reduced_state = reduced_model.step_backward_euler(reduced_state, dt_s, port_current)
+        full_trace[step, :] = full_voltage[boundary_indices] - reversal_v
+        reduced_trace[step, :] = reduced_model.port_voltages(reduced_state)
+
+    rows: list[dict] = []
+    for port_index, meta in enumerate(boundary_meta):
+        reference_trace = full_trace[:, port_index]
+        reduced_port_trace = reduced_trace[:, port_index]
+        denominator = max(float(np.linalg.norm(reference_trace)), 1e-30)
+        reference_peak = float(np.max(np.abs(reference_trace)))
+        absolute_error = reduced_port_trace - reference_trace
+        rows.append({
+            "metric": "transient_port",
+            "frequency_hz": "",
+            "port_index": port_index,
+            "port_swc_id": meta["node_id"],
+            "port_roles": meta["roles"],
+            "transient_dt_ms": dt_s * 1e3,
+            "transient_duration_ms": duration_s * 1e3,
+            "transient_pulse_start_ms": pulse_start_s * 1e3,
+            "transient_pulse_end_ms": pulse_end_s * 1e3,
+            "transient_current_pA": pulse_current_a * 1e12,
+            "transient_port_nrmse_pct": 100.0 * float(np.linalg.norm(absolute_error)) / denominator,
+            "transient_max_abs_error_mV": float(np.max(np.abs(absolute_error))) * 1e3,
+            "transient_full_peak_mV": reference_peak * 1e3,
+            "transient_peak_relative_error_pct": 100.0 * float(np.max(np.abs(absolute_error))) / max(reference_peak, 1e-30),
+        })
+
+    all_reference = full_trace.ravel()
+    all_error = (reduced_trace - full_trace).ravel()
+    rows.append({
+        "metric": "transient_all_ports",
+        "frequency_hz": "",
+        "port_index": "",
+        "port_swc_id": "",
+        "port_roles": "all_retained_ports",
+        "transient_dt_ms": dt_s * 1e3,
+        "transient_duration_ms": duration_s * 1e3,
+        "transient_pulse_start_ms": pulse_start_s * 1e3,
+        "transient_pulse_end_ms": pulse_end_s * 1e3,
+        "transient_current_pA": pulse_current_a * 1e12,
+        "transient_port_nrmse_pct": 100.0 * float(np.linalg.norm(all_error)) / max(float(np.linalg.norm(all_reference)), 1e-30),
+        "transient_max_abs_error_mV": float(np.max(np.abs(all_error))) * 1e3,
+        "transient_full_peak_mV": float(np.max(np.abs(all_reference))) * 1e3,
+        "transient_peak_relative_error_pct": 100.0 * float(np.max(np.abs(all_error))) / max(float(np.max(np.abs(all_reference))), 1e-30),
+    })
+    return rows
+
+
+
 def main() -> None:
     if not np.isfinite(NEURON_MAX_SEGMENT_UM) or NEURON_MAX_SEGMENT_UM <= 0.0:
         raise ValueError("AMSN_NEURON_MAX_SEGMENT_UM must be finite and positive")
@@ -173,6 +256,11 @@ def main() -> None:
     }
     cable = morphology.to_cable_tree()
     boundary_indices = [cable.index[node_to_name[node_id]] for node_id in boundary_ids]
+    if PRIMA_MAX_ORDER <= 0:
+        raise ValueError("AMSN_PRIMA_MAX_ORDER must be positive")
+    prima_model = prima_reduce_passive_cable(cable, boundary_indices, max_order=PRIMA_MAX_ORDER)
+    if prima_model.order >= cable.n_compartments:
+        raise RuntimeError("PRIMA audit did not reduce the full compartment state count")
 
     roles: dict[int, list[str]] = defaultdict(list)
     for name, node_id in injections:
@@ -198,9 +286,11 @@ def main() -> None:
     raw_path = results_dir / f"{prefix}human_passive_schur_port_matrix_2026-11-21.csv"
     summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-21.csv"
     localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-21.csv"
+    prima_path = results_dir / f"{prefix}human_passive_prima_reduction_2026-11-21.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
     localization_rows: list[dict] = []
+    prima_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
     maximum_neuron_reciprocity_error_pct = 0.0
@@ -230,6 +320,20 @@ def main() -> None:
 
         y_amsn_from_z = np.linalg.inv(z_amsn)
         y_neuron = np.linalg.inv(z_neuron)
+        z_prima = prima_model.impedance_matrix(frequency_hz)
+        y_prima = np.linalg.solve(z_prima, np.eye(len(boundary_ids)))
+        prima_rows.append({
+            "metric": "frequency_response",
+            "morphology_label": MORPHOLOGY_LABEL,
+            "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+            "frequency_hz": frequency_hz,
+            "full_compartment_order": cable.n_compartments,
+            "prima_order": prima_model.order,
+            "prima_max_order": PRIMA_MAX_ORDER,
+            "state_count_reduction_pct": 100.0 * (1.0 - prima_model.order / cable.n_compartments),
+            "impedance_frobenius_error_pct": relative_frobenius_pct(z_prima, z_amsn),
+            "admittance_frobenius_error_pct": relative_frobenius_pct(y_prima, y_amsn_schur),
+        })
         schur_identity_error = relative_frobenius_pct(y_amsn_schur, y_amsn_from_z)
         maximum_schur_identity_error_pct = max(
             maximum_schur_identity_error_pct, schur_identity_error
@@ -275,6 +379,10 @@ def main() -> None:
             "port_impedance_diagonal_error_pct": z_diagonal_error,
             "port_impedance_offdiagonal_error_pct": z_offdiag_error,
             "port_impedance_max_absolute_error_ohm": z_max_abs_error,
+            "prima_reduced_order": prima_model.order,
+            "prima_state_count_reduction_pct": 100.0 * (1.0 - prima_model.order / cable.n_compartments),
+            "prima_impedance_frobenius_error_pct": relative_frobenius_pct(z_prima, z_amsn),
+            "prima_admittance_frobenius_error_pct": relative_frobenius_pct(y_prima, y_amsn_schur),
         })
 
         # Localize each frequency-domain residual by retained port row.
@@ -370,6 +478,10 @@ def main() -> None:
     write_csv(raw_path, raw_rows)
     write_csv(summary_path, summary_rows)
     write_csv(localization_path, localization_rows)
+    basal_source_id = next(node_id for name, node_id in injections if name == "basal_q75")
+    basal_source_port = boundary_ids.index(basal_source_id)
+    prima_rows.extend(build_prima_transient_port_comparison(cable, prima_model, boundary_indices, basal_source_port, boundary_meta))
+    write_csv(prima_path, prima_rows)
 
     max_admittance_error = max(
         float(row["port_admittance_frobenius_error_pct"]) for row in summary_rows
@@ -378,6 +490,7 @@ def main() -> None:
         float(row["port_impedance_frobenius_error_pct"]) for row in summary_rows
     )
     print(f"NEURON={neuron.__version__}")
+    print(f"PRIMA_order={prima_model.order}/{cable.n_compartments}; state_reduction_pct={100.0 * (1.0-prima_model.order/cable.n_compartments):.9g}; requested_cap={PRIMA_MAX_ORDER}")
     print(
         f"morphology={MORPHOLOGY_LABEL}; path={reference.DATA}; "
         f"SWC_records={len(morphology.nodes)}"
@@ -404,6 +517,11 @@ def main() -> None:
     print(f"raw_csv={raw_path}; bytes={raw_path.stat().st_size}")
     print(f"summary_csv={summary_path}; rows={len(summary_rows)}")
     print(f"port_localization_csv={localization_path}; rows={len(localization_rows)}")
+    print(f"prima_reduction_csv={prima_path}; rows={len(prima_rows)}")
+    max_prima_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
+    max_prima_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
+    global_transient = next(row for row in prima_rows if row["metric"] == "transient_all_ports")
+    print("PRIMA_port_impedance_error_pct_max=%.12g; PRIMA_port_admittance_error_pct_max=%.12g; PRIMA_transient_all_ports_NRMSE_pct=%.12g" % (max_prima_z, max_prima_y, global_transient["transient_port_nrmse_pct"]))
 
 
 if __name__ == "__main__":

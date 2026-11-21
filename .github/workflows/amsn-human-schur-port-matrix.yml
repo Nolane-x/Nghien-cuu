@@ -6,6 +6,7 @@ on:
     paths:
       - ".github/workflows/amsn-human-schur-port-matrix.yml"
       - "amsn-core/src/amsn/reduction.py"
+      - "amsn-core/src/amsn/prima.py"
       - "amsn-core/src/amsn/cable.py"
       - "amsn-core/src/amsn/morphology.py"
       - "amsn-core/examples/human_schur_port_matrix_audit.py"
@@ -112,6 +113,7 @@ jobs:
           name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-schur-port-matrix
           path: |
             amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-schur-port.log
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_reduction_2026-11-21.csv
             amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_matrix_2026-11-21.csv
             amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_summary_2026-11-21.csv
             amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_localization_2026-11-21.csv
