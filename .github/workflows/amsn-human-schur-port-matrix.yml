@@ -1,0 +1,117 @@
+name: AMSN Human Passive Schur Port-Matrix Audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-schur-port-matrix.yml"
+      - "amsn-core/src/amsn/reduction.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/examples/human_schur_port_matrix_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-schur-port-matrix.yml"
+      - "amsn-core/src/amsn/reduction.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/examples/human_schur_port_matrix_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  schur-port-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify morphology and source/probe port mapping
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from amsn.morphology import SWCMorphology
+          path = Path(os.environ["AMSN_MORPHOLOGY_PATH"])
+          morphology = SWCMorphology.from_file(path)
+          expected = int(os.environ["AMSN_EXPECTED_SWC_RECORDS"])
+          if len(morphology.nodes) != expected:
+              raise RuntimeError(f"SWC record count {len(morphology.nodes)} != {expected}")
+          print(f"morphology={os.environ['AMSN_MORPHOLOGY_LABEL']}")
+          print(f"SWC_records={len(morphology.nodes)}")
+          PY
+        working-directory: amsn-core
+      - name: Run exact seven-port Schur matrix comparison
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_schur_port_matrix_audit.py | tee "${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-schur-port.log"
+        working-directory: amsn-core
+      - name: Preserve Schur port matrices and summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-schur-port-matrix
+          path: |
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-schur-port.log
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_matrix_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_summary_2026-11-21.csv
+          if-no-files-found: error

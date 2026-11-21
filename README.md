@@ -335,3 +335,8 @@ Six configurations have been added to separate time-step and spatial mesh effect
 - The 2×3 matrix (mesh 0.125/0.0625 µm × dt 0.1/0.05/0.025 ms) produced 63,090 trace rows and 180 summaries.
 - At fixed mesh, cross-simulator NRMSE is nearly invariant with dt. Refining mesh to 0.0625 µm reduces maximum interpolated NRMSE by about 90.4%. Direct NEURON temporal error halves as dt halves (ratio ≈1.954), as expected for backward Euler.
 - Report: [HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md); data: [configuration CSV](amsn-core/results/human_nmo290988_passive_transient_convergence_summary_2026-11-21.csv) and [pairwise CSV](amsn-core/results/human_nmo290988_passive_transient_pairwise_convergence_2026-11-21.csv).
+
+
+### Exact passive Schur port reduction — in progress
+
+The core now exposes a frequency-dependent Schur/Kron reduction that eliminates non-port compartments while preserving chosen electrical vertices. Unit tests compare it with a dense Schur complement and the full Hines solution. A six-job human audit will compare AMSN and NEURON seven-port matrices over eight frequencies on three morphologies and two mesh caps.
