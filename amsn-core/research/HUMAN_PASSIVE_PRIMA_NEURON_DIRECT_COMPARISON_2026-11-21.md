@@ -89,3 +89,8 @@ The direct NEURON residual includes differences between the AMSN and NEURON impl
 - Order 28: use only for a narrower or explicitly error-tolerant task, not as the general-purpose preset.
 
 Next work should test additional source ports and pulse widths, perturb passive parameters without rebuilding the Krylov basis, and extend the comparison above 3 kHz. These checks are needed before making the reduced model a default or coupling it to active and synaptic dynamics.
+
+
+## Parameter-basis reuse follow-up
+
+A further audit perturbed Rm, Cm and Ra by ±20% on three human morphologies and compared a frozen nominal basis with a fresh same-order multi-shift basis. The 27-scenario audit passed 3/3; all 54 reduced projections passed Cholesky. Frozen-basis global maxima were 0.9946% Z / 0.9768% Y at 10 kHz, with worst single-port transient NRMSE 0.0006268%. See [HUMAN_PASSIVE_PRIMA_PARAMETER_ROBUSTNESS_2026-11-21.md](HUMAN_PASSIVE_PRIMA_PARAMETER_ROBUSTNESS_2026-11-21.md) and [morphology summary data](../results/human_passive_prima_parameter_robustness_morphology_summary_2026-11-21.csv).
