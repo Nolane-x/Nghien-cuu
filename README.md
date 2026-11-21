@@ -87,7 +87,7 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Fast-AMPA spatial-floor sweep [run 44761379734](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44761379734) đã xanh; tăng AMSN 2.000→6.000 Hz (2.541→4.287 compartment) giảm q90 RMS từ 0,003851 xuống 0,003670 mV nhưng không cải thiện source/soma cùng hướng. Chưa chọn mesh mặc định; bước kế tiếp là kiểm tra interpolation vị trí NEURON và area-lumping quanh protected control points.
 - Probe interpolation [run 44762715648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44762715648) cho thấy nội suy NEURON tới tọa độ SWC giúp q90 ở mesh 2k/4k nhưng không phải 6k, và làm xấu q75; đây là hiệu ứng phụ thuộc vị trí.
 - Matched-support area [run 44763720776](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44763720776) cho thấy diện tích control-volume AMSN khớp NEURON trong cùng miền hỗ trợ: q90 sai khác khoảng 0,0000018%, q75 khoảng 0,04–0,05%. So một segment đơn lẻ với cả node trước đó là không cùng miền đo.
-- Bước tiếp theo là kiểm chứng axial-resistance integrals trên chính các nửa cạnh q75/q90 và mở rộng sang nhánh basal/apical khác; chưa chọn mesh mặc định và chưa tuyên bố biological validation.
+- Matched-support axial-resistance audit [run 44870476391](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391) đã xanh; 15 phép đo trên 5 điểm basal/apical cho thấy sai khác axial geometry factor AMSN/NEURON tối đa 0,000239676%. Chỉ xác nhận các điểm unbranched đã khảo sát, chưa phải biological validation.
 
 
 ### Bổ sung trạng thái — 21/11/2026
@@ -95,7 +95,7 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Đã thêm matched-support axial-resistance audit và workflow vào commit `56a731c156db32f6beb35b813e177039d739a850`.
 - Audit chuyên biệt đã thành công: 15/15 hàng đo, 5 vị trí trên basal/apical, 3 tần số lưới; sai khác axial geometry factor AMSN/NEURON tối đa 0,000239676%.
 - Kết quả loại trừ một sai khác lớn trong tích phân axial cục bộ tại các điểm unbranched đã khảo sát; chưa bao phủ branchpoint, soma, section join, terminal hay toàn bộ cable matrix.
-- Xem handoff mới nhất để biết thí nghiệm toàn cây tiếp theo. Không xem đây là biological validation.
+- Bước tiếp theo: đối chiếu toàn bộ axial edge/junction matrix, bao gồm branchpoint, soma, section join và terminal; sau đó reproduce published Eyal 2018 / ModelDB 238347 bằng morphology/mechanism gốc. Không thêm NMDA/calcium/plasticity trước khi baseline điện học được khóa.
 
 
 - Comprehensive Core CI for code commit `56a731c156db32f6beb35b813e177039d739a850` is now confirmed successful: 65 tests on each of Python 3.12/3.13, module compilation/examples and both NEURON cross-validation jobs all green ([run 44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392)).
