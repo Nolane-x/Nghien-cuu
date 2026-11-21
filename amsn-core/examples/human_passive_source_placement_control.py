@@ -1,12 +1,11 @@
 """Controlled passive source-placement comparison on an identical NEURON mesh.
 
-The source section is locally refined to a mesh that preserves every original
-segment centre (the refined nseg is an odd multiple of the base nseg) and also
-places a segment centre within 0.001 um of the exact Import3D SWC arc.
+The source section is locally refined (within NEURON's nseg limit) to place a
+segment centre within 0.001 um of the exact Import3D SWC arc.
 
 Two current-clamp conditions are then compared on this same refined mesh:
-1. legacy_center: clamp at the original 0.125-um mesh's nearest segment centre,
-   which is preserved exactly as a node in the nested refined mesh;
+1. legacy_center: clamp at the refined-mesh centre nearest the source centre
+   used by the original 0.125-um mesh; the tiny remapping offset is recorded;
 2. swc_aligned: clamp at the refined mesh segment centre nearest the exact SWC
    electrical node.
 
@@ -34,7 +33,7 @@ from amsn.morphology import SWCMorphology
 
 BASE_MAX_SEGMENT_UM = 0.125
 SOURCE_ALIGNMENT_TOLERANCE_UM = 0.001
-MAX_REFINED_NSEG = 200001
+MAX_REFINED_NSEG = 32767
 RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
 CM_F_M2 = 0.01
@@ -60,49 +59,42 @@ def configure_reference_parameters():
 
 
 def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
-    """Choose the smallest odd multiple of nseg meeting the alignment target.
+    """Choose the smallest valid odd nseg meeting the SWC source tolerance.
 
-    If n_new = n_old * odd_multiplier, every old segment centre remains an
-    exact centre in the refined mesh, providing a same-mesh legacy control.
+    NEURON limits nseg to 32767. The old base-mesh centre is mapped to its
+    nearest centre on this common refined mesh; that remapping offset is
+    recorded so the legacy control remains quantitatively interpretable.
     """
     base_nseg = int(section.nseg)
     if base_nseg % 2 == 0:
         raise RuntimeError(f"{section.name()} nseg must be odd")
-    maximum_multiplier = MAX_REFINED_NSEG // base_nseg
-    if maximum_multiplier % 2 == 0:
-        maximum_multiplier -= 1
-    for multiplier in range(1, maximum_multiplier + 1, 2):
-        candidate_nseg = base_nseg * multiplier
-        index = int(round(target_x * candidate_nseg - 0.5))
-        index = min(candidate_nseg - 1, max(0, index))
-        centre_x = (index + 0.5) / candidate_nseg
-        offset_um = abs(centre_x - target_x) * float(section.L)
-        if offset_um <= tolerance_um:
+    for candidate_nseg in range(base_nseg, MAX_REFINED_NSEG + 1, 2):
+        aligned_index = int(round(target_x * candidate_nseg - 0.5))
+        aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
+        aligned_x = (aligned_index + 0.5) / candidate_nseg
+        aligned_offset_um = abs(aligned_x - target_x) * float(section.L)
+        if aligned_offset_um <= tolerance_um:
             legacy_index = int(round(legacy_x * candidate_nseg - 0.5))
             legacy_index = min(
                 candidate_nseg - 1, max(0, legacy_index)
             )
             legacy_centre_x = (legacy_index + 0.5) / candidate_nseg
-            if abs(legacy_centre_x - legacy_x) > 1e-12:
-                raise RuntimeError(
-                    f"old centre x={legacy_x:.15g} not retained by "
-                    f"nested nseg={candidate_nseg} in {section.name()}"
-                )
+            legacy_remap_um = abs(legacy_centre_x - legacy_x) * float(section.L)
             return {
                 "nseg": candidate_nseg,
-                "aligned_index": index,
-                "aligned_x": centre_x,
-                "aligned_offset_um": offset_um,
+                "aligned_index": aligned_index,
+                "aligned_x": aligned_x,
+                "aligned_offset_um": aligned_offset_um,
                 "legacy_index": legacy_index,
                 "legacy_x": legacy_centre_x,
                 "legacy_offset_um": abs(legacy_centre_x - target_x)
                     * float(section.L),
+                "legacy_remap_offset_um": legacy_remap_um,
                 "base_nseg": base_nseg,
-                "multiplier": multiplier,
             }
     raise RuntimeError(
         f"could not align {section.name()} source within {tolerance_um:g} um "
-        f"using odd nseg multiples up to {MAX_REFINED_NSEG}"
+        f"under NEURON's nseg cap {MAX_REFINED_NSEG}"
     )
 
 
