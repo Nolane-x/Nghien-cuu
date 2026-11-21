@@ -47,6 +47,7 @@ jobs:
       AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
       AMSN_SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM: "0.05"
       AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
+      AMSN_AC_SOURCE_OUTPUT: ${{ matrix.morphology_label }}-ac-source-alignment.csv
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -72,12 +73,14 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          python examples/human_segev_ac_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-ac-source-alignment.csv"
+          python examples/human_segev_ac_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-ac-source-alignment.log"
         working-directory: amsn-core
       - name: Preserve raw AC source-alignment measurements
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: amsn-${{ matrix.morphology_label }}-ac-source-alignment-0.125um
-          path: amsn-core/${{ matrix.morphology_label }}-ac-source-alignment.csv
-          if-no-files-found: ignore
+          path: |
+            amsn-core/${{ matrix.morphology_label }}-ac-source-alignment.csv
+            amsn-core/${{ matrix.morphology_label }}-ac-source-alignment.log
+          if-no-files-found: error
