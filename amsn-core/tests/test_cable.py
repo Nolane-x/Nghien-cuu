@@ -179,3 +179,61 @@ def test_uniform_cable_input_resistance_matches_analytic_sealed_cable():
     assert coarse_error < 7e-5
     assert fine_error < 2e-5
     assert fine_error < coarse_error / 3.0
+
+
+def _dense_frequency_response(tree, frequency_hz, injected_current_a):
+    from math import pi
+
+    omega = 2.0 * pi * frequency_hz
+    matrix = np.diag(
+        tree.membrane_leak_s + 1j * omega * tree.capacitance_f
+    ).astype(np.complex128)
+    for i in range(1, tree.n_compartments):
+        parent = tree.parent_index[i]
+        conductance = tree.axial_g_s[i]
+        matrix[i, i] += conductance
+        matrix[parent, parent] += conductance
+        matrix[i, parent] -= conductance
+        matrix[parent, i] -= conductance
+    return np.linalg.solve(matrix, injected_current_a)
+
+
+@pytest.mark.parametrize("frequency_hz", [0.0, 17.5, 100.0, 1000.0])
+def test_complex_hines_frequency_response_matches_dense_linear_system(frequency_hz):
+    tree = _tree()
+    current = np.array(
+        [1.0 + 0.2j, -0.3 + 0.1j, 0.2 - 0.4j, 0.5 + 0.0j],
+        dtype=np.complex128,
+    ) * 1e-12
+    got = tree.solve_passive_frequency_response(frequency_hz, current)
+    expected = _dense_frequency_response(tree, frequency_hz, current)
+    np.testing.assert_allclose(got, expected, rtol=2e-12, atol=1e-20)
+
+
+def test_zero_frequency_phasor_matches_passive_dc_perturbation():
+    tree = _tree()
+    current = np.zeros(tree.n_compartments)
+    current[tree.index["branch"]] = 10e-12
+    dc_absolute = tree.solve_passive_steady_state(current)
+    phasor = tree.solve_passive_frequency_response(0.0, current)
+    np.testing.assert_allclose(
+        phasor, dc_absolute - tree.parameters.e_leak_v,
+        rtol=2e-12, atol=1e-14,
+    )
+
+
+@pytest.mark.parametrize("frequency_hz", [-1.0, float("nan"), float("inf")])
+def test_frequency_response_rejects_invalid_frequencies(frequency_hz):
+    tree = _tree()
+    with pytest.raises(ValueError):
+        tree.solve_passive_frequency_response(frequency_hz)
+
+
+def test_frequency_response_rejects_bad_current_shape_and_non_finite_values():
+    tree = _tree()
+    with pytest.raises(ValueError):
+        tree.solve_passive_frequency_response(100.0, np.zeros(2))
+    current = np.zeros(tree.n_compartments, dtype=np.complex128)
+    current[1] = complex(float("nan"), 0.0)
+    with pytest.raises(ValueError):
+        tree.solve_passive_frequency_response(100.0, current)

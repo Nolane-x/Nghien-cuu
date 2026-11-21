@@ -158,3 +158,11 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - 15 source–probe pairs: max transfer-ratio error 0,107566% khi đọc nearest segment và 0,093053% khi nội suy probe về SWC arc.
 - Source input-response sai khác: soma 0,0000629%, basal q75 0,04324%, apical q75 0,06792%. So với mesh 5 µm, sai khác dendritic giảm khoảng 6–10 lần.
 - Source clamp vẫn đặt ở segment gần nhất; sai số vị trí nguồn chưa được loại bỏ. Tiếp theo sweep 0,25/0,125 µm để kiểm tra hội tụ.
+
+
+### Checkpoint mới — passive frequency-domain impedance (21/11/2026)
+
+- [Handoff frequency-domain impedance](HANDOFF_2026-11-21_PASSIVE-FREQUENCY-RESPONSE.md) — checkpoint tiếp tục mới nhất.
+- [Báo cáo frequency-domain](amsn-core/research/HUMAN_PASSIVE_FREQUENCY_RESPONSE_AUDIT_2026-11-21.md) — phương pháp kiểm chứng complex input/transfer impedance và pha theo 8 tần số; kết quả chỉ được chốt sau CI.
+- [Mã audit](amsn-core/examples/human_passive_frequency_response_audit.py), [bộ giải complex Hines](amsn-core/src/amsn/cable.py) và [workflow](.github/workflows/amsn-passive-frequency-response-audit.yml).
+- [Raw CSV artifact](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-passive-frequency-response-audit.yml) sẽ được tải từ run tương ứng sau khi workflow hoàn tất.

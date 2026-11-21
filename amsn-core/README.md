@@ -115,3 +115,8 @@ Conversion helper checks prevent common factors-of-10/1000 errors. The cable sol
 ## Research context
 
 The pilot biological target is a human temporal-cortex layer 2–3 pyramidal neuron, but a single parameter set is not representative of the population. Planert et al. (2026) report four electrophysiological subtypes in a large human L2/3 dataset. A human-specific parameterization must preserve subtype, cortical depth and experimental provenance.
+
+
+## Passive frequency-domain impedance
+
+`CableTree.solve_passive_frequency_response(frequency_hz, injected_current_a)` solves the complex small-signal passive phasor system using Hines elimination. The returned voltage is a perturbation around the leak reversal potential; at 0 Hz it must match the exact passive DC solution after subtracting that reversal. See `examples/human_passive_frequency_response_audit.py` for NEURON 9.0.2 input/transfer impedance comparison across eight frequencies. The audit is numerical and passive-only, not biological validation.
