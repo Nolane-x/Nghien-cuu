@@ -38,3 +38,8 @@ The six-job human Schur audit [44916411567](https://github.com/Nolane-x/Nghien-c
 The Schur matrix agrees with an independent inversion of the full AMSN port impedance to at most 9.40e-11%. AMSN and NEURON reciprocity errors remain below 1.23e-12%. Seven-port matrix-level errors are below 0.0262% (admittance) and 0.0895% (impedance), with all maxima at 3 kHz. Off-diagonal transfer coupling errors are larger than diagonal self-admittance errors.
 
 See [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](../amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md) and the two Schur port summary CSVs under ../amsn-core/results.
+
+
+## Test-suite count correction
+
+The Schur matrix audit ran 90 tests in each of the six jobs. Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) also passed all 90 tests on Python 3.12 and 3.13.

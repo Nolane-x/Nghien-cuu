@@ -26,7 +26,7 @@ The comparison therefore does not rely on the earlier matched-support membrane-a
 
 ## 2. Validation of the Schur implementation itself
 
-All six morphology/mesh jobs passed the full 81-test AMSN suite and the Schur audit. The most important internal check is the agreement between:
+All six morphology/mesh jobs passed the full 90-test AMSN suite and the Schur audit. The most important internal check is the agreement between:
 - AMSN's explicit sparse Schur reduction; and
 - the inverse of AMSN's independently constructed full-tree port impedance.
 
@@ -92,7 +92,7 @@ This remains a passive numerical comparison between two discretized models. It d
 
 ## 6. Reproducibility
 
-The six-job workflow [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) passed all jobs. Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed all four jobs, including Python 3.12/3.13 and both NEURON validation jobs.
+All six jobs passed 90 tests each. Core CI [44916411432] also passed 90 tests on both Python 3.12 and 3.13, plus both NEURON cross-validation jobs. The six-job workflow [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) passed all jobs. Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed all four jobs, including Python 3.12/3.13 and both NEURON validation jobs.
 
 | Morphology | Mesh µm | Artifact |
 |---|---:|---:|

@@ -53,3 +53,8 @@ Workflow [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916
 The new Schur API reproduces the independent AMSN full-tree port inverse to a maximum relative error of 9.40e-11%. Reciprocity errors remain below 1.23e-12%. Across the 3 morphologies × 2 mesh caps, all seven-port admittance matrix errors stay below 0.0262%; impedance errors stay below 0.0895%. Every worst case occurs at 3 kHz and off-diagonal coupling errors are larger than diagonal self-admittance errors.
 
 Full report: [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md); configuration summary [CSV](amsn-core/results/human_schur_port_matrix_summary_2026-11-21.csv); frequency detail [CSV](amsn-core/results/human_schur_port_matrix_frequency_summary_2026-11-21.csv).
+
+
+## Core suite count correction — 21/11/2026
+
+The six Schur matrix jobs each ran **90 passing tests** (not the earlier 81-test baseline). Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) also passed the 90-test suite on Python 3.12 and 3.13 and both NEURON validation jobs.

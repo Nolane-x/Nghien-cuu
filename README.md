@@ -348,3 +348,6 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 - New core API: \`amsn.schur_reduce_passive_admittance\`, exact frequency-dependent Schur/Kron elimination on selected electrical ports. Its output matches an independent full-tree AMSN port solve to at most 9.40e-11%.
 - On three morphologies and two meshes, seven-port admittance errors remain below 0.0262%; impedance errors below 0.0895%. Worst cases are at 3 kHz; off-diagonal couplings are more sensitive than diagonal self-admittances.
 - Report: [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md); configuration [CSV](amsn-core/results/human_schur_port_matrix_summary_2026-11-21.csv), frequency [CSV](amsn-core/results/human_schur_port_matrix_frequency_summary_2026-11-21.csv).
+
+
+- Correction: the Schur matrix audit [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) ran 90 tests in each of six jobs; Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed 90 tests on both Python 3.12 and 3.13.
