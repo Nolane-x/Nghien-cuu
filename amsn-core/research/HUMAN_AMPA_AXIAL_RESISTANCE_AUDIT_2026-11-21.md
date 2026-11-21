@@ -23,14 +23,14 @@ This is a numerical geometry audit. It does not fit biological parameters or com
 
 ## 3. Model and method
 
-For a circular cable with linearly varying diameter from (d_0) to (d_1), the axial geometry factor is
+For a circular cable with linearly varying diameter from \(d_0\) to \(d_1\), the axial geometry factor is
 
-[
+\[
 G = \int \frac{ds}{\pi r(s)^2}
   = \frac{4L}{\pi d_0d_1}.
-]
+\]
 
-The factor is reported in m⁻¹ when dimensions are converted to SI. The corresponding axial resistance is (R_i G), where (R_i=0.7\;\Omega\,m). The audit computes the taper integral on each underlying SWC piece, so a support spanning multiple SWC edges is integrated piece by piece.
+The factor is reported in m⁻¹ when dimensions are converted to SI. The corresponding axial resistance is \(R=R_iG\), where \(R_i=0.7\;\Omega\,m\). The audit computes the taper integral on each underlying SWC piece, so a support spanning multiple SWC edges is integrated piece by piece.
 
 For each preserved electrical site:
 1. Identify the incoming and outgoing AMSN electrical edges.
@@ -38,8 +38,8 @@ For each preserved electrical site:
 3. Integrate the two AMSN half-supports separately on the original SWC taper geometry.
 4. Map the same arc-length support to the corresponding NEURON Import3D section.
 5. Independently integrate NEURON's pt3d diameter profile over that support.
-6. Reconstruct the NEURON network resistance by summing actual `segment.ri()` values between adjacent segment centres inside the support and integrating only the two partial endpoint caps directly.
-7. Check that NEURON's segment-level `ri()` values reproduce the pt3d integral and that the network-plus-cap result reproduces the direct support integral.
+6. Reconstruct the NEURON network resistance by summing actual \`segment.ri()\` values between adjacent segment centres inside the support and integrating only the two partial endpoint caps directly.
+7. Check that NEURON's segment-level \`ri()\` values reproduce the pt3d integral and that the network-plus-cap result reproduces the direct support integral.
 
 The audit rejects a site if its parent, site and child do not map to one ordered NEURON section. It therefore does not silently approximate branch points or section joins.
 
