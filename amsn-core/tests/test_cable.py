@@ -580,3 +580,99 @@ def test_multishift_prima_rejects_invalid_expansion_points():
         prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(float("nan"),))
     with pytest.raises(TypeError):
         prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(True,))
+
+
+def _tree_with_parameters(tree, parameters):
+    return CableTree(
+        [tree.by_name[name] for name in tree.order],
+        parameters,
+    )
+
+
+def test_passive_prima_basis_reprojection_matches_reference_when_parameters_unchanged():
+    from amsn.prima import (
+        prima_reduce_passive_cable_multishift,
+        reproject_passive_cable_basis,
+    )
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["dend_a"], tree.index["branch"]]
+    original = prima_reduce_passive_cable_multishift(
+        tree, ports, max_order=3, expansion_frequencies_hz=(0.0, 300.0)
+    )
+    reprojected = reproject_passive_cable_basis(tree, tree, original)
+    np.testing.assert_allclose(reprojected.basis, original.basis, rtol=0.0, atol=0.0)
+    for frequency_hz in (0.0, 100.0, 3000.0):
+        np.testing.assert_allclose(
+            reprojected.impedance_matrix(frequency_hz),
+            original.impedance_matrix(frequency_hz),
+            rtol=1e-13,
+            atol=1e-12,
+        )
+
+
+@pytest.mark.parametrize(
+    "parameters",
+    [
+        PassiveParameters(specific_membrane_resistance_ohm_m2=0.8),
+        PassiveParameters(specific_membrane_resistance_ohm_m2=1.2),
+        PassiveParameters(specific_capacitance_f_m2=0.008),
+        PassiveParameters(specific_capacitance_f_m2=0.012),
+        PassiveParameters(axial_resistivity_ohm_m=0.56),
+        PassiveParameters(axial_resistivity_ohm_m=0.84),
+        PassiveParameters(
+            specific_capacitance_f_m2=0.012,
+            specific_membrane_resistance_ohm_m2=0.8,
+            axial_resistivity_ohm_m=0.84,
+        ),
+    ],
+)
+def test_passive_prima_basis_reprojection_stays_passive_under_parameter_variation(parameters):
+    from amsn.prima import (
+        prima_reduce_passive_cable_multishift,
+        reproject_passive_cable_basis,
+    )
+
+    tree = _tree()
+    perturbed = _tree_with_parameters(tree, parameters)
+    ports = [tree.index["soma"], tree.index["dend_a"], tree.index["branch"]]
+    original = prima_reduce_passive_cable_multishift(
+        tree, ports, max_order=3, expansion_frequencies_hz=(0.0, 300.0)
+    )
+    reprojected = reproject_passive_cable_basis(tree, perturbed, original)
+    assert reprojected.order == original.order
+    np.linalg.cholesky(reprojected.conductance_matrix_s)
+    np.linalg.cholesky(reprojected.capacitance_matrix_f)
+    for frequency_hz in (0.0, 100.0, 3000.0):
+        impedance = reprojected.impedance_matrix(frequency_hz)
+        assert np.all(np.isfinite(impedance.real))
+        assert np.all(np.isfinite(impedance.imag))
+
+
+def test_passive_prima_basis_reprojection_rejects_geometry_or_topology_change():
+    from amsn.prima import (
+        prima_reduce_passive_cable_multishift,
+        reproject_passive_cable_basis,
+    )
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["dend_a"]]
+    model = prima_reduce_passive_cable_multishift(
+        tree, ports, max_order=2, expansion_frequencies_hz=(0.0, 100.0)
+    )
+    changed_geometry = CableTree([
+        CableCompartment("soma", 20e-6, 20e-6),
+        CableCompartment("dend_a", 100e-6, 2.2e-6, "soma"),
+        CableCompartment("dend_b", 100e-6, 1.5e-6, "soma"),
+        CableCompartment("branch", 80e-6, 1.0e-6, "dend_a"),
+    ])
+    changed_topology = CableTree([
+        CableCompartment("soma", 20e-6, 20e-6),
+        CableCompartment("dend_a", 100e-6, 2e-6, "soma"),
+        CableCompartment("dend_b", 100e-6, 1.5e-6, "dend_a"),
+        CableCompartment("branch", 80e-6, 1.0e-6, "soma"),
+    ])
+    with pytest.raises(ValueError):
+        reproject_passive_cable_basis(tree, changed_geometry, model)
+    with pytest.raises(ValueError):
+        reproject_passive_cable_basis(tree, changed_topology, model)

@@ -467,3 +467,52 @@ def prima_reduce_passive_cable_multishift(
             break
 
     return _project_passive_basis(tree, tuple(ports), basis_columns)
+
+
+def reproject_passive_cable_basis(
+    reference_tree: CableTree,
+    perturbed_tree: CableTree,
+    reference_model: PassiveReducedModel,
+) -> PassiveReducedModel:
+    """Reuse a passive PRIMA basis after changing passive parameters.
+
+    The reference and target trees must have identical compartment order,
+    parent topology, membrane areas and axial geometry. Only the passive
+    parameters (specific Rm, Cm, Ra, and leak reversal) may differ. The
+    reference_model basis is kept fixed, while target G/C/B are reprojected
+    by congruence. This preserves passivity and stability for the new
+    parameter set, but it does not promise the same approximation error:
+    the returned response must be benchmarked against the full target tree.
+    """
+    if not isinstance(reference_tree, CableTree) or not isinstance(perturbed_tree, CableTree):
+        raise TypeError("reference_tree and perturbed_tree must be CableTree instances")
+    if not isinstance(reference_model, PassiveReducedModel):
+        raise TypeError("reference_model must be a PassiveReducedModel")
+    n = reference_tree.n_compartments
+    if perturbed_tree.n_compartments != n:
+        raise ValueError("reference and perturbed trees must have equal compartment counts")
+    if reference_model.basis.shape[0] != n:
+        raise ValueError("reference model basis does not match reference tree size")
+    if not np.array_equal(reference_tree.parent_index, perturbed_tree.parent_index):
+        raise ValueError("reference and perturbed trees must have identical parent topology")
+    if not np.allclose(
+        reference_tree.area_m2, perturbed_tree.area_m2, rtol=1e-12, atol=0.0
+    ):
+        raise ValueError("reference and perturbed trees must have identical membrane geometry")
+    reference_axial_geometry = (
+        reference_tree.axial_g_s * reference_tree.parameters.axial_resistivity_ohm_m
+    )
+    perturbed_axial_geometry = (
+        perturbed_tree.axial_g_s * perturbed_tree.parameters.axial_resistivity_ohm_m
+    )
+    if not np.allclose(
+        reference_axial_geometry, perturbed_axial_geometry, rtol=1e-11, atol=0.0
+    ):
+        raise ValueError("reference and perturbed trees must have identical axial geometry")
+    if any(index < 0 or index >= n for index in reference_model.port_indices):
+        raise ValueError("reference model contains a port outside the reference tree")
+
+    columns = [reference_model.basis[:, index] for index in range(reference_model.order)]
+    return _project_passive_basis(
+        perturbed_tree, reference_model.port_indices, columns
+    )

@@ -7,6 +7,7 @@ from .prima import (
     PassiveReducedModel,
     prima_reduce_passive_cable,
     prima_reduce_passive_cable_multishift,
+    reproject_passive_cable_basis,
 )
 
 __all__ = [
@@ -15,4 +16,5 @@ __all__ = [
     "HHParameters", "HodgkinHuxley1952", "simulate_hh",
     "schur_reduce_passive_admittance", "PassiveReducedModel",
     "prima_reduce_passive_cable", "prima_reduce_passive_cable_multishift",
+    "reproject_passive_cable_basis",
 ]
