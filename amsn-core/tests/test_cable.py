@@ -286,3 +286,90 @@ def test_frequency_phasor_matches_time_domain_sinusoidal_steady_state():
     # Backward-Euler discretization at 5 us contributes a small, known
     # O(omega*dt) difference from the continuous-time phasor solution.
     assert relative_error < 2e-3
+
+
+@pytest.mark.parametrize("frequency_hz", [0.0, 17.5, 100.0, 3000.0])
+def test_schur_reduced_admittance_matches_dense_schur_complement(frequency_hz):
+    from amsn.reduction import schur_reduce_passive_admittance
+
+    tree = _tree()
+    boundary = [tree.index["branch"], tree.index["soma"], tree.index["dend_b"]]
+    internal = [i for i in range(tree.n_compartments) if i not in boundary]
+    dense = np.diag(
+        tree.membrane_leak_s + 1j * 2.0 * np.pi * frequency_hz * tree.capacitance_f
+    ).astype(np.complex128)
+    for child in range(1, tree.n_compartments):
+        parent = tree.parent_index[child]
+        conductance = tree.axial_g_s[child]
+        dense[child, child] += conductance
+        dense[parent, parent] += conductance
+        dense[child, parent] -= conductance
+        dense[parent, child] -= conductance
+
+    if internal:
+        a_bb = dense[np.ix_(boundary, boundary)]
+        a_bi = dense[np.ix_(boundary, internal)]
+        a_ib = dense[np.ix_(internal, boundary)]
+        a_ii = dense[np.ix_(internal, internal)]
+        expected = a_bb - a_bi @ np.linalg.solve(a_ii, a_ib)
+    else:
+        expected = dense[np.ix_(boundary, boundary)]
+
+    reduced = schur_reduce_passive_admittance(tree, boundary, frequency_hz)
+    np.testing.assert_allclose(reduced, expected, rtol=2e-12, atol=1e-18)
+    np.testing.assert_allclose(reduced, reduced.T, rtol=2e-12, atol=1e-18)
+
+
+@pytest.mark.parametrize("frequency_hz", [0.0, 50.0, 1000.0])
+def test_schur_reduced_ports_reproduce_full_tree_boundary_voltage(frequency_hz):
+    from amsn.reduction import schur_reduce_passive_admittance
+
+    tree = _tree()
+    boundary = [tree.index["branch"], tree.index["soma"], tree.index["dend_b"]]
+    port_current = np.array(
+        [0.8 + 0.2j, -0.3 + 0.1j, 0.4 - 0.5j], dtype=np.complex128
+    ) * 1e-12
+    full_current = np.zeros(tree.n_compartments, dtype=np.complex128)
+    full_current[boundary] = port_current
+    full_voltage = tree.solve_passive_frequency_response(frequency_hz, full_current)
+    reduced = schur_reduce_passive_admittance(tree, boundary, frequency_hz)
+    reduced_voltage = np.linalg.solve(reduced, port_current)
+    np.testing.assert_allclose(
+        reduced_voltage, full_voltage[boundary], rtol=2e-11, atol=1e-17
+    )
+
+
+def test_schur_reduction_all_ports_matches_full_admittance():
+    from amsn.reduction import schur_reduce_passive_admittance
+
+    tree = _tree()
+    boundary = list(range(tree.n_compartments))
+    frequency_hz = 123.0
+    reduced = schur_reduce_passive_admittance(tree, boundary, frequency_hz)
+    expected = np.diag(
+        tree.membrane_leak_s + 1j * 2.0 * np.pi * frequency_hz * tree.capacitance_f
+    ).astype(np.complex128)
+    for child in range(1, tree.n_compartments):
+        parent = tree.parent_index[child]
+        conductance = tree.axial_g_s[child]
+        expected[child, child] += conductance
+        expected[parent, parent] += conductance
+        expected[child, parent] -= conductance
+        expected[parent, child] -= conductance
+    np.testing.assert_allclose(reduced, expected, rtol=1e-13, atol=1e-18)
+
+
+def test_schur_reduction_rejects_invalid_retained_ports():
+    from amsn.reduction import schur_reduce_passive_admittance
+
+    tree = _tree()
+    with pytest.raises(ValueError):
+        schur_reduce_passive_admittance(tree, [], 10.0)
+    with pytest.raises(ValueError):
+        schur_reduce_passive_admittance(tree, [0, 0], 10.0)
+    with pytest.raises(TypeError):
+        schur_reduce_passive_admittance(tree, [0, 1.5], 10.0)
+    with pytest.raises(IndexError):
+        schur_reduce_passive_admittance(tree, [tree.n_compartments], 10.0)
+    with pytest.raises(ValueError):
+        schur_reduce_passive_admittance(tree, [0], -1.0)
