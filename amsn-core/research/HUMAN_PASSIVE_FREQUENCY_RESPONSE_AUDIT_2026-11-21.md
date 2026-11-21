@@ -103,3 +103,8 @@ This is a passive small-signal numerical audit on one partial morphology, not a 
 ## Published active-model reference (source gate)
 
 A separate source review now documents ModelDB 238347 (Eyal et al. 2018), an appropriate next benchmark for human L2/3 active/synaptic mechanisms. The official ModelDB record describes six human L2/3 cells and AMPA/NMDA, spines, dendritic NMDA and somatic/axonal Na spikes. The Human Brain Project lists the ModelDB access code `eyal2018`. The public GitHub record linked by ModelDB contains only a 971-byte README pointing to the official 133 MB Yale/SenseLab ZIP; the full ZIP has not yet passed archive-integrity inspection. See [source review](EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md). This reference is not yet integrated into AMSN.
+
+
+## Independent AC-to-transient check
+
+The AMSN unit suite now includes an independent 50 Hz sinusoidal steady-state comparison between `solve_passive_frequency_response()` and the time-domain passive solver. It fits the final five cycles of the simulated waveform to estimate complex amplitude/phase, accounting for the time integrator's left-edge forcing convention. This guards the phasor sign/time convention in addition to dense-matrix and zero-frequency checks. Validation is pending the Core CI run for this test addition.

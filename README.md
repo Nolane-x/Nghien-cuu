@@ -173,3 +173,5 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [Eyal 2018 ModelDB source review](amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md) — đã xác minh metadata, 6 tế bào L2/3, AMPA/NMDA, dendritic spines, NMDA spikes và somatic/axonal Na spikes; archive ZIP chính thức 133 MB vẫn đang ở cổng tải và chưa được kiểm tra toàn vẹn.
 - [ModelDB 238347](https://modeldb.science/238347), [GitHub source record](https://github.com/ModelDBRepository/238347), [Human Brain Project Human Neurons](https://www.humanbrainproject.eu/en/brain-simulation/human-neurons/).
 - Core CI trên baseline `ccde254` đã xanh 4/4 job: [run 44881036875](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44881036875).
+
+- AC solver additional safeguard: 50 Hz fitted sinusoidal transient response is now checked against the phasor solution in the core unit suite (pending the latest CI).

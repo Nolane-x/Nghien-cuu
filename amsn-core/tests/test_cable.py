@@ -237,3 +237,52 @@ def test_frequency_response_rejects_bad_current_shape_and_non_finite_values():
     current[1] = complex(float("nan"), 0.0)
     with pytest.raises(ValueError):
         tree.solve_passive_frequency_response(100.0, current)
+
+
+def test_frequency_phasor_matches_time_domain_sinusoidal_steady_state():
+    tree = _tree()
+    frequency_hz = 50.0
+    angular_frequency = 2.0 * np.pi * frequency_hz
+    dt_s = 5e-6
+    duration_s = 0.25
+    current_amplitude_a = 20e-12
+    source_index = tree.index["branch"]
+    current_phasor = np.zeros(tree.n_compartments, dtype=np.complex128)
+    current_phasor[source_index] = current_amplitude_a
+    expected = tree.solve_passive_frequency_response(
+        frequency_hz, current_phasor
+    )
+
+    def sinusoidal_current(time_s):
+        current = np.zeros(tree.n_compartments)
+        current[source_index] = (
+            current_amplitude_a * np.cos(angular_frequency * time_s)
+        )
+        return current
+
+    trace = tree.simulate_passive(
+        duration_s,
+        dt_s,
+        current_fn=sinusoidal_current,
+        initial_voltage_v=tree.parameters.e_leak_v,
+    )
+
+    # simulate_passive applies the left-edge current to the following step.
+    # Fit the last five cycles against that sampled input-time convention.
+    mask = trace.time_s >= duration_s - 5.0 / frequency_hz
+    fit_time = trace.time_s[mask] - dt_s
+    samples = trace.voltage_v[mask, source_index] - tree.parameters.e_leak_v
+    design = np.column_stack([
+        np.cos(angular_frequency * fit_time),
+        np.sin(angular_frequency * fit_time),
+        np.ones_like(fit_time),
+    ])
+    coefficients, *_ = np.linalg.lstsq(design, samples, rcond=None)
+    observed = complex(coefficients[0], -coefficients[1])
+    relative_error = abs(observed - expected[source_index]) / abs(
+        expected[source_index]
+    )
+
+    # Backward-Euler discretization at 5 us contributes a small, known
+    # O(omega*dt) difference from the continuous-time phasor solution.
+    assert relative_error < 2e-3
