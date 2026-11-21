@@ -31,3 +31,8 @@ Pending GitHub Actions. Do not claim the multi-morphology extension is validated
 ## Limits
 
 NEURON and AMSN both consume the same SWC source; matching their geometry does not independently validate the morphology biologically. A zero-resistance soma wire connection is an import convention, not an anatomical statement.
+
+
+## Follow-up: global axial conductance matrix
+
+The next stage after the local edge/topology audit is recorded in HANDOFF_2026-11-21_SEGEV-FULL-TREE-AXIAL-MATRIX.md and the research log RESEARCH_LOG_2026-11-21_SEGEV-FULL-TREE-AXIAL-MATRIX.md. The matrix workflow passed 2/2 Segev cells; the axial-only operator is closely matched on 32 deterministic random voltage vectors. It is not a passive membrane or biological validation.

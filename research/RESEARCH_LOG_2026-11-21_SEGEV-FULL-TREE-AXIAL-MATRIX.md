@@ -33,3 +33,24 @@ Pending workflow amsn-segev-full-tree-axial-matrix-audit.yml. Do not claim matri
 ## Limits
 
 Axial-only comparison. No leak, capacitance, synaptic or active conductance terms. Numerical agreement between two representations built from the same SWC is not biological validation.
+
+
+## Verified results — Segev full-tree axial conductance matrix
+
+Segev matrix workflow [44903533060](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903533060) passed both cells; original single-morphology matrix regression [44903453372](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903453372) passed.
+
+NMO_68174:
+- Electrical graph 12,399 vertices / 12,398 edges; 214 NEURON sections / 41,864 segments.
+- Edge conductance absolute median/p95/p99/max 0.0001641/0.0017516/0.0044951/0.0932558%.
+- NEURON ri-network vs direct pt3d maximum 1.984e-11%.
+- 32-vector axial-operator relative L2 mean/p95/max 0.0042137/0.0076496/0.0106860%.
+- Max total-current conservation residual 4.606e-21 A; constant voltage nullspace 0 A.
+
+NMO_68175:
+- Electrical graph 13,747 vertices / 13,746 edges; 189 NEURON sections / 39,245 segments.
+- Edge conductance absolute median/p95/p99/max 0.0001800/0.0019193/0.0051603/0.0359234%.
+- NEURON ri-network vs direct pt3d maximum 1.550e-11%.
+- 32-vector axial-operator relative L2 mean/p95/max 0.0020482/0.0030657/0.0032929%.
+- Max total-current conservation residual 9.503e-21 A; constant voltage nullspace 0 A.
+
+The full report is at [HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md). This tests the axial-only graph; leak and capacitance are not included.

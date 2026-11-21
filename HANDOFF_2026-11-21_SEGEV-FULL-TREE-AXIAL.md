@@ -56,3 +56,8 @@ Soma-centre wire attachments are reported separately. A zero-resistance import l
 ## Next step
 
 After both Segev jobs pass, compare the full-tree results with the 0.0625 µm AC residual localization. If edge-level geometry and topology pass, implement a separate whole-tree axial conductance matrix comparison for the Segev cells, then a full-tree passive voltage-operator comparison including leak and capacitance.
+
+
+## Verified next-stage result — global axial conductance matrix (21/11/2026)
+
+The Segev matrix workflow [44903533060](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903533060) passed both cells. Both axial graphs agree closely at edge and 32-vector operator level: maximum sampled relative L2 error 0.0106860% for NMO_68174 and 0.0032929% for NMO_68175. Details: [matrix report](amsn-core/research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md), [matrix handoff](HANDOFF_2026-11-21_SEGEV-FULL-TREE-AXIAL-MATRIX.md). Next: add matched membrane leak/capacitance only after validating membrane-area/control-volume support.

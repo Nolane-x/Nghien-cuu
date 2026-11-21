@@ -54,3 +54,17 @@ This is an axial-only geometry/operator comparison. It does not include membrane
 ## Next step
 
 After both matrices pass, compare edge-wise conductance and whole-operator error against the 0.0625 µm AC residual localization. Then implement a full-tree passive voltage operator including leak and capacitance, with both simulators using the same electrical node set and explicit control-volume area support. Do not tune passive constants to absorb discretization effects.
+
+
+## Verified results — Segev full-tree axial matrix complete (21/11/2026)
+
+**Status:** [workflow 44903533060](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903533060) passed 2/2 Segev jobs. Original NMO_290988 matrix regression [44903453372](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903453372) also passed. Core CI [44903453433](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903453433) was still running when the result report was prepared.
+
+The two reduced graphs contained 12,399 vertices / 12,398 edges (cell1125) and 13,747 vertices / 13,746 edges (cell1204). Edge conductance absolute median/p95/p99/max errors were 0.0001641/0.0017516/0.0044951/0.0932558% and 0.0001800/0.0019193/0.0051603%, respectively.
+
+Across 32 deterministic 10 mV random voltage vectors:
+- Cell1125 axial operator relative L2 error mean/p95/max: 0.0042137/0.0076496/0.0106860%.
+- Cell1204: 0.0020482/0.0030657/0.0032929%.
+- Total-current conservation residuals were 4.61e-21 A and 9.50e-21 A; constant-potential nullspace residual was zero.
+
+This is a sampled-vector comparison of the axial-only operator, not a formal induced-norm proof or biological validation. Full report: [HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md), summary [CSV](amsn-core/results/human_segev_full_tree_axial_matrix_summary_2026-11-21.csv).

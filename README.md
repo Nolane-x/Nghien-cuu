@@ -240,3 +240,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Exact-SWC and nearest-centre readouts were identical at exported precision for every row. The largest interpolation-vs-exact probe shift shrank from 0.213915% to 0.041671% for cell1125 and from 0.209515% to 0.042864% for cell1204 between 0.25 and 0.0625 µm.
 - Interpolation does not consistently improve the AMSN–NEURON residual. At 0.0625 µm it improves all three aggregate statistics for NMO_68174, but worsens median/p95/max for NMO_68175. Exact-SWC remains the canonical readout; complex interpolation remains diagnostic-only.
 - Report: [HUMAN_SEGEV_AC_PROBE_MESH_SWEEP_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_PROBE_MESH_SWEEP_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_probe_mesh_sweep_summary_2026-11-21.csv).
+
+
+### Segev full-tree axial conductance matrix — verified 21/11/2026
+
+- Axial matrix workflow [44903533060](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903533060) passed 2/2 Segev cells. The original NMO_290988 matrix regression [44903453372](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44903453372) passed as well.
+- Reduced axial graphs: 12,399 nodes/12,398 edges (NMO_68174) and 13,747 nodes/13,746 edges (NMO_68175). Edge conductance median/p95/p99/max absolute differences: 0.0001641/0.0017516/0.0044951/0.0932558% and 0.0001800/0.0019193/0.0051603/0.0359234%.
+- Across 32 deterministic voltage vectors, sampled axial-operator relative L2 mean/p95/max: 0.0042137/0.0076496/0.0106860% for NMO_68174 and 0.0020482/0.0030657/0.0032929% for NMO_68175. Total-current residuals stayed below 1e-20 A.
+- This is axial-only, sampled-vector numerical validation, not a formal operator norm or biological validation. Report: [HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_full_tree_axial_matrix_summary_2026-11-21.csv).
+- Next: matched membrane-area/control-volume mapping, then full passive leak+capacitance operator.
