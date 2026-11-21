@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        segment_um: ["0.5", "0.25"]
+        segment_um: ["0.5", "0.25", "0.125"]
     concurrency:
       group: amsn-fine-mesh-passive-dc-${{ matrix.segment_um }}-${{ github.ref }}
       cancel-in-progress: true
