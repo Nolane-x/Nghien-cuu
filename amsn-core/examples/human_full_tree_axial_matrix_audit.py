@@ -229,7 +229,7 @@ def run_matrix_conservation_self_checks():
     graph = [(0, 1, 2.0), (1, 2, 3.0)]
     voltage = np.array([0.0, 0.1, -0.2])
     current = apply_tree_laplacian(3, graph, voltage)
-    expected = np.array([-0.2, 0.9, -0.7])
+    expected = np.array([-0.2, 1.1, -0.9])
     if not np.allclose(current, expected, rtol=0.0, atol=1e-14):
         raise AssertionError(f"tree Laplacian sign test failed: {current} != {expected}")
     if abs(float(current.sum())) > 1e-14:
@@ -435,8 +435,7 @@ def main() -> None:
     total_current_residual = []
     for case_index in range(RANDOM_VOLTAGE_CASES):
         voltage = (
-            morphology.root_id * 0.0
-            + rng.normal(0.0, RANDOM_VOLTAGE_STD_V, amsn_tree.n_compartments)
+            rng.normal(0.0, RANDOM_VOLTAGE_STD_V, amsn_tree.n_compartments)
             - 0.065
         )
         amsn_current = apply_tree_laplacian(
