@@ -209,3 +209,14 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 
 
 - Raw source/probe residual investigation: [pair-level analysis](amsn-core/research/SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md). The next controlled test will match the exact physical source/probe support across NEURON and AMSN rather than simply refine the mesh further.
+
+
+
+### Segev source-reference triplet — verified 21/11/2026
+
+- Three source references were tested on the same NEURON 9.0.2 morphology mesh: legacy base-mesh centre, exact SWC arc and refined segment centre.
+- Workflow [44899442076](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076) passed 2/2 morphology jobs; Core CI [44899349672](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899349672) passed.
+- NMO_68174 apical q75: legacy→exact maximum transfer-complex change 0.021954%; NMO_68175 basal q75: 0.228926%. Exact-SWC→refined-centre change was zero at exported precision for both tested distinct source sites across 0.1–3,000 Hz.
+- NMO_68174 basal q75 was pre-aligned; NMO_68175 apical q75 remained unresolved by the NEURON nseg cap. Neither is treated as an identifiable paired contrast.
+- Raw artifacts: [68174](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705865103), [68175](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705880425).
+- Next: [Segev AC probe-coordinate handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md) — test exact SWC, nearest segment centre and complex-interpolated readouts with the exact SWC source fixed.
