@@ -146,7 +146,7 @@ def simulate_neuron(
     probes: list[tuple[str, int]],
     sites: dict,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-    old_secondorder = float(h.secondorder)
+    old_secondorder = int(h.secondorder)
     old_dt = float(h.dt)
     clamp = None
     try:
