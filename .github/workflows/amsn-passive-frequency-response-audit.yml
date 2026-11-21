@@ -31,7 +31,14 @@ permissions:
 jobs:
   frequency-response:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        neuron_mesh_um: ["0.5", "0.25", "0.125"]
+    env:
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.neuron_mesh_um }}
+      AMSN_FREQUENCY_OUTPUT: human-passive-frequency-response-${{ matrix.neuron_mesh_um }}um.csv
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -60,6 +67,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-passive-frequency-response-neuron-9.0.2
-          path: amsn-core/human-passive-frequency-response.csv
+          name: amsn-passive-frequency-response-${{ matrix.neuron_mesh_um }}um
+          path: amsn-core/human-passive-frequency-response-${{ matrix.neuron_mesh_um }}um.csv
           if-no-files-found: ignore

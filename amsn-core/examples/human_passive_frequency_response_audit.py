@@ -9,6 +9,7 @@ numerical passive-model comparison, not a biological validation.
 from __future__ import annotations
 
 import csv
+import os
 from pathlib import Path
 
 import numpy as np
@@ -24,10 +25,10 @@ RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
 CM_F_M2 = 0.01
 ELEAK_MV = -65.0
-NEURON_MAX_SEGMENT_UM = 0.5
+NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.5"))
 CURRENT_A = 1e-9
 FREQUENCIES_HZ = (0.1, 1.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0)
-OUTPUT = Path("human-passive-frequency-response.csv")
+OUTPUT = Path(os.environ.get("AMSN_FREQUENCY_OUTPUT", "human-passive-frequency-response.csv"))
 
 
 def configure_reference() -> None:
@@ -85,12 +86,16 @@ def main() -> None:
     transfer_complex_errors: list[float] = []
     transfer_magnitude_errors: list[float] = []
     transfer_phase_errors: list[float] = []
+    transfer_by_frequency = {frequency: [] for frequency in FREQUENCIES_HZ}
+    magnitude_by_frequency = {frequency: [] for frequency in FREQUENCIES_HZ}
+    phase_by_frequency = {frequency: [] for frequency in FREQUENCIES_HZ}
+    input_by_frequency = {frequency: [] for frequency in FREQUENCIES_HZ}
     row_count = 0
 
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow([
-            "source", "source_swc_id", "probe", "probe_swc_id", "frequency_hz",
+            "source", "source_swc_id", "probe", "probe_swc_id", "frequency_hz", "neuron_max_segment_um",
             "neuron_input_mohm", "neuron_input_phase_deg",
             "amsn_input_mohm", "amsn_input_phase_deg",
             "input_magnitude_error_pct", "input_phase_error_deg",
@@ -135,6 +140,7 @@ def main() -> None:
                     amsn_input, neuron_input
                 )
                 input_complex_errors.append(amsn_input_error)
+                input_by_frequency[frequency_hz].append(amsn_input_error)
 
                 for probe_name, probe_id in probes:
                     probe_site = sites[probe_id]
@@ -163,11 +169,15 @@ def main() -> None:
                     transfer_complex_errors.append(transfer_complex_error)
                     transfer_magnitude_errors.append(transfer_magnitude_error)
                     transfer_phase_errors.append(transfer_phase_error)
+                    transfer_by_frequency[frequency_hz].append(transfer_complex_error)
+                    magnitude_by_frequency[frequency_hz].append(transfer_magnitude_error)
+                    phase_by_frequency[frequency_hz].append(transfer_phase_error)
                     row_count += 1
 
                     writer.writerow([
                         source_name, source_id, probe_name, probe_id,
                         f"{frequency_hz:.9g}",
+                        f"{NEURON_MAX_SEGMENT_UM:.9g}",
                         f"{abs(neuron_input) / 1e6:.12g}",
                         f"{np.angle(neuron_input, deg=True):.12g}",
                         f"{abs(amsn_input) / 1e6:.12g}",
@@ -219,6 +229,19 @@ def main() -> None:
         "transfer_phase_error_deg_median_p95_max="
         + ",".join(f"{x:.12g}" for x in summary(transfer_phase_errors))
     )
+    for frequency_hz in FREQUENCIES_HZ:
+        transfer_stats = summary(transfer_by_frequency[frequency_hz])
+        magnitude_stats = summary(magnitude_by_frequency[frequency_hz])
+        phase_stats = summary(phase_by_frequency[frequency_hz])
+        input_stats = summary(input_by_frequency[frequency_hz])
+        print(
+            f"by_frequency_hz={frequency_hz:g}; "
+            f"transfer_complex_median_p95_max_pct="
+            f"{transfer_stats[0]:.12g},{transfer_stats[1]:.12g},{transfer_stats[2]:.12g}; "
+            f"transfer_magnitude_max_pct={magnitude_stats[2]:.12g}; "
+            f"transfer_phase_max_deg={phase_stats[2]:.12g}; "
+            f"input_complex_max_pct={input_stats[2]:.12g}"
+        )
     print(f"output_csv={OUTPUT}")
 
 
