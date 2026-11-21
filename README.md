@@ -8,7 +8,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
 2. [HANDOFF.md](HANDOFF.md) — mục tiêu nghiên cứu tổng thể và lịch sử khôi phục.
-3. [HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md](HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md) — checkpoint mới nhất: full-tree audit thành công, 8.892/8.892 active SWC edges mapped, 58/58 branchpoints khớp topology, CI tổng thể xanh.
+3. [HANDOFF_2026-11-21_FULL-TREE-AXIAL-MATRIX.md](HANDOFF_2026-11-21_FULL-TREE-AXIAL-MATRIX.md) — checkpoint mới nhất: so sánh axial conductance operator toàn cây trên 8.893 nút / 8.892 cạnh; workflow ma trận và Core CI đều xanh.
+   - [Handoff full-tree axial network](HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md) — audit nền: 8.892/8.892 active SWC edges mapped, 58/58 branchpoints khớp topology.
    - [Handoff AMPA synaptic timing — 20/11](HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md) — baseline lịch sử: 65 test trên Python 3.12/3.13, NEURON 9.0.2 cross-validation và Exp2Syn timing audit.
    - [Handoff AMPA audit ban đầu](HANDOFF_2026-11-20_AMPA-SYNAPTIC-NUMERICS.md) — lịch sử nghiên cứu trước khi hoàn tất kernel timing.
    - [Handoff transient lịch sử](HANDOFF_2026-11-20-HUMAN-TRANSIENT.md) — pulse/step passive cross-validation với NEURON 9.0.2.
@@ -69,6 +70,15 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [Full-tree workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993854) — NEURON 9.0.2, 1/1 job thành công.
 - [Mã audit](amsn-core/examples/human_full_tree_axial_network_audit.py) và [workflow YAML](.github/workflows/amsn-full-tree-axial-network-audit.yml).
 
+### Checkpoint mới nhất — full-tree axial conductance matrix (21/11/2026)
+
+- [Handoff axial matrix](HANDOFF_2026-11-21_FULL-TREE-AXIAL-MATRIX.md).
+- [Báo cáo so sánh ma trận axial](amsn-core/research/HUMAN_FULL_TREE_AXIAL_MATRIX_AUDIT_2026-11-21.md) — 8.893 nút / 8.892 cạnh; mean relative operator error 3,53e-6 trên 32 vector kiểm tra.
+- [CSV summary](amsn-core/results/human_full_tree_axial_matrix_summary_2026-11-21.csv).
+- [Raw edge matrix + vector probes artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44872853672/artifacts/14694905509).
+- [Matrix audit workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44872853672) — 1/1 job thành công.
+- [Mã audit](amsn-core/examples/human_full_tree_axial_matrix_audit.py) và [workflow](.github/workflows/amsn-full-tree-axial-matrix-audit.yml).
+
 ## Bảo toàn dữ liệu
 
 - Ưu tiên append-only: thêm checkpoint mới; không xóa hoặc ghi đè lịch sử nghiên cứu.
@@ -122,3 +132,12 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 
 - Comprehensive AMSN Core CI cho code commit `e65a347ef1c51bb44ecbc1deca35c8a4d5712a90` đã xanh 4/4 job: 65 test trên Python 3.12 và 65 test trên Python 3.13; cả hai NEURON 9.0.2 cross-validation đều hoàn tất ([run 44871993797](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993797)).
+
+
+### Kết quả full-tree axial matrix — 21/11/2026
+
+- AMSN và NEURON được quy về cùng đồ thị 8.893 nút điện học và 8.892 cạnh.
+- Sai khác conductance tuyệt đối theo cạnh: median 0,0001638%, p95 0,0020371%, p99 0,0036173%, max 0,0152884%.
+- 32 vector điện thế với seed cố định cho relative operator L2 error mean 3,531e-6, max 6,675e-6; tổng dòng axial được bảo toàn với residual tối đa 2,396e-21 A.
+- Đây là axial-only graph operator, chưa bao gồm leak/capacitance/synapse/active channels và không phải biological validation.
+- Thí nghiệm kế tiếp: full-tree passive voltage impact, sau đó source-matched Eyal 2018/ModelDB 238347 nếu archive/license gốc được xác minh.
