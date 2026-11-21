@@ -354,3 +354,6 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 
 
 - Port-localization extension: each Schur audit artifact now also records a per-frequency/per-port error table (56 rows per configuration), separating diagonal self-admittance from off-diagonal transfer coupling and avoiding unstable elementwise relative-error rankings.
+
+
+- Port-level error localization is now included in each Schur artifact (56 rows per configuration). At 3 kHz the dominant retained ports are apical q50 for NMO_68174, mesh-dependent basal/apical q50 for NMO_68175, and apical q90 for NMO_290988; the latter is primarily off-diagonal coupling error. See [port localization CSV](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).

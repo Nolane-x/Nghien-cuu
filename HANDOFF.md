@@ -368,3 +368,8 @@ The six Schur audit jobs each passed 90 tests; Core CI [44916411432](https://git
 ## Schur port error localization extension — in progress
 
 The Schur audit now records per-frequency, per-port row-norm and diagonal/off-diagonal errors so the high-frequency residual can be localized without unstable relative percentages on near-zero matrix entries. Each configuration will upload 56 port-localization rows in addition to the 392 raw matrix entries and eight frequency summaries.
+
+
+## Schur port-resolved residual localization — completed
+
+The rerun [44917323461](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44917323461) passed 6/6 and adds a 56-row per-configuration port-localization CSV. Dominant 3 kHz rows: NMO_68174 apical q50; NMO_68175 basal q50/apical q50 depending on mesh; NMO_290988 apical q90 with off-diagonal coupling error dominating its diagonal. See [localization data](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).

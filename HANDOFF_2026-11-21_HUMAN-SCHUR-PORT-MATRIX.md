@@ -65,3 +65,10 @@ The six Schur matrix jobs each ran **90 passing tests** (not the earlier 81-test
 The audit now uploads an additional per-frequency, per-port localization table. For each of the seven retained ports it reports the normalized Frobenius error of the full matrix row, off-diagonal row-coupling error, diagonal self-admittance error and absolute row error. This avoids unstable conclusions from elementwise relative errors when a coupling reference is nearly zero.
 
 Expected localization rows: 8 frequencies × 7 ports = 56 per morphology/mesh configuration. Artifact workflow remains [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567); the rerun will add this localization CSV to each artifact.
+
+
+## Port-resolved Schur residual localization
+
+The rerun [44917323461](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44917323461) passed 6/6 and now uploads 56 port-localization rows per configuration (8 frequencies × 7 ports). At 3 kHz the dominant rows are: NMO_68174 apical q50 at both meshes (0.1691%→0.0559%); NMO_68175 basal q50 at 0.125 µm and apical q50 at 0.0625 µm (0.0699% and 0.0543%); NMO_290988 apical q90 at both meshes (0.0913% and 0.0964%). The NMO_290988 apical q90 row is dominated by off-diagonal coupling error (0.261–0.272%) rather than its diagonal self-admittance (0.091–0.096%).
+
+Localization CSV: [human_schur_port_matrix_port_localization_2026-11-21.csv](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).

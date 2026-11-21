@@ -104,3 +104,21 @@ All six jobs passed 90 tests each. Core CI [44916411432] also passed 90 tests on
 | NMO_290988 | 0.0625 | [14712351124](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567/artifacts/14712351124) |
 
 Each artifact retains all 392 complex matrix entries, eight frequency summaries and its execution log.
+
+
+## 7. Port-resolved error localization at 3 kHz
+
+The rerun also emits a port-localization table for every frequency. For each retained port it computes the relative Frobenius error of that matrix row, the off-diagonal part of that row, the diagonal self-admittance error and the maximum absolute row error. The 3 kHz worst-port rows are:
+
+| Cell | Mesh µm | Highest-error retained port | Row error | Off-diagonal row error | Diagonal error |
+|---|---:|---|---:|---:|---:|
+| NMO_68174 | 0.125 | apical q50 probe | 0.1691% | 0.1646% | 0.1691% |
+| NMO_68174 | 0.0625 | apical q50 probe | 0.0559% | 0.0703% | 0.0559% |
+| NMO_68175 | 0.125 | basal q50 probe | 0.0699% | 0.0903% | 0.0676% |
+| NMO_68175 | 0.0625 | apical q50 probe | 0.0543% | 0.0600% | 0.0543% |
+| NMO_290988 | 0.125 | apical q90 probe | 0.0913% | 0.2716% | 0.0913% |
+| NMO_290988 | 0.0625 | apical q90 probe | 0.0964% | 0.2614% | 0.0964% |
+
+This identifies a stable apical q50 hotspot for NMO_68174, while the highest-error port shifts from basal q50 to apical q50 for NMO_68175 when the NEURON mesh is refined. NMO_290988 remains dominated by apical q90 at both meshes; for that row the off-diagonal coupling error is roughly 2.7 times the diagonal self-admittance error.
+
+The 3 kHz localization table does not imply that all error is at the probe itself. Each row aggregates the error between one port and all seven other ports, including its couplings to the rest of the boundary. It is a row-level diagnostic, not a unique causal attribution to one physical branch.
