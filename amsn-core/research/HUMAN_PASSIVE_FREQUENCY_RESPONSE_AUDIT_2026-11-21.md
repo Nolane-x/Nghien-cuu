@@ -84,7 +84,7 @@ Raw data artifacts:
 - [0.25 µm CSV artifact 14696684877](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877)
 - [0.125 µm CSV artifact 14697712070](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070)
 
-The summary tables are committed in `amsn-core/results/`. A further 0.0625 µm run is being added to test whether high-frequency transfer error continues to decline; no production mesh is declared yet.
+The summary tables are committed in `amsn-core/results/`. A dedicated 0.0625 µm refinement workflow has been added to test whether high-frequency transfer error continues to decline; no production mesh is declared yet.
 
 ## Interpretation boundaries
 

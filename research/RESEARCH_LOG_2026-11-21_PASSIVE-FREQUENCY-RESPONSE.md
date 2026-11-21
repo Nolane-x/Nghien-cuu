@@ -49,3 +49,7 @@ The audit script and workflow were parameterized in commit 62a5d288f23084001c70e
 - Raw artifacts: 0.5 µm 14697044290; 0.25 µm 14696684877; 0.125 µm 14697712070 (all within Actions run 44880470858).
 
 Next: add a 0.0625 µm mesh to inspect diminishing returns and high-frequency residual floor.
+
+## 0.0625 µm next refinement
+
+A dedicated NEURON 9.0.2 workflow was added to test a 0.0625 µm maximum segment length. It reuses the same fixed-parameter AMSN/NEURON frequency-response audit, reruns the complete 74-test suite and uploads a separate raw CSV. The run is triggered by the workflow-file push. No claim is made about its result until Actions completes.
