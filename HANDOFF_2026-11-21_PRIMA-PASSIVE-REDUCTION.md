@@ -52,3 +52,8 @@ The subsequent order sweep [44920477444](https://github.com/Nolane-x/Nghien-cuu/
 ## Current API and recommendation
 
 Multi-shift method: amsn.prima_reduce_passive_cable_multishift(..., expansion_frequencies_hz=(0, 100, 1000, 3000)). The order sweep indicates order 56 as the balanced preset and order 84 as the high-accuracy option for the tested 0.1–3 kHz passive seven-port problem. Order 28 is not recommended for full-band use because the worst individual-port transient error is much larger. Full Hines remains canonical.
+
+
+## Direct PRIMA-to-NEURON comparison — completed 21/11/2026
+
+Human workflow [44921474635](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474635) passed 6/6 and Core CI [44921474632](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474632) passed 4/4 (99 tests on Python 3.12 and 3.13). The audit now measures reduced PRIMA matrices directly against native NEURON matrices. At order 56, global direct errors are at most 0.09394% Z and 0.02134% Y. At order 84, 0.08943% Z and 0.02611% Y, which is essentially the same as the full-Hines-to-NEURON discrepancy floor. See [direct-comparison report](amsn-core/research/HUMAN_PASSIVE_PRIMA_NEURON_DIRECT_COMPARISON_2026-11-21.md) and [summary CSV](amsn-core/results/human_passive_prima_neuron_direct_comparison_summary_2026-11-21.csv).

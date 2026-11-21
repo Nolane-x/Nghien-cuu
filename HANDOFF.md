@@ -385,3 +385,8 @@ Next: multi-shift/frequency-aware PRIMA order sweep, retaining passivity and mea
 ## Multi-shift passive PRIMA and order sweep — completed 21/11/2026
 
 Added positive-real multi-shift Krylov expansion at 0/100/1,000/3,000 Hz and a human order sweep at 28/56/84 states. Across three morphologies and six NEURON reference-mesh configurations, order 56 gives maximum 3 kHz Z/Y errors below 0.0201%/0.0237%; order 84 lowers them below 0.000094%/0.000183%, with more than 99.05% state reduction. Six human jobs and four Core CI jobs passed; 99 tests passed on Python 3.12 and 3.13. Read [multi-shift/order-sweep handoff](HANDOFF_2026-11-21_PRIMA-PASSIVE-REDUCTION.md), [report](amsn-core/research/HUMAN_PASSIVE_PRIMA_MULTISHIFT_ORDER_SWEEP_2026-11-21.md) and [summary CSV](amsn-core/results/human_passive_prima_multishift_order_sweep_summary_2026-11-21.csv).
+
+
+## Direct PRIMA-to-NEURON comparison — completed 21/11/2026
+
+Added a three-layer validation: exact Schur vs Hines, PRIMA vs full Hines, and PRIMA vs NEURON. Human audit [44921474635](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474635) passed 6/6; Core CI [44921474632](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474632) passed 4/4 with 99 tests on both Python versions. At order 84, direct PRIMA–NEURON errors (0.08943% Z and 0.02611% Y) are essentially at the full-model cross-simulator discrepancy floor. Detailed [report](amsn-core/research/HUMAN_PASSIVE_PRIMA_NEURON_DIRECT_COMPARISON_2026-11-21.md) and [summary CSV](amsn-core/results/human_passive_prima_neuron_direct_comparison_summary_2026-11-21.csv).

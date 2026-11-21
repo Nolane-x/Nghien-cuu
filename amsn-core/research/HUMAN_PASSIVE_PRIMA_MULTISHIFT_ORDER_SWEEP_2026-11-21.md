@@ -115,3 +115,12 @@ For the currently tested passive 0.1–3 kHz, seven-port system:
 This is numerical validation of passive RC reduction, not biological validation. Reduced coordinates are global electrical modes rather than anatomical compartments. The method does not yet include voltage-gated channels, nonlinear synapses, ion concentrations, calcium, stochastic release, metabolism or plasticity. NMO_290988 is an incomplete dendritic reconstruction without an axon and has a mesiotemporal-sclerosis context; do not interpret it as a healthy control. The full Hines solver remains the reference implementation.
 
 Next: test new pulse locations and waveform widths, vary passive parameters, include higher frequency evaluation points beyond 3 kHz, and begin a controlled coupling experiment with active channels while preserving the passive core's passivity guarantees.
+
+
+## 8. Direct PRIMA-to-NEURON verification
+
+The following audit adds a direct end-to-end comparison between the reduced PRIMA port matrices and native NEURON matrices, rather than only comparing PRIMA against the full AMSN Hines response. Workflow [44921474635](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474635) passed 6/6 and Core CI [44921474632](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44921474632) passed 4/4 with 99 tests on Python 3.12 and 3.13.
+
+The full AMSN-Hines-to-NEURON maximum discrepancy is 0.08941851% in port impedance and 0.02617965% in port admittance. At order 84, direct PRIMA-to-NEURON maxima are 0.08942854% and 0.02610733%, respectively. The order-84 PRIMA-to-full-Hines residual is much smaller (0.00009368% Z and 0.0001823% Y). This indicates the order-84 reduction error is below the cross-simulator residual floor over the tested 0.1–3 kHz band. Order 56 also remains close to the reference: direct maxima 0.0939333% Z and 0.0213333% Y, with at least 99.37% state reduction.
+
+Detailed morphology/order metrics: [HUMAN_PASSIVE_PRIMA_NEURON_DIRECT_COMPARISON_2026-11-21.md](HUMAN_PASSIVE_PRIMA_NEURON_DIRECT_COMPARISON_2026-11-21.md), [CSV](../results/human_passive_prima_neuron_direct_comparison_summary_2026-11-21.csv).

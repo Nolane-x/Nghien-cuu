@@ -121,3 +121,8 @@ The current basis is expanded from DC, which explains its excellent low-frequenc
 ## Follow-on: positive-real multi-shift and order sweep
 
 The 56-state DC-only basis was followed by a multi-shift basis with positive-real expansion points at 0, 100, 1,000 and 3,000 Hz. At equal order 56, the multi-shift basis improves worst-case port impedance by 60.97–98.22× and admittance by 83.44–112.07×. A subsequent order sweep tested 28/56/84 states; the balanced order-56 and high-accuracy order-84 results are documented in [HUMAN_PASSIVE_PRIMA_MULTISHIFT_ORDER_SWEEP_2026-11-21.md](HUMAN_PASSIVE_PRIMA_MULTISHIFT_ORDER_SWEEP_2026-11-21.md), with per-configuration metrics in [order-sweep summary CSV](../results/human_passive_prima_multishift_order_sweep_summary_2026-11-21.csv).
+
+
+## Direct comparison with NEURON
+
+A subsequent end-to-end comparison now evaluates PRIMA matrices directly against native NEURON port matrices. At order 84, direct errors are 0.08942854% impedance and 0.02610733% admittance, essentially matching the maximum full AMSN-Hines-to-NEURON discrepancy (0.08941851% and 0.02617965%). Order 56 direct maxima are 0.0939333% and 0.0213333%. Full data: [direct NEURON comparison report](HUMAN_PASSIVE_PRIMA_NEURON_DIRECT_COMPARISON_2026-11-21.md) and [CSV](../results/human_passive_prima_neuron_direct_comparison_summary_2026-11-21.csv).
