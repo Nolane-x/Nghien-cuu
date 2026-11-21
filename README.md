@@ -228,3 +228,11 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Re-joining the 0.125 µm raw cross-simulator matrices: cell1125 median/p95/max 0.001555/0.049634/0.130599% → 0.000670/0.046984/0.132786% (26 improved, 70 worse, 24 equal); cell1204 0.002297/0.073495/0.169222% → 0.001105/0.059094/0.125637% (64 improved, 32 worse, 24 equal). Thus interpolation is not universally better.
 - Raw artifacts: [68174](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035/artifacts/14706460979), [68175](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035/artifacts/14706590616).
 - Next: repeat probe audit at three mesh caps; see [probe mesh sweep handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md).
+
+
+### Segev AC probe-coordinate mesh sweep — running 21/11/2026
+
+- The 0.125 µm audit is verified: exact-SWC and nearest-centre readouts are identical at exported precision, while complex interpolation changes cross-simulator residuals in a source-/probe-/cell-dependent manner.
+- The follow-up six-job mesh sweep [workflow 44902130621](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130621) tests both Segev morphologies at 0.25, 0.125 and 0.0625 µm.
+- The CSVs now include the mesh cap per row. Do not choose a default interpolation rule until the 720 rows are inspected and the error trend is evaluated across all mesh levels.
+- Handoff: [HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md](HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md).
