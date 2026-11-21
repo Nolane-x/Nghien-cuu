@@ -32,7 +32,7 @@ from amsn.morphology import SWCMorphology
 
 
 BASE_MAX_SEGMENT_UM = 0.125
-SOURCE_ALIGNMENT_TOLERANCE_UM = 0.001
+SOURCE_ALIGNMENT_TOLERANCE_UM = 0.002
 MAX_REFINED_NSEG = 32767
 RI_OHM_M = 0.7
 RM_OHM_M2 = 1.0
@@ -59,44 +59,65 @@ def configure_reference_parameters():
 
 
 def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
-    """Choose the smallest valid odd nseg meeting the SWC source tolerance.
+    """Preserve a legacy segment centre and create a distinct SWC-aligned one.
 
-    NEURON limits nseg to 32767. The old base-mesh centre is mapped to its
-    nearest centre on this common refined mesh; that remapping offset is
-    recorded so the legacy control remains quantitatively interpretable.
+    For odd multiplier m, nseg_new = nseg_old*m preserves the old segment
+    centres exactly: each old centre becomes the centre of the middle child
+    segment. NEURON caps nseg at 32767. The selected aligned centre must be a
+    distinct segment from the preserved legacy centre.
     """
     base_nseg = int(section.nseg)
     if base_nseg % 2 == 0:
         raise RuntimeError(f"{section.name()} nseg must be odd")
-    for candidate_nseg in range(base_nseg, MAX_REFINED_NSEG + 1, 2):
+    base_legacy_index = int(round(legacy_x * base_nseg - 0.5))
+    base_legacy_index = min(base_nseg - 1, max(0, base_legacy_index))
+    if abs((base_legacy_index + 0.5) / base_nseg - legacy_x) > 1e-12:
+        raise RuntimeError("legacy source is not an original segment centre")
+
+    max_multiplier = MAX_REFINED_NSEG // base_nseg
+    if max_multiplier % 2 == 0:
+        max_multiplier -= 1
+    for multiplier in range(1, max_multiplier + 1, 2):
+        candidate_nseg = base_nseg * multiplier
         aligned_index = int(round(target_x * candidate_nseg - 0.5))
         aligned_index = min(candidate_nseg - 1, max(0, aligned_index))
         aligned_x = (aligned_index + 0.5) / candidate_nseg
         aligned_offset_um = abs(aligned_x - target_x) * float(section.L)
-        if aligned_offset_um <= tolerance_um:
-            legacy_index = int(round(legacy_x * candidate_nseg - 0.5))
-            legacy_index = min(
-                candidate_nseg - 1, max(0, legacy_index)
-            )
-            legacy_centre_x = (legacy_index + 0.5) / candidate_nseg
-            legacy_remap_um = abs(legacy_centre_x - legacy_x) * float(section.L)
-            return {
-                "nseg": candidate_nseg,
-                "aligned_index": aligned_index,
-                "aligned_x": aligned_x,
-                "aligned_offset_um": aligned_offset_um,
-                "legacy_index": legacy_index,
-                "legacy_x": legacy_centre_x,
-                "legacy_offset_um": abs(legacy_centre_x - target_x)
-                    * float(section.L),
-                "legacy_remap_offset_um": legacy_remap_um,
-                "base_nseg": base_nseg,
-            }
-    raise RuntimeError(
-        f"could not align {section.name()} source within {tolerance_um:g} um "
-        f"under NEURON's nseg cap {MAX_REFINED_NSEG}"
-    )
+        if aligned_offset_um > tolerance_um:
+            continue
 
+        legacy_index = (
+            base_legacy_index * multiplier + (multiplier - 1) // 2
+        )
+        legacy_x_refined = (legacy_index + 0.5) / candidate_nseg
+        legacy_remap_um = abs(
+            legacy_x_refined - legacy_x
+        ) * float(section.L)
+        if legacy_remap_um > 1e-10:
+            raise RuntimeError(
+                f"legacy centre not preserved in {section.name()}: "
+                f"{legacy_remap_um:.12g} um"
+            )
+        if aligned_index == legacy_index:
+            continue
+
+        return {
+            "nseg": candidate_nseg,
+            "aligned_index": aligned_index,
+            "aligned_x": aligned_x,
+            "aligned_offset_um": aligned_offset_um,
+            "legacy_index": legacy_index,
+            "legacy_x": legacy_x_refined,
+            "legacy_offset_um": abs(legacy_x_refined - target_x)
+                * float(section.L),
+            "legacy_remap_offset_um": legacy_remap_um,
+            "base_nseg": base_nseg,
+            "multiplier": multiplier,
+        }
+    raise RuntimeError(
+        f"could not produce distinct legacy and SWC-aligned segment centres "
+        f"within {tolerance_um:g} um under nseg cap {MAX_REFINED_NSEG}"
+    )
 
 def main():
     configure_reference_parameters()
@@ -221,10 +242,13 @@ def main():
         print(
             f"# source_refinement={info['source_name']}; swc_id={source_id}; "
             f"section={info['section'].name()}; "
-            f"nseg={refinement['base_nseg']}->{refinement['nseg']}; "
+            f"nseg={refinement['base_nseg']}->{refinement['nseg']} "
+            f"(odd_multiple={refinement['multiplier']}); "
             f"legacy_source_offset_um={refinement['legacy_offset_um']:.12g}; "
             f"legacy_mesh_remap_um={refinement['legacy_remap_offset_um']:.12g}; "
-            f"aligned_source_offset_um={refinement['aligned_offset_um']:.12g}"
+            f"aligned_source_offset_um={refinement['aligned_offset_um']:.12g}; "
+            f"legacy_index={refinement['legacy_index']}; "
+            f"aligned_index={refinement['aligned_index']}"
         )
 
     print(
@@ -246,6 +270,8 @@ def main():
         for node_id, electrical_id in electrical_map.items()
     }
     for source_name, source_id in injections:
+        if source_name == "soma":
+            continue
         amsn_input_mohm, _ = reference.solve_amsn(
             fine_tree,
             fine_mapping,
