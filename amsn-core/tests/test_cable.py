@@ -373,3 +373,127 @@ def test_schur_reduction_rejects_invalid_retained_ports():
         schur_reduce_passive_admittance(tree, [tree.n_compartments], 10.0)
     with pytest.raises(ValueError):
         schur_reduce_passive_admittance(tree, [0], -1.0)
+
+
+def _full_port_impedance(tree, ports, frequency_hz):
+    impedance = np.empty((len(ports), len(ports)), dtype=np.complex128)
+    for column, source in enumerate(ports):
+        current = np.zeros(tree.n_compartments, dtype=np.complex128)
+        current[source] = 1.0
+        voltage = tree.solve_passive_frequency_response(frequency_hz, current)
+        impedance[:, column] = voltage[ports]
+    return impedance
+
+
+def test_prima_reduction_matches_full_tree_dc_port_impedance():
+    from amsn.prima import prima_reduce_passive_cable
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["branch"]]
+    reduced = prima_reduce_passive_cable(tree, ports, max_order=2)
+    assert reduced.order <= 2
+    expected = _full_port_impedance(tree, ports, 0.0)
+    np.testing.assert_allclose(
+        reduced.impedance_matrix(0.0), expected, rtol=2e-10, atol=1e-10
+    )
+
+
+def test_prima_full_order_projection_matches_complex_port_response():
+    from amsn.prima import prima_reduce_passive_cable
+
+    tree = _tree()
+    ports = list(range(tree.n_compartments))
+    reduced = prima_reduce_passive_cable(tree, ports, max_order=tree.n_compartments)
+    assert reduced.order == tree.n_compartments
+    for frequency_hz in (0.0, 17.5, 1000.0):
+        expected = _full_port_impedance(tree, ports, frequency_hz)
+        np.testing.assert_allclose(
+            reduced.impedance_matrix(frequency_hz),
+            expected,
+            rtol=2e-10,
+            atol=2e-10,
+        )
+
+
+def test_prima_projected_matrices_are_passive_and_stable():
+    from amsn.prima import prima_reduce_passive_cable
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["dend_a"], tree.index["branch"]]
+    reduced = prima_reduce_passive_cable(tree, ports, max_order=3)
+    np.testing.assert_allclose(
+        reduced.conductance_matrix_s,
+        reduced.conductance_matrix_s.T,
+        rtol=1e-12,
+        atol=1e-18,
+    )
+    np.testing.assert_allclose(
+        reduced.capacitance_matrix_f,
+        reduced.capacitance_matrix_f.T,
+        rtol=1e-12,
+        atol=1e-24,
+    )
+    np.linalg.cholesky(reduced.conductance_matrix_s)
+    np.linalg.cholesky(reduced.capacitance_matrix_f)
+    rates = np.linalg.eigvals(
+        np.linalg.solve(
+            reduced.capacitance_matrix_f, reduced.conductance_matrix_s
+        )
+    )
+    assert np.all(rates.real > 0.0)
+    assert np.max(np.abs(rates.imag)) < 1e-7 * np.max(rates.real)
+
+
+def test_prima_backward_euler_step_matches_full_order_hines_step():
+    from amsn.prima import prima_reduce_passive_cable
+
+    tree = _tree()
+    ports = list(range(tree.n_compartments))
+    reduced = prima_reduce_passive_cable(tree, ports, max_order=tree.n_compartments)
+    current = np.array([0.2, -0.1, 0.4, 0.7], dtype=float) * 1e-12
+    dt_s = 2e-5
+    state = np.zeros(reduced.order)
+    next_state = reduced.step_backward_euler(state, dt_s, current)
+    reduced_voltage = reduced.basis @ next_state
+
+    full_current = np.zeros(tree.n_compartments)
+    full_current[ports] = current
+    reversal = tree.parameters.e_leak_v
+    full_voltage = tree.step_linear(
+        np.full(tree.n_compartments, reversal),
+        dt_s,
+        tree.membrane_leak_s,
+        tree.membrane_leak_s * reversal,
+        full_current,
+    )
+    np.testing.assert_allclose(
+        reduced_voltage, full_voltage - reversal, rtol=2e-10, atol=1e-14
+    )
+
+
+def test_prima_reduction_rejects_invalid_configuration_and_inputs():
+    from amsn.prima import prima_reduce_passive_cable
+
+    tree = _tree()
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable(tree, [])
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable(tree, [0, 0])
+    with pytest.raises(TypeError):
+        prima_reduce_passive_cable(tree, [0, 1.5])
+    with pytest.raises(IndexError):
+        prima_reduce_passive_cable(tree, [tree.n_compartments])
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable(tree, [0], max_order=0)
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable(tree, [0], relative_tolerance=1.0)
+
+    reduced = prima_reduce_passive_cable(tree, [0], max_order=2)
+    with pytest.raises(ValueError):
+        reduced.impedance_matrix(-1.0)
+    with pytest.raises(ValueError):
+        reduced.step_backward_euler(np.zeros(reduced.order), 0.0, np.zeros(1))
+    with pytest.raises(ValueError):
+        reduced.step_backward_euler(np.zeros(reduced.order), 1e-4, np.zeros(2))
+    with pytest.raises(ValueError):
+        reduced.port_voltages(np.zeros(reduced.order + 1))

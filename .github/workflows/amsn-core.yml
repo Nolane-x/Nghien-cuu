@@ -52,6 +52,7 @@ jobs:
           python examples/scaling_smoke.py
           python examples/electrotonic_refinement.py
           python examples/passive_mesh_convergence.py
+          python examples/passive_prima_reduction.py
           python examples/human_morphology_inspect.py
           python examples/human_passive_transfer.py
           python examples/human_sectioned_mesh_sensitivity.py
