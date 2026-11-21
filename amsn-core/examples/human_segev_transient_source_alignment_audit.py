@@ -308,11 +308,13 @@ def main() -> None:
                     **source_meta,
                 }
 
-                for probe_mode, trace in (
-                    PROBE_MODES[0],
-                    PROBE_MODES[1],
-                ):
-                    chosen = nearest_trace if probe_mode[1] == "nearest" else interpolated_trace
+                for probe_mode, probe_selector in PROBE_MODES:
+                    if probe_selector == "nearest":
+                        chosen = nearest_trace
+                    elif probe_selector == "interpolated":
+                        chosen = interpolated_trace
+                    else:
+                        raise RuntimeError(f"unsupported probe selector: {probe_selector}")
                     metrics = base.waveform_metrics(
                         amsn_time,
                         amsn_trace[:, column],
@@ -320,7 +322,7 @@ def main() -> None:
                     )
                     summaries.append({
                         **identity,
-                        "probe_readout_mode": probe_mode[0],
+                        "probe_readout_mode": probe_mode,
                         **metrics,
                     })
 
@@ -337,6 +339,17 @@ def main() -> None:
                         "neuron_total_iclamp_current_nA": float(total_current[sample]),
                     })
 
+    actual_probe_modes = {row["probe_readout_mode"] for row in summaries}
+    expected_probe_modes = {mode for mode, _ in PROBE_MODES}
+    if actual_probe_modes != expected_probe_modes:
+        raise RuntimeError(
+            f"probe readout mode labels mismatch: {actual_probe_modes} != {expected_probe_modes}"
+        )
+    actual_source_modes = {row["source_mode"] for row in summaries}
+    if actual_source_modes != set(SOURCE_MODES):
+        raise RuntimeError(
+            f"source placement mode labels mismatch: {actual_source_modes} != {set(SOURCE_MODES)}"
+        )
     expected_summaries = len(injections) * len(probes) * len(SOURCE_MODES) * len(PROBE_MODES)
     expected_traces = len(injections) * len(probes) * len(SOURCE_MODES) * expected_samples
     if len(summaries) != expected_summaries or len(traces) != expected_traces:
