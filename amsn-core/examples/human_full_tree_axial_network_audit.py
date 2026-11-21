@@ -14,6 +14,7 @@ by AMSN's documented NeuroMorpho soma policy are counted separately.
 from __future__ import annotations
 
 import csv
+import os
 from math import ceil, pi, sqrt
 from pathlib import Path
 import sys
@@ -26,10 +27,11 @@ import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 
 
-DATA = reference.DATA
+DATA = Path(os.environ.get("AMSN_MORPHOLOGY_PATH", str(reference.DATA)))
+MORPHOLOGY_LABEL = os.environ.get("AMSN_MORPHOLOGY_LABEL", "NMO_290988")
 RI_OHM_M = 0.7
 NEURON_RA_OHM_CM = RI_OHM_M * 100.0
-NEURON_MAX_SEGMENT_UM = 0.5
+NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.5"))
 GEOMETRY_MATCH_TOLERANCE_UM = 1e-3
 DIAMETER_MATCH_TOLERANCE_UM = 1e-3
 BRANCHPOINT_X_TOLERANCE = 1e-8
@@ -704,6 +706,9 @@ def write_csv(path: Path, rows):
 
 
 def main() -> None:
+    reference.DATA = DATA
+    reference.MAX_NEURON_SEGMENT_UM = NEURON_MAX_SEGMENT_UM
+    reference.RI_OHM_M = RI_OHM_M
     morphology = SWCMorphology.from_file(DATA)
     reader, sections = reference.import_swc_with_neuron()
     configure_neuron_reference(sections)
@@ -723,10 +728,11 @@ def main() -> None:
 
     outdir = Path(__file__).parents[1] / "results"
     outdir.mkdir(parents=True, exist_ok=True)
-    edge_csv = outdir / "human_full_tree_axial_edges_2026-11-21.csv"
-    ri_csv = outdir / "human_neuron_ri_connections_2026-11-21.csv"
-    branch_csv = outdir / "human_branchpoint_connection_audit_2026-11-21.csv"
-    section_csv = outdir / "human_neuron_section_connections_2026-11-21.csv"
+    prefix = "" if MORPHOLOGY_LABEL == "NMO_290988" else f"{MORPHOLOGY_LABEL}_"
+    edge_csv = outdir / f"{prefix}human_full_tree_axial_edges_2026-11-21.csv"
+    ri_csv = outdir / f"{prefix}human_neuron_ri_connections_2026-11-21.csv"
+    branch_csv = outdir / f"{prefix}human_branchpoint_connection_audit_2026-11-21.csv"
+    section_csv = outdir / f"{prefix}human_neuron_section_connections_2026-11-21.csv"
     write_csv(edge_csv, edge_rows)
     write_csv(ri_csv, ri_rows)
     write_csv(branch_csv, branch_rows)
@@ -760,7 +766,7 @@ def main() -> None:
         default=float("nan"),
     )
 
-    print(f"# NEURON={neuron.__version__}; source morphology=NMO_290988")
+    print(f"# NEURON={neuron.__version__}; source morphology={MORPHOLOGY_LABEL}; path={DATA}")
     print(
         f"# section_count={len(sections)}; NEURON_segments="
         f"{sum(section.nseg for section in sections)}; "
@@ -778,7 +784,7 @@ def main() -> None:
         f"{edge_summary['unmapped_swc_edges']}"
     )
     print(
-        f"# max_SW C_to_NEURON_pt3d_axial_factor_difference_pct={max_edge_error:.12g}; "
+        f"# max_SWC_to_NEURON_pt3d_axial_factor_difference_pct={max_edge_error:.12g}; "
         f"max_node_geometry_mapping_offset_um={max_mapping_offset:.12g}"
     )
     print(
@@ -819,6 +825,28 @@ def main() -> None:
         raise RuntimeError(
             f"{edge_summary['unmapped_swc_edges']} active SWC edges did not map "
             "to an adjacent NEURON pt3d interval; inspect raw edge CSV"
+        )
+    if branch_exact != branchpoint_count:
+        mismatches = [
+            row for row in branch_rows
+            if row["child_section_count_difference"] != 0
+        ]
+        detail = [
+            (row["swc_branchpoint_id"], row["swc_child_count"],
+             row["neuron_child_section_count_at_site"])
+            for row in mismatches[:8]
+        ]
+        raise RuntimeError(
+            f"{len(mismatches)} SWC branchpoints do not preserve exact "
+            f"NEURON child-section counts; first mismatches={detail}"
+        )
+    if (
+        connection_summary["max_non_soma_connection_endpoint_gap_um"]
+        > GEOMETRY_MATCH_TOLERANCE_UM
+    ):
+        raise RuntimeError(
+            "non-soma section-connection endpoint gap exceeds geometry "
+            f"tolerance: {connection_summary['max_non_soma_connection_endpoint_gap_um']:.12g} um"
         )
     if ri_summary["unexpected_infinite_ri"] != 0:
         raise RuntimeError(
