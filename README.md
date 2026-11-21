@@ -59,6 +59,15 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [Research log 21/11](research/RESEARCH_LOG_2026-11-21_AMPA-AXIAL-RESISTANCE.md).
 - [Axial-resistance audit workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391) — NEURON 9.0.2, 1/1 job thành công.
 
+### Checkpoint mới nhất — full-tree axial audit (21/11/2026)
+
+- [Handoff toàn cây](HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md) — tiếp tục từ đây.
+- [Báo cáo full-tree axial network](amsn-core/research/HUMAN_FULL_TREE_AXIAL_NETWORK_AUDIT_2026-11-21.md) — 8.892/8.892 cạnh hoạt động được ánh xạ; 58/58 branchpoint khớp child count; 25.233 phép kiểm tra NEURON ri().
+- [CSV tóm tắt toàn cây](amsn-core/results/human_full_tree_axial_summary_2026-11-21.csv) — các metric chính để đọc nhanh.
+- [Raw artifact gồm 4 CSV](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993854/artifacts/14693349082) — edge-level, segment-ri, branchpoint và section-connections.
+- [Full-tree workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993854) — NEURON 9.0.2, 1/1 job thành công.
+- [Mã audit](amsn-core/examples/human_full_tree_axial_network_audit.py) và [workflow YAML](.github/workflows/amsn-full-tree-axial-network-audit.yml).
+
 ## Bảo toàn dữ liệu
 
 - Ưu tiên append-only: thêm checkpoint mới; không xóa hoặc ghi đè lịch sử nghiên cứu.
@@ -99,3 +108,13 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 
 - Comprehensive Core CI for code commit `56a731c156db32f6beb35b813e177039d739a850` is now confirmed successful: 65 tests on each of Python 3.12/3.13, module compilation/examples and both NEURON cross-validation jobs all green ([run 44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392)).
+
+
+### Bổ sung kết quả — full-tree axial audit 21/11/2026
+
+- 8.892/8.892 active SWC edges được ánh xạ với NEURON Import3D pt3d; 0 edge không ánh xạ.
+- Sai khác axial geometry factor SWC/pt3d có median 0,0001638%, p99 0,0036173%, maximum 0,0152884%; lớn nhất trên một cạnh apical rất ngắn 0,1565 µm, phù hợp với ảnh hưởng precision của pt3d nhưng chưa quy nguyên nhân tuyệt đối.
+- 25.233/25.233 NEURON ri records được kiểm tra; sai khác nội bộ cực đại 2,28e-11%.
+- 58/58 branchpoints có đúng số child sections; 116 section endpoint bình thường có gap bằng 0; 8 soma wire attachments được báo riêng, không suy diễn chúng có zero biological resistance.
+- Kết quả là numerical/topology audit trên một partial morphology, chưa phải biological validation hay bằng chứng tương đương toàn bộ voltage solver.
+- Bước tiếp theo: so sánh toàn bộ effective AMSN axial conductance matrix với NEURON, rồi tái tạo ModelDB 238347 bằng morphology/mechanism gốc sau khi xác minh archive/license.
