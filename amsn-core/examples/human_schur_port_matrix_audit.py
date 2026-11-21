@@ -604,6 +604,8 @@ def main() -> None:
     max_multi_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     multi_transient = next(row for row in prima_multishift_rows if row["metric"] == "transient_all_ports")
+    max_multi_z_neuron = max(float(row["neuron_impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
+    max_multi_y_neuron = max(float(row["neuron_admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     print("PRIMA_multishift_port_impedance_error_pct_max=%.12g; PRIMA_multishift_port_admittance_error_pct_max=%.12g; PRIMA_multishift_Z_vs_NEURON_pct_max=%.12g; PRIMA_multishift_Y_vs_NEURON_pct_max=%.12g; PRIMA_multishift_transient_all_ports_NRMSE_pct=%.12g" % (max_multi_z, max_multi_y, max_multi_z_neuron, max_multi_y_neuron, multi_transient["transient_port_nrmse_pct"]))
     for order in prima_order_sweep_models:
         subset = [row for row in prima_sweep_rows if row["metric"] == "frequency_response" and int(row["prima_order"]) == order]
