@@ -233,6 +233,85 @@ def main() -> None:
     print(f"NEURON_total_membrane_area_um2={neuron_area_um2:.12g}")
     print(f"AMSN_total_membrane_area_um2={amsn_area_um2:.12g}")
     print(f"NEURON_minus_AMSN_area_difference_pct={area_difference_pct:.12g}")
+    if soma_normalization is None:
+        raise RuntimeError("expected NeuroMorpho three-point soma normalization was not detected")
+
+    # Decompose reconstructed area and Import3D's sections before interpreting
+    # any electrical discrepancy. All areas are in um^2; lengths in um.
+    swc_area_by_type: dict[int, float] = {}
+    swc_length_by_type: dict[int, float] = {}
+    for node_id, node in morphology.nodes.items():
+        if node.parent_id == -1:
+            continue
+        parent_node = morphology.nodes[node.parent_id]
+        edge_length = float(np.linalg.norm([
+            node.x_um - parent_node.x_um,
+            node.y_um - parent_node.y_um,
+            node.z_um - parent_node.z_um,
+        ]))
+        edge_area = np.pi * (
+            parent_node.radius_um + node.radius_um
+        ) * np.hypot(edge_length, node.radius_um - parent_node.radius_um)
+        swc_area_by_type[node.neurite_type] = (
+            swc_area_by_type.get(node.neurite_type, 0.0) + edge_area
+        )
+        swc_length_by_type[node.neurite_type] = (
+            swc_length_by_type.get(node.neurite_type, 0.0) + edge_length
+        )
+
+    neuron_sections_by_type: dict[str, list[dict[str, float]]] = {}
+    neuron_area_by_type: dict[str, float] = {}
+    for section in sections:
+        section_type = section.name().split("[", 1)[0]
+        section_area = sum(float(segment.area()) for segment in section)
+        neuron_area_by_type[section_type] = (
+            neuron_area_by_type.get(section_type, 0.0) + section_area
+        )
+        neuron_sections_by_type.setdefault(section_type, []).append({
+            "length_um": float(section.L),
+            "nseg": int(section.nseg),
+            "n3d": int(h.n3d(sec=section)),
+            "area_um2": float(section_area),
+        })
+
+    print(f"SWC_frustum_area_by_type_um2={swc_area_by_type}")
+    print(f"SWC_path_length_by_type_um={swc_length_by_type}")
+    print(f"NEURON_import3d_area_by_section_type_um2={neuron_area_by_type}")
+    for section_type, type_sections in sorted(neuron_sections_by_type.items()):
+        print(
+            f"NEURON_section_signature_{section_type}="
+            f"count:{len(type_sections)};"
+            f"nseg:{sum(int(x['nseg']) for x in type_sections)};"
+            f"n3d:{sum(int(x['n3d']) for x in type_sections)};"
+            f"area_um2:{sum(float(x['area_um2']) for x in type_sections):.12g};"
+            f"length_um:{sum(float(x['length_um']) for x in type_sections):.12g}"
+        )
+
+    print(
+        f"AMSN_root_soma_area_um2={soma_normalization.root_soma_area_um2:.12g};"
+        f"root_radius_um={morphology.nodes[soma_normalization.root_id].radius_um:.12g};"
+        f"wire_attachment_count={len(soma_normalization.wire_attachment_node_ids)};"
+        f"wire_attachment_lengths_um={soma_normalization.wire_attachment_lengths_um}"
+    )
+    for wire_id in soma_normalization.wire_attachment_node_ids:
+        point_index = int(reader.id2pt(int(wire_id)))
+        section_index = int(reader.point2sec.x[point_index])
+        imported_section = reader.sections.object(section_index)
+        base_type = {1: "soma", 2: "axon", 3: "dend", 4: "apic"}.get(
+            int(imported_section.type), "unknown"
+        )
+        section_name_index = int(imported_section.nameindex)
+        section_name = (
+            f"{base_type}[{section_name_index}]"
+            if section_name_index > 0 else base_type
+        )
+        print(
+            f"IMPORT3D_wire_attachment_swc_id={wire_id};"
+            f"point_index={point_index};section_index={section_index};"
+            f"section_name={section_name};"
+            f"first={int(imported_section.first)};"
+            f"point_count={int(imported_section.d.size())}"
+        )
     print(f"passive_Ri_ohm_m={RI_OHM_M:g}; Rm_ohm_m2={RM_OHM_M2:g}; "
           f"Cm_F_m2={CM_F_M2:g}; Eleak_mV={ELEAK_MV:g}")
     print(f"frequencies_hz={','.join(str(x) for x in FREQUENCIES_HZ)}")
@@ -265,6 +344,20 @@ def main() -> None:
             f"transfer_magnitude_max_pct={magnitude_stats[2]:.12g}; "
             f"transfer_phase_max_deg={phase_stats[2]:.12g}; "
             f"input_complex_max_pct={input_stats[2]:.12g}"
+        )
+    for source_name, source_id in injections:
+        site = sites[source_id]
+        print(
+            f"SOURCE_SITE_{source_name}=swc:{source_id};"
+            f"section:{site['section'].name()};x:{float(site['normalized_x']):.12g};"
+            f"nearest_centre_offset_um:{float(site['nearest_centre_offset_um']):.12g}"
+        )
+    for probe_name, probe_id in probes:
+        site = sites[probe_id]
+        print(
+            f"PROBE_SITE_{probe_name}=swc:{probe_id};"
+            f"section:{site['section'].name()};x:{float(site['normalized_x']):.12g};"
+            f"nearest_centre_offset_um:{float(site['nearest_centre_offset_um']):.12g}"
         )
     print(f"output_csv={OUTPUT}")
 

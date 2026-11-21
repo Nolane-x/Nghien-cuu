@@ -43,3 +43,15 @@ NMO_68175 does not show a comparable improvement. Its input-complex discrepancy 
 ## Limits
 
 These are two individual human temporal L2–3 morphologies with moderately complete dendrites and incomplete axons. No active-channel/synapse fitting or experimental trace validation was performed. Numerical agreement between two simulators is not biological validation.
+
+
+## Import3D geometry diagnostics added (pending rerun)
+
+The audit now emits:
+- total SWC tapered-frustum area and path length by neurite type;
+- total NEURON segment area by Import3D section type;
+- NEURON section signatures (count, nseg, n3d points, area and length) by type;
+- normalized spherical soma radius/area and each collapsed soma wire attachment's Import3D section identity, first-point flag and local point count;
+- source/probe SWC IDs, selected Import3D section/x and nearest segment-centre offset.
+
+This is intended to isolate why NMO_68175 has a low-frequency discrepancy that is nearly mesh invariant. No cause is assigned until the new logs and area ledgers are compared.
