@@ -1,0 +1,25 @@
+metric,value,unit,scope
+neuron_max_segment_length,0.5,um,NEURON_9.0.2
+neuron_sections,125,sections,NEURON_9.0.2
+neuron_segments,25233,segments,NEURON_9.0.2
+amsn_full_compartments,8893,compartments,full_SW C_tree
+amsn_sectioned_compartments,690,compartments,electrotonic_mesh
+neuron_total_segment_area,23338.438806144237,um2,NEURON
+amsn_normalized_electrical_area,23338.439002801428,um2,AMSN
+area_difference,-0.000000842632152062,percent,NEURON_vs_AMSN
+soma_source_input_difference,0.000062942604375,percent,10pA
+basal_q75_source_input_difference,0.0432387674706,percent,10pA
+apical_q75_source_input_difference,0.0679201212653,percent,10pA
+nearest_ratio_error_median,0.046141607378,percent,15_source_probe_pairs
+nearest_ratio_error_p95,0.101881848755,percent,15_source_probe_pairs
+nearest_ratio_error_max,0.107565995992,percent,15_source_probe_pairs
+interpolated_ratio_error_median,0.0462721056967,percent,15_source_probe_pairs
+interpolated_ratio_error_p95,0.0930256463935,percent,15_source_probe_pairs
+interpolated_ratio_error_max,0.0930533497652,percent,15_source_probe_pairs
+sectioned_vs_full_amsn_ratio_error_max,0.0492173018953,percent,15_source_probe_pairs
+max_neuron_steady_residual,8.99348151506e-10,mV,200ms_vs_250ms
+max_nearest_probe_centre_offset,0.242786673,um,selected_probes
+max_import3d_geometry_mapping_offset,0.000026920008,um,selected_probes
+source_placement_offset_basal_q75,0.079654544,um,nearest_segment_centre_vs_SW C_arc
+source_placement_offset_apical_q75,0.206856997,um,nearest_segment_centre_vs_SW C_arc
+raw_source_probe_rows,15,rows,artifact_and_committed_csv
