@@ -240,7 +240,19 @@ def main():
 
     all_clamps = []
     maximum_residual = 0.0
+    electrical_map = morphology.electrical_node_mapping()
+    fine_mapping = {
+        node_id: f"swc_{electrical_id}"
+        for node_id, electrical_id in electrical_map.items()
+    }
     for source_name, source_id in injections:
+        amsn_input_mohm, _ = reference.solve_amsn(
+            fine_tree,
+            fine_mapping,
+            source_id,
+            [probe_id for _, probe_id in probes],
+        )
+        amsn_source_delta = amsn_input_mohm * INJECTED_P_A / 1000.0
         for mode in ("legacy", "aligned"):
             source_site = source_sites[source_id][mode]
             neuron_voltage, residual, clamp = fine_audit.solve_neuron_passive(
@@ -250,7 +262,6 @@ def main():
             maximum_residual = max(maximum_residual, residual)
 
             source_delta = neuron_voltage[(source_id, False)] - ELEAK_MV
-            amsn_source_delta = fine_results[source_id][source_id][0]
             source_error_pct = 100.0 * abs(
                 source_delta - amsn_source_delta
             ) / max(abs(amsn_source_delta), 1e-30)
