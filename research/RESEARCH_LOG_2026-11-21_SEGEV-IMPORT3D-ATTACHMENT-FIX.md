@@ -45,3 +45,13 @@ Source data: direct NeuroMorpho CNG SWCs NMO_68174 and NMO_68175, unchanged and 
 - Error statistics are not monotone in every percentile: NMO_68174 p95/max rise slightly while median improves; NMO_68175 p95/max improve while median rises. Do not overstate mesh convergence.
 - Raw artifacts: 14700676187 (NMO_68174) and 14700169600 (NMO_68175), run 44887397930.
 - Dedicated workflow `.github/workflows/amsn-segev-fine-mesh-frequency-audit.yml` is committed at `ff83fd7acc36da874f0ebcca7290a7bc8c80bdf4`.
+
+## Pair-level residual localization from raw CSV
+
+Extracted four Actions artifacts (NMO_68174 and NMO_68175 at 0.125 and 0.0625 µm; 120 rows each). Worst 3 kHz pairs:
+- NMO_68175 0.125: basal q75 SWC3253 → apical q50 SWC12177, complex 0.169384%, source/probe offsets 0.044099/0.043591 µm.
+- NMO_68175 0.0625: apical q75 SWC7640 → apical q50 SWC12177, 0.099423%, offsets 0.027810/0.002554 µm.
+- NMO_68174 0.125: basal q75 SWC1577 → apical q90 SWC10532, 0.130503%, offsets 0.001441/0.030656 µm.
+- NMO_68174 0.0625: same pair, 0.133856%, offsets 0.009962/0.022117 µm.
+
+Spearman error-versus-log-frequency across the 120 rows is 0.747–0.833. Source/probe offset associations vary by cell, so this is not a causal location result. The NMO_68174 0.0625 worst transfer path has a very small absolute NEURON magnitude (~2.410e−7 MΩ); relative error must be read with absolute transfer. A matched-support site-placement experiment is the next step.

@@ -103,3 +103,7 @@ Raw artifacts: [NMO_68174 0.0625 µm, artifact 14700676187](https://github.com/N
 The combined results (0.25/0.125/0.0625 µm) are in `amsn-core/results/human_segev_import3d_attachment_fix_summary_2026-11-21.csv`; the per-frequency fine-mesh table is in `amsn-core/results/human_segev_import3d_attachment_fix_0p0625_frequency_2026-11-21.csv`.
 
 Interpretation: the missing soma/axon attachment was the dominant NMO_68175 discrepancy and is now fixed. The remaining ~0.1% transfer-complex tail is small, morphology-/site-dependent and high-frequency weighted; the mesh results do not yet prove a continuum limit or experimental biological accuracy.
+
+## Raw pair-level residual investigation
+
+The 0.125/0.0625 µm raw CSV artifacts were downloaded and analyzed. At 3 kHz, the NMO_68175 worst pair changes from basal q75 (SWC 3253) → apical q50 (12177) at 0.125 µm to apical q75 (7640) → apical q50 (12177) at 0.0625 µm. NMO_68174's worst pair remains basal q75 (1577) → apical q90 (10532). Transfer error has a strong descriptive rank association with log-frequency (Spearman 0.747–0.833) and weaker, cell-specific associations with source/probe segment-centre offsets. See [SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md](amsn-core/research/SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md). Next: matched-support source/probe placement comparison at fixed physical sites; keep Ri/Rm/Cm/Eleak unchanged.

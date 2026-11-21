@@ -206,3 +206,6 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Raw artifacts: [68174/0.25](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699778704), [68175/0.25](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699833538), [68174/0.125](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699989410), [68175/0.125](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14700104294).
 - Core CI [44887065325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065325) passed 4/4 jobs; 81 tests on both Python 3.12 and 3.13; full NEURON passive/transient/AMPA/Exp2Syn/single-compartment validation passed.
 - See [final multi-morphology audit](amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md), [summary CSV](amsn-core/results/human_segev_import3d_attachment_fix_summary_2026-11-21.csv) and [handoff](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md).
+
+
+- Raw source/probe residual investigation: [pair-level analysis](amsn-core/research/SEGEV_FINE_MESH_RESIDUAL_LOCALIZATION_2026-11-21.md). The next controlled test will match the exact physical source/probe support across NEURON and AMSN rather than simply refine the mesh further.
