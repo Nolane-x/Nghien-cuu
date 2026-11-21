@@ -116,3 +116,8 @@ The full Hines solver remains the canonical model. Do not replace it as the defa
 ## 7. Next technical question
 
 The current basis is expanded from DC, which explains its excellent low-frequency and transient behavior and its larger residual at 3 kHz. The next experiment should build a multi-shift or frequency-aware passive Krylov basis, while retaining congruence projection and positive definiteness, then map the trade-off among reduced order, 3 kHz error and transient accuracy. Test order values 28, 56, 84 and 112 before choosing a runtime preset.
+
+
+## Follow-on: positive-real multi-shift and order sweep
+
+The 56-state DC-only basis was followed by a multi-shift basis with positive-real expansion points at 0, 100, 1,000 and 3,000 Hz. At equal order 56, the multi-shift basis improves worst-case port impedance by 60.97–98.22× and admittance by 83.44–112.07×. A subsequent order sweep tested 28/56/84 states; the balanced order-56 and high-accuracy order-84 results are documented in [HUMAN_PASSIVE_PRIMA_MULTISHIFT_ORDER_SWEEP_2026-11-21.md](HUMAN_PASSIVE_PRIMA_MULTISHIFT_ORDER_SWEEP_2026-11-21.md), with per-configuration metrics in [order-sweep summary CSV](../results/human_passive_prima_multishift_order_sweep_summary_2026-11-21.csv).
