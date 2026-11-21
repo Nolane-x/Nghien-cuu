@@ -1,10 +1,10 @@
 """Fine-mesh full-tree passive DC cross-validation and probe interpolation.
 
 This experiment revisits the existing whole-morphology passive DC comparison,
-but uses a 0.5 um NEURON reference mesh instead of 5 um. It compares:
+but uses a configurable fine NEURON reference mesh (default 0.5 um) instead of 5 um. It compares:
 - AMSN's exact, unresampled 8,893-node electrical tree;
 - the existing electrotonically reduced AMSN mesh;
-- NEURON 9.0.2 with 0.5 um maximum segment length.
+- NEURON 9.0.2 with AMSN_NEURON_MAX_SEGMENT_UM maximum segment length.
 
 For each SWC probe, NEURON voltage is read both at the nearest segment centre
 and by linear interpolation between adjacent segment-centre voltages at the
@@ -19,6 +19,7 @@ one partial morphology, not a biological fit.
 from __future__ import annotations
 
 import csv
+import os
 from math import ceil
 from pathlib import Path
 
@@ -31,7 +32,9 @@ from amsn.morphology import SWCMorphology
 from amsn.sectioned import to_sectioned_cable_tree
 
 
-NEURON_MAX_SEGMENT_UM = 0.5
+NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.5"))
+if not np.isfinite(NEURON_MAX_SEGMENT_UM) or NEURON_MAX_SEGMENT_UM <= 0:
+    raise ValueError("AMSN_NEURON_MAX_SEGMENT_UM must be finite and positive")
 DT_MS = 0.025
 RUN_TO_MS = 200.0
 FINAL_MS = 250.0
@@ -180,8 +183,8 @@ def solve_amsn_all(morphology, injections, probes):
 
 
 def main():
-    # Reuse the established Import3D model and parameter conversion, but
-    # raise the reference mesh density from 5 um to 0.5 um.
+    # Reuse the established Import3D model and parameter conversion; the
+    # mesh cap is supplied by AMSN_NEURON_MAX_SEGMENT_UM (default 0.5 um).
     reference.MAX_NEURON_SEGMENT_UM = NEURON_MAX_SEGMENT_UM
     reference.RI_OHM_M = RI_OHM_M
     reference.RM_OHM_M2 = RM_OHM_M2

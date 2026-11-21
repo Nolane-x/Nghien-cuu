@@ -28,13 +28,19 @@ on:
 permissions:
   contents: read
 
-concurrency:
-  group: amsn-fine-mesh-passive-dc-audit-\${{ github.ref }}
-  cancel-in-progress: true
-
 jobs:
   passive-dc:
+    name: passive-dc (\${{ matrix.segment_um }} um NEURON mesh)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        segment_um: ["0.5", "0.25"]
+    concurrency:
+      group: amsn-fine-mesh-passive-dc-\${{ matrix.segment_um }}-\${{ github.ref }}
+      cancel-in-progress: true
+    env:
+      AMSN_NEURON_MAX_SEGMENT_UM: \${{ matrix.segment_um }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -51,16 +57,19 @@ jobs:
       - name: Verify NEURON and morphology fixture
         run: |
           python -c "import neuron; print('NEURON', neuron.__version__)"
+          echo "AMSN_NEURON_MAX_SEGMENT_UM=$AMSN_NEURON_MAX_SEGMENT_UM"
           test -s data/human/1094_Mohan_etal_2015.CNG.swc
         working-directory: amsn-core
       - name: Run fine-mesh passive DC comparison
         shell: bash
-        run: set -o pipefail; python examples/human_fine_mesh_passive_dc_audit.py | tee human-fine-mesh-passive-dc.csv
+        run: |
+          set -o pipefail
+          python examples/human_fine_mesh_passive_dc_audit.py | tee "human-fine-mesh-passive-dc-$AMSN_NEURON_MAX_SEGMENT_UM-um.csv"
         working-directory: amsn-core
       - name: Preserve passive DC result
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-fine-mesh-passive-dc-py3.12
-          path: amsn-core/human-fine-mesh-passive-dc.csv
+          name: amsn-fine-mesh-passive-dc-\${{ matrix.segment_um }}um-py3.12
+          path: amsn-core/human-fine-mesh-passive-dc-\${{ matrix.segment_um }}-um.csv
           if-no-files-found: ignore
