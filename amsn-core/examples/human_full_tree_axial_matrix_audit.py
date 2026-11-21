@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import bisect
 import csv
+import os
 from math import ceil, pi
 from pathlib import Path
 import sys
@@ -31,10 +32,11 @@ import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 
 
-DATA = reference.DATA
+DATA = Path(os.environ.get("AMSN_MORPHOLOGY_PATH", str(reference.DATA)))
+MORPHOLOGY_LABEL = os.environ.get("AMSN_MORPHOLOGY_LABEL", "NMO_290988")
 RI_OHM_M = 0.7
 NEURON_RA_OHM_CM = RI_OHM_M * 100.0
-NEURON_MAX_SEGMENT_UM = 0.5
+NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.5"))
 RANDOM_SEED = 20261121
 RANDOM_VOLTAGE_CASES = 32
 RANDOM_VOLTAGE_STD_V = 0.010
@@ -176,7 +178,20 @@ def neuron_edge_network_factor(
             and index1 is None
             and abs(x1 - 1.0) <= EDGE_MATCH_TOLERANCE
         ):
-            actual_ri_mohm = float(h.ri(1.0, sec=section))
+            # If the parent endpoint is also this section's own orientation
+            # attachment, h.ri(1) can resolve through the shared parent
+            # topology rather than the section-side half. Use the actual last
+            # segment ri(), independently checked by the full-tree audit.
+            # For ordinary opposite-endpoint caps, retain h.ri.
+            section_orientation = float(section.orientation())
+            shared_orientation_half = (
+                section.parentseg() is not None
+                and abs(x1 - section_orientation) <= EDGE_MATCH_TOLERANCE
+            )
+            if shared_orientation_half:
+                actual_ri_mohm = float(segments[-1].ri())
+            else:
+                actual_ri_mohm = float(h.ri(1.0, sec=section))
             parent_end_half_ri += 1
 
         if actual_ri_mohm is not None:
@@ -258,6 +273,13 @@ def write_csv(path: Path, rows):
 
 def main() -> None:
     run_matrix_conservation_self_checks()
+    reference.DATA = DATA
+    reference.MAX_NEURON_SEGMENT_UM = NEURON_MAX_SEGMENT_UM
+    reference.RI_OHM_M = RI_OHM_M
+    audit.DATA = DATA
+    audit.MORPHOLOGY_LABEL = MORPHOLOGY_LABEL
+    audit.NEURON_MAX_SEGMENT_UM = NEURON_MAX_SEGMENT_UM
+    audit.reference.DATA = DATA
     morphology = SWCMorphology.from_file(DATA)
     reader, sections = reference.import_swc_with_neuron()
     configure_neuron_reference(sections)
@@ -424,8 +446,9 @@ def main() -> None:
 
     outdir = Path(__file__).parents[1] / "results"
     outdir.mkdir(parents=True, exist_ok=True)
-    edge_csv = outdir / "human_full_tree_axial_matrix_edges_2026-11-21.csv"
-    probe_csv = outdir / "human_full_tree_axial_matrix_probes_2026-11-21.csv"
+    prefix = "" if MORPHOLOGY_LABEL == "NMO_290988" else f"{MORPHOLOGY_LABEL}_"
+    edge_csv = outdir / f"{prefix}human_full_tree_axial_matrix_edges_2026-11-21.csv"
+    probe_csv = outdir / f"{prefix}human_full_tree_axial_matrix_probes_2026-11-21.csv"
     write_csv(edge_csv, edge_rows)
 
     rng = np.random.default_rng(RANDOM_SEED)
@@ -494,7 +517,8 @@ def main() -> None:
         )
 
     write_csv(probe_csv, probe_rows)
-    print(f"# NEURON={neuron.__version__}; morphology=NMO_290988")
+    print(f"# NEURON={neuron.__version__}; morphology={MORPHOLOGY_LABEL}; path={DATA}")
+    print(f"# max_segment_um={NEURON_MAX_SEGMENT_UM}; axial_resistivity_ohm_m={RI_OHM_M}")
     print(
         f"# nodes={amsn_tree.n_compartments}; edges={len(edge_rows)}; "
         f"NEURON_sections={len(sections)}; NEURON_segments={sum(s.nseg for s in sections)}"
