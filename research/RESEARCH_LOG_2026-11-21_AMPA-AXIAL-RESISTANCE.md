@@ -74,3 +74,8 @@ The audit thresholds are internal numerical consistency checks, not experimental
 ## Next experiment
 
 Audit the entire tree's axial edge and junction conductances, explicitly handling branchpoints, soma attachment, section joins and terminals. After that, reproduce the published Eyal et al. 2018 / ModelDB 238347 cell and mechanism baseline as a separate matched-source experiment.
+
+
+## Comprehensive Core CI completion (recorded after run)
+
+Workflow [44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392) completed successfully on code commit `56a731c156db32f6beb35b813e177039d739a850`: all 4 jobs green. Unit/numerical tests passed 65/65 on Python 3.12 and 65/65 on Python 3.13. Both jobs also compiled all Python modules and ran configured examples. Both NEURON cross-validation jobs completed all steps on Python 3.12/3.13. The dedicated axial audit workflow [44870476391](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391) also completed successfully.

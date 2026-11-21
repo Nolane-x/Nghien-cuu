@@ -96,3 +96,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Audit chuyên biệt đã thành công: 15/15 hàng đo, 5 vị trí trên basal/apical, 3 tần số lưới; sai khác axial geometry factor AMSN/NEURON tối đa 0,000239676%.
 - Kết quả loại trừ một sai khác lớn trong tích phân axial cục bộ tại các điểm unbranched đã khảo sát; chưa bao phủ branchpoint, soma, section join, terminal hay toàn bộ cable matrix.
 - Xem handoff mới nhất để biết thí nghiệm toàn cây tiếp theo. Không xem đây là biological validation.
+
+
+- Comprehensive Core CI for code commit `56a731c156db32f6beb35b813e177039d739a850` is now confirmed successful: 65 tests on each of Python 3.12/3.13, module compilation/examples and both NEURON cross-validation jobs all green ([run 44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392)).

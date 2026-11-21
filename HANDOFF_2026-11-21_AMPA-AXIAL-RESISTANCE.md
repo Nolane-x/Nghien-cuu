@@ -52,6 +52,14 @@ This is a local geometry/numerics result for five unbranched supports in one par
 3. **Published reference reproduction.** Reproduce the Eyal et al. 2018 / ModelDB 238347 neuron with its own morphology and mechanisms. Keep that source-matched reproduction separate from the NMO_290988 engineering fixture.
 4. **Only after baseline stability:** add calibrated NMDA Mg²⁺ block, then calcium/signalling/plasticity. Preserve source ranges and uncertainty; do not leap to whole-genome or multi-neuron intelligence claims.
 
-## CI state and honesty rule
+## CI state and final verification
 
-The dedicated axial audit is verified successful. The comprehensive AMSN Core CI run for the same code commit is tracked separately at https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392. Record its final conclusion after it completes; do not call it green based only on the dedicated audit.
+Both workflows are now confirmed successful for code commit `56a731c156db32f6beb35b813e177039d739a850`:
+
+- Dedicated matched-support axial audit: [44870476391](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391), 1/1 job successful.
+- Comprehensive AMSN Core CI: [44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392), 4/4 jobs successful.
+- Unit/numerical tests: 65 passed under Python 3.12 and 65 passed under Python 3.13.
+- Both matrix jobs compiled all Python modules and ran the configured examples.
+- Both NEURON 9.0.2 cross-validation jobs completed all steps, including transient, AMPA, Exp2Syn timing and single-compartment voltage/current checks.
+
+The audit's geometry conclusions remain local to the five tested unbranched supports in one partial morphology. Do not expand them into a biological validation claim.

@@ -137,3 +137,16 @@ The thresholds above are implementation sanity gates for this audit, not scienti
 - Artifact: [14693647848](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391/artifacts/14693647848).
 - Code commit: `56a731c156db32f6beb35b813e177039d739a850`.
 - Raw data: `amsn-core/results/human_ampa_axial_resistance_2026-11-21.csv`.
+
+
+## Comprehensive AMSN Core CI — final verification
+
+Workflow [44870476392](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476392) completed with conclusion **success** on the same code commit `56a731c156db32f6beb35b813e177039d739a850`.
+
+All four jobs completed successfully:
+- Unit/numerical test matrix: Python 3.12 — 65 passed; Python 3.13 — 65 passed.
+- NEURON cross-validation: Python 3.12 — all steps successful.
+- NEURON cross-validation: Python 3.13 — all steps successful.
+
+The two test jobs also compiled all Python modules and ran the configured examples. Both NEURON jobs completed passive cross-simulator, temporal/spatial convergence, transient pulse/step, AMPA-like conductance, Exp2Syn timing and matched single-compartment voltage/current checks. The dedicated axial audit remains independently green in workflow [44870476391](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44870476391).
+
