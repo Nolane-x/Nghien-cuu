@@ -58,3 +58,15 @@ Weighted source is strongly beneficial for NMO_68175 in both domains and for NMO
 Decision: exact SWC stays canonical; weighted source stays optional/diagnostic. No automatic source-offset threshold is justified from three morphologies.
 
 Full report: [HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md](amsn-core/research/HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md); summary [CSV](amsn-core/results/human_morphology_source_alignment_summary_2026-11-21.csv).
+
+
+## Third-morphology transient time/space convergence — pending
+
+A six-job factorial workflow has been added for NMO_290988 / 1094_Mohan_etal_2015:
+- mesh caps 0.125 and 0.0625 µm;
+- dt 0.1, 0.05 and 0.025 ms;
+- full AMSN test suite in every job;
+- exact 8,903-record morphology verification;
+- 10 pA passive pulse transient comparison with raw trace/summary artifact preservation.
+
+Workflow: [AMSN NMO-290988 Passive Transient Time-Space Convergence](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-nmo290988-passive-transient-convergence.yml). Inspect each artifact before claiming temporal or spatial convergence.

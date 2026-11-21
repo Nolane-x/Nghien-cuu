@@ -1,0 +1,107 @@
+name: AMSN NMO-290988 Passive Transient Time-Space Convergence
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-nmo290988-passive-transient-convergence.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/1094_Mohan_etal_2015.CNG.swc"
+      - "amsn-core/pyproject.toml"
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-nmo290988-passive-transient-convergence.yml"
+      - "amsn-core/examples/human_segev_passive_transient_audit.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/data/human/1094_Mohan_etal_2015.CNG.swc"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  transient-convergence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - mesh_cap_um: "0.125"
+            dt_ms: "0.1"
+          - mesh_cap_um: "0.125"
+            dt_ms: "0.05"
+          - mesh_cap_um: "0.125"
+            dt_ms: "0.025"
+          - mesh_cap_um: "0.0625"
+            dt_ms: "0.1"
+          - mesh_cap_um: "0.0625"
+            dt_ms: "0.05"
+          - mesh_cap_um: "0.0625"
+            dt_ms: "0.025"
+    env:
+      AMSN_MORPHOLOGY_LABEL: NMO_290988_Mohan2015
+      AMSN_MORPHOLOGY_PATH: data/human/1094_Mohan_etal_2015.CNG.swc
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+      AMSN_TRANSIENT_DT_MS: ${{ matrix.dt_ms }}
+      AMSN_TRANSIENT_OUTPUT_PREFIX: "NMO_290988_Mohan2015_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify the independent human morphology
+        run: |
+          python - <<'PY'
+          import neuron
+          from pathlib import Path
+          from amsn.morphology import SWCMorphology
+          import os
+
+          path = Path(os.environ["AMSN_MORPHOLOGY_PATH"])
+          morphology = SWCMorphology.from_file(path)
+          if len(morphology.nodes) != 8903:
+              raise RuntimeError(f"expected 8903 SWC records, got {len(morphology.nodes)}")
+          print(f"NEURON={neuron.__version__}")
+          print(f"morphology=NMO_290988_Mohan2015; swc_records={len(morphology.nodes)}")
+          print(f"mesh_cap_um={os.environ['AMSN_NEURON_MAX_SEGMENT_UM']}")
+          print(f"dt_ms={os.environ['AMSN_TRANSIENT_DT_MS']}")
+          PY
+        working-directory: amsn-core
+      - name: Run passive transient comparison at configured dt and mesh
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_segev_passive_transient_audit.py | tee "NMO_290988_Mohan2015-dt${{ matrix.dt_ms }}ms-mesh${{ matrix.mesh_cap_um }}um-transient-convergence.log"
+        working-directory: amsn-core
+      - name: Preserve transient convergence traces and summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-nmo290988-dt-${{ matrix.dt_ms }}ms-mesh-${{ matrix.mesh_cap_um }}um-transient-convergence
+          path: |
+            amsn-core/NMO_290988_Mohan2015-dt${{ matrix.dt_ms }}ms-mesh${{ matrix.mesh_cap_um }}um-transient-convergence.log
+            amsn-core/results/NMO_290988_Mohan2015_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_human_passive_transient_traces_2026-11-21.csv
+            amsn-core/results/NMO_290988_Mohan2015_dt${{ matrix.dt_ms }}ms_mesh${{ matrix.mesh_cap_um }}um_human_passive_transient_summary_2026-11-21.csv
+          if-no-files-found: error

@@ -40,3 +40,12 @@ Aggregate data: 108,180 transient trace rows, 360 transient summaries, 6,480 raw
 NMO_290988 showed a 91–98% reduction in maximum transient NRMSE at 0.125 µm and 40–81% at 0.0625 µm under weighted source placement. In AC, it improved modestly at 0.125 µm but worsened slightly at 0.0625 µm. This confirms that transient gains do not guarantee AC gains.
 
 See [HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md](../amsn-core/research/HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md) and its summary CSV under ../amsn-core/results.
+
+
+## Third-morphology transient time/space convergence — pending
+
+New workflow: .github/workflows/amsn-nmo290988-passive-transient-convergence.yml.
+
+The six points cover mesh caps 0.125/0.0625 µm and dt 0.1/0.05/0.025 ms on NMO_290988. Each run checks the exact 8,903-record fixture, runs all AMSN tests, validates pulse-grid alignment through the transient script, and uploads raw traces and summary.
+
+Results are pending. The source-placement audit showed that transient can improve substantially while AC worsens slightly at the finer mesh; this follow-up isolates temporal discretization and must not be conflated with source-placement sensitivity.

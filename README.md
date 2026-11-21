@@ -322,3 +322,8 @@ Workflow: [AMSN Human Morphology Source-Placement Replication](https://github.co
 - NMO_68175 benefits consistently. NMO_68174 remains mixed. NMO_290988 has very large transient gains from weighted source, but AC worsens slightly at the finer mesh.
 - Report: [HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md](amsn-core/research/HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md); data: [summary CSV](amsn-core/results/human_morphology_source_alignment_summary_2026-11-21.csv).
 - Decision: weighted source remains optional/diagnostic, not a universal default.
+
+
+### NMO_290988 passive transient convergence — in progress
+
+Six configurations have been added to separate time-step and spatial mesh effects on the third human morphology: mesh caps 0.125/0.0625 µm × dt 0.1/0.05/0.025 ms. Each job runs the full AMSN test suite, verifies the 8,903-record SWC, runs the passive transient comparison and preserves raw waveform artifacts.
