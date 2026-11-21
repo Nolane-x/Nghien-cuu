@@ -157,12 +157,16 @@ def run_neuron(
         ):
             raise RuntimeError("non-finite NEURON transient/source-current values")
 
-        expected_current = np.asarray([
-            (base.INJECTED_P_A / 1000.0)
-            if base.pulse_is_active(max(0.0, float(time) - base.DT_MS))
-            else 0.0
-            for time in time_ms
-        ])
+        # Samples are recorded after each integration interval. Build the
+        # expected clamp-current trace from integer step indices so that
+        # (2.05 - 0.05) cannot round to 1.999999999999... and misclassify
+        # the first pulse sample as being outside the active window.
+        start_step = int(round(base.PULSE_START_MS / base.DT_MS))
+        stop_step = int(round(
+            (base.PULSE_START_MS + base.PULSE_DURATION_MS) / base.DT_MS
+        ))
+        expected_current = np.zeros_like(time_ms, dtype=float)
+        expected_current[start_step + 1:stop_step + 1] = base.INJECTED_P_A / 1000.0
         max_current_error = float(np.max(np.abs(total_current_nA - expected_current)))
         if max_current_error > 1e-12:
             mismatch = np.flatnonzero(np.abs(total_current_nA - expected_current) > 1e-12)
@@ -172,7 +176,6 @@ def run_neuron(
                     "time_ms": float(time_ms[index]),
                     "actual_current_nA": float(total_current_nA[index]),
                     "expected_current_nA": float(expected_current[index]),
-                    "component_currents_nA": [float(clamp.i) for clamp in clamps],
                 }
                 for index in mismatch[:12]
             ]
