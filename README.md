@@ -220,3 +220,11 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - NMO_68174 basal q75 was pre-aligned; NMO_68175 apical q75 remained unresolved by the NEURON nseg cap. Neither is treated as an identifiable paired contrast.
 - Raw artifacts: [68174](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705865103), [68175](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705880425).
 - Next: [Segev AC probe-coordinate handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md) — test exact SWC, nearest segment centre and complex-interpolated readouts with the exact SWC source fixed.
+
+\n\n### Segev AC probe-coordinate audit — verified 21/11/2026
+
+- Probe AC workflow [44901688035](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035) passed 2/2 jobs on NEURON 9.0.2 (120 rows per cell); Core CI [44901673896](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901673896) passed.
+- Exact-SWC and nearest segment-centre Impedance.transfer() outputs were identical at exported precision. Complex-linear interpolation shifted transfer impedance by up to 0.057785% (NMO_68174 apical q90) and 0.095872% (NMO_68175 apical q50).
+- Re-joining the 0.125 µm raw cross-simulator matrices: cell1125 median/p95/max 0.001555/0.049634/0.130599% → 0.000670/0.046984/0.132786% (26 improved, 70 worse, 24 equal); cell1204 0.002297/0.073495/0.169222% → 0.001105/0.059094/0.125637% (64 improved, 32 worse, 24 equal). Thus interpolation is not universally better.
+- Raw artifacts: [68174](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035/artifacts/14706460979), [68175](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035/artifacts/14706590616).
+- Next: repeat probe audit at three mesh caps; see [probe mesh sweep handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md).
