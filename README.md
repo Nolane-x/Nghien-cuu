@@ -294,3 +294,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - NMO_68174 is mixed; at 0.0625 µm the weighted split worsens all 10 non-unchanged interpolated probe pairs. Therefore it remains optional/diagnostic, not a universal default.
 - Report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_transient_source_alignment_summary_2026-11-21.csv).
 - Next: test the same source-placement definitions against direct NEURON AC transfer impedance.
+
+
+### Segev AC source-placement alignment — verified 21/11/2026
+
+- AC workflow [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4; Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4.
+- Four configurations (2 cells × 2 mesh caps) each produced 1,080 raw rows and 135 summary rows.
+- Weighted adjacent-centre source placement strongly improves NMO_68175 at both meshes: maximum AC complex error falls from 0.169222% to 0.068720% (0.125 µm) and 0.099512% to 0.069568% (0.0625 µm) for exact/nearest probes. It also improves interpolated probe maxima.
+- NMO_68174 is mixed: modest benefit at 0.125 µm; at 0.0625 µm, median/P95 and interpolated-probe statistics worsen.
+- Decision: weighted source remains optional/diagnostic, not a universal default. Report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv), comparison [CSV](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).

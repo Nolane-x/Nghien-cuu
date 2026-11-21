@@ -320,3 +320,8 @@ Next: test source placement by comparing nearest-centre IClamp with a charge-con
 ## Verified Segev transient source-placement checkpoint — 21/11/2026
 
 Source-placement audit [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed 4/4; Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed 4/4. The weighted two-centre IClamp split conserves total 10 pA at every sample, but its benefit is morphology-/mesh-dependent: it strongly improves NMO_68175 and is mixed/worse for NMO_68174 at the finer mesh. Keep it optional, not the default. Full report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md). Next: direct AC source-placement comparison.
+
+
+## Verified Segev AC source-placement checkpoint — 21/11/2026
+
+AC source placement [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4, Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4. Weighted adjacent-centre source superposition strongly improves NMO_68175 at both meshes, but is mixed/worse on NMO_68174 at the finer mesh. Keep it optional, not the default. See [AC report](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md), [summary](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv), and [comparison](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).

@@ -46,3 +46,22 @@ This compares discrete source-placement approximations on a passive linear model
 ## Next step
 
 If transient and AC source-placement conclusions agree, keep weighted source placement as an optional diagnostic for the morphologies where it improves results. If they disagree, investigate how the discrete source distribution maps to NEURON's AC current reference before changing any default.
+
+
+## Verified results — AC source-placement alignment (21/11/2026)
+
+AC source-placement workflow [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4 jobs; Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4.
+
+Each configuration generated 1,080 raw rows and 135 summaries across 3 sources × 5 probes × 8 frequencies × 3 source modes × 3 probe modes.
+
+Weighted adjacent-centre source placement strongly improves NMO_68175:
+- 0.125 µm: exact/nearest probe max error 0.169222%→0.068720%; interpolated max 0.125637%→0.071947%.
+- 0.0625 µm: exact/nearest 0.099512%→0.069568%; interpolated 0.104835%→0.072209%.
+
+NMO_68174 remains mixed:
+- 0.125 µm: modest improvement for exact/nearest probes; interpolation median improves but tail worsens slightly.
+- 0.0625 µm: median/P95 worsen for exact/nearest; all three aggregate interpolated metrics worsen.
+
+**Decision:** keep weighted source as an optional diagnostic, not a universal default. The AC result corroborates the transient source-placement finding on NMO_68175.
+
+Full report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv); comparison [CSV](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).

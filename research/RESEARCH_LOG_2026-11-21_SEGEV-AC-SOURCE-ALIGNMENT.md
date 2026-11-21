@@ -27,3 +27,16 @@ Pending. Inspect all four raw CSV and summary artifacts before reporting conclus
 ## Limits
 
 The weighted complex superposition is valid for the linear passive frequency response, but remains a discrete source-placement diagnostic and not a biological claim.
+
+
+## Verified results — AC source-placement alignment
+
+Workflow [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4 morphology/mesh jobs; Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4.
+
+Each of the four configurations generated 1,080 raw rows and 135 summary rows. NEURON exact-SWC and nearest-centre source references are identical at exported precision.
+
+Weighted source alignment:
+- NMO_68175: strong improvement at both meshes; maximum complex error falls to 0.068720%/0.071947% at 0.125 µm and 0.069568%/0.072209% at 0.0625 µm for exact/nearest and interpolated probe readouts, respectively.
+- NMO_68174: small mixed benefit at 0.125 µm; at 0.0625 µm, median/P95 and interpolated-probe statistics worsen.
+
+Keep weighted source optional/diagnostic; it is not universally superior. Full report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md).
