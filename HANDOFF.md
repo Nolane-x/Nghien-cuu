@@ -262,3 +262,13 @@ Continue from [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI
 ## Segev morphology investigation — 21/11/2026
 
 The four-job AC matrix [44885009077](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) passed but shows NMO_68175 residuals (~0.94% low-frequency input, ~5.7% transfer maximum) that do not reduce on mesh refinement. Do not claim multi-cell validation is complete. Follow [HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md) and compare geometry/area/import mapping before changing parameters.
+
+
+
+---
+
+## Latest dated checkpoint — Segev AC source and probe coordinate audits (21/11/2026)
+
+- Three-reference source audit [workflow 44899442076](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076) passed both NMO_68174/68175 morphology jobs on NEURON 9.0.2; Core CI [44899349672](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899349672) passed.
+- Source-reference results and limitations are recorded in [triplet handoff](HANDOFF_2026-11-21_SEGEV-AC-SOURCE-TRIPLET.md) and [research log](research/RESEARCH_LOG_2026-11-21_SEGEV-AC-SOURCE-TRIPLET.md). The measured legacy-to-exact transfer effect reached 0.021954% for cell1125 and 0.228926% for cell1204; exact-to-refined centre changes were zero at exported precision for those identifiable source sites.
+- Next active experiment: [AC probe-coordinate audit](HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md), comparing exact SWC readout, nearest segment centre and complex interpolation with source fixed at exact SWC arc. Do not infer results until raw CSVs and both CI jobs pass.
