@@ -80,6 +80,36 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
             f"{section.name()} base nseg {base_nseg} exceeds cap {max_nseg}"
         )
 
+    base_legacy_index = int(round(legacy_x * base_nseg - 0.5))
+    base_aligned_index = int(round(target_x * base_nseg - 0.5))
+    base_legacy_index = min(base_nseg - 1, max(0, base_legacy_index))
+    base_aligned_index = min(base_nseg - 1, max(0, base_aligned_index))
+    base_legacy_x = (base_legacy_index + 0.5) / base_nseg
+    base_aligned_x = (base_aligned_index + 0.5) / base_nseg
+    base_aligned_offset_um = abs(base_aligned_x - target_x) * float(section.L)
+
+    # If the original mesh already places the clamp at the exact SWC node
+    # within tolerance, do not manufacture a different segment just to make
+    # the two modes look different. Record it as already aligned.
+    if (
+        base_legacy_index == base_aligned_index
+        and base_aligned_offset_um <= tolerance_um
+    ):
+        return {
+            "nseg": base_nseg,
+            "aligned_index": base_aligned_index,
+            "aligned_x": base_aligned_x,
+            "aligned_offset_um": base_aligned_offset_um,
+            "legacy_index": base_legacy_index,
+            "legacy_x": base_legacy_x,
+            "legacy_offset_um": base_aligned_offset_um,
+            "legacy_remap_offset_um": abs(base_legacy_x - legacy_x)
+                * float(section.L),
+            "base_nseg": base_nseg,
+            "multiplier": 1.0,
+            "already_aligned": True,
+        }
+
     first_nseg = base_nseg if base_nseg % 2 else base_nseg + 1
     best = None
     for candidate_nseg in range(first_nseg, max_nseg + 1, 2):
@@ -109,6 +139,7 @@ def choose_nested_refinement(section, target_x, legacy_x, tolerance_um):
             "legacy_remap_offset_um": legacy_remap_um,
             "base_nseg": base_nseg,
             "multiplier": candidate_nseg / base_nseg,
+            "already_aligned": False,
         }
         break
 
@@ -266,7 +297,8 @@ def main():
             f"legacy_mesh_remap_um={refinement['legacy_remap_offset_um']:.12g}; "
             f"aligned_source_offset_um={refinement['aligned_offset_um']:.12g}; "
             f"legacy_index={refinement['legacy_index']}; "
-            f"aligned_index={refinement['aligned_index']}"
+            f"aligned_index={refinement['aligned_index']}; "
+            f"already_aligned={refinement['already_aligned']}"
         )
 
     print(

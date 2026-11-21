@@ -119,3 +119,8 @@ The fine-mesh raw-data inspection shows the remaining error is strongly associat
 The first Segev source-placement run [44888178565](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44888178565) verified both SWC files and passed 81 tests in each job, but failed during local refinement: it could not create distinct legacy and SWC-aligned centres within 0.002 µm under NEURON's 32,767 nseg per-section cap. This is not a morphology/test failure.
 
 The source-placement algorithm was revised to search candidate odd nseg values up to the hard cap, map the old legacy source coordinate to its nearest centre on the chosen shared mesh, and map the SWC coordinate to a different centre. The legacy coordinate remapping is explicitly recorded; the two modes still differ only in IClamp segment on an identical mesh. New diagnostics report the best achievable SWC-centre offset if the tolerance cannot be met. Validate the new algorithm with Core CI, then rerun both Segev cells. Keep failed runs documented.
+
+
+## Placement-control edge case: pre-aligned source
+
+The first bounded nseg rerun found that NMO_68174 dend[26] is already at its SWC target to 1.535e-7 µm. The control now reports already_aligned=true and preserves the same segment in both modes for that source, rather than constructing an artificial perturbation. For other sources it searches for two distinct centres on a shared mesh. Confirm the rerun output before interpreting source-placement sensitivity.

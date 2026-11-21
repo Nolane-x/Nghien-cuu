@@ -130,3 +130,8 @@ The same-mesh source-placement experiment is now parameterized by morphology pat
 The first Segev source-placement workflow passed all 81 tests but could not construct two distinct source centres with the old exact-preservation odd-multiple refinement under NEURON's per-section nseg cap of 32,767. The YAML path and matrix expressions have been fixed; this is a separate algorithmic limit.
 
 The source-placement helper now searches odd nseg values up to the configured cap, maps the old legacy source coordinate to the nearest centre on the final mesh, and separately maps the exact SWC arc to a distinct centre. Both modes still share the same final section nseg, morphology, cable and probe discretization. The legacy coordinate remap is recorded explicitly rather than assumed to be zero. It rejects cases that cannot meet the alignment tolerance or produce distinct centres under the cap. This bounded redesign is pending CI and a successful Segev source-placement rerun.
+
+
+## Placement-control edge case: source already aligned
+
+On NMO_68174, one source section (dend[26]) has its original nearest segment centre only 1.535e-7 µm from the SWC target. Under the 0.002 µm tolerance it is already aligned. The control now records this explicitly and uses the same segment in both modes; it does not invent a different clamp location merely to force a difference. Other sources still require distinct legacy/aligned centres on one shared mesh. This refinement is pending CI.
