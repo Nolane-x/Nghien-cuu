@@ -38,8 +38,8 @@ For each preserved electrical site:
 3. Integrate the two AMSN half-supports separately on the original SWC taper geometry.
 4. Map the same arc-length support to the corresponding NEURON Import3D section.
 5. Independently integrate NEURON's pt3d diameter profile over that support.
-6. Reconstruct the NEURON network resistance by summing actual \`segment.ri()\` values between adjacent segment centres inside the support and integrating only the two partial endpoint caps directly.
-7. Check that NEURON's segment-level \`ri()\` values reproduce the pt3d integral and that the network-plus-cap result reproduces the direct support integral.
+6. Reconstruct the NEURON network resistance by summing actual `segment.ri()` values between adjacent segment centres inside the support and integrating only the two partial endpoint caps directly.
+7. Check that NEURON's segment-level `ri()` values reproduce the pt3d integral and that the network-plus-cap result reproduces the direct support integral.
 
 The audit rejects a site if its parent, site and child do not map to one ordered NEURON section. It therefore does not silently approximate branch points or section joins.
 
