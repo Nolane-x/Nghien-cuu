@@ -39,8 +39,8 @@ jobs:
           - morphology_label: NMO_68175_cell1204
             morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
     env:
-      AMSN_MORPHOLOGY_LABEL: \${{ matrix.morphology_label }}
-      AMSN_MORPHOLOGY_PATH: \${{ matrix.morphology_path }}
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
       AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
       AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
       AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
@@ -63,18 +63,18 @@ jobs:
       - name: Verify morphology source
         run: |
           python -c "import neuron; print('NEURON', neuron.__version__)"
-          test -s "\${{ matrix.morphology_path }}"
+          test -s "${{ matrix.morphology_path }}"
         working-directory: amsn-core
       - name: Run same-mesh legacy versus SWC-aligned placement
         shell: bash
         run: |
           set -o pipefail
-          python examples/human_passive_source_placement_control.py | tee "\${{ matrix.morphology_label }}-source-placement.csv"
+          python examples/human_passive_source_placement_control.py | tee "${{ matrix.morphology_label }}-source-placement.csv"
         working-directory: amsn-core
       - name: Preserve raw source-placement data
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-\${{ matrix.morphology_label }}-source-placement-0.125um
-          path: amsn-core/\${{ matrix.morphology_label }}-source-placement.csv
+          name: amsn-${{ matrix.morphology_label }}-source-placement-0.125um
+          path: amsn-core/${{ matrix.morphology_label }}-source-placement.csv
           if-no-files-found: ignore
