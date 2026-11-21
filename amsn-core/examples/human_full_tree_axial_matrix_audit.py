@@ -469,6 +469,13 @@ def main() -> None:
             "max_abs_total_current_conservation_residual_a": conservation,
         })
 
+    max_random_conservation_residual = max(total_current_residual, default=0.0)
+    if max_random_conservation_residual > MATRIX_CONSERVATION_TOLERANCE_A:
+        raise RuntimeError(
+            "axial Laplacian fails total-current conservation: "
+            f"{max_random_conservation_residual:.12g} A"
+        )
+
     # The axial Laplacian must annihilate a constant potential exactly.
     constant_voltage = np.full(amsn_tree.n_compartments, -0.065)
     amsn_constant_current = apply_tree_laplacian(
