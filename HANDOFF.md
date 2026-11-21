@@ -373,3 +373,10 @@ The Schur audit now records per-frequency, per-port row-norm and diagonal/off-di
 ## Schur port-resolved residual localization — completed
 
 The rerun [44917323461](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44917323461) passed 6/6 and adds a 56-row per-configuration port-localization CSV. Dominant 3 kHz rows: NMO_68174 apical q50; NMO_68175 basal q50/apical q50 depending on mesh; NMO_290988 apical q90 with off-diagonal coupling error dominating its diagonal. See [localization data](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).
+
+
+## PRIMA passive reduced-order model — completed 21/11/2026
+
+A structure-preserving passive state-space reduction has been added after the exact Schur port audit. Human audit [44918896972](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44918896972) passed 6/6; Core CI [44918897010](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44918897010) passed 4/4. The reduced order is 56 for full models of 8,893–13,747 compartments (99.37–99.59% fewer states). Worst 3 kHz impedance/admittance errors are 1.9661%/2.3601%; worst individual-port transient NRMSE is 0.00015662%. This validates the passive numerical subsystem, not active or biological behavior. Read [PRIMA handoff](HANDOFF_2026-11-21_PRIMA-PASSIVE-REDUCTION.md), [research report](amsn-core/research/HUMAN_PASSIVE_PRIMA_REDUCTION_AUDIT_2026-11-21.md) and [summary CSV](amsn-core/results/human_passive_prima_reduction_summary_2026-11-21.csv).
+
+Next: multi-shift/frequency-aware PRIMA order sweep, retaining passivity and measuring the high-frequency error trade-off.

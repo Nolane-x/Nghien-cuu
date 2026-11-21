@@ -72,3 +72,10 @@ Expected localization rows: 8 frequencies × 7 ports = 56 per morphology/mesh co
 The rerun [44917323461](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44917323461) passed 6/6 and now uploads 56 port-localization rows per configuration (8 frequencies × 7 ports). At 3 kHz the dominant rows are: NMO_68174 apical q50 at both meshes (0.1691%→0.0559%); NMO_68175 basal q50 at 0.125 µm and apical q50 at 0.0625 µm (0.0699% and 0.0543%); NMO_290988 apical q90 at both meshes (0.0913% and 0.0964%). The NMO_290988 apical q90 row is dominated by off-diagonal coupling error (0.261–0.272%) rather than its diagonal self-admittance (0.091–0.096%).
 
 Localization CSV: [human_schur_port_matrix_port_localization_2026-11-21.csv](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).
+
+
+## Follow-on: PRIMA passive state-space reduction — completed 21/11/2026
+
+The Schur audit has now been followed by a structure-preserving PRIMA-style state-space reduction. The order-56 models compress 8,893–13,747 passive cable compartments to 56 states, with 99.37–99.59% state reduction. The worst 3 kHz port impedance/admittance errors are 1.9661%/2.3601%; the worst individual-port transient NRMSE is 0.00015662%. The six-job workflow [44918896972](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44918896972) and Core CI [44918897010](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44918897010) passed. The full report is [HUMAN_PASSIVE_PRIMA_REDUCTION_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_REDUCTION_AUDIT_2026-11-21.md), with aggregate metrics in [CSV](amsn-core/results/human_passive_prima_reduction_summary_2026-11-21.csv).
+
+Next, build a frequency-aware/multi-shift Krylov basis to reduce the 3 kHz residual without sacrificing passivity. Keep the full Hines solver as the canonical model until broader pulse, frequency and parameter-variation validation is complete.
