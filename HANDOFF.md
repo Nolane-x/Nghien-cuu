@@ -345,3 +345,8 @@ Workflow [44914135217](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44914
 ## NMO_290988 transient time/space convergence — in progress
 
 A six-job factorial run now varies dt=0.1/0.05/0.025 ms and NEURON mesh cap=0.125/0.0625 µm on the independent 8,903-record NMO_290988 morphology. Each job runs the complete AMSN test suite and preserves raw transients. Do not infer convergence until all six artifacts have been reviewed.
+
+
+## NMO_290988 transient time/space convergence — completed 21/11/2026
+
+Workflow [44915125555](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44915125555) passed 6/6. At fixed mesh, AMSN–NEURON mismatch barely changes with dt; refining the NEURON mesh from 0.125 to 0.0625 µm reduces maximum interpolated NRMSE by about 90.4%. Direct NEURON temporal pairwise error halves with dt as expected for backward Euler. See [convergence report](amsn-core/research/HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md) and [pairwise data](amsn-core/results/human_nmo290988_passive_transient_pairwise_convergence_2026-11-21.csv).

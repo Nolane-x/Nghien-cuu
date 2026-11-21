@@ -327,3 +327,11 @@ Workflow: [AMSN Human Morphology Source-Placement Replication](https://github.co
 ### NMO_290988 passive transient convergence — in progress
 
 Six configurations have been added to separate time-step and spatial mesh effects on the third human morphology: mesh caps 0.125/0.0625 µm × dt 0.1/0.05/0.025 ms. Each job runs the full AMSN test suite, verifies the 8,903-record SWC, runs the passive transient comparison and preserves raw waveform artifacts.
+
+
+### NMO_290988 transient time/space convergence — verified 21/11/2026
+
+- Workflow [44915125555](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44915125555) passed 6/6; every job passed the full AMSN test suite.
+- The 2×3 matrix (mesh 0.125/0.0625 µm × dt 0.1/0.05/0.025 ms) produced 63,090 trace rows and 180 summaries.
+- At fixed mesh, cross-simulator NRMSE is nearly invariant with dt. Refining mesh to 0.0625 µm reduces maximum interpolated NRMSE by about 90.4%. Direct NEURON temporal error halves as dt halves (ratio ≈1.954), as expected for backward Euler.
+- Report: [HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md); data: [configuration CSV](amsn-core/results/human_nmo290988_passive_transient_convergence_summary_2026-11-21.csv) and [pairwise CSV](amsn-core/results/human_nmo290988_passive_transient_pairwise_convergence_2026-11-21.csv).

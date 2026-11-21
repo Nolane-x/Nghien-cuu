@@ -70,3 +70,12 @@ A six-job factorial workflow has been added for NMO_290988 / 1094_Mohan_etal_201
 - 10 pA passive pulse transient comparison with raw trace/summary artifact preservation.
 
 Workflow: [AMSN NMO-290988 Passive Transient Time-Space Convergence](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-nmo290988-passive-transient-convergence.yml). Inspect each artifact before claiming temporal or spatial convergence.
+
+
+## Completed NMO_290988 transient time/space convergence — 21/11/2026
+
+Workflow [44915125555](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44915125555) passed 6/6 jobs. The 2×3 matrix covers mesh caps 0.125/0.0625 µm and dt 0.1/0.05/0.025 ms. Each job passed the complete 81-test suite and uploaded raw traces and summaries.
+
+The six runs produced 63,090 trace rows and 180 summaries. At fixed mesh, reducing dt barely changed the cross-simulator NRMSE. Refining the NEURON mesh to 0.0625 µm reduced maximum interpolated-probe NRMSE by about 90.4%. Direct NEURON temporal pairwise error halved as dt halved (maximum-NRMSE ratio ≈1.954), consistent with backward-Euler first-order convergence.
+
+Full report: [HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_NMO_290988_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md); configuration [CSV](amsn-core/results/human_nmo290988_passive_transient_convergence_summary_2026-11-21.csv); pairwise [CSV](amsn-core/results/human_nmo290988_passive_transient_pairwise_convergence_2026-11-21.csv).
