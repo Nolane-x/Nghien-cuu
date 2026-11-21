@@ -270,6 +270,17 @@ def main() -> None:
         cable, boundary_indices, max_order=PRIMA_MAX_ORDER,
         expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
     )
+    prima_order_sweep_models = {
+        28: prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=28,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
+        ),
+        56: prima_multishift_model,
+        84: prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=84,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
+        ),
+    }
     if prima_model.order >= cable.n_compartments:
         raise RuntimeError("PRIMA audit did not reduce the full compartment state count")
 
@@ -299,11 +310,13 @@ def main() -> None:
     localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-21.csv"
     prima_path = results_dir / f"{prefix}human_passive_prima_reduction_2026-11-21.csv"
     prima_multishift_path = results_dir / f"{prefix}human_passive_prima_multishift_reduction_2026-11-21.csv"
+    prima_sweep_path = results_dir / f"{prefix}human_passive_prima_multishift_order_sweep_2026-11-21.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
     localization_rows: list[dict] = []
     prima_rows: list[dict] = []
     prima_multishift_rows: list[dict] = []
+    prima_sweep_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
     maximum_neuron_reciprocity_error_pct = 0.0
@@ -350,6 +363,26 @@ def main() -> None:
             "impedance_frobenius_error_pct": relative_frobenius_pct(z_prima_multi, z_amsn),
             "admittance_frobenius_error_pct": relative_frobenius_pct(y_prima_multi, y_amsn_schur),
         })
+        for order, sweep_model in prima_order_sweep_models.items():
+            if order == prima_multishift_model.order:
+                z_sweep = z_prima_multi
+                y_sweep = y_prima_multi
+            else:
+                z_sweep = sweep_model.impedance_matrix(frequency_hz)
+                y_sweep = np.linalg.solve(z_sweep, np.eye(len(boundary_ids)))
+            prima_sweep_rows.append({
+                "metric": "frequency_response",
+                "reduction_method": "multi_shift_positive_real",
+                "morphology_label": MORPHOLOGY_LABEL,
+                "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+                "frequency_hz": frequency_hz,
+                "full_compartment_order": cable.n_compartments,
+                "prima_order": sweep_model.order,
+                "expansion_frequencies_hz": ";".join(str(x) for x in PRIMA_MULTI_SHIFT_HZ),
+                "state_count_reduction_pct": 100.0 * (1.0 - sweep_model.order / cable.n_compartments),
+                "impedance_frobenius_error_pct": relative_frobenius_pct(z_sweep, z_amsn),
+                "admittance_frobenius_error_pct": relative_frobenius_pct(y_sweep, y_amsn_schur),
+            })
         prima_rows.append({
             "metric": "frequency_response",
             "morphology_label": MORPHOLOGY_LABEL,
@@ -513,8 +546,14 @@ def main() -> None:
         cable, prima_multishift_model, boundary_indices, basal_source_port,
         boundary_meta, "multi_shift_positive_real"
     ))
+    for order, sweep_model in prima_order_sweep_models.items():
+        prima_sweep_rows.extend(build_prima_transient_port_comparison(
+            cable, sweep_model, boundary_indices, basal_source_port,
+            boundary_meta, f"multi_shift_order_{order}"
+        ))
     write_csv(prima_path, prima_rows)
     write_csv(prima_multishift_path, prima_multishift_rows)
+    write_csv(prima_sweep_path, prima_sweep_rows)
 
     max_admittance_error = max(
         float(row["port_admittance_frobenius_error_pct"]) for row in summary_rows
@@ -553,10 +592,17 @@ def main() -> None:
     print(f"port_localization_csv={localization_path}; rows={len(localization_rows)}")
     print(f"prima_reduction_csv={prima_path}; rows={len(prima_rows)}")
     print(f"prima_multishift_reduction_csv={prima_multishift_path}; rows={len(prima_multishift_rows)}")
+    print(f"prima_multishift_order_sweep_csv={prima_sweep_path}; rows={len(prima_sweep_rows)}; orders={tuple(prima_order_sweep_models)}")
     max_multi_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     multi_transient = next(row for row in prima_multishift_rows if row["metric"] == "transient_all_ports")
     print("PRIMA_multishift_port_impedance_error_pct_max=%.12g; PRIMA_multishift_port_admittance_error_pct_max=%.12g; PRIMA_multishift_transient_all_ports_NRMSE_pct=%.12g" % (max_multi_z, max_multi_y, multi_transient["transient_port_nrmse_pct"]))
+    for order in prima_order_sweep_models:
+        subset = [row for row in prima_sweep_rows if row["metric"] == "frequency_response" and int(row["prima_order"]) == order]
+        max_z_sweep = max(float(row["impedance_frobenius_error_pct"]) for row in subset)
+        max_y_sweep = max(float(row["admittance_frobenius_error_pct"]) for row in subset)
+        trace_sweep = next(row for row in prima_sweep_rows if row["metric"] == "transient_all_ports" and row["reduction_method"] == f"multi_shift_order_{order}")
+        print("PRIMA_order_sweep=%d; max_Z_pct=%.12g; max_Y_pct=%.12g; transient_all_ports_NRMSE_pct=%.12g" % (order, max_z_sweep, max_y_sweep, trace_sweep["transient_port_nrmse_pct"]))
     max_prima_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
     max_prima_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
     global_transient = next(row for row in prima_rows if row["metric"] == "transient_all_ports")
