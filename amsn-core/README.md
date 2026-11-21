@@ -120,3 +120,6 @@ The pilot biological target is a human temporal-cortex layer 2–3 pyramidal neu
 ## Passive frequency-domain impedance
 
 `CableTree.solve_passive_frequency_response(frequency_hz, injected_current_a)` solves the complex small-signal passive phasor system using Hines elimination. The returned voltage is a perturbation around the leak reversal potential; at 0 Hz it must match the exact passive DC solution after subtracting that reversal. See `examples/human_passive_frequency_response_audit.py` for NEURON 9.0.2 input/transfer impedance comparison across eight frequencies. The audit is numerical and passive-only, not biological validation.
+
+
+The soma normalizer also handles a neurite that branches immediately at its first point. For Segev NMO_68175 this is axon node 5851; see the dedicated geometry residual audit in the current Segev handoff.

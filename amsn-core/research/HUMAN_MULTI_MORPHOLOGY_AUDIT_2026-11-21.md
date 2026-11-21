@@ -55,3 +55,9 @@ The audit now emits:
 - source/probe SWC IDs, selected Import3D section/x and nearest segment-centre offset.
 
 This is intended to isolate why NMO_68175 has a low-frequency discrepancy that is nearly mesh invariant. No cause is assigned until the new logs and area ledgers are compared.
+
+## Root cause found — missing immediately branching axon attachment
+
+Latest geometry run [44886628293](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44886628293) shows NMO_68175's NEURON total area is 83,861.8731579 µm² while AMSN is 84,538.3504114 µm², a difference of 676.4772535 µm² (−0.8002016%). The SWC edge from soma root 1 to axon node 5851 has a frustum area of 676.4765820 µm² and length 12.06765097 µm. NEURON's imported axon path is 676.4514768 µm versus 688.5191355 µm from SWC, again omitting that exact first edge to within 8e−6 µm.
+
+Node 5851 is a direct root child and immediately branches (two children). The previous detector only marked first neurite nodes with more than one unbranched same-type edge, so it missed this axon attachment. The normalizer now treats every direct non-soma child of a verified three-point soma as an attachment, preserving the later SWC edges. The physical passive constants are unchanged. The next four-job matrix rerun must confirm area agreement and lower low-frequency impedance errors.
