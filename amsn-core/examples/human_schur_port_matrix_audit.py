@@ -197,8 +197,10 @@ def main() -> None:
     results_dir = Path(__file__).parents[1] / "results"
     raw_path = results_dir / f"{prefix}human_passive_schur_port_matrix_2026-11-21.csv"
     summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-21.csv"
+    localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-21.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
+    localization_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
     maximum_neuron_reciprocity_error_pct = 0.0
@@ -275,6 +277,42 @@ def main() -> None:
             "port_impedance_max_absolute_error_ohm": z_max_abs_error,
         })
 
+        # Localize each frequency-domain residual by retained port row.
+        # Relative row norms avoid judging tiny individual off-diagonal
+        # elements by unstable elementwise percentages.
+        for port_index, port_meta in enumerate(boundary_meta):
+            row_delta = y_amsn_schur[port_index, :] - y_neuron[port_index, :]
+            row_reference = y_neuron[port_index, :]
+            off_diagonal_mask = np.arange(len(boundary_ids)) != port_index
+            offdiag_delta = row_delta[off_diagonal_mask]
+            offdiag_reference = row_reference[off_diagonal_mask]
+            diagonal_delta = row_delta[port_index]
+            diagonal_reference = row_reference[port_index]
+            localization_rows.append({
+                "morphology_label": MORPHOLOGY_LABEL,
+                "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+                "frequency_hz": frequency_hz,
+                "port_index": port_index,
+                "port_swc_id": port_meta["node_id"],
+                "port_cable_index": port_meta["cable_index"],
+                "port_roles": port_meta["roles"],
+                "port_section": port_meta["section"],
+                "port_section_x": port_meta["section_x"],
+                "row_frobenius_relative_error_pct": (
+                    100.0 * float(np.linalg.norm(row_delta))
+                    / max(float(np.linalg.norm(row_reference)), 1e-30)
+                ),
+                "offdiagonal_row_relative_error_pct": (
+                    100.0 * float(np.linalg.norm(offdiag_delta))
+                    / max(float(np.linalg.norm(offdiag_reference)), 1e-30)
+                ),
+                "diagonal_entry_relative_error_pct": (
+                    100.0 * abs(diagonal_delta) / max(abs(diagonal_reference), 1e-30)
+                ),
+                "row_max_absolute_error_s": float(np.max(np.abs(row_delta))),
+                "diagonal_absolute_error_s": float(abs(diagonal_delta)),
+            })
+
         for row_index, row_meta in enumerate(boundary_meta):
             for column_index, column_meta in enumerate(boundary_meta):
                 y_a = y_amsn_schur[row_index, column_index]
@@ -323,8 +361,15 @@ def main() -> None:
         )
     if len(summary_rows) != len(FREQUENCIES_HZ):
         raise RuntimeError("reduced port summary row count mismatch")
+    expected_localization_rows = len(FREQUENCIES_HZ) * len(boundary_ids)
+    if len(localization_rows) != expected_localization_rows:
+        raise RuntimeError(
+            f"expected {expected_localization_rows} port localization rows, "
+            f"got {len(localization_rows)}"
+        )
     write_csv(raw_path, raw_rows)
     write_csv(summary_path, summary_rows)
+    write_csv(localization_path, localization_rows)
 
     max_admittance_error = max(
         float(row["port_admittance_frobenius_error_pct"]) for row in summary_rows
@@ -358,6 +403,7 @@ def main() -> None:
     )
     print(f"raw_csv={raw_path}; bytes={raw_path.stat().st_size}")
     print(f"summary_csv={summary_path}; rows={len(summary_rows)}")
+    print(f"port_localization_csv={localization_path}; rows={len(localization_rows)}")
 
 
 if __name__ == "__main__":

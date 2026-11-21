@@ -351,3 +351,6 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 
 
 - Correction: the Schur matrix audit [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567) ran 90 tests in each of six jobs; Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed 90 tests on both Python 3.12 and 3.13.
+
+
+- Port-localization extension: each Schur audit artifact now also records a per-frequency/per-port error table (56 rows per configuration), separating diagonal self-admittance from off-diagonal transfer coupling and avoiding unstable elementwise relative-error rankings.

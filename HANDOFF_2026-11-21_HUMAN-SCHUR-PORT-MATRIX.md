@@ -58,3 +58,10 @@ Full report: [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](amsn-core/res
 ## Core suite count correction — 21/11/2026
 
 The six Schur matrix jobs each ran **90 passing tests** (not the earlier 81-test baseline). Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) also passed the 90-test suite on Python 3.12 and 3.13 and both NEURON validation jobs.
+
+
+## Port-resolved localization extension
+
+The audit now uploads an additional per-frequency, per-port localization table. For each of the seven retained ports it reports the normalized Frobenius error of the full matrix row, off-diagonal row-coupling error, diagonal self-admittance error and absolute row error. This avoids unstable conclusions from elementwise relative errors when a coupling reference is nearly zero.
+
+Expected localization rows: 8 frequencies × 7 ports = 56 per morphology/mesh configuration. Artifact workflow remains [44916411567](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411567); the rerun will add this localization CSV to each artifact.

@@ -43,3 +43,8 @@ See [HUMAN_PASSIVE_SCHUR_PORT_MATRIX_AUDIT_2026-11-21.md](../amsn-core/research/
 ## Test-suite count correction
 
 The Schur matrix audit ran 90 tests in each of the six jobs. Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) also passed all 90 tests on Python 3.12 and 3.13.
+
+
+## Port-resolved localization extension
+
+The human Schur audit now emits 56 additional localization rows per configuration (eight frequencies × seven retained ports), including row-norm, off-diagonal coupling, diagonal self-admittance and absolute errors. This is intended to localize the high-frequency residual without relying on unstable per-element relative percentages for near-zero couplings. Rerun pending.

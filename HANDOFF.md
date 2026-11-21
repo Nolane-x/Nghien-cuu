@@ -363,3 +363,8 @@ The new exact frequency-dependent Schur reduction is validated against an indepe
 
 
 The six Schur audit jobs each passed 90 tests; Core CI [44916411432](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44916411432) passed all 90 tests on Python 3.12 and 3.13 and both NEURON jobs.
+
+
+## Schur port error localization extension — in progress
+
+The Schur audit now records per-frequency, per-port row-norm and diagonal/off-diagonal errors so the high-frequency residual can be localized without unstable relative percentages on near-zero matrix entries. Each configuration will upload 56 port-localization rows in addition to the 392 raw matrix entries and eight frequency summaries.
