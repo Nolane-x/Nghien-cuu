@@ -13,6 +13,7 @@
 2. Check current main head and the latest frequency-response workflow before modifying files.
 3. Keep the passive parameters frozen: Ri=0.7 Ω·m, Rm=1.0 Ω·m², Cm=0.01 F/m², Eleak=−65 mV.
 4. Do not claim biological validation from this numerical cross-simulator test.
+5. Read [Eyal 2018 ModelDB source review](amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md) before importing any published active mechanisms.
 
 ## What changed
 
@@ -77,3 +78,12 @@ All aggregate median/p95/max metrics improve with finer mesh, but some low-frequ
 Workflow: https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-passive-frequency-response-audit.yml  
 Raw artifact name: \`amsn-passive-frequency-response-neuron-9.0.2\`  
 Raw CSV path inside the artifact: \`human-passive-frequency-response.csv\`.
+
+
+## Latest complete Core CI
+
+The full Core CI for current baseline commit `ccde2542c62843ac2a7f3c41efe2206e16eee543` passed 4/4 jobs: Python 3.12 and 3.13 test/compile/examples, plus NEURON cross-validation on both versions. The NEURON workflow completed passive, temporal/spatial convergence, transient pulse/step, AMPA conductance, Exp2Syn event timing and matched single-compartment checks. [Run 44881036875](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44881036875).
+
+## Published-model source gate
+
+Eyal et al. 2018 ModelDB 238347 has been identified as a relevant six-cell human L2/3 reference, but the official 133 MB archive is not yet verified locally. See [source review](amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md). Do not integrate mechanisms until archive integrity, cell identities, units, temperature assumptions, model provenance and license are inspected.

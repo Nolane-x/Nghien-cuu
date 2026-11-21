@@ -98,3 +98,8 @@ This is a passive small-signal numerical audit on one partial morphology, not a 
 2. Decompose remaining residuals by source, probe, frequency and absolute transfer impedance; avoid percentage-only claims for near-zero transfer.
 3. Separate source-position and probe-position effects if any residual remains frequency-localized.
 4. Only after passive frequency response is stable, resume active-channel calibration against published human cortical recordings.
+
+
+## Published active-model reference (source gate)
+
+A separate source review now documents ModelDB 238347 (Eyal et al. 2018), an appropriate next benchmark for human L2/3 active/synaptic mechanisms. The official ModelDB record describes six human L2/3 cells and AMPA/NMDA, spines, dendritic NMDA and somatic/axonal Na spikes. The Human Brain Project lists the ModelDB access code `eyal2018`. The public GitHub record linked by ModelDB contains only a 971-byte README pointing to the official 133 MB Yale/SenseLab ZIP; the full ZIP has not yet passed archive-integrity inspection. See [source review](EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md). This reference is not yet integrated into AMSN.
