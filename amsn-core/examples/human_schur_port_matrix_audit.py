@@ -29,7 +29,10 @@ import human_fine_mesh_passive_dc_audit as fine_audit
 import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 from amsn.reduction import schur_reduce_passive_admittance
-from amsn.prima import prima_reduce_passive_cable
+from amsn.prima import (
+    prima_reduce_passive_cable,
+    prima_reduce_passive_cable_multishift,
+)
 
 
 RI_OHM_M = 0.7
@@ -43,6 +46,7 @@ MORPHOLOGY_PATH = os.environ.get("AMSN_MORPHOLOGY_PATH")
 NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.125"))
 OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
 PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
+PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
@@ -150,6 +154,7 @@ def build_prima_transient_port_comparison(
     boundary_indices: list[int],
     source_port_index: int,
     boundary_meta: list[dict],
+    reduction_method: str,
 ) -> list[dict]:
     """Compare PRIMA and full Hines port traces under the same current pulse."""
     dt_s = 0.1e-3
@@ -187,6 +192,7 @@ def build_prima_transient_port_comparison(
         absolute_error = reduced_port_trace - reference_trace
         rows.append({
             "metric": "transient_port",
+            "reduction_method": reduction_method,
             "frequency_hz": "",
             "port_index": port_index,
             "port_swc_id": meta["node_id"],
@@ -206,6 +212,7 @@ def build_prima_transient_port_comparison(
     all_error = (reduced_trace - full_trace).ravel()
     rows.append({
         "metric": "transient_all_ports",
+        "reduction_method": reduction_method,
         "frequency_hz": "",
         "port_index": "",
         "port_swc_id": "",
@@ -259,6 +266,10 @@ def main() -> None:
     if PRIMA_MAX_ORDER <= 0:
         raise ValueError("AMSN_PRIMA_MAX_ORDER must be positive")
     prima_model = prima_reduce_passive_cable(cable, boundary_indices, max_order=PRIMA_MAX_ORDER)
+    prima_multishift_model = prima_reduce_passive_cable_multishift(
+        cable, boundary_indices, max_order=PRIMA_MAX_ORDER,
+        expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
+    )
     if prima_model.order >= cable.n_compartments:
         raise RuntimeError("PRIMA audit did not reduce the full compartment state count")
 
@@ -287,10 +298,12 @@ def main() -> None:
     summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-21.csv"
     localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-21.csv"
     prima_path = results_dir / f"{prefix}human_passive_prima_reduction_2026-11-21.csv"
+    prima_multishift_path = results_dir / f"{prefix}human_passive_prima_multishift_reduction_2026-11-21.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
     localization_rows: list[dict] = []
     prima_rows: list[dict] = []
+    prima_multishift_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
     maximum_neuron_reciprocity_error_pct = 0.0
@@ -322,6 +335,21 @@ def main() -> None:
         y_neuron = np.linalg.inv(z_neuron)
         z_prima = prima_model.impedance_matrix(frequency_hz)
         y_prima = np.linalg.solve(z_prima, np.eye(len(boundary_ids)))
+        z_prima_multi = prima_multishift_model.impedance_matrix(frequency_hz)
+        y_prima_multi = np.linalg.solve(z_prima_multi, np.eye(len(boundary_ids)))
+        prima_multishift_rows.append({
+            "metric": "frequency_response",
+            "reduction_method": "multi_shift_positive_real",
+            "morphology_label": MORPHOLOGY_LABEL,
+            "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+            "frequency_hz": frequency_hz,
+            "full_compartment_order": cable.n_compartments,
+            "prima_order": prima_multishift_model.order,
+            "expansion_frequencies_hz": ";".join(str(x) for x in PRIMA_MULTI_SHIFT_HZ),
+            "state_count_reduction_pct": 100.0 * (1.0 - prima_multishift_model.order / cable.n_compartments),
+            "impedance_frobenius_error_pct": relative_frobenius_pct(z_prima_multi, z_amsn),
+            "admittance_frobenius_error_pct": relative_frobenius_pct(y_prima_multi, y_amsn_schur),
+        })
         prima_rows.append({
             "metric": "frequency_response",
             "morphology_label": MORPHOLOGY_LABEL,
@@ -480,8 +508,13 @@ def main() -> None:
     write_csv(localization_path, localization_rows)
     basal_source_id = next(node_id for name, node_id in injections if name == "basal_q75")
     basal_source_port = boundary_ids.index(basal_source_id)
-    prima_rows.extend(build_prima_transient_port_comparison(cable, prima_model, boundary_indices, basal_source_port, boundary_meta))
+    prima_rows.extend(build_prima_transient_port_comparison(cable, prima_model, boundary_indices, basal_source_port, boundary_meta, "dc_krylov"))
+    prima_multishift_rows.extend(build_prima_transient_port_comparison(
+        cable, prima_multishift_model, boundary_indices, basal_source_port,
+        boundary_meta, "multi_shift_positive_real"
+    ))
     write_csv(prima_path, prima_rows)
+    write_csv(prima_multishift_path, prima_multishift_rows)
 
     max_admittance_error = max(
         float(row["port_admittance_frobenius_error_pct"]) for row in summary_rows
@@ -491,6 +524,7 @@ def main() -> None:
     )
     print(f"NEURON={neuron.__version__}")
     print(f"PRIMA_order={prima_model.order}/{cable.n_compartments}; state_reduction_pct={100.0 * (1.0-prima_model.order/cable.n_compartments):.9g}; requested_cap={PRIMA_MAX_ORDER}")
+    print(f"PRIMA_multishift_order={prima_multishift_model.order}/{cable.n_compartments}; expansion_frequencies_hz={PRIMA_MULTI_SHIFT_HZ}")
     print(
         f"morphology={MORPHOLOGY_LABEL}; path={reference.DATA}; "
         f"SWC_records={len(morphology.nodes)}"
@@ -518,6 +552,11 @@ def main() -> None:
     print(f"summary_csv={summary_path}; rows={len(summary_rows)}")
     print(f"port_localization_csv={localization_path}; rows={len(localization_rows)}")
     print(f"prima_reduction_csv={prima_path}; rows={len(prima_rows)}")
+    print(f"prima_multishift_reduction_csv={prima_multishift_path}; rows={len(prima_multishift_rows)}")
+    max_multi_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
+    max_multi_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
+    multi_transient = next(row for row in prima_multishift_rows if row["metric"] == "transient_all_ports")
+    print("PRIMA_multishift_port_impedance_error_pct_max=%.12g; PRIMA_multishift_port_admittance_error_pct_max=%.12g; PRIMA_multishift_transient_all_ports_NRMSE_pct=%.12g" % (max_multi_z, max_multi_y, multi_transient["transient_port_nrmse_pct"]))
     max_prima_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
     max_prima_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
     global_transient = next(row for row in prima_rows if row["metric"] == "transient_all_ports")
