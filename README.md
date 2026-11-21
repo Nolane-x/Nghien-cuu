@@ -178,3 +178,11 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 - AC-to-transient invariant is now validated: 50 Hz sinusoidal phasor test passed; latest Core CI [44882886045](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886045) green 4/4, 75 tests on Python 3.12 and 3.13.
 - Eyal 2018 ModelDB archive: official URL confirmed, but Yale legacy domain timed out; linked GitHub repo tree contains README only. No source archive downloaded or integrated.
+
+
+### Multi-morphology checkpoint — Segev archive (21/11/2026)
+
+- [FCI Eyal-labelled derivative audit](amsn-core/research/FCI_EYAL_DERIVATIVE_SOURCE_AUDIT_2026-11-21.md): source provenance, SI parameter conversion, reduced HOC, channel scaling, synapse kinetics and licensing caveats.
+- [NMO_68174 cell 1125](amsn-core/data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc) and [NMO_68175 cell 1204](amsn-core/data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc): direct NeuroMorpho CC BY 4.0 morphology fixtures; dendrites moderate and axons incomplete.
+- [Source manifest](amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json) pins third-party source SHA and morphology blob hashes.
+- [New dated handoff](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md).

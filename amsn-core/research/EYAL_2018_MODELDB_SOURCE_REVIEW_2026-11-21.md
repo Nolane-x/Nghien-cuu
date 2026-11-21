@@ -54,3 +54,8 @@ The complete AMSN Core CI on commit `ccde2542c62843ac2a7f3c41efe2206e16eee543` p
 ## Archive retrieval attempt update
 
 A browser attempt checked the official legacy download flow on 2026-11-21. The page `https://senselab.med.yale.edu/modeldb/enterCode.cshtml?model=238347` repeatedly timed out, so no access-code form was shown and no code was submitted. The official ZIP URL from the ModelDB README was confirmed as `http://senselab.med.yale.edu/modeldb/data/238347/EyalEtAl2018.zip`, but direct retrieval also timed out and no complete ZIP was received. The current ModelDB entry page itself loads, but this does not expose the protected archive contents. The linked public GitHub repository tree has exactly one `readme.html` file; a browser automation summary suggested the code was on GitHub, but the tree inspection disproves that statement. Treat archive status as **not downloaded / not integrated**.
+
+
+## Segev archive human L2/3 morphologies
+
+Two additional standardized CNG SWCs were obtained directly from NeuroMorpho.org: NMO_68174 (cell 1125, 12,410 rows) and NMO_68175 (cell 1204, 13,758 rows). Both are human temporal neocortex, Brodmann area 21, layer 2–3 pyramidal/principal cells; dendrites moderately complete and axons incomplete. They are retained unchanged with CC BY 4.0 attribution in `amsn-core/data/human/segev/`. See `amsn-core/data/human/segev/README.md` and `amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json`. They are not copied from FCI; no FCI source code is vendored.

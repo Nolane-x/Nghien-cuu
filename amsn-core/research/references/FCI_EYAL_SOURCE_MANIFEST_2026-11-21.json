@@ -1,0 +1,141 @@
+{
+  "schema_version": "1.0",
+  "date": "2026-11-21",
+  "fci": {
+    "repository": "https://github.com/ido4848/fci",
+    "commit": "75ad8b4d81a7f51bf888b30650c543592340db06",
+    "root_license_found": false,
+    "policy": "read-only source inspection; do not redistribute files absent explicit license clearance",
+    "files": [
+      {
+        "path": "README.md",
+        "blob": "8a823f041bdc5cb9d05b91c929a3e3ee63bb7989"
+      },
+      {
+        "path": "models.csv",
+        "blob": "ab58d919894f08e46fd1452678f0c521a526654c"
+      },
+      {
+        "path": "morphological_features.csv",
+        "blob": "ce0ca6457ecf7a8b7368f3bacf1b634d69a8bdef"
+      },
+      {
+        "path": "simulating_neurons/neuron_models/model_utils.py",
+        "blob": "b8a64060c6bad4b72be0eeaab54f4d1426aeffb0"
+      },
+      {
+        "path": "simulating_neurons/neuron_models/passive_dends_simple_soma_model.hoc",
+        "blob": "4bf0a3b3dbd2e971857d6c0db1afe97806140255"
+      },
+      {
+        "path": "simulating_neurons/simulate_neuron.py",
+        "blob": "731c3fa9b089ea33db7c38210f9d6e1994a87631"
+      },
+      {
+        "path": "...1125.../get_standard_model.py",
+        "blob": "adcb68db7f7e72201b75d2ab0d3f325a557d952a"
+      },
+      {
+        "path": "...1125.../properties.json",
+        "blob": "6645fac1b2d4f69e955fd210da43822508470f9d"
+      },
+      {
+        "path": "...1125.../morphologies/cell.asc",
+        "blob": "42ce70f86f6ff01bfa35816fb1f66d5c407147af",
+        "bytes": 784271,
+        "not_redistributed": true
+      },
+      {
+        "path": "...1125.../mods/AMPANMDA_EMS.mod",
+        "blob": "7a3c010f742d31ab5c88ae1de1925964ec9b4d33",
+        "bytes": 8030,
+        "license": "BBP 2015 CC BY-NC-SA 4.0 notice",
+        "not_redistributed": true
+      },
+      {
+        "path": "...1125.../mods/GABAAB_EMS.mod",
+        "blob": "d13647ea03c75409a6c1b3f3b748a9850ad04cd0",
+        "bytes": 7200,
+        "license": "BBP 2015 CC BY-NC-SA 4.0 notice",
+        "not_redistributed": true
+      },
+      {
+        "path": "...1125.../mods/na.mod",
+        "blob": "0d631835c8f6739b46f79a7c6bfe7cd3ef7f8192",
+        "bytes": 4978,
+        "license": "no clear file-level license",
+        "not_redistributed": true
+      },
+      {
+        "path": "...1125.../mods/kv.mod",
+        "blob": "fa8c003e91419941ff45736f8687f8bea096ba51",
+        "bytes": 4046,
+        "license": "no clear file-level license",
+        "not_redistributed": true
+      },
+      {
+        "path": "...1204.../get_standard_model.py",
+        "blob": "e3644763d66f3cc0baee32d66b5d8f65f6838d6e"
+      },
+      {
+        "path": "...1204.../properties.json",
+        "blob": "21dc7ba74b31026b4172a1cb08e77f2a4d7af454"
+      },
+      {
+        "path": "...1204.../morphologies/cell.asc",
+        "blob": "f5f072b3803c94fef3d08f82dc6538fe3d819816",
+        "bytes": 877625,
+        "not_redistributed": true
+      }
+    ]
+  },
+  "neuromorpho": {
+    "terms": "CC BY 4.0",
+    "attribution": [
+      "Mohan et al. 2015 DOI 10.1093/cercor/bhv188",
+      "Eyal et al. 2016 DOI 10.7554/eLife.16553",
+      "NeuroMorpho.org RRID:SCR_002145",
+      "Tecuatl et al. 2024 DOI 10.1096/fba.2024-00048"
+    ],
+    "records": [
+      {
+        "id": "NMO_68174",
+        "filename": "2013_03_06_cell11_1125_H41_06.CNG.swc",
+        "url": "https://neuromorpho.org/dableFiles/segev/CNG%20version/2013_03_06_cell11_1125_H41_06.CNG.swc",
+        "rows": 12410,
+        "bytes": 462706,
+        "type_counts": {
+          "soma": 3,
+          "axon": 116,
+          "basal": 5595,
+          "apical": 6696
+        },
+        "root_count": 1,
+        "duplicate_ids": 0,
+        "missing_parent_references": 0,
+        "malformed_rows": 0,
+        "git_blob_sha1": "0659a889d47e44cb67b0685181ce7c8d8ebdc6f6"
+      },
+      {
+        "id": "NMO_68175",
+        "filename": "2013_03_13_cell03_1204_H42_02.CNG.swc",
+        "url": "https://neuromorpho.org/dableFiles/segev/CNG%20version/2013_03_13_cell03_1204_H42_02.CNG.swc",
+        "rows": 13758,
+        "bytes": 510212,
+        "type_counts": {
+          "soma": 3,
+          "axon": 379,
+          "basal": 5847,
+          "apical": 7529
+        },
+        "root_count": 1,
+        "duplicate_ids": 0,
+        "missing_parent_references": 0,
+        "malformed_rows": 0,
+        "git_blob_sha1": "5bbfdb0e8c5ab49fb6eae8a873d49b89d8fd551f"
+      }
+    ]
+  },
+  "provenance_caution": "FCI folder label is Eyal but models.csv cites Mohan et al. 2015 morphologies. Not proof of complete original Eyal 2018 ModelDB code.",
+  "modeldb_238347": "Only public linked README found; official 133 MB Yale/SenseLab archive timed out; not downloaded or integrated."
+}

@@ -243,3 +243,10 @@ Nếu thiếu một thành phần, phải ghi rõ “not collected/not validated
 ---
 
 **Trạng thái handoff:** Đây là checkpoint tài liệu để tiếp tục từ dữ liệu còn xác minh được. Nó không khẳng định có sẵn mã AMSN Alpha chạy được.
+
+
+---
+
+## Latest dated checkpoint — FCI derivatives and Segev morphologies (21/11/2026)
+
+Read `HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md` before continuing. Two direct NeuroMorpho human L2/3 morphologies have been added with CC BY 4.0 attribution. The FCI `human/eyal` configurations are reduced derivatives, with passive dendrites and active soma/synthetic axon; their Na/Kv scaling is based on a rat Hay L5b exemplar. No FCI code was copied. The original Eyal 2018 ModelDB archive remains unavailable/unintegrated. Keep configurations separate.

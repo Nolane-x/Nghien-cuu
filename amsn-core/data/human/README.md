@@ -62,3 +62,8 @@ This is an empirical comparison convention matching this one record, not a claim
 ## Intended use and limitations
 
 Use as a real dendritic-geometry fixture for SWC parsing, cable conversion, passive electrotonic analysis and comparison with reference simulators. It has no axon, moderate dendritic completeness, clinical-context caveats and no shrinkage correction report. It does not include matched ion-channel parameters, synaptic connectivity or recorded voltage traces.
+
+
+## Segev archive human L2/3 morphologies
+
+Two additional standardized CNG SWCs were obtained directly from NeuroMorpho.org: NMO_68174 (cell 1125, 12,410 rows) and NMO_68175 (cell 1204, 13,758 rows). Both are human temporal neocortex, Brodmann area 21, layer 2–3 pyramidal/principal cells; dendrites moderately complete and axons incomplete. They are retained unchanged with CC BY 4.0 attribution in `amsn-core/data/human/segev/`. See `amsn-core/data/human/segev/README.md` and `amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json`. They are not copied from FCI; no FCI source code is vendored.
