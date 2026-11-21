@@ -82,7 +82,16 @@ def main() -> None:
         morphology, reader, sections
     )
     cable = morphology.to_cable_tree()
+    soma_normalization = morphology.detect_neuromorpho_three_point_soma()
     electrical_map = morphology.electrical_node_mapping()
+    neuron_area_um2 = float(
+        sum(float(segment.area()) for section in sections for segment in section)
+    )
+    amsn_area_um2 = float(np.sum(cable.area_m2) * 1e12)
+    area_difference_pct = (
+        100.0 * (neuron_area_um2 - amsn_area_um2)
+        / max(amsn_area_um2, 1e-30)
+    )
     node_to_name = {
         node_id: f"swc_{electrical_id}"
         for node_id, electrical_id in electrical_map.items()
@@ -215,6 +224,15 @@ def main() -> None:
         f"max_segment_length_um={NEURON_MAX_SEGMENT_UM:g}"
     )
     print(f"AMSN_compartments={cable.n_compartments}")
+    print(
+        f"soma_root={soma_normalization.root_id}; "
+        f"soma_node_ids={','.join(str(x) for x in soma_normalization.soma_node_ids)}; "
+        f"wire_attachment_count={len(soma_normalization.wire_attachment_node_ids)}; "
+        f"wire_attachment_ids={','.join(str(x) for x in soma_normalization.wire_attachment_node_ids)}"
+    )
+    print(f"NEURON_total_membrane_area_um2={neuron_area_um2:.12g}")
+    print(f"AMSN_total_membrane_area_um2={amsn_area_um2:.12g}")
+    print(f"NEURON_minus_AMSN_area_difference_pct={area_difference_pct:.12g}")
     print(f"passive_Ri_ohm_m={RI_OHM_M:g}; Rm_ohm_m2={RM_OHM_M2:g}; "
           f"Cm_F_m2={CM_F_M2:g}; Eleak_mV={ELEAK_MV:g}")
     print(f"frequencies_hz={','.join(str(x) for x in FREQUENCIES_HZ)}")
