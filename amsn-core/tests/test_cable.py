@@ -497,3 +497,86 @@ def test_prima_reduction_rejects_invalid_configuration_and_inputs():
         reduced.step_backward_euler(np.zeros(reduced.order), 1e-4, np.zeros(2))
     with pytest.raises(ValueError):
         reduced.port_voltages(np.zeros(reduced.order + 1))
+
+
+def _dense_shifted_passive_matrix(tree, shift_per_s):
+    matrix = np.diag(
+        tree.membrane_leak_s + shift_per_s * tree.capacitance_f
+    ).astype(float)
+    for child in range(1, tree.n_compartments):
+        parent = tree.parent_index[child]
+        conductance = tree.axial_g_s[child]
+        matrix[child, child] += conductance
+        matrix[parent, parent] += conductance
+        matrix[child, parent] -= conductance
+        matrix[parent, child] -= conductance
+    return matrix
+
+
+def test_multishift_hines_solver_matches_dense_positive_real_shift():
+    from amsn.prima import _solve_shifted_passive_real
+
+    tree = _tree()
+    shift = 2.0 * np.pi * 3000.0
+    rhs = np.column_stack([
+        np.array([1.0, -0.2, 0.3, 0.8]) * 1e-12,
+        np.array([-0.4, 0.7, 0.2, -0.1]) * 1e-12,
+    ])
+    got = _solve_shifted_passive_real(tree, shift, rhs)
+    expected = np.linalg.solve(_dense_shifted_passive_matrix(tree, shift), rhs)
+    np.testing.assert_allclose(got, expected, rtol=2e-12, atol=1e-20)
+
+
+def test_multishift_prima_full_order_matches_full_complex_port_response():
+    from amsn.prima import prima_reduce_passive_cable_multishift
+
+    tree = _tree()
+    ports = list(range(tree.n_compartments))
+    reduced = prima_reduce_passive_cable_multishift(
+        tree,
+        ports,
+        max_order=tree.n_compartments,
+        expansion_frequencies_hz=(0.0, 100.0, 3000.0),
+    )
+    assert reduced.order == tree.n_compartments
+    for frequency_hz in (0.0, 17.5, 1000.0, 3000.0):
+        expected = _full_port_impedance(tree, ports, frequency_hz)
+        np.testing.assert_allclose(
+            reduced.impedance_matrix(frequency_hz),
+            expected,
+            rtol=2e-10,
+            atol=2e-10,
+        )
+
+
+def test_multishift_prima_projection_remains_passive_and_stable():
+    from amsn.prima import prima_reduce_passive_cable_multishift
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["dend_a"], tree.index["branch"]]
+    reduced = prima_reduce_passive_cable_multishift(
+        tree, ports, max_order=3, expansion_frequencies_hz=(0.0, 1000.0, 3000.0)
+    )
+    assert reduced.order == 3
+    np.linalg.cholesky(reduced.conductance_matrix_s)
+    np.linalg.cholesky(reduced.capacitance_matrix_f)
+    rates = np.linalg.eigvals(
+        np.linalg.solve(reduced.capacitance_matrix_f, reduced.conductance_matrix_s)
+    )
+    assert np.all(rates.real > 0.0)
+
+
+def test_multishift_prima_rejects_invalid_expansion_points():
+    from amsn.prima import prima_reduce_passive_cable_multishift
+
+    tree = _tree()
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=[])
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(-1.0,))
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(0.0, 0.0))
+    with pytest.raises(ValueError):
+        prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(float("nan"),))
+    with pytest.raises(TypeError):
+        prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(True,))

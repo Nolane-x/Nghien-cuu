@@ -115,6 +115,91 @@ def _apply_passive_conductance(tree: CableTree, values: np.ndarray) -> np.ndarra
 
 
 
+
+def _solve_shifted_passive_real(
+    tree: CableTree, shift_per_s: float, rhs: np.ndarray
+) -> np.ndarray:
+    """Solve (G + shift*C)x = rhs with a real tree Hines elimination."""
+    shift = float(shift_per_s)
+    if not np.isfinite(shift) or shift < 0.0:
+        raise ValueError("shift_per_s must be finite and non-negative")
+    values = np.asarray(rhs, dtype=float)
+    vector_input = values.ndim == 1
+    if vector_input:
+        values = values[:, None]
+    if values.ndim != 2 or values.shape[0] != tree.n_compartments:
+        raise ValueError("rhs must have shape (n_compartments,) or (n_compartments, n_rhs)")
+    if not np.all(np.isfinite(values)):
+        raise ValueError("rhs must contain only finite values")
+
+    diagonal = tree.membrane_leak_s + shift * tree.capacitance_f
+    diagonal = np.array(diagonal, dtype=float, copy=True)
+    work = np.array(values, dtype=float, copy=True)
+    for child in range(1, tree.n_compartments):
+        parent = int(tree.parent_index[child])
+        conductance = float(tree.axial_g_s[child])
+        diagonal[child] += conductance
+        diagonal[parent] += conductance
+
+    for child in range(tree.n_compartments - 1, 0, -1):
+        parent = int(tree.parent_index[child])
+        conductance = float(tree.axial_g_s[child])
+        pivot = diagonal[child]
+        if not np.isfinite(pivot) or pivot <= 0.0:
+            raise FloatingPointError("non-positive pivot in shifted passive Hines solve")
+        diagonal[parent] -= conductance * conductance / pivot
+        work[parent, :] += conductance * work[child, :] / pivot
+
+    if not np.isfinite(diagonal[0]) or diagonal[0] <= 0.0:
+        raise FloatingPointError("non-positive root pivot in shifted passive Hines solve")
+    solution = np.empty_like(work)
+    solution[0, :] = work[0, :] / diagonal[0]
+    for child in range(1, tree.n_compartments):
+        parent = int(tree.parent_index[child])
+        conductance = float(tree.axial_g_s[child])
+        solution[child, :] = (
+            work[child, :] + conductance * solution[parent, :]
+        ) / diagonal[child]
+
+    if not np.all(np.isfinite(solution)):
+        raise FloatingPointError("non-finite shifted passive Hines solution")
+    return solution[:, 0] if vector_input else solution
+
+
+def _project_passive_basis(
+    tree: CableTree,
+    ports: tuple[int, ...],
+    basis_columns: list[np.ndarray],
+) -> PassiveReducedModel:
+    """Congruently project a full cable tree onto an orthonormal basis."""
+    if not basis_columns:
+        raise FloatingPointError("empty passive reduction basis")
+    basis = np.column_stack(basis_columns)
+    if basis.shape[0] != tree.n_compartments:
+        raise RuntimeError("invalid passive reduction basis shape")
+    capacitance_action = tree.capacitance_f[:, None] * basis
+    conductance_action = _apply_passive_conductance(tree, basis)
+    capacitance_reduced = basis.T @ capacitance_action
+    conductance_reduced = basis.T @ conductance_action
+    capacitance_reduced = 0.5 * (capacitance_reduced + capacitance_reduced.T)
+    conductance_reduced = 0.5 * (conductance_reduced + conductance_reduced.T)
+    input_reduced = basis[np.asarray(ports, dtype=int), :].T.copy()
+    try:
+        np.linalg.cholesky(capacitance_reduced)
+        np.linalg.cholesky(conductance_reduced)
+    except np.linalg.LinAlgError as exc:
+        raise FloatingPointError(
+            "passive congruence projection did not preserve positive-definite C and G"
+        ) from exc
+    return PassiveReducedModel(
+        port_indices=ports,
+        basis=basis,
+        conductance_matrix_s=conductance_reduced,
+        capacitance_matrix_f=capacitance_reduced,
+        input_matrix=input_reduced,
+    )
+
+
 def _solve_dc_real(tree: CableTree, current_a: np.ndarray) -> np.ndarray:
     """Use the real DC solution and reject any unexpected imaginary residue."""
     response = tree.solve_passive_frequency_response(0.0, current_a)
@@ -277,3 +362,108 @@ def prima_reduce_passive_cable(
         capacitance_matrix_f=capacitance_reduced,
         input_matrix=input_reduced,
     )
+
+
+def prima_reduce_passive_cable_multishift(
+    tree: CableTree,
+    retained_indices: Sequence[int],
+    max_order: int = 64,
+    expansion_frequencies_hz: Sequence[float] = (0.0, 100.0, 1000.0, 3000.0),
+    relative_tolerance: float = 1e-12,
+) -> PassiveReducedModel:
+    """Build a passive rational-Krylov model using multiple positive-real shifts.
+
+    Each supplied expansion frequency f defines a positive-real Laplace shift
+    sigma = 2*pi*f (per second). For each shift, the basis includes
+    (G+sigma*C)^-1 B and successive actions of -(G+sigma*C)^-1 C. The union
+    of these shifted Krylov blocks is orthogonalized and projected by
+    congruence. This targets a wider frequency band than a DC-only basis
+    without sacrificing the symmetric positive-definite RC structure.
+
+    The expansion frequencies are positive-real shifts, not imaginary-axis
+    sinusoidal evaluation frequencies. The returned model is passive and
+    stable for the same reasons as the DC PRIMA model.
+    """
+    if not isinstance(tree, CableTree):
+        raise TypeError("tree must be a CableTree")
+    try:
+        raw_ports = tuple(retained_indices)
+    except TypeError as exc:
+        raise TypeError("retained_indices must be a sequence of integer indices") from exc
+    if not raw_ports:
+        raise ValueError("at least one retained compartment is required")
+    ports: list[int] = []
+    for value in raw_ports:
+        if isinstance(value, (bool, np.bool_)) or not isinstance(value, (int, np.integer)):
+            raise TypeError("retained compartment indices must be integers")
+        index = int(value)
+        if index < 0 or index >= tree.n_compartments:
+            raise IndexError(
+                f"retained compartment index {index} is outside [0, {tree.n_compartments})"
+            )
+        ports.append(index)
+    if len(ports) != len(set(ports)):
+        raise ValueError("retained compartment indices must be unique")
+
+    if isinstance(max_order, (bool, np.bool_)) or not isinstance(max_order, (int, np.integer)):
+        raise TypeError("max_order must be an integer")
+    if int(max_order) <= 0:
+        raise ValueError("max_order must be positive")
+    tolerance = float(relative_tolerance)
+    if not np.isfinite(tolerance) or not (0.0 < tolerance < 1.0):
+        raise ValueError("relative_tolerance must be finite and between 0 and 1")
+    try:
+        raw_frequencies = tuple(expansion_frequencies_hz)
+    except TypeError as exc:
+        raise TypeError("expansion_frequencies_hz must be a sequence") from exc
+    if not raw_frequencies:
+        raise ValueError("at least one expansion frequency is required")
+    frequencies: list[float] = []
+    for value in raw_frequencies:
+        if isinstance(value, (bool, np.bool_)):
+            raise TypeError("expansion frequencies must be real numbers")
+        frequency = float(value)
+        if not np.isfinite(frequency) or frequency < 0.0:
+            raise ValueError("expansion frequencies must be finite and non-negative")
+        frequencies.append(frequency)
+    if len(frequencies) != len(set(frequencies)):
+        raise ValueError("expansion frequencies must be unique")
+
+    n = tree.n_compartments
+    order_cap = min(int(max_order), n)
+    selector = np.zeros((n, len(ports)), dtype=float)
+    selector[np.asarray(ports, dtype=int), np.arange(len(ports))] = 1.0
+    basis_columns: list[np.ndarray] = []
+    shifted_blocks: list[tuple[float, np.ndarray]] = []
+
+    # Seed every expansion point before growing any one Krylov chain. This
+    # prevents the DC point from consuming the entire state budget.
+    for frequency in frequencies:
+        shift = 2.0 * pi * frequency
+        start = _solve_shifted_passive_real(tree, shift, selector)
+        block = _orthogonalize_block(start, basis_columns, tolerance, order_cap)
+        shifted_blocks.append((shift, block))
+
+    # Round-robin block Arnoldi across the expansion points. Every new vector
+    # remains in the global union and is reorthogonalized against all shifts.
+    while len(basis_columns) < order_cap:
+        added_any = False
+        updated_blocks: list[tuple[float, np.ndarray]] = []
+        for shift, block in shifted_blocks:
+            if len(basis_columns) >= order_cap or block.shape[1] == 0:
+                updated_blocks.append((shift, np.empty((n, 0), dtype=float)))
+                continue
+            candidates = _solve_shifted_passive_real(
+                tree, shift, -tree.capacitance_f[:, None] * block
+            )
+            following = _orthogonalize_block(
+                candidates, basis_columns, tolerance, order_cap
+            )
+            if following.shape[1] > 0:
+                added_any = True
+            updated_blocks.append((shift, following))
+        shifted_blocks = updated_blocks
+        if not added_any:
+            break
+
+    return _project_passive_basis(tree, tuple(ports), basis_columns)
