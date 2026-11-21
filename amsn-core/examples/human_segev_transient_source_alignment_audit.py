@@ -165,6 +165,24 @@ def run_neuron(
         ])
         max_current_error = float(np.max(np.abs(total_current_nA - expected_current)))
         if max_current_error > 1e-12:
+            mismatch = np.flatnonzero(np.abs(total_current_nA - expected_current) > 1e-12)
+            sample_rows = [
+                {
+                    "index": int(index),
+                    "time_ms": float(time_ms[index]),
+                    "actual_current_nA": float(total_current_nA[index]),
+                    "expected_current_nA": float(expected_current[index]),
+                    "component_currents_nA": [float(clamp.i) for clamp in clamps],
+                }
+                for index in mismatch[:12]
+            ]
+            print(
+                f"SOURCE_CURRENT_DEBUG mode={source_mode}; "
+                f"amp_nA={[float(clamp.amp) for clamp in clamps]}; "
+                f"delay_ms={[float(clamp.delay) for clamp in clamps]}; "
+                f"dur_ms={[float(clamp.dur) for clamp in clamps]}; "
+                f"mismatches={sample_rows}"
+            )
             raise RuntimeError(
                 f"{source_mode}: total current is not conserved at every sample; "
                 f"max error={max_current_error:.12g} nA"
