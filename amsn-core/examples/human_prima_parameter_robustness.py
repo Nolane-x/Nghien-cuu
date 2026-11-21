@@ -15,6 +15,7 @@ EXPECTED=int(os.environ["AMSN_EXPECTED_SWC_RECORDS"])
 ORDER=int(os.environ.get("AMSN_PRIMA_PARAMETER_ORDER","56"))
 FREQS=(0.1,1.0,10.0,100.0,300.0,1000.0,3000.0,6000.0,10000.0)
 SHIFTS=(0.0,100.0,1000.0,3000.0)
+EXTENDED_SHIFTS=(0.0,100.0,1000.0,3000.0,6000.0,10000.0)
 
 def port_z(tree, ports, hz):
     z=np.empty((len(ports),len(ports)),dtype=np.complex128)
@@ -72,11 +73,12 @@ def main():
         target=CableTree([base.by_name[n] for n in base.order],p)
         frozen=reproject_passive_cable_basis(base,target,nominal)
         fresh=prima_reduce_passive_cable_multishift(target,ports,ORDER,SHIFTS)
-        for model in (frozen,fresh):
+        fresh_extended=prima_reduce_passive_cable_multishift(target,ports,ORDER,EXTENDED_SHIFTS)
+        for model in (frozen,fresh,fresh_extended):
             np.linalg.cholesky(model.conductance_matrix_s)
             np.linalg.cholesky(model.capacitance_matrix_f)
         metrics={}
-        for tag,model in (("frozen",frozen),("fresh",fresh)):
+        for tag,model in (("frozen",frozen),("fresh",fresh),("fresh_extended",fresh_extended)):
             ze=[]; ye=[]
             for hz in FREQS:
                 z0=port_z(target,ports,hz); y0=np.linalg.solve(z0,np.eye(len(ports)))
@@ -99,9 +101,11 @@ def main():
         w=csv.DictWriter(f,fieldnames=list(rows[0]));w.writeheader();w.writerows(rows)
     print(f"morphology={LABEL}; compartments={base.n_compartments}; ports={len(ports)}; order={nominal.order}")
     for r in rows:
-        print("scenario=%s; frozen_Z=%.9g%%; frozen_Y=%.9g%%; fresh_Z=%.9g%%; fresh_Y=%.9g%%; frozen_transient=%.9g%%" %
+        print("scenario=%s; frozen_Z=%.9g%%; frozen_Y=%.9g%%; fresh_3k_Z=%.9g%%; fresh_3k_Y=%.9g%%; fresh_10k_Z=%.9g%%; fresh_10k_Y=%.9g%%; extended_transient=%.9g%%" %
           (r["scenario"],r["frozen_max_Z_error_pct"],r["frozen_max_Y_error_pct"],
-           r["fresh_max_Z_error_pct"],r["fresh_max_Y_error_pct"],r["frozen_max_port_transient_nrmse_pct"]))
+           r["fresh_max_Z_error_pct"],r["fresh_max_Y_error_pct"],
+           r["fresh_extended_max_Z_error_pct"],r["fresh_extended_max_Y_error_pct"],
+           r["fresh_extended_max_port_transient_nrmse_pct"]))
     print(f"output_csv={output}; rows={len(rows)}; passivity=passed")
 
 if __name__=="__main__": main()
