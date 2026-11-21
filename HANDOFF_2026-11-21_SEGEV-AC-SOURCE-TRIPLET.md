@@ -57,3 +57,33 @@ Both morphology jobs must run all AMSN tests with NEURON 9.0.2, produce 80 rows 
 ## Known limits
 
 The two Segev morphologies are individual human temporal L2/3 reconstructions with moderate dendritic completeness and incomplete axons. Passive parameters remain generic assumptions, not fitted human parameters. This experiment does not establish active channel, synaptic, calcium, plasticity, metabolic or network validity.
+
+## Verified results — workflow 44899442076
+
+**Status:** both NEURON 9.0.2 morphology jobs passed; both produced 80 rows and uploaded raw CSV + log. The accompanying Core CI workflow 44899349672 passed Python 3.12/3.13 tests and NEURON cross-validation.
+
+### Source-coordinate results
+
+- NMO_68174 / cell1125:
+  - basal q75 (SWC 1577) is pre_aligned at 0.00144089 µm; it is not a distinct-source contrast.
+  - apical q75 (SWC 9934) is distinct_aligned: legacy centre offset 0.00832399 µm, refined-centre offset 0.00196022 µm.
+  - legacy → exact-SWC transfer-complex maximum by frequency (0.1, 1, 10, 30, 100, 300, 1,000, 3,000 Hz): 0.0003209, 0.0003215, 0.0003790, 0.0006844, 0.0020304, 0.0057770, 0.0141009, 0.0219544%.
+  - exact-SWC → refined-centre complex deltas are 0 at exported precision for all eight frequencies.
+- NMO_68175 / cell1204:
+  - basal q75 (SWC 3253) is distinct_aligned: legacy centre offset 0.0876304 µm, refined-centre offset 0.000504592 µm.
+  - legacy → exact-SWC transfer-complex maximum by frequency: 0.0017634, 0.0017668, 0.0020825, 0.0037624, 0.0112115, 0.0330902, 0.1042289, 0.2289258%.
+  - exact-SWC → refined-centre complex deltas are 0 at exported precision for all eight frequencies.
+  - apical q75 (SWC 7640) is unresolved_nseg_cap. The identical legacy/exact/refined output in this case is not evidence of source insensitivity and must be excluded from distinct-source sensitivity summaries.
+
+Interpretation: the measurable legacy-to-exact effect is concentrated in the source site that actually changes segment identity; the exact SWC coordinate and refined segment centre return identical NEURON impedance values for the tested source sites. The existing cross-simulator frequency audit uses the exact SWC coordinate, so its reference convention is consistent with this result. This does not establish biological validity or explain all remaining AMSN–NEURON residuals.
+
+### Raw artifacts
+
+- [NMO_68174 CSV + log, artifact 14705865103](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705865103)
+- [NMO_68175 CSV + log, artifact 14705880425](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705880425)
+- [Triplet workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076)
+- [Core CI](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899349672)
+
+### Follow-up
+
+The next controlled variable is probe/readout position. Continue from [HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md](HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md). Keep source fixed at the exact SWC coordinate, and compare exact SWC probe readout, nearest segment centre and complex interpolation on one mesh.
