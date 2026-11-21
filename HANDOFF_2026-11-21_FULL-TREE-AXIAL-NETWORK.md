@@ -49,7 +49,7 @@ This is geometry/topology/numerics evidence for one partial morphology and NEURO
 ## CI
 
 - Dedicated audit: [44871993854](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993854), success, 1/1 job.
-- Comprehensive Core CI for commit e65a347ef1c51bb44ecbc1deca35c8a4d5712a90: [44871993797](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993797). Check its final status at the start of the next session; do not infer it from the dedicated audit.
+- Comprehensive Core CI for code commit `e65a347ef1c51bb44ecbc1deca35c8a4d5712a90`: [44871993797](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993797), success (4/4 jobs); 65 tests passed on Python 3.12 and 65 on Python 3.13; both NEURON 9.0.2 cross-validation jobs completed all steps.
 
 ## Next work — ordered
 

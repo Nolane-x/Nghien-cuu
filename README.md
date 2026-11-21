@@ -8,7 +8,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
 2. [HANDOFF.md](HANDOFF.md) — mục tiêu nghiên cứu tổng thể và lịch sử khôi phục.
-3. [HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md](HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md) — checkpoint mới nhất đã xác minh: 65 test trên Python 3.12/3.13, NEURON 9.0.2 cross-validation và Exp2Syn timing audit đều xanh.
+3. [HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md](HANDOFF_2026-11-21_FULL-TREE-AXIAL-NETWORK.md) — checkpoint mới nhất: full-tree audit thành công, 8.892/8.892 active SWC edges mapped, 58/58 branchpoints khớp topology, CI tổng thể xanh.
+   - [Handoff AMPA synaptic timing — 20/11](HANDOFF_2026-11-20_AMPA-SYNAPTIC-TIMING-FINAL.md) — baseline lịch sử: 65 test trên Python 3.12/3.13, NEURON 9.0.2 cross-validation và Exp2Syn timing audit.
    - [Handoff AMPA audit ban đầu](HANDOFF_2026-11-20_AMPA-SYNAPTIC-NUMERICS.md) — lịch sử nghiên cứu trước khi hoàn tất kernel timing.
    - [Handoff transient lịch sử](HANDOFF_2026-11-20-HUMAN-TRANSIENT.md) — pulse/step passive cross-validation với NEURON 9.0.2.
 4. [Human transient cross-validation report](amsn-core/research/HUMAN_TRANSIENT_CROSS_VALIDATION_2026-11-20.md) — 270 phép đo theo thời gian, sai lệch điện thế probe tối đa 1,48%.
@@ -118,3 +119,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - 58/58 branchpoints có đúng số child sections; 116 section endpoint bình thường có gap bằng 0; 8 soma wire attachments được báo riêng, không suy diễn chúng có zero biological resistance.
 - Kết quả là numerical/topology audit trên một partial morphology, chưa phải biological validation hay bằng chứng tương đương toàn bộ voltage solver.
 - Bước tiếp theo: so sánh toàn bộ effective AMSN axial conductance matrix với NEURON, rồi tái tạo ModelDB 238347 bằng morphology/mechanism gốc sau khi xác minh archive/license.
+
+
+- Comprehensive AMSN Core CI cho code commit `e65a347ef1c51bb44ecbc1deca35c8a4d5712a90` đã xanh 4/4 job: 65 test trên Python 3.12 và 65 test trên Python 3.13; cả hai NEURON 9.0.2 cross-validation đều hoàn tất ([run 44871993797](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993797)).

@@ -87,3 +87,8 @@ This audit is not equality of the full AMSN/NEURON voltage solve, not a 3-D bran
 1. Independently compare the entire AMSN axial edge/conductance matrix against the NEURON connection network, with separate treatment for the eight soma-wire attachment links and for branchpoint parent junctions.
 2. Run a matched passive DC/steady-state multi-source comparison using unchanged membrane parameters and a node mapping that preserves the soma/branch semantics. Record source/probe transfer resistance and map any residual to the corresponding edge/connection class.
 3. Reproduce the original Eyal et al. 2018 / ModelDB 238347 source archive using its own morphologies and mechanisms. The ModelDB GitHub mirror only documents a separate 133MB EyalEtAl2018.zip download; verify archive contents and license before importing or redistributing.
+
+
+## Comprehensive Core CI completion
+
+Workflow [44871993797](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44871993797) completed successfully on code commit `e65a347ef1c51bb44ecbc1deca35c8a4d5712a90`: all 4/4 jobs succeeded. The unit/numerical test matrix passed 65 tests on Python 3.12 and 65 on Python 3.13. Both test jobs compiled all Python modules and ran examples; both NEURON 9.0.2 cross-validation jobs completed passive, temporal/spatial, transient, AMPA, Exp2Syn timing and matched single-compartment checks.
