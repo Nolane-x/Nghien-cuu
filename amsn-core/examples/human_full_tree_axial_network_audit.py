@@ -507,7 +507,9 @@ def audit_neuron_ri(sections, profiles):
 
 
 def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
+    """Audit every NEURON section junction and the two axial half-resistances."""
     connections = []
+    parent_half_rows = []
     for section in sections:
         parent_segment = section.parentseg()
         if parent_segment is None:
@@ -515,14 +517,74 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
         parent_section = parent_segment.sec
         parent_x = float(h.parent_connection(sec=section))
         child_x = float(section.orientation())
-        parent_xyz = coordinate_at_x(
-            parent_section, profiles[parent_section.name()], parent_x
-        )
-        child_xyz = coordinate_at_x(section, profiles[section.name()], child_x)
+        parent_profile = profiles[parent_section.name()]
+        child_profile = profiles[section.name()]
+        parent_xyz = coordinate_at_x(parent_section, parent_profile, parent_x)
+        child_xyz = coordinate_at_x(section, child_profile, child_x)
         endpoint_gap_um = float(np.linalg.norm(parent_xyz - child_xyz))
+
+        child_segments = list(section)
+        if not child_segments:
+            raise RuntimeError(f"connected section {section.name()} has no segments")
+        child_first = child_segments[0]
+        child_half_factor = profile_factor_between_x(
+            section, child_profile, child_x, float(child_first.x)
+        )
+        child_actual_mohm = float(child_first.ri())
+        child_actual_factor = (
+            child_actual_mohm * 1e6 / RI_OHM_M
+            if child_actual_mohm < 1e20 else float("nan")
+        )
+        child_half_error_pct = (
+            relative_difference_pct(child_actual_factor, child_half_factor)
+            if np.isfinite(child_actual_factor) else float("nan")
+        )
+
+        parent_is_soma_sphere = bool(parent_profile["one_point_soma"])
+        parent_at_endpoint = (
+            abs(parent_x) <= 1e-12 or abs(parent_x - 1.0) <= 1e-12
+        )
+        parent_half_factor = 0.0
+        parent_actual_mohm = float("nan")
+        parent_half_error_pct = float("nan")
+        parent_center_x = float("nan")
+        if parent_at_endpoint and not parent_is_soma_sphere:
+            parent_segments = list(parent_section)
+            nearest_parent_segment = min(
+                parent_segments,
+                key=lambda candidate: abs(float(candidate.x) - parent_x),
+            )
+            parent_center_x = float(nearest_parent_segment.x)
+            parent_half_factor = profile_factor_between_x(
+                parent_section, parent_profile, parent_center_x, parent_x
+            )
+            parent_actual_mohm = float(h.ri(parent_x, sec=parent_section))
+            if parent_actual_mohm < 1e20:
+                parent_actual_factor = parent_actual_mohm * 1e6 / RI_OHM_M
+                parent_half_error_pct = relative_difference_pct(
+                    parent_actual_factor, parent_half_factor
+                )
+            parent_half_rows.append({
+                "child_section": section.name(),
+                "parent_section": parent_section.name(),
+                "parent_connection_x": parent_x,
+                "parent_nearest_segment_center_x": parent_center_x,
+                "parent_half_expected_factor_m_inv": parent_half_factor,
+                "parent_half_ri_reported_mohm": parent_actual_mohm,
+                "parent_half_ri_error_pct": parent_half_error_pct,
+            })
+
+        if parent_is_soma_sphere:
+            connection_kind = "soma_wire_attachment_zero_resistance_link"
+        elif parent_at_endpoint:
+            connection_kind = "section_endpoint_junction"
+        else:
+            connection_kind = "interior_section_junction"
+
         connections.append({
             "child_section": section.name(),
             "parent_section": parent_section.name(),
+            "connection_kind": connection_kind,
             "parent_connection_x": parent_x,
             "child_orientation": child_x,
             "parent_connection_x_um": parent_x * float(parent_section.L),
@@ -534,6 +596,18 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
             "child_endpoint_xyz_y_um": child_xyz[1],
             "child_endpoint_xyz_z_um": child_xyz[2],
             "connection_endpoint_gap_um": endpoint_gap_um,
+            "parent_half_expected_factor_m_inv": parent_half_factor,
+            "parent_half_ri_reported_mohm": parent_actual_mohm,
+            "parent_half_ri_error_pct": parent_half_error_pct,
+            "child_half_expected_factor_m_inv": child_half_factor,
+            "child_first_segment_ri_mohm": child_actual_mohm,
+            "child_half_ri_error_pct": child_half_error_pct,
+            "total_connection_half_factor_m_inv": (
+                parent_half_factor + child_half_factor
+            ),
+            "total_connection_half_resistance_ohm": (
+                RI_OHM_M * (parent_half_factor + child_half_factor)
+            ),
         })
 
     rows = []
@@ -577,8 +651,32 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
                 c["child_section"] for c in matching
             ),
         })
-    return rows, connections
-
+    non_soma_gaps = [
+        c["connection_endpoint_gap_um"]
+        for c in connections
+        if c["connection_kind"] != "soma_wire_attachment_zero_resistance_link"
+    ]
+    soma_gaps = [
+        c["connection_endpoint_gap_um"]
+        for c in connections
+        if c["connection_kind"] == "soma_wire_attachment_zero_resistance_link"
+    ]
+    connection_summary = {
+        "section_connection_count": len(connections),
+        "soma_wire_attachment_count": len(soma_gaps),
+        "max_soma_wire_attachment_offset_um": max(soma_gaps, default=0.0),
+        "max_non_soma_connection_endpoint_gap_um": max(non_soma_gaps, default=0.0),
+        "parent_endpoint_half_ri_checked": len(parent_half_rows),
+        "max_parent_endpoint_half_ri_error_pct": max(
+            (
+                float(row["parent_half_ri_error_pct"])
+                for row in parent_half_rows
+                if np.isfinite(float(row["parent_half_ri_error_pct"]))
+            ),
+            default=0.0,
+        ),
+    }
+    return rows, connections, connection_summary
 
 def write_csv(path: Path, rows):
     if not rows:
@@ -609,7 +707,7 @@ def main() -> None:
         morphology, reader, section_by_name, profiles
     )
     ri_rows, ri_summary = audit_neuron_ri(sections, profiles)
-    branch_rows, connection_rows = audit_branchpoint_connections(
+    branch_rows, connection_rows, connection_summary = audit_branchpoint_connections(
         morphology, edge_summary["node_maps"], sections, profiles
     )
 
@@ -686,8 +784,21 @@ def main() -> None:
     )
     print(
         f"# SWC_branchpoints_with_exact_NEURON_child_count="
-        f"{branch_exact}/{branchpoint_count}; "
-        f"max_section_connection_endpoint_gap_um={connection_gap_max:.12g}"
+        f"{branch_exact}/{branchpoint_count}"
+    )
+    print(
+        f"# section_connections={connection_summary['section_connection_count']}; "
+        f"soma_wire_attachments={connection_summary['soma_wire_attachment_count']}; "
+        f"max_soma_wire_attachment_offset_um="
+        f"{connection_summary['max_soma_wire_attachment_offset_um']:.12g}; "
+        f"max_non_soma_endpoint_gap_um="
+        f"{connection_summary['max_non_soma_connection_endpoint_gap_um']:.12g}"
+    )
+    print(
+        f"# parent_endpoint_half_ri_checked="
+        f"{connection_summary['parent_endpoint_half_ri_checked']}; "
+        f"max_parent_endpoint_half_ri_error_pct="
+        f"{connection_summary['max_parent_endpoint_half_ri_error_pct']:.12g}"
     )
     print(f"# raw_edge_csv={edge_csv}")
     print(f"# raw_ri_csv={ri_csv}")
@@ -713,6 +824,14 @@ def main() -> None:
         raise RuntimeError(
             "NEURON child-section initial ri() does not reproduce its pt3d "
             f"half-edge: {ri_summary['max_child_start_ri_error_pct']:.12g}%"
+        )
+    if (
+        connection_summary["max_parent_endpoint_half_ri_error_pct"]
+        > RI_RELATIVE_WARNING_PCT
+    ):
+        raise RuntimeError(
+            "NEURON parent endpoint ri() does not reproduce its pt3d half-edge: "
+            f"{connection_summary['max_parent_endpoint_half_ri_error_pct']:.12g}%"
         )
 
 
