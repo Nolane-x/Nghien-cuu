@@ -315,3 +315,8 @@ Backward-Euler temporal refinement is first-order (pairwise maximum-NRMSE ratios
 See [full convergence report](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md), [configuration summary](amsn-core/results/human_segev_passive_transient_convergence_summary_2026-11-21.csv), and [pairwise measurements](amsn-core/results/human_segev_passive_transient_pairwise_convergence_2026-11-21.csv).
 
 Next: test source placement by comparing nearest-centre IClamp with a charge-conserving two-centre weighted current split at the exact SWC arc.
+
+
+## Verified Segev transient source-placement checkpoint — 21/11/2026
+
+Source-placement audit [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed 4/4; Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed 4/4. The weighted two-centre IClamp split conserves total 10 pA at every sample, but its benefit is morphology-/mesh-dependent: it strongly improves NMO_68175 and is mixed/worse for NMO_68174 at the finer mesh. Keep it optional, not the default. Full report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md). Next: direct AC source-placement comparison.

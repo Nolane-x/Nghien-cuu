@@ -284,3 +284,13 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Spatial refinement is cell-specific: it improves NMO_68174 but worsens NMO_68175; interpolation is not universally superior.
 - Report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md). Data: [configuration summary CSV](amsn-core/results/human_segev_passive_transient_convergence_summary_2026-11-21.csv), [pairwise convergence CSV](amsn-core/results/human_segev_passive_transient_pairwise_convergence_2026-11-21.csv).
 - Next: isolate source placement using a charge-conserving two-segment weighted IClamp versus nearest-centre IClamp.
+
+
+### Segev transient source-placement alignment — verified 21/11/2026
+
+- Source-placement workflow [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed 4/4; Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed 4/4.
+- Four configurations (2 morphologies × 2 mesh caps) each produced 18,030 trace rows and 60 summaries. Total 10 pA current was conserved to within 1.735e-18 nA.
+- Weighted two-centre source placement strongly improves NMO_68175 at both meshes (maximum SWC-interpolated NRMSE 0.000192% vs nearest-source baseline 0.000791% at 0.125 µm and 0.002633% at 0.0625 µm).
+- NMO_68174 is mixed; at 0.0625 µm the weighted split worsens all 10 non-unchanged interpolated probe pairs. Therefore it remains optional/diagnostic, not a universal default.
+- Report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_transient_source_alignment_summary_2026-11-21.csv).
+- Next: test the same source-placement definitions against direct NEURON AC transfer impedance.

@@ -88,3 +88,8 @@ The 12 configurations produced 126,180 trace rows and 360 summary rows. Each job
 Full report: [HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_PASSIVE_TRANSIENT_CONVERGENCE_2026-11-21.md). Summary [CSV](amsn-core/results/human_segev_passive_transient_convergence_summary_2026-11-21.csv); pairwise measurements [CSV](amsn-core/results/human_segev_passive_transient_pairwise_convergence_2026-11-21.csv).
 
 Next: isolate source placement using nearest-centre IClamp versus a charge-conserving two-segment weighted current split at the exact SWC arc.
+
+
+## Verified source-placement extension — 21/11/2026
+
+The source-placement audit [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed all four jobs and Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed. A weighted two-centre 10 pA source split strongly improves cell1204 but is not universally beneficial for cell1125, especially at the 0.0625 µm mesh. See [source alignment report](HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md) and [handoff](../../HANDOFF_2026-11-21_SEGEV-TRANSIENT-SOURCE-ALIGNMENT.md). It remains a diagnostic/optional mode rather than a production default.

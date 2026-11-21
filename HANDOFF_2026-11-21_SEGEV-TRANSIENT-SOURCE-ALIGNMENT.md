@@ -53,3 +53,19 @@ A weighted split current is a discrete source-mapping diagnostic, not asserted t
 ## Next step
 
 If the weighted split improves agreement consistently, retain it as an optional source-alignment mode and test it against direct NEURON impedance. If improvement is morphology-/source-dependent, preserve it as a diagnostic only and proceed to a true reduced fine-tree operator.
+
+
+## Verified results — source-placement alignment (21/11/2026)
+
+Final workflow [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed all four morphology/mesh jobs. Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed 4/4.
+
+Each job produced 18,030 trace rows and 60 summary rows. Total clamp current was checked at every sample; maximum error was 1.735e-18 nA.
+
+Weighted two-centre source placement is morphology-/mesh-dependent:
+- NMO_68175 benefits at both meshes: maximum interpolated-probe NRMSE falls to 0.000192% from 0.000791% at 0.125 µm and from 0.002633% at 0.0625 µm.
+- NMO_68174 at 0.125 µm is mixed, with interpolated maximum falling 0.000357%→0.000265%.
+- NMO_68174 at 0.0625 µm worsens for interpolated probes: 0.000190%→0.000265%, 10 worsened / 0 improved / 5 unchanged pairs.
+
+**Decision:** retain weighted source placement as an optional diagnostic, not a universal default.
+
+Full report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_transient_source_alignment_summary_2026-11-21.csv).

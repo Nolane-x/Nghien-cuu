@@ -28,3 +28,18 @@ Pending. The four morphology/mesh jobs must all pass before results are reported
 ## Limits
 
 Weighted two-centre source placement is a discrete diagnostic approximation; it is not a claim of exact continuous point-current injection or biological validity.
+
+
+## Verified results — source-placement alignment
+
+Workflow [44910070325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070325) passed 4/4 morphology/mesh jobs; Core CI [44910070326](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910070326) passed 4/4.
+
+Every configuration produced 18,030 trace rows and 60 summaries. Maximum total IClamp current-conservation error was 1.735e-18 nA.
+
+NMO_68175 weighted source placement improved all non-unchanged pairs on interpolated probes at both meshes (10 improved, 0 worsened, 5 unchanged). Maximum interpolated NRMSE fell to 0.000192% at both mesh caps, versus 0.000791% at 0.125 µm and 0.002633% at 0.0625 µm under nearest-centre injection.
+
+NMO_68174 was mixed at 0.125 µm (5 improved, 5 worsened, 5 unchanged for each probe readout). At 0.0625 µm, weighted source placement worsened all 10 non-unchanged interpolated probe pairs, and improved only 2/15 nearest-centre pairs.
+
+Thus weighted two-centre injection is an optional diagnostic, not a universal default.
+
+See [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md).
