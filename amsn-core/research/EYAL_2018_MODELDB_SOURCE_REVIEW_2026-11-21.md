@@ -59,3 +59,8 @@ A browser attempt checked the official legacy download flow on 2026-11-21. The p
 ## Segev archive human L2/3 morphologies
 
 Two additional standardized CNG SWCs were obtained directly from NeuroMorpho.org: NMO_68174 (cell 1125, 12,410 rows) and NMO_68175 (cell 1204, 13,758 rows). Both are human temporal neocortex, Brodmann area 21, layer 2–3 pyramidal/principal cells; dendrites moderately complete and axons incomplete. They are retained unchanged with CC BY 4.0 attribution in `amsn-core/data/human/segev/`. See `amsn-core/data/human/segev/README.md` and `amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json`. They are not copied from FCI; no FCI source code is vendored.
+
+
+## Alternative direct morphology route
+
+Two Segev archive morphologies associated with the FCI Eyal-labelled folders are now directly downloaded from NeuroMorpho.org and committed with CC BY 4.0 attribution: NMO_68174 (cell1125; 12,410 rows) and NMO_68175 (cell1204; 13,758 rows). This does not change original ModelDB 238347 archive status (not downloaded/not integrated). FCI code is not copied. See FCI_EYAL_DERIVATIVE_SOURCE_AUDIT_2026-11-21.md and the JSON manifest.

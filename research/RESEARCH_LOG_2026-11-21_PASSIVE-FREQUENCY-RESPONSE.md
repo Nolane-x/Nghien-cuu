@@ -71,3 +71,8 @@ Added `test_frequency_phasor_matches_time_domain_sinusoidal_steady_state`: 50 Hz
 ## Eyal 2018 source retrieval
 
 The official ModelDB 238347 archive URL is documented by the ModelDB-linked GitHub README as `http://senselab.med.yale.edu/modeldb/data/238347/EyalEtAl2018.zip` (stated 133 MB). The legacy Yale/SenseLab URL timed out in both page and archive attempts. The GitHub repository tree contains only `readme.html`; it is not the model code. No archive was received or integrated. See `amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md`.
+
+
+## Segev morphology expansion
+
+See the newer log research/RESEARCH_LOG_2026-11-21_FCI-EYAL-DERIVATIVE.md and handoff HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md. The original Eyal 2018 archive remains unavailable; FCI is read-only and is not the source of the committed SWCs.

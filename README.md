@@ -186,3 +186,11 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [NMO_68174 cell 1125](amsn-core/data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc) and [NMO_68175 cell 1204](amsn-core/data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc): direct NeuroMorpho CC BY 4.0 morphology fixtures; dendrites moderate and axons incomplete.
 - [Source manifest](amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json) pins third-party source SHA and morphology blob hashes.
 - [New dated handoff](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md).
+
+
+### Multi-morphology checkpoint — Segev archive (21/11/2026)
+
+- [FCI Eyal-labelled derivative audit](amsn-core/research/FCI_EYAL_DERIVATIVE_SOURCE_AUDIT_2026-11-21.md): provenance, SI parameter conversions, reduced HOC, channel/synapse and license notes.
+- [NMO_68174](amsn-core/data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc) and [NMO_68175](amsn-core/data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc): official NeuroMorpho CNG morphologies, CC BY 4.0, incomplete axons.
+- [Four-job 0.25/0.125 µm validation](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) is running; results not yet accepted.
+- New handoff: [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md).

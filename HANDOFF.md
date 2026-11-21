@@ -250,3 +250,10 @@ Nếu thiếu một thành phần, phải ghi rõ “not collected/not validated
 ## Latest dated checkpoint — FCI derivatives and Segev morphologies (21/11/2026)
 
 Read `HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md` before continuing. Two direct NeuroMorpho human L2/3 morphologies have been added with CC BY 4.0 attribution. The FCI `human/eyal` configurations are reduced derivatives, with passive dendrites and active soma/synthetic axon; their Na/Kv scaling is based on a rat Hay L5b exemplar. No FCI code was copied. The original Eyal 2018 ModelDB archive remains unavailable/unintegrated. Keep configurations separate.
+
+
+---
+
+## Latest dated checkpoint — FCI derivative / Segev morphologies (21/11/2026)
+
+Continue from [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md). The commit adds two direct NeuroMorpho human L2/3 morphologies, CC BY 4.0 attribution, parser/soma/cable tests, an FCI read-only provenance/parameter audit, and a four-job passive AC matrix. Do not claim results until that workflow passes. FCI is a reduced derivative, not original Eyal 2018; no FCI code is copied.

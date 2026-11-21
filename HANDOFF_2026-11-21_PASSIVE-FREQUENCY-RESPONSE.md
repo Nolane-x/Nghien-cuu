@@ -97,3 +97,8 @@ A new unit test compares the complex phasor solver with a fitted steady-state 50
 ## ModelDB archive retrieval outcome
 
 The official ModelDB record and its GitHub repository were checked. The linked repository's complete public Git tree has exactly one file, `readme.html` (971 bytes), which points to `http://senselab.med.yale.edu/modeldb/data/238347/EyalEtAl2018.zip` and describes it as 133 MB. A browser attempt to access the official legacy Yale/SenseLab path timed out; no access-code form was loaded and no ZIP was received. The Human Brain Project lists `eyal2018` as the access code for its ModelDB Eyal 2018 link, but no code was entered because the linked form never loaded. See the detailed [source review](amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md). Do not say the GitHub record contains the model code or that the archive is integrated.
+
+
+## New multi-morphology fixture check
+
+The shared impedance audit now supports alternate SWCs through AMSN_MORPHOLOGY_PATH and AMSN_MORPHOLOGY_LABEL. NMO_68174/NMO_68175 are direct NeuroMorpho CC BY 4.0 morphology inputs; four NEURON 9.0.2 jobs at 0.25/0.125 µm are in workflow run 44885009077. The results are pending; no numerical equivalence claim is made until its logs/CSV artifacts are inspected.
