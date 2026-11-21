@@ -221,10 +221,10 @@ def main():
         print(
             f"# source_refinement={info['source_name']}; swc_id={source_id}; "
             f"section={info['section'].name()}; "
-            f"nseg={refinement['base_nseg']}->{refinement['nseg']} "
-            f"(odd_multiple={refinement['multiplier']}); "
-            f"legacy_offset_um={refinement['legacy_offset_um']:.12g}; "
-            f"aligned_offset_um={refinement['aligned_offset_um']:.12g}"
+            f"nseg={refinement['base_nseg']}->{refinement['nseg']}; "
+            f"legacy_source_offset_um={refinement['legacy_offset_um']:.12g}; "
+            f"legacy_mesh_remap_um={refinement['legacy_remap_offset_um']:.12g}; "
+            f"aligned_source_offset_um={refinement['aligned_offset_um']:.12g}"
         )
 
     print(
