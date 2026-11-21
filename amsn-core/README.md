@@ -123,3 +123,8 @@ The pilot biological target is a human temporal-cortex layer 2–3 pyramidal neu
 
 
 The soma normalizer also handles a neurite that branches immediately at its first point. For Segev NMO_68175 this is axon node 5851; see the dedicated geometry residual audit in the current Segev handoff.
+
+
+## Segev Import3D soma-attachment normalization
+
+The three-point soma normalizer collapses the established long unbranched soma stems and any first neurite point that is itself an immediate branch junction (two or more children). A one-point terminal neurite is retained. This matches the tested Import3D behavior on NeuroMorpho NMO_68174 and NMO_68175, including NMO_68175 axon attachment node 5851. Regression tests cover both the immediate branch and the terminal-neurite negative case. See the final Segev audit and handoff; the tested passive constants remain generic and unfitted.

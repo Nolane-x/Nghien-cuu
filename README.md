@@ -196,6 +196,13 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - New handoff: [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md).
 
 
-### Segev multi-morphology check — preliminary
+### Segev multi-morphology Import3D correction — verified
 
-The four-job matrix [44885009077](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) passed. NMO_68174 improves from ~0.365% to ~0.131% maximum transfer-complex error from 0.25 to 0.125 µm. NMO_68175 remains around 5.7% and has ~0.94% input discrepancy at 0.1 Hz; this is under investigation, not accepted as cross-simulator agreement. See [preliminary report](amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md).
+The NMO_68175 mismatch was traced to the immediately branching axon attachment at SWC node 5851. The final soma normalizer collapses that first-point branch junction while retaining a one-point terminal neurite. Passive parameters were not changed.
+
+- Four-job matrix [44887065310](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310) passed on NEURON 9.0.2 (two morphologies × two mesh caps).
+- Area agreement: NMO_68174 −0.00000112%; NMO_68175 −0.00000080%.
+- NMO_68175 at 0.125 µm: max input complex error 0.03774%, max transfer complex error 0.16938%; before fix these maxima were ~5.69% and ~5.70%.
+- Raw artifacts: [68174/0.25](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699778704), [68175/0.25](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699833538), [68174/0.125](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14699989410), [68175/0.125](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065310/artifacts/14700104294).
+- Core CI [44887065325](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44887065325) passed 4/4 jobs; 81 tests on both Python 3.12 and 3.13; full NEURON passive/transient/AMPA/Exp2Syn/single-compartment validation passed.
+- See [final multi-morphology audit](amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md), [summary CSV](amsn-core/results/human_segev_import3d_attachment_fix_summary_2026-11-21.csv) and [handoff](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md).
