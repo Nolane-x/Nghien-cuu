@@ -5,7 +5,7 @@
 **Branch:** main  
 **Implementation commit:** 99daea4ea0cbaacc19b2e79f621e028fe5ccbf62  
 **Three-mesh convergence commit:** 62a5d288f23084001c70e7580ac334140c09b967  
-**Status:** 0.5 µm baseline passed; 0.5/0.25/0.125 µm convergence run pending.
+**Status:** 0.5/0.25/0.125 µm convergence matrix passed; 0.0625 µm follow-up pending.
 
 ## Start here
 
@@ -38,7 +38,7 @@ Workflow [44880205634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880
 
 The largest transfer percentage occurred for apical q75 → basal q90 at 3,000 Hz, where transfer impedance itself is very small (~8.37e-9 MΩ in NEURON). Interpret relative error with absolute impedance.
 
-The frequency dependence suggests further spatial refinement should be tested; it does not prove the cause is mesh-only. Three-mesh run [44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) is configured for 0.5, 0.25 and 0.125 µm. Inspect all three artifacts/logs and update this handoff before changing passive parameters.
+The three-mesh run [44880470858](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858) passed all three jobs. Segment counts were 25,233 / 50,353 / 100,571 for 0.5 / 0.25 / 0.125 µm. Transfer complex median/p95/max errors were 0.039583/0.711515/1.592748%, 0.012377/0.264956/0.534125%, and 0.006550/0.172349/0.273631%, respectively. The aggregate improvement is consistent, but not every individual pair maximum is monotone at the low end. Artifacts: [0.5 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697044290), [0.25 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14696684877), [0.125 µm](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44880470858/artifacts/14697712070). A 0.0625 µm follow-up is next; do not tune passive parameters or declare a production mesh yet.
 
 ## Validation gates
 
@@ -58,9 +58,9 @@ The frequency dependence suggests further spatial refinement should be tested; i
 
 ## Next actions
 
-1. Inspect the 0.5/0.25/0.125 µm workflow jobs and compare error by frequency, source and probe.
-2. If convergence is monotonic, define a minimum reference mesh and quantify the remaining high-frequency floor.
-3. If discrepancy does not converge, isolate source/probe placement, section junctions and Import3D interpolation.
+1. Run and inspect the 0.0625 µm follow-up and quantify reduction versus 0.125 µm.
+2. Compare per-frequency, per-source and per-probe behavior; track absolute transfer values for weak paths.
+3. If any residual persists, isolate source/probe placement, section junctions and Import3D interpolation.
 4. Continue to active human cortical channels only after passive AC and transient baselines are stable.
 
 ## Source workflow and output

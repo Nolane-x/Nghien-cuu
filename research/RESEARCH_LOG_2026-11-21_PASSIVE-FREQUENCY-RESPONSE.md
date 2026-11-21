@@ -38,3 +38,14 @@ One partial morphology, passive membrane only, no fitting, no experimental valid
 ## Spatial convergence follow-up
 
 The audit script and workflow were parameterized in commit 62a5d288f23084001c70e7580ac334140c09b967 to run mesh caps of 0.5, 0.25 and 0.125 µm. Workflow 44880470858 is the three-mesh run. Do not select a production reference mesh until its three per-mesh CSVs are inspected.
+## Three-mesh AC convergence — workflow 44880470858
+
+- All three matrix jobs passed; each ran the full 74-test AMSN suite and NEURON 9.0.2.
+- 0.5 µm: 25,233 segments; input complex median/p95/max 0.043795832/0.073407268/0.078027291%; transfer complex 0.039582892/0.711515188/1.592748090%.
+- 0.25 µm: 50,353 segments; input complex 0.025169814/0.064440836/0.068445691%; transfer complex 0.012377350/0.264955807/0.534124819%.
+- 0.125 µm: 100,571 segments; input complex 0.009609508/0.036137713/0.060370374%; transfer complex 0.006549744/0.172349280/0.273631126%.
+- From 0.5 to 0.125 µm, transfer complex median/p95/max decreases by ~6.04×/~4.13×/~5.82×. The 0.125 µm worst pair is basal q75 → apical q50 at 3 kHz (0.273631%).
+- Median and p95 transfer errors decrease at every tested frequency across meshes; a few low-frequency per-frequency maxima are not monotone because the worst pair shifts.
+- Raw artifacts: 0.5 µm 14697044290; 0.25 µm 14696684877; 0.125 µm 14697712070 (all within Actions run 44880470858).
+
+Next: add a 0.0625 µm mesh to inspect diminishing returns and high-frequency residual floor.
