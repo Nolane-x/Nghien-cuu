@@ -26,7 +26,7 @@ permissions:
 
 jobs:
   source-alignment:
-    name: source-alignment (\${{ matrix.alignment_um }} um tolerance)
+    name: source-alignment (${{ matrix.alignment_um }} um tolerance)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -34,7 +34,7 @@ jobs:
         alignment_um: ["0", "0.001"]
     env:
       AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
-      AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: \${{ matrix.alignment_um }}
+      AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: ${{ matrix.alignment_um }}
       AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "50001"
     steps:
       - uses: actions/checkout@v4
@@ -65,6 +65,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-passive-source-alignment-\${{ matrix.alignment_um }}um-py3.12
-          path: amsn-core/human-source-alignment-\${{ matrix.alignment_um }}-um.csv
+          name: amsn-passive-source-alignment-${{ matrix.alignment_um }}um-py3.12
+          path: amsn-core/human-source-alignment-${{ matrix.alignment_um }}-um.csv
           if-no-files-found: ignore
