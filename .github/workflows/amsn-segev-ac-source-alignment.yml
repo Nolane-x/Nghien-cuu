@@ -1,27 +1,29 @@
-name: AMSN Segev AC source-alignment sensitivity
+name: AMSN Segev AC Source-Placement Alignment Audit
 
 on:
   push:
     branches: [main]
     paths:
       - ".github/workflows/amsn-segev-ac-source-alignment.yml"
-      - "amsn-core/src/amsn/**"
-      - "amsn-core/data/human/segev/**"
       - "amsn-core/examples/human_segev_ac_source_alignment_audit.py"
-      - "amsn-core/examples/human_passive_source_placement_control.py"
+      - "amsn-core/examples/human_segev_ac_probe_coordinate_audit.py"
+      - "amsn-core/examples/human_passive_frequency_response_audit.py"
       - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
       - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/segev/**"
       - "amsn-core/pyproject.toml"
   pull_request:
     branches: [main]
     paths:
       - ".github/workflows/amsn-segev-ac-source-alignment.yml"
-      - "amsn-core/src/amsn/**"
-      - "amsn-core/data/human/segev/**"
       - "amsn-core/examples/human_segev_ac_source_alignment_audit.py"
-      - "amsn-core/examples/human_passive_source_placement_control.py"
+      - "amsn-core/examples/human_segev_ac_probe_coordinate_audit.py"
+      - "amsn-core/examples/human_passive_frequency_response_audit.py"
       - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
       - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/segev/**"
       - "amsn-core/pyproject.toml"
   workflow_dispatch:
 
@@ -31,23 +33,27 @@ permissions:
 jobs:
   ac-source-alignment:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 55
     strategy:
       fail-fast: false
       matrix:
         include:
           - morphology_label: NMO_68174_cell1125
             morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_cap_um: "0.0625"
           - morphology_label: NMO_68175_cell1204
             morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.125"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_cap_um: "0.0625"
     env:
       AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
       AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
-      AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
-      AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM: "0.002"
-      AMSN_SOURCE_NSEG_CAP_FALLBACK_MAX_OFFSET_UM: "0.05"
-      AMSN_SOURCE_ALIGNMENT_MAX_NSEG: "32767"
-      AMSN_AC_SOURCE_OUTPUT: ${{ matrix.morphology_label }}-ac-source-alignment.csv
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -69,18 +75,19 @@ jobs:
           python -c "import neuron; print('NEURON', neuron.__version__)"
           test -s "${{ matrix.morphology_path }}"
         working-directory: amsn-core
-      - name: Compare AC impedance under two source references
+      - name: Compare exact, nearest and weighted source transfer impedances
         shell: bash
         run: |
           set -o pipefail
-          python examples/human_segev_ac_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-ac-source-alignment.log"
+          python examples/human_segev_ac_source_alignment_audit.py | tee "${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-ac-source-alignment.log"
         working-directory: amsn-core
-      - name: Preserve raw AC source-alignment measurements
+      - name: Preserve AC source alignment measurements
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-${{ matrix.morphology_label }}-ac-source-alignment-0.125um
+          name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-ac-source-alignment
           path: |
-            amsn-core/${{ matrix.morphology_label }}-ac-source-alignment.csv
-            amsn-core/${{ matrix.morphology_label }}-ac-source-alignment.log
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-ac-source-alignment.log
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_segev_ac_source_alignment_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_segev_ac_source_alignment_summary_2026-11-21.csv
           if-no-files-found: error
