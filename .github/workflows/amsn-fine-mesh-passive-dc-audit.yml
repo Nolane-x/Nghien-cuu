@@ -30,17 +30,17 @@ permissions:
 
 jobs:
   passive-dc:
-    name: passive-dc (\${{ matrix.segment_um }} um NEURON mesh)
+    name: passive-dc (${{ matrix.segment_um }} um NEURON mesh)
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
         segment_um: ["0.5", "0.25"]
     concurrency:
-      group: amsn-fine-mesh-passive-dc-\${{ matrix.segment_um }}-\${{ github.ref }}
+      group: amsn-fine-mesh-passive-dc-${{ matrix.segment_um }}-${{ github.ref }}
       cancel-in-progress: true
     env:
-      AMSN_NEURON_MAX_SEGMENT_UM: \${{ matrix.segment_um }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.segment_um }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -70,6 +70,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-fine-mesh-passive-dc-\${{ matrix.segment_um }}um-py3.12
-          path: amsn-core/human-fine-mesh-passive-dc-\${{ matrix.segment_um }}-um.csv
+          name: amsn-fine-mesh-passive-dc-${{ matrix.segment_um }}um-py3.12
+          path: amsn-core/human-fine-mesh-passive-dc-${{ matrix.segment_um }}-um.csv
           if-no-files-found: ignore
