@@ -279,6 +279,7 @@ def main():
         alignment_tolerance_um,
     ) = align_source_sections(morphology, reader, sections, injections)
     if aligned_sites is not None:
+        probes = aligned_probes
         sites = aligned_sites
     fine_tree, sectioned, fine_results, sectioned_results = solve_amsn_all(
         morphology, injections, probes
