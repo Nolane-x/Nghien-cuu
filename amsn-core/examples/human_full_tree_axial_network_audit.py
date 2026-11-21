@@ -570,7 +570,22 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
             parent_half_factor = profile_factor_between_x(
                 parent_section, parent_profile, parent_center_x, parent_x
             )
-            parent_actual_mohm = float(h.ri(parent_x, sec=parent_section))
+            # At a child section's own orientation, the shared parent-side
+            # half is the first/last segment's ri(). h.ri(x) at x=0 on a
+            # section that is itself attached at x=0 can resolve through the
+            # parent topology instead of returning that half-edge. The
+            # segment ri() is already independently checked by audit_neuron_ri.
+            parent_orientation = float(parent_section.orientation())
+            shared_orientation_half = (
+                parent_section.parentseg() is not None
+                and abs(parent_x - parent_orientation) <= 1e-12
+            )
+            if shared_orientation_half:
+                parent_actual_mohm = float(nearest_parent_segment.ri())
+                parent_half_readout = "segment_ri_at_section_orientation"
+            else:
+                parent_actual_mohm = float(h.ri(parent_x, sec=parent_section))
+                parent_half_readout = "h_ri_at_parent_endpoint"
             if parent_actual_mohm < 1e20:
                 parent_actual_factor = parent_actual_mohm * 1e6 / RI_OHM_M
                 parent_half_error_pct = relative_difference_pct(
@@ -580,6 +595,8 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
                 "child_section": section.name(),
                 "parent_section": parent_section.name(),
                 "parent_connection_x": parent_x,
+                "parent_section_orientation": parent_orientation,
+                "parent_half_readout": parent_half_readout,
                 "parent_nearest_segment_center_x": parent_center_x,
                 "parent_half_expected_factor_m_inv": parent_half_factor,
                 "parent_half_ri_reported_mohm": parent_actual_mohm,
@@ -636,6 +653,20 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
             and abs(connection["parent_connection_x"] - target_x)
                 <= BRANCHPOINT_X_TOLERANCE
         ]
+        # Import3D can keep one SWC branch in the same NEURON section as the
+        # parent-side continuation while representing the other branches as
+        # child sections. Count these in-section continuations as real outgoing
+        # branches instead of falsely reporting a missing child section.
+        same_section_continuations = []
+        for child_id in children:
+            child_map = node_maps[child_id]
+            if (
+                child_map["section_name"] == section_name
+                and abs(float(child_map["x"]) - float(target_x))
+                    > BRANCHPOINT_X_TOLERANCE
+            ):
+                same_section_continuations.append(child_id)
+        matched_branch_count = len(matching) + len(same_section_continuations)
         target_xyz = np.array([node.x_um, node.y_um, node.z_um])
         max_gap = max(
             (
@@ -657,10 +688,18 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
             "import3d_parent_section": section_name,
             "import3d_branchpoint_x": target_x,
             "neuron_child_section_count_at_site": len(matching),
-            "child_section_count_difference": len(matching) - len(children),
+            "neuron_same_section_continuation_count_at_site": len(
+                same_section_continuations
+            ),
+            "neuron_child_branch_count_at_site": matched_branch_count,
+            "child_section_count_difference": matched_branch_count - len(children),
             "max_parent_connection_to_swc_point_gap_um": max_gap,
             "child_section_names": ";".join(
-                c["child_section"] for c in matching
+                [c["child_section"] for c in matching]
+                + [
+                    f"{section_name}(same-section:{child_id})"
+                    for child_id in same_section_continuations
+                ]
             ),
         })
     non_soma_gaps = [
