@@ -65,3 +65,10 @@ NMO_68174 remains mixed:
 **Decision:** keep weighted source as an optional diagnostic, not a universal default. The AC result corroborates the transient source-placement finding on NMO_68175.
 
 Full report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv); comparison [CSV](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).
+
+
+## Raw AC worst-path localization — 21/11/2026
+
+All four raw AC configurations reach maximum exact/nearest-probe error at 3 kHz. NMO_68174's worst path remains basal q75→apical q90 at both meshes. NMO_68175's nearest-source worst path changes with mesh; weighted source placement moves the worst remaining path to basal q75→apical q90 at both mesh caps.
+
+The residual is concentrated in high-frequency apical transfers. Weighted source changes the spatial distribution of the remaining error, not merely its magnitude. See [worst-pair CSV](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).

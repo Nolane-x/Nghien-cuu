@@ -325,3 +325,8 @@ Source-placement audit [44910070325](https://github.com/Nolane-x/Nghien-cuu/acti
 ## Verified Segev AC source-placement checkpoint — 21/11/2026
 
 AC source placement [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4, Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4. Weighted adjacent-centre source superposition strongly improves NMO_68175 at both meshes, but is mixed/worse on NMO_68174 at the finer mesh. Keep it optional, not the default. See [AC report](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md), [summary](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv), and [comparison](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).
+
+
+## AC source-placement worst-path localization — 21/11/2026
+
+The four raw AC matrices peak at 3 kHz and are concentrated in apical transfer paths. NMO_68174's worst path remains basal q75→apical q90; NMO_68175's worst path changes with mesh, and weighted source moves the remaining worst path to basal q75→apical q90 at both meshes. See [AC worst-pair table](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).

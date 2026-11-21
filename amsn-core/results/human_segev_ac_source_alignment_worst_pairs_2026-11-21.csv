@@ -1,0 +1,9 @@
+morphology,mesh_cap_um,source_mode,probe_mode,worst_source,worst_probe,worst_source_swc_id,worst_probe_swc_id,worst_frequency_hz,max_complex_error_pct
+NMO_68174_cell1125,0.125,nearest_segment_centre,exact_swc_arc,basal_q75,apical_q90,1577,10532,3000,0.130598846264
+NMO_68174_cell1125,0.125,weighted_adjacent_centres,exact_swc_arc,basal_q75,apical_q90,1577,10532,3000,0.129611647129
+NMO_68174_cell1125,0.0625,nearest_segment_centre,exact_swc_arc,basal_q75,apical_q90,1577,10532,3000,0.13395509857
+NMO_68174_cell1125,0.0625,weighted_adjacent_centres,exact_swc_arc,basal_q75,apical_q90,1577,10532,3000,0.128276858335
+NMO_68175_cell1204,0.125,nearest_segment_centre,exact_swc_arc,basal_q75,apical_q50,3253,12177,3000,0.169222028178
+NMO_68175_cell1204,0.125,weighted_adjacent_centres,exact_swc_arc,basal_q75,apical_q90,3253,7074,3000,0.068719699208
+NMO_68175_cell1204,0.0625,nearest_segment_centre,exact_swc_arc,apical_q75,apical_q50,7640,12177,3000,0.0995118521562
+NMO_68175_cell1204,0.0625,weighted_adjacent_centres,exact_swc_arc,basal_q75,apical_q90,3253,7074,3000,0.0695684928678

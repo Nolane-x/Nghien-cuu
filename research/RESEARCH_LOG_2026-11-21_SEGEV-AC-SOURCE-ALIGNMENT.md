@@ -40,3 +40,10 @@ Weighted source alignment:
 - NMO_68174: small mixed benefit at 0.125 µm; at 0.0625 µm, median/P95 and interpolated-probe statistics worsen.
 
 Keep weighted source optional/diagnostic; it is not universally superior. Full report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md).
+
+
+## Raw AC worst-path localization — 21/11/2026
+
+All four configurations have maximum exact/nearest-probe complex error at 3 kHz. NMO_68174's worst path is consistently basal q75→apical q90. NMO_68175's nearest-source worst path is basal q75→apical q50 at 0.125 µm and apical q75→apical q50 at 0.0625 µm; the weighted source's worst remaining path becomes basal q75→apical q90 at both meshes.
+
+See [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](../research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md) and [worst-pair table](../results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).

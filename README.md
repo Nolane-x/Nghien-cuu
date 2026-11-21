@@ -303,3 +303,6 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Weighted adjacent-centre source placement strongly improves NMO_68175 at both meshes: maximum AC complex error falls from 0.169222% to 0.068720% (0.125 µm) and 0.099512% to 0.069568% (0.0625 µm) for exact/nearest probes. It also improves interpolated probe maxima.
 - NMO_68174 is mixed: modest benefit at 0.125 µm; at 0.0625 µm, median/P95 and interpolated-probe statistics worsen.
 - Decision: weighted source remains optional/diagnostic, not a universal default. Report: [HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_source_alignment_summary_2026-11-21.csv), comparison [CSV](amsn-core/results/human_segev_ac_source_alignment_comparison_2026-11-21.csv).
+
+
+- Raw AC worst-path inspection: all four configurations peak at 3 kHz. Cell1125's worst path stays basal q75→apical q90; cell1204's nearest-source worst path changes with mesh, while weighted-source worst residual moves to basal q75→apical q90. See [worst-pair CSV](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).

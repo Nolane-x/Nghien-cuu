@@ -74,3 +74,8 @@ Full report: [HUMAN_SEGEV_TRANSIENT_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md](amsn-c
 ## AC source-placement corroboration — 21/11/2026
 
 The AC source-placement experiment [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4, Core CI [44910754810](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754810) passed 4/4. It corroborates the transient result: weighted source placement strongly improves NMO_68175 at both meshes, while NMO_68174 remains mixed and worsens on interpolated probes at 0.0625 µm. Do not promote weighted source to a universal default. See [AC source report](HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md).
+
+
+## AC cross-domain source-placement localization — 21/11/2026
+
+The AC source-placement experiment [44910754764](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44910754764) passed 4/4. Across all four configurations, maximum errors occur at 3 kHz and are concentrated in apical transfer paths. Weighted source changes the worst remaining source/probe pair for NMO_68175, consistent with a path-dependent rather than global effect. See [AC source report](amsn-core/research/HUMAN_SEGEV_AC_SOURCE_ALIGNMENT_AUDIT_2026-11-21.md) and [worst-pair CSV](amsn-core/results/human_segev_ac_source_alignment_worst_pairs_2026-11-21.csv).

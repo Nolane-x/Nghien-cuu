@@ -80,3 +80,25 @@ Each artifact contains 1,080 raw rows and 135 grouped summary rows plus its job 
 ## 6. Next step
 
 Cross-domain testing now supports the same source-placement interpretation for NMO_68175 and the same caution for NMO_68174. Next, inspect the worst source/probe/frequency pairs in the raw AC CSV and identify whether the residual is concentrated around specific branch orders, short apical edges or source bracket widths. Retain source-mode alternatives and avoid tuning Ri/Rm/Cm/Eleak.
+
+
+## 7. Worst-path localization from the four raw AC matrices
+
+All four configurations reach their maximum exact/nearest-probe error at **3,000 Hz**. The dominant path is apical and changes with morphology/mesh:
+
+| Cell | Mesh µm | Nearest-source worst path | Baseline max | Weighted-source worst path | Weighted max |
+|---|---:|---|---:|---|---:|
+| NMO_68174 | 0.125 | basal q75 → apical q90 | 0.130599% | basal q75 → apical q90 | 0.129612% |
+| NMO_68174 | 0.0625 | basal q75 → apical q90 | 0.133955% | basal q75 → apical q90 | 0.128277% |
+| NMO_68175 | 0.125 | basal q75 → apical q50 | 0.169222% | basal q75 → apical q90 | 0.068720% |
+| NMO_68175 | 0.0625 | apical q75 → apical q50 | 0.099512% | basal q75 → apical q90 | 0.069568% |
+
+The worst source/probe identity changes for NMO_68175 under weighted source placement. The error therefore is not just a scalar reduction of the same path: the remaining residual is redistributed among dendritic pathways.
+
+For NMO_68174, the worst exact/nearest probe path remains basal q75→apical q90 at both meshes. For cell1204 the worst baseline path changes from basal q75→apical q50 at 0.125 µm to apical q75→apical q50 at 0.0625 µm; under weighted source, the worst remaining path at both meshes becomes basal q75→apical q90.
+
+Across all four matrices the error grows sharply toward 3 kHz. For example, cell1204 at 0.125 µm has nearest-source exact-probe median complex error 0.000809% at 0.1 Hz and 0.057739% at 3 kHz. This is consistent with earlier probe-coordinate audits that found the largest interpolation sensitivity at the high-frequency end.
+
+Raw source bracket widths are approximately the mesh cap. Source weights vary by source/cell: at 0.125 µm, cell1125's basal/apical q75 brackets are strongly asymmetric (0.0115/0.9885 and 0.9745/0.0255); cell1204's basal q75 bracket is 0.3531/0.6469. This confirms that the same weighted rule redistributes source current differently depending on the source's location inside its local segment bracket.
+
+**Interpretation:** the residual is concentrated in high-frequency apical transfer paths, and weighted source placement can reduce the dominant cell1204 paths while moving the worst remaining path to a different probe. Use a source-/path-aware diagnostic rather than one universal source rule.
