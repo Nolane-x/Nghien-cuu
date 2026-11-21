@@ -14,3 +14,8 @@ Added exact SWC node/type/soma/cable tests and parameterized the passive frequen
 
 ## Guardrails
 Do not combine NMO_290988 passive parameters with FCI reduced active channels or FCI synaptic values. Keep NMO_290988, Segev1125, Segev1204, FCI-reduced and original Eyal2018 as separate named configurations. Numerical passive agreement is not biological validation.
+
+
+## Preliminary multi-morphology AC finding
+
+Workflow 44885009077: four jobs passed. NMO_68174 maximum transfer-complex error ~0.365% at 0.25 µm and ~0.131% at 0.125 µm. NMO_68175 remains ~5.7% max at both meshes; input-complex discrepancy is ~0.94% at 0.1 Hz. This is a persistent morphology/import/compartment-mapping discrepancy requiring area, soma/wire, section and site mapping diagnostics. Raw CSV artifacts are linked in amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md.

@@ -257,3 +257,8 @@ Read `HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md` before continuing. Two direct N
 ## Latest dated checkpoint — FCI derivative / Segev morphologies (21/11/2026)
 
 Continue from [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md). The commit adds two direct NeuroMorpho human L2/3 morphologies, CC BY 4.0 attribution, parser/soma/cable tests, an FCI read-only provenance/parameter audit, and a four-job passive AC matrix. Do not claim results until that workflow passes. FCI is a reduced derivative, not original Eyal 2018; no FCI code is copied.
+
+
+## Segev morphology investigation — 21/11/2026
+
+The four-job AC matrix [44885009077](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) passed but shows NMO_68175 residuals (~0.94% low-frequency input, ~5.7% transfer maximum) that do not reduce on mesh refinement. Do not claim multi-cell validation is complete. Follow [HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md) and compare geometry/area/import mapping before changing parameters.

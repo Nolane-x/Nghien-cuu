@@ -194,3 +194,8 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [NMO_68174](amsn-core/data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc) and [NMO_68175](amsn-core/data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc): official NeuroMorpho CNG morphologies, CC BY 4.0, incomplete axons.
 - [Four-job 0.25/0.125 µm validation](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) is running; results not yet accepted.
 - New handoff: [HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md](HANDOFF_2026-11-21_FCI-EYAL-DERIVATIVE.md).
+
+
+### Segev multi-morphology check — preliminary
+
+The four-job matrix [44885009077](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) passed. NMO_68174 improves from ~0.365% to ~0.131% maximum transfer-complex error from 0.25 to 0.125 µm. NMO_68175 remains around 5.7% and has ~0.94% input discrepancy at 0.1 Hz; this is under investigation, not accepted as cross-simulator agreement. See [preliminary report](amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md) and [handoff](HANDOFF_2026-11-21_SEGEV-MORPHOLOGY-VALIDATION.md).

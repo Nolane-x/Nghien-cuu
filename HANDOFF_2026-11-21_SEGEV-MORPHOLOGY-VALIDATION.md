@@ -1,0 +1,41 @@
+# Handoff — Segev multi-morphology passive validation investigation
+
+**Date:** 2026-11-21 (Asia/Bangkok)  
+**Repository:** https://github.com/Nolane-x/Nghien-cuu  
+**Main head at creation:** f22bdd7fbe58efcec6ae5e5fec6d7a87659f2374  
+**Status:** morphology fixtures/tests and four-job AC workflow passed; one cell shows unresolved persistent numerical discrepancy.
+
+## Read first
+1. AGENTS.md
+2. HANDOFF.md
+3. This handoff
+4. amsn-core/research/FCI_EYAL_DERIVATIVE_SOURCE_AUDIT_2026-11-21.md
+5. amsn-core/research/HUMAN_MULTI_MORPHOLOGY_AUDIT_2026-11-21.md
+6. amsn-core/research/references/FCI_EYAL_SOURCE_MANIFEST_2026-11-21.json
+7. research/AMSN_RESEARCH_DOSSIER.md
+
+## Data and code
+- NMO_68174 / cell1125: amsn-core/data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+- NMO_68175 / cell1204: amsn-core/data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+- Test file: amsn-core/tests/test_segev_reference_morphologies.py
+- Parameterized audit: amsn-core/examples/human_passive_frequency_response_audit.py
+- Workflow: .github/workflows/amsn-segev-multi-morphology-frequency-audit.yml
+
+Both SWCs are official NeuroMorpho CNG data under CC BY 4.0, with source metadata and attribution recorded in the data folder README and JSON manifest. Axons are incomplete.
+
+## Matrix result
+Workflow [44885009077](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44885009077) passed all four jobs. Each run executes the full test suite and 120 NEURON/AMSN source–probe–frequency comparisons:
+- NMO_68174 0.25 µm max transfer-complex error ~0.365%.
+- NMO_68174 0.125 µm max ~0.131%.
+- NMO_68175 0.25 and 0.125 µm remain ~5.7% maximum; input-complex error is already ~0.94% at 0.1 Hz.
+Do not combine these statistics or mark both morphologies validated just because CI is green. Read the preliminary report and raw artifacts.
+
+## Next required work
+1. Compare total area and axial geometry between NEURON and AMSN.
+2. Inspect soma/axon junction, wire normalization, node-to-segment mapping and section/segment counts.
+3. Check low-frequency input impedance first; it is already discrepant for NMO_68175.
+4. Fix only a proven conversion/import issue. Do not fit/change passive parameters to force equivalence.
+5. Repeat the 0.25/0.125 µm matrix and document whether the residual is resolved.
+
+## FCI provenance boundary
+FCI `human/eyal` is a reduced derivative, not the original Eyal 2018 ModelDB archive. FCI code was not copied. Its passive, Na/Kv and synaptic parameters must remain in a separate named reproduction model. ModelDB 238347 original archive remains not downloaded.
