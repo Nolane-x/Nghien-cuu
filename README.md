@@ -313,3 +313,12 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 A third morphology is now included in the source-placement replication matrix: NMO_290988 / 1094_Mohan_etal_2015 (8,903 SWC records). It is a separate NeuroMorpho.Org/DeKock neuron record with soma and basal/apical dendrites, no axon, moderate dendritic completeness and recorded mesiotemporal sclerosis context. It is not a healthy-control sample.
 
 Workflow: [AMSN Human Morphology Source-Placement Replication](https://github.com/Nolane-x/Nghien-cuu/actions/workflows/amsn-human-morphology-source-alignment.yml). The six jobs cover three morphology records × two mesh caps, run the full AMSN test suite, check all source/probe mappings, then run transient and AC source-placement audits.
+
+
+### Three-morphology source-placement replication — verified 21/11/2026
+
+- Workflow [44914135217](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44914135217) passed 6/6. Every job ran the complete 81-test AMSN suite and validated Import3D source/probe mapping.
+- Three morphology records × two NEURON mesh caps generated 108,180 transient trace rows, 360 transient summaries, 6,480 AC raw rows and 810 AC summaries. Total 10 pA current was conserved to within 1.735e-18 nA.
+- NMO_68175 benefits consistently. NMO_68174 remains mixed. NMO_290988 has very large transient gains from weighted source, but AC worsens slightly at the finer mesh.
+- Report: [HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md](amsn-core/research/HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md); data: [summary CSV](amsn-core/results/human_morphology_source_alignment_summary_2026-11-21.csv).
+- Decision: weighted source remains optional/diagnostic, not a universal default.

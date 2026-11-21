@@ -45,3 +45,16 @@ The exact SWC source remains the canonical reference. Weighted source is an opti
 ## Next
 
 After the six jobs complete, compare source-mode effects on the third cell against the two Segev fixtures. If the effect is morphology-dependent, retain per-cell diagnostics and move to a source-aware reduced fine-tree operator rather than introducing a global source-placement switch.
+
+
+## Completed three-morphology source-placement replication — 21/11/2026
+
+Workflow [44914135217](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44914135217) passed 6/6 jobs. The matrix includes NMO_68174, NMO_68175 and NMO_290988 / Mohan 2015 at mesh caps 0.125 and 0.0625 µm.
+
+Every job passed the full 81-test suite, verified SWC counts and Import3D source/probe mapping, ran transient and AC source-placement audits, and uploaded raw artifacts. Aggregate data: 108,180 transient trace rows, 360 transient summaries, 6,480 AC transfer rows and 810 AC summaries. Maximum total-current conservation error: 1.735e-18 nA.
+
+Weighted source is strongly beneficial for NMO_68175 in both domains and for NMO_290988 transient. However, NMO_290988 AC improves at 0.125 µm but worsens slightly at 0.0625 µm. NMO_68174 remains mixed.
+
+Decision: exact SWC stays canonical; weighted source stays optional/diagnostic. No automatic source-offset threshold is justified from three morphologies.
+
+Full report: [HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md](amsn-core/research/HUMAN_MORPHOLOGY_SOURCE_ALIGNMENT_REPLICATION_2026-11-21.md); summary [CSV](amsn-core/results/human_morphology_source_alignment_summary_2026-11-21.csv).
