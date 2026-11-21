@@ -1,0 +1,80 @@
+name: AMSN Segev human L2/3 multi-morphology passive impedance audit
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/tests/test_segev_reference_morphologies.py"
+      - "amsn-core/examples/human_passive_frequency_response_audit.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-segev-multi-morphology-frequency-audit.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "amsn-core/data/human/segev/**"
+      - "amsn-core/tests/test_segev_reference_morphologies.py"
+      - "amsn-core/examples/human_passive_frequency_response_audit.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/pyproject.toml"
+      - ".github/workflows/amsn-segev-multi-morphology-frequency-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  segev-frequency:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_um: "0.25"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            mesh_um: "0.125"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_um: "0.25"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            mesh_um: "0.125"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_um }}
+      AMSN_FREQUENCY_OUTPUT: ${{ matrix.morphology_label }}-passive-frequency-${{ matrix.mesh_um }}um.csv
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run full core tests and morphology fixtures
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify morphology file exists
+        run: test -s "${{ matrix.morphology_path }}"
+        working-directory: amsn-core
+      - name: Run passive complex impedance comparison
+        run: python examples/human_passive_frequency_response_audit.py
+        working-directory: amsn-core
+      - name: Upload raw measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_um }}um
+          path: amsn-core/${{ matrix.morphology_label }}-passive-frequency-${{ matrix.mesh_um }}um.csv
+          if-no-files-found: ignore

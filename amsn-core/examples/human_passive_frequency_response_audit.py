@@ -31,7 +31,13 @@ FREQUENCIES_HZ = (0.1, 1.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0)
 OUTPUT = Path(os.environ.get("AMSN_FREQUENCY_OUTPUT", "human-passive-frequency-response.csv"))
 
 
+MORPHOLOGY_PATH = os.environ.get("AMSN_MORPHOLOGY_PATH")
+MORPHOLOGY_LABEL = os.environ.get("AMSN_MORPHOLOGY_LABEL", "nmo_290988")
+
+
 def configure_reference() -> None:
+    if MORPHOLOGY_PATH:
+        reference.DATA = Path(MORPHOLOGY_PATH)
     reference.MAX_NEURON_SEGMENT_UM = NEURON_MAX_SEGMENT_UM
     reference.RI_OHM_M = RI_OHM_M
     reference.RM_OHM_M2 = RM_OHM_M2
@@ -95,7 +101,7 @@ def main() -> None:
     with OUTPUT.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.writer(handle)
         writer.writerow([
-            "source", "source_swc_id", "probe", "probe_swc_id", "frequency_hz", "neuron_max_segment_um",
+            "morphology_label", "source", "source_swc_id", "probe", "probe_swc_id", "frequency_hz", "neuron_max_segment_um",
             "neuron_input_mohm", "neuron_input_phase_deg",
             "amsn_input_mohm", "amsn_input_phase_deg",
             "input_magnitude_error_pct", "input_phase_error_deg",
@@ -175,7 +181,7 @@ def main() -> None:
                     row_count += 1
 
                     writer.writerow([
-                        source_name, source_id, probe_name, probe_id,
+                        MORPHOLOGY_LABEL, source_name, source_id, probe_name, probe_id,
                         f"{frequency_hz:.9g}",
                         f"{NEURON_MAX_SEGMENT_UM:.9g}",
                         f"{abs(neuron_input) / 1e6:.12g}",
@@ -202,7 +208,7 @@ def main() -> None:
         raise RuntimeError("frequency-response CSV was not written")
 
     print(f"NEURON={neuron.__version__}")
-    print(f"morphology=NMO_290988; SWC_records={len(morphology.nodes)}")
+    print(f"morphology={MORPHOLOGY_LABEL}; path={reference.DATA}; SWC_records={len(morphology.nodes)}")
     print(
         f"NEURON_sections={len(sections)}; "
         f"NEURON_segments={sum(section.nseg for section in sections)}; "
