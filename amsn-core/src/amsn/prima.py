@@ -113,6 +113,20 @@ def _apply_passive_conductance(tree: CableTree, values: np.ndarray) -> np.ndarra
     return result
 
 
+
+
+def _solve_dc_real(tree: CableTree, current_a: np.ndarray) -> np.ndarray:
+    """Use the real DC solution and reject any unexpected imaginary residue."""
+    response = tree.solve_passive_frequency_response(0.0, current_a)
+    real_scale = max(float(np.linalg.norm(response.real)), np.finfo(float).tiny)
+    imaginary_norm = float(np.linalg.norm(response.imag))
+    if imaginary_norm > 1e-13 * real_scale:
+        raise FloatingPointError(
+            "zero-frequency Hines solve returned a material imaginary component"
+        )
+    return response.real
+
+
 def _orthogonalize_block(
     candidates: np.ndarray,
     basis_columns: list[np.ndarray],
@@ -212,9 +226,7 @@ def prima_reduce_passive_cable(
     for column, port in enumerate(ports):
         unit_current = np.zeros(n, dtype=float)
         unit_current[port] = 1.0
-        starting_block[:, column] = tree.solve_passive_frequency_response(
-            0.0, unit_current
-        )
+        starting_block[:, column] = _solve_dc_real(tree, unit_current)
 
     block = _orthogonalize_block(
         starting_block, basis_columns, tolerance, order_cap
@@ -227,7 +239,7 @@ def prima_reduce_passive_cable(
         candidates = np.empty_like(block)
         for column in range(block.shape[1]):
             rhs = -tree.capacitance_f * block[:, column]
-            candidates[:, column] = tree.solve_passive_frequency_response(0.0, rhs)
+            candidates[:, column] = _solve_dc_real(tree, rhs)
         following = _orthogonalize_block(
             candidates, basis_columns, tolerance, order_cap
         )

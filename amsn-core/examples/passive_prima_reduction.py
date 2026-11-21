@@ -31,6 +31,7 @@ def main() -> None:
     reduced = prima_reduce_passive_cable(tree, ports, max_order=18)
     print(f"full_order={tree.n_compartments} reduced_order={reduced.order} ports={len(ports)}")
     print("frequency_hz,impedance_frobenius_error_pct")
+    errors = []
     for frequency_hz in (0.0, 1.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0):
         full = np.empty((len(ports), len(ports)), dtype=np.complex128)
         for column, source in enumerate(ports):
@@ -43,6 +44,12 @@ def main() -> None:
         print(f"{frequency_hz:g},{error_pct:.9g}")
         if not np.isfinite(error_pct):
             raise RuntimeError("non-finite PRIMA frequency-response error")
+        errors.append((frequency_hz, error_pct))
+    high_frequency_error = dict(errors)[3000.0]
+    if high_frequency_error > 0.05:
+        raise RuntimeError(
+            f"3 kHz PRIMA error {high_frequency_error:.6g}% exceeds the 0.05% smoke limit"
+        )
 
     # Check one finite-duration pulse using the projected backward-Euler model.
     state = np.zeros(reduced.order)
