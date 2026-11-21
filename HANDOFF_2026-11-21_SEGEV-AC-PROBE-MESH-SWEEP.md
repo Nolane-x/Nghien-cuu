@@ -62,3 +62,21 @@ All six jobs must pass the complete 81-test AMSN suite, verify NEURON 9.0.2, pro
 ## Next step after this sweep
 
 If interpolation effects reduce consistently with mesh refinement, quantify their continuum limit and determine whether any matched-support interpolation should be adopted for specific probe classes only. If effects remain site-specific or non-monotone, move to explicit matched-support geometry at branchpoints and section junctions, and keep exact-SWC as the documented baseline.
+
+
+## Verified results — six-mesh matrix complete (21/11/2026)
+
+**Status:** [workflow 44902130621](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130621) passed 6/6 jobs; [Core CI 44902130609](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130609) passed 4/4 jobs.
+
+Each of the six jobs ran all 81 AMSN tests, verified NEURON 9.0.2, produced 120 rows and uploaded a raw CSV/log. Total: 720 rows. Exact-SWC and nearest-centre probe impedances were identical at exported precision in all 720 rows.
+
+The maximum exact-SWC-to-complex-interpolation readout change falls from 0.213915% to 0.041671% for NMO_68174, and from 0.209515% to 0.042864% for NMO_68175, as the mesh cap goes from 0.25 to 0.0625 µm. The maximum occurs at 3 kHz for all six runs.
+
+The interpolated-vs-exact cross-simulator error is not uniformly better:
+- NMO_68174 at 0.0625 µm: median/p95/max improves 0.001221/0.053004/0.133955% → 0.000253/0.033139/0.132166%.
+- NMO_68175 at 0.0625 µm: median/p95/max worsens 0.003012/0.059626/0.099512% → 0.003131/0.066941/0.104835%.
+- Across the intermediate 0.125 µm mesh, NMO_68174 improved 26 rows and worsened 70; NMO_68175 improved 64 and worsened 32. At 0.25 µm, both cells improved in the aggregate, but subsets still worsened.
+
+**Decision:** preserve exact-SWC readout as the canonical cross-simulator baseline. Keep complex interpolation diagnostic-only; do not change membrane parameters or claim biological validation.
+
+Detailed results: [mesh report](amsn-core/research/HUMAN_SEGEV_AC_PROBE_MESH_SWEEP_2026-11-21.md), [summary CSV](amsn-core/results/human_segev_ac_probe_mesh_sweep_summary_2026-11-21.csv). Raw artifact IDs: 14706705700, 14706511545, 14706785100, 14705604235, 14705544460, 14706168324.

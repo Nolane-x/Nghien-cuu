@@ -221,7 +221,9 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Raw artifacts: [68174](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705865103), [68175](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44899442076/artifacts/14705880425).
 - Next: [Segev AC probe-coordinate handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-COORDINATE.md) — test exact SWC, nearest segment centre and complex-interpolated readouts with the exact SWC source fixed.
 
-\n\n### Segev AC probe-coordinate audit — verified 21/11/2026
+
+
+### Segev AC probe-coordinate audit — verified 21/11/2026
 
 - Probe AC workflow [44901688035](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901688035) passed 2/2 jobs on NEURON 9.0.2 (120 rows per cell); Core CI [44901673896](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44901673896) passed.
 - Exact-SWC and nearest segment-centre Impedance.transfer() outputs were identical at exported precision. Complex-linear interpolation shifted transfer impedance by up to 0.057785% (NMO_68174 apical q90) and 0.095872% (NMO_68175 apical q50).
@@ -230,9 +232,11 @@ The NMO_68175 mismatch was traced to the immediately branching axon attachment a
 - Next: repeat probe audit at three mesh caps; see [probe mesh sweep handoff](HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md).
 
 
-### Segev AC probe-coordinate mesh sweep — running 21/11/2026
 
-- The 0.125 µm audit is verified: exact-SWC and nearest-centre readouts are identical at exported precision, while complex interpolation changes cross-simulator residuals in a source-/probe-/cell-dependent manner.
-- The follow-up six-job mesh sweep [workflow 44902130621](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130621) tests both Segev morphologies at 0.25, 0.125 and 0.0625 µm.
-- The CSVs now include the mesh cap per row. Do not choose a default interpolation rule until the 720 rows are inspected and the error trend is evaluated across all mesh levels.
-- Handoff: [HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md](HANDOFF_2026-11-21_SEGEV-AC-PROBE-MESH-SWEEP.md).
+
+### Segev AC probe-coordinate mesh sweep — verified 21/11/2026
+
+- Six-job matrix [44902130621](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130621) passed 6/6; Core CI [44902130609](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44902130609) passed 4/4. All 720 probe rows were produced and checked.
+- Exact-SWC and nearest-centre readouts were identical at exported precision for every row. The largest interpolation-vs-exact probe shift shrank from 0.213915% to 0.041671% for cell1125 and from 0.209515% to 0.042864% for cell1204 between 0.25 and 0.0625 µm.
+- Interpolation does not consistently improve the AMSN–NEURON residual. At 0.0625 µm it improves all three aggregate statistics for NMO_68174, but worsens median/p95/max for NMO_68175. Exact-SWC remains the canonical readout; complex interpolation remains diagnostic-only.
+- Report: [HUMAN_SEGEV_AC_PROBE_MESH_SWEEP_2026-11-21.md](amsn-core/research/HUMAN_SEGEV_AC_PROBE_MESH_SWEEP_2026-11-21.md); summary [CSV](amsn-core/results/human_segev_ac_probe_mesh_sweep_summary_2026-11-21.csv).
