@@ -21,6 +21,7 @@ from __future__ import annotations
 import csv
 import os
 from math import ceil
+import os
 from pathlib import Path
 
 import numpy as np
@@ -109,7 +110,79 @@ def build_sites(morphology, reader, sections):
     return injections, probes, mapped
 
 
+
+def align_source_sections(morphology, reader, sections, injections):
+    """Refine only dendritic source sections so an IClamp segment centre is
+    within a requested distance of the exact Import3D SWC arc.
+    """
+    tolerance_um = float(os.environ.get(
+        "AMSN_SOURCE_ALIGNMENT_TOLERANCE_UM", "0"
+    ))
+    max_nseg = int(os.environ.get(
+        "AMSN_SOURCE_ALIGNMENT_MAX_NSEG", "50001"
+    ))
+    if not np.isfinite(tolerance_um) or tolerance_um < 0:
+        raise ValueError("source alignment tolerance must be finite and nonnegative")
+    if max_nseg < 1:
+        raise ValueError("source alignment maximum nseg must be positive")
+    if tolerance_um == 0:
+        return [], injections, None, None, None
+
+    _, _, initial_sites = build_sites(morphology, reader, sections)
+    changes = []
+    for source_name, node_id in injections:
+        if source_name == "soma":
+            continue
+        site = initial_sites[node_id]
+        section = site["section"]
+        target_x = float(site["normalized_x"])
+        current_nseg = int(section.nseg)
+        start_nseg = current_nseg if current_nseg % 2 else current_nseg + 1
+        if start_nseg > max_nseg:
+            raise RuntimeError(
+                f"source section {section.name()} already has {current_nseg} "
+                f"segments, above alignment maximum {max_nseg}"
+            )
+
+        candidates = np.arange(start_nseg, max_nseg + 1, 2, dtype=np.int64)
+        nearest_index = np.rint(candidates * target_x - 0.5).astype(np.int64)
+        nearest_index = np.clip(nearest_index, 0, candidates - 1)
+        nearest_centre_x = (nearest_index + 0.5) / candidates
+        offsets_um = np.abs(nearest_centre_x - target_x) * float(section.L)
+        within_tolerance = np.flatnonzero(offsets_um <= tolerance_um)
+        if not within_tolerance.size:
+            best = int(np.argmin(offsets_um))
+            raise RuntimeError(
+                f"could not align {source_name} source within {tolerance_um:g} um; "
+                f"best offset={offsets_um[best]:.12g} um at nseg={candidates[best]}"
+            )
+        chosen = int(within_tolerance[0])
+        chosen_nseg = int(candidates[chosen])
+        chosen_offset_um = float(offsets_um[chosen])
+
+        section.nseg = chosen_nseg
+        for segment in section:
+            _ = segment.area()
+        changes.append({
+            "source": source_name,
+            "swc_node_id": int(node_id),
+            "section": section.name(),
+            "target_x": target_x,
+            "previous_nseg": current_nseg,
+            "aligned_nseg": chosen_nseg,
+            "source_centre_offset_um": chosen_offset_um,
+            "tolerance_um": tolerance_um,
+        })
+
+    h.define_shape()
+    aligned_injections, aligned_probes, aligned_sites = build_sites(
+        morphology, reader, sections
+    )
+    return changes, aligned_injections, aligned_probes, aligned_sites, tolerance_um
+
+
 def read_probe_voltage(site, interpolated: bool):
+
     if not interpolated:
         return float(site["nearest_segment"].v)
     lower = float(site["lower_segment"].v)
@@ -198,6 +271,15 @@ def main():
     morphology = SWCMorphology.from_file(reference.DATA)
     reader, sections = reference.import_swc_with_neuron()
     injections, probes, sites = build_sites(morphology, reader, sections)
+    (
+        alignment_changes,
+        injections,
+        probes,
+        aligned_sites,
+        alignment_tolerance_um,
+    ) = align_source_sections(morphology, reader, sections, injections)
+    if aligned_sites is not None:
+        sites = aligned_sites
     fine_tree, sectioned, fine_results, sectioned_results = solve_amsn_all(
         morphology, injections, probes
     )
@@ -228,6 +310,17 @@ def main():
         f"# NEURON sections={len(sections)}; segments={segment_count}; "
         f"max_segment_length_um={NEURON_MAX_SEGMENT_UM:g}"
     )
+    print(
+        f"# source_alignment_tolerance_um="
+        f"{alignment_tolerance_um if alignment_tolerance_um is not None else 0:g}"
+    )
+    for change in alignment_changes:
+        print(
+            f"# source_alignment={change['source']}; swc_id={change['swc_node_id']}; "
+            f"section={change['section']}; target_x={change['target_x']:.12g}; "
+            f"nseg={change['previous_nseg']}->{change['aligned_nseg']}; "
+            f"centre_offset_um={change['source_centre_offset_um']:.12g}"
+        )
     print(
         f"# AMSN fine compartments={fine_tree.n_compartments}; "
         f"AMSN sectioned compartments={sectioned.tree.n_compartments}"
@@ -265,6 +358,9 @@ def main():
         "sectioned_vs_fine_ratio_error_pct,"
         "probe_nearest_centre_offset_um,"
         "probe_geometry_offset_um,"
+        "source_nearest_centre_offset_um,"
+        "source_geometry_offset_um,"
+        "source_section_nseg,"
         "steady_residual_mV"
     )
 
@@ -332,7 +428,10 @@ def main():
                 f"{fine_ratio:.12g},{sectioned_ratio:.12g},"
                 f"{nearest_error:.12g},{interp_error:.12g},{sectioned_error:.12g},"
                 f"{site['nearest_centre_offset_um']:.9g},"
-                f"{site['geometry_offset_um']:.9g},{residual:.9g}"
+                f"{site['geometry_offset_um']:.9g},"
+                f"{source_site['nearest_centre_offset_um']:.9g},"
+                f"{source_site['geometry_offset_um']:.9g},"
+                f"{source_site['section'].nseg},{residual:.9g}"
             )
 
     max_residual = max(all_residuals, default=0.0)
