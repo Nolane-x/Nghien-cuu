@@ -540,6 +540,16 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
             if np.isfinite(child_actual_factor) else float("nan")
         )
 
+        # NeuroMorpho CNG's three-point soma is represented in NEURON
+        # as soma[0]. The eight Import3D wire stems are connected to its
+        # electrical centre (x=0.5), while their first pt3d endpoint remains
+        # at the original SWC stem coordinate. This is a documented topology
+        # convention, not a geometric coincidence.
+        parent_is_soma_wire_attachment = (
+            parent_section.name() == "soma[0]"
+            and abs(parent_x - 0.5) <= 1e-10
+            and abs(child_x) <= 1e-10
+        )
         parent_is_soma_sphere = bool(parent_profile["one_point_soma"])
         parent_at_endpoint = (
             abs(parent_x) <= 1e-12 or abs(parent_x - 1.0) <= 1e-12
@@ -574,7 +584,7 @@ def audit_branchpoint_connections(morphology, node_maps, sections, profiles):
                 "parent_half_ri_error_pct": parent_half_error_pct,
             })
 
-        if parent_is_soma_sphere:
+        if parent_is_soma_sphere or parent_is_soma_wire_attachment:
             connection_kind = "soma_wire_attachment_zero_resistance_link"
         elif parent_at_endpoint:
             connection_kind = "section_endpoint_junction"
