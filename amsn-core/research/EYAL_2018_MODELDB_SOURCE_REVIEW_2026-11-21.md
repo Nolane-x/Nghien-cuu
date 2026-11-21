@@ -49,3 +49,8 @@ Then implement a separate *reference reproduction harness* in AMSN. Start with o
 The passive frequency-domain phasor solver has been compared with NEURON 9.0.2 on the NMO_290988 morphology at 0.5, 0.25, 0.125 and 0.0625 µm segment caps, with 120 source/probe/frequency rows per mesh. Four-mesh aggregates and raw artifact links are in [the passive frequency-domain audit](HUMAN_PASSIVE_FREQUENCY_RESPONSE_AUDIT_2026-11-21.md).
 
 The complete AMSN Core CI on commit `ccde2542c62843ac2a7f3c41efe2206e16eee543` passed 4/4 jobs ([run 44881036875](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44881036875)), including Python 3.12/3.13 tests and NEURON cross-validation, transient pulse/step, AMPA-like conductance, Exp2Syn timing and single-compartment checks.
+
+
+## Archive retrieval attempt update
+
+A browser attempt checked the official legacy download flow on 2026-11-21. The page `https://senselab.med.yale.edu/modeldb/enterCode.cshtml?model=238347` repeatedly timed out, so no access-code form was shown and no code was submitted. The official ZIP URL from the ModelDB README was confirmed as `http://senselab.med.yale.edu/modeldb/data/238347/EyalEtAl2018.zip`, but direct retrieval also timed out and no complete ZIP was received. The current ModelDB entry page itself loads, but this does not expose the protected archive contents. The linked public GitHub repository tree has exactly one `readme.html` file; a browser automation summary suggested the code was on GitHub, but the tree inspection disproves that statement. Treat archive status as **not downloaded / not integrated**.

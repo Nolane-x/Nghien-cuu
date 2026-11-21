@@ -175,3 +175,6 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - Core CI trên baseline `ccde254` đã xanh 4/4 job: [run 44881036875](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44881036875).
 
 - AC solver additional safeguard: 50 Hz fitted sinusoidal transient response is now checked against the phasor solution in the core unit suite (pending the latest CI).
+
+- AC-to-transient invariant is now validated: 50 Hz sinusoidal phasor test passed; latest Core CI [44882886045](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886045) green 4/4, 75 tests on Python 3.12 and 3.13.
+- Eyal 2018 ModelDB archive: official URL confirmed, but Yale legacy domain timed out; linked GitHub repo tree contains README only. No source archive downloaded or integrated.

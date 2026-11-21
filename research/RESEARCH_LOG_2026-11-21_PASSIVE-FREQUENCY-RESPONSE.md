@@ -63,3 +63,11 @@ A dedicated NEURON 9.0.2 workflow was added to test a 0.0625 µm maximum segment
 - Worst pair: apical q75 → apical q90 at 3 kHz; source and probe nearest-centre offsets 0.005167/0.002339 µm.
 - Versus 0.5 µm the transfer complex median/p95/max improve by ~20.42×/~6.32×/~6.93×. Aggregate median and p95 decrease at every sampled frequency through all four meshes.
 - Raw artifact 14698056883, workflow 44880843864.
+
+## AC-to-transient phasor invariant and latest Core CI
+
+Added `test_frequency_phasor_matches_time_domain_sinusoidal_steady_state`: 50 Hz cosine current on the branch compartment; fit the final five cycles from the time-domain solver; account for the left-edge input-sampling offset; compare fitted complex response with the continuous phasor solver within 0.2%. Core CI [44882886045](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886045) passed 4/4 jobs on commit d85f8d9; Python 3.12 and 3.13 each passed 75 tests; both NEURON cross-validation jobs passed.
+
+## Eyal 2018 source retrieval
+
+The official ModelDB 238347 archive URL is documented by the ModelDB-linked GitHub README as `http://senselab.med.yale.edu/modeldb/data/238347/EyalEtAl2018.zip` (stated 133 MB). The legacy Yale/SenseLab URL timed out in both page and archive attempts. The GitHub repository tree contains only `readme.html`; it is not the model code. No archive was received or integrated. See `amsn-core/research/EYAL_2018_MODELDB_SOURCE_REVIEW_2026-11-21.md`.

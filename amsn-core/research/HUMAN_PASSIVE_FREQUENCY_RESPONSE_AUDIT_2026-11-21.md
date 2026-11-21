@@ -107,4 +107,9 @@ A separate source review now documents ModelDB 238347 (Eyal et al. 2018), an app
 
 ## Independent AC-to-transient check
 
-The AMSN unit suite now includes an independent 50 Hz sinusoidal steady-state comparison between `solve_passive_frequency_response()` and the time-domain passive solver. It fits the final five cycles of the simulated waveform to estimate complex amplitude/phase, accounting for the time integrator's left-edge forcing convention. This guards the phasor sign/time convention in addition to dense-matrix and zero-frequency checks. Validation is pending the Core CI run for this test addition.
+The AMSN unit suite now includes an independent 50 Hz sinusoidal steady-state comparison between `solve_passive_frequency_response()` and the time-domain passive solver. It fits the final five cycles of the simulated waveform to estimate complex amplitude/phase, accounting for the time integrator's left-edge forcing convention. This guards the phasor sign/time convention in addition to dense-matrix and zero-frequency checks. The test passed on Python 3.12 and 3.13 in Core CI run [44882886045](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886045): 75/75 tests in each Python version; all 4 Core CI jobs succeeded.
+
+
+## Latest complete CI snapshot
+
+Commit `d85f8d971a29df63c778bbe782c2860f62b12146` passed Core CI run [44882886045](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886045), 4/4 jobs. Python 3.12 and 3.13 each passed 75 tests; NEURON cross-validation passed on both versions, including passive, transient pulse/step, AMPA-like conductance, Exp2Syn event timing and matched single-compartment comparisons. The AC matrix run [44882886072](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886072) and 0.0625 µm refinement [44882886098](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44882886098) also passed.
