@@ -58,6 +58,9 @@ def test_multi_point_soma_does_not_receive_a_second_spherical_area():
             length**2 + (node.radius_um-parent.radius_um)**2
         )
     assert morphology.summary().estimated_membrane_area_um2 == pytest.approx(expected)
+    info = morphology.detect_neuromorpho_three_point_soma()
+    assert info is not None
+    assert info.wire_attachment_node_ids == ()  # lone terminal neurite is not a wire
     with pytest.raises(ValueError, match="multi-point soma"):
         morphology.to_cable_tree(root_soma_area_um2=314.0)
     cable = morphology.to_cable_tree()

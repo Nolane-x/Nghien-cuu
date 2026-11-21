@@ -137,11 +137,11 @@ class SWCMorphology:
         The three soma points must be the first three SWC rows; the two
         non-root points must be direct root children without children of their
         own; their diameters must match; and the sum of their distances from
-        the root must be within 1% of the soma diameter. Every first neurite node directly attached to one of the three
-        soma-outline points is treated as a zero-resistance soma attachment.
-        This includes immediately branching stems: Import3D excludes the
-        soma-centre-to-first-neurite edge even when the neurite branches at
-        that first node. Later edges retain their original geometry. All
+        the root must be within 1% of the soma diameter.
+        Long unbranched neurite roots and first-point branch junctions
+        attached to this soma are treated as zero-resistance attachments.
+        This includes immediately branching stems, but not a one-point
+        terminal neurite. Later edges retain their original geometry. All
         source SWC data remain unchanged.
         """
         if not (0.0 < length_tolerance < 1.0):
@@ -191,17 +191,28 @@ class SWCMorphology:
                 if child.neurite_type == 1:
                     continue
 
-                # The incoming SWC edge reaches the soma from its centre to
-                # the first neurite point. Import3D attaches the neurite at
-                # this point and does not model that incoming edge as cable
-                # membrane/axial geometry. This remains true when the first
-                # neurite point itself is an immediate branch point.
-                wire_ids.append(child_id)
-                wire_lengths[child_id] = sqrt(
-                    (child.x_um-parent.x_um)**2
-                    + (child.y_um-parent.y_um)**2
-                    + (child.z_um-parent.z_um)**2
-                )
+                # Long unbranched roots are Import3D wires. Also collapse a
+                # first-point branch junction: Import3D connects that split
+                # at the soma without a membrane/axial edge to the branch
+                # point. A lone terminal first point is retained as membrane.
+                current_id = child_id
+                same_type_edges = 0
+                while len(self.children[current_id]) == 1:
+                    next_id = self.children[current_id][0]
+                    next_node = self.nodes[next_id]
+                    if next_node.neurite_type != child.neurite_type:
+                        break
+                    same_type_edges += 1
+                    current_id = next_id
+
+                is_immediate_branch = len(self.children[child_id]) >= 2
+                if same_type_edges > 1 or is_immediate_branch:
+                    wire_ids.append(child_id)
+                    wire_lengths[child_id] = sqrt(
+                        (child.x_um-parent.x_um)**2
+                        + (child.y_um-parent.y_um)**2
+                        + (child.z_um-parent.z_um)**2
+                    )
 
         return NeuroMorphoSomaNormalization(
             root_id=root_id,
