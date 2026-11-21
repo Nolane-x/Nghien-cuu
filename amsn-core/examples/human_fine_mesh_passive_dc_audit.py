@@ -273,12 +273,13 @@ def main():
     injections, probes, sites = build_sites(morphology, reader, sections)
     (
         alignment_changes,
-        injections,
-        probes,
+        aligned_injections,
+        aligned_probes,
         aligned_sites,
         alignment_tolerance_um,
     ) = align_source_sections(morphology, reader, sections, injections)
     if aligned_sites is not None:
+        injections = aligned_injections
         probes = aligned_probes
         sites = aligned_sites
     fine_tree, sectioned, fine_results, sectioned_results = solve_amsn_all(
