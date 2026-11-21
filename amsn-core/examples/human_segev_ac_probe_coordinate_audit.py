@@ -168,6 +168,7 @@ def main() -> None:
 
                 row = {
                     "morphology_label": MORPHOLOGY_LABEL,
+                    "neuron_max_segment_um": f"{NEURON_MAX_SEGMENT_UM:.12g}",
                     "source": source_name,
                     "source_swc_id": source_id,
                     "source_section": source_section.name(),
