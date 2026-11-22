@@ -37,6 +37,7 @@ This is a validated negative result for the proposition that simply adding q25 r
 
 - `amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md`
 - `amsn-core/results/human_passive_prima_nine_port_model_summary_2026-11-22.csv`
+- `amsn-core/results/human_passive_prima_nine_port_config_model_summary_2026-11-22.csv` — 24 morphology × mesh × model rows
 - `amsn-core/results/human_passive_prima_nine_vs_seven_port_q90_summary_2026-11-22.csv`
 - `amsn-core/results/human_passive_prima_nine_port_artifact_manifest_2026-11-22.csv`
 - `research/RESEARCH_LOG_2026-11-22_PRIMA-NINE-PORT-RESULTS.md`
