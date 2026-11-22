@@ -1,31 +1,35 @@
 # Research log — PRIMA shift distribution × order Pareto sweep
 
 **Date:** 2026-11-22  
+**Pull request:** #7  
+**Actions run:** 45002816664  
 **Branch:** research/prima-basis-transfer-protocol-robustness-2026-11-22
 
-## Motivation
+## Validated matrix
 
-The 2026-11-22 basis-transfer experiment (PR #7) compared three basis construction methods at achieved order 56. The 10 kHz-extended basis improved 6 kHz and 10 kHz Z/Y residuals in all matched cases, but its transient per-port NRMSE was higher in all 1,134 pairings. This demonstrates that choosing expansion shifts from only one metric is unsafe.
+All three jobs succeeded after the full AMSN test suite. Three morphology fixtures were evaluated across nine candidate models (orders 56, 84, 112 × narrow-3k, extended-10k, balanced-10k shifts) and nine passive-parameter scenarios.
 
-## Hypothesis
+The complete matrix produced 243 model records, 2,187 frequency records and 10,206 transient per-port records. Exact requested/achieved orders and all 243 Cholesky positive-definiteness checks passed. All three artifact SHA-256 digests were checked against GitHub metadata.
 
-At larger orders, the basis may have enough dimensions to retain useful high-frequency directions without sacrificing as much transient accuracy. A log-balanced shift allocation may also preserve low-frequency behavior better than the current extended set.
+## Main findings
 
-## Design
+- Order112_extended_10khz had the smallest 3/6/10 kHz impedance and admittance residuals. At 10 kHz, median Z/Y residuals were 4.681e-6% / 1.390e-5%.
+- Versus order112_narrow_3khz, it lowered median 10 kHz Z/Y residual by 41.7× / 44.8×, while median transient NRMSE increased only 1.38% and the maximum was effectively unchanged.
+- Order84_narrow_3khz delivered very low transient errors with less numeric storage, but its median 10 kHz Z/Y residual was 0.006487% / 0.015528%.
+- Order56_narrow_3khz is the smallest candidate but has the largest errors among narrow-shift strategies.
+- Balanced 10 kHz allocation did not dominate the narrow or extended strategies; it makes different low-/mid-/high-frequency trade-offs.
+- All nine candidates remain on the 19-objective Pareto frontier. This is a multi-objective outcome, not evidence that all choices are equivalent.
 
-Cross orders 56, 84, 112 with three shift lists:
-- narrow 3 kHz: 0/100/1,000/3,000 Hz;
-- extended 10 kHz: 0/100/1,000/3,000/6,000/10,000 Hz;
-- balanced 10 kHz: 0/10/100/1,000/3,000/10,000 Hz.
+## Resource observations
 
-The same three morphology fixtures, nine Rm/Cm/Ra stress cases, nine frequency points, three source locations, two pulse widths and seven output ports are held fixed.
+Median candidate-specific numeric storage was about 5.35 MB at order 56, 8.05 MB at order 84 and 10.79 MB at order 112. Median basis-build time rose from about 1.02 s to 1.57 s and 2.14 s respectively. These figures are per-candidate numerical arrays/build-time summaries, not total process RSS.
 
-Expected per morphology: 81 model rows, 729 frequency rows, 3,402 transient-port rows. Every model must achieve its requested order and pass Cholesky positive-definiteness checks.
+Whole-job peak RSS varied by morphology from 221.9 MB to 321.9 MB. Whole-job wall time ranged from 265 to 397 seconds and included all 81 basis builds, frequency solves and transient reference comparisons for that morphology.
 
-## Evidence state
+## Decision and next steps
 
-Pending GitHub Actions. No model ranking or recommended default is recorded before all three morphology jobs and artifact validations finish.
+Keep Hines canonical and do not change production defaults. Use order112_extended_10khz as the strongest high-fidelity passive candidate and order84_narrow_3khz as the lower-storage transient-oriented candidate for further validation, not as production defaults. Next, validate both on a held-out human morphology with traceable provenance and usage rights. Then test a broader passive-parameter grid. Active-channel or nonlinear-synapse work remains a separate research stage.
 
-## Scope limits
+## Limits
 
-Deterministic ±20% passive parameter perturbations are stress cases, not biological confidence intervals. The Mohan2015 morphology is a partial dendritic reconstruction without an axon. All results remain passive linear RC reduction.
+This remains passive linear RC model reduction. The three morphologies do not constitute a representative human-neuron population. The Mohan2015 reconstruction is partial and lacks an axon. Deterministic ±20% parameter perturbations are stress cases, not biological confidence intervals. Cholesky positive definiteness is not a full biological validation.

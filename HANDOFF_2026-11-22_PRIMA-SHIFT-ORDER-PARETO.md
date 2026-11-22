@@ -2,48 +2,32 @@
 
 **Date:** 2026-11-22 (Asia/Bangkok)  
 **Branch:** research/prima-basis-transfer-protocol-robustness-2026-11-22  
-**Workflow:** AMSN Human PRIMA Shift-Order Pareto Sweep
+**Pull request:** https://github.com/Nolane-x/Nghien-cuu/pull/7  
+**Validated Actions run:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/45002816664
 
-## Research question
+## Validated result
 
-The order-56 basis-transfer audit showed that a 10 kHz-extended shift set can greatly reduce 6–10 kHz impedance/admittance residuals while worsening all paired transient-output NRMSE measurements. The next step is to vary both the retained order and the distribution of positive-real expansion shifts, rather than picking a winner from only one frequency or transient metric.
+The three-morphology matrix completed with **3/3 jobs successful**. Each job passed the complete AMSN test suite before running the Pareto sweep.
 
-## Candidate matrix
+Validated coverage:
+- 243 model records: 3 morphologies × 9 candidates × 9 parameter scenarios.
+- 2,187 frequency records across nine AC frequencies.
+- 10,206 transient per-port records across three sources, two pulse widths and seven retained output nodes.
+- All 243 requested/achieved PRIMA orders matched exactly and every reduced G/C matrix passed Cholesky positive-definiteness checks.
+- All three Actions artifacts were downloaded and SHA-256 verified against GitHub metadata.
 
-Three achieved PRIMA orders are tested: 56, 84 and 112.
+## Key decision
 
-Each order is crossed with three shift strategies:
+Order112_extended_10khz gave the best AC residuals at 3, 6 and 10 kHz. At 10 kHz its median Z/Y errors were 0.000004681% / 0.00001390%, versus 0.0001951% / 0.0006225% for order112_narrow_3khz. Its median transient NRMSE was only 1.38% higher and the worst transient error was effectively identical. This is the strongest high-fidelity passive candidate in this matrix.
 
-- narrow_3khz: 0, 100, 1,000 and 3,000 Hz.
-- extended_10khz: 0, 100, 1,000, 3,000, 6,000 and 10,000 Hz.
-- balanced_10khz: 0, 10, 100, 1,000, 3,000 and 10,000 Hz.
+Order84_narrow_3khz is the lower-storage transient-oriented candidate. Order56_narrow_3khz is the smallest state/storage option but has materially larger transient and high-band errors.
 
-The balanced strategy retains the 10 kHz endpoint but replaces the 6 kHz shift with a 10 Hz shift to strengthen the low-frequency part of the basis. The design does not assume that this improves results; it is a falsifiable candidate.
+The full 19-objective Pareto analysis leaves all nine candidates non-dominated. No single model should be declared universally best; candidate choice depends on the intended AC band, transient tolerance and resource budget.
 
-## Fixed validation protocol
+## Persisted outputs
 
-The same three public human morphology fixtures and nine passive parameter scenarios are used. Each candidate is freshly generated for each perturbed parameter set and compared against the corresponding full Hines cable tree.
+- amsn-core/research/HUMAN_PRIMA_SHIFT_ORDER_PARETO_2026-11-22.md
+- amsn-core/research/analyze_human_prima_shift_order_pareto.py
+- Candidate, frontier, transient, runtime, process-resource and artifact-manifest CSVs under amsn-core/results.
 
-Frequency-domain checks cover 0.1, 1, 10, 100, 300, 1,000, 3,000, 6,000 and 10,000 Hz. Transient checks cover soma, basal-q75 and apical-q75 sources, 2 ms and 10 ms square pulses, 10 pA current, 2 ms onset, 20 ms total duration and 0.1 ms time step. All seven retained outputs are recorded by exact SWC node ID.
-
-Each candidate records basis build wall time, basis storage bytes, reduced G/C matrix storage bytes and state reduction. The workflow also records process wall time, CPU time and peak RSS for each morphology. Reduced conductance and capacitance matrices must pass Cholesky positive-definiteness checks; every requested order must be achieved exactly.
-
-## Expected coverage per morphology
-
-- 9 candidates × 9 parameter scenarios = 81 model-summary rows.
-- 81 × 9 frequencies = 729 frequency rows.
-- 9 candidates × 9 scenarios × 3 sources × 2 pulse widths × 7 outputs = 3,402 per-port transient rows.
-
-Across all three morphologies: 243 model rows, 2,187 frequency rows and 10,206 transient per-port rows.
-
-## Interpretation guardrails
-
-- No model is selected before the full accuracy/resource tables are inspected.
-- Frequency and transient errors remain separate objectives; the order-56 result already demonstrates that high-band gains can trade against transient accuracy.
-- Build time and numeric storage are candidate-specific. Process RSS is morphology/job-level and must not be presented as per-model RSS.
-- Full Hines remains canonical. Production defaults stay unchanged.
-- The fixtures are passive linear RC models only. They do not validate active channels, spikes, nonlinear synapses, plasticity or cognition.
-
-## Validation state
-
-Implementation and workflow are staged for Actions. No Pareto conclusion is claimed until all three jobs pass, all CSV row counts and exact model/parameter/source/pulse/output coverage are checked, and all artifacts are independently inspected.
+Full Hines remains canonical; production defaults are unchanged. These are passive linear RC results only.
