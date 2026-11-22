@@ -357,3 +357,12 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 
 
 - Port-level error localization is now included in each Schur artifact (56 rows per configuration). At 3 kHz the dominant retained ports are apical q50 for NMO_68174, mesh-dependent basal/apical q50 for NMO_68175, and apical q90 for NMO_290988; the latter is primarily off-diagonal coupling error. See [port localization CSV](amsn-core/results/human_schur_port_matrix_port_localization_2026-11-21.csv).
+
+
+### PRIMA 10 kHz direct NEURON validation — verified 22/11/2026
+
+- The six-job audit [44965325079](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079) passed 6/6 across three human morphology records × two NEURON mesh caps; each job passed 109 tests and compared seven ports at ten frequencies through 10 kHz.
+- At fixed order 56, adding 6/10 kHz positive-real shifts reduced worst direct-NEURON impedance/admittance errors from 0.527300%/0.404489% to 0.216765%/0.211010%. Worst full-Hines residuals fell from 0.416133%/0.432732% to 0.113574%/0.124064%.
+- This is an upper-band gain, not a universal improvement: some 1–3 kHz admittance residuals and the tested transient metric increase modestly. Keep the six-shift basis optional; retain the four-shift preset and full Hines as canonical.
+- Report: [HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md). Data: [six-configuration aggregate CSV](amsn-core/results/human_passive_prima_high_frequency_neuron_aggregate_2026-11-22.csv). PR: [#1](https://github.com/Nolane-x/Nghien-cuu/pull/1).
+
