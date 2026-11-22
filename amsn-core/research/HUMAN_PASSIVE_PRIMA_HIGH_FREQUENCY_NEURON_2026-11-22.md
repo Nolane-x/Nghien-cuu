@@ -5,7 +5,7 @@
 **Pull request:** https://github.com/Nolane-x/Nghien-cuu/pull/1  
 **Schur/PRIMA workflow:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079 — 6/6 jobs passed  
 **Frequency audit:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325128 — 3/3 jobs passed  
-**Core CI:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088 — Python 3.12/3.13 unit-test jobs passed; NEURON cross-validation jobs were still running when this report was prepared.
+**Core CI:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088 — 4/4 jobs passed, including Python 3.12/3.13 tests and both NEURON cross-validation jobs. Post-merge main checks also passed: Core CI [44965966066](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966066), Schur/PRIMA [44965966021](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966021), fine-mesh [44965966005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966005), frequency audit [44965965999](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965965999).
 
 ## 1. Research question
 
