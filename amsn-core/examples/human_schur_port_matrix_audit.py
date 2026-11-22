@@ -48,7 +48,6 @@ OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
 PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
 PRIMA_MULTI_SHIFT_EXTENDED_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
-RESULTS_DATE = "2026-11-22"
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
