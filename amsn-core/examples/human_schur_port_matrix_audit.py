@@ -352,6 +352,15 @@ def main() -> None:
     }
     cable = morphology.to_cable_tree()
     boundary_indices = [cable.index[node_to_name[node_id]] for node_id in boundary_ids]
+    if len(set(boundary_indices)) != len(boundary_indices):
+        duplicate_indices = sorted(
+            index for index in set(boundary_indices)
+            if boundary_indices.count(index) > 1
+        )
+        raise RuntimeError(
+            "retained SWC ports collapse to duplicate electrical compartments "
+            f"after morphology normalization: {duplicate_indices}"
+        )
     if PRIMA_MAX_ORDER <= 0:
         raise ValueError("AMSN_PRIMA_MAX_ORDER must be positive")
     prima_model = prima_reduce_passive_cable(cable, boundary_indices, max_order=PRIMA_MAX_ORDER)
