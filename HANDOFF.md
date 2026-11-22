@@ -1,5 +1,20 @@
 # HANDOFF — Nolane-x Research
 
+
+---
+
+## Latest validated checkpoint — PRIMA held-out morphology and port/order study (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md](HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`; validated code head: `5180f0bc72dbfad0a460b0870ca80fec772db0e3`.
+
+- Held-out human L2–3 dendritic morphology NMO_162186: [workflow 45012282648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282648), 2/2 jobs pass. Exact SWC SHA-256 `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`; 7,287 records; dendrites complete and axon incomplete; epilepsy surgical specimen. PRIMA coverage 81/729/3,402 rows and all 81 G/C Cholesky checks passed.
+- Equal-order 7-port/9-port: [workflow 45012282737](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282737), 12/12 pass. At order56/112, all 252 common-output pairs worsened when nine ports were retained. At order168, 138/252 worsened and 114/252 improved, median ratio 1.000001: practical parity, not a systematic improvement.
+- Nine-port order capacity: [workflow 45012282650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282650), 6/6 pass. Maximum transient NRMSE falls from 12.10% (order28) to 0.5231% (56), 0.001775% (84), 3.447e-5% (112), 3.450e-6% (168). Order168's incremental value varies by morphology.
+- Core CI [45012282476](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282476) 4/4 pass; enrichment [45012282496] 6/6; parameter robustness [45012282485] 3/3.
+- Resource/RSS matrix [45012282723](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282723): 16-test validator preflight passed, but 23/30 resource jobs remained queued at checkpoint; do not treat as complete.
+
+Full Hines remains canonical. No production defaults changed. All claims are limited to passive linear RC; ±20% parameter scenarios are deterministic stress tests, not biological distributions. PR #8 remains draft/open.
+
 **Ngày checkpoint ban đầu:** 2026-11-20  
 **Kho chuẩn:** https://github.com/Nolane-x/Nghien-cuu  
 **Nghiên cứu đang bàn giao:** AMSN — Adaptive Multi-Scale Neuron  

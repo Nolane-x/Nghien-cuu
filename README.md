@@ -4,6 +4,17 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
+
+## Checkpoint mới nhất — PRIMA holdout và port/order (22/11/2026)
+
+- [Handoff nghiên cứu mới](HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md) — trạng thái đã kiểm chứng, lựa chọn order/số cổng và benchmark còn chờ.
+- [Báo cáo PRIMA tổng hợp](amsn-core/research/HUMAN_PASSIVE_PRIMA_VALIDATED_RESULTS_2026-11-22.md) — holdout NMO_162186, so sánh 7-port/9-port cùng order và khả năng order 28–168.
+- [CSV candidate holdout](amsn-core/results/NMO_162186_PRIMA_candidate_summary_2026-11-22.csv), [paired q90](amsn-core/results/human_passive_prima_equal_order_q90_summary_2026-11-22.csv), [common ports](amsn-core/results/human_passive_prima_equal_order_common_ports_summary_2026-11-22.csv).
+- [High-order summary](amsn-core/results/human_passive_prima_nine_port_high_order_summary_2026-11-22.csv), [per-morphology breakdown](amsn-core/results/human_passive_prima_nine_port_high_order_by_morphology_2026-11-22.csv), [20-artifact SHA-256 manifest](amsn-core/results/human_prima_verified_artifact_manifest_2026-11-22.csv).
+- [PR #8](https://github.com/Nolane-x/Nghien-cuu/pull/8) còn draft/open. Holdout 2/2, equal-order 12/12, nine-port high-order 6/6, Core CI 4/4; benchmark runtime/RSS vẫn còn job chờ.
+
+**Giới hạn:** tất cả là passive linear-RC; NMO_162186 là mẫu phẫu thuật epilepsy và axon không hoàn chỉnh. Full Hines vẫn là chuẩn; chưa đổi production defaults.
+
 ## Bắt đầu từ đây
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
