@@ -246,7 +246,7 @@ jobs:
       AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
       AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
       AMSN_PORT_ENRICHMENT: apical_basal_q25_q75
-      AMSN_PRIMA_EXTENDED_ORDERS: ${{ matrix.candidate_order }}
+      AMSN_PRIMA_EXTENDED_ORDERS: "56,${{ matrix.candidate_order }}"
       AMSN_BENCH_REPLICATE: ${{ matrix.replicate }}
       AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_benchorder${{ matrix.candidate_order}}_rep${{ matrix.replicate }}_9port_
     steps:
@@ -323,14 +323,14 @@ jobs:
           prefix = os.environ["AMSN_SCHUR_OUTPUT_PREFIX"]
           sweep = Path("results") / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
           rows = list(csv.DictReader(sweep.open(newline="", encoding="utf-8")))
-          expected_counts = {"frequency_response": 20, "transient_port": 108, "transient_all_ports": 12}
+          expected_counts = {"frequency_response": 30, "transient_port": 162, "transient_all_ports": 18}
           counts = {}
           for row in rows:
               counts[row["metric"]] = counts.get(row["metric"], 0) + 1
-          if len(rows) != 140 or counts != expected_counts:
+          if len(rows) != 210 or counts != expected_counts:
               raise RuntimeError(f"coverage mismatch: rows={len(rows)} counts={counts}")
           order = os.environ["AMSN_PRIMA_EXTENDED_ORDERS"]
-          expected_models = {"four_shift_order56_control", f"six_shift_order{order}"}
+          expected_models = {"four_shift_order56_control", "six_shift_order56", f"six_shift_order{order}"}
           if {row["model_id"] for row in rows} != expected_models:
               raise RuntimeError("model identity coverage mismatch")
           candidate_rows = [r for r in rows if r["metric"] == "frequency_response" and r["model_id"] == f"six_shift_order{order}"]
