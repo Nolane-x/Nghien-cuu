@@ -49,6 +49,11 @@ PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
 PRIMA_MULTI_SHIFT_EXTENDED_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
 EXTENDED_ORDER_SWEEP = (28, 56, 84)
+EXTRA_PROBE_QUANTILES = (
+    (0.25, 0.75)
+    if os.environ.get("AMSN_PORT_ENRICHMENT", "").strip() == "apical_basal_q25_q75"
+    else ()
+)
 TRANSIENT_SCENARIOS = (
     ("soma", 2.0),
     ("basal_q75", 2.0),
@@ -304,15 +309,39 @@ def main() -> None:
 
     morphology = SWCMorphology.from_file(reference.DATA)
     reader, sections = reference.import_swc_with_neuron()
-    injections, probes, sites = fine_audit.build_sites(morphology, reader, sections)
+    injections, probes, sites = fine_audit.build_sites(
+        morphology,
+        reader,
+        sections,
+        extra_probe_quantiles=EXTRA_PROBE_QUANTILES,
+    )
     boundary_ids = list(dict.fromkeys(
         [node_id for _, node_id in injections + probes]
     ))
-    if len(injections) != 3 or len(probes) != 5 or len(boundary_ids) != 7:
+    expected_probe_count = 5 + 2 * len(EXTRA_PROBE_QUANTILES)
+    expected_unique_ports = 7 if not EXTRA_PROBE_QUANTILES else 9
+    if (
+        len(injections) != 3
+        or len(probes) != expected_probe_count
+        or len(boundary_ids) != expected_unique_ports
+    ):
         raise RuntimeError(
-            f"expected 3 source labels, 5 probe labels and 7 unique ports; "
-            f"got {len(injections)}, {len(probes)}, {len(boundary_ids)}"
+            f"expected 3 source labels, {expected_probe_count} probe labels and "
+            f"{expected_unique_ports} unique ports; got "
+            f"{len(injections)}, {len(probes)}, {len(boundary_ids)}"
         )
+    if EXTRA_PROBE_QUANTILES:
+        expected_extra_labels = {
+            f"{branch}_{f'q{round(quantile * 100):02d}'}"
+            for quantile in EXTRA_PROBE_QUANTILES
+            for branch in ("basal", "apical")
+        }
+        actual_labels = {name for name, _ in probes}
+        if not expected_extra_labels.issubset(actual_labels):
+            raise RuntimeError(
+                f"missing enriched probe labels: "
+                f"{sorted(expected_extra_labels - actual_labels)}"
+            )
     if set(boundary_ids) != set(sites):
         raise RuntimeError("not every retained SWC port has an Import3D mapping")
 
@@ -390,6 +419,8 @@ def main() -> None:
     prefix = OUTPUT_PREFIX or (
         f"{MORPHOLOGY_LABEL}_mesh{NEURON_MAX_SEGMENT_UM:g}um_"
     )
+    if EXTRA_PROBE_QUANTILES and not prefix.endswith("9port_"):
+        prefix = f"{prefix}9port_"
     results_dir = Path(__file__).parents[1] / "results"
     raw_path = results_dir / f"{prefix}human_passive_schur_port_matrix_2026-11-22.csv"
     summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-22.csv"

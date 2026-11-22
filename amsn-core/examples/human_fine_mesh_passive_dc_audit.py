@@ -52,7 +52,25 @@ def path_distances_um(morphology):
     return reference.path_distances_um(morphology)
 
 
-def build_sites(morphology, reader, sections):
+def build_sites(
+    morphology,
+    reader,
+    sections,
+    *,
+    extra_probe_quantiles: tuple[float, ...] = (),
+):
+    """Build matched SWC ports; optionally add symmetric basal/apical quantiles.
+
+    The default five probes are unchanged. Enrichment quantiles add named
+    probe labels only; duplicate SWC node IDs remain a single electrical port
+    carrying all corresponding roles.
+    """
+    quantiles = tuple(float(value) for value in extra_probe_quantiles)
+    if any(not np.isfinite(value) or not 0.0 < value < 1.0 for value in quantiles):
+        raise ValueError("extra probe quantiles must be finite and strictly between 0 and 1")
+    labels = [f"q{round(value * 100):02d}" for value in quantiles]
+    if len(set(labels)) != len(labels) or {"q50", "q90"}.intersection(labels):
+        raise ValueError("extra probe quantiles must not duplicate existing probe labels")
     distances = path_distances_um(morphology)
     injections = [
         ("soma", morphology.root_id),
@@ -66,6 +84,12 @@ def build_sites(morphology, reader, sections):
         ("apical_q50", reference.quantile_node(morphology, distances, 4, 0.50)),
         ("apical_q90", reference.quantile_node(morphology, distances, 4, 0.90)),
     ]
+    for quantile in quantiles:
+        label = f"q{round(quantile * 100):02d}"
+        probes.extend((
+            (f"basal_{label}", reference.quantile_node(morphology, distances, 3, quantile)),
+            (f"apical_{label}", reference.quantile_node(morphology, distances, 4, quantile)),
+        ))
     section_by_name = {section.name(): section for section in sections}
     site_ids = sorted({node_id for _, node_id in injections + probes})
     mapped = {}
