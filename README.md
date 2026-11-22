@@ -11,6 +11,7 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [Báo cáo PRIMA tổng hợp](amsn-core/research/HUMAN_PASSIVE_PRIMA_VALIDATED_RESULTS_2026-11-22.md) — holdout NMO_162186, so sánh 7-port/9-port cùng order và khả năng order 28–168.
 - [CSV candidate holdout](amsn-core/results/NMO_162186_PRIMA_candidate_summary_2026-11-22.csv), [paired q90](amsn-core/results/human_passive_prima_equal_order_q90_summary_2026-11-22.csv), [common ports](amsn-core/results/human_passive_prima_equal_order_common_ports_summary_2026-11-22.csv).
 - [High-order summary](amsn-core/results/human_passive_prima_nine_port_high_order_summary_2026-11-22.csv), [per-morphology breakdown](amsn-core/results/human_passive_prima_nine_port_high_order_by_morphology_2026-11-22.csv), [20-artifact SHA-256 manifest](amsn-core/results/human_prima_verified_artifact_manifest_2026-11-22.csv).
+- [Resource/RSS progress (partial 12/36)](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_PARTIAL_2026-11-22.md) — 12 artifact của NMO_68174, 2 mesh cap, order84/112/168; 12/12 SHA-256 khớp, 12/12 exit0; hai morphology còn lại vẫn đang chờ.
 - [PR #8](https://github.com/Nolane-x/Nghien-cuu/pull/8) còn draft/open. Holdout 2/2, equal-order 12/12, nine-port high-order 6/6, Core CI 4/4; benchmark runtime/RSS vẫn còn job chờ.
 
 **Giới hạn:** tất cả là passive linear-RC; NMO_162186 là mẫu phẫu thuật epilepsy và axon không hoàn chỉnh. Full Hines vẫn là chuẩn; chưa đổi production defaults.

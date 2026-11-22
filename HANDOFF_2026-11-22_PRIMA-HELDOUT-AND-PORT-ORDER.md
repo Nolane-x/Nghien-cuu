@@ -19,7 +19,7 @@
 - Nine-port high-order [45012282650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282650): 6/6 pass; 2,520 rows.
 - Core CI [45012282476](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282476): 4/4 pass.
 - Nine-port enrichment [45012282496]: 6/6 pass. Parameter robustness [45012282485]: 3/3 pass.
-- Runtime/RSS matrix [45012282723]: validator preflight passed; 23/30 resource jobs were still queued. Matrix not yet complete.
+- Runtime/RSS matrix [45012282723](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282723): validator preflight passed; 12/36 resource artifacts for NMO_68174 have been independently verified (all hashes match; all runs exit0). The other two morphologies remain to be processed; full matrix incomplete. See [partial resource report](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_PARTIAL_2026-11-22.md).
 
 ## Research decisions
 

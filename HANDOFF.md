@@ -11,7 +11,7 @@ Continue from [HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md](HANDOFF_2026-
 - Equal-order 7-port/9-port: [workflow 45012282737](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282737), 12/12 pass. At order56/112, all 252 common-output pairs worsened when nine ports were retained. At order168, 138/252 worsened and 114/252 improved, median ratio 1.000001: practical parity, not a systematic improvement.
 - Nine-port order capacity: [workflow 45012282650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282650), 6/6 pass. Maximum transient NRMSE falls from 12.10% (order28) to 0.5231% (56), 0.001775% (84), 3.447e-5% (112), 3.450e-6% (168). Order168's incremental value varies by morphology.
 - Core CI [45012282476](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282476) 4/4 pass; enrichment [45012282496] 6/6; parameter robustness [45012282485] 3/3.
-- Resource/RSS matrix [45012282723](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282723): 16-test validator preflight passed, but 23/30 resource jobs remained queued at checkpoint; do not treat as complete.
+- Resource/RSS matrix [45012282723](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282723): validator preflight passed; 12/36 resource artifacts for NMO_68174 have now been independently verified (two mesh caps × orders84/112/168 × two replicates, all SHA-256 matched and exit0). Other morphology jobs remain; full matrix incomplete. See [partial report](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_PARTIAL_2026-11-22.md).
 
 Full Hines remains canonical. No production defaults changed. All claims are limited to passive linear RC; ±20% parameter scenarios are deterministic stress tests, not biological distributions. PR #8 remains draft/open.
 
