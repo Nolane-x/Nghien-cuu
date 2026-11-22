@@ -36,38 +36,7 @@ FINAL_MS = 250.0
 DT_MS = 0.025
 
 
-def path_distances_um(morphology: SWCMorphology) -> dict[int, float]:
-    distances = {morphology.root_id: 0.0}
-    stack = [morphology.root_id]
-    while stack:
-        parent_id = stack.pop()
-        parent = morphology.nodes[parent_id]
-        for child_id in morphology.children[parent_id]:
-            child = morphology.nodes[child_id]
-            distances[child_id] = distances[parent_id] + float(np.linalg.norm([
-                child.x_um-parent.x_um,
-                child.y_um-parent.y_um,
-                child.z_um-parent.z_um,
-            ]))
-            stack.append(child_id)
-    return distances
-
-
-def quantile_node(
-    morphology: SWCMorphology,
-    distances: dict[int, float],
-    neurite_type: int,
-    quantile: float,
-) -> int:
-    ordered = sorted(
-        (
-            (distances[node_id], node_id)
-            for node_id, node in morphology.nodes.items()
-            if node.neurite_type == neurite_type
-        ),
-        key=lambda pair: (pair[0], pair[1]),
-    )
-    return ordered[round((len(ordered)-1)*quantile)][1]
+from amsn.ports import path_distances_um, quantile_node
 
 
 def import_swc_with_neuron():
