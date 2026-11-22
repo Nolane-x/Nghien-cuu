@@ -395,3 +395,10 @@ Added a three-layer validation: exact Schur vs Hines, PRIMA vs full Hines, and P
 ## Human passive PRIMA parameter robustness — completed 21/11/2026
 
 The basis-reprojection API has been tested on three human morphologies with nine parameter scenarios each (Rm/Cm/Ra ±20%, plus joint corners). Human workflow [44922676384](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44922676384) passed 3/3; Core CI [44922676436](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44922676436) passed 4/4 with 108 tests on Python 3.12 and 3.13. All 54 reduced models (27 frozen and 27 fresh) passed Cholesky passivity checks. Across the scenarios, the frozen order-56 basis stayed below 0.995% Z / 0.977% Y error at the 10 kHz stress point and below 0.000627% worst individual-port transient NRMSE. A fresh order-56 basis improved the global high-frequency error envelope, but not uniformly scenario-by-scenario. See [parameter robustness report](amsn-core/research/HUMAN_PASSIVE_PRIMA_PARAMETER_ROBUSTNESS_2026-11-21.md) and [morphology summary CSV](amsn-core/results/human_passive_prima_parameter_robustness_morphology_summary_2026-11-21.csv).
+
+
+---
+
+## Latest checkpoint — PRIMA nine-port result (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-NINE-PORT-RESULTS.md](HANDOFF_2026-11-22_PRIMA-NINE-PORT-RESULTS.md), not the older initial snapshot above. PR #3 merged as `9e646563f04d2682c32b6ccec5da8c4ae1bebb84`. The nine-port workflow passed 6/6 jobs, Core CI 4/4 and the seven-port control 6/6. The full report is [HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md). Key negative result: all 144 matched apical-q90 comparisons worsened after expanding seven to nine ports at the same tested reduction orders. Keep seven-port as the reference and full Hines canonical; next test basis capacity/order 112 and 168 or a block-Krylov/source-probe weighted basis. See the new dated research log for exact metrics and limits.
