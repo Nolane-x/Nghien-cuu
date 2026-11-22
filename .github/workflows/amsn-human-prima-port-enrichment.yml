@@ -12,6 +12,7 @@ on:
       - "amsn-core/src/amsn/ports.py"
       - "amsn-core/examples/human_schur_port_matrix_audit.py"
       - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
       - "amsn-core/examples/neuron_cross_validation.py"
       - "amsn-core/tests/test_segev_reference_morphologies.py"
       - "amsn-core/data/human/**"
