@@ -42,10 +42,21 @@ Three input locations (soma, basal q75, apical q75) × two pulse widths (2 and 1
 - Per-port/all-port transient errors for every source and pulse width.
 - No biological or active-neuron claims from passive RC results.
 
-## Status at checkpoint creation
+## Final validation — verified 22/11/2026
 
-Implementation has been written and read back from GitHub. It is not yet a validated result or merged code. Await the PR workflows, inspect raw CSVs/artifacts, then write the result report and update README. Keep the prior four-shift preset and full Hines canonical until evidence supports a change.
+PR #2: https://github.com/Nolane-x/Nghien-cuu/pull/2 — implementation and six-configuration validation complete; merge was not yet performed at checkpoint creation.
 
-## Decision rule
+- Schur/PRIMA workflow [44966510373](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510373): 6/6 jobs passed. Each job ran 111 tests and asserted exactly 232 rows; total 1,392 rows across six morphology/mesh configurations.
+- Core CI [44966510441](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510441): 4/4 jobs passed on Python 3.12 and 3.13, including both NEURON cross-validation jobs.
+- Frequency audit [44966510356](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510356): 3/3 jobs passed.
+- All 24 projected G/C models passed Cholesky positive-definiteness checks; maximum NEURON impedance condition number was 91.263.
+- Order 28 failed the full-band/input-diversity accuracy gate (maximum direct-NEURON Z/Y 9.4902%/8.4540%; maximum all-port transient NRMSE 0.4161%; maximum single-port 5.1199%).
+- Order 56 six-shift improved the upper-band errors but modestly worsened transient error versus the four-shift control.
+- Order 84 six-shift produced maximum Hines residuals 0.000296% Z / 0.000376% Y, direct-NEURON maxima 0.2163% Z / 0.1193% Y, all-port transient maximum 0.00001835% and single-port maximum 0.000229% while retaining 99.055–99.389% state reduction.
+- The four-shift order-56 model remains default/control; six-shift order 84 is an optional high-fidelity passive preset. Full Hines remains canonical.
 
-The six-shift basis remains optional unless the order sweep and all six transient scenarios demonstrate a stable accuracy/performance trade-off across the three morphology records and both meshes. Retain and document negative results; do not tune morphology-specific passive parameters to force agreement.
+See [the validated report](amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md) and its three summary CSVs under amsn-core/results/.
+
+## Next experiment — apical-q90 port enrichment
+
+Investigate why the apical-q90 retained port is the recurring worst transient output. Compare the current seven-port basis with a port-enriched alternative preserving additional apical/basal transfer locations, using identical morphology, passive parameters, pulse scenarios and reference meshes. Measure whether local accuracy improves without degrading soma/basal paths; do not infer biological mechanisms from numerical error alone.
