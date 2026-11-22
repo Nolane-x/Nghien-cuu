@@ -4,6 +4,19 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
+## Trạng thái mới nhất — PRIMA / AMSN (22/11/2026)
+
+> Các mục dưới đây là kết quả đã chạy và được xác minh trong GitHub Actions. Ba PR nghiên cứu vẫn đang mở, chưa merge vào `main`.
+
+- [PR #5 — Benchmark CPU/RAM PRIMA order 84/112/168](https://github.com/Nolane-x/Nghien-cuu/pull/5): Actions 44989658844, **37/37 job thành công**, 36 artifact đã kiểm SHA-256. RSS median: 267.90 / 276.15 / 301.73 MB theo order 84 / 112 / 168.
+- [PR #6 — So sánh 7-port và 9-port ở cùng order](https://github.com/Nolane-x/Nghien-cuu/pull/6): Actions 44987393352, **12/12 job thành công**, 3.072 dòng sweep. Ở order 168, bảy cổng chung gần như tương đương; hai q25 mới có sai số nhỏ.
+- [PR #7 — Basis reuse, shift-band và order trade-offs](https://github.com/Nolane-x/Nghien-cuu/pull/7): có ba thí nghiệm đã chạy thành công:
+  - [Basis-transfer protocol report](amsn-core/research/HUMAN_PRIMA_BASIS_TRANSFER_PROTOCOL_ROBUSTNESS_2026-11-22.md): 3/3 morphology; 81 model, 729 AC và 3.402 transient-port rows. Shift mở rộng 10 kHz tốt hơn ở AC 6/10 kHz nhưng xấu hơn transient ở order 56.
+  - [Shift/order Pareto report](amsn-core/research/HUMAN_PRIMA_SHIFT_ORDER_PARETO_2026-11-22.md): Actions 45002816664, 3/3 morphology; 243 model, 2.187 AC và 10.206 transient-port rows. Order112 + extended 10 kHz là ứng viên high-fidelity passive; order84 + narrow 3 kHz là ứng viên tiết kiệm bộ nhớ, ưu tiên transient.
+  - [Pareto candidate CSV](amsn-core/results/prima_shift_order_pareto_candidate_summary_2026-11-22.csv) · [Pareto frontier CSV](amsn-core/results/prima_shift_order_pareto_frontier_2026-11-22.csv) · [Artifact SHA-256 manifest](amsn-core/results/prima_shift_order_pareto_artifact_manifest_2026-11-22.csv).
+
+**Guardrail khoa học:** tất cả kết quả trên là passive linear RC model-reduction. Full Hines vẫn là chuẩn tham chiếu; chưa thay đổi production defaults; chưa suy rộng sang active channels, spike propagation, nonlinear synapses hoặc cognition. Vòng CI mới trên head gần nhất cần kiểm tra trạng thái riêng trước khi kết luận xanh toàn bộ.
+
 ## Bắt đầu từ đây
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
