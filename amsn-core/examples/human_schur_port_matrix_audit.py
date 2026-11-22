@@ -26,6 +26,7 @@ import neuron
 from neuron import h
 
 import human_fine_mesh_passive_dc_audit as fine_audit
+import human_prima_port_enrichment as port_enrichment
 import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 from amsn.reduction import schur_reduce_passive_admittance
@@ -309,12 +310,17 @@ def main() -> None:
 
     morphology = SWCMorphology.from_file(reference.DATA)
     reader, sections = reference.import_swc_with_neuron()
-    injections, probes, sites = fine_audit.build_sites(
-        morphology,
-        reader,
-        sections,
-        extra_probe_quantiles=EXTRA_PROBE_QUANTILES,
-    )
+    if EXTRA_PROBE_QUANTILES:
+        injections, probes, sites = port_enrichment.build_sites(
+            morphology,
+            reader,
+            sections,
+            extra_probe_quantiles=EXTRA_PROBE_QUANTILES,
+        )
+    else:
+        injections, probes, sites = fine_audit.build_sites(
+            morphology, reader, sections
+        )
     boundary_ids = list(dict.fromkeys(
         [node_id for _, node_id in injections + probes]
     ))
