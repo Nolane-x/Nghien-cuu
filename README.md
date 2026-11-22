@@ -378,3 +378,11 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 - The retained apical-q90 probe recurs as the hardest transient output port. Do not infer a biological hotspot from this numerical port error.
 - Decision: keep four-shift order 56 as default/control, keep six-shift order 56 as an optional high-band compromise, reject order 28 for the tested full band, and keep six-shift order 84 as an optional high-fidelity passive preset. Full Hines remains canonical.
 - Report: [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). Data: [configuration/model summary CSV](amsn-core/results/human_passive_prima_order_transient_config_summary_2026-11-22.csv), [scenario summary CSV](amsn-core/results/human_passive_prima_order_transient_scenario_summary_2026-11-22.csv), [frequency summary CSV](amsn-core/results/human_passive_prima_order_transient_frequency_summary_2026-11-22.csv).
+
+
+## Latest validated checkpoint — PRIMA nine-port enrichment (22/11/2026)
+
+- [Final report](amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md) — six morphology/mesh jobs passed; 1,680 rows; paired seven-versus-nine port experiment shows apical-q90 transient error worsened in 144/144 matched comparisons.
+- [Aggregate model metrics](amsn-core/results/human_passive_prima_nine_port_model_summary_2026-11-22.csv), [paired q90 summary](amsn-core/results/human_passive_prima_nine_vs_seven_port_q90_summary_2026-11-22.csv) and [artifact manifest](amsn-core/results/human_passive_prima_nine_port_artifact_manifest_2026-11-22.csv).
+- [Handoff](HANDOFF_2026-11-22_PRIMA-NINE-PORT-RESULTS.md) and [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-NINE-PORT-RESULTS.md).
+- Decision: retain the seven-port baseline and full Hines as canonical; do not promote the nine-port basis as an accuracy improvement. Follow-up should test basis capacity/block-Krylov enrichment.
