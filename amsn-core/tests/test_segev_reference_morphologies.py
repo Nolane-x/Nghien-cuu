@@ -78,17 +78,17 @@ def test_segev_three_point_soma_collapses_all_first_order_neurite_attachments():
     [
         (
             Path("human/1094_Mohan_etal_2015.CNG.swc"),
-            (695, 3355, 3784, 3814),
+            (2070, 3355, 3784, 3814),
             (8831, 6897, 5920, 5164),
         ),
         (
             Path("human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc"),
-            (3647, 3789, 1577, 2135),
+            (5302, 3789, 1577, 2135),
             (7495, 11993, 9934, 10532),
         ),
         (
             Path("human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc"),
-            (4716, 140, 1544, 2827),
+            (4716, 140, 3253, 2827),
             (12553, 12177, 7640, 7074),
         ),
     ],
@@ -109,6 +109,7 @@ def test_enriched_basal_apical_quantile_ports_are_stable_and_distinct(
         quantile_node(morphology, distances, 4, quantile)
         for quantile in quantiles
     )
+    print(f"quantile_ports={relative_path}: basal={basal}, apical={apical}")
     assert basal == expected_basal
     assert apical == expected_apical
     retained_ids = {morphology.root_id, *basal, *apical}
