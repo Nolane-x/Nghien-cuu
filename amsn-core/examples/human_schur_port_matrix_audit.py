@@ -48,6 +48,15 @@ OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
 PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
 PRIMA_MULTI_SHIFT_EXTENDED_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
+EXTENDED_ORDER_SWEEP = (28, 56, 84)
+TRANSIENT_SCENARIOS = (
+    ("soma", 2.0),
+    ("basal_q75", 2.0),
+    ("apical_q75", 2.0),
+    ("soma", 10.0),
+    ("basal_q75", 10.0),
+    ("apical_q75", 10.0),
+)
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
@@ -156,14 +165,41 @@ def build_prima_transient_port_comparison(
     source_port_index: int,
     boundary_meta: list[dict],
     reduction_method: str,
+    *,
+    source_name: str = "basal_q75",
+    pulse_width_ms: float = 10.0,
+    pulse_start_ms: float = 2.0,
+    pulse_current_pa: float = 10.0,
+    dt_ms: float = 0.1,
+    duration_ms: float = 20.0,
 ) -> list[dict]:
-    """Compare PRIMA and full Hines port traces under the same current pulse."""
-    dt_s = 0.1e-3
-    duration_s = 20e-3
-    steps = round(duration_s / dt_s)
-    pulse_start_s = 2e-3
-    pulse_end_s = 12e-3
-    pulse_current_a = 10e-12
+    """Compare reduced and full Hines port traces for one named current pulse."""
+    if isinstance(source_port_index, bool) or not isinstance(source_port_index, int):
+        raise TypeError("source_port_index must be an integer")
+    if not 0 <= source_port_index < len(boundary_indices):
+        raise IndexError("source_port_index is outside the retained port set")
+    values = np.asarray(
+        [pulse_width_ms, pulse_start_ms, pulse_current_pa, dt_ms, duration_ms],
+        dtype=float,
+    )
+    if not np.all(np.isfinite(values)):
+        raise ValueError("transient settings must be finite")
+    if pulse_width_ms <= 0.0 or pulse_start_ms < 0.0 or pulse_current_pa <= 0.0:
+        raise ValueError("pulse width/current must be positive and pulse start nonnegative")
+    if dt_ms <= 0.0 or duration_ms <= 0.0:
+        raise ValueError("transient dt and duration must be positive")
+    dt_s = dt_ms * 1e-3
+    duration_s = duration_ms * 1e-3
+    steps_float = duration_s / dt_s
+    steps = round(steps_float)
+    if not np.isclose(steps_float, steps, rtol=0.0, atol=1e-10):
+        raise ValueError("duration_ms must be an integer multiple of dt_ms")
+    pulse_start_s = pulse_start_ms * 1e-3
+    pulse_end_s = pulse_start_s + pulse_width_ms * 1e-3
+    if pulse_end_s > duration_s:
+        raise ValueError("pulse must end no later than the transient duration")
+    pulse_current_a = pulse_current_pa * 1e-12
+    scenario_id = f"{source_name}_pulse{pulse_width_ms:g}ms"
     reversal_v = tree.parameters.e_leak_v
     full_voltage = np.full(tree.n_compartments, reversal_v, dtype=float)
     reduced_state = np.zeros(reduced_model.order, dtype=float)
@@ -180,7 +216,9 @@ def build_prima_transient_port_comparison(
             full_current[boundary_indices[source_port_index]] = pulse_current_a
             port_current[source_port_index] = pulse_current_a
         full_voltage = tree.step_passive(full_voltage, dt_s, full_current)
-        reduced_state = reduced_model.step_backward_euler(reduced_state, dt_s, port_current)
+        reduced_state = reduced_model.step_backward_euler(
+            reduced_state, dt_s, port_current
+        )
         full_trace[step, :] = full_voltage[boundary_indices] - reversal_v
         reduced_trace[step, :] = reduced_model.port_voltages(reduced_state)
 
@@ -194,19 +232,29 @@ def build_prima_transient_port_comparison(
         rows.append({
             "metric": "transient_port",
             "reduction_method": reduction_method,
+            "model_id": reduction_method,
+            "reduced_order": reduced_model.order,
+            "scenario_id": scenario_id,
+            "source_name": source_name,
+            "pulse_width_ms": pulse_width_ms,
             "frequency_hz": "",
             "port_index": port_index,
             "port_swc_id": meta["node_id"],
             "port_roles": meta["roles"],
-            "transient_dt_ms": dt_s * 1e3,
-            "transient_duration_ms": duration_s * 1e3,
-            "transient_pulse_start_ms": pulse_start_s * 1e3,
-            "transient_pulse_end_ms": pulse_end_s * 1e3,
-            "transient_current_pA": pulse_current_a * 1e12,
-            "transient_port_nrmse_pct": 100.0 * float(np.linalg.norm(absolute_error)) / denominator,
+            "transient_dt_ms": dt_ms,
+            "transient_duration_ms": duration_ms,
+            "transient_pulse_start_ms": pulse_start_ms,
+            "transient_pulse_end_ms": pulse_start_ms + pulse_width_ms,
+            "transient_current_pA": pulse_current_pa,
+            "transient_port_nrmse_pct": (
+                100.0 * float(np.linalg.norm(absolute_error)) / denominator
+            ),
             "transient_max_abs_error_mV": float(np.max(np.abs(absolute_error))) * 1e3,
             "transient_full_peak_mV": reference_peak * 1e3,
-            "transient_peak_relative_error_pct": 100.0 * float(np.max(np.abs(absolute_error))) / max(reference_peak, 1e-30),
+            "transient_peak_relative_error_pct": (
+                100.0 * float(np.max(np.abs(absolute_error)))
+                / max(reference_peak, 1e-30)
+            ),
         })
 
     all_reference = full_trace.ravel()
@@ -214,19 +262,30 @@ def build_prima_transient_port_comparison(
     rows.append({
         "metric": "transient_all_ports",
         "reduction_method": reduction_method,
+        "model_id": reduction_method,
+        "reduced_order": reduced_model.order,
+        "scenario_id": scenario_id,
+        "source_name": source_name,
+        "pulse_width_ms": pulse_width_ms,
         "frequency_hz": "",
         "port_index": "",
         "port_swc_id": "",
         "port_roles": "all_retained_ports",
-        "transient_dt_ms": dt_s * 1e3,
-        "transient_duration_ms": duration_s * 1e3,
-        "transient_pulse_start_ms": pulse_start_s * 1e3,
-        "transient_pulse_end_ms": pulse_end_s * 1e3,
-        "transient_current_pA": pulse_current_a * 1e12,
-        "transient_port_nrmse_pct": 100.0 * float(np.linalg.norm(all_error)) / max(float(np.linalg.norm(all_reference)), 1e-30),
+        "transient_dt_ms": dt_ms,
+        "transient_duration_ms": duration_ms,
+        "transient_pulse_start_ms": pulse_start_ms,
+        "transient_pulse_end_ms": pulse_start_ms + pulse_width_ms,
+        "transient_current_pA": pulse_current_pa,
+        "transient_port_nrmse_pct": (
+            100.0 * float(np.linalg.norm(all_error))
+            / max(float(np.linalg.norm(all_reference)), 1e-30)
+        ),
         "transient_max_abs_error_mV": float(np.max(np.abs(all_error))) * 1e3,
         "transient_full_peak_mV": float(np.max(np.abs(all_reference))) * 1e3,
-        "transient_peak_relative_error_pct": 100.0 * float(np.max(np.abs(all_error))) / max(float(np.max(np.abs(all_reference))), 1e-30),
+        "transient_peak_relative_error_pct": (
+            100.0 * float(np.max(np.abs(all_error)))
+            / max(float(np.max(np.abs(all_reference))), 1e-30)
+        ),
     })
     return rows
 
@@ -289,6 +348,25 @@ def main() -> None:
             expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
         ),
     }
+    prima_extended_order_sweep_models = {
+        "four_shift_order56_control": prima_multishift_model,
+        "six_shift_order28": prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=28,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+        ),
+        "six_shift_order56": prima_multishift_extended_model,
+        "six_shift_order84": prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=84,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+        ),
+    }
+    for model_id, projected_model in prima_extended_order_sweep_models.items():
+        np.linalg.cholesky(projected_model.conductance_matrix_s)
+        np.linalg.cholesky(projected_model.capacitance_matrix_f)
+        if projected_model.order >= cable.n_compartments:
+            raise RuntimeError(
+                f"{model_id} did not reduce the full compartment state count"
+            )
     if prima_model.order >= cable.n_compartments:
         raise RuntimeError("PRIMA audit did not reduce the full compartment state count")
 
@@ -320,6 +398,7 @@ def main() -> None:
     prima_multishift_path = results_dir / f"{prefix}human_passive_prima_multishift_reduction_2026-11-22.csv"
     prima_multishift_extended_path = results_dir / f"{prefix}human_passive_prima_multishift_extended_reduction_2026-11-22.csv"
     prima_sweep_path = results_dir / f"{prefix}human_passive_prima_multishift_order_sweep_2026-11-22.csv"
+    prima_extended_sweep_path = results_dir / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
     localization_rows: list[dict] = []
@@ -327,6 +406,7 @@ def main() -> None:
     prima_multishift_rows: list[dict] = []
     prima_multishift_extended_rows: list[dict] = []
     prima_sweep_rows: list[dict] = []
+    prima_extended_sweep_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
     maximum_neuron_reciprocity_error_pct = 0.0
@@ -379,6 +459,55 @@ def main() -> None:
             "neuron_impedance_frobenius_error_pct": relative_frobenius_pct(z_prima_multi_extended, z_neuron),
             "neuron_admittance_frobenius_error_pct": relative_frobenius_pct(y_prima_multi_extended, y_neuron),
         })
+        for model_id, sweep_model in prima_extended_order_sweep_models.items():
+            z_extended_sweep = (
+                z_prima_multi if model_id == "four_shift_order56_control"
+                else z_prima_multi_extended if model_id == "six_shift_order56"
+                else sweep_model.impedance_matrix(frequency_hz)
+            )
+            y_extended_sweep = (
+                y_prima_multi if model_id == "four_shift_order56_control"
+                else y_prima_multi_extended if model_id == "six_shift_order56"
+                else np.linalg.solve(
+                    z_extended_sweep, np.eye(len(boundary_ids))
+                )
+            )
+            shift_set = (
+                PRIMA_MULTI_SHIFT_HZ
+                if model_id == "four_shift_order56_control"
+                else PRIMA_MULTI_SHIFT_EXTENDED_HZ
+            )
+            requested_order = (
+                56 if model_id == "four_shift_order56_control"
+                else int(model_id.rsplit("order", 1)[1])
+            )
+            prima_extended_sweep_rows.append({
+                "metric": "frequency_response",
+                "model_id": model_id,
+                "morphology_label": MORPHOLOGY_LABEL,
+                "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+                "frequency_hz": frequency_hz,
+                "full_compartment_order": cable.n_compartments,
+                "requested_order": requested_order,
+                "prima_order": sweep_model.order,
+                "state_count_reduction_pct": (
+                    100.0 * (1.0 - sweep_model.order / cable.n_compartments)
+                ),
+                "expansion_frequencies_hz": ";".join(str(x) for x in shift_set),
+                "impedance_vs_hines_pct": relative_frobenius_pct(
+                    z_extended_sweep, z_amsn
+                ),
+                "admittance_vs_hines_pct": relative_frobenius_pct(
+                    y_extended_sweep, y_amsn_schur
+                ),
+                "impedance_vs_neuron_pct": relative_frobenius_pct(
+                    z_extended_sweep, z_neuron
+                ),
+                "admittance_vs_neuron_pct": relative_frobenius_pct(
+                    y_extended_sweep, y_neuron
+                ),
+                "neuron_impedance_condition": neuron_condition,
+            })
         prima_multishift_rows.append({
             "metric": "frequency_response",
             "reduction_method": "multi_shift_positive_real",
@@ -599,6 +728,40 @@ def main() -> None:
     write_csv(prima_multishift_extended_path, prima_multishift_extended_rows)
     write_csv(prima_sweep_path, prima_sweep_rows)
 
+    injection_ids = dict(injections)
+    required_sources = {source_name for source_name, _ in TRANSIENT_SCENARIOS}
+    missing_sources = required_sources.difference(injection_ids)
+    if missing_sources:
+        raise RuntimeError(
+            f"transient scenarios reference unmapped injection sources: {sorted(missing_sources)}"
+        )
+    for model_id, sweep_model in prima_extended_order_sweep_models.items():
+        if tuple(sweep_model.port_indices) != tuple(boundary_indices):
+            raise RuntimeError(f"{model_id} retained-port order does not match the audit")
+        for source_name, pulse_width_ms in TRANSIENT_SCENARIOS:
+            source_id = injection_ids[source_name]
+            source_port_index = boundary_ids.index(source_id)
+            prima_extended_sweep_rows.extend(build_prima_transient_port_comparison(
+                cable,
+                sweep_model,
+                boundary_indices,
+                source_port_index,
+                boundary_meta,
+                model_id,
+                source_name=source_name,
+                pulse_width_ms=pulse_width_ms,
+            ))
+    expected_extended_rows = len(prima_extended_order_sweep_models) * (
+        len(FREQUENCIES_HZ)
+        + len(TRANSIENT_SCENARIOS) * (len(boundary_indices) + 1)
+    )
+    if len(prima_extended_sweep_rows) != expected_extended_rows:
+        raise RuntimeError(
+            f"expected {expected_extended_rows} extended order/transient rows, "
+            f"got {len(prima_extended_sweep_rows)}"
+        )
+    write_csv(prima_extended_sweep_path, prima_extended_sweep_rows)
+
     max_admittance_error = max(
         float(row["port_admittance_frobenius_error_pct"]) for row in summary_rows
     )
@@ -638,6 +801,7 @@ def main() -> None:
     print(f"prima_multishift_reduction_csv={prima_multishift_path}; rows={len(prima_multishift_rows)}")
     print(f"prima_multishift_extended_reduction_csv={prima_multishift_extended_path}; rows={len(prima_multishift_extended_rows)}")
     print(f"prima_multishift_order_sweep_csv={prima_sweep_path}; rows={len(prima_sweep_rows)}; orders={tuple(prima_order_sweep_models)}")
+    print(f"prima_extended_order_transient_sweep_csv={prima_extended_sweep_path}; rows={len(prima_extended_sweep_rows)}; models={tuple(prima_extended_order_sweep_models)}; scenarios={len(TRANSIENT_SCENARIOS)}")
     max_multi_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     multi_transient = next(row for row in prima_multishift_rows if row["metric"] == "transient_all_ports")
@@ -661,6 +825,24 @@ def main() -> None:
         max_y_neuron = max(float(row["neuron_admittance_frobenius_error_pct"]) for row in subset)
         trace_sweep = next(row for row in prima_sweep_rows if row["metric"] == "transient_all_ports" and row["reduction_method"] == f"multi_shift_order_{order}")
         print("PRIMA_order_sweep=%d; max_Z_pct=%.12g; max_Y_pct=%.12g; max_Z_vs_NEURON_pct=%.12g; max_Y_vs_NEURON_pct=%.12g; transient_all_ports_NRMSE_pct=%.12g" % (order, max_z_sweep, max_y_sweep, max_z_neuron, max_y_neuron, trace_sweep["transient_port_nrmse_pct"]))
+    for model_id in prima_extended_order_sweep_models:
+        frequency_subset = [
+            row for row in prima_extended_sweep_rows
+            if row["metric"] == "frequency_response" and row["model_id"] == model_id
+        ]
+        transient_subset = [
+            row for row in prima_extended_sweep_rows
+            if row["metric"] == "transient_all_ports" and row["reduction_method"] == model_id
+        ]
+        max_z_neuron = max(float(row["impedance_vs_neuron_pct"]) for row in frequency_subset)
+        max_y_neuron = max(float(row["admittance_vs_neuron_pct"]) for row in frequency_subset)
+        max_transient = max(float(row["transient_port_nrmse_pct"]) for row in transient_subset)
+        print(
+            f"EXTENDED_SWEEP={model_id}; "
+            f"max_Z_vs_NEURON_pct={max_z_neuron:.12g}; "
+            f"max_Y_vs_NEURON_pct={max_y_neuron:.12g}; "
+            f"max_all_port_transient_NRMSE_pct={max_transient:.12g}"
+        )
     max_prima_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_rows if row["metric"] == "frequency_response")
     max_multi_z_neuron = max(float(row["neuron_impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y_neuron = max(float(row["neuron_admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")

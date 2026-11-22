@@ -5,6 +5,7 @@
 **Work branch:** `research/prima-high-frequency-neuron-validation-2026-11-22`  
 **Pull request:** https://github.com/Nolane-x/Nghien-cuu/pull/1  
 **Implementation commit at log creation:** 11ccddba3adc7f3f0e25ee3608ed8ba0432a9722  
+**Merged main commit:** c7b61733c4dc3aa744509218640d774e953ee20d  
 **Status:** implementation staged for validation; do not treat the experiment as passed.
 
 ## Research question
@@ -57,7 +58,8 @@ The PR-specific run is now verified; this supersedes the earlier pending-validat
 
 - Schur/PRIMA matrix workflow [44965325079](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079): **6/6 morphology × NEURON-mesh jobs passed**. Every job ran **109 tests**, validated source/probe mapping and completed the 10-frequency, seven-port comparison.
 - Separate passive frequency-domain audit [44965325128](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325128): **3/3 jobs passed**.
-- Core CI [44965325088](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088): regular test/compile/example jobs passed on Python 3.12 and 3.13. Its two longer NEURON cross-validation jobs were still in progress when this log was updated; do not call the whole Core CI complete yet.
+- Core CI [44965325088](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088): **4/4 jobs passed**, including regular test/compile/example jobs and both NEURON cross-validation jobs on Python 3.12 and 3.13.
+- Post-merge main Core CI [44965966066](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966066), Schur/PRIMA [44965966021](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966021), fine-mesh [44965966005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966005) and frequency audit [44965965999](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965965999): all successful.
 - All six extended-basis projected conductance/capacitance matrices passed the Cholesky checks. The maximum NEURON port-impedance condition number was 91.263.
 - Across the six configurations, worst direct-NEURON impedance error fell from 0.527300% to 0.216765%; worst direct-NEURON admittance error fell from 0.404489% to 0.211010%.
 - Worst PRIMA-vs-full-Hines impedance/admittance errors fell from 0.416133%/0.432732% to 0.113574%/0.124064%.
@@ -66,7 +68,11 @@ The PR-specific run is now verified; this supersedes the earlier pending-validat
 
 The 10 kHz protocol is validated only for the passive linear RC network, the three available morphology records and the seven retained ports. Full Hines remains canonical.
 
-## Interpretation limits## Interpretation limits
+## Next experiment
+
+The next experiment compares the four-shift order-56 control with six-shift 10 kHz PRIMA at orders 28/56/84, and measures six transient scenarios: three injection locations (soma, basal q75 and apical q75) × two pulse widths (2 ms and 10 ms). This tests whether the 10 kHz basis is robust across model order and input location, rather than only the original basal-q75 10 ms pulse.
+
+## Interpretation limits
 
 The experiment covers only the linear passive RC subsystem and the selected seven ports in the three existing morphology records. It does not validate active ion channels, synapses, calcium, gene expression, metabolism, plasticity or biological realism. The passive parameter settings remain numerical defaults rather than population-fitted physiology. The NMO_290988 morphology is partial and must not be described as a healthy-control neuron. The full Hines solver remains canonical.
 
@@ -77,6 +83,6 @@ The experiment covers only the linear passive RC subsystem and the selected seve
 3. If reciprocity, Cholesky, matrix conditioning, or transient checks fail, preserve the failure and diagnose it before further use.
 4. Do not switch the default solver or merge based solely on lower full-Hines residuals.
 
-## Next concrete action
+## Completed follow-up
 
-Run the PR's Core CI and six morphology × NEURON-mesh comparison jobs. Inspect job logs and artifacts; then add the actual numerical result table and a follow-up checkpoint. If the pull-request workflow is not scheduled automatically, use the repository Actions UI to dispatch the named workflows against this branch.
+The order/input/pulse-width sweep is complete and documented in [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](../amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). See [its dedicated research log](RESEARCH_LOG_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md) and [handoff](../HANDOFF_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md). PR #2 passed Core CI 4/4, Schur/PRIMA 6/6 and frequency audit 3/3. Its result rejects order 28, keeps the four-shift order-56 default, and retains six-shift order 84 as an optional high-fidelity passive preset.

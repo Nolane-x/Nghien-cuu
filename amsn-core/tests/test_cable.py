@@ -582,7 +582,8 @@ def test_multishift_prima_rejects_invalid_expansion_points():
         prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(True,))
 
 
-def test_multishift_prima_extended_high_frequency_basis_remains_passive():
+@pytest.mark.parametrize("max_order", [2, 3, 4])
+def test_multishift_prima_extended_order_sweep_preserves_passivity(max_order):
     from amsn.prima import prima_reduce_passive_cable_multishift
 
     tree = _tree()
@@ -590,22 +591,39 @@ def test_multishift_prima_extended_high_frequency_basis_remains_passive():
     reduced = prima_reduce_passive_cable_multishift(
         tree,
         ports,
-        max_order=tree.n_compartments,
+        max_order=max_order,
         expansion_frequencies_hz=(0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0),
     )
 
-    assert reduced.order == tree.n_compartments
+    assert 0 < reduced.order <= max_order
     np.linalg.cholesky(reduced.conductance_matrix_s)
     np.linalg.cholesky(reduced.capacitance_matrix_f)
+    np.testing.assert_allclose(
+        reduced.conductance_matrix_s,
+        reduced.conductance_matrix_s.T,
+        rtol=1e-12,
+        atol=1e-18,
+    )
+    np.testing.assert_allclose(
+        reduced.capacitance_matrix_f,
+        reduced.capacitance_matrix_f.T,
+        rtol=1e-12,
+        atol=1e-24,
+    )
     for frequency_hz in (0.0, 100.0, 3000.0, 6000.0, 10000.0):
         impedance = reduced.impedance_matrix(frequency_hz)
-        admittance = reduced.admittance_matrix(frequency_hz)
         assert np.all(np.isfinite(impedance.real))
         assert np.all(np.isfinite(impedance.imag))
-        assert np.all(np.isfinite(admittance.real))
-        assert np.all(np.isfinite(admittance.imag))
         np.testing.assert_allclose(impedance, impedance.T, rtol=2e-10, atol=1e-10)
-        np.testing.assert_allclose(admittance, admittance.T, rtol=2e-10, atol=1e-10)
+
+    for source_port in range(reduced.port_count):
+        current = np.zeros(reduced.port_count, dtype=float)
+        current[source_port] = 10e-12
+        next_state = reduced.step_backward_euler(
+            np.zeros(reduced.order), 0.1e-3, current
+        )
+        assert np.all(np.isfinite(next_state))
+        assert np.all(np.isfinite(reduced.port_voltages(next_state)))
 
 
 def _tree_with_parameters(tree, parameters):

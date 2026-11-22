@@ -5,7 +5,7 @@
 **Pull request:** https://github.com/Nolane-x/Nghien-cuu/pull/1  
 **Schur/PRIMA workflow:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079 — 6/6 jobs passed  
 **Frequency audit:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325128 — 3/3 jobs passed  
-**Core CI:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088 — Python 3.12/3.13 unit-test jobs passed; NEURON cross-validation jobs were still running when this report was prepared.
+**Core CI:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088 — 4/4 jobs passed, including Python 3.12/3.13 tests and both NEURON cross-validation jobs. Post-merge main checks also passed: Core CI [44965966066](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966066), Schur/PRIMA [44965966021](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966021), fine-mesh [44965966005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966005), frequency audit [44965965999](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965965999).
 
 ## 1. Research question
 
@@ -102,3 +102,8 @@ The artifacts contain the raw 7×7 port matrices, Schur summaries, port-localiza
 This validates a passive, linear RC reduction at seven selected ports. It does not validate active ion channels, nonlinear synapses, calcium, metabolism, gene regulation, plasticity, cognition or biological realism. The passive parameter values remain numerical reference parameters, not population-fitted human physiological distributions. NMO_290988 is a partial dendritic reconstruction without an axon and must not be described as a healthy-control morphology.
 
 Next, compare order 56 and 84 using both the four-shift and six-shift basis, expand the retained port set, and test multiple pulse widths/input locations. Only after those checks should a broader operating-band recommendation be made.
+
+
+## Follow-up: order and transient robustness
+
+The subsequent experiment is documented in [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). It compares four-shift order 56 with six-shift orders 28/56/84 and six source/width scenarios across three morphologies and two NEURON mesh caps. The results reject order 28, retain order 56 as the default/control, and identify six-shift order 84 as an optional high-fidelity passive RC preset. The apical-q90 output port is the recurring transient error location.
