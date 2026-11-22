@@ -41,8 +41,9 @@ The Allen Cell Types collection is associated with the Brain Image Library colle
 - SWC branch-point count: 48 (matches NeuroMorpho's pre-computed morphology metadata).
 - Path length from SWC: 10,484.9066 µm versus NeuroMorpho's reported 10,476.9 µm (+0.076%).
 - Maximum path distance from SWC: 620.4322 µm versus reported 620.43 µm (within 0.001%).
-- The raw frustum-surface sum is 22,586.1838 µm², but it includes seven soma-attached **virtual wire** edges (1,261.9907 µm²). NeuroMorpho's three-point soma convention uses zero-resistance virtual wires to connect neurite trees to the soma; these are not physical membrane.
-- After removing those virtual-wire edge areas, the AMSN normalized electrical surface is 21,324.1932 µm². This is 0.2008% below NeuroMorpho's pre-computed Total Surface (21,367.1 µm²). The report preserves both values and the method difference rather than presenting the raw sum as electrical membrane area.
+- The raw frustum-surface sum is 22,586.1838 µm². It includes seven soma-attached **virtual wire** edges (1,261.9907 µm²), which are zero-resistance connectors, and two three-point soma outline frusta (201.0083 µm²), which are geometric markers replaced by the spherical soma.
+- Exact electrical-area accounting is: raw frusta − virtual wire edges − three-point soma outline edges + spherical soma membrane = **21,324.6492 µm²**. This exactly matches the AMSN cable compartment area sum to numerical precision and is 0.1987% below NeuroMorpho's pre-computed Total Surface (21,367.1 µm²).
+- The earlier 21,324.1932 µm² calculation removed the seven wires but did not replace the two soma outline edges with the sphere; the 0.45596 µm² assertion failure was the difference between those outline frusta and the spherical soma area. The strict identity now includes all four terms.
 - SWC SHA-256: `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`.
 
 These are geometry/import consistency checks, not a biological surface-area validation or cell-type population inference.

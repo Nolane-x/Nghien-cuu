@@ -100,7 +100,30 @@ def main() -> None:
         ) * math.hypot(edge_length, child.radius_um - parent.radius_um)
     virtual_wire_area_um2 = sum(virtual_wire_edge_areas.values())
     raw_frustum_area_um2 = summary.estimated_membrane_area_um2
-    source_normalized_area_um2 = raw_frustum_area_um2 - virtual_wire_area_um2
+    # The three soma outline SWC rows are geometric markers, not neurite
+    # frusta in the normalized electrical tree. Replace their two root-edge
+    # frusta with the spherical soma membrane area used by Import3D/AMSN.
+    soma_outline_edge_areas = {}
+    for node_id in soma_normalization.soma_node_ids:
+        if node_id == soma_normalization.root_id:
+            continue
+        child = morphology.nodes[node_id]
+        parent = morphology.nodes[child.parent_id]
+        edge_length = math.dist(
+            (child.x_um, child.y_um, child.z_um),
+            (parent.x_um, parent.y_um, parent.z_um),
+        )
+        soma_outline_edge_areas[node_id] = math.pi * (
+            child.radius_um + parent.radius_um
+        ) * math.hypot(edge_length, child.radius_um - parent.radius_um)
+    soma_outline_area_um2 = sum(soma_outline_edge_areas.values())
+    spherical_soma_area_um2 = soma_normalization.root_soma_area_um2
+    source_normalized_area_um2 = (
+        raw_frustum_area_um2
+        - virtual_wire_area_um2
+        - soma_outline_area_um2
+        + spherical_soma_area_um2
+    )
 
     path_distances = reference.path_distances_um(morphology)
     max_path_distance_um = max(path_distances.values())
@@ -261,7 +284,9 @@ def main() -> None:
         "swc_raw_frustum_area_including_virtual_soma_wires_um2": raw_frustum_area_um2,
         "import3d_virtual_soma_wire_node_ids": list(soma_normalization.wire_attachment_node_ids),
         "import3d_virtual_soma_wire_area_um2": virtual_wire_area_um2,
-        "source_frustum_area_after_virtual_wire_removal_um2": source_normalized_area_um2,
+        "three_point_soma_outline_edge_area_um2": soma_outline_area_um2,
+        "spherical_soma_membrane_area_um2": spherical_soma_area_um2,
+        "source_normalized_area_after_wire_and_soma_replacement_um2": source_normalized_area_um2,
         "amsn_normalized_electrical_area_um2": electrical_area_um2,
         "normalized_electrical_area_difference_vs_neuromorpho_pct": surface_difference_pct,
         "normalized_area_identity_error_um2": area_identity_error_um2,

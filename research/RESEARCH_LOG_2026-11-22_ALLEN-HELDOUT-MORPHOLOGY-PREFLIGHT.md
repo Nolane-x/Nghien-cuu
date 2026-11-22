@@ -49,3 +49,14 @@ Independent parsing of the artifact confirmed 7,287 records; type counts {1:3, 2
 The first preflight report's raw SWC frustum-area sum (22,586.1838 µm²) includes seven soma-attached virtual-wire edges. The official NeuroMorpho three-point soma convention uses these as virtual zero-resistance wires to connect neurite trees to the soma, so they must not be counted as electrical membrane area. Removing the seven wire-edge frusta (1,261.9907 µm²) yields a normalized AMSN area of 21,324.1932 µm², 0.2008% below NeuroMorpho's precomputed Total Surface of 21,367.1 µm². The preflight script is being tightened to assert this accounting identity and report raw and normalized areas separately.
 
 The source SWC itself is unchanged. The numerical scope remains passive linear RC, and the morphology remains a single epilepsy surgical specimen with incomplete axon.
+
+
+## Follow-up correction — three-point soma area normalization
+
+The first strict area-identity attempt failed by 0.455961904 µm². Investigation of `SWCMorphology.to_cable_tree()` showed the missing term: its three-point soma rule collapses the two soma outline SWC points and replaces their two frustum areas (201.008292847 µm²) with a spherical soma area (201.464254751 µm²). The earlier accounting removed the seven virtual wire edge areas but had not included this soma-outline replacement.
+
+The corrected identity is:
+
+`raw SWC frusta - virtual soma wire frusta - three-point soma outline frusta + spherical soma membrane`
+
+Numerically this is 21,324.6491556581 µm², matching the actual AMSN `CableTree.area_m2.sum()` to approximately 3e-11 µm². It is 0.1986739% below the NeuroMorpho metadata Total Surface of 21,367.1 µm². The raw source SWC and its SHA-256 do not change.
