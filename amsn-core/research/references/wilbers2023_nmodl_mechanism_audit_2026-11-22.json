@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "status": "source_transcribed_reviewed_not_reproduced",
+  "runtime_eligible": false,
+  "source_manifest": "wilbers2023_dataverse_source_manifest_2026-11-22.json",
+  "sodium": {
+    "source_path": "Figures5_6/MOD/na_human.mod",
+    "sha256": "e23ed354aa683639bfd2ffdeae4b2544adf8c5cce6f8a4adbada42549310f2fd",
+    "state_variables": [
+      "m",
+      "h"
+    ],
+    "conductance_equation": "gna = tadj * gbar * m^3 * h",
+    "current_equation": "ina = 1e-4 * gna * (v - ena)",
+    "gbar_default": {
+      "value": 40,
+      "unit": "pS/um^2",
+      "runtime_default": false
+    },
+    "reference_temperature_c": 25,
+    "q10": 2.3,
+    "table_lookup": {
+      "enabled": true,
+      "points": 199,
+      "voltage_range_mV": [
+        -120,
+        100
+      ]
+    },
+    "activation": {
+      "steady_state": "minf = 1/(1+exp((th_act_inf-vm)/q_act_inf))",
+      "tau": "mtau = 1/[tadj*(trap0(vm,tha,Ra,qa)+trap0(-vm,-tha,Rb,qa))]"
+    },
+    "inactivation": {
+      "shifted_voltage": "vs=vm-vShift_inact",
+      "steady_state": "hinf=1/(1+exp((vs-th_inact_inf)/q_inact_inf))",
+      "tau": "htau = 1/[tadj*(trap0(vs,thi1,Rd,qi1)+trap0(-vs,-thi2,Rg,qi2))]"
+    },
+    "fitting": {
+      "script": "Figures5_6/Channel_fitting/fit_na_hh_cma_human.py",
+      "script_sha256": "ccb66f0d63514ba8eae60b17c61394630df15238cfbf67ddfb62c0d6a80c4f27",
+      "method": "multi-objective CMA strategy implemented through DEAP",
+      "voltage_clamp_temperature_c": 25,
+      "voltage_steps_mV": "-80 to +10 in 5 mV increments",
+      "command": "2 ms holding at -120 mV, then 10 ms test voltage",
+      "geometry": "single 10 um diameter section; Ra=200 ohm cm; Cm=1 uF/cm^2",
+      "script_final_parameter_dictionary_matches_distributed_mod": true
+    }
+  },
+  "potassium": {
+    "source_path": "Figures5_6/MOD/k_human.mod",
+    "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063",
+    "state_variables": [
+      "m",
+      "h1",
+      "h2"
+    ],
+    "conductance_equation": "gk=gbar*m^2*[prop_inact*(1-prop_h2)*h1 + prop_inact*prop_h2*h2 + (1-prop_inact)]",
+    "current_equation": "ik=1e-4*gk*(v-ek)",
+    "gbar_default": {
+      "value": 40,
+      "unit": "pS/um^2",
+      "runtime_default": false
+    },
+    "reference_temperature_c": 34,
+    "q10": 2.3,
+    "mixture_parameters": {
+      "prop_inact": 0.85,
+      "prop_h2": 0.4,
+      "h2tau_inact_ms": 450,
+      "h2tau_inact_rec_ms": 2789.7929428108187,
+      "inact_rate_factor": 1
+    },
+    "table_lookup": {
+      "enabled": false,
+      "reason": "The TABLE directive is commented out in this K MOD file."
+    },
+    "fitting": {
+      "script": "Figures5_6/Channel_fitting/fit_k_hh_cma_human.py",
+      "script_sha256": "842cbfffc8031b8fa03044cd862494474f55ccc2ac2493a2cf5bc3a1fa99958c",
+      "method": "multi-objective CMA strategy implemented through DEAP",
+      "voltage_clamp_temperature_c": 34,
+      "test_steps_mV": "-110 to +50 in 10 mV increments",
+      "command": "20 ms at -140 mV, 500 ms test, 50 ms at +60 mV, 100 ms at -140 mV",
+      "recovery": "2 ms at -120 mV, 5000 ms at +40 mV, variable recovery at -80 mV, then 5 ms test at +40 mV",
+      "intermediate_inactivation_fit_matches_mod": true,
+      "later_final_best_fit_matches_mod": false,
+      "final_fit_discrepancy": "The later final-best-fit dict differs from the intermediate fit and distributed MOD in thi1, thi2, qi1, qi2, Rd and Rg. No snapshot is selected.",
+      "h12factor_note": "The script assigns h12factor=10.5, but distributed MOD comments out h2tau=h1tau*h12factor and instead selects fixed h2tau values."
+    }
+  },
+  "separate_current_clamp_variants": {
+    "sodium": {
+      "path": "Figures5_6/Current_clamp/mod/na_human.mod",
+      "id": 318563,
+      "sha256": "4dd6995c3fd0614fe7cb92a6940a393d8f92d494b4810d0f3c2ed7dbf424592b",
+      "difference": "Adds GLOBAL gbar and na_human_ratio scaling."
+    },
+    "potassium": {
+      "path": "Figures5_6/Current_clamp/mod/k_human.mod",
+      "id": 318566,
+      "sha256": "96095b416f9984eb98f17df17e5b5d066c02709fb498834bfc89310a096700ba",
+      "difference": "Adds GLOBAL gbar and k_human_ratio scaling."
+    }
+  },
+  "fitting_warnings": {
+    "current_clamp_gbar": {
+      "helper": "Figures5_6/Current_clamp/cc_tools.py",
+      "helper_sha256": "3215473c16162dc81f73cb60da161014f370f3acc052b7cae3c1c416d321f241",
+      "method": "Powell minimization over gbarNa/gbarK, bounds 20–150",
+      "target": "50:50 average of human and mouse median AP amplitude, upstroke and downstroke",
+      "implication": "The fitted conductance densities cannot be described as human-only estimates."
+    },
+    "potassium_recovery": "K_IV_ss uses a recovery target of 236.82434540670081 ms explicitly described in source as the mean of human and mouse values."
+  },
+  "source_code_warnings": [
+    {
+      "id": "trap0_branch_and_limit_mismatch",
+      "severity": "high_priority_reproduction_gate",
+      "files": [
+        "Figures5_6/MOD/na_human.mod",
+        "Figures5_6/MOD/k_human.mod"
+      ],
+      "observed": "Branch checks fabs((v+th)/q), while main quotient uses (v-th)/(1-exp(-(v-th)/q)); commented intended limit is a*q but active fallback is q*(1--(v-th)/q/2), omitting a.",
+      "issue": "At v=th the quotient has a removable 0/0 limit, but for nonzero th the branch condition does not select it. The active fallback is also not the standard a*q limit.",
+      "status": "Source-level warning only; exact impact on compiled NEURON mechanism and trajectories has not been tested.",
+      "next_test": "Compile original MOD; probe at v=th-epsilon, v=th, v=th+epsilon; compare with stable analytic reference and the published voltage-clamp protocols."
+    },
+    {
+      "id": "potassium_fit_snapshot_mismatch",
+      "severity": "high_priority_provenance_gate",
+      "status": "The intermediate K inactivation fit matches distributed MOD; later final-best-fit dict differs. Determine matching code release/revision before reuse."
+    }
+  ],
+  "execution_status": {
+    "selected_source_bytes_downloaded_read_sha256_checked": true,
+    "complete_archive_mirrored": false,
+    "raw_numeric_files_downloaded": false,
+    "original_nmodl_compiled_or_executed": false,
+    "voltage_clamp_or_ap_clamp_reproduced": false,
+    "mechanism_implemented_in_amsn": false,
+    "production_defaults_changed": false
+  }
+}

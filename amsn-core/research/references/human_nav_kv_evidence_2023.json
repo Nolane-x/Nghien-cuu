@@ -36,7 +36,7 @@
       "open_article_url": "https://pure.knaw.nl/ws/files/1125507062/Wilbers2023.pdf",
       "data_doi": "10.34894/L5J0SD",
       "data_landing_page": "https://research.vu.nl/en/datasets/data-for-human-voltage-gated-na-and-k-channel-properties-underlie/",
-      "data_access_status": "Dataset metadata and DOI verified; Dataverse archive files not downloaded, hashed, or inspected in this checkpoint.",
+      "data_access_status": "DataverseNL released version 3.0 and CC0-1.0 metadata verified (65 files); selected mechanism and Python source bytes downloaded/read and SHA-256 hashed in isolated session; raw numeric workbooks and AP-clamp trace matrix not downloaded; source files not vendored.",
       "cohort": {
         "subjects_n": 19,
         "age_years": {
@@ -183,8 +183,17 @@
       "source_notes": [
         "The study analyzes human supragranular pyramidal neurons and somatic voltage-gated channel properties.",
         "Somatic nucleated-patch recordings do not provide AIS-specific or axonal channel-density measurements.",
-        "The article's data files are listed under DataverseNL DOI 10.34894/L5J0SD, but the raw files have not yet been obtained and verified by AMSN."
-      ]
+        "The article's data files are listed under DataverseNL DOI 10.34894/L5J0SD, but the raw files have not yet been obtained and verified by AMSN.",
+        "DataverseNL version 3.0 is released under CC0-1.0 and contains 65 files; a curated file inventory with official SHA-1 and selected source SHA-256 values is stored in the AMSN research references.",
+        "The human Na/K MOD mechanisms and fitting scripts were inspected and hashed; they have not yet been compiled or reproduced in NEURON.",
+        "The human K fitting script has an unresolved mismatch between its intermediate inactivation-fit values and later final-best-fit dictionary.",
+        "Both canonical MOD files contain a source-level trap0 branch/limit inconsistency; its impact on compiled NEURON execution has not yet been measured."
+      ],
+      "mechanism_source_reference": {
+        "manifest": "wilbers2023_dataverse_source_manifest_2026-11-22.json",
+        "audit": "WILBERS_2023_DATAVERSE_AND_NMODL_SOURCE_AUDIT_2026-11-22.md",
+        "runtime_eligible": false
+      }
     },
     "eyal_2018": {
       "title": "Human Cortical Pyramidal Neurons: From Spines to Spikes via Models",

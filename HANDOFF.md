@@ -1,3 +1,15 @@
+## Latest research checkpoint — Wilbers Dataverse v3 / NMODL source audit (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22-HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- DataverseNL DOI 10.34894/L5J0SD: released version 3.0, CC0-1.0, 65 files.
+- Selected Na/K mechanisms and fitting source files were downloaded/read and SHA-256 hashed; see the [curated manifest](amsn-core/research/references/wilbers2023_dataverse_source_manifest_2026-11-22.json).
+- The source audit found a possible `trap0` branch/limit mismatch, an unresolved K fitting snapshot mismatch, and current-clamp gbar fitting against a 50:50 human/mouse target. These are reproduction blockers, not confirmed runtime failures.
+- Raw spreadsheets/AP-clamp traces remain undownloaded. Original mechanisms not compiled or reproduced. No runtime active-channel code or default changed.
+- PR #8 remains draft/open, unmerged and unchanged.
+
+---
+
 ## Latest research checkpoint — human somatic NaV/KV evidence baseline (22/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md). Separate evidence branch: `research/wilbers-human-active-channel-baseline-2026-11-22`, based on `7655389b9d95dc85a54f81185a037ab026e32300`.

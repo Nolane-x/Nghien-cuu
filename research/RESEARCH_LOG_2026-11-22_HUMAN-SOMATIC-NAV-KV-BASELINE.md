@@ -64,3 +64,22 @@ The passive AMSN core is already numerically grounded, while the existing HH smo
 ## Next concrete experiment
 
 Retrieve and hash the Wilbers DataverseNL archive; reconstruct the original human Na+ and K+ equations and reproduce the published voltage-clamp command protocols before building a separate opt-in human somatic channel mechanism. Only after single-cell traces and channel kinetics pass should an independently justified spatial distribution be explored.
+
+
+## Dataverse v3 / original NMODL source audit — 22/11/2026
+
+- Official DataverseNL API verified DOI 10.34894/L5J0SD, released v3.0, CC0-1.0, 65 files.
+- Selected Na/K mechanisms, human fitting drivers and supporting Python tools were read from public object-store downloads and SHA-256 hashed. The file manifest records IDs, bytes, official SHA-1 and observed SHA-256.
+- Na mechanism: m/h states, m^3h conductance, 25 C reference, Q10=2.3, active TABLE lookup. Its script's final parameter dictionary agrees with distributed MOD.
+- K mechanism: m/h1/h2 states, mixed fast/slow/non-inactivating populations, 34 C reference, Q10=2.3. Intermediate fit values match the MOD, but the later final-best-fit dictionary differs on six inactivation parameters; no snapshot is selected.
+- Separate current-clamp MOD variants add human-fraction conductance scaling; they are not byte-identical to the channel-comparison files.
+- Current-clamp gbar fitting uses a 50:50 human/mouse median AP target; it is not a human-only fit. K recovery fitting also uses a human/mouse average target.
+- Both canonical MOD files contain a potential trap0 branch/limit mismatch. This is a source-level warning, not yet a proven NEURON failure.
+- Raw spreadsheets and the 15.1 MB AP-clamp matrix were not downloaded. Selected source files were not vendored. Original mechanisms not compiled or executed; no pytest run is claimed; no runtime mechanism or default changed.
+
+Files added:
+- `amsn-core/research/references/wilbers2023_dataverse_source_manifest_2026-11-22.json`
+- `amsn-core/research/references/wilbers2023_nmodl_mechanism_audit_2026-11-22.json`
+- `amsn-core/research/WILBERS_2023_DATAVERSE_AND_NMODL_SOURCE_AUDIT_2026-11-22.md`
+
+Next gate: compile original MOD files with pinned NEURON, probe trap0 around singular points, reproduce voltage clamp and AP-clamp traces, and resolve the K fit snapshot before implementing a distinct opt-in human somatic channel.

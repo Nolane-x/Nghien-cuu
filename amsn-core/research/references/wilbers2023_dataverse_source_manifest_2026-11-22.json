@@ -1,0 +1,233 @@
+{
+  "schema_version": 1,
+  "record_id": "wilbers-2023-dataverse-source-manifest-v3",
+  "status": "selected_source_bytes_downloaded_read_and_sha256_checked; raw numeric files not downloaded; source files not vendored into AMSN",
+  "dataset": {
+    "doi": "10.34894/L5J0SD",
+    "persistent_id": "doi:10.34894/L5J0SD",
+    "dataset_id": 317867,
+    "version": 3,
+    "internal_version_id": 24561,
+    "version_state": "RELEASED",
+    "publication_date": "2022-11-10",
+    "last_updated_utc": "2022-12-13T12:12:16Z",
+    "license": {
+      "name": "CC0-1.0",
+      "uri": "https://creativecommons.org/publicdomain/zero/1.0/"
+    },
+    "total_file_count": 65,
+    "metadata_api": "https://dataverse.nl/api/datasets/317867/versions/3.0",
+    "file_metadata_api_template": "https://dataverse.nl/api/files/{file_id}",
+    "directory_index_api": "https://dataverse.nl/api/datasets/317867/dirindex/?version=3.0&folder=Figures5_6/MOD",
+    "download_api_template": "https://dataverse.nl/api/access/datafile/{path}/{file_id}",
+    "note": "Curated selected records, not a mirror of all 65 files."
+  },
+  "files": [
+    {
+      "path": "Figure1/data_fig1.xlsx",
+      "id": 318665,
+      "bytes": 2543679,
+      "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "sha1": "1dcc78336acaba23dffe5db8631006bebee71234",
+      "role": "Figure 1 numeric data workbook",
+      "downloaded": false
+    },
+    {
+      "path": "Figure2/Na_data_fig2.xlsx",
+      "id": 318668,
+      "bytes": 548562,
+      "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
+      "role": "Figure 2 sodium data workbook",
+      "downloaded": false
+    },
+    {
+      "path": "Figure2/K_data_fig2.xlsx",
+      "id": 318669,
+      "bytes": 302011,
+      "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
+      "role": "Figure 2 potassium data workbook",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/APclamp/H_wide.csv",
+      "id": 318541,
+      "bytes": 15095411,
+      "mime": "text/csv",
+      "sha1": "e209550ce746483de580459f7d8e40de91ec3667",
+      "role": "Large AP-clamp trace matrix; not downloaded",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/APclamp/amps_na.csv",
+      "id": 318540,
+      "bytes": 11751,
+      "mime": "text/csv",
+      "sha1": "75eb8b1b17becf31cac4d42869e44679bc9aa42a",
+      "role": "Derived AP-clamp sodium amplitudes",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/APclamp/amps_k.csv",
+      "id": 318543,
+      "bytes": 10297,
+      "mime": "text/csv",
+      "sha1": "7b7c6906d39fae9382f20deb310621fa48c07cf0",
+      "role": "Derived AP-clamp potassium amplitudes",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/MOD/na_human.mod",
+      "id": 318629,
+      "bytes": 3602,
+      "mime": "audio/mod",
+      "sha1": "b199d70c3d0e7a2e991fd8d26c54b1318e3c0970",
+      "role": "Canonical channel-comparison human Na mechanism",
+      "downloaded": true,
+      "sha256": "e23ed354aa683639bfd2ffdeae4b2544adf8c5cce6f8a4adbada42549310f2fd"
+    },
+    {
+      "path": "Figures5_6/MOD/k_human.mod",
+      "id": 318647,
+      "bytes": 4220,
+      "mime": "audio/mod",
+      "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
+      "role": "Canonical channel-comparison human K mechanism",
+      "downloaded": true,
+      "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/mod/na_human.mod",
+      "id": 318563,
+      "bytes": 3711,
+      "mime": "audio/mod",
+      "sha1": "ef158980e4bb427c97cfb8f379cd63006130b3b2",
+      "role": "Separate current-clamp Na variant with human-ratio scaling",
+      "downloaded": true,
+      "sha256": "4dd6995c3fd0614fe7cb92a6940a393d8f92d494b4810d0f3c2ed7dbf424592b"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/mod/k_human.mod",
+      "id": 318566,
+      "bytes": 4326,
+      "mime": "audio/mod",
+      "sha1": "622f7c9867e727a3dc7dea1f9ba2efbfb94cfd3a",
+      "role": "Separate current-clamp K variant with human-ratio scaling",
+      "downloaded": true,
+      "sha256": "96095b416f9984eb98f17df17e5b5d066c02709fb498834bfc89310a096700ba"
+    },
+    {
+      "path": "Figures5_6/Channel_fitting/fit_na_hh_cma_human.py",
+      "id": 326238,
+      "bytes": 3663,
+      "mime": "text/x-python-script",
+      "sha1": "3fac7eb5d25c2e02f6a3530d746de292548ef368",
+      "role": "Human sodium multi-objective kinetic fitting driver",
+      "downloaded": true,
+      "sha256": "ccb66f0d63514ba8eae60b17c61394630df15238cfbf67ddfb62c0d6a80c4f27"
+    },
+    {
+      "path": "Figures5_6/Channel_fitting/fit_k_hh_cma_human.py",
+      "id": 326237,
+      "bytes": 3875,
+      "mime": "text/x-python-script",
+      "sha1": "c819e59813acd70fae7af7151752bb1d8bbc7357",
+      "role": "Human potassium multi-objective kinetic fitting driver",
+      "downloaded": true,
+      "sha256": "842cbfffc8031b8fa03044cd862494474f55ccc2ac2493a2cf5bc3a1fa99958c"
+    },
+    {
+      "path": "Figures5_6/Channel_fitting/channel_kinetics.py",
+      "id": 326241,
+      "bytes": 2482,
+      "mime": "text/x-python-script",
+      "sha1": "a462fc4f9c725150c1bc83a9cf21c535d67c451f",
+      "role": "Kinetic comparison plotting driver",
+      "downloaded": true,
+      "sha256": "e77be00eacd0db88d518f71b720cec3fe748fed9c19dcd7fb5ea9ded2f3e2705"
+    },
+    {
+      "path": "Figures5_6/Channel_fitting/channel_tools.py",
+      "id": 326242,
+      "bytes": 35609,
+      "mime": "text/x-python-script",
+      "sha1": "615595a270c6170987757cd35743f5d5b5b2af0e",
+      "role": "Voltage-clamp and fitting helper library",
+      "downloaded": true,
+      "sha256": "1b9de7b4d5642633b3a8666bbbed4fd7d17b41bb6be4b4bcb1199a3fce534aba"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/AP1comparison.csv",
+      "id": 318555,
+      "bytes": 846,
+      "mime": "text/csv",
+      "sha1": "85fea00fea374ed0595d032180a798371d96aa4d",
+      "role": "Human/mouse AP summary targets",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/Current_clamp/cc_tools.py",
+      "id": 318557,
+      "bytes": 10448,
+      "mime": "text/x-python-script",
+      "sha1": "f64162577fa5dd86892b46570d597e58e083a02b",
+      "role": "Single-compartment current-clamp and density-fit helpers",
+      "downloaded": true,
+      "sha256": "3215473c16162dc81f73cb60da161014f370f3acc052b7cae3c1c416d321f241"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/currentclamp.py",
+      "id": 318553,
+      "bytes": 3070,
+      "mime": "text/x-python-script",
+      "sha1": "fffbe589889ae552c29b96dd2eb1dafd90e1c69e",
+      "role": "Current-clamp simulation driver",
+      "downloaded": true,
+      "sha256": "56a83d012040bb8dd8114edbe658ea347c7cb3a7451f7b711c9be7b496b73321"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/fit_gbar_na_k.py",
+      "id": 318556,
+      "bytes": 1472,
+      "mime": "text/x-python-script",
+      "sha1": "708babaafe09090828978b366e4c6193fe982421",
+      "role": "Two-dimensional human-ratio conductance grid driver",
+      "downloaded": true,
+      "sha256": "a9549e210294a5016bb3d3e0ba51f4ba158e7f853f22150b75c728fc533b68d3"
+    },
+    {
+      "path": "Figures5_6/Current_clamp/gbar_na.csv",
+      "id": 318551,
+      "bytes": 8224,
+      "mime": "text/csv",
+      "sha1": "ac2f1b3ae108e8f256e53b0d85c4e0b353eb173a",
+      "role": "Na conductance-density interpolation grid",
+      "downloaded": false
+    },
+    {
+      "path": "Figures5_6/Current_clamp/gbar_k.csv",
+      "id": 318552,
+      "bytes": 8037,
+      "mime": "text/csv",
+      "sha1": "6867798db8a5a2a77a66bb72b7cae77590ff0247",
+      "role": "K conductance-density interpolation grid",
+      "downloaded": false
+    }
+  ],
+  "acquisition": {
+    "method": "DataverseNL public file API resolving to signed Surf object-store downloads, read with Python urllib in an isolated research session",
+    "sha256_method": "SHA-256 over exact downloaded response bytes; size and SHA-1 cross-checked with the Dataverse file metadata API",
+    "selected_file_count": 20,
+    "downloaded_read_and_sha256_checked_count": 11,
+    "raw_source_files_committed_to_amsn": false,
+    "raw_workbooks_downloaded": false,
+    "large_ap_clamp_h_wide_csv_downloaded": false,
+    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source."
+  },
+  "provenance": {
+    "sodium": "Source comment attributes the HH-style mechanism to Mainen (1994), edited by Kole (2006), modified/fitted by René Wilbers at VU (2020).",
+    "potassium": "Source comment describes a mixed population of fast-, slow- and non-inactivating potassium channels, authored by René Wilbers at VU (2020).",
+    "scope": "Mechanisms and fitting scripts concern channel protocols/single-compartment models, not a validated spatial density map on reconstructed human L2/3 morphology."
+  }
+}
