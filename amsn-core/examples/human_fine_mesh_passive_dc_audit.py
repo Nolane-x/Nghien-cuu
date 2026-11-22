@@ -31,6 +31,7 @@ from neuron import h
 import neuron_cross_validation as reference
 from amsn.morphology import SWCMorphology
 from amsn.sectioned import to_sectioned_cable_tree
+from amsn.ports import path_distances_um, quantile_node
 
 
 NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.5"))
@@ -46,10 +47,6 @@ CM_F_M2 = 0.01
 ELEAK_MV = -65.0
 STEADY_RESIDUAL_TOLERANCE_MV = 1e-6
 AREA_DIFFERENCE_SANITY_TOLERANCE_PCT = 1e-3
-
-
-def path_distances_um(morphology):
-    return reference.path_distances_um(morphology)
 
 
 def build_sites(
@@ -74,21 +71,21 @@ def build_sites(
     distances = path_distances_um(morphology)
     injections = [
         ("soma", morphology.root_id),
-        ("basal_q75", reference.quantile_node(morphology, distances, 3, 0.75)),
-        ("apical_q75", reference.quantile_node(morphology, distances, 4, 0.75)),
+        ("basal_q75", quantile_node(morphology, distances, 3, 0.75)),
+        ("apical_q75", quantile_node(morphology, distances, 4, 0.75)),
     ]
     probes = [
         ("soma", morphology.root_id),
-        ("basal_q50", reference.quantile_node(morphology, distances, 3, 0.50)),
-        ("basal_q90", reference.quantile_node(morphology, distances, 3, 0.90)),
-        ("apical_q50", reference.quantile_node(morphology, distances, 4, 0.50)),
-        ("apical_q90", reference.quantile_node(morphology, distances, 4, 0.90)),
+        ("basal_q50", quantile_node(morphology, distances, 3, 0.50)),
+        ("basal_q90", quantile_node(morphology, distances, 3, 0.90)),
+        ("apical_q50", quantile_node(morphology, distances, 4, 0.50)),
+        ("apical_q90", quantile_node(morphology, distances, 4, 0.90)),
     ]
     for quantile in quantiles:
         label = f"q{round(quantile * 100):02d}"
         probes.extend((
-            (f"basal_{label}", reference.quantile_node(morphology, distances, 3, quantile)),
-            (f"apical_{label}", reference.quantile_node(morphology, distances, 4, quantile)),
+            (f"basal_{label}", quantile_node(morphology, distances, 3, quantile)),
+            (f"apical_{label}", quantile_node(morphology, distances, 4, quantile)),
         ))
     section_by_name = {section.name(): section for section in sections}
     site_ids = sorted({node_id for _, node_id in injections + probes})
