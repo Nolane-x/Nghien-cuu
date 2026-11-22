@@ -90,6 +90,7 @@ jobs:
           python -m pip install -e ".[test]"
           python -m pip install --only-binary=neuron "neuron==9.0.2"
         working-directory: amsn-core
+      # Keep the enriched nine-port matrix isolated from the canonical seven-port run.
       - name: Run complete AMSN test suite
         run: python -m pytest
         working-directory: amsn-core
