@@ -49,7 +49,20 @@ OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
 PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
 PRIMA_MULTI_SHIFT_EXTENDED_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
-EXTENDED_ORDER_SWEEP = (28, 56, 84)
+EXTENDED_ORDER_SWEEP = tuple(
+    int(value.strip())
+    for value in os.environ.get("AMSN_PRIMA_EXTENDED_ORDERS", "28,56,84").split(",")
+    if value.strip()
+)
+if (
+    not EXTENDED_ORDER_SWEEP
+    or any(order <= 0 for order in EXTENDED_ORDER_SWEEP)
+    or len(set(EXTENDED_ORDER_SWEEP)) != len(EXTENDED_ORDER_SWEEP)
+    or 56 not in EXTENDED_ORDER_SWEEP
+):
+    raise ValueError(
+        "AMSN_PRIMA_EXTENDED_ORDERS must contain unique positive orders and include 56"
+    )
 EXTRA_PROBE_QUANTILES = (
     (0.25, 0.75)
     if os.environ.get("AMSN_PORT_ENRICHMENT", "").strip() == "apical_basal_q25_q75"
@@ -394,16 +407,18 @@ def main() -> None:
     }
     prima_extended_order_sweep_models = {
         "four_shift_order56_control": prima_multishift_model,
-        "six_shift_order28": prima_reduce_passive_cable_multishift(
-            cable, boundary_indices, max_order=28,
-            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
-        ),
-        "six_shift_order56": prima_multishift_extended_model,
-        "six_shift_order84": prima_reduce_passive_cable_multishift(
-            cable, boundary_indices, max_order=84,
-            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
-        ),
     }
+    for order in EXTENDED_ORDER_SWEEP:
+        if order == 56:
+            sweep_model = prima_multishift_extended_model
+        else:
+            sweep_model = prima_reduce_passive_cable_multishift(
+                cable,
+                boundary_indices,
+                max_order=order,
+                expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+            )
+        prima_extended_order_sweep_models[f"six_shift_order{order}"] = sweep_model
     for model_id, projected_model in prima_extended_order_sweep_models.items():
         np.linalg.cholesky(projected_model.conductance_matrix_s)
         np.linalg.cholesky(projected_model.capacitance_matrix_f)
