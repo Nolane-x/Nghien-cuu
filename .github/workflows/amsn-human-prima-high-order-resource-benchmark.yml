@@ -1,0 +1,382 @@
+name: AMSN Human Passive PRIMA High-Order Runtime and Memory Benchmark
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-prima-high-order-resource-benchmark.yml"
+      - "amsn-core/examples/human_schur_port_matrix_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resource-benchmark:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "2"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.125"
+            candidate_order: "168"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "84"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "112"
+            replicate: "2"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "1"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+            mesh_cap_um: "0.0625"
+            candidate_order: "168"
+            replicate: "2"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+      AMSN_PORT_ENRICHMENT: apical_basal_q25_q75
+      AMSN_PRIMA_EXTENDED_ORDERS: ${{ matrix.candidate_order }}
+      AMSN_BENCH_REPLICATE: ${{ matrix.replicate }}
+      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_benchorder${{ matrix.candidate_order}}_rep${{ matrix.replicate }}_9port_
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Verify morphology record count
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from amsn.morphology import SWCMorphology
+          morphology = SWCMorphology.from_file(Path(os.environ["AMSN_MORPHOLOGY_PATH"]))
+          expected = int(os.environ["AMSN_EXPECTED_SWC_RECORDS"])
+          if len(morphology.nodes) != expected:
+              raise RuntimeError(f"SWC records {len(morphology.nodes)} != expected {expected}")
+          print(f"morphology={os.environ['AMSN_MORPHOLOGY_LABEL']}; SWC_records={len(morphology.nodes)}")
+          PY
+        working-directory: amsn-core
+      - name: Capture runner environment
+        run: |
+          python - <<'PY'
+          import csv, os, platform, subprocess
+          from pathlib import Path
+          cpu = "unknown"
+          cpuinfo = Path("/proc/cpuinfo")
+          if cpuinfo.exists():
+              for line in cpuinfo.read_text(errors="replace").splitlines():
+                  if line.lower().startswith("model name"):
+                      cpu = line.split(":", 1)[1].strip()
+                      break
+          row = {
+              "runner_os": platform.platform(),
+              "architecture": platform.machine(),
+              "python_version": platform.python_version(),
+              "cpu_model": cpu,
+              "logical_cpu_count": os.cpu_count(),
+              "candidate_order": os.environ["AMSN_PRIMA_EXTENDED_ORDERS"],
+              "replicate": os.environ["AMSN_BENCH_REPLICATE"],
+              "morphology": os.environ["AMSN_MORPHOLOGY_LABEL"],
+              "mesh_max_segment_um": os.environ["AMSN_NEURON_MAX_SEGMENT_UM"],
+          }
+          with Path("benchmark_environment.csv").open("w", newline="", encoding="utf-8") as handle:
+              writer = csv.DictWriter(handle, fieldnames=list(row))
+              writer.writeheader()
+              writer.writerow(row)
+          PY
+        working-directory: amsn-core
+      - name: Measure full audit wall time, CPU time and peak RSS
+        shell: bash
+        run: |
+          set -euo pipefail
+          LOG="${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-order${{ matrix.candidate_order }}-rep${{ matrix.replicate }}-resource-benchmark.log"
+          TIME_FILE="${LOG%.log}.time.txt"
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o "$TIME_FILE" \
+            python examples/human_schur_port_matrix_audit.py | tee "$LOG"
+          printf 'log_file=%s\ntime_file=%s\n' "$LOG" "$TIME_FILE"
+        working-directory: amsn-core
+      - name: Validate coverage and write resource measurement
+        run: |
+          python - <<'PY'
+          import csv, os
+          from pathlib import Path
+          prefix = os.environ["AMSN_SCHUR_OUTPUT_PREFIX"]
+          sweep = Path("results") / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
+          rows = list(csv.DictReader(sweep.open(newline="", encoding="utf-8")))
+          expected_counts = {"frequency_response": 20, "transient_port": 108, "transient_all_ports": 12}
+          counts = {}
+          for row in rows:
+              counts[row["metric"]] = counts.get(row["metric"], 0) + 1
+          if len(rows) != 140 or counts != expected_counts:
+              raise RuntimeError(f"coverage mismatch: rows={len(rows)} counts={counts}")
+          order = os.environ["AMSN_PRIMA_EXTENDED_ORDERS"]
+          expected_models = {"four_shift_order56_control", f"six_shift_order{order}"}
+          if {row["model_id"] for row in rows} != expected_models:
+              raise RuntimeError("model identity coverage mismatch")
+          candidate_rows = [r for r in rows if r["metric"] == "frequency_response" and r["model_id"] == f"six_shift_order{order}"]
+          ranks = {int(r["prima_order"]) for r in candidate_rows}
+          if ranks != {int(order)}:
+              raise RuntimeError(f"requested order {order} did not produce exact actual rank: {ranks}")
+          time_path = next(Path(".").glob("*.time.txt"))
+          timings = {}
+          for line in time_path.read_text().splitlines():
+              if "=" in line:
+                  key, value = line.split("=", 1)
+                  timings[key] = value
+          env = next(csv.DictReader(Path("benchmark_environment.csv").open(newline="", encoding="utf-8")))
+          result = {
+              **env,
+              "actual_order": next(iter(ranks)),
+              "full_compartment_order": candidate_rows[0]["full_compartment_order"],
+              "state_reduction_pct": candidate_rows[0]["state_count_reduction_pct"],
+              "frequency_rows": counts["frequency_response"],
+              "transient_port_rows": counts["transient_port"],
+              "transient_all_ports_rows": counts["transient_all_ports"],
+              "elapsed_wall_seconds": timings.get("elapsed_wall_seconds"),
+              "user_cpu_seconds": timings.get("user_cpu_seconds"),
+              "system_cpu_seconds": timings.get("system_cpu_seconds"),
+              "max_rss_kb": timings.get("max_rss_kb"),
+              "max_rss_mb": (float(timings["max_rss_kb"]) / 1024 if "max_rss_kb" in timings else ""),
+              "exit_status": timings.get("exit_status"),
+          }
+          if result["exit_status"] != "0":
+              raise RuntimeError(f"resource run exited abnormally: {timings}")
+          with Path("resource_benchmark.csv").open("w", newline="", encoding="utf-8") as handle:
+              writer = csv.DictWriter(handle, fieldnames=list(result))
+              writer.writeheader()
+              writer.writerow(result)
+          print(result)
+          PY
+        working-directory: amsn-core
+      - name: Preserve benchmark data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-order-${{ matrix.candidate_order }}-rep-${{ matrix.replicate }}-resource-benchmark
+          path: |
+            amsn-core/resource_benchmark.csv
+            amsn-core/benchmark_environment.csv
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-order${{ matrix.candidate_order }}-rep${{ matrix.replicate }}-resource-benchmark.log
+            amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-order${{ matrix.candidate_order }}-rep${{ matrix.replicate }}-resource-benchmark.time.txt
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_benchorder${{ matrix.candidate_order}}_rep${{ matrix.replicate }}_9port_human_passive_prima_extended_order_transient_sweep_2026-11-22.csv
+          if-no-files-found: error
