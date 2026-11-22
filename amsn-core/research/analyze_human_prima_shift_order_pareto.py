@@ -250,7 +250,8 @@ def main():
         "median_Z_6000_pct", "median_Y_6000_pct",
         "median_Z_10000_pct", "median_Y_10000_pct",
         "median_port_nrmse_pct", "p90_port_nrmse_pct", "max_port_nrmse_pct",
-        "median_basis_build_seconds", "median_numeric_storage_mb",
+        "median_basis_build_seconds", "median_reduced_transient_seconds",
+        "median_numeric_storage_mb", "basis_order",
     )
     for model_id in sorted(MODELS):
         model_rows = [row for row in all_models if row["model_id"] == model_id]
@@ -273,6 +274,10 @@ def main():
             "median_port_nrmse_pct": transient["median_port_nrmse_pct"],
             "p90_port_nrmse_pct": transient["p90_port_nrmse_pct"],
             "max_port_nrmse_pct": transient["max_port_nrmse_pct"],
+            "median_reduced_transient_seconds": next(
+                row["median_reduced_transient_seconds"]
+                for row in transient_runtime_summary if row["model_id"] == model_id
+            ),
         }
         for frequency_hz in (3000.0, 6000.0, 10000.0):
             row = freq_map[(frequency_hz, model_id)]
