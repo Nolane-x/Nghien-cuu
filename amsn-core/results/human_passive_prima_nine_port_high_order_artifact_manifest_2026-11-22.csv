@@ -1,0 +1,7 @@
+run_id,artifact_id,morphology,mesh_max_segment_um,artifact_name,url
+44979673244,14737601761,NMO_68174_cell1125,0.125,amsn-NMO_68174_cell1125-mesh-0.125um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14737601761
+44979673244,14737690715,NMO_68174_cell1125,0.0625,amsn-NMO_68174_cell1125-mesh-0.0625um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14737690715
+44979673244,14737870431,NMO_68175_cell1204,0.125,amsn-NMO_68175_cell1204-mesh-0.125um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14737870431
+44979673244,14736949497,NMO_68175_cell1204,0.0625,amsn-NMO_68175_cell1204-mesh-0.0625um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14736949497
+44979673244,14737810288,NMO_290988_Mohan2015,0.125,amsn-NMO_290988_Mohan2015-mesh-0.125um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14737810288
+44979673244,14737785139,NMO_290988_Mohan2015,0.0625,amsn-NMO_290988_Mohan2015-mesh-0.0625um-9port-orders-28-168,https://github.com/Nolane-x/Nghien-cuu/actions/runs/44979673244/artifacts/14737785139

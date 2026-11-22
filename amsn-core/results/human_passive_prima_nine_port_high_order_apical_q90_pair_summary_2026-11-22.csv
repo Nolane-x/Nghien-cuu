@@ -1,0 +1,5 @@
+model_id,comparison,pairs,worse_pairs,median_ratio,max_ratio
+six_shift_order112,ratio_vs_nine84,36,0,0.022160895016813596,0.44677485719476984
+six_shift_order112,ratio_vs_seven84,36,0,0.2565784331156321,0.8762955720444722
+six_shift_order168,ratio_vs_nine84,36,0,0.014113932944290131,0.4452696426712582
+six_shift_order168,ratio_vs_seven84,36,0,0.15773969061765925,0.8733432733627331

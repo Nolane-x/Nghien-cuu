@@ -386,3 +386,12 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 - [Aggregate model metrics](amsn-core/results/human_passive_prima_nine_port_model_summary_2026-11-22.csv), [paired q90 summary](amsn-core/results/human_passive_prima_nine_vs_seven_port_q90_summary_2026-11-22.csv) and [artifact manifest](amsn-core/results/human_passive_prima_nine_port_artifact_manifest_2026-11-22.csv).
 - [Handoff](HANDOFF_2026-11-22_PRIMA-NINE-PORT-RESULTS.md) and [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-NINE-PORT-RESULTS.md).
 - Decision: retain the seven-port baseline and full Hines as canonical; do not promote the nine-port basis as an accuracy improvement. Follow-up should test basis capacity/block-Krylov enrichment.
+
+
+## Latest validated checkpoint — nine-port high-order PRIMA (22/11/2026)
+
+- [Full report](amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_HIGH_ORDER_2026-11-22.md) — merged PR #4, six morphologies/mesh configs, 2,520 validated rows.
+- Orders 112 and 168 beat both nine-port order-84 and seven-port order-84 apical-q90 baselines in 36/36 matched cases each; neither regressed across 252 shared-output comparisons per candidate.
+- [Model summary](amsn-core/results/human_passive_prima_nine_port_high_order_model_summary_2026-11-22.csv), [candidate/config summary](amsn-core/results/human_passive_prima_nine_port_high_order_config_candidate_summary_2026-11-22.csv), [q90 paired summary](amsn-core/results/human_passive_prima_nine_port_high_order_apical_q90_pair_summary_2026-11-22.csv), and [shared-output summary](amsn-core/results/human_passive_prima_nine_port_high_order_shared_port_by_probe_2026-11-22.csv).
+- Default remains 28/56/84; 112/168 stay opt-in pending runtime/peak-memory and held-out morphology validation. Full Hines remains canonical.
+- Reproducible analyzer: [analyze_human_prima_nine_port_high_order_artifacts.py](amsn-core/research/analyze_human_prima_nine_port_high_order_artifacts.py). Handoff: [dated checkpoint](HANDOFF_2026-11-22_PRIMA-NINE-PORT-HIGH-ORDER.md).
