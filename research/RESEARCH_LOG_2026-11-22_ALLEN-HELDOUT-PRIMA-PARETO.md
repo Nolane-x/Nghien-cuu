@@ -58,3 +58,15 @@ Median values are calculated over all nine parameter scenarios for the same morp
 For this single holdout, `order112_extended_10khz` cuts median 10 kHz Z error by about **30.2×** and Y error by about **33.4×** versus `order112_narrow_3khz`, while median and maximum transient errors are essentially unchanged. `order84_narrow_3khz` remains a very accurate lower-order transient candidate but has larger 10 kHz AC error. At order 56 the extended shift set clearly worsens transient error; the trade-off therefore depends on basis order.
 
 This is one epilepsy surgical-specimen dendritic morphology under passive linear-RC assumptions. It does not prove generalization to healthy controls, complete axon-bearing neurons, active channels or a human-neuron population. The artifact and report-schema validator need to complete successfully on a fresh run before these rows are promoted as an accepted holdout result.
+
+
+## Resource benchmark validator backport
+
+The PR8 high-order resource workflow was still using the older inline order parser from `main`, which treats the comma-separated environment value (for example `56,112`) as one literal model ID. This failure mode was already corrected and tested in PR #7.
+
+Before the 36-job PR8 resource matrix is accepted, the following tested files from PR #7 are backported unchanged:
+- `.github/workflows/amsn-human-prima-high-order-resource-benchmark.yml`: adds a `validator-tests` preflight job and makes resource measurements depend on it; the measurement matrix and all environment dimensions remain unchanged.
+- `research/prima_resource_benchmark_validator.py`: strict parser for comma-separated orders and exact per-model metric/rank checks.
+- `research/test_prima_resource_benchmark_validator.py`: 16 parser/coverage tests.
+
+The source implementation is PR #7 commit `7c584d41dcf349554adf236a31c1ef47558dde09`, where the validator test suite passed locally and the workflow includes the corrected `PYTHONPATH` for its working directory. The PR8 workflow will only count a resource matrix after this preflight and every resource job pass.
