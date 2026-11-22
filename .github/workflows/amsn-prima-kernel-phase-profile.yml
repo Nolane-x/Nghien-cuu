@@ -40,9 +40,9 @@ jobs:
             expected_swc_records: "8903"
     env:
       NEURON_NOGUI: "1"
-      AMSN_MORPHOLOGY_LABEL: \${{ matrix.morphology_label }}
-      AMSN_MORPHOLOGY_PATH: \${{ matrix.morphology_path }}
-      AMSN_EXPECTED_SWC_RECORDS: \${{ matrix.expected_swc_records }}
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
       AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
       AMSN_PROFILE_REPEATS: "2"
     steps:
@@ -67,24 +67,24 @@ jobs:
         run: |
           set -euo pipefail
           /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
-            -o "\${{ matrix.morphology_label }}-prima-profile.time.txt" \
+            -o "${{ matrix.morphology_label }}-prima-profile.time.txt" \
             python examples/prima_phase_profile.py \
               --mode prima \
-              --repeats "\${AMSN_PROFILE_REPEATS}" \
-              --output-dir "results/prima_phase_profile/\${AMSN_MORPHOLOGY_LABEL}/prima"
-          cat "\${{ matrix.morphology_label }}-prima-profile.time.txt"
+              --repeats "${AMSN_PROFILE_REPEATS}" \
+              --output-dir "results/prima_phase_profile/${AMSN_MORPHOLOGY_LABEL}/prima"
+          cat "${{ matrix.morphology_label }}-prima-profile.time.txt"
         working-directory: amsn-core
       - name: Run full-Hines baseline in a separate process
         shell: bash
         run: |
           set -euo pipefail
           /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
-            -o "\${{ matrix.morphology_label }}-hines-profile.time.txt" \
+            -o "${{ matrix.morphology_label }}-hines-profile.time.txt" \
             python examples/prima_phase_profile.py \
               --mode hines \
-              --repeats "\${AMSN_PROFILE_REPEATS}" \
-              --output-dir "results/prima_phase_profile/\${AMSN_MORPHOLOGY_LABEL}/hines"
-          cat "\${{ matrix.morphology_label }}-hines-profile.time.txt"
+              --repeats "${AMSN_PROFILE_REPEATS}" \
+              --output-dir "results/prima_phase_profile/${AMSN_MORPHOLOGY_LABEL}/hines"
+          cat "${{ matrix.morphology_label }}-hines-profile.time.txt"
         working-directory: amsn-core
       - name: Validate phase, solver and matrix coverage
         run: |
@@ -141,9 +141,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: amsn-\${{ matrix.morphology_label }}-prima-kernel-phase-profile
+          name: amsn-${{ matrix.morphology_label }}-prima-kernel-phase-profile
           path: |
-            amsn-core/results/prima_phase_profile/\${{ matrix.morphology_label }}/
-            amsn-core/\${{ matrix.morphology_label }}-prima-profile.time.txt
-            amsn-core/\${{ matrix.morphology_label }}-hines-profile.time.txt
+            amsn-core/results/prima_phase_profile/${{ matrix.morphology_label }}/
+            amsn-core/${{ matrix.morphology_label }}-prima-profile.time.txt
+            amsn-core/${{ matrix.morphology_label }}-hines-profile.time.txt
           if-no-files-found: error
