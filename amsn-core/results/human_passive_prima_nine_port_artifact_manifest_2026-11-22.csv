@@ -1,0 +1,13 @@
+experiment,run_id,artifact_id,morphology,mesh_cap_um,port_set
+nine_port_enrichment,44976224651,14735389729,NMO_68174_cell1125,0.125,nine
+nine_port_enrichment,44976224651,14735449253,NMO_68174_cell1125,0.0625,nine
+nine_port_enrichment,44976224651,14736610394,NMO_68175_cell1204,0.125,nine
+nine_port_enrichment,44976224651,14736144273,NMO_68175_cell1204,0.0625,nine
+nine_port_enrichment,44976224651,14736516060,NMO_290988_Mohan2015,0.125,nine
+nine_port_enrichment,44976224651,14735389638,NMO_290988_Mohan2015,0.0625,nine
+seven_port_baseline,44966510373,14732270037,NMO_68174_cell1125,0.125,seven
+seven_port_baseline,44966510373,14731708587,NMO_68174_cell1125,0.0625,seven
+seven_port_baseline,44966510373,14731039030,NMO_68175_cell1204,0.125,seven
+seven_port_baseline,44966510373,14731429692,NMO_68175_cell1204,0.0625,seven
+seven_port_baseline,44966510373,14732020626,NMO_290988_Mohan2015,0.125,seven
+seven_port_baseline,44966510373,14731589116,NMO_290988_Mohan2015,0.0625,seven
