@@ -63,7 +63,7 @@ The key comparison pairs identical morphology, mesh, model, transient source/pul
 | Six-shift order 56 | 127.706× | 613.199× | 36/36 |
 | Six-shift order 84 | 7.814× | 28.749× | 36/36 |
 
-**All 144 paired apical-q90 comparisons worsened when expanding from seven to nine ports at the same tested model orders.** The effect is not an artifact of changing the all-port aggregation denominator: apical-q90 is the same named output node in each matched pair. Other common outputs also mostly worsened, particularly for six-shift order 56. The complete paired observations are preserved in `human_passive_prima_nine_vs_seven_port_q90_summary_2026-11-22.csv` and the six workflow artifacts for each port set.
+**All 144 paired apical-q90 comparisons worsened when expanding from seven to nine ports at the same tested model orders.** The effect is not an artifact of changing the all-port aggregation denominator: apical-q90 is the same named output node in each matched pair. Other common outputs also mostly worsened, particularly for six-shift order 56. The per-model paired summary is preserved in `human_passive_prima_nine_vs_seven_port_q90_summary_2026-11-22.csv`; the 24-row morphology/mesh/model breakdown is in `human_passive_prima_nine_port_config_model_summary_2026-11-22.csv`. All 144 individual q90 pair observations are reproducible from the per-port transient rows in the six seven-port and six nine-port workflow artifacts.
 
 This is a negative result with a clear design implication: adding more retained boundary ports at the same reduction order increases the burden on the reduced basis; it does not guarantee improved accuracy at a difficult output. The data do not establish the underlying mechanism beyond this numerical observation.
 
