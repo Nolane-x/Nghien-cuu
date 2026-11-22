@@ -15,6 +15,17 @@ Continue from [HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md](HANDOFF_2026-11-22_PR
 
 ---
 
+## Latest implementation checkpoint — PRIMA phase profiler (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md). Latest implementation commit: `fb642cce096a1fb2920c5b30bbaf471c1dd2d3a0`.
+
+- Added phase timing for the real PRIMA builder, unprofiled build reference, reduced solver timing and a separate full-Hines process baseline.
+- Files: `amsn-core/examples/prima_phase_profile.py`, `amsn-core/tests/test_prima_phase_profile.py`, `.github/workflows/amsn-prima-kernel-phase-profile.yml`.
+- Targeted workflow [45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028) and Core CI [45035222163](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222163) were **queued** at the last inspection. No tests or profile results have been accepted as passing yet.
+- Keep full Hines canonical and production defaults unchanged. PR #8 remains draft/open.
+
+---
+
 ## Latest validated checkpoint — complete PRIMA resource benchmark (22/11/2026)
 
 Continue from [HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md](HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`. Resource benchmark code head tested: `e556625b9f0b1f31f9c822e603cf0ae220eefe0f`.

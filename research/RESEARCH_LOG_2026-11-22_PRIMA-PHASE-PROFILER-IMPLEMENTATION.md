@@ -4,8 +4,8 @@
 **Repository:** `Nolane-x/Nghien-cuu`  
 **Branch:** `research/allen-human-morphology-heldout-preflight-2026-11-22`  
 **PR:** [#8 — draft/open](https://github.com/Nolane-x/Nghien-cuu/pull/8)  
-**Profiler code checkpoint:** `9050c6a075c12af564fa86c0e5c2b1ce1564eac4`  
-**Targeted Actions run:** [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634)
+**Implementation commit:** `fb642cce096a1fb2920c5b30bbaf471c1dd2d3a0`  
+**Targeted Actions run:** [45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028)
 
 ## Question and hypothesis
 

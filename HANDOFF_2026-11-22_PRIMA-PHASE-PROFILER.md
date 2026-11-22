@@ -4,8 +4,8 @@
 **Repository:** https://github.com/Nolane-x/Nghien-cuu  
 **Branch:** `research/allen-human-morphology-heldout-preflight-2026-11-22`  
 **PR:** [#8 — draft/open](https://github.com/Nolane-x/Nghien-cuu/pull/8)  
-**Profiler code checkpoint:** `9050c6a075c12af564fa86c0e5c2b1ce1564eac4`  
-**Latest profile workflow at this checkpoint:** [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634)
+**Latest implementation commit:** `fb642cce096a1fb2920c5b30bbaf471c1dd2d3a0`  
+**Latest profile workflow at this checkpoint:** [45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028)
 
 ## Read first
 
@@ -35,7 +35,7 @@
 
 ## Validation status — do not overstate
 
-The workflow file, script and test file were read back from GitHub. The Actions interpolation tokens and expected six phase names were checked after correcting an escaping issue. However, the actual profiler CI run [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634) was still **queued** at the last inspection; its three morphology jobs had not started. The command `python -m pytest -q tests/test_prima_phase_profile.py` has therefore **not yet been observed passing** in Actions. No phase timings or new numerical conclusions have been accepted.
+The workflow file, script and test file were read back from GitHub. The Actions interpolation tokens and expected six phase names were checked after correcting an escaping issue. However, the actual profiler CI run [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634) was still **queued** at the last inspection; its three morphology jobs had not started. The latest-head profile workflow is [45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028), and Core CI is [45035222163](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222163). Both were **queued** at the last inspection. The command `python -m pytest -q tests/test_prima_phase_profile.py` has therefore **not yet been observed passing** in Actions. No phase timings or new numerical conclusions have been accepted.
 
 ## Next steps
 

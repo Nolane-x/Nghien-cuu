@@ -10,7 +10,7 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 - [Handoff phase profiler](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md) và [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-PHASE-PROFILER-IMPLEMENTATION.md).
 - [Profiler](amsn-core/examples/prima_phase_profile.py) đo shifted Hines solve, orthogonalization, congruence projection, orchestration, frequency solve và transient solve. [Kiểm thử](amsn-core/tests/test_prima_phase_profile.py), [workflow](.github/workflows/amsn-prima-kernel-phase-profile.yml).
 - Full Hines chạy trong tiến trình riêng; có đối chứng cùng bậc PRIMA không bật cProfile để ước lượng profiler overhead.
-- [GitHub Actions run 45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634) đang chờ runner ở checkpoint này. Chưa xác nhận test pass và chưa có số đo profiler được chấp nhận.
+- [GitHub Actions run 45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028) đang queued theo commit `fb642cce`; [Core CI 45035222163](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222163) cũng đang queued. Chưa xác nhận test pass và chưa có số đo profiler được chấp nhận.
 
 ## Checkpoint mới nhất — hoàn tất benchmark tài nguyên PRIMA (22/11/2026)
 
