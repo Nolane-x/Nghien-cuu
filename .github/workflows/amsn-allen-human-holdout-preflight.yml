@@ -102,8 +102,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \\
-            -o NMO_162186_prima_pareto.time.txt \\
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o NMO_162186_prima_pareto.time.txt \
             python examples/human_prima_shift_order_pareto.py | tee NMO_162186_prima_pareto.log
         working-directory: amsn-core
       - name: Validate full held-out matrix and write run summary
@@ -177,14 +177,6 @@ jobs:
                   value = float(row[key])
                   require(math.isfinite(value) and value >= 0.0, f"invalid {key} in {row['model_id']}")
 
-          expected_transient_keys = {
-              (model_id, scenario, source, width, port)
-              for model_id in expected_model_ids
-              for scenario in expected_scenarios
-              for source in ("soma", "basal_q75", "apical_q75")
-              for width in (2.0, 10.0)
-              for port in range(7)
-          }
           preflight = json.loads(Path("results/NMO_162186_holdout_preflight/preflight.json").read_text(encoding="utf-8"))
           expected_port_ids = {int(row["swc_id"]) for row in preflight["mapping"]}
           require(len(expected_port_ids) == 7, "preflight did not contain exactly seven unique ports")
@@ -236,7 +228,7 @@ jobs:
               "status": "PASS",
           }
           Path("results/NMO_162186_holdout_preflight/prima_pareto_validation.json").write_text(
-              json.dumps(summary, indent=2, sort_keys=True) + "\\n", encoding="utf-8"
+              json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
           )
           print(json.dumps(summary, indent=2, sort_keys=True))
           PY
