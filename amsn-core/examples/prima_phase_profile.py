@@ -80,16 +80,28 @@ def profile_prima_build(
         totals[item]["cumulative_seconds"] += float(cumulative_seconds)
 
     selected_self = sum(item["self_seconds"] for item in totals.values())
-    total_python_self = float(stats.total_tt)
-    other_self = max(0.0, total_python_self - selected_self)
+    total_python_self = sum(
+        float(values[2])
+        for (filename, _line, _name), values in stats.stats.items()
+        if filename != "~"
+    )
+    total_function_self = float(stats.total_tt)
+    other_python_self = max(0.0, total_python_self - selected_self)
+    native_function_self = max(0.0, total_function_self - total_python_self)
     totals["other_python_self"] = {
         "calls": 0,
-        "self_seconds": other_self,
-        "cumulative_seconds": other_self,
+        "self_seconds": other_python_self,
+        "cumulative_seconds": other_python_self,
+    }
+    totals["native_function_self"] = {
+        "calls": 0,
+        "self_seconds": native_function_self,
+        "cumulative_seconds": native_function_self,
     }
     summary = {
         "phases": totals,
         "profiled_python_self_seconds": total_python_self,
+        "profiled_total_function_self_seconds": total_function_self,
         "profiled_total_calls": int(stats.total_calls),
         "build_wall_seconds": wall_seconds,
         "build_process_cpu_seconds": cpu_seconds,
@@ -284,6 +296,7 @@ def run_prima_mode(args):
                 "congruence_projection",
                 "multishift_orchestration",
                 "other_python_self",
+                "native_function_self",
             )
             if set(summary["phases"]) != set(phase_names):
                 raise RuntimeError("profile phase coverage changed unexpectedly")
@@ -355,7 +368,7 @@ def run_prima_mode(args):
         "python_version": platform.python_version(),
         "numpy_version": np.__version__,
         "method": "cProfile self-time of the existing PRIMA implementation",
-        "phase_interpretation": "self_seconds are non-overlapping Python function self-time; cumulative_seconds overlap across nested functions",
+        "phase_interpretation": "named phase self_seconds exclude child calls; cumulative_seconds include nested NumPy/native work and overlap with the parent orchestrator; native_function_self is reported separately rather than assigned to a phase",
         "full_hines_is_separate_process": True,
     }
     (output_dir / "metadata.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
