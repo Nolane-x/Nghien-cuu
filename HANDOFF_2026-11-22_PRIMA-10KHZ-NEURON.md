@@ -4,7 +4,9 @@
 **Repository:** https://github.com/Nolane-x/Nghien-cuu  
 **Branch:** `research/prima-high-frequency-neuron-validation-2026-11-22`  
 **Pull request:** https://github.com/Nolane-x/Nghien-cuu/pull/1  
-**Checkpoint commit:** 11ccddba3adc7f3f0e25ee3608ed8ba0432a9722
+**Original checkpoint commit:** 11ccddba3adc7f3f0e25ee3608ed8ba0432a9722  
+**Merged to main:** 2026-11-22, commit `c7b61733c4dc3aa744509218640d774e953ee20d`  
+**PR:** [#1 merged](https://github.com/Nolane-x/Nghien-cuu/pull/1)
 
 ## Read first
 
@@ -23,9 +25,14 @@ A controlled direct comparison of two order-56 passive PRIMA bases:
 
 The human Schur port audit now measures full AMSN Hines and native NEURON matrices over 0.1–10 kHz, records extended-basis impedance/admittance errors against both references, and saves an extended-basis transient comparison. The regression test checks Cholesky positive definiteness plus finite reciprocal port matrices through 10 kHz. The original main-branch outputs are preserved; new outputs use the 2026-11-22 suffix.
 
-## Validation state
+## Final validation and merge status
 
-Implementation is in PR #1 and is not merged. GitHub read-back confirms the changed files. The PR-specific Python workflow results had not appeared at checkpoint creation; no new test or high-frequency result is claimed. Existing main-branch evidence is not a substitute for running the modified branch.
+PR #1 was merged to main at `c7b61733c4dc3aa744509218640d774e953ee20d`.
+
+- PR Core CI [44965696105](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965696105): 4/4 passed, including Python 3.12/3.13 tests and NEURON cross-validation.
+- PR Schur/PRIMA matrix audit [44965696254](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965696254): 6/6 passed.
+- PR frequency-domain audit [44965696159](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965696159): 3/3 passed.
+- Post-merge main workflows [Core CI 44965966066](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966066), [Schur 44965966021](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966021), [fine mesh 44965966005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966005) and [frequency 44965965999](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965965999) all passed.
 
 ## Next action
 
@@ -46,6 +53,10 @@ The high-frequency PRIMA branch has completed its six-job direct NEURON matrix a
 
 The regular test, compile and example jobs in Core CI passed on Python 3.12 and 3.13; the two longer NEURON cross-validation jobs were still running when this checkpoint was written. Recheck that workflow before merging. Keep full Hines canonical and retain the passive/biological validity guardrails from the earlier handoffs.
 
-## Guardrails## Guardrails
+## Next experiment — order × source × pulse-width matrix
+
+Continue with the next research checkpoint `HANDOFF_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md`. The next experiment evaluates four models at equal/controlled order (four-shift order 56 control; six-shift orders 28, 56 and 84) and six transient scenarios (soma, basal-q75, apical-q75 × 2 ms/10 ms pulses). Keep the full Hines reference, Cholesky/passivity checks and direct NEURON frequency comparison. Do not choose a default from one aggregate number.
+
+## Guardrails
 
 This work remains passive linear RC validation at selected ports. Do not generalize it to active channels, synapses, calcium, metabolism, plasticity, intelligence, or biological validity. Keep full Hines canonical.
