@@ -179,8 +179,14 @@ jobs:
                   require(math.isfinite(value) and value >= 0.0, f"invalid {key} in {row['model_id']}")
 
           preflight = json.loads(Path("results/NMO_162186_holdout_preflight/preflight.json").read_text(encoding="utf-8"))
-          expected_port_ids = {int(row["swc_id"]) for row in preflight["mapping"]}
-          require(len(expected_port_ids) == 7, "preflight did not contain exactly seven unique ports")
+          mapping_rows = preflight.get("mapping", [])
+          require(len(mapping_rows) == 7, f"preflight mapping rows={len(mapping_rows)} != 7")
+          require(
+              all("swc_node_id" in row for row in mapping_rows),
+              "preflight port mapping rows must expose swc_node_id",
+          )
+          expected_port_ids = {int(row["swc_node_id"]) for row in mapping_rows}
+          require(len(expected_port_ids) == 7, "preflight did not contain exactly seven unique SWC ports")
           transient_keys = Counter(
               (row["model_id"], row["parameter_scenario"], row["source_name"], float(row["pulse_width_ms"]), int(row["port_swc_id"]))
               for row in transient
