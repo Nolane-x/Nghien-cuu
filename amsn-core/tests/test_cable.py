@@ -582,6 +582,32 @@ def test_multishift_prima_rejects_invalid_expansion_points():
         prima_reduce_passive_cable_multishift(tree, [0], expansion_frequencies_hz=(True,))
 
 
+def test_multishift_prima_extended_high_frequency_basis_remains_passive():
+    from amsn.prima import prima_reduce_passive_cable_multishift
+
+    tree = _tree()
+    ports = [tree.index["soma"], tree.index["dend_a"], tree.index["branch"]]
+    reduced = prima_reduce_passive_cable_multishift(
+        tree,
+        ports,
+        max_order=tree.n_compartments,
+        expansion_frequencies_hz=(0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0),
+    )
+
+    assert reduced.order == tree.n_compartments
+    np.linalg.cholesky(reduced.conductance_matrix_s)
+    np.linalg.cholesky(reduced.capacitance_matrix_f)
+    for frequency_hz in (0.0, 100.0, 3000.0, 6000.0, 10000.0):
+        impedance = reduced.impedance_matrix(frequency_hz)
+        admittance = reduced.admittance_matrix(frequency_hz)
+        assert np.all(np.isfinite(impedance.real))
+        assert np.all(np.isfinite(impedance.imag))
+        assert np.all(np.isfinite(admittance.real))
+        assert np.all(np.isfinite(admittance.imag))
+        np.testing.assert_allclose(impedance, impedance.T, rtol=2e-10, atol=1e-10)
+        np.testing.assert_allclose(admittance, admittance.T, rtol=2e-10, atol=1e-10)
+
+
 def _tree_with_parameters(tree, parameters):
     return CableTree(
         [tree.by_name[name] for name in tree.order],

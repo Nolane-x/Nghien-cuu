@@ -113,10 +113,11 @@ jobs:
           name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-schur-port-matrix
           path: |
             amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-schur-port.log
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_reduction_2026-11-21.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_multishift_reduction_2026-11-21.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_multishift_order_sweep_2026-11-21.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_matrix_2026-11-21.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_summary_2026-11-21.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_localization_2026-11-21.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_reduction_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_multishift_reduction_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_multishift_extended_reduction_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_prima_multishift_order_sweep_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_matrix_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_summary_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_human_passive_schur_port_localization_2026-11-22.csv
           if-no-files-found: error

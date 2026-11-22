@@ -40,13 +40,14 @@ RM_OHM_M2 = 1.0
 CM_F_M2 = 0.01
 ELEAK_MV = -65.0
 CURRENT_A = 1e-9
-FREQUENCIES_HZ = (0.1, 1.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0)
+FREQUENCIES_HZ = (0.1, 1.0, 10.0, 30.0, 100.0, 300.0, 1000.0, 3000.0, 6000.0, 10000.0)
 MORPHOLOGY_LABEL = os.environ.get("AMSN_MORPHOLOGY_LABEL", "NMO_290988_Mohan2015")
 MORPHOLOGY_PATH = os.environ.get("AMSN_MORPHOLOGY_PATH")
 NEURON_MAX_SEGMENT_UM = float(os.environ.get("AMSN_NEURON_MAX_SEGMENT_UM", "0.125"))
 OUTPUT_PREFIX = os.environ.get("AMSN_SCHUR_OUTPUT_PREFIX", "")
 PRIMA_MAX_ORDER = int(os.environ.get("AMSN_PRIMA_MAX_ORDER", "56"))
 PRIMA_MULTI_SHIFT_HZ = (0.0, 100.0, 1000.0, 3000.0)
+PRIMA_MULTI_SHIFT_EXTENDED_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
 
 
 def write_csv(path: Path, rows: list[dict]) -> None:
@@ -270,6 +271,13 @@ def main() -> None:
         cable, boundary_indices, max_order=PRIMA_MAX_ORDER,
         expansion_frequencies_hz=PRIMA_MULTI_SHIFT_HZ,
     )
+    prima_multishift_extended_model = prima_reduce_passive_cable_multishift(
+        cable, boundary_indices, max_order=PRIMA_MAX_ORDER,
+        expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+    )
+    for projected_model in (prima_multishift_model, prima_multishift_extended_model):
+        np.linalg.cholesky(projected_model.conductance_matrix_s)
+        np.linalg.cholesky(projected_model.capacitance_matrix_f)
     prima_order_sweep_models = {
         28: prima_reduce_passive_cable_multishift(
             cable, boundary_indices, max_order=28,
@@ -305,17 +313,19 @@ def main() -> None:
         f"{MORPHOLOGY_LABEL}_mesh{NEURON_MAX_SEGMENT_UM:g}um_"
     )
     results_dir = Path(__file__).parents[1] / "results"
-    raw_path = results_dir / f"{prefix}human_passive_schur_port_matrix_2026-11-21.csv"
-    summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-21.csv"
-    localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-21.csv"
-    prima_path = results_dir / f"{prefix}human_passive_prima_reduction_2026-11-21.csv"
-    prima_multishift_path = results_dir / f"{prefix}human_passive_prima_multishift_reduction_2026-11-21.csv"
-    prima_sweep_path = results_dir / f"{prefix}human_passive_prima_multishift_order_sweep_2026-11-21.csv"
+    raw_path = results_dir / f"{prefix}human_passive_schur_port_matrix_2026-11-22.csv"
+    summary_path = results_dir / f"{prefix}human_passive_schur_port_summary_2026-11-22.csv"
+    localization_path = results_dir / f"{prefix}human_passive_schur_port_localization_2026-11-22.csv"
+    prima_path = results_dir / f"{prefix}human_passive_prima_reduction_2026-11-22.csv"
+    prima_multishift_path = results_dir / f"{prefix}human_passive_prima_multishift_reduction_2026-11-22.csv"
+    prima_multishift_extended_path = results_dir / f"{prefix}human_passive_prima_multishift_extended_reduction_2026-11-22.csv"
+    prima_sweep_path = results_dir / f"{prefix}human_passive_prima_multishift_order_sweep_2026-11-22.csv"
     raw_rows: list[dict] = []
     summary_rows: list[dict] = []
     localization_rows: list[dict] = []
     prima_rows: list[dict] = []
     prima_multishift_rows: list[dict] = []
+    prima_multishift_extended_rows: list[dict] = []
     prima_sweep_rows: list[dict] = []
     maximum_schur_identity_error_pct = 0.0
     maximum_amsn_reciprocity_error_pct = 0.0
@@ -350,6 +360,25 @@ def main() -> None:
         y_prima = np.linalg.solve(z_prima, np.eye(len(boundary_ids)))
         z_prima_multi = prima_multishift_model.impedance_matrix(frequency_hz)
         y_prima_multi = np.linalg.solve(z_prima_multi, np.eye(len(boundary_ids)))
+        z_prima_multi_extended = prima_multishift_extended_model.impedance_matrix(frequency_hz)
+        y_prima_multi_extended = np.linalg.solve(
+            z_prima_multi_extended, np.eye(len(boundary_ids))
+        )
+        prima_multishift_extended_rows.append({
+            "metric": "frequency_response",
+            "reduction_method": "multi_shift_extended_10khz",
+            "morphology_label": MORPHOLOGY_LABEL,
+            "neuron_max_segment_um": NEURON_MAX_SEGMENT_UM,
+            "frequency_hz": frequency_hz,
+            "full_compartment_order": cable.n_compartments,
+            "prima_order": prima_multishift_extended_model.order,
+            "expansion_frequencies_hz": ";".join(str(x) for x in PRIMA_MULTI_SHIFT_EXTENDED_HZ),
+            "state_count_reduction_pct": 100.0 * (1.0 - prima_multishift_extended_model.order / cable.n_compartments),
+            "impedance_frobenius_error_pct": relative_frobenius_pct(z_prima_multi_extended, z_amsn),
+            "admittance_frobenius_error_pct": relative_frobenius_pct(y_prima_multi_extended, y_amsn_schur),
+            "neuron_impedance_frobenius_error_pct": relative_frobenius_pct(z_prima_multi_extended, z_neuron),
+            "neuron_admittance_frobenius_error_pct": relative_frobenius_pct(y_prima_multi_extended, y_neuron),
+        })
         prima_multishift_rows.append({
             "metric": "frequency_response",
             "reduction_method": "multi_shift_positive_real",
@@ -450,6 +479,8 @@ def main() -> None:
             "prima_admittance_frobenius_error_pct": relative_frobenius_pct(y_prima, y_amsn_schur),
             "prima_multishift_impedance_vs_neuron_pct": relative_frobenius_pct(z_prima_multi, z_neuron),
             "prima_multishift_admittance_vs_neuron_pct": relative_frobenius_pct(y_prima_multi, y_neuron),
+            "prima_multishift_extended_impedance_vs_neuron_pct": relative_frobenius_pct(z_prima_multi_extended, z_neuron),
+            "prima_multishift_extended_admittance_vs_neuron_pct": relative_frobenius_pct(y_prima_multi_extended, y_neuron),
             "neuron_impedance_frobenius_error_pct": relative_frobenius_pct(z_prima, z_neuron),
             "neuron_admittance_frobenius_error_pct": relative_frobenius_pct(y_prima, y_neuron),
         })
@@ -561,6 +592,11 @@ def main() -> None:
         ))
     write_csv(prima_path, prima_rows)
     write_csv(prima_multishift_path, prima_multishift_rows)
+    prima_multishift_extended_rows.extend(build_prima_transient_port_comparison(
+        cable, prima_multishift_extended_model, boundary_indices, basal_source_port,
+        boundary_meta, "multi_shift_extended_10khz"
+    ))
+    write_csv(prima_multishift_extended_path, prima_multishift_extended_rows)
     write_csv(prima_sweep_path, prima_sweep_rows)
 
     max_admittance_error = max(
@@ -600,6 +636,7 @@ def main() -> None:
     print(f"port_localization_csv={localization_path}; rows={len(localization_rows)}")
     print(f"prima_reduction_csv={prima_path}; rows={len(prima_rows)}")
     print(f"prima_multishift_reduction_csv={prima_multishift_path}; rows={len(prima_multishift_rows)}")
+    print(f"prima_multishift_extended_reduction_csv={prima_multishift_extended_path}; rows={len(prima_multishift_extended_rows)}")
     print(f"prima_multishift_order_sweep_csv={prima_sweep_path}; rows={len(prima_sweep_rows)}; orders={tuple(prima_order_sweep_models)}")
     max_multi_z = max(float(row["impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y = max(float(row["admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
@@ -607,6 +644,15 @@ def main() -> None:
     max_multi_z_neuron = max(float(row["neuron_impedance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     max_multi_y_neuron = max(float(row["neuron_admittance_frobenius_error_pct"]) for row in prima_multishift_rows if row["metric"] == "frequency_response")
     print("PRIMA_multishift_port_impedance_error_pct_max=%.12g; PRIMA_multishift_port_admittance_error_pct_max=%.12g; PRIMA_multishift_Z_vs_NEURON_pct_max=%.12g; PRIMA_multishift_Y_vs_NEURON_pct_max=%.12g; PRIMA_multishift_transient_all_ports_NRMSE_pct=%.12g" % (max_multi_z, max_multi_y, max_multi_z_neuron, max_multi_y_neuron, multi_transient["transient_port_nrmse_pct"]))
+    extended_frequency_rows = [row for row in prima_multishift_extended_rows if row["metric"] == "frequency_response"]
+    extended_transient = next(row for row in prima_multishift_extended_rows if row["metric"] == "transient_all_ports")
+    print("PRIMA_multishift_extended_Z_vs_AMSN_pct_max=%.12g; PRIMA_multishift_extended_Y_vs_AMSN_pct_max=%.12g; PRIMA_multishift_extended_Z_vs_NEURON_pct_max=%.12g; PRIMA_multishift_extended_Y_vs_NEURON_pct_max=%.12g; transient_all_ports_NRMSE_pct=%.12g" % (
+        max(float(row["impedance_frobenius_error_pct"]) for row in extended_frequency_rows),
+        max(float(row["admittance_frobenius_error_pct"]) for row in extended_frequency_rows),
+        max(float(row["neuron_impedance_frobenius_error_pct"]) for row in extended_frequency_rows),
+        max(float(row["neuron_admittance_frobenius_error_pct"]) for row in extended_frequency_rows),
+        extended_transient["transient_port_nrmse_pct"],
+    ))
     for order in prima_order_sweep_models:
         subset = [row for row in prima_sweep_rows if row["metric"] == "frequency_response" and int(row["prima_order"]) == order]
         max_z_sweep = max(float(row["impedance_frobenius_error_pct"]) for row in subset)
