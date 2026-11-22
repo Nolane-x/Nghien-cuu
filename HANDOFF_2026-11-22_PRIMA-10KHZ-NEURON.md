@@ -31,6 +31,21 @@ Implementation is in PR #1 and is not merged. GitHub read-back confirms the chan
 
 Verify that Core CI and all six morphology × NEURON-mesh jobs execute on PR #1. Examine 10 kHz matrix conditioning, positive definiteness, reciprocity, and transient data. Record the measured direct-NEURON trade-off before changing the recommended order/shifts. Do not make the extended basis a default merely because its full-Hines error is lower.
 
-## Guardrails
+## Verified continuation — 2026-11-22
+
+The high-frequency PRIMA branch has completed its six-job direct NEURON matrix audit:
+
+- PR #1: https://github.com/Nolane-x/Nghien-cuu/pull/1
+- Workflow [44965325079](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079): 6/6 passed; each job ran 109 tests.
+- The 56-state six-shift basis (0, 100, 1,000, 3,000, 6,000, 10,000 Hz) improves worst direct-NEURON Z/Y errors over the four-shift control from 0.527300%/0.404489% to 0.216765%/0.211010%.
+- Full-Hines residual maxima improve from 0.416133%/0.432732% to 0.113574%/0.124064%.
+- The gain is specific to the upper band; some 1–3 kHz admittance residuals and the one tested transient pulse become modestly worse. Keep this basis experimental/optional; do not change the default.
+- Report: `amsn-core/research/HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md`
+- Aggregate table: `amsn-core/results/human_passive_prima_high_frequency_neuron_aggregate_2026-11-22.csv`
+- Checkpoint protocol/status: `research/RESEARCH_LOG_2026-11-22_PRIMA-10KHZ-NEURON.md`
+
+The regular test, compile and example jobs in Core CI passed on Python 3.12 and 3.13; the two longer NEURON cross-validation jobs were still running when this checkpoint was written. Recheck that workflow before merging. Keep full Hines canonical and retain the passive/biological validity guardrails from the earlier handoffs.
+
+## Guardrails## Guardrails
 
 This work remains passive linear RC validation at selected ports. Do not generalize it to active channels, synapses, calcium, metabolism, plasticity, intelligence, or biological validity. Keep full Hines canonical.
