@@ -41,6 +41,14 @@ METADATA = {
     "published_paper_doi": "10.1038/s41586-021-03813-8",
     "dataset_collection_doi": "10.35077/g.19",
     "neuromorpho_citation_doi": "10.1096/fba.2024-00048",
+    "reported_morphometry": {
+        "stems": 7,
+        "bifurcations": 48,
+        "total_length_um": 10476.9,
+        "total_surface_um2": 21367.1,
+        "max_path_distance_um": 620.43,
+        "total_fragmentation": 7284,
+    },
 }
 
 
@@ -72,6 +80,44 @@ def main() -> None:
 
     reference.DATA = SWC
     reference.MAX_NEURON_SEGMENT_UM = MAX_NEURON_SEGMENT_UM
+
+    # NeuroMorpho's three-point soma convention connects dendritic/axonal
+    # arbors through zero-resistance virtual wires. Do not count those first
+    # attachment edges as membrane area in the electrical surface estimate.
+    soma_normalization = morphology.detect_neuromorpho_three_point_soma()
+    if soma_normalization is None:
+        raise RuntimeError("held-out morphology lost its recognized three-point soma")
+    virtual_wire_edge_areas = {}
+    for node_id in soma_normalization.wire_attachment_node_ids:
+        child = morphology.nodes[node_id]
+        parent = morphology.nodes[child.parent_id]
+        edge_length = math.dist(
+            (child.x_um, child.y_um, child.z_um),
+            (parent.x_um, parent.y_um, parent.z_um),
+        )
+        virtual_wire_edge_areas[node_id] = math.pi * (
+            child.radius_um + parent.radius_um
+        ) * math.hypot(edge_length, child.radius_um - parent.radius_um)
+    virtual_wire_area_um2 = sum(virtual_wire_edge_areas.values())
+    raw_frustum_area_um2 = summary.estimated_membrane_area_um2
+    source_normalized_area_um2 = raw_frustum_area_um2 - virtual_wire_area_um2
+
+    path_distances = reference.path_distances_um(morphology)
+    max_path_distance_um = max(path_distances.values())
+    length_difference_pct = 100.0 * (
+        summary.total_path_length_um - METADATA["reported_morphometry"]["total_length_um"]
+    ) / METADATA["reported_morphometry"]["total_length_um"]
+    path_difference_pct = 100.0 * (
+        max_path_distance_um - METADATA["reported_morphometry"]["max_path_distance_um"]
+    ) / METADATA["reported_morphometry"]["max_path_distance_um"]
+    if summary.branch_point_count != METADATA["reported_morphometry"]["bifurcations"]:
+        raise RuntimeError("SWC branch-point count disagrees with NeuroMorpho metadata")
+    if abs(length_difference_pct) > 0.5 or abs(path_difference_pct) > 0.5:
+        raise RuntimeError(
+            f"SWC path morphometry differs from NeuroMorpho metadata: "
+            f"length={length_difference_pct:.6f}%, max_path={path_difference_pct:.6f}%"
+        )
+
     reader, sections = reference.import_swc_with_neuron()
     injections, probes, mapped = fine_audit.build_sites(morphology, reader, sections)
 
@@ -90,6 +136,26 @@ def main() -> None:
 
     electrical_map = morphology.electrical_node_mapping()
     cable = morphology.to_cable_tree()
+    electrical_area_um2 = float(cable.area_m2.sum() * 1e12)
+    area_identity_error_um2 = electrical_area_um2 - source_normalized_area_um2
+    if not math.isclose(
+        electrical_area_um2,
+        source_normalized_area_um2,
+        rel_tol=1e-9,
+        abs_tol=1e-6,
+    ):
+        raise RuntimeError(
+            "normalized AMSN cable area does not equal source frustum area "
+            f"after removing Import3D wires: {area_identity_error_um2:.9g} um^2"
+        )
+    surface_difference_pct = 100.0 * (
+        electrical_area_um2 - METADATA["reported_morphometry"]["total_surface_um2"]
+    ) / METADATA["reported_morphometry"]["total_surface_um2"]
+    if abs(surface_difference_pct) > 1.0:
+        raise RuntimeError(
+            "normalized AMSN electrical surface differs from NeuroMorpho reported "
+            f"total surface by {surface_difference_pct:.6f}%"
+        )
     cable_mapping = {
         node_id: f"swc_{electrical_map[node_id]}" for node_id in morphology.nodes
     }
@@ -188,7 +254,17 @@ def main() -> None:
         "swc_neurite_type_counts": {str(k): v for k, v in validated.neurite_type_counts.items()},
         "swc_branch_point_count": summary.branch_point_count,
         "swc_path_length_um": summary.total_path_length_um,
-        "swc_estimated_membrane_area_um2": summary.estimated_membrane_area_um2,
+        "swc_max_path_distance_um": max_path_distance_um,
+        "neuromorpho_reported_morphometry": METADATA["reported_morphometry"],
+        "swc_path_length_difference_vs_neuromorpho_pct": length_difference_pct,
+        "swc_max_path_difference_vs_neuromorpho_pct": path_difference_pct,
+        "swc_raw_frustum_area_including_virtual_soma_wires_um2": raw_frustum_area_um2,
+        "import3d_virtual_soma_wire_node_ids": list(soma_normalization.wire_attachment_node_ids),
+        "import3d_virtual_soma_wire_area_um2": virtual_wire_area_um2,
+        "source_frustum_area_after_virtual_wire_removal_um2": source_normalized_area_um2,
+        "amsn_normalized_electrical_area_um2": electrical_area_um2,
+        "normalized_electrical_area_difference_vs_neuromorpho_pct": surface_difference_pct,
+        "normalized_area_identity_error_um2": area_identity_error_um2,
         "three_point_soma_detected": validated.three_point_soma_detected,
         "amsn_full_node_compartments": cable.n_compartments,
         "amsn_unique_port_count": len(site_ids),
@@ -228,6 +304,11 @@ def main() -> None:
         "records": summary.node_count,
         "type_counts": validated.neurite_type_counts,
         "branches": summary.branch_point_count,
+        "raw_frustum_area_um2": raw_frustum_area_um2,
+        "virtual_soma_wire_area_um2": virtual_wire_area_um2,
+        "normalized_electrical_area_um2": electrical_area_um2,
+        "normalized_area_difference_vs_neuromorpho_pct": surface_difference_pct,
+        "max_path_distance_um": max_path_distance_um,
         "amsn_compartments": cable.n_compartments,
         "neuron_sections": len(sections),
         "neuron_segments": neuron_segment_count,

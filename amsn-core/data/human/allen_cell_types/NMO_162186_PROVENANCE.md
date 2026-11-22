@@ -21,6 +21,8 @@
 
 `https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc`
 
+Verified standardized SWC SHA-256: `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc` (7,287 records; 294,762 bytes in the preflight artifact).
+
 The file is fetched by a GitHub Actions runner using the direct SWC URL and an explicit User-Agent. The workflow does not scrape the JSP metadata page. The exact downloaded bytes, SHA-256 digest, parser results, and NEURON Import3D preflight are preserved as a workflow artifact. The SWC is deliberately **not vendored into the repository yet**; that decision is deferred until the source bytes and checksum are verified.
 
 ## Attribution and license
@@ -32,6 +34,18 @@ NeuroMorpho.Org states that material found on or downloaded from the site is lic
 3. Tecuatl C, Ljungquist B, Ascoli GA (2024), “Accelerating the continuous community sharing of digital neuromorphology data,” *FASEB BioAdvances* 6(7):207–221, DOI: [10.1096/fba.2024-00048](https://doi.org/10.1096/fba.2024-00048).
 
 The Allen Cell Types collection is associated with the Brain Image Library collection DOI [10.35077/g.19](https://doi.org/10.35077/g.19).
+
+## Independently verified preflight metrics (2026-11-22)
+
+- SWC record count: 7,287; node type counts: soma 3, axon 23, basal dendrite 3,411, apical dendrite 3,850.
+- SWC branch-point count: 48 (matches NeuroMorpho's pre-computed morphology metadata).
+- Path length from SWC: 10,484.9066 µm versus NeuroMorpho's reported 10,476.9 µm (+0.076%).
+- Maximum path distance from SWC: 620.4322 µm versus reported 620.43 µm (within 0.001%).
+- The raw frustum-surface sum is 22,586.1838 µm², but it includes seven soma-attached **virtual wire** edges (1,261.9907 µm²). NeuroMorpho's three-point soma convention uses zero-resistance virtual wires to connect neurite trees to the soma; these are not physical membrane.
+- After removing those virtual-wire edge areas, the AMSN normalized electrical surface is 21,324.1932 µm². This is 0.2008% below NeuroMorpho's pre-computed Total Surface (21,367.1 µm²). The report preserves both values and the method difference rather than presenting the raw sum as electrical membrane area.
+- SWC SHA-256: `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`.
+
+These are geometry/import consistency checks, not a biological surface-area validation or cell-type population inference.
 
 ## Scientific use constraints
 
