@@ -75,13 +75,17 @@ python examples/human_schur_port_matrix_audit.py
 
 The base PRIMA 10 kHz audit on main has already passed. This experiment is not considered validated until the new code, tests, six matrix jobs and raw artifacts all pass.
 
-## Current validation state
+## Verified results — PR #2, 2026-11-22
 
-- Base main Core CI [44965966066](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966066): success, 4/4 jobs.
-- Base main Schur/PRIMA [44965966021](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966021): success, 6/6 jobs.
-- Base main fine-mesh audit [44965966005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965966005): success.
-- Base main frequency audit [44965965999](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965965999): success, 3/3 jobs.
-- New order/transient branch: files have been written and read back from GitHub; PR-specific checks have not yet run. No new order-sweep or transient result is claimed.
+- Schur/PRIMA workflow [44966510373](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510373): 6/6 success. All six jobs passed 111 tests and emitted exactly 232 rows; 1,392 total rows across the matrix.
+- Core CI [44966510441](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510441): 4/4 success, including Python 3.12/3.13 test, compile/example and NEURON cross-validation jobs.
+- Frequency audit [44966510356](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510356): 3/3 success.
+- All 24 projected models (four basis/order variants × six morphology/mesh runs) passed Cholesky checks; maximum NEURON port-impedance condition number was 91.263.
+- Worst-case direct-NEURON Z/Y error: four-shift order 56 = 0.527304%/0.404489%; six-shift order 28 = 9.490221%/8.453951%; six-shift order 56 = 0.216765%/0.211010%; six-shift order 84 = 0.216299%/0.119252%.
+- Worst-case Hines residual Z/Y: 0.416133%/0.432732%, 9.524511%/8.392428%, 0.113574%/0.124064%, and 0.000296%/0.000376%, respectively.
+- Worst transient all-port/single-port NRMSE: four-shift 56 = 0.0002864%/0.0025174%; six-shift 28 = 0.416069%/5.119891%; six-shift 56 = 0.0009012%/0.0086914%; six-shift 84 = 0.00001835%/0.0002290%.
+- Decision: reject order 28; keep four-shift order 56 as default/control; keep six-shift order 56 as optional upper-band compromise; keep six-shift order 84 as optional high-fidelity passive RC preset. Full Hines remains canonical.
+- Result report: [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](../amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). Three summary CSVs are stored in amsn-core/results/.
 
 ## Interpretation limits
 
@@ -89,4 +93,4 @@ The experiment remains a passive linear RC validation at seven chosen ports. It 
 
 ## Next decision
 
-After all six jobs complete, aggregate the frequency-domain and transient matrices. Choose an optional order/basis preset only if direct NEURON errors and transient behavior are acceptable across all three morphology records and both mesh caps. Otherwise retain the four-shift default, record the failures, and identify the source/port/scenario driving each error.
+The apical-q90 retained port recurs as the highest-error transient output. The next experiment should enrich the retained port set around apical and branch-transfer paths, compare the seven-port basis with a larger port set, and measure whether local accuracy improves without degrading soma/basal responses. Preserve the same morphology, passive parameters, pulse matrix and NEURON mesh controls. Do not infer biological mechanisms from passive port residuals.
