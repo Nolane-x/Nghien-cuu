@@ -333,6 +333,8 @@ jobs:
           printf 'log_file=%s\ntime_file=%s\n' "$LOG" "$TIME_FILE"
         working-directory: amsn-core
       - name: Validate coverage and write resource measurement
+        env:
+          PYTHONPATH: ../research
         run: |
           python - <<'PY'
           import csv, os
