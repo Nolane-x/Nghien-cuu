@@ -232,6 +232,8 @@ def build_prima_transient_port_comparison(
         rows.append({
             "metric": "transient_port",
             "reduction_method": reduction_method,
+            "model_id": reduction_method,
+            "reduced_order": reduced_model.order,
             "scenario_id": scenario_id,
             "source_name": source_name,
             "pulse_width_ms": pulse_width_ms,
@@ -260,6 +262,8 @@ def build_prima_transient_port_comparison(
     rows.append({
         "metric": "transient_all_ports",
         "reduction_method": reduction_method,
+        "model_id": reduction_method,
+        "reduced_order": reduced_model.order,
         "scenario_id": scenario_id,
         "source_name": source_name,
         "pulse_width_ms": pulse_width_ms,
@@ -345,22 +349,16 @@ def main() -> None:
         ),
     }
     prima_extended_order_sweep_models = {
-        order: (
-            prima_multishift_extended_model
-            if order == prima_multishift_extended_model.order
-            else prima_reduce_passive_cable_multishift(
-                cable, boundary_indices, max_order=order,
-                expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
-            )
-        )
-        for order in EXTENDED_ORDER_SWEEP
-    }
-    prima_extended_order_sweep_models = {
         "four_shift_order56_control": prima_multishift_model,
-        **{
-            f"six_shift_order{requested_order}": model
-            for requested_order, model in prima_extended_order_sweep_models.items()
-        },
+        "six_shift_order28": prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=28,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+        ),
+        "six_shift_order56": prima_multishift_extended_model,
+        "six_shift_order84": prima_reduce_passive_cable_multishift(
+            cable, boundary_indices, max_order=84,
+            expansion_frequencies_hz=PRIMA_MULTI_SHIFT_EXTENDED_HZ,
+        ),
     }
     for model_id, projected_model in prima_extended_order_sweep_models.items():
         np.linalg.cholesky(projected_model.conductance_matrix_s)
@@ -731,7 +729,15 @@ def main() -> None:
     write_csv(prima_sweep_path, prima_sweep_rows)
 
     injection_ids = dict(injections)
+    required_sources = {source_name for source_name, _ in TRANSIENT_SCENARIOS}
+    missing_sources = required_sources.difference(injection_ids)
+    if missing_sources:
+        raise RuntimeError(
+            f"transient scenarios reference unmapped injection sources: {sorted(missing_sources)}"
+        )
     for model_id, sweep_model in prima_extended_order_sweep_models.items():
+        if tuple(sweep_model.port_indices) != tuple(boundary_indices):
+            raise RuntimeError(f"{model_id} retained-port order does not match the audit")
         for source_name, pulse_width_ms in TRANSIENT_SCENARIOS:
             source_id = injection_ids[source_name]
             source_port_index = boundary_ids.index(source_id)
@@ -745,6 +751,15 @@ def main() -> None:
                 source_name=source_name,
                 pulse_width_ms=pulse_width_ms,
             ))
+    expected_extended_rows = len(prima_extended_order_sweep_models) * (
+        len(FREQUENCIES_HZ)
+        + len(TRANSIENT_SCENARIOS) * (len(boundary_indices) + 1)
+    )
+    if len(prima_extended_sweep_rows) != expected_extended_rows:
+        raise RuntimeError(
+            f"expected {expected_extended_rows} extended order/transient rows, "
+            f"got {len(prima_extended_sweep_rows)}"
+        )
     write_csv(prima_extended_sweep_path, prima_extended_sweep_rows)
 
     max_admittance_error = max(
