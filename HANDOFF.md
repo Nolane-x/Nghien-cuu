@@ -3,7 +3,22 @@
 
 ---
 
-## Latest validated checkpoint — PRIMA held-out morphology and port/order study (22/11/2026)
+## Latest validated checkpoint — complete PRIMA resource benchmark (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md](HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`. Resource benchmark code head tested: `e556625b9f0b1f31f9c822e603cf0ae220eefe0f`.
+
+- [Completed GitHub Actions run 45016243390](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45016243390): 37/37 jobs passed (one validator + 36 resource jobs); validator log: 16 tests passed.
+- 36/36 artifact ZIPs downloaded; 36/36 SHA-256 digests match GitHub metadata. Matrix coverage 3 morphologies × 2 mesh caps × orders84/112/168 × 2 repeats = 36 unique conditions.
+- 7,560 sweep rows checked: 1,080 frequency, 5,832 per-port transient, 648 aggregate transient; each artifact has 210 rows and exit status 0.
+- Median process user CPU / peak RSS: order84 = 141.45 s / 268.16 MiB; order112 = 205.96 s / 277.29 MiB; order168 = 278.31 s / 300.76 MiB. State reductions: 99.3225%, 99.0967%, 98.6451%.
+- Whole audit-process measurements only, not isolated PRIMA kernels. Seven runner CPU models mean wall time is not a controlled speed comparison. Full Hines remains canonical; production defaults unchanged.
+- Complete report: [HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_2026-11-22.md). Raw per-run data, summaries, manifest, validation JSON and reproducer are linked in that report.
+
+The preceding 12/36 resource note remains in the history below, but is superseded for resource status by this 36/36 verified run. PR #8 remains draft/open; do not merge or mark ready without explicit authorization.
+
+---
+
+## Previous validated checkpoint — PRIMA held-out morphology and port/order study (22/11/2026)
 
 Continue from [HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md](HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`; validated code head: `5180f0bc72dbfad0a460b0870ca80fec772db0e3`.
 
