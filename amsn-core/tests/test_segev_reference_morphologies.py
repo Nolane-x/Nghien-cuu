@@ -98,7 +98,7 @@ def test_enriched_basal_apical_quantile_ports_are_stable_and_distinct(
 ):
     from amsn.ports import path_distances_um, quantile_node
 
-    morphology = SWCMorphology.from_file(DATA_DIR.parent / relative_path)
+    morphology = SWCMorphology.from_file(DATA_DIR.parent.parent / relative_path)
     distances = path_distances_um(morphology)
     quantiles = (0.25, 0.50, 0.75, 0.90)
     basal = tuple(
