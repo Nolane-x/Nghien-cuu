@@ -59,7 +59,7 @@ jobs:
       AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
       AMSN_PORT_ENRICHMENT: apical_basal_q25_q75
       AMSN_PRIMA_EXTENDED_ORDERS: "28,56,84,112,168"
-      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_9port_highorder_
+      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_highorder_9port_
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
@@ -137,7 +137,7 @@ jobs:
           name: amsn-${{ matrix.morphology_label }}-mesh-${{ matrix.mesh_cap_um }}um-9port-orders-28-168
           path: |
             amsn-core/${{ matrix.morphology_label }}-mesh${{ matrix.mesh_cap_um }}um-9port-highorder.log
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_9port_highorder_human_passive_prima_extended_order_transient_sweep_2026-11-22.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_9port_highorder_human_passive_schur_port_summary_2026-11-22.csv
-            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_9port_highorder_human_passive_schur_port_localization_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_highorder_9port_human_passive_prima_extended_order_transient_sweep_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_highorder_9port_human_passive_schur_port_summary_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_highorder_9port_human_passive_schur_port_localization_2026-11-22.csv
           if-no-files-found: error
