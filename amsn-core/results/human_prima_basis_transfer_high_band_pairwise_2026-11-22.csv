@@ -1,0 +1,5 @@
+frequency_hz,metric,matched_morphology_scenario_pairs,median_extended_over_fresh3k,p90_extended_over_fresh3k,max_extended_over_fresh3k,extended_lower_error_count,fresh3k_lower_error_count
+6000.0,z_error_vs_hines_pct,27,0.4677891990541993,0.5150537799863638,0.5572460454978031,27,0
+6000.0,y_error_vs_hines_pct,27,0.5058547153990871,0.5350651367125667,0.6055200148955674,27,0
+10000.0,z_error_vs_hines_pct,27,0.29269516469463,0.315071487401418,0.3431871099449892,27,0
+10000.0,y_error_vs_hines_pct,27,0.3124472284246348,0.3250093034138546,0.36167255608051385,27,0

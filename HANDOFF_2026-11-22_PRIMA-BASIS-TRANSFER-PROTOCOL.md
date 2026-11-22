@@ -47,6 +47,20 @@ Every model must pass Cholesky checks on both reduced conductance and capacitanc
 - Keep full Hines canonical and production defaults unchanged.
 - Do not compare against NEURON as if it were the same error target: this experiment reports reduced PRIMA versus the corresponding perturbed Hines tree.
 
-## Validation status
+## Validated result — 2026-11-22
 
-Protocol, implementation and workflow are staged for CI. No numerical result is claimed in this handoff. Results become validated only after all three jobs pass, all artifacts are inspected, exact row counts are confirmed and aggregate analysis is committed.
+Actions run 44990898080 completed with **3/3 successful morphology jobs**. Each ran the full AMSN test suite, used pinned NEURON 9.0.2 and uploaded model, frequency and transient CSVs.
+
+Coverage validated from all three artifacts:
+- 81 model audit rows; all requested/achieved order 56; all 81 Cholesky checks passed.
+- 729 frequency rows across nine frequencies and nine parameter cases.
+- 3,402 transient per-port rows across three source sites, two pulse widths and seven output nodes.
+- 1,134 exact-paired transient output conditions across model variants.
+
+The high-band extended basis improves every matched case at 6 kHz and 10 kHz for both Z and Y (27/27 per metric/frequency), with median extended/fresh-3k ratios of 0.4678/0.5059 at 6 kHz and 0.2927/0.3124 at 10 kHz. But it worsens transient per-port NRMSE in all 1,134 paired comparisons; median error ratio is 4.052× (P90 6.519×). It must not replace the 3 kHz basis as a general-purpose passive model.
+
+Full report: amsn-core/research/HUMAN_PRIMA_BASIS_TRANSFER_PROTOCOL_ROBUSTNESS_2026-11-22.md. Reproducer: amsn-core/research/analyze_human_prima_basis_transfer_protocol_robustness.py. Summary tables and provenance manifest are in amsn-core/results/.
+
+## Decision and next step
+
+Retain all three basis constructions as research candidates with declared use domains. Keep Hines canonical; no production defaults changed. Next compare order 56/84/112 with narrow, extended and balanced shifts under the same parameter/source/pulse matrix, then construct a Pareto frontier across Z/Y bands, transient NRMSE, CPU and RSS. Validate the leading candidates on a held-out morphology.

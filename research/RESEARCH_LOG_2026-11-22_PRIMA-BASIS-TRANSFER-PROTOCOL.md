@@ -20,9 +20,19 @@ Expected records per morphology:
 
 All reduced conductance and capacitance matrices undergo Cholesky positive-definiteness checks. The full Hines tree is run once per source/pulse protocol and compared against all three reduced variants.
 
-## Evidence status
+## Validated evidence — 2026-11-22
 
-The earlier run (Actions 44922676384) validated its original 3-morphology × 9-parameter matrix and its Cholesky checks. It is historical evidence for the 3 kHz frozen/fresh comparison only. The present protocol is a new experiment; its result remains pending until its own GitHub Actions run and artifacts are fully inspected.
+The present experiment completed in Actions run 44990898080, 3/3 jobs successful. Pinned NEURON 9.0.2 and the full AMSN test suite passed in each job. Three artifacts were downloaded and SHA-256 checked against GitHub metadata.
+
+Validated totals: 81 model rows, 729 frequency rows and 3,402 transient-port rows. All 81 models achieved order 56 and passed Cholesky positive-definiteness checks. The analysis paired 1,134 transient output conditions by morphology, scenario, source, pulse width and exact SWC node.
+
+The extended 10 kHz basis improved 6 kHz and 10 kHz frequency residuals in all 27 matched morphology/parameter cases for both Z and Y. Median extended/fresh-3k ratios:
+- 6 kHz: Z 0.4678, Y 0.5059.
+- 10 kHz: Z 0.2927, Y 0.3124.
+
+But it worsened transient error in all 1,134 paired outputs, with median extended/fresh-3k ratio 4.052× and P90 6.519×. Fresh 3 kHz versus frozen 3 kHz was mixed: 488 improvements, 520 regressions and 126 ties.
+
+The post-processing script, report, summary CSVs and artifact manifest are committed in this branch.
 
 ## Scientific limits
 
