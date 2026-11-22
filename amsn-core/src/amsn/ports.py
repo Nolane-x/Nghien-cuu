@@ -5,7 +5,7 @@ quantile is a physical compartment or a biological boundary.
 """
 from __future__ import annotations
 
-from math import hypot, isfinite
+from math import isfinite, sqrt
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -21,10 +21,11 @@ def path_distances_um(morphology: "SWCMorphology") -> dict[int, float]:
         parent = morphology.nodes[parent_id]
         for child_id in morphology.children[parent_id]:
             child = morphology.nodes[child_id]
-            distances[child_id] = distances[parent_id] + hypot(
-                child.x_um - parent.x_um,
-                child.y_um - parent.y_um,
-                child.z_um - parent.z_um,
+            dx = child.x_um - parent.x_um
+            dy = child.y_um - parent.y_um
+            dz = child.z_um - parent.z_um
+            distances[child_id] = distances[parent_id] + sqrt(
+                dx * dx + dy * dy + dz * dz
             )
             stack.append(child_id)
     if len(distances) != len(morphology.nodes):
