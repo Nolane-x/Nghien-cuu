@@ -1,0 +1,153 @@
+name: AMSN PRIMA Kernel Phase Profile
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-prima-kernel-phase-profile.yml"
+      - "amsn-core/examples/prima_phase_profile.py"
+      - "amsn-core/tests/test_prima_phase_profile.py"
+      - "amsn-core/src/amsn/prima.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/src/amsn/ports.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phase-profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
+      AMSN_PROFILE_REPEATS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Test the phase profiler on a deterministic small cable
+        run: python -m pytest -q tests/test_prima_phase_profile.py
+        working-directory: amsn-core
+      - name: Run PRIMA-only phase profile
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o "${{ matrix.morphology_label }}-prima-profile.time.txt" \
+            python examples/prima_phase_profile.py \
+              --mode prima \
+              --repeats "${AMSN_PROFILE_REPEATS}" \
+              --output-dir "results/prima_phase_profile/${AMSN_MORPHOLOGY_LABEL}/prima"
+          cat "${{ matrix.morphology_label }}-prima-profile.time.txt"
+        working-directory: amsn-core
+      - name: Run full-Hines baseline in a separate process
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o "${{ matrix.morphology_label }}-hines-profile.time.txt" \
+            python examples/prima_phase_profile.py \
+              --mode hines \
+              --repeats "${AMSN_PROFILE_REPEATS}" \
+              --output-dir "results/prima_phase_profile/${AMSN_MORPHOLOGY_LABEL}/hines"
+          cat "${{ matrix.morphology_label }}-hines-profile.time.txt"
+        working-directory: amsn-core
+      - name: Validate phase, solver and matrix coverage
+        run: |
+          python - <<'PY'
+          import csv, json, math, os
+          from pathlib import Path
+          root = Path("results/prima_phase_profile") / os.environ["AMSN_MORPHOLOGY_LABEL"]
+          build_path = root / "prima" / "build_phase_profile.csv"
+          prima_solver_path = root / "prima" / "solver_profile.csv"
+          hines_solver_path = root / "hines" / "solver_profile.csv"
+          build = list(csv.DictReader(build_path.open(newline="", encoding="utf-8")))
+          prima_solver = list(csv.DictReader(prima_solver_path.open(newline="", encoding="utf-8")))
+          hines_solver = list(csv.DictReader(hines_solver_path.open(newline="", encoding="utf-8")))
+          expected_phases = {
+              "shifted_hines_solve", "orthogonalization", "congruence_projection",
+              "multishift_orchestration", "other_python_self", "native_function_self",
+          }
+          if len(build) != 36:
+              raise RuntimeError(f"expected 36 phase rows, got {len(build)}")
+          if {row["phase"] for row in build} != expected_phases:
+              raise RuntimeError("phase coverage mismatch")
+          expected_pairs = {(str(order), str(rep)) for order in (84, 112, 168) for rep in (1, 2)}
+          actual_pairs = {(row["prima_order"], row["replicate"]) for row in build}
+          if actual_pairs != expected_pairs:
+              raise RuntimeError(f"build order/repeat coverage mismatch: {actual_pairs}")
+          if len(prima_solver) != 12 or len(hines_solver) != 4:
+              raise RuntimeError(
+                  f"solver row mismatch: PRIMA={len(prima_solver)}, Hines={len(hines_solver)}"
+              )
+          for row in build:
+              for field in (
+                  "self_seconds", "cumulative_seconds", "build_wall_seconds",
+                  "unprofiled_build_wall_seconds", "unprofiled_build_process_cpu_seconds",
+                  "cprofile_wall_overhead_ratio",
+              ):
+                  value = float(row[field])
+                  if not math.isfinite(value) or value < 0:
+                      raise RuntimeError(f"invalid timing: {field}={row[field]}")
+          for row in prima_solver + hines_solver:
+              if row["finite_check"].lower() != "true":
+                  raise RuntimeError(f"finite-value check failed: {row}")
+              if not math.isfinite(float(row["wall_seconds"])) or float(row["wall_seconds"]) <= 0:
+                  raise RuntimeError("solver wall time must be finite and positive")
+          for mode in ("prima", "hines"):
+              metadata = json.loads((root / mode / "metadata.json").read_text())
+              if metadata["morphology"] != os.environ["AMSN_MORPHOLOGY_LABEL"]:
+                  raise RuntimeError("morphology metadata mismatch")
+              if metadata["retained_port_count"] != 7:
+                  raise RuntimeError("expected seven matched ports")
+          print(
+              f"morphology={os.environ['AMSN_MORPHOLOGY_LABEL']}; "
+              f"build_phase_rows={len(build)}; prima_solver_rows={len(prima_solver)}; "
+              f"hines_solver_rows={len(hines_solver)}; all_checks=passed"
+          )
+          PY
+        working-directory: amsn-core
+      - name: Preserve phase profiles and separate process resource records
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-prima-kernel-phase-profile
+          path: |
+            amsn-core/results/prima_phase_profile/${{ matrix.morphology_label }}/
+            amsn-core/${{ matrix.morphology_label }}-prima-profile.time.txt
+            amsn-core/${{ matrix.morphology_label }}-hines-profile.time.txt
+          if-no-files-found: error

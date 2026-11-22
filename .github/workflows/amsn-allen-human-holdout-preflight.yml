@@ -1,0 +1,256 @@
+name: AMSN Allen human held-out morphology source preflight
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-allen-human-holdout-preflight.yml"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/src/amsn/provenance.py"
+      - "amsn-core/examples/allen_human_holdout_preflight.py"
+      - "amsn-core/examples/human_prima_shift_order_pareto.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/tests/test_provenance.py"
+      - "amsn-core/pyproject.toml"
+      - "amsn-core/data/human/allen_cell_types/NMO_162186_PROVENANCE.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  held-out-source-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEURON_NOGUI: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Download standardized SWC from the direct NeuroMorpho file URL
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Preflight/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          sha256sum data/human/allen_cell_types/770307286_transformed.CNG.swc
+        working-directory: amsn-core
+      - name: Test strict SWC holdout validation
+        run: python -m pytest -q tests/test_provenance.py
+        working-directory: amsn-core
+      - name: Run topology, Import3D, seven-port and passive-RC preflight
+        run: python examples/allen_human_holdout_preflight.py
+        working-directory: amsn-core
+      - name: Preserve the exact source and validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-NMO_162186-allen-heldout-source-preflight
+          path: |
+            amsn-core/data/human/allen_cell_types/770307286_transformed.CNG.swc
+            amsn-core/results/NMO_162186_holdout_preflight/preflight.json
+            amsn-core/results/NMO_162186_holdout_preflight/port_mapping.csv
+          if-no-files-found: warn
+
+  held-out-prima-pareto:
+    needs: held-out-source-preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_MORPHOLOGY_LABEL: NMO_162186_AllenL23
+      AMSN_MORPHOLOGY_PATH: data/human/allen_cell_types/770307286_transformed.CNG.swc
+      AMSN_EXPECTED_SWC_RECORDS: "7287"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download the exact SWC validated by the preflight job
+        uses: actions/download-artifact@v4
+        with:
+          name: amsn-NMO_162186-allen-heldout-source-preflight
+          path: amsn-core
+      - name: Verify source bytes against the preflight SHA-256
+        run: |
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+          test -s data/human/allen_cell_types/770307286_transformed.CNG.swc
+        working-directory: amsn-core
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run held-out nine-candidate PRIMA shift/order sweep
+        shell: bash
+        run: |
+          set -euo pipefail
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o NMO_162186_prima_pareto.time.txt \
+            python examples/human_prima_shift_order_pareto.py | tee NMO_162186_prima_pareto.log
+        working-directory: amsn-core
+      - name: Validate full held-out matrix and write run summary
+        run: |
+          python - <<'PY'
+          import csv, json, math
+          from collections import Counter
+          from pathlib import Path
+
+          label = "NMO_162186_AllenL23"
+          prefix = f"{label}_human_prima_shift_order_pareto_2026-11-22"
+          result_dir = Path("results")
+          def load(suffix):
+              path = result_dir / f"{prefix}_{suffix}.csv"
+              if not path.is_file():
+                  raise RuntimeError(f"missing result CSV: {path}")
+              return list(csv.DictReader(path.open(newline="", encoding="utf-8")))
+
+          models = load("models")
+          frequency = load("frequency")
+          transient = load("transient")
+          expected_model_ids = {
+              f"order{order}_{strategy}"
+              for order in (56, 84, 112)
+              for strategy in ("narrow_3khz", "extended_10khz", "balanced_10khz")
+          }
+          expected_scenarios = {
+              "nominal", "Rm_minus20", "Rm_plus20", "Cm_minus20", "Cm_plus20",
+              "Ra_minus20", "Ra_plus20", "all_minus20", "all_plus20",
+          }
+          def require(condition, message):
+              if not condition:
+                  raise RuntimeError(message)
+
+          require(len(models) == 81, f"model rows={len(models)} != 81")
+          require(len(frequency) == 729, f"frequency rows={len(frequency)} != 729")
+          require(len(transient) == 3402, f"transient rows={len(transient)} != 3402")
+          require({row["model_id"] for row in models} == expected_model_ids, "model ID coverage mismatch")
+          require({row["model_id"] for row in frequency} == expected_model_ids, "frequency model coverage mismatch")
+          require({row["model_id"] for row in transient} == expected_model_ids, "transient model coverage mismatch")
+          require({row["parameter_scenario"] for row in models} == expected_scenarios, "parameter scenario coverage mismatch")
+          require({row["parameter_scenario"] for row in frequency} == expected_scenarios, "frequency scenario coverage mismatch")
+          require({row["parameter_scenario"] for row in transient} == expected_scenarios, "transient scenario coverage mismatch")
+
+          requested_orders = {f"order{order}_" : order for order in (56, 84, 112)}
+          for row in models:
+              expected_order = next((order for prefix, order in requested_orders.items() if row["model_id"].startswith(prefix)), None)
+              require(expected_order is not None, f"unknown model ID {row['model_id']}")
+              require(int(row["basis_order_requested"]) == expected_order, f"requested order mismatch in {row['model_id']}")
+              require(int(row["basis_order_actual"]) == expected_order, f"actual order mismatch in {row['model_id']}")
+              require(row["passivity_check"] == "cholesky_passed", f"Cholesky check missing for {row['model_id']}")
+              for key in ("basis_build_wall_seconds", "numeric_storage_bytes", "state_reduction_pct"):
+                  value = float(row[key])
+                  require(math.isfinite(value), f"non-finite {key} in {row['model_id']}")
+              require(int(row["numeric_storage_bytes"]) > 0, "non-positive numeric storage")
+
+          frequency_keys = Counter(
+              (row["model_id"], row["parameter_scenario"], float(row["frequency_hz"]))
+              for row in frequency
+          )
+          expected_frequency_keys = {
+              (model_id, scenario, freq)
+              for model_id in expected_model_ids
+              for scenario in expected_scenarios
+              for freq in (0.1, 1.0, 10.0, 100.0, 300.0, 1000.0, 3000.0, 6000.0, 10000.0)
+          }
+          require(set(frequency_keys) == expected_frequency_keys, "frequency key coverage mismatch")
+          require(all(count == 1 for count in frequency_keys.values()), "duplicate frequency rows")
+          for row in frequency:
+              for key in ("z_error_vs_hines_pct", "y_error_vs_hines_pct"):
+                  value = float(row[key])
+                  require(math.isfinite(value) and value >= 0.0, f"invalid {key} in {row['model_id']}")
+
+          preflight = json.loads(Path("results/NMO_162186_holdout_preflight/preflight.json").read_text(encoding="utf-8"))
+          mapping_rows = preflight.get("mapping", [])
+          require(len(mapping_rows) == 7, f"preflight mapping rows={len(mapping_rows)} != 7")
+          require(
+              all("swc_node_id" in row for row in mapping_rows),
+              "preflight port mapping rows must expose swc_node_id",
+          )
+          expected_port_ids = {int(row["swc_node_id"]) for row in mapping_rows}
+          require(len(expected_port_ids) == 7, "preflight did not contain exactly seven unique SWC ports")
+          transient_keys = Counter(
+              (row["model_id"], row["parameter_scenario"], row["source_name"], float(row["pulse_width_ms"]), int(row["port_swc_id"]))
+              for row in transient
+          )
+          require(set(transient_keys) == {
+              (model_id, scenario, source, width, port)
+              for model_id in expected_model_ids
+              for scenario in expected_scenarios
+              for source in ("soma", "basal_q75", "apical_q75")
+              for width in (2.0, 10.0)
+              for port in expected_port_ids
+          }, "transient key coverage mismatch")
+          require(all(count == 1 for count in transient_keys.values()), "duplicate transient rows")
+          for row in transient:
+              for key in ("port_nrmse_pct", "overall_nrmse_pct", "max_port_nrmse_pct"):
+                  value = float(row[key])
+                  require(math.isfinite(value) and value >= 0.0, f"invalid {key} in {row['model_id']}")
+              require(int(row["source_swc_id"]) in expected_port_ids, "transient source SWC ID not in retained ports")
+              require(int(row["port_swc_id"]) in expected_port_ids, "transient port SWC ID not in retained ports")
+
+          timing = {}
+          for line in Path("NMO_162186_prima_pareto.time.txt").read_text(encoding="utf-8").splitlines():
+              if "=" in line:
+                  key, value = line.split("=", 1)
+                  timing[key] = value
+          require(timing.get("exit_status") == "0", f"runner exit status not zero: {timing}")
+
+          summary = {
+              "morphology": label,
+              "source_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+              "swc_records": 7287,
+              "models_rows": len(models),
+              "frequency_rows": len(frequency),
+              "transient_rows": len(transient),
+              "candidate_ids": sorted(expected_model_ids),
+              "parameter_scenarios": sorted(expected_scenarios),
+              "frequency_hz": [0.1, 1.0, 10.0, 100.0, 300.0, 1000.0, 3000.0, 6000.0, 10000.0],
+              "source_names": ["soma", "basal_q75", "apical_q75"],
+              "pulse_widths_ms": [2.0, 10.0],
+              "unique_port_swc_ids": sorted(expected_port_ids),
+              "all_requested_orders_achieved": True,
+              "all_reduced_G_C_cholesky_checks_passed": True,
+              "all_numeric_error_values_finite_nonnegative": True,
+              "runner_resource_metrics": timing,
+              "scope": "passive linear RC; single epilepsy surgical-specimen morphology with incomplete axon",
+              "status": "PASS",
+          }
+          Path("results/NMO_162186_holdout_preflight/prima_pareto_validation.json").write_text(
+              json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(summary, indent=2, sort_keys=True))
+          PY
+        working-directory: amsn-core
+      - name: Preserve held-out PRIMA raw data and resource measurements
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-NMO_162186-allen-heldout-prima-pareto
+          path: |
+            amsn-core/data/human/allen_cell_types/770307286_transformed.CNG.swc
+            amsn-core/results/NMO_162186_holdout_preflight/preflight.json
+            amsn-core/results/NMO_162186_holdout_preflight/port_mapping.csv
+            amsn-core/results/NMO_162186_holdout_preflight/prima_pareto_validation.json
+            amsn-core/results/NMO_162186_AllenL23_human_prima_shift_order_pareto_2026-11-22_*.csv
+            amsn-core/NMO_162186_prima_pareto.log
+            amsn-core/NMO_162186_prima_pareto.time.txt
+          if-no-files-found: error

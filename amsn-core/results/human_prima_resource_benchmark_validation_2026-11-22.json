@@ -1,0 +1,66 @@
+{
+  "workflow_run": 45016243390,
+  "tested_code_head": "e556625b9f0b1f31f9c822e603cf0ae220eefe0f",
+  "workflow_conclusion": "success",
+  "jobs": {
+    "total": 37,
+    "success": 37,
+    "failure": 0,
+    "validator_tests_passed": 16
+  },
+  "matrix": {
+    "morphologies": 3,
+    "mesh_caps_um": [
+      0.125,
+      0.0625
+    ],
+    "orders": [
+      84,
+      112,
+      168
+    ],
+    "replicates": 2,
+    "resource_jobs": 36,
+    "unique_conditions": 36
+  },
+  "artifacts": {
+    "expected": 36,
+    "downloaded": 36,
+    "sha256_matches": 36,
+    "mismatches": 0
+  },
+  "raw_sweep_rows": {
+    "total": 7560,
+    "frequency_response": 1080,
+    "transient_port": 5832,
+    "transient_all_ports": 648,
+    "rows_per_artifact": 210
+  },
+  "resource_medians": {
+    "84": {
+      "n": 12,
+      "user_cpu_seconds": 141.45,
+      "peak_rss_mib": 268.158203125,
+      "state_reduction_pct": 99.32252601016211,
+      "wall_seconds": 116.575
+    },
+    "112": {
+      "n": 12,
+      "user_cpu_seconds": 205.96,
+      "peak_rss_mib": 277.287109375,
+      "state_reduction_pct": 99.09670134688281,
+      "wall_seconds": 98.78
+    },
+    "168": {
+      "n": 12,
+      "user_cpu_seconds": 278.31,
+      "peak_rss_mib": 300.76171875,
+      "state_reduction_pct": 98.64505202032421,
+      "wall_seconds": 129.95
+    }
+  },
+  "runner_cpu_models": 7,
+  "wall_time_comparable": false,
+  "caveat": "Whole audit-process profile, not isolated PRIMA kernels; no production-default changes.",
+  "errors": []
+}

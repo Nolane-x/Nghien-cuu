@@ -1,5 +1,58 @@
 # HANDOFF — Nolane-x Research
 
+
+---
+
+## Latest implementation checkpoint — PRIMA phase profiler (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`; profiler code checkpoint: `9050c6a075c12af564fa86c0e5c2b1ce1564eac4`.
+
+- Added `amsn-core/examples/prima_phase_profile.py`, targeted tests in `amsn-core/tests/test_prima_phase_profile.py`, and `.github/workflows/amsn-prima-kernel-phase-profile.yml`.
+- Profile scope: existing PRIMA shifted Hines solves, orthogonalization, congruence projection, orchestration; separate Python/native self-time; same-order unprofiled build reference; reduced frequency/transient solvers; full-Hines baseline in an independent process.
+- The matrix is three morphology fixtures × orders84/112/168 × two profiled repeats, with a separate Hines process for each morphology.
+- **Validation pending:** Actions [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634) was queued at the last check. The targeted pytest command has not yet been observed passing; no profiler measurements have been accepted. See the new handoff for exact parameters and next actions.
+- No production defaults or canonical Hines equations were changed. PR #8 remains draft/open.
+
+---
+
+## Latest implementation checkpoint — PRIMA phase profiler (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md). Latest implementation commit: `fb642cce096a1fb2920c5b30bbaf471c1dd2d3a0`.
+
+- Added phase timing for the real PRIMA builder, unprofiled build reference, reduced solver timing and a separate full-Hines process baseline.
+- Files: `amsn-core/examples/prima_phase_profile.py`, `amsn-core/tests/test_prima_phase_profile.py`, `.github/workflows/amsn-prima-kernel-phase-profile.yml`.
+- Targeted workflow [45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028) and Core CI [45035222163](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222163) were **queued** at the last inspection. No tests or profile results have been accepted as passing yet.
+- Keep full Hines canonical and production defaults unchanged. PR #8 remains draft/open.
+
+---
+
+## Latest validated checkpoint — complete PRIMA resource benchmark (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md](HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`. Resource benchmark code head tested: `e556625b9f0b1f31f9c822e603cf0ae220eefe0f`.
+
+- [Completed GitHub Actions run 45016243390](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45016243390): 37/37 jobs passed (one validator + 36 resource jobs); validator log: 16 tests passed.
+- 36/36 artifact ZIPs downloaded; 36/36 SHA-256 digests match GitHub metadata. Matrix coverage 3 morphologies × 2 mesh caps × orders84/112/168 × 2 repeats = 36 unique conditions.
+- 7,560 sweep rows checked: 1,080 frequency, 5,832 per-port transient, 648 aggregate transient; each artifact has 210 rows and exit status 0.
+- Median process user CPU / peak RSS: order84 = 141.45 s / 268.16 MiB; order112 = 205.96 s / 277.29 MiB; order168 = 278.31 s / 300.76 MiB. State reductions: 99.3225%, 99.0967%, 98.6451%.
+- Whole audit-process measurements only, not isolated PRIMA kernels. Seven runner CPU models mean wall time is not a controlled speed comparison. Full Hines remains canonical; production defaults unchanged.
+- Complete report: [HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_2026-11-22.md). Raw per-run data, summaries, manifest, validation JSON and reproducer are linked in that report.
+
+The preceding 12/36 resource note remains in the history below, but is superseded for resource status by this 36/36 verified run. PR #8 remains draft/open; do not merge or mark ready without explicit authorization.
+
+---
+
+## Previous validated checkpoint — PRIMA held-out morphology and port/order study (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md](HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`; validated code head: `5180f0bc72dbfad0a460b0870ca80fec772db0e3`.
+
+- Held-out human L2–3 dendritic morphology NMO_162186: [workflow 45012282648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282648), 2/2 jobs pass. Exact SWC SHA-256 `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`; 7,287 records; dendrites complete and axon incomplete; epilepsy surgical specimen. PRIMA coverage 81/729/3,402 rows and all 81 G/C Cholesky checks passed.
+- Equal-order 7-port/9-port: [workflow 45012282737](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282737), 12/12 pass. At order56/112, all 252 common-output pairs worsened when nine ports were retained. At order168, 138/252 worsened and 114/252 improved, median ratio 1.000001: practical parity, not a systematic improvement.
+- Nine-port order capacity: [workflow 45012282650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282650), 6/6 pass. Maximum transient NRMSE falls from 12.10% (order28) to 0.5231% (56), 0.001775% (84), 3.447e-5% (112), 3.450e-6% (168). Order168's incremental value varies by morphology.
+- Core CI [45012282476](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282476) 4/4 pass; enrichment [45012282496] 6/6; parameter robustness [45012282485] 3/3.
+- Resource/RSS matrix [45012282723](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282723): validator preflight passed; 12/36 resource artifacts for NMO_68174 have now been independently verified (two mesh caps × orders84/112/168 × two replicates, all SHA-256 matched and exit0). Other morphology jobs remain; full matrix incomplete. See [partial report](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_PARTIAL_2026-11-22.md).
+
+Full Hines remains canonical. No production defaults changed. All claims are limited to passive linear RC; ±20% parameter scenarios are deterministic stress tests, not biological distributions. PR #8 remains draft/open.
+
 **Ngày checkpoint ban đầu:** 2026-11-20  
 **Kho chuẩn:** https://github.com/Nolane-x/Nghien-cuu  
 **Nghiên cứu đang bàn giao:** AMSN — Adaptive Multi-Scale Neuron  

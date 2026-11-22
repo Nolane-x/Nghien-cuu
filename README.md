@@ -4,6 +4,41 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
+
+## Checkpoint mới nhất — profiler tách pha PRIMA (22/11/2026)
+
+- [Handoff phase profiler](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md) và [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-PHASE-PROFILER-IMPLEMENTATION.md).
+- [Profiler](amsn-core/examples/prima_phase_profile.py) đo shifted Hines solve, orthogonalization, congruence projection, orchestration, frequency solve và transient solve. [Kiểm thử](amsn-core/tests/test_prima_phase_profile.py), [workflow](.github/workflows/amsn-prima-kernel-phase-profile.yml).
+- Full Hines chạy trong tiến trình riêng; có đối chứng cùng bậc PRIMA không bật cProfile để ước lượng profiler overhead.
+- [GitHub Actions run 45035222028](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222028) đang queued theo commit `fb642cce`; [Core CI 45035222163](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45035222163) cũng đang queued. Chưa xác nhận test pass và chưa có số đo profiler được chấp nhận.
+
+## Checkpoint mới nhất — hoàn tất benchmark tài nguyên PRIMA (22/11/2026)
+
+- [Báo cáo benchmark đầy đủ](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_2026-11-22.md) — thay thế trạng thái partial của benchmark tài nguyên.
+- [Bảng 36 lượt chạy](amsn-core/results/human_prima_resource_benchmark_36_runs_2026-11-22.csv), [tóm tắt theo bậc PRIMA](amsn-core/results/human_prima_resource_benchmark_by_order_2026-11-22.csv), [theo mesh](amsn-core/results/human_prima_resource_benchmark_by_mesh_2026-11-22.csv), [theo morphology](amsn-core/results/human_prima_resource_benchmark_by_morphology_2026-11-22.csv).
+- [Manifest SHA-256 36 artifact](amsn-core/results/human_prima_resource_benchmark_artifact_manifest_2026-11-22.csv), [validation JSON](amsn-core/results/human_prima_resource_benchmark_validation_2026-11-22.json), [script tái lập/kiểm chứng](research/analyze_prima_resource_benchmark_artifacts.py).
+- [Handoff phiên tiếp theo](HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md), [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-RESOURCE-BENCHMARK-FINAL.md).
+- GitHub Actions [run 45016243390](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45016243390): **37/37 job pass**, 16/16 validator tests pass, **36/36 artifact SHA-256 khớp**, 36 điều kiện ma trận, 7.560 dòng sweep được xác thực.
+
+| PRIMA order | Median user CPU | Median peak RSS | State reduction |
+|---:|---:|---:|---:|
+| 84 | 141,45 s | 268,16 MiB | 99,3225% |
+| 112 | 205,96 s | 277,29 MiB | 99,0967% |
+| 168 | 278,31 s | 300,76 MiB | 98,6451% |
+
+**Diễn giải:** số liệu là profile toàn bộ audit process, chưa tách riêng kernel PRIMA; 7 loại CPU runner làm wall-time không phù hợp để xếp hạng tốc độ. Không thay đổi production defaults; full Hines vẫn là chuẩn tham chiếu.
+
+## Checkpoint trước — PRIMA holdout và port/order (22/11/2026)
+
+- [Handoff nghiên cứu mới](HANDOFF_2026-11-22_PRIMA-HELDOUT-AND-PORT-ORDER.md) — trạng thái đã kiểm chứng, lựa chọn order/số cổng và benchmark còn chờ.
+- [Báo cáo PRIMA tổng hợp](amsn-core/research/HUMAN_PASSIVE_PRIMA_VALIDATED_RESULTS_2026-11-22.md) — holdout NMO_162186, so sánh 7-port/9-port cùng order và khả năng order 28–168.
+- [CSV candidate holdout](amsn-core/results/NMO_162186_PRIMA_candidate_summary_2026-11-22.csv), [paired q90](amsn-core/results/human_passive_prima_equal_order_q90_summary_2026-11-22.csv), [common ports](amsn-core/results/human_passive_prima_equal_order_common_ports_summary_2026-11-22.csv).
+- [High-order summary](amsn-core/results/human_passive_prima_nine_port_high_order_summary_2026-11-22.csv), [per-morphology breakdown](amsn-core/results/human_passive_prima_nine_port_high_order_by_morphology_2026-11-22.csv), [20-artifact SHA-256 manifest](amsn-core/results/human_prima_verified_artifact_manifest_2026-11-22.csv).
+- [Resource/RSS progress (partial 12/36)](amsn-core/research/HUMAN_PASSIVE_PRIMA_RESOURCE_BENCHMARK_PARTIAL_2026-11-22.md) — snapshot lịch sử của run cũ; không còn là trạng thái hiện tại. Benchmark hoàn tất ở run [45016243390](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45016243390), xem báo cáo đầy đủ ở checkpoint phía trên.
+- [PR #8](https://github.com/Nolane-x/Nghien-cuu/pull/8) còn draft/open. Holdout 2/2, equal-order 12/12, nine-port high-order 6/6, Core CI 4/4; benchmark runtime/RSS vẫn còn job chờ.
+
+**Giới hạn:** tất cả là passive linear-RC; NMO_162186 là mẫu phẫu thuật epilepsy và axon không hoàn chỉnh. Full Hines vẫn là chuẩn; chưa đổi production defaults.
+
 ## Bắt đầu từ đây
 
 1. [AGENTS.md](AGENTS.md) — quy tắc làm việc, bảo toàn dữ liệu và tính trung thực khoa học cho AI agent.
