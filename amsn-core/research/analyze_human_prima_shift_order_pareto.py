@@ -247,8 +247,11 @@ def main():
     candidate_summary = []
     objective_fields = (
         "median_Z_3000_pct", "median_Y_3000_pct",
+        "max_Z_3000_pct", "max_Y_3000_pct",
         "median_Z_6000_pct", "median_Y_6000_pct",
+        "max_Z_6000_pct", "max_Y_6000_pct",
         "median_Z_10000_pct", "median_Y_10000_pct",
+        "max_Z_10000_pct", "max_Y_10000_pct",
         "median_port_nrmse_pct", "p90_port_nrmse_pct", "max_port_nrmse_pct",
         "median_basis_build_seconds", "median_reduced_transient_seconds",
         "median_numeric_storage_mb", "basis_order",
@@ -284,6 +287,8 @@ def main():
             suffix = int(frequency_hz)
             summary[f"median_Z_{suffix}_pct"] = finite_number(row, "median_Z_pct")
             summary[f"median_Y_{suffix}_pct"] = finite_number(row, "median_Y_pct")
+            summary[f"max_Z_{suffix}_pct"] = finite_number(row, "max_Z_pct")
+            summary[f"max_Y_{suffix}_pct"] = finite_number(row, "max_Y_pct")
         candidate_summary.append(summary)
 
     pareto_rows = []
