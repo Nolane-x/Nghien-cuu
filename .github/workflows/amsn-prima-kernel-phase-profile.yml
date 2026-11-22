@@ -115,7 +115,11 @@ jobs:
                   f"solver row mismatch: PRIMA={len(prima_solver)}, Hines={len(hines_solver)}"
               )
           for row in build:
-              for field in ("self_seconds", "cumulative_seconds", "build_wall_seconds"):
+              for field in (
+                  "self_seconds", "cumulative_seconds", "build_wall_seconds",
+                  "unprofiled_build_wall_seconds", "unprofiled_build_process_cpu_seconds",
+                  "cprofile_wall_overhead_ratio",
+              ):
                   value = float(row[field])
                   if not math.isfinite(value) or value < 0:
                       raise RuntimeError(f"invalid timing: {field}={row[field]}")

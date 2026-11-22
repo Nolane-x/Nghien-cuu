@@ -3,6 +3,18 @@
 
 ---
 
+## Latest implementation checkpoint — PRIMA phase profiler (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`; profiler code checkpoint: `9050c6a075c12af564fa86c0e5c2b1ce1564eac4`.
+
+- Added `amsn-core/examples/prima_phase_profile.py`, targeted tests in `amsn-core/tests/test_prima_phase_profile.py`, and `.github/workflows/amsn-prima-kernel-phase-profile.yml`.
+- Profile scope: existing PRIMA shifted Hines solves, orthogonalization, congruence projection, orchestration; separate Python/native self-time; same-order unprofiled build reference; reduced frequency/transient solvers; full-Hines baseline in an independent process.
+- The matrix is three morphology fixtures × orders84/112/168 × two profiled repeats, with a separate Hines process for each morphology.
+- **Validation pending:** Actions [45034830634](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45034830634) was queued at the last check. The targeted pytest command has not yet been observed passing; no profiler measurements have been accepted. See the new handoff for exact parameters and next actions.
+- No production defaults or canonical Hines equations were changed. PR #8 remains draft/open.
+
+---
+
 ## Latest validated checkpoint — complete PRIMA resource benchmark (22/11/2026)
 
 Continue from [HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md](HANDOFF_2026-11-22_PRIMA-RESOURCE-BENCHMARK.md). Active branch: `research/allen-human-morphology-heldout-preflight-2026-11-22`. Resource benchmark code head tested: `e556625b9f0b1f31f9c822e603cf0ae220eefe0f`.

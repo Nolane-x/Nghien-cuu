@@ -109,6 +109,28 @@ def profile_prima_build(
     return model, summary
 
 
+def measure_unprofiled_build(
+    tree,
+    retained_indices,
+    max_order: int,
+    expansion_frequencies_hz=EXPANSION_SHIFTS_HZ,
+):
+    """Measure the same builder without cProfile instrumentation."""
+    start_wall = time.perf_counter()
+    start_cpu = time.process_time()
+    model = prima_reduce_passive_cable_multishift(
+        tree,
+        retained_indices,
+        max_order=max_order,
+        expansion_frequencies_hz=expansion_frequencies_hz,
+    )
+    return (
+        model,
+        time.perf_counter() - start_wall,
+        time.process_time() - start_cpu,
+    )
+
+
 def measure_reduced_frequency(model: PassiveReducedModel, frequencies_hz=FREQUENCIES_HZ):
     start_wall = time.perf_counter()
     start_cpu = time.process_time()
@@ -276,6 +298,13 @@ def run_prima_mode(args):
     )
 
     for order in ORDERS:
+        unprofiled_model, unprofiled_wall_seconds, unprofiled_cpu_seconds = (
+            measure_unprofiled_build(tree, ports, order, EXPANSION_SHIFTS_HZ)
+        )
+        if unprofiled_model.order != order:
+            raise RuntimeError(
+                f"unprofiled builder requested order {order}, achieved {unprofiled_model.order}"
+            )
         for replicate in range(1, args.repeats + 1):
             model, summary = profile_prima_build(
                 tree, ports, order, EXPANSION_SHIFTS_HZ
@@ -316,7 +345,13 @@ def run_prima_mode(args):
                     "build_wall_seconds": summary["build_wall_seconds"],
                     "build_process_cpu_seconds": summary["build_process_cpu_seconds"],
                     "profiled_python_self_seconds": summary["profiled_python_self_seconds"],
+                    "profiled_total_function_self_seconds": summary["profiled_total_function_self_seconds"],
                     "profiled_total_calls": summary["profiled_total_calls"],
+                    "unprofiled_build_wall_seconds": unprofiled_wall_seconds,
+                    "unprofiled_build_process_cpu_seconds": unprofiled_cpu_seconds,
+                    "cprofile_wall_overhead_ratio": (
+                        summary["build_wall_seconds"] / unprofiled_wall_seconds
+                    ),
                     "numeric_storage_bytes": storage_bytes,
                     "expansion_shifts_hz": ";".join(str(value) for value in EXPANSION_SHIFTS_HZ),
                 })

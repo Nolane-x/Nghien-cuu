@@ -15,6 +15,7 @@ from prima_phase_profile import (  # noqa: E402
     measure_hines_transient,
     measure_reduced_frequency,
     measure_reduced_transient,
+    measure_unprofiled_build,
     profile_prima_build,
 )
 
@@ -109,3 +110,15 @@ def test_full_hines_frequency_and_transient_measurements_are_finite():
     assert transient["cpu_seconds"] >= 0
     assert transient["seconds_per_step"] > 0
     assert np.isfinite(transient["peak_port_perturbation_v"])
+
+def test_unprofiled_build_reference_matches_requested_order():
+    tree = _small_tree()
+    model, wall_seconds, cpu_seconds = measure_unprofiled_build(
+        tree,
+        retained_indices=(0, 2),
+        max_order=3,
+        expansion_frequencies_hz=(0.0, 1000.0),
+    )
+    assert model.order == 3
+    assert wall_seconds > 0
+    assert cpu_seconds >= 0
