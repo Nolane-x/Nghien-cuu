@@ -8,6 +8,7 @@ on:
       - "amsn-core/examples/human_schur_port_matrix_audit.py"
       - "amsn-core/examples/human_prima_port_enrichment.py"
       - "amsn-core/src/amsn/**"
+      - "amsn-core/tests/test_resource_benchmark.py"
       - "amsn-core/data/human/**"
       - "amsn-core/pyproject.toml"
   workflow_dispatch:
@@ -16,7 +17,23 @@ permissions:
   contents: read
 
 jobs:
+  validate-resource-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install AMSN test dependencies
+        run: python -m pip install -e ".[test]"
+        working-directory: amsn-core
+      - name: Test resource benchmark validator
+        run: python -m pytest tests/test_resource_benchmark.py
+        working-directory: amsn-core
+
   resource-benchmark:
+    needs: validate-resource-benchmark
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -248,6 +265,8 @@ jobs:
       AMSN_PORT_ENRICHMENT: apical_basal_q25_q75
       AMSN_PRIMA_EXTENDED_ORDERS: "56,${{ matrix.candidate_order }}"
       AMSN_BENCH_REPLICATE: ${{ matrix.replicate }}
+      AMSN_BENCH_CANDIDATE_ORDER: ${{ matrix.candidate_order }}
+      AMSN_EXPECTED_PORTS: "9"
       AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_benchorder${{ matrix.candidate_order}}_rep${{ matrix.replicate }}_9port_
     steps:
       - uses: actions/checkout@v4
@@ -294,7 +313,7 @@ jobs:
               "python_version": platform.python_version(),
               "cpu_model": cpu,
               "logical_cpu_count": os.cpu_count(),
-              "candidate_order": os.environ["AMSN_PRIMA_EXTENDED_ORDERS"],
+              "candidate_order": os.environ["AMSN_BENCH_CANDIDATE_ORDER"],
               "replicate": os.environ["AMSN_BENCH_REPLICATE"],
               "morphology": os.environ["AMSN_MORPHOLOGY_LABEL"],
               "mesh_max_segment_um": os.environ["AMSN_NEURON_MAX_SEGMENT_UM"],
@@ -320,47 +339,59 @@ jobs:
           python - <<'PY'
           import csv, os
           from pathlib import Path
+          from amsn.resource_benchmark import parse_prima_orders, validate_resource_sweep_rows
+
           prefix = os.environ["AMSN_SCHUR_OUTPUT_PREFIX"]
           sweep = Path("results") / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
-          rows = list(csv.DictReader(sweep.open(newline="", encoding="utf-8")))
-          expected_counts = {"frequency_response": 30, "transient_port": 162, "transient_all_ports": 18}
-          counts = {}
-          for row in rows:
-              counts[row["metric"]] = counts.get(row["metric"], 0) + 1
-          if len(rows) != 210 or counts != expected_counts:
-              raise RuntimeError(f"coverage mismatch: rows={len(rows)} counts={counts}")
-          order = os.environ["AMSN_PRIMA_EXTENDED_ORDERS"]
-          expected_models = {"four_shift_order56_control", "six_shift_order56", f"six_shift_order{order}"}
-          if {row["model_id"] for row in rows} != expected_models:
-              raise RuntimeError("model identity coverage mismatch")
-          candidate_rows = [r for r in rows if r["metric"] == "frequency_response" and r["model_id"] == f"six_shift_order{order}"]
-          ranks = {int(r["prima_order"]) for r in candidate_rows}
-          if ranks != {int(order)}:
-              raise RuntimeError(f"requested order {order} did not produce exact actual rank: {ranks}")
+          with sweep.open(newline="", encoding="utf-8") as handle:
+              rows = list(csv.DictReader(handle))
+
+          orders = parse_prima_orders(os.environ["AMSN_PRIMA_EXTENDED_ORDERS"])
+          candidate_order = int(os.environ["AMSN_BENCH_CANDIDATE_ORDER"])
+          validation = validate_resource_sweep_rows(
+              rows,
+              extended_orders=orders,
+              candidate_order=candidate_order,
+              expected_ports=int(os.environ["AMSN_EXPECTED_PORTS"]),
+          )
+
           time_path = next(Path(".").glob("*.time.txt"))
           timings = {}
-          for line in time_path.read_text().splitlines():
+          for line in time_path.read_text(encoding="utf-8").splitlines():
               if "=" in line:
                   key, value = line.split("=", 1)
                   timings[key] = value
-          env = next(csv.DictReader(Path("benchmark_environment.csv").open(newline="", encoding="utf-8")))
+          required_timing_fields = (
+              "elapsed_wall_seconds", "user_cpu_seconds", "system_cpu_seconds",
+              "max_rss_kb", "exit_status",
+          )
+          missing = [key for key in required_timing_fields if key not in timings]
+          if missing:
+              raise RuntimeError(f"resource timing fields missing: {missing}")
+          if timings["exit_status"] != "0":
+              raise RuntimeError(f"resource run exited abnormally: {timings}")
+
+          with Path("benchmark_environment.csv").open(newline="", encoding="utf-8") as handle:
+              env = next(csv.DictReader(handle))
           result = {
               **env,
-              "actual_order": next(iter(ranks)),
-              "full_compartment_order": candidate_rows[0]["full_compartment_order"],
-              "state_reduction_pct": candidate_rows[0]["state_count_reduction_pct"],
-              "frequency_rows": counts["frequency_response"],
-              "transient_port_rows": counts["transient_port"],
-              "transient_all_ports_rows": counts["transient_all_ports"],
-              "elapsed_wall_seconds": timings.get("elapsed_wall_seconds"),
-              "user_cpu_seconds": timings.get("user_cpu_seconds"),
-              "system_cpu_seconds": timings.get("system_cpu_seconds"),
-              "max_rss_kb": timings.get("max_rss_kb"),
-              "max_rss_mb": (float(timings["max_rss_kb"]) / 1024 if "max_rss_kb" in timings else ""),
-              "exit_status": timings.get("exit_status"),
+              "candidate_order": candidate_order,
+              "extended_orders": ";".join(str(order) for order in orders),
+              "expected_models": ";".join(validation["models"]),
+              "actual_order": validation["actual_order"],
+              "full_compartment_order": validation["full_compartment_order"],
+              "state_reduction_pct": validation["state_count_reduction_pct"],
+              "frequency_rows": validation["frequency_rows"],
+              "transient_port_rows": validation["transient_port_rows"],
+              "transient_all_ports_rows": validation["transient_all_ports_rows"],
+              "total_rows": validation["total_rows"],
+              "elapsed_wall_seconds": timings["elapsed_wall_seconds"],
+              "user_cpu_seconds": timings["user_cpu_seconds"],
+              "system_cpu_seconds": timings["system_cpu_seconds"],
+              "max_rss_kb": timings["max_rss_kb"],
+              "max_rss_mb": float(timings["max_rss_kb"]) / 1024,
+              "exit_status": timings["exit_status"],
           }
-          if result["exit_status"] != "0":
-              raise RuntimeError(f"resource run exited abnormally: {timings}")
           with Path("resource_benchmark.csv").open("w", newline="", encoding="utf-8") as handle:
               writer = csv.DictWriter(handle, fieldnames=list(result))
               writer.writeheader()
