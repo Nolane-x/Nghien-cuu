@@ -1,0 +1,5 @@
+model_id,matched_pairs,worse_pairs,median_ratio_nine_over_seven,max_ratio_nine_over_seven,median_change_pct
+four_shift_order56_control,36,36,11.515,22.350,1051.5
+six_shift_order28,36,36,2.118,3.394,111.8
+six_shift_order56,36,36,127.706,613.199,12670.6
+six_shift_order84,36,36,7.814,28.749,681.4
