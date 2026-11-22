@@ -73,6 +73,71 @@ def test_segev_three_point_soma_collapses_all_first_order_neurite_attachments():
     assert cable.n_compartments == len(morphology.nodes) - 2 - 9
 
 
+@pytest.mark.parametrize(
+    ("relative_path", "expected_basal", "expected_apical"),
+    [
+        (
+            Path("human/1094_Mohan_etal_2015.CNG.swc"),
+            (2070, 3355, 3784, 3814),
+            (8831, 6897, 5920, 5164),
+        ),
+        (
+            Path("human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc"),
+            (5302, 3789, 1577, 2135),
+            (7495, 11993, 9934, 10532),
+        ),
+        (
+            Path("human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc"),
+            (4716, 140, 3253, 2827),
+            (12553, 12177, 7640, 7074),
+        ),
+    ],
+)
+def test_enriched_basal_apical_quantile_ports_are_stable_and_distinct(
+    relative_path, expected_basal, expected_apical
+):
+    from amsn.ports import path_distances_um, quantile_node
+
+    morphology = SWCMorphology.from_file(DATA_DIR.parent.parent / relative_path)
+    distances = path_distances_um(morphology)
+    quantiles = (0.25, 0.50, 0.75, 0.90)
+    basal = tuple(
+        quantile_node(morphology, distances, 3, quantile)
+        for quantile in quantiles
+    )
+    apical = tuple(
+        quantile_node(morphology, distances, 4, quantile)
+        for quantile in quantiles
+    )
+    assert basal == expected_basal
+    assert apical == expected_apical
+    retained_ids = [morphology.root_id, *basal, *apical]
+    assert len(set(retained_ids)) == 9
+    electrical_ids = [
+        morphology.electrical_node_mapping()[node_id]
+        for node_id in retained_ids
+    ]
+    assert len(set(electrical_ids)) == 9, (
+        "nine quantile SWC ports must remain nine distinct electrical "
+        f"vertices after soma/wire normalization: {electrical_ids}"
+    )
+
+
+@pytest.mark.parametrize(
+    "quantile",
+    [-0.01, 1.01, float("nan"), float("inf")],
+)
+def test_path_quantile_port_selection_rejects_invalid_quantiles(quantile):
+    from amsn.ports import path_distances_um, quantile_node
+
+    morphology = SWCMorphology.from_file(
+        DATA_DIR / FIXTURES[0][0]
+    )
+    distances = path_distances_um(morphology)
+    with pytest.raises(ValueError):
+        quantile_node(morphology, distances, 3, quantile)
+
+
 def test_segev_cell1204_normalized_area_matches_import3d_geometry_ledger():
     morphology = SWCMorphology.from_file(
         DATA_DIR / "2013_03_13_cell03_1204_H42_02.CNG.swc"
