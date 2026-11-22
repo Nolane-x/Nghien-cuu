@@ -109,11 +109,18 @@ def test_enriched_basal_apical_quantile_ports_are_stable_and_distinct(
         quantile_node(morphology, distances, 4, quantile)
         for quantile in quantiles
     )
-    print(f"quantile_ports={relative_path}: basal={basal}, apical={apical}")
     assert basal == expected_basal
     assert apical == expected_apical
-    retained_ids = {morphology.root_id, *basal, *apical}
-    assert len(retained_ids) == 9
+    retained_ids = [morphology.root_id, *basal, *apical]
+    assert len(set(retained_ids)) == 9
+    electrical_ids = [
+        morphology.electrical_node_mapping()[node_id]
+        for node_id in retained_ids
+    ]
+    assert len(set(electrical_ids)) == 9, (
+        "nine quantile SWC ports must remain nine distinct electrical "
+        f"vertices after soma/wire normalization: {electrical_ids}"
+    )
 
 
 @pytest.mark.parametrize(
