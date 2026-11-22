@@ -51,11 +51,11 @@ The high-frequency PRIMA branch has completed its six-job direct NEURON matrix a
 - Aggregate table: `amsn-core/results/human_passive_prima_high_frequency_neuron_aggregate_2026-11-22.csv`
 - Checkpoint protocol/status: `research/RESEARCH_LOG_2026-11-22_PRIMA-10KHZ-NEURON.md`
 
-The regular test, compile and example jobs in Core CI passed on Python 3.12 and 3.13; the two longer NEURON cross-validation jobs were still running when this checkpoint was written. Recheck that workflow before merging. Keep full Hines canonical and retain the passive/biological validity guardrails from the earlier handoffs.
+Core CI [44965325088](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088) completed 4/4 successfully, including both NEURON cross-validation jobs. PR #1 was merged into main at c7b61733c4dc3aa744509218640d774e953ee20d.
 
-## Next experiment — order × source × pulse-width matrix
+## Completed follow-up — order × source × pulse-width matrix
 
-Continue with the next research checkpoint `HANDOFF_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md`. The next experiment evaluates four models at equal/controlled order (four-shift order 56 control; six-shift orders 28, 56 and 84) and six transient scenarios (soma, basal-q75, apical-q75 × 2 ms/10 ms pulses). Keep the full Hines reference, Cholesky/passivity checks and direct NEURON frequency comparison. Do not choose a default from one aggregate number.
+The next experiment is complete and documented in [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). PR #2 is validated by Core CI 4/4, Schur/PRIMA 6/6 and frequency audit 3/3. Six-shift order 84 is the most accurate optional passive preset for the tested 10 kHz/seven-port protocol; order 28 is rejected; four-shift order 56 remains the default/control. See [the new handoff](HANDOFF_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md).
 
 ## Guardrails
 
