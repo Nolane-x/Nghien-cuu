@@ -1,0 +1,128 @@
+name: AMSN Human Passive PRIMA Equal-Order Seven-vs-Nine-Port Comparison
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-prima-port-count-order-match.yml"
+      - "HANDOFF_2026-11-22_PRIMA-PORT-COUNT-ORDER-MATCH.md"
+      - "amsn-core/src/amsn/reduction.py"
+      - "amsn-core/src/amsn/prima.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/src/amsn/ports.py"
+      - "amsn-core/examples/human_schur_port_matrix_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/tests/test_segev_reference_morphologies.py"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  equal-order-port-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        morphology:
+          - label: NMO_68174_cell1125
+            path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            records: "12410"
+          - label: NMO_68175_cell1204
+            path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            records: "13758"
+          - label: NMO_290988_Mohan2015
+            path: data/human/1094_Mohan_etal_2015.CNG.swc
+            records: "8903"
+        mesh_cap_um: ["0.125", "0.0625"]
+        port_count: [7, 9]
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology.label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology.path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.morphology.records }}
+      AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
+      AMSN_PORT_ENRICHMENT: ${{ matrix.port_count == 9 && 'apical_basal_q25_q75' || '' }}
+      AMSN_EXPECTED_PORTS: ${{ matrix.port_count }}
+      AMSN_PRIMA_EXTENDED_ORDERS: "56,112,168"
+      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology.label }}_mesh${{ matrix.mesh_cap_um }}um_ordermatch_${{ matrix.port_count }}port_
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run complete AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Verify morphology record count
+        run: |
+          python - <<'PY'
+          import os
+          from pathlib import Path
+          from amsn.morphology import SWCMorphology
+          morphology = SWCMorphology.from_file(Path(os.environ["AMSN_MORPHOLOGY_PATH"]))
+          expected = int(os.environ["AMSN_EXPECTED_SWC_RECORDS"])
+          if len(morphology.nodes) != expected:
+              raise RuntimeError(f"SWC record count {len(morphology.nodes)} != {expected}")
+          print(f"morphology={os.environ['AMSN_MORPHOLOGY_LABEL']}; SWC_records={len(morphology.nodes)}")
+          PY
+        working-directory: amsn-core
+      - name: Run equal-order PRIMA port comparison
+        shell: bash
+        run: |
+          set -o pipefail
+          python examples/human_schur_port_matrix_audit.py | tee "${{ matrix.morphology.label }}-mesh${{ matrix.mesh_cap_um }}um-${{ matrix.port_count}port-ordermatch.log"
+        working-directory: amsn-core
+      - name: Assert exact frequency and transient coverage
+        run: |
+          python - <<'PY'
+          import csv
+          import os
+          from pathlib import Path
+          prefix = os.environ["AMSN_SCHUR_OUTPUT_PREFIX"]
+          path = Path("results") / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
+          with path.open(newline="", encoding="utf-8") as handle:
+              rows = list(csv.DictReader(handle))
+          ports = int(os.environ["AMSN_EXPECTED_PORTS"])
+          orders = tuple(int(x) for x in os.environ["AMSN_PRIMA_EXTENDED_ORDERS"].split(","))
+          models = {"four_shift_order56_control"} | {f"six_shift_order{x}" for x in orders}
+          expected = len(models) * (10 + 6 * (ports + 1))
+          counts = {}
+          for row in rows:
+              counts[row["metric"]] = counts.get(row["metric"], 0) + 1
+          expected_counts = {
+              "frequency_response": len(models) * 10,
+              "transient_port": len(models) * 6 * ports,
+              "transient_all_ports": len(models) * 6,
+          }
+          if len(rows) != expected or counts != expected_counts:
+              raise RuntimeError(f"coverage mismatch: rows={len(rows)}/{expected}; counts={counts}/{expected_counts}")
+          actual = {row["model_id"] for row in rows}
+          if actual != models:
+              raise RuntimeError(f"model mismatch: {actual} != {models}")
+          print(f"port_count={ports}; rows={len(rows)}; metrics={counts}; models={sorted(actual)}")
+          PY
+        working-directory: amsn-core
+      - name: Preserve equal-order comparison data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology.label }}-mesh-${{ matrix.mesh_cap_um }}um-${{ matrix.port_count }}port-equal-order-56-112-168
+          path: |
+            amsn-core/${{ matrix.morphology.label }}-mesh${{ matrix.mesh_cap_um }}um-${{ matrix.port_count }}port-ordermatch.log
+            amsn-core/results/${{ matrix.morphology.label }}_mesh${{ matrix.mesh_cap_um }}um_ordermatch_${{ matrix.port_count }}port_human_passive_prima_extended_order_transient_sweep_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology.label }}_mesh${{ matrix.mesh_cap_um }}um_ordermatch_${{ matrix.port_count }}port_human_passive_schur_port_summary_2026-11-22.csv
+            amsn-core/results/${{ matrix.morphology.label }}_mesh${{ matrix.mesh_cap_um }}um_ordermatch_${{ matrix.port_count }}port_human_passive_schur_port_localization_2026-11-22.csv
+          if-no-files-found: error
