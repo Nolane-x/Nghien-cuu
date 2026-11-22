@@ -59,7 +59,7 @@ jobs:
       AMSN_NEURON_MAX_SEGMENT_UM: ${{ matrix.mesh_cap_um }}
       AMSN_PORT_ENRICHMENT: apical_basal_q25_q75
       AMSN_PRIMA_EXTENDED_ORDERS: "28,56,84,112,168"
-      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_9port_highorder_
+      AMSN_SCHUR_OUTPUT_PREFIX: ${{ matrix.morphology_label }}_mesh${{ matrix.mesh_cap_um }}um_highorder_9port_
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
