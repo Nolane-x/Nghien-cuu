@@ -83,7 +83,7 @@ jobs:
         shell: bash
         run: |
           set -o pipefail
-          python examples/human_schur_port_matrix_audit.py | tee "${{ matrix.morphology.label }}-mesh${{ matrix.mesh_cap_um }}um-${{ matrix.port_count}port-ordermatch.log"
+          python examples/human_schur_port_matrix_audit.py | tee "${{ matrix.morphology.label }}-mesh${{ matrix.mesh_cap_um }}um-${{ matrix.port_count }}port-ordermatch.log"
         working-directory: amsn-core
       - name: Assert exact frequency and transient coverage
         run: |
