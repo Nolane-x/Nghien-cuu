@@ -51,7 +51,22 @@ The Schur/PRIMA workflow matrix evaluates the three existing morphology records 
 - New PR-specific Actions execution: not yet observed at checkpoint creation. The external check suites returned by GitHub were queued with zero check runs; those are not evidence that the Python workflows passed.
 - Therefore no test/passivity/cross-simulator result is claimed for this PR yet. The new regression test and 6 morphology × mesh jobs must run before acceptance.
 
-## Interpretation limits
+## Validation results from PR #1 (2026-11-22)
+
+The PR-specific run is now verified; this supersedes the earlier pending-validation paragraph above.
+
+- Schur/PRIMA matrix workflow [44965325079](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325079): **6/6 morphology × NEURON-mesh jobs passed**. Every job ran **109 tests**, validated source/probe mapping and completed the 10-frequency, seven-port comparison.
+- Separate passive frequency-domain audit [44965325128](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325128): **3/3 jobs passed**.
+- Core CI [44965325088](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44965325088): regular test/compile/example jobs passed on Python 3.12 and 3.13. Its two longer NEURON cross-validation jobs were still in progress when this log was updated; do not call the whole Core CI complete yet.
+- All six extended-basis projected conductance/capacitance matrices passed the Cholesky checks. The maximum NEURON port-impedance condition number was 91.263.
+- Across the six configurations, worst direct-NEURON impedance error fell from 0.527300% to 0.216765%; worst direct-NEURON admittance error fell from 0.404489% to 0.211010%.
+- Worst PRIMA-vs-full-Hines impedance/admittance errors fell from 0.416133%/0.432732% to 0.113574%/0.124064%.
+- The improvement is concentrated at 6–10 kHz. The six-shift basis slightly increases some intermediate-band (1–3 kHz) admittance residuals and the tested transient error, so it remains optional and does not replace the existing default.
+- Full per-frequency results: [HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md](../amsn-core/research/HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md) and [aggregate CSV](../amsn-core/results/human_passive_prima_high_frequency_neuron_aggregate_2026-11-22.csv).
+
+The 10 kHz protocol is validated only for the passive linear RC network, the three available morphology records and the seven retained ports. Full Hines remains canonical.
+
+## Interpretation limits## Interpretation limits
 
 The experiment covers only the linear passive RC subsystem and the selected seven ports in the three existing morphology records. It does not validate active ion channels, synapses, calcium, gene expression, metabolism, plasticity or biological realism. The passive parameter settings remain numerical defaults rather than population-fitted physiology. The NMO_290988 morphology is partial and must not be described as a healthy-control neuron. The full Hines solver remains canonical.
 
