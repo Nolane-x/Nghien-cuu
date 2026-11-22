@@ -1,0 +1,68 @@
+name: AMSN Human PRIMA Basis-Transfer Protocol Robustness
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-human-prima-basis-transfer-protocol-robustness.yml"
+      - "amsn-core/src/amsn/**"
+      - "amsn-core/examples/human_prima_basis_transfer_protocol_robustness.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/tests/**"
+      - "amsn-core/data/human/**"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  basis-transfer-protocol-robustness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        include:
+          - morphology_label: NMO_68174_cell1125
+            morphology_path: data/human/segev/2013_03_06_cell11_1125_H41_06.CNG.swc
+            expected_swc_records: "12410"
+          - morphology_label: NMO_68175_cell1204
+            morphology_path: data/human/segev/2013_03_13_cell03_1204_H42_02.CNG.swc
+            expected_swc_records: "13758"
+          - morphology_label: NMO_290988_Mohan2015
+            morphology_path: data/human/1094_Mohan_etal_2015.CNG.swc
+            expected_swc_records: "8903"
+    env:
+      AMSN_MORPHOLOGY_LABEL: ${{ matrix.morphology_label }}
+      AMSN_MORPHOLOGY_PATH: ${{ matrix.morphology_path }}
+      AMSN_EXPECTED_SWC_RECORDS: ${{ matrix.expected_swc_records }}
+      AMSN_PRIMA_PARAMETER_ORDER: "56"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Run full AMSN test suite
+        run: python -m pytest
+        working-directory: amsn-core
+      - name: Run parameter and protocol robustness audit
+        run: python examples/human_prima_basis_transfer_protocol_robustness.py
+        working-directory: amsn-core
+      - name: Preserve frequency, transient and model audit data
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-${{ matrix.morphology_label }}-prima-basis-transfer-protocol-robustness
+          path: |
+            amsn-core/results/${{ matrix.morphology_label }}_human_prima_basis_transfer_protocol_robustness_2026-11-22_model_summary.csv
+            amsn-core/results/${{ matrix.morphology_label }}_human_prima_basis_transfer_protocol_robustness_2026-11-22_frequency.csv
+            amsn-core/results/${{ matrix.morphology_label }}_human_prima_basis_transfer_protocol_robustness_2026-11-22_transient.csv
+          if-no-files-found: error
