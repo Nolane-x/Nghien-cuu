@@ -366,3 +366,15 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 - This is an upper-band gain, not a universal improvement: some 1–3 kHz admittance residuals and the tested transient metric increase modestly. Keep the six-shift basis optional; retain the four-shift preset and full Hines as canonical.
 - Report: [HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_HIGH_FREQUENCY_NEURON_2026-11-22.md). Data: [six-configuration aggregate CSV](amsn-core/results/human_passive_prima_high_frequency_neuron_aggregate_2026-11-22.csv). PR: [#1](https://github.com/Nolane-x/Nghien-cuu/pull/1).
 
+
+
+### PRIMA order × transient robustness — verified 22/11/2026
+
+- Pull request [#2](https://github.com/Nolane-x/Nghien-cuu/pull/2) adds a controlled four-model comparison (four-shift order 56 control; six-shift orders 28, 56 and 84) and six pulse scenarios (soma, basal-q75, apical-q75 × 2 ms/10 ms).
+- The six-job audit [44966510373](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510373) passed 6/6. Each job passed 111 tests and produced exactly 232 rows; total 1,392 rows. Core CI [44966510441](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510441) passed 4/4 and frequency audit [44966510356](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44966510356) passed 3/3.
+- Six-shift order 28 is rejected: worst direct-NEURON Z/Y errors 9.4902%/8.4540%; worst all-port transient NRMSE 0.4161% and single-port NRMSE 5.1199%.
+- Six-shift order 56 improves high-band Z/Y (0.2168%/0.2110%) but transient errors rise modestly versus the four-shift order-56 control.
+- Six-shift order 84 gives the best overall passive accuracy: Hines residual maxima 0.000296% Z / 0.000376% Y; direct-NEURON maxima 0.2163% Z / 0.1193% Y; worst all-port transient 0.00001835%; worst single-port 0.000229%. It still removes 99.055–99.389% of the compartment states.
+- The retained apical-q90 probe recurs as the hardest transient output port. Do not infer a biological hotspot from this numerical port error.
+- Decision: keep four-shift order 56 as default/control, keep six-shift order 56 as an optional high-band compromise, reject order 28 for the tested full band, and keep six-shift order 84 as an optional high-fidelity passive preset. Full Hines remains canonical.
+- Report: [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). Data: [configuration/model summary CSV](amsn-core/results/human_passive_prima_order_transient_config_summary_2026-11-22.csv), [scenario summary CSV](amsn-core/results/human_passive_prima_order_transient_scenario_summary_2026-11-22.csv), [frequency summary CSV](amsn-core/results/human_passive_prima_order_transient_frequency_summary_2026-11-22.csv).
