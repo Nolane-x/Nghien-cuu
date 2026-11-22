@@ -16,7 +16,24 @@ permissions:
   contents: read
 
 jobs:
+  validator-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install AMSN test dependencies
+        run: python -m pip install -e ".[test]"
+        working-directory: amsn-core
+      - name: Test comma-separated order and artifact coverage validation
+        env:
+          PYTHONPATH: research
+        run: python -m pytest -q research/test_prima_resource_benchmark_validator.py
+
   resource-benchmark:
+    needs: validator-tests
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -320,6 +337,10 @@ jobs:
           python - <<'PY'
           import csv, os
           from pathlib import Path
+          from prima_resource_benchmark_validator import (
+              parse_prima_order_list,
+              validate_prima_resource_sweep,
+          )
           prefix = os.environ["AMSN_SCHUR_OUTPUT_PREFIX"]
           sweep = Path("results") / f"{prefix}human_passive_prima_extended_order_transient_sweep_2026-11-22.csv"
           rows = list(csv.DictReader(sweep.open(newline="", encoding="utf-8")))
@@ -329,14 +350,12 @@ jobs:
               counts[row["metric"]] = counts.get(row["metric"], 0) + 1
           if len(rows) != 210 or counts != expected_counts:
               raise RuntimeError(f"coverage mismatch: rows={len(rows)} counts={counts}")
-          order = os.environ["AMSN_PRIMA_EXTENDED_ORDERS"]
-          expected_models = {"four_shift_order56_control", "six_shift_order56", f"six_shift_order{order}"}
-          if {row["model_id"] for row in rows} != expected_models:
-              raise RuntimeError("model identity coverage mismatch")
-          candidate_rows = [r for r in rows if r["metric"] == "frequency_response" and r["model_id"] == f"six_shift_order{order}"]
-          ranks = {int(r["prima_order"]) for r in candidate_rows}
-          if ranks != {int(order)}:
-              raise RuntimeError(f"requested order {order} did not produce exact actual rank: {ranks}")
+          requested_orders = parse_prima_order_list(os.environ["AMSN_PRIMA_EXTENDED_ORDERS"])
+          coverage = validate_prima_resource_sweep(rows, requested_orders)
+          counts = coverage["counts"]
+          order = coverage["candidate_order"]
+          candidate_rows = coverage["candidate_rows"]
+          ranks = coverage["candidate_ranks"]
           time_path = next(Path(".").glob("*.time.txt"))
           timings = {}
           for line in time_path.read_text().splitlines():
