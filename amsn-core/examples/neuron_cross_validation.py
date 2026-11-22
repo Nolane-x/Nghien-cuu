@@ -16,6 +16,7 @@ import neuron
 from neuron import h
 
 from amsn.morphology import SWCMorphology
+from amsn.ports import path_distances_um, quantile_node
 from amsn.sectioned import to_sectioned_cable_tree
 
 
@@ -35,8 +36,6 @@ RUN_TO_MS = 200.0
 FINAL_MS = 250.0
 DT_MS = 0.025
 
-
-from amsn.ports import path_distances_um, quantile_node
 
 
 def import_swc_with_neuron():
