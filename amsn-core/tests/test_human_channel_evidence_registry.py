@@ -139,3 +139,10 @@ def test_current_clamp_density_fit_is_not_mislabelled_human_only():
     assert "50:50 average" in target
     assert "human-only" in audit["fitting_warnings"]["current_clamp_gbar"]["implication"]
     assert audit["execution_status"]["production_defaults_changed"] is False
+
+
+def test_original_nmodl_source_audit_is_diagnostic_and_not_runtime_ready():
+    audit = load_mechanism_audit()
+    assert audit["runtime_eligible"] is False
+    assert audit["execution_status"]["original_nmodl_compiled_or_executed"] is False
+    assert audit["source_manifest"].endswith("wilbers2023_dataverse_source_manifest_2026-11-22.json")

@@ -1,0 +1,50 @@
+name: AMSN Wilbers original NMODL source audit
+
+on:
+  push:
+    branches:
+      - research/wilbers-human-active-channel-baseline-2026-11-22
+    paths:
+      - "amsn-core/examples/audit_wilbers_nmodl.py"
+      - "amsn-core/research/references/wilbers2023_*.json"
+      - "amsn-core/tests/test_human_channel_evidence_registry.py"
+      - ".github/workflows/amsn-wilbers-nmodl-reproduction-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-wilbers-nmodl-audit
+  cancel-in-progress: false
+
+jobs:
+  source-probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned NEURON and test dependencies
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" neuron==9.0.2
+      - name: Validate evidence and source manifests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_human_channel_evidence_registry.py
+      - name: Download, hash, compile and probe original MOD mechanisms
+        working-directory: amsn-core
+        run: python examples/audit_wilbers_nmodl.py --output artifacts/wilbers-nmodl-probe.json
+      - name: Upload reproducibility evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-original-nmodl-source-audit
+          path: amsn-core/artifacts/wilbers-nmodl-probe.json
+          if-no-files-found: warn
+          retention-days: 30

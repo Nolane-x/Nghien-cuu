@@ -65,4 +65,4 @@ Not yet completed: NEURON compilation/execution of the original MOD files, repro
 5. Resolve the K parameter-snapshot mismatch and mixed-species fitting objectives.
 6. Only then implement an opt-in human somatic channel mechanism. Do not infer AIS, axonal or dendritic densities from soma measurements.
 
-No human mechanism was added to AMSN runtime and no production defaults were changed.
+A dedicated GitHub Actions source audit was added to re-download the exact canonical MOD files, verify SHA-256, compile with NEURON 9.0.2 and probe near source-declared characteristic voltages. The first workflow result is pending. No human mechanism was added to AMSN runtime and no production defaults were changed.

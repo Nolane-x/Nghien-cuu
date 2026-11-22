@@ -140,5 +140,12 @@
     "voltage_clamp_or_ap_clamp_reproduced": false,
     "mechanism_implemented_in_amsn": false,
     "production_defaults_changed": false
+  },
+  "reproduction_workflow": {
+    "path": ".github/workflows/amsn-wilbers-nmodl-reproduction-audit.yml",
+    "script": "amsn-core/examples/audit_wilbers_nmodl.py",
+    "neuron_version": "9.0.2",
+    "trigger": "push to dedicated research branch or manual workflow dispatch",
+    "status": "added; awaiting first Actions result"
   }
 }

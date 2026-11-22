@@ -65,3 +65,8 @@ None is promoted to AMSN runtime defaults. The somatic patch values are not axon
 3. Reproduce the original Na/K voltage-clamp protocols and published AP-clamp data.
 4. Resolve the K fitting snapshot mismatch and mixed-species objectives.
 5. Only after reproduction, implement an opt-in somatic mechanism; no AIS/axon/dendrite extrapolation.
+
+
+## Executable source-reproduction workflow
+
+A dedicated workflow is now added at `.github/workflows/amsn-wilbers-nmodl-reproduction-audit.yml`. It installs pinned `neuron==9.0.2`, runs the evidence-registry tests, downloads the two canonical MOD files, verifies their SHA-256 values, compiles the unchanged sources with `nrnivmodl`, probes rate observables around the source-declared characteristic voltages and uploads a JSON artifact. Its first CI result is pending; no compilation/probe success is claimed.
