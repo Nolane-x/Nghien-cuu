@@ -11,6 +11,8 @@ if str(EXAMPLES) not in sys.path:
     sys.path.insert(0, str(EXAMPLES))
 
 from prima_phase_profile import (  # noqa: E402
+    measure_hines_frequency,
+    measure_hines_transient,
     measure_reduced_frequency,
     measure_reduced_transient,
     profile_prima_build,
@@ -90,3 +92,19 @@ def test_reduced_transient_rejects_invalid_source_port(source_port):
     )
     with pytest.raises(ValueError):
         measure_reduced_transient(model, source_port=source_port)
+
+def test_full_hines_frequency_and_transient_measurements_are_finite():
+    tree = _small_tree()
+    ports = (0, 2)
+    frequency = measure_hines_frequency(tree, ports, frequencies_hz=(0.0, 100.0))
+    transient = measure_hines_transient(tree, ports, source_port=0)
+
+    assert frequency["solve_calls"] == 4
+    assert frequency["wall_seconds"] > 0
+    assert frequency["cpu_seconds"] >= 0
+    assert frequency["finite_checksum"] is True
+    assert transient["steps"] == 100
+    assert transient["wall_seconds"] > 0
+    assert transient["cpu_seconds"] >= 0
+    assert transient["seconds_per_step"] > 0
+    assert np.isfinite(transient["peak_port_perturbation_v"])
