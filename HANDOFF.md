@@ -1,4 +1,40 @@
-# HANDOFF — Nolane-x Research
+# Current checkpoint — 2026-11-22
+
+> This section supersedes older status statements below. The remainder of this file is retained as historical research context.
+
+## Current GitHub state
+
+Repository: https://github.com/Nolane-x/Nghien-cuu
+
+Three research PRs remain open and have not been merged into main:
+
+- PR #5 — [PRIMA high-order resource benchmark](https://github.com/Nolane-x/Nghien-cuu/pull/5), head d2848c031c5caa34d622d8cc1d6ca014fd8702f2. Corrects the comma-separated PRIMA order validator, adds 12 validator unit tests and records the completed 36-run resource matrix. Actions run 44989658844 passed 37/37 jobs. Median RSS is 267.90 MB at order 84, 276.15 MB at order 112 and 301.73 MB at order 168.
+- PR #6 — [Seven-port versus nine-port comparison](https://github.com/Nolane-x/Nghien-cuu/pull/6), head ea28d97ec3020c7ec3d3194799bba68db8ca024e. Actions run 44987393352 passed 12/12 jobs; 3,072 raw sweep rows were analyzed. At equal order 168, the seven shared outputs are effectively equivalent while the added q25 outputs are accurate.
+- PR #7 — [Basis reuse, shift-band and order trade-offs](https://github.com/Nolane-x/Nghien-cuu/pull/7), head b3f99236c240131ef7c08346342b2d852d77fc66. Includes the order-56 basis-transfer experiment, a 56/84/112 × three-shift-strategy Pareto sweep and the committed reports/summaries. Pareto Actions run 45002816664 passed 3/3 jobs and validated 243 models, 2,187 frequency records and 10,206 transient-port records.
+
+## Current Pareto conclusion
+
+The strongest high-frequency passive research candidate is order112_extended_10khz. Its median 10 kHz Z/Y residuals are 0.000004681% / 0.00001390%; compared with order112_narrow_3khz, those are lower by 41.7× / 44.8×. Median transient NRMSE is only 1.38% higher and the worst transient error is effectively identical. Its median dense numeric storage is 10.79 MB before Python/runtime workspace.
+
+Order84_narrow_3khz is the lower-storage transient-oriented candidate. Order56_narrow_3khz is the smallest state/storage choice but has materially higher errors. All nine candidates remain non-dominated under the stated 19-objective Pareto analysis. No production default has changed; full Hines remains canonical.
+
+## Evidence and workflow caveats
+
+- The three Pareto artifacts were downloaded and their SHA-256 digests matched GitHub metadata. Artifact IDs and expiry are in amsn-core/results/prima_shift_order_pareto_artifact_manifest_2026-11-22.csv.
+- Pareto report: amsn-core/research/HUMAN_PRIMA_SHIFT_ORDER_PARETO_2026-11-22.md.
+- Reproduction/validation program: amsn-core/research/analyze_human_prima_shift_order_pareto.py.
+- The high-order resource benchmark workflow on PR #7 can still fail because main has not yet received PR #5's corrected validator. The corrected validator and successful 37/37 benchmark run are already committed to PR #5. Do not confuse this base-branch dependency with the successful PR #7 Pareto/basis-transfer workflows.
+- Current commit b3f99236c240131ef7c08346342b2d852d77fc66 has triggered another Actions cycle; check its latest run status before making new claims about all checks being green.
+
+## Next research actions
+
+1. Finish checking Actions on the latest PR #7 head and resolve only reproducible failures.
+2. Add a held-out human morphology only after obtaining a real SWC file, source metadata, usage rights and a verified topology/axon assessment.
+3. Repeat leading order84_narrow_3khz and order112_extended_10khz candidates on the held-out morphology.
+4. Keep passive RC, active-channel, nonlinear synapse, plasticity and metabolism validation as separate stages. Never infer biological completeness or cognition from the current passive model.
+
+---
+
 
 **Ngày checkpoint ban đầu:** 2026-11-20  
 **Kho chuẩn:** https://github.com/Nolane-x/Nghien-cuu  
