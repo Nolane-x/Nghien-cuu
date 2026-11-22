@@ -1,3 +1,15 @@
+## Latest research checkpoint — human somatic NaV/KV evidence baseline (22/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md). Separate evidence branch: `research/wilbers-human-active-channel-baseline-2026-11-22`, based on `7655389b9d95dc85a54f81185a037ab026e32300`.
+
+- Added a provenance-aware evidence registry for Wilbers et al. 2023 direct somatic nucleated-patch measurements, its separate single-compartment HH model fit, and Eyal et al. 2018 compartment-specific model estimates.
+- Added a report and data-integrity tests. Values are **not** AMSN runtime defaults; the tests have not yet been run.
+- Wilbers dataset DOI 10.34894/L5J0SD is verified at the VU Research Portal, but the raw Dataverse files have not been downloaded or hashed.
+- Do not use somatic patch densities as AIS/axon densities. Keep the human dendritic channel distribution unresolved until direct evidence exists.
+- This is a separate research branch; PR #8 remains draft/open and unchanged.
+
+---
+
 # HANDOFF — Nolane-x Research
 
 

@@ -1,0 +1,262 @@
+{
+  "schema_version": 1,
+  "record_id": "human-nav-kv-literature-evidence-2023",
+  "status": "source_backed_research_transcription_not_runtime_ready",
+  "runtime_eligible": false,
+  "scope": {
+    "cell_class": "human supragranular cortical pyramidal neurons",
+    "intended_use": "research provenance and future reproduction planning",
+    "prohibited_inferences": [
+      "Do not interpret somatic nucleated-patch conductance density as AIS or axonal density.",
+      "Do not interpret a fitted single-compartment gbar as a direct experimental measurement.",
+      "Do not pool Wilbers 2023 measurements with Eyal 2018 model-estimated compartment densities.",
+      "Do not assign either study's values uniformly to all compartments or all human cortical pyramidal subtypes.",
+      "Do not infer a dendritic sodium-channel density or back-propagating action-potential mechanism from these somatic recordings."
+    ]
+  },
+  "unit_conversions": {
+    "pS/um^2_to_S/m^2": 1,
+    "pS/um^2_to_S/cm^2": 0.0001,
+    "S/cm^2_to_S/m^2": 10000
+  },
+  "studies": {
+    "wilbers_2023": {
+      "title": "Human voltage-gated Na+ and K+ channel properties underlie sustained fast AP signaling",
+      "authors": [
+        "René Wilbers",
+        "Natalia A. Goriounova",
+        "et al."
+      ],
+      "journal": "Science Advances",
+      "volume": 9,
+      "article": "eade3300",
+      "publication_date": "2023-10-12",
+      "doi": "10.1126/sciadv.ade3300",
+      "article_url": "https://www.science.org/doi/10.1126/sciadv.ade3300",
+      "open_article_url": "https://pure.knaw.nl/ws/files/1125507062/Wilbers2023.pdf",
+      "data_doi": "10.34894/L5J0SD",
+      "data_landing_page": "https://research.vu.nl/en/datasets/data-for-human-voltage-gated-na-and-k-channel-properties-underlie/",
+      "data_access_status": "Dataset metadata and DOI verified; Dataverse archive files not downloaded, hashed, or inspected in this checkpoint.",
+      "cohort": {
+        "subjects_n": 19,
+        "age_years": {
+          "min": 21,
+          "max": 70,
+          "mean": 44.9,
+          "sd": 17.3
+        },
+        "tissue_source": "neurosurgical tissue described as healthy cortex removed to access deeper structural pathology",
+        "pathology_context": {
+          "medial_temporal_sclerosis_subjects": 8,
+          "tumor_subjects": 11
+        },
+        "cortical_regions": {
+          "temporal": 10,
+          "frontal": 5,
+          "parietal": 4
+        },
+        "cell_class": "supragranular pyramidal neurons; the study examines L2/L3 pyramidal neurons",
+        "privacy": "Study reports anonymized data and written informed consent; no patient-level data are stored here."
+      },
+      "experimental_conditions": {
+        "recording_configuration": "somatic nucleated patches for isolated voltage-gated Na+ and K+ current measurements",
+        "channel_isolation": "pharmacological isolation in separate Na+ and K+ experiments",
+        "temperature_c": {
+          "most_recordings": 34,
+          "sodium_channel_kinetics": 25,
+          "note": "The paper states that all channel recordings were at 34 C except sodium-channel kinetics recordings, which were at 25 C."
+        },
+        "liquid_junction_potential": "Table S1 voltage-dependence data are explicitly stated to be uncorrected for a 15 mV liquid-junction potential."
+      },
+      "measured_somatic_nucleated_patch_conductance_density": {
+        "evidence_class": "direct_experimental_measurement",
+        "scope": "somatic nucleated-patch membrane; not AIS or axon",
+        "article_statistics": "mean +/- SEM",
+        "unit": "pS/um^2",
+        "si_unit": "S/m^2",
+        "conversion": "1 pS/um^2 = 1 S/m^2",
+        "na": {
+          "mean": 5.9,
+          "sem": 0.8,
+          "n_recordings": 17,
+          "thesis_table_s3": {
+            "mean": 5.85,
+            "sd": 3.38,
+            "surface_area_um2_mean": 368,
+            "surface_area_um2_sd": 63,
+            "maximal_conductance_pS_mean": 2074,
+            "maximal_conductance_pS_sd": 1134
+          },
+          "si_mean_S_m2": 5.9,
+          "si_sem_S_m2": 0.8,
+          "mean_S_cm2": 0.00059
+        },
+        "k": {
+          "mean": 31.2,
+          "sem": 4.2,
+          "n_recordings": 13,
+          "thesis_table_s3": {
+            "mean": 31.22,
+            "sd": 14.71,
+            "surface_area_um2_mean": 307,
+            "surface_area_um2_sd": 63,
+            "maximal_conductance_pS_mean": 9398,
+            "maximal_conductance_pS_sd": 4399
+          },
+          "si_mean_S_m2": 31.2,
+          "si_sem_S_m2": 4.2,
+          "mean_S_cm2": 0.00312
+        },
+        "note": "The main article reports mean +/- SEM; the thesis appendix Table S3 reports the corresponding means +/- SD. These are somatic patch measurements and should not be promoted into whole-cell or axonal conductance densities."
+      },
+      "measured_voltage_dependence": {
+        "evidence_class": "direct_experimental_measurement",
+        "statistic": "mean +/- SD",
+        "voltage_unit": "mV",
+        "data_corrected_for_15mV_liquid_junction_potential": false,
+        "v_half": {
+          "na_activation": {
+            "mean": -32.13,
+            "sd": 4.86,
+            "n": 19
+          },
+          "na_inactivation": {
+            "mean": -66,
+            "sd": 7.82,
+            "n": 18
+          },
+          "k_activation": {
+            "mean": -3.03,
+            "sd": 5.95,
+            "n": 13
+          },
+          "k_inactivation": {
+            "mean": -52.69,
+            "sd": 5.97,
+            "n": 11
+          }
+        },
+        "slope_factors": {
+          "status": "not_transcribed_as_runtime_parameters",
+          "reason": "The thesis Table S1 extraction labels the slope-factor unit as ms^-1, which is dimensionally suspect for a Boltzmann voltage slope. Verify the source files/equations before use."
+        }
+      },
+      "channel_kinetic_findings": {
+        "sodium": [
+          "Steady-state activation and inactivation curves are shifted toward more depolarized voltages than in mouse.",
+          "Activation and inactivation time constants are slower than in mouse at the tested voltages.",
+          "Recovery from inactivation is faster than in mouse.",
+          "Relative conductance availability at -80 mV is reported as 0.81 +/- 0.16 in human and 0.63 +/- 0.21 in mouse."
+        ],
+        "potassium": [
+          "Steady-state activation and inactivation curves are shifted toward more depolarized voltages than in mouse.",
+          "K+ currents activate faster in human neurons at lower membrane potentials in the tested protocol.",
+          "Fast and slow inactivation components are described; recovery time constants are similar between species, while human currents recover to a larger proportion of initial amplitude.",
+          "Relative conductance availability at -80 mV is reported as 0.94 +/- 0.05 in human and 0.86 +/- 0.06 in mouse."
+        ],
+        "model_limit": "The authors report that the HH-based model reproduced K+ currents less well than Na+ currents and did not capture every potassium-current property."
+      },
+      "single_compartment_hh_model_fit": {
+        "evidence_class": "computational_model_parameter_fit",
+        "runtime_eligible": false,
+        "model_scope": "single compartment with 10 um diameter; not a reconstructed L2/3 morphology",
+        "maximal_conductance_density": {
+          "na": {
+            "value": 114.5,
+            "unit": "pS/um^2",
+            "si_value": 114.5,
+            "si_unit": "S/m^2"
+          },
+          "k": {
+            "value": 29.05,
+            "unit": "pS/um^2",
+            "si_value": 29.05,
+            "si_unit": "S/m^2"
+          }
+        },
+        "reversal_potential_mV": {
+          "na": 53,
+          "k": -101
+        },
+        "interpretation": "Model-derived maximal conductances used in the paper's single-compartment AP simulations. The authors explicitly note that the sodium density required by the single-compartment AP model exceeds the density measured in somatic nucleated patches."
+      },
+      "source_notes": [
+        "The study analyzes human supragranular pyramidal neurons and somatic voltage-gated channel properties.",
+        "Somatic nucleated-patch recordings do not provide AIS-specific or axonal channel-density measurements.",
+        "The article's data files are listed under DataverseNL DOI 10.34894/L5J0SD, but the raw files have not yet been obtained and verified by AMSN."
+      ]
+    },
+    "eyal_2018": {
+      "title": "Human Cortical Pyramidal Neurons: From Spines to Spikes via Models",
+      "authors": [
+        "Guy Eyal",
+        "Matthijs B. Verhoog",
+        "Guilherme Testa-Silva",
+        "et al."
+      ],
+      "journal": "Frontiers in Cellular Neuroscience",
+      "volume": 12,
+      "article": "181",
+      "publication_date": "2018-06-29",
+      "doi": "10.3389/fncel.2018.00181",
+      "article_url": "https://www.frontiersin.org/journals/cellular-neuroscience/articles/10.3389/fncel.2018.00181/full",
+      "modeldb_accession": "238347",
+      "modeled_cells": 6,
+      "spike_records_approximately": 900,
+      "evidence_class": "model_estimated_conductance_density",
+      "fitting_method": "multi-objective optimization against recorded somatic/axonal spike waveforms",
+      "critical_assumption": "The study assumed ion-channel kinetics similar to rodents; these are model estimates, not direct compartment-resolved human channel-density measurements.",
+      "model_estimates": {
+        "na_axon": {
+          "mean": 4.9,
+          "sd": 1,
+          "unit": "S/cm^2",
+          "mean_S_m2": 49000,
+          "sd_S_m2": 10000,
+          "n_cells": 6
+        },
+        "kv3_1_axon": {
+          "mean": 1.9,
+          "sd": 0.1,
+          "unit": "S/cm^2",
+          "mean_S_m2": 19000,
+          "sd_S_m2": 1000,
+          "n_cells": 6
+        },
+        "persistent_k_axon": {
+          "mean": 0.019,
+          "sd": 0.039,
+          "unit": "S/cm^2",
+          "mean_S_m2": 190,
+          "sd_S_m2": 390,
+          "n_cells": 6
+        },
+        "persistent_k_soma": {
+          "mean": 0.0002,
+          "sd": 0.0004,
+          "unit": "S/cm^2",
+          "mean_S_m2": 2,
+          "sd_S_m2": 4,
+          "n_cells": 6
+        },
+        "na_soma": {
+          "mean": 0.33,
+          "sd": 0.17,
+          "unit": "S/cm^2",
+          "mean_S_m2": 3300,
+          "sd_S_m2": 1700,
+          "n_cells": 6
+        }
+      },
+      "missing_evidence": [
+        "No direct human dendritic sodium-channel recordings in the study.",
+        "The extent of back-propagating action potentials in human L2/L3 pyramidal dendrites remains unknown in the article."
+      ],
+      "source_notes": [
+        "The article models six human L2/L3 pyramidal cells using approximately 900 recorded spikes.",
+        "Kv3.1 and persistent potassium estimates are separate model components and are not directly equivalent to the total somatic voltage-gated potassium current measured by Wilbers et al. 2023.",
+        "ModelDB archive 238347 remains not downloaded or reproduced in AMSN in the current checkpoint."
+      ]
+    }
+  }
+}
