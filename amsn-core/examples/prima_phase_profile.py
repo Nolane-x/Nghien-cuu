@@ -24,7 +24,6 @@ from typing import Any
 
 import numpy as np
 
-from amsn import prima as prima_module
 from amsn.prima import PassiveReducedModel, prima_reduce_passive_cable_multishift
 
 ORDERS = (84, 112, 168)
@@ -101,14 +100,15 @@ def profile_prima_build(
 def measure_reduced_frequency(model: PassiveReducedModel, frequencies_hz=FREQUENCIES_HZ):
     start_wall = time.perf_counter()
     start_cpu = time.process_time()
+    frequencies = tuple(frequencies_hz)
     checksums = []
-    for frequency_hz in frequencies_hz:
+    for frequency_hz in frequencies:
         impedance = model.impedance_matrix(float(frequency_hz))
         if not (np.all(np.isfinite(impedance.real)) and np.all(np.isfinite(impedance.imag))):
             raise FloatingPointError("reduced frequency solve produced non-finite impedance")
         checksums.append(float(np.linalg.norm(impedance)))
     return {
-        "solve_calls": len(tuple(frequencies_hz)),
+        "solve_calls": len(frequencies),
         "wall_seconds": time.perf_counter() - start_wall,
         "cpu_seconds": time.process_time() - start_cpu,
         "finite_checksum": all(np.isfinite(value) for value in checksums),
@@ -118,11 +118,12 @@ def measure_reduced_frequency(model: PassiveReducedModel, frequencies_hz=FREQUEN
 def measure_hines_frequency(tree, retained_indices, frequencies_hz=FREQUENCIES_HZ):
     """Build the same retained-port impedance matrix using one Hines solve per source."""
     ports = tuple(int(value) for value in retained_indices)
+    frequencies = tuple(frequencies_hz)
     current = np.zeros(tree.n_compartments, dtype=np.complex128)
     start_wall = time.perf_counter()
     start_cpu = time.process_time()
     checksums = []
-    for frequency_hz in frequencies_hz:
+    for frequency_hz in frequencies:
         impedance = np.empty((len(ports), len(ports)), dtype=np.complex128)
         for column, source_index in enumerate(ports):
             current.fill(0.0)
@@ -133,7 +134,7 @@ def measure_hines_frequency(tree, retained_indices, frequencies_hz=FREQUENCIES_H
             raise FloatingPointError("full-Hines frequency solve produced non-finite impedance")
         checksums.append(float(np.linalg.norm(impedance)))
     return {
-        "solve_calls": len(tuple(frequencies_hz)) * len(ports),
+        "solve_calls": len(frequencies) * len(ports),
         "wall_seconds": time.perf_counter() - start_wall,
         "cpu_seconds": time.process_time() - start_cpu,
         "finite_checksum": all(np.isfinite(value) for value in checksums),
@@ -153,15 +154,16 @@ def measure_reduced_transient(model: PassiveReducedModel, source_port: int = 0):
         if PULSE_START_STEP <= step < PULSE_STOP_STEP:
             current[source_port] = PULSE_CURRENT_A
         state = model.step_backward_euler(state, DT_S, current)
-        ports = model.port_voltages(state)
-        if not np.all(np.isfinite(ports)):
+        port_values = model.port_voltages(state)
+        if not np.all(np.isfinite(port_values)):
             raise FloatingPointError("reduced transient produced non-finite port voltage")
-        peak_delta_v = max(peak_delta_v, float(np.max(np.abs(ports))))
+        peak_delta_v = max(peak_delta_v, float(np.max(np.abs(port_values))))
+    wall_seconds = time.perf_counter() - start_wall
     return {
         "steps": TRANSIENT_STEPS,
-        "wall_seconds": time.perf_counter() - start_wall,
+        "wall_seconds": wall_seconds,
         "cpu_seconds": time.process_time() - start_cpu,
-        "seconds_per_step": (time.perf_counter() - start_wall) / TRANSIENT_STEPS,
+        "seconds_per_step": wall_seconds / TRANSIENT_STEPS,
         "peak_port_perturbation_v": peak_delta_v,
     }
 
