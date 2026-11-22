@@ -77,8 +77,11 @@ def analyze(seven,nine,out:Path):
             if len(common)!=42 or only7 or len(only9)!=12:
                 raise ValueError(f"shared/q25 port mismatch: {(morph,mesh,order)} {len(common)} {len(only7)} {len(only9)}")
             for scenario,node in sorted(common):
-                e7=float(da[(scenario,node)]["transient_port_nrmse_pct"])
-                e9=float(db[(scenario,node)]["transient_port_nrmse_pct"])
+                arow, brow = da[(scenario,node)], db[(scenario,node)]
+                if arow["source_name"] != brow["source_name"] or float(arow["pulse_width_ms"]) != float(brow["pulse_width_ms"]):
+                    raise ValueError(f"source/pulse mismatch for {(morph,mesh,order,scenario,node)}")
+                e7=float(arow["transient_port_nrmse_pct"])
+                e9=float(brow["transient_port_nrmse_pct"])
                 if not (math.isfinite(e7) and math.isfinite(e9) and e7>=0 and e9>=0):
                     raise ValueError(f"invalid NRMSE for {(morph,mesh,order,scenario,node)}")
                 ratio=e9/e7 if e7 else (1.0 if e9==0 else math.inf)
@@ -89,6 +92,9 @@ def analyze(seven,nine,out:Path):
                 v9=[float(db[(scenario,n)]["transient_port_nrmse_pct"]) for n in nodes]
                 x=math.sqrt(sum(v*v for v in v7)/len(v7)); y=math.sqrt(sum(v*v for v in v9)/len(v9))
                 rms_rows.append({"morphology":morph,"mesh_um":mesh,"order":order,"scenario_id":scenario,"seven_shared_ports_rms_nrmse_pct":x,"nine_shared_ports_rms_nrmse_pct":y,"ratio_9_over_7":y/x if x else math.inf})
+            q25_roles = {db[k]["port_roles"] for k in only9}
+            if q25_roles != {"probe:basal_q25", "probe:apical_q25"}:
+                raise ValueError(f"expected exact basal/apical q25 probes; found {q25_roles}")
             for scenario,node in sorted(only9):
                 r=db[(scenario,node)]
                 q25_rows.append({"morphology":morph,"mesh_um":mesh,"order":order,"scenario_id":scenario,"port_swc_id":node,"port_roles":r["port_roles"],"nine_port_q25_nrmse_pct":float(r["transient_port_nrmse_pct"])})
