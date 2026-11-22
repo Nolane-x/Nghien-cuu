@@ -1,0 +1,66 @@
+name: AMSN Allen human held-out morphology source preflight
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - ".github/workflows/amsn-allen-human-holdout-preflight.yml"
+      - "amsn-core/src/amsn/morphology.py"
+      - "amsn-core/src/amsn/provenance.py"
+      - "amsn-core/examples/allen_human_holdout_preflight.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/tests/test_provenance.py"
+      - "amsn-core/pyproject.toml"
+      - "amsn-core/data/human/allen_cell_types/NMO_162186_PROVENANCE.md"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  held-out-source-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      NEURON_NOGUI: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron "neuron==9.0.2"
+        working-directory: amsn-core
+      - name: Download standardized SWC from the direct NeuroMorpho file URL
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Preflight/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          sha256sum data/human/allen_cell_types/770307286_transformed.CNG.swc
+        working-directory: amsn-core
+      - name: Test strict SWC holdout validation
+        run: python -m pytest -q tests/test_provenance.py
+        working-directory: amsn-core
+      - name: Run topology, Import3D, seven-port and passive-RC preflight
+        run: python examples/allen_human_holdout_preflight.py
+        working-directory: amsn-core
+      - name: Preserve the exact source and validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: amsn-NMO_162186-allen-heldout-source-preflight
+          path: |
+            amsn-core/data/human/allen_cell_types/770307286_transformed.CNG.swc
+            amsn-core/results/NMO_162186_holdout_preflight/preflight.json
+            amsn-core/results/NMO_162186_holdout_preflight/port_mapping.csv
+          if-no-files-found: warn
