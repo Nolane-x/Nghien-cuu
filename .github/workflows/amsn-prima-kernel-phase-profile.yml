@@ -102,8 +102,8 @@ jobs:
               "shifted_hines_solve", "orthogonalization", "congruence_projection",
               "multishift_orchestration", "other_python_self", "native_function_self",
           }
-          if len(build) != 30:
-              raise RuntimeError(f"expected 30 phase rows, got {len(build)}")
+          if len(build) != 36:
+              raise RuntimeError(f"expected 36 phase rows, got {len(build)}")
           if {row["phase"] for row in build} != expected_phases:
               raise RuntimeError("phase coverage mismatch")
           expected_pairs = {(str(order), str(rep)) for order in (84, 112, 168) for rep in (1, 2)}
