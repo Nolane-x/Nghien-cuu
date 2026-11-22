@@ -44,6 +44,7 @@ def test_profiled_prima_build_reports_each_actual_builder_phase():
         "congruence_projection",
         "multishift_orchestration",
         "other_python_self",
+        "native_function_self",
     }
     phases = summary["phases"]
     assert phases["shifted_hines_solve"]["calls"] > 0
