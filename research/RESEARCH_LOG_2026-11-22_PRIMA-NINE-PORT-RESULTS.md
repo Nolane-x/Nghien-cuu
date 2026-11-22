@@ -31,7 +31,7 @@ Core CI [44976224745](https://github.com/Nolane-x/Nghien-cuu/actions/runs/449762
 
 ## Results
 
-Each nine-port morphology/mesh configuration yielded 280 rows; 1,680 total. The exact aggregate metrics and artifact links are in `amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md`. Key result: 144 matched apical-q90 comparisons against the seven-port raw sweep, with 36 pairs per model. All 36/36 pairs worsened for every model. Median error ratios (nine port / seven port): four-shift order56 11.515×; six-shift order28 2.118×; six-shift order56 127.706×; six-shift order84 7.814×. Maximum ratios: 22.350×, 3.394×, 613.199× and 28.749× respectively.
+Each nine-port morphology/mesh configuration yielded 280 rows; 1,680 total. The exact aggregate metrics and artifact links are in `amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_ENRICHMENT_2026-11-22.md`; the 24-row per-configuration/model table is `amsn-core/results/human_passive_prima_nine_port_config_model_summary_2026-11-22.csv`. Key result: 144 matched apical-q90 comparisons against the seven-port raw sweep, with 36 pairs per model. All 36/36 pairs worsened for every model. Median error ratios (nine port / seven port): four-shift order56 11.515×; six-shift order28 2.118×; six-shift order56 127.706×; six-shift order84 7.814×. Maximum ratios: 22.350×, 3.394×, 613.199× and 28.749× respectively.
 
 The expanded basis therefore fails the primary non-degradation criterion. The best nine-port model is six-shift order84, but it remains worse on apical-q90 than its paired seven-port reference. The result does not identify a biological cause; it is a model reduction/port basis result within a passive RC protocol.
 
