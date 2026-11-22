@@ -83,6 +83,6 @@ The experiment covers only the linear passive RC subsystem and the selected seve
 3. If reciprocity, Cholesky, matrix conditioning, or transient checks fail, preserve the failure and diagnose it before further use.
 4. Do not switch the default solver or merge based solely on lower full-Hines residuals.
 
-## Next concrete action
+## Completed follow-up
 
-Run the PR's Core CI and six morphology × NEURON-mesh comparison jobs. Inspect job logs and artifacts; then add the actual numerical result table and a follow-up checkpoint. If the pull-request workflow is not scheduled automatically, use the repository Actions UI to dispatch the named workflows against this branch.
+The order/input/pulse-width sweep is complete and documented in [HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md](../amsn-core/research/HUMAN_PASSIVE_PRIMA_ORDER_TRANSIENT_SWEEP_2026-11-22.md). See [its dedicated research log](RESEARCH_LOG_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md) and [handoff](../HANDOFF_2026-11-22_PRIMA-ORDER-TRANSIENT-MATRIX.md). PR #2 passed Core CI 4/4, Schur/PRIMA 6/6 and frequency audit 3/3. Its result rejects order 28, keeps the four-shift order-56 default, and retains six-shift order 84 as an optional high-fidelity passive preset.
