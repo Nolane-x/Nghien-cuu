@@ -68,8 +68,9 @@ def build_sites(
     quantiles = tuple(float(value) for value in extra_probe_quantiles)
     if any(not np.isfinite(value) or not 0.0 < value < 1.0 for value in quantiles):
         raise ValueError("extra probe quantiles must be finite and strictly between 0 and 1")
-    if len(set(quantiles)) != len(quantiles):
-        raise ValueError("extra probe quantiles must be unique")
+    labels = [f"q{round(value * 100):02d}" for value in quantiles]
+    if len(set(labels)) != len(labels) or {"q50", "q90"}.intersection(labels):
+        raise ValueError("extra probe quantiles must not duplicate existing probe labels")
     distances = path_distances_um(morphology)
     injections = [
         ("soma", morphology.root_id),
