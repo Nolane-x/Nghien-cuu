@@ -1,0 +1,5 @@
+model_id,state_reduction_min_pct,state_reduction_max_pct,max_impedance_vs_hines_pct,max_admittance_vs_hines_pct,max_impedance_vs_neuron_pct,max_admittance_vs_neuron_pct,max_all_ports_transient_nrmse_pct,max_single_port_transient_nrmse_pct,max_apical_q90_transient_nrmse_pct,worst_port,worst_scenario,worst_source,worst_pulse_width_ms
+four_shift_order56_control,99.37029124,99.59263839,3.485388302,1.655248127,3.345528876,1.550976532,0.004392933321,0.02619244546,0.02619244546,probe:apical_q90,apical_q75_pulse2ms,apical_q75,2
+six_shift_order28,99.68514562,99.7963192,35.03070824,9.135726676,35.20696888,9.193970278,1.324901826,12.09981448,12.09981448,probe:apical_q90,apical_q75_pulse2ms,apical_q75,2
+six_shift_order56,99.37029124,99.59263839,0.219615742,0.2214329131,0.3273230919,0.3145615261,0.07309632026,0.5230992462,0.5230992462,probe:apical_q90,soma_pulse2ms,soma,2
+six_shift_order84,99.05543686,99.38895759,0.0429509876,0.01112412057,0.1713402106,0.1111112875,0.0001194471749,0.00177506118,0.00177506118,probe:apical_q90,apical_q75_pulse2ms,apical_q75,2
