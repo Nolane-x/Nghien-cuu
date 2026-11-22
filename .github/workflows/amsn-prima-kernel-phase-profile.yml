@@ -100,7 +100,7 @@ jobs:
           hines_solver = list(csv.DictReader(hines_solver_path.open(newline="", encoding="utf-8")))
           expected_phases = {
               "shifted_hines_solve", "orthogonalization", "congruence_projection",
-              "multishift_orchestration", "other_python_self",
+              "multishift_orchestration", "other_python_self", "native_function_self",
           }
           if len(build) != 30:
               raise RuntimeError(f"expected 30 phase rows, got {len(build)}")
