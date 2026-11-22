@@ -1,0 +1,10 @@
+model_id,pareto_optimal,dominated_by,objective_count
+order56_balanced_10khz,True,,19
+order56_extended_10khz,True,,19
+order56_narrow_3khz,True,,19
+order84_balanced_10khz,True,,19
+order84_extended_10khz,True,,19
+order84_narrow_3khz,True,,19
+order112_balanced_10khz,True,,19
+order112_extended_10khz,True,,19
+order112_narrow_3khz,True,,19

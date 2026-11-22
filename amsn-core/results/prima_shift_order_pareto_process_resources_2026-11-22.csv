@@ -1,0 +1,4 @@
+morphology,elapsed_wall_seconds,user_cpu_seconds,system_cpu_seconds,max_rss_kb,max_rss_mb
+NMO_290988_Mohan2015,265.24,359.48,0.32,227220,221.89453125
+NMO_68174_cell1125,360.98,768.41,0.37,327212,319.54296875
+NMO_68175_cell1204,397.01,810.79,0.37,329604,321.87890625

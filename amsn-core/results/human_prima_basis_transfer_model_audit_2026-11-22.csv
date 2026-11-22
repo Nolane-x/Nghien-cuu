@@ -1,0 +1,4 @@
+morphology_label,model_rows,parameter_scenarios,model_variants,requested_orders,actual_orders,passivity_all_cholesky_passed,state_reduction_pct,full_compartment_order
+NMO_290988_Mohan2015,27,9,3,56,56,True,99.37029124030136,8893
+NMO_68174_cell1125,27,9,3,56,56,True,99.5483506734414,12399
+NMO_68175_cell1204,27,9,3,56,56,True,99.59263839383138,13747
