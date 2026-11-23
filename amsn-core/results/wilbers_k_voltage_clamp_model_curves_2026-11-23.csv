@@ -1,0 +1,856 @@
+mechanism,source_role,protocol,variable,voltage_mV,model_value
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-110,8.28367506947e-05
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-100,0.000232445536091
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-90,0.000644447569205
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-80,0.00176742266594
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-70,0.00474091968628
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-60,0.0122331210996
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-50,0.0297133556106
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-40,0.0660246067178
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-30,0.132110715893
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-20,0.239808488168
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,-10,0.388376655161
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,0,0.553792931858
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,10,0.706001286309
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,20,0.82644561012
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,30,0.911508218602
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,40,0.96669178881
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_activation,50,1
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-110,1
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-100,0.990206222788
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-90,0.970306837047
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-80,0.936213148644
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-70,0.880137162254
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-60,0.77123720525
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-50,0.632096492875
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-40,0.499560222543
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-30,0.403967284284
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-20,0.348088721902
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,-10,0.319384013226
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,0,0.305531050588
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,10,0.299011271752
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,20,0.295985948626
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,30,0.294616874824
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,40,0.294039734653
+k_human,canonical human potassium reference,K_IV_ss,G_Gmax_inactivation,50,0.293874049462
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-110,
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-100,0.931328351572
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-90,1.11561410537
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-80,1.36895742199
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-70,1.7465335527
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-60,2.35059635303
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-50,3.35550352936
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-40,4.82448185019
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-30,5.74639273713
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-20,4.82215670194
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,-10,3.37116064685
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,0,2.3746363125
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,10,1.76684454535
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,20,1.39004395055
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,30,1.13628467335
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,40,0.950263543797
+k_human,canonical human potassium reference,K_IV_ss,tau_activation_ms,50,0.815360638401
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-90,7.16702374086
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-80,104.854854199
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-70,166.983731813
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-60,201.488208869
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-50,205.503998046
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-40,157.25791838
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-30,121.089175199
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-20,91.5915979734
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,-10,68.3297315042
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,0,52.8807561957
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,10,41.816165379
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,20,33.5967923829
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,30,27.3445852331
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,40,22.518669932
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_fast_ms,50,18.7799093145
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-90,371.287232734
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-80,324.133310602
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-70,368.375646272
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-60,342.702538164
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-50,978.872205804
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-40,980.206185408
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-30,997.252851602
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-20,795.278861215
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,-10,539.394546359
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,0,485.01146433
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,10,467.166916984
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,20,460.660017356
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,30,457.518600248
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,40,455.392826085
+k_human,canonical human potassium reference,K_IV_ss,tau_inactivation_slow_ms,50,454.408429765
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,4,0.0801049060167
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,144,0.173462868989
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,484,0.27060289235
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.314894170833
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.341544748988
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.364582875384
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.383791127609
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.398304357847
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.408289263433
+k_human,canonical human potassium reference,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.414578319793
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-110,8.84239342611e-05
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-100,0.000266107326196
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-90,0.000789730513304
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-80,0.00231132878882
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-70,0.00657305688416
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-60,0.0177827947994
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-50,0.0446489096346
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-40,0.100332134785
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-30,0.192182152025
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-20,0.30142009504
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,-10,0.451200522476
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,0,0.631678142087
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,10,0.776778538805
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,20,0.877362509188
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,30,0.941254700142
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,40,0.979104645322
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_activation,50,1
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-110,1
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-100,0.979055857355
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-90,0.93612520567
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-80,0.866273660324
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-70,0.768838614241
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-60,0.618807774959
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-50,0.482897892363
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-40,0.391533294348
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-30,0.342349521129
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-20,0.319471804812
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,-10,0.309664184604
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,0,0.305580777888
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,10,0.303894056384
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,20,0.303229013935
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,30,0.303016385581
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,40,0.303022465332
+k_mouse,canonical mouse potassium comparator,K_IV_ss,G_Gmax_inactivation,50,0.303174603324
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-110,
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-100,0.870256856301
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-90,1.01488778327
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-80,1.20018597522
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-70,1.45828513705
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-60,1.83736438765
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-50,2.44617304095
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-40,3.58017200678
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-30,6.12295671322
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-20,10.8017624351
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,-10,8.71545676848
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,0,4.72455852057
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,10,2.97395524451
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,20,2.12574142007
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,30,1.64128336462
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,40,1.3260493041
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_activation_ms,50,1.10359020604
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-90,49.0578244218
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-80,112.430585351
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-70,167.377682929
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-60,169.006508036
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-50,166.046729574
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-40,155.307977855
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-30,121.60448612
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-20,100.623318083
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,-10,76.7831193213
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,0,55.3136172301
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,10,42.6030784792
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,20,33.9385020156
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,30,27.538818748
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,40,22.656725121
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_fast_ms,50,18.8746577782
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-90,316.211631297
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-80,329.638130054
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-70,369.032052409
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-60,322.75251481
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-50,328.985075972
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-40,994.5421092
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-30,996.594261651
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-20,1000
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,-10,1000
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,0,571.678543342
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,10,490.953296362
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,20,470.334131655
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,30,462.777902214
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,40,459.028769767
+k_mouse,canonical mouse potassium comparator,K_IV_ss,tau_inactivation_slow_ms,50,456.795959817
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,4,0.080062587421
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,144,0.161576607184
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,484,0.2459358858
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.284675630641
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.308188994179
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.328550154876
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.345527941836
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.358355918184
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.367181392422
+k_mouse,canonical mouse potassium comparator,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.372740173696
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-110,8.37592934123e-05
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-100,0.000235053000504
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-90,0.000651642246421
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-80,0.00178536475584
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-70,0.00478005392972
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-60,0.0123067192756
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-50,0.0297642760362
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-40,0.0657714700196
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-30,0.131068930942
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-20,0.238009616877
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,-10,0.38634848724
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,0,0.551847200017
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,10,0.704232569504
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,20,0.82491659921
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,30,0.910368003302
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,40,0.966031289478
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_activation,50,1
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-110,1
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-100,0.990382857077
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-90,0.968580468055
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-80,0.924809526778
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-70,0.842870704926
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-60,0.708458936118
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-50,0.552938212836
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-40,0.433371061763
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-30,0.36655329275
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-20,0.336286088341
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,-10,0.324282696659
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,0,0.319858607489
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,10,0.318252827292
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,20,0.317656215598
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,30,0.317428027872
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,40,0.31733936929
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,G_Gmax_inactivation,50,0.317304729873
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-110,
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-100,0.930617280672
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-90,1.11514642586
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-80,1.37083932612
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-70,1.75117862652
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-60,2.35542679509
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-50,3.35928700359
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-40,4.81974546087
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-30,5.74334331633
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-20,4.82014204248
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,-10,3.35980709414
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,0,2.36941742775
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,10,1.75920861866
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,20,1.37801101756
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,30,1.12851887455
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,40,0.945125653718
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_activation_ms,50,0.812621383245
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-110,
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-100,
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-90,101.343155202
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-80,67.9651679455
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-70,187.229695507
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-60,225.137894217
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-50,195.900289399
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-40,156.703163209
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-30,121.860547225
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-20,95.066819425
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,-10,74.8272764269
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,0,59.6477589096
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,10,48.1512261897
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,20,39.37514442
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,30,32.6189528912
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,40,27.3580132629
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_fast_ms,50,23.2339216429
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-110,
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-100,
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-90,391.754908305
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-80,325.708300079
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-70,348.112660908
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-60,316.871679672
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-50,300.175821777
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-40,300.000626954
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-30,300.00000001
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-20,300.000003468
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,-10,300.000000011
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,0,300.000000385
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,10,849.19593713
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,20,999.832806991
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,30,999.971225444
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,40,999.991315639
+k_human_h1,"released reduced-state human variant with m,h gates",K_IV_ss,tau_inactivation_slow_ms,50,487.490795009
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,4,0.146945580756
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,144,0.267184509778
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,484,0.381116566217
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,1024,0.412985867268
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,1764,0.416428602225
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,2704,0.416582205577
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,3844,0.416585099152
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,5184,0.416585122366
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,6724,0.416585122446
+k_human_h1,"released reduced-state human variant with m,h gates",K_recovery_ss,recovery_test_pulse_peak_current,8464,0.416585122446
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-110,8.28367506947e-05
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-100,0.000232445536091
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-90,0.000644447569205
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-80,0.00176742266594
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-70,0.00474091968628
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-60,0.0122331210996
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-50,0.0297133556106
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-40,0.0660246067178
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-30,0.132110715893
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-20,0.239808488168
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,-10,0.388376655161
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,0,0.553792931858
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,10,0.706001286309
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,20,0.82644561012
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,30,0.911508218602
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,40,0.96669178881
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_activation,50,1
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-110,1
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-100,0.990206222788
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-90,0.970306837047
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-80,0.936213148644
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-70,0.880137162254
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-60,0.77123720525
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-50,0.632096492875
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-40,0.499560222543
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-30,0.403967284284
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-20,0.348088721902
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,-10,0.319384013226
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,0,0.305531050588
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,10,0.299011271752
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,20,0.295985948626
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,30,0.294616874824
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,40,0.294039734653
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,G_Gmax_inactivation,50,0.293874049462
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-110,
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-100,0.931328351572
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-90,1.11561410537
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-80,1.36895742199
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-70,1.7465335527
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-60,2.35059635303
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-50,3.35550352936
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-40,4.82448185019
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-30,5.74639273713
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-20,4.82215670194
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,-10,3.37116064685
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,0,2.3746363125
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,10,1.76684454535
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,20,1.39004395055
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,30,1.13628467335
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,40,0.950263543797
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_activation_ms,50,0.815360638401
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-110,
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-100,
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-90,7.16702374086
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-80,104.854854199
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-70,166.983731813
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-60,201.488208869
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-50,205.503998046
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-40,157.25791838
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-30,121.089175199
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-20,91.5915979734
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,-10,68.3297315042
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,0,52.8807561957
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,10,41.816165379
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,20,33.5967923829
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,30,27.3445852331
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,40,22.518669932
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_fast_ms,50,18.7799093145
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-110,
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-100,
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-90,371.287232734
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-80,324.133310602
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-70,368.375646272
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-60,342.702538164
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-50,978.872205804
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-40,980.206185408
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-30,997.252851602
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-20,795.278861215
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,-10,539.394546359
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,0,485.01146433
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,10,467.166916984
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,20,460.660017356
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,30,457.518600248
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,40,455.392826085
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_IV_ss,tau_inactivation_slow_ms,50,454.408429765
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,4,0.0801049060167
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,144,0.173462868989
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,484,0.27060289235
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,1024,0.314894170833
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,1764,0.341544748988
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,2704,0.364582875384
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,3844,0.383791127609
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,5184,0.398304357847
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,6724,0.408289263433
+k_human_hm12inf,"released human variant with m,m1,m2,h1,h2 gates",K_recovery_ss,recovery_test_pulse_peak_current,8464,0.414578319793
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-110,8.49725702078e-05
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-100,0.000238451083263
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-90,0.000661167366302
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-80,0.00181357034921
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-70,0.0048669944656
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-60,0.0125811086782
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-50,0.030702802017
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-40,0.0686724006917
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-30,0.134802814868
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-20,0.222461361355
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,-10,0.354258435245
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,0,0.529684732466
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,10,0.691086466279
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,20,0.817573766032
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,30,0.906740595423
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,40,0.964725276452
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_activation,50,1
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-110,1
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-100,0.99030593299
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-90,0.970597091235
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-80,0.936749041245
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-70,0.880978351484
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-60,0.77305195129
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-50,0.635179431225
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-40,0.503914175771
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-30,0.40930998204
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-20,0.354095628723
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,-10,0.325784261395
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,0,0.312151530431
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,10,0.305754025209
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,20,0.302799523477
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,30,0.301479022181
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,40,0.300945351618
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,G_Gmax_inactivation,50,0.300832558592
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-110,
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-100,0.865048088178
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-90,1.00878629311
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-80,1.19339701495
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-70,1.44947286685
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-60,1.83000973117
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-50,2.44176782282
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-40,3.58036076733
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-30,6.12684187191
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-20,10.8158184029
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,-10,8.72138001519
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,0,4.7161450603
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,10,2.97648362652
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,20,2.12655141456
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,30,1.64157209674
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,40,1.32614725717
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_activation_ms,50,1.10360930059
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-90,56.064922924
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-80,70.3432046986
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-70,166.551966703
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-60,202.002229491
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-50,170.114545282
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-40,155.312303106
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-30,121.672058678
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-20,100.734152994
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,-10,76.8164514137
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,0,55.2699010108
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,10,42.6124999602
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,20,33.9407461605
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,30,27.5394746063
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,40,22.6569258818
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_fast_ms,50,18.8747091694
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-90,300.113091383
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-80,335.319103055
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-70,369.08249692
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-60,341.33315519
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-50,342.092606749
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-40,982.944529447
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-30,994.952070075
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-20,999.999999992
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,-10,999.999459939
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,0,569.545060867
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,10,491.268591288
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,20,470.40334529
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,30,462.797336493
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,40,459.034573214
+k_hybrid1,human G/Gmax activation + inactivation,K_IV_ss,tau_inactivation_slow_ms,50,456.797456302
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,4,0.0776240044943
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,144,0.167764813753
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,484,0.261045014708
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.303881550157
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.32988156355
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.35239602495
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.371169302167
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.385353903708
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.395112717344
+k_hybrid1,human G/Gmax activation + inactivation,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.401259368231
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-110,8.49196674142e-05
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-100,0.000238155116593
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-90,0.000659781200313
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-80,0.00180869051154
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-70,0.00484804281164
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-60,0.0124977704343
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-50,0.0304283311041
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-40,0.0679740602293
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-30,0.133324100944
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-20,0.220026961507
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,-10,0.352294145916
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,0,0.528641978425
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,10,0.690557188366
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,20,0.8173156938
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,30,0.906627418711
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,40,0.964687066862
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_activation,50,1
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-110,1
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-100,0.979041258683
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-90,0.93608039941
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-80,0.866174233975
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-70,0.768653550664
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-60,0.618559496415
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-50,0.482604164817
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-40,0.391284683371
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-30,0.34215509695
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-20,0.319329125099
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,-10,0.30955121976
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,0,0.305479925987
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,10,0.303795105202
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,20,0.303126379704
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,30,0.302908598678
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,40,0.302908277994
+k_hybrid2,human G/Gmax activation,K_IV_ss,G_Gmax_inactivation,50,0.303054365957
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-110,
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-100,0.866408996055
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-90,1.01119076122
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-80,1.19680229309
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-70,1.45510548899
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-60,1.83422169314
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-50,2.44802645958
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-40,3.57637924049
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-30,6.11749759061
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-20,10.7931463023
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,-10,8.71098727458
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,0,4.72343119554
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,10,2.97368442313
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,20,2.12568897713
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,30,1.6412789063
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,40,1.32604613151
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_activation_ms,50,1.10357834185
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-90,77.6839613064
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-80,104.906708114
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-70,112.857600964
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-60,197.28099854
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-50,203.723499893
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-40,155.094210201
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-30,121.618160929
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-20,100.615790103
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,-10,76.7804444997
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,0,55.3125873854
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,10,42.6029028649
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,20,33.9384696078
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,30,27.5388128099
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,40,22.6567218451
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_fast_ms,50,18.8746519875
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-90,300.884328112
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-80,320.378954456
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-70,366.550503837
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-60,393.91900768
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-50,977.645816786
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-40,965.533864504
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-30,999.999899326
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-20,999.999999997
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,-10,999.999931632
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,0,571.633109573
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,10,490.948016238
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,20,470.333462608
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,30,462.777915777
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,40,459.028796695
+k_hybrid2,human G/Gmax activation,K_IV_ss,tau_inactivation_slow_ms,50,456.795874932
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,4,0.076894191262
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,144,0.155181839262
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,484,0.236202389493
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.27340890946
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.295991670502
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.315546984782
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.331852830819
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.344173105753
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.35264928816
+k_hybrid2,human G/Gmax activation,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.357988065694
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-110,8.84791579742e-05
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-100,0.000266438672271
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-90,0.000791392542525
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-80,0.00231757130245
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-70,0.0065987742334
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-60,0.0179014441746
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-50,0.0450518334398
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-40,0.101363212678
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-30,0.194314180018
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-20,0.304755815978
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,-10,0.45371661076
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,0,0.632924301988
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,10,0.777373901766
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,20,0.877639541974
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,30,0.9413721997
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,40,0.979143426064
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_activation,50,1
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-110,1
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-100,0.990320701928
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-90,0.970643556571
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-80,0.936856582337
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-70,0.881214084611
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-60,0.773406076314
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-50,0.635681981152
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-40,0.504454097804
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-30,0.40978582508
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-20,0.354465245435
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,-10,0.326050079104
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,0,0.312346733251
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,10,0.305905701403
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,20,0.302930344345
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,30,0.301600286861
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,40,0.301065174594
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,G_Gmax_inactivation,50,0.30095415423
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-110,
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-100,0.868779228419
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-90,1.01155886136
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-80,1.19662881256
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-70,1.45247856078
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-60,1.83297601751
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-50,2.44487106401
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-40,3.5840043389
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-30,6.13213144062
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-20,10.8005835791
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,-10,8.72580171308
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,0,4.71726064239
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,10,2.97675461441
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,20,2.12660387144
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,30,1.64157656583
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,40,1.32615041652
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_activation_ms,50,1.10362115726
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-90,47.1635303142
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-80,103.593178145
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-70,159.087319145
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-60,203.667058941
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-50,203.829816527
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-40,155.305041651
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-30,121.690681474
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-20,100.628839844
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,-10,76.8191480105
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,0,55.2708980382
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,10,42.6126791209
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,20,33.9407782462
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,30,27.5394814439
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,40,22.6569291482
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_fast_ms,50,18.8747145073
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-90,321.607044343
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-80,319.461290132
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-70,368.666236252
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-60,340.982940454
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-50,991.382499894
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-40,981.317946329
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-30,997.373057596
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-20,1000
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,-10,1000
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,0,569.587954334
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,10,491.274033494
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,20,470.403984827
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,30,462.797372862
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,40,459.034545173
+k_hybrid3,human G/Gmax inactivation,K_IV_ss,tau_inactivation_slow_ms,50,456.797515334
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,4,0.0808224724196
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,144,0.174678105452
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,484,0.271802238368
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.31640400504
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.343475442166
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.366917693389
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.386464591964
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.401233722088
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.411394683637
+k_hybrid3,human G/Gmax inactivation,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.417794630018
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-110,8.61984838169e-05
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-100,0.00025938387442
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-90,0.000769616859268
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-80,0.00225178269404
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-70,0.00639866576227
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-60,0.017265199724
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-50,0.0430986409471
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-40,0.0962017967856
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-30,0.188443805348
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-20,0.326619737699
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,-10,0.496112536661
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,0,0.660972653745
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,10,0.793744190812
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,20,0.886963742664
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,30,0.946234379
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,40,0.981109205509
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_activation,50,1
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-110,1
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-100,0.978858472001
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-90,0.935541448753
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-80,0.865226270494
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-70,0.767331277179
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-60,0.616004796221
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-50,0.478676062604
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-40,0.386192769953
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-30,0.336264528705
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-20,0.312975630131
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,-10,0.302966892352
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,0,0.298785405245
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,10,0.297043209906
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,20,0.296336924636
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,30,0.296088300507
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,40,0.296053769508
+k_hybrid4,human activation time constant,K_IV_ss,G_Gmax_inactivation,50,0.296152210486
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-110,
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-100,0.936976105027
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-90,1.12305020502
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-80,1.3774434891
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-70,1.75729960236
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-60,2.36129508298
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-50,3.36103644744
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-40,4.82496807664
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-30,5.74712985816
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-20,4.81972505954
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,-10,3.3743714688
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,0,2.3715448665
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,10,1.76570807965
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,20,1.38957602199
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,30,1.13608038951
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,40,0.950176904798
+k_hybrid4,human activation time constant,K_IV_ss,tau_activation_ms,50,0.815330949676
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-90,49.3526875425
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-80,109.002179408
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-70,209.412742117
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-60,178.446004671
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-50,205.261336864
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-40,157.194055412
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-30,121.058290849
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-20,91.5411866021
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,-10,68.3543447384
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,0,52.865104325
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,10,41.8124374548
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,20,33.5956737699
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,30,27.3442079009
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,40,22.5185468196
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_fast_ms,50,18.7798710628
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-90,315.37737618
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-80,345.587760941
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-70,370.995193159
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-60,321.989663271
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-50,970.627758857
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-40,989.0596692
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-30,998.674976934
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-20,791.563204222
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,-10,540.504453072
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,0,484.472791543
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,10,467.045613042
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,20,460.624640752
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,30,457.506934137
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,40,455.389078517
+k_hybrid4,human activation time constant,K_IV_ss,tau_inactivation_slow_ms,50,454.407243089
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,4,0.0826074702693
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,144,0.166927424062
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,484,0.254767168945
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.294817870113
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.31891677469
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.339749092987
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.357118232893
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.370241880875
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.379270773084
+k_hybrid4,human activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.384957678487
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-110,8.27824920632e-05
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-100,0.000232138199601
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-90,0.000642978141314
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-80,0.00176209676161
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-70,0.00471942805271
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-60,0.0121340440407
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-50,0.0293719698846
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-40,0.0651762287623
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-30,0.130730582787
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-20,0.238417559529
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,-10,0.387355746307
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,0,0.553155096483
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,10,0.705638069339
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,20,0.826258930113
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,30,0.911423400167
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,40,0.966661937566
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_activation,50,1
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-110,1
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-100,0.978845867247
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-90,0.935502740561
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-80,0.865140372623
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-70,0.767171449186
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-60,0.615798906014
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-50,0.4784424146
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-40,0.385984767828
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-30,0.336112690685
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-20,0.312863320994
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,-10,0.302879906336
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,0,0.298707952945
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,10,0.296967235405
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,20,0.296259703022
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,30,0.29600650989
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,40,0.295967599738
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,G_Gmax_inactivation,50,0.296061708321
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-110,
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-100,0.93268919937
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-90,1.11878273904
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-80,1.37335048839
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-70,1.75322026204
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-60,2.35691939396
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-50,3.35605260847
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-40,4.81927684814
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-30,5.74212164631
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-20,4.81711507367
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,-10,3.37345655425
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,0,2.3713263195
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,10,1.76571259481
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,20,1.38963019092
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,30,1.13612826936
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,40,0.950205133045
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_activation_ms,50,0.815341798487
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-110,
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-100,
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-90,76.563301622
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-80,102.461326054
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-70,117.899418741
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-60,222.282131878
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-50,205.450171588
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-40,157.129250064
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-30,121.026893689
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-20,91.5374296661
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,-10,68.3532569804
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,0,52.8649142265
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,10,41.8124210281
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,20,33.5956896288
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,30,27.3442242276
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,40,22.5185562584
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_fast_ms,50,18.7798748097
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-110,
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-100,
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-90,302.083312886
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-80,321.072120582
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-70,366.413926078
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-60,382.649175514
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-50,993.943743572
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-40,980.770125226
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-30,993.849920017
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-20,791.286146306
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,-10,540.461191849
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,0,484.467109478
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,10,467.045534303
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,20,460.625429086
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,30,457.507622751
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,40,455.389482394
+k_hybrid5,human G/Gmax activation + activation time constant,K_IV_ss,tau_inactivation_slow_ms,50,454.40743615
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,4,0.0793517675632
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,144,0.160339543517
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,484,0.2447126283
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,1024,0.283182695475
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,1764,0.306330515965
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,2704,0.326340668192
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,3844,0.343024318988
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,5184,0.355630029826
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,6724,0.364302588147
+k_hybrid5,human G/Gmax activation + activation time constant,K_recovery_ss,recovery_test_pulse_peak_current,8464,0.369765054315
