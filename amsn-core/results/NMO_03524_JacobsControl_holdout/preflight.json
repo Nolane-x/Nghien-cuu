@@ -1,0 +1,178 @@
+{
+  "amsn": {
+    "electrical_compartment_count": 862,
+    "finite_1khz_passive_response": true,
+    "port_mapping_rows": [
+      {
+        "geometry_offset_um": 0.0,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.4924812030075188,
+        "interpolation_upper_weight": 1.0,
+        "interpolation_upper_x": 0.5,
+        "nearest_centre_offset_um": 0.0,
+        "normalized_x": 0.5,
+        "section_name": "soma[0]",
+        "swc_node_id": 1
+      },
+      {
+        "geometry_offset_um": 1.9451215809109057e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.7957074721780604,
+        "interpolation_upper_weight": 0.6034256203629447,
+        "interpolation_upper_x": 0.7972972972972973,
+        "nearest_centre_offset_um": 0.049571594939500585,
+        "normalized_x": 0.7966668133869045,
+        "section_name": "dend[30]",
+        "swc_node_id": 367
+      },
+      {
+        "geometry_offset_um": 4.888322824958517e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.6188051595383571,
+        "interpolation_upper_weight": 0.9173960285213628,
+        "interpolation_upper_x": 0.6194840461642905,
+        "nearest_centre_offset_um": 0.010321098184405741,
+        "normalized_x": 0.6194279674328047,
+        "section_name": "dend[42]",
+        "swc_node_id": 583
+      },
+      {
+        "geometry_offset_um": 2.452111617106334e-06,
+        "interpolation_endpoint_fallback": "right_endpoint_nearest_segment",
+        "interpolation_lower_x": 0.9995857497928748,
+        "interpolation_upper_weight": 0.0,
+        "interpolation_upper_x": 0.9995857497928748,
+        "nearest_centre_offset_um": 0.06249733745622166,
+        "normalized_x": 1.0,
+        "section_name": "dend[57]",
+        "swc_node_id": 751
+      },
+      {
+        "geometry_offset_um": 1.787624282750168e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.6555555555555556,
+        "interpolation_upper_weight": 0.0240868597898781,
+        "interpolation_upper_x": 0.6572649572649573,
+        "nearest_centre_offset_um": 0.0030033413369778827,
+        "normalized_x": 0.6555967296748545,
+        "section_name": "apic[0]",
+        "swc_node_id": 866
+      },
+      {
+        "geometry_offset_um": 1.0235906888957017e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.7871794871794872,
+        "interpolation_upper_weight": 0.13921126964363145,
+        "interpolation_upper_x": 0.7888888888888889,
+        "nearest_centre_offset_um": 0.017357968798833667,
+        "normalized_x": 0.787417455161784,
+        "section_name": "apic[0]",
+        "swc_node_id": 867
+      },
+      {
+        "geometry_offset_um": 1.373291016509231e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.9136752136752136,
+        "interpolation_upper_weight": 0.27558082237898174,
+        "interpolation_upper_x": 0.9153846153846154,
+        "nearest_centre_offset_um": 0.03436160972208313,
+        "normalized_x": 0.9141462920040666,
+        "section_name": "apic[0]",
+        "swc_node_id": 868
+      }
+    ],
+    "roles_by_node": {
+      "1": [
+        "soma"
+      ],
+      "367": [
+        "basal_q50"
+      ],
+      "583": [
+        "basal_q75"
+      ],
+      "751": [
+        "basal_q90"
+      ],
+      "866": [
+        "apical_q50"
+      ],
+      "867": [
+        "apical_q75"
+      ],
+      "868": [
+        "apical_q90"
+      ]
+    },
+    "seven_unique_port_node_ids": [
+      1,
+      583,
+      867,
+      367,
+      751,
+      866,
+      868
+    ],
+    "source_node_ids": {
+      "apical_q75": 867,
+      "basal_q75": 583,
+      "soma": 1
+    }
+  },
+  "label": "NMO_03524_JacobsControl",
+  "neuron": {
+    "maximum_segment_length_cap_um": 0.125,
+    "maximum_segment_length_um": 0.12499948933884178,
+    "section_count": 68,
+    "segment_count": 35248,
+    "version": "9.0.2"
+  },
+  "scientific_limits": [
+    "The specimen is a human control morphology from the Jacobs archive, but it is a single cell and does not constitute a population.",
+    "The axon is incomplete and dendrites are rated moderate in NeuroMorpho metadata.",
+    "This is a passive linear-RC numerical morphology holdout, not an active-neuron or biological validation.",
+    "No active-channel mechanism, conductance fit or production default is changed."
+  ],
+  "source": {
+    "age_years": 23,
+    "archive": "Jacobs",
+    "cell_class": "principal cell, pyramidal",
+    "cell_name": "1-5-3",
+    "experimental_condition": "Control",
+    "metadata_url": "https://neuromorpho.org/neuron_info.jsp?neuron_name=1-5-3",
+    "neuromorpho_id": "NMO_03524",
+    "physical_integrity": "dendrites moderate, axon incomplete",
+    "primary_region": "neocortex",
+    "protocol": "in vitro",
+    "reference_article": "Life-span dendritic and spine changes in areas 10 and 18 of human cortex: a quantitative Golgi study",
+    "secondary_region": "occipital",
+    "sex": "male",
+    "slice_thickness_um": 120,
+    "source_bytes": 31199,
+    "source_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+    "source_url": "https://neuromorpho.org/dableFiles/jacobs/CNG%20version/1-5-3.CNG.swc",
+    "species": "human",
+    "staining": "Golgi",
+    "structural_domains": [
+      "dendrites",
+      "soma",
+      "axon"
+    ],
+    "tertiary_region": "Brodmann area 18"
+  },
+  "status": "PASS",
+  "swc": {
+    "branch_point_count": 30,
+    "missing_parent_references": 0,
+    "record_count": 869,
+    "root_count": 1,
+    "three_point_soma_detected": true,
+    "total_path_length_um": 4453.468154492559,
+    "type_counts": {
+      "1": 3,
+      "2": 42,
+      "3": 816,
+      "4": 8
+    }
+  }
+}

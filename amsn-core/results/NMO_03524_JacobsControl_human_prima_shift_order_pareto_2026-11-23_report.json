@@ -1,0 +1,256 @@
+{
+  "candidate_summary": [
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.1553787630362436e-08,
+      "max_y_error_10khz_pct": 7.57202463965787e-08,
+      "max_z_error_10khz_pct": 4.152471668362888e-07,
+      "median_basis_build_seconds": 0.24987855800000602,
+      "median_numeric_storage_mb": 0.927978515625,
+      "median_transient_port_nrmse_pct": 3.270792849596126e-09,
+      "median_y_error_10khz_pct": 1.6398060187610997e-08,
+      "median_z_error_10khz_pct": 9.188294232094002e-08,
+      "model_id": "order112_balanced_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "balanced_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.1553556248312304e-08,
+      "max_y_error_10khz_pct": 6.672029761898553e-10,
+      "max_z_error_10khz_pct": 4.827264485796081e-09,
+      "median_basis_build_seconds": 0.25086754000000155,
+      "median_numeric_storage_mb": 0.927978515625,
+      "median_transient_port_nrmse_pct": 3.2708367355987666e-09,
+      "median_y_error_10khz_pct": 1.8142932453890805e-10,
+      "median_z_error_10khz_pct": 3.600482716743273e-10,
+      "model_id": "order112_extended_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "extended_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.155405019622243e-08,
+      "max_y_error_10khz_pct": 9.383091667255832e-09,
+      "max_z_error_10khz_pct": 3.276440213793696e-08,
+      "median_basis_build_seconds": 0.24254636899999582,
+      "median_numeric_storage_mb": 0.927978515625,
+      "median_transient_port_nrmse_pct": 3.2708487522455552e-09,
+      "median_y_error_10khz_pct": 3.962822849838367e-09,
+      "median_z_error_10khz_pct": 6.874827269833411e-09,
+      "model_id": "order112_narrow_3khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "narrow_3khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 56,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 4.565370465516499e-08,
+      "max_y_error_10khz_pct": 0.013884675043537234,
+      "max_z_error_10khz_pct": 0.015525772499241506,
+      "median_basis_build_seconds": 0.1395246229999998,
+      "median_numeric_storage_mb": 0.4161376953125,
+      "median_transient_port_nrmse_pct": 4.4369418561226395e-09,
+      "median_y_error_10khz_pct": 0.006028814571185719,
+      "median_z_error_10khz_pct": 0.005794725547981653,
+      "model_id": "order56_balanced_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "balanced_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 56,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 1.8050513859433278e-07,
+      "max_y_error_10khz_pct": 0.0006321359485457622,
+      "max_z_error_10khz_pct": 0.0019564190086767018,
+      "median_basis_build_seconds": 0.13965236299999617,
+      "median_numeric_storage_mb": 0.4161376953125,
+      "median_transient_port_nrmse_pct": 9.055363159343852e-09,
+      "median_y_error_10khz_pct": 0.00024463544924999397,
+      "median_z_error_10khz_pct": 0.0011970878348619373,
+      "model_id": "order56_extended_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "extended_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 56,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.15539185536596e-08,
+      "max_y_error_10khz_pct": 0.006750268818014326,
+      "max_z_error_10khz_pct": 0.024521973755616194,
+      "median_basis_build_seconds": 0.1366143619999889,
+      "median_numeric_storage_mb": 0.4161376953125,
+      "median_transient_port_nrmse_pct": 3.5394135759875997e-09,
+      "median_y_error_10khz_pct": 0.00545512581737096,
+      "median_z_error_10khz_pct": 0.008569230648263943,
+      "model_id": "order56_narrow_3khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "narrow_3khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 84,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.15536162117082e-08,
+      "max_y_error_10khz_pct": 3.7388425458183104e-05,
+      "max_z_error_10khz_pct": 7.085702736386194e-05,
+      "median_basis_build_seconds": 0.18903580099998862,
+      "median_numeric_storage_mb": 0.66009521484375,
+      "median_transient_port_nrmse_pct": 3.271046758882915e-09,
+      "median_y_error_10khz_pct": 8.113941022098272e-06,
+      "median_z_error_10khz_pct": 2.9229529226237192e-05,
+      "model_id": "order84_balanced_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "balanced_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 84,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.1553715414048754e-08,
+      "max_y_error_10khz_pct": 1.2871147756895833e-06,
+      "max_z_error_10khz_pct": 1.9301495034111994e-06,
+      "median_basis_build_seconds": 0.18935043400000495,
+      "median_numeric_storage_mb": 0.66009521484375,
+      "median_transient_port_nrmse_pct": 3.270889906030812e-09,
+      "median_y_error_10khz_pct": 2.875254893179335e-07,
+      "median_z_error_10khz_pct": 5.577517314394475e-07,
+      "model_id": "order84_extended_10khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "extended_10khz",
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 84,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.155361219463086e-08,
+      "max_y_error_10khz_pct": 2.5169999764486627e-05,
+      "max_z_error_10khz_pct": 4.503861032325955e-05,
+      "median_basis_build_seconds": 0.18806098599999643,
+      "median_numeric_storage_mb": 0.66009521484375,
+      "median_transient_port_nrmse_pct": 3.2712607201651657e-09,
+      "median_y_error_10khz_pct": 9.10224621380849e-06,
+      "median_z_error_10khz_pct": 9.22596729031276e-06,
+      "model_id": "order84_narrow_3khz",
+      "parameter_scenario_rows": 9,
+      "shift_strategy": "narrow_3khz",
+      "transient_port_rows": 378
+    }
+  ],
+  "exact_coverage": {
+    "frequency": 729,
+    "models": 81,
+    "transient": 3402
+  },
+  "morphology": {
+    "age_years": 23,
+    "archive": "Jacobs",
+    "cell_class": "principal cell, pyramidal",
+    "cell_name": "1-5-3",
+    "experimental_condition": "Control",
+    "metadata_url": "https://neuromorpho.org/neuron_info.jsp?neuron_name=1-5-3",
+    "neuromorpho_id": "NMO_03524",
+    "physical_integrity": "dendrites moderate, axon incomplete",
+    "primary_region": "neocortex",
+    "protocol": "in vitro",
+    "reference_article": "Life-span dendritic and spine changes in areas 10 and 18 of human cortex: a quantitative Golgi study",
+    "secondary_region": "occipital",
+    "sex": "male",
+    "slice_thickness_um": 120,
+    "source_bytes": 31199,
+    "source_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+    "source_url": "https://neuromorpho.org/dableFiles/jacobs/CNG%20version/1-5-3.CNG.swc",
+    "species": "human",
+    "staining": "Golgi",
+    "structural_domains": [
+      "dendrites",
+      "soma",
+      "axon"
+    ],
+    "tertiary_region": "Brodmann area 18"
+  },
+  "preflight": {
+    "electrical_compartments": 862,
+    "neurite_type_counts": {
+      "1": 3,
+      "2": 42,
+      "3": 816,
+      "4": 8
+    },
+    "neuron_version": "9.0.2",
+    "swc_records": 869,
+    "unique_port_count": 7
+  },
+  "protocol": {
+    "dt_ms": 0.1,
+    "duration_ms": 20,
+    "frequencies_hz": [
+      0.1,
+      1,
+      10,
+      100,
+      300,
+      1000,
+      3000,
+      6000,
+      10000
+    ],
+    "orders": [
+      56,
+      84,
+      112
+    ],
+    "parameter_scenarios": 9,
+    "pulse_amplitude_pA": 10,
+    "pulse_onset_ms": 2,
+    "pulse_widths_ms": [
+      2,
+      10
+    ],
+    "shift_sets": {
+      "balanced_10khz": [
+        0,
+        10,
+        100,
+        1000,
+        3000,
+        10000
+      ],
+      "extended_10khz": [
+        0,
+        100,
+        1000,
+        3000,
+        6000,
+        10000
+      ],
+      "narrow_3khz": [
+        0,
+        100,
+        1000,
+        3000
+      ]
+    },
+    "source_ports": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ]
+  },
+  "scientific_limits": [
+    "One human control morphology from the Jacobs archive; not a representative human population.",
+    "NeuroMorpho describes dendrites as moderate and axon as incomplete.",
+    "Passive linear-RC comparison against full Hines only; no active-channel or nonlinear-synapse validation.",
+    "This is a seven-port shift/order sweep; it does not independently test the nine-port q25 decision on this control morphology.",
+    "No production default, solver method or runtime behavior is promoted."
+  ],
+  "status": "jacobs_control_prima_shift_order_replay_passed"
+}
