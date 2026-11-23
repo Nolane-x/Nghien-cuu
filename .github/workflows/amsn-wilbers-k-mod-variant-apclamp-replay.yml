@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: amsn-wilbers-k-mod-variant-apclamp-replay
@@ -52,6 +52,19 @@ jobs:
             --output-json results/wilbers_k_mod_variant_apclamp_200_2026-11-23.json \
             --summary-csv results/wilbers_k_mod_variant_apclamp_summary_2026-11-23.csv \
             --per-ap-csv results/wilbers_k_mod_variant_apclamp_per_ap_2026-11-23.csv
+      - name: Commit validated raw replay outputs to this research branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/wilbers_k_mod_variant_apclamp_200_2026-11-23.json \
+            amsn-core/results/wilbers_k_mod_variant_apclamp_summary_2026-11-23.csv \
+            amsn-core/results/wilbers_k_mod_variant_apclamp_per_ap_2026-11-23.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive validated Wilbers K variant AP-clamp replay"
+            git push origin "HEAD:\${GITHUB_REF_NAME}"
+          fi
       - name: Preserve source hashes, raw replay curves, comparisons and summaries
         if: always()
         uses: actions/upload-artifact@v4
