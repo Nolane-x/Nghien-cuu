@@ -1,0 +1,49 @@
+name: AMSN Wilbers original 200-AP AP-clamp trace replay
+
+on:
+  push:
+    branches:
+      - research/wilbers-human-active-channel-baseline-2026-11-22
+    paths:
+      - "amsn-core/examples/replay_wilbers_apclamp.py"
+      - "amsn-core/tests/test_wilbers_apclamp_replay.py"
+      - ".github/workflows/amsn-wilbers-apclamp-200-replay.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-wilbers-apclamp-200-replay
+  cancel-in-progress: false
+
+jobs:
+  original-200-ap-replay:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install NEURON and original AP-clamp helper dependencies
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" neuron==9.0.2 scipy==1.15.3 pandas==2.2.3 matplotlib==3.10.1 seaborn==0.13.2
+      - name: Test 5-AP and 200-AP source protocol windows
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_wilbers_apclamp_replay.py
+      - name: Replay the complete 200-AP source command
+        working-directory: amsn-core
+        env:
+          MPLBACKEND: Agg
+        run: python examples/replay_wilbers_apclamp.py --ap-count 200 --output artifacts/wilbers-apclamp-200-replay.json
+      - name: Upload complete 200-AP model and experimental comparison
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-original-apclamp-200-replay
+          path: amsn-core/artifacts/wilbers-apclamp-200-replay.json
+          if-no-files-found: warn
+          retention-days: 30

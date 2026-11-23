@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Verify the raw Wilbers AP-clamp trace and replay the original 5-AP protocol.
+"""Reproduce the original Wilbers 5-AP and 200-AP H_wide AP-clamp protocols.
 
-The published AP-clamp helper code and original human/mouse MOD mechanisms are
-downloaded by immutable Dataverse file ID and SHA-1/size checked. The H_wide
-trace is SHA-1 checked against Dataverse and independently SHA-256 hashed.
-NEURON 9.0.2 then executes the original APclamp_tools helper functions for
-human/mouse Na and K mechanisms using the source's exact trace slice and LJP
-offset rules. Failures/non-finite outputs are recorded as evidence rather than
-silently repaired. No AMSN runtime code is changed.
+All original source artifacts are downloaded by immutable Dataverse ID and
+SHA-1/size checked. NEURON 9.0.2 executes the unchanged Na/K mechanism files
+and the original 5/200-AP helper routines. In 200-AP mode only, the helper's
+quadratic np.append current recorder is replaced by equivalent list-backed
+recorders. Voltage commands, integration steps, channel equations and peak
+thresholds are unchanged. No AMSN runtime code is changed.
 """
 from __future__ import annotations
 
@@ -74,8 +73,22 @@ FILES = {
 SAMPLE_FREQ_PER_MS = 125
 SAMPLE_RATE_HZ = 125000
 TIME_START_MS = 199
-TIME_END_MS = 307
+AP_INTERVAL_MS = 25
+AP_POST_WINDOW_MS = 7
 NA_VOLTAGE_OFFSET_MV = -10.0
+
+
+def protocol_end_ms(ap_count: int) -> int:
+    if ap_count not in (5, 200):
+        raise ValueError("ap_count must be 5 or 200")
+    return 200 + AP_INTERVAL_MS * (ap_count - 1) + AP_POST_WINDOW_MS
+
+
+def expected_protocol_samples(ap_count: int) -> int:
+    return (
+        round(protocol_end_ms(ap_count) * SAMPLE_FREQ_PER_MS) + 1
+        - round(TIME_START_MS * SAMPLE_FREQ_PER_MS)
+    )
 
 
 def fetch_verified(name: str, spec: dict[str, Any], cache: Path) -> tuple[bytes, dict[str, Any]]:
@@ -127,17 +140,65 @@ def fetch_verified(name: str, spec: dict[str, Any], cache: Path) -> tuple[bytes,
     )
 
 
-def load_original_helper(path: Path) -> Any:
+def load_original_helper(path: Path, ap_count: int = 5) -> Any:
     spec = importlib.util.spec_from_file_location("wilbers_apclamp_tools_original", path)
     if spec is None or spec.loader is None:
         raise RuntimeError("Could not create Python import spec for original apclamp_tools.py")
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
-    required = ("init_na", "Ina_AP1_5", "init_k", "Ik_AP1_5")
+    required = ["init_na", "init_k"]
+    required.extend(("Ina_AP1_5", "Ik_AP1_5") if ap_count == 5 else ("Ina_AP1_5_200", "Ik_AP1_5_200"))
     missing = [name for name in required if not hasattr(module, name)]
     if missing:
-        raise RuntimeError(f"Original helper module missing functions: {missing}")
+        raise RuntimeError(f"Original helper module missing functions for {ap_count}-AP replay: {missing}")
     return module
+
+
+def install_linear_current_recorders(helper: Any, h: Any) -> dict[str, Any]:
+    """Replace only np.append's quadratic copying with equivalent list storage."""
+    def record_na(cell: Any, command: Any, samplefreq: int = 125000) -> np.ndarray:
+        h.celsius = 34
+        h.dt = 1000 / samplefreq
+        command_vector = h.Vector(command)
+        clamp = h.VClamp(cell(0.5))
+        clamp.dur[0] = len(command) * h.dt
+        command_vector.play(clamp._ref_amp[0], h.dt)
+        h.finitialize(command[0])
+        current = []
+        while h.t <= clamp.dur[0]:
+            h.fadvance()
+            current.append(float(cell.ina))
+        return np.asarray(current, dtype=float)
+
+    def record_k(cell: Any, command: Any, samplefreq: int = 125000) -> np.ndarray:
+        h.celsius = 34
+        h.dt = 1000 / samplefreq
+        command_vector = h.Vector(command)
+        clamp = h.VClamp(cell(0.5))
+        clamp.dur[0] = len(command) * h.dt
+        command_vector.play(clamp._ref_amp[0], h.dt)
+        h.finitialize(command[0])
+        current = []
+        while h.t <= clamp.dur[0]:
+            h.fadvance()
+            current.append(float(cell.ik))
+        return np.asarray(current, dtype=float)
+
+    required = ("APclamp", "APclamp_k")
+    missing = [name for name in required if not hasattr(helper, name)]
+    if missing:
+        raise RuntimeError(f"Original helper is missing APclamp recorders: {missing}")
+    helper.APclamp = record_na
+    helper.APclamp_k = record_k
+    return {
+        "enabled": True,
+        "replaced_helpers": ["APclamp", "APclamp_k"],
+        "channel_equations_modified": False,
+        "voltage_clamp_command_modified": False,
+        "integration_step_modified": False,
+        "peak_detection_modified": False,
+        "reason": "Avoid O(n^2) np.append array reallocations for the 200-AP waveform.",
+    }
 
 
 def finite_summary(values: Any) -> dict[str, Any]:
@@ -164,17 +225,22 @@ def normalized(values: Any, by: str) -> list[float | None]:
     return [float(x / denominator) if np.isfinite(x) else None for x in array]
 
 
-def execute_model(helper: Any, h: Any, ion: str, species: str, trace: np.ndarray, t: np.ndarray) -> dict[str, Any]:
+def execute_model(
+    helper: Any, h: Any, ion: str, species: str,
+    trace: np.ndarray, t: np.ndarray, ap_count: int = 5,
+) -> dict[str, Any]:
     cell = None
     try:
         if ion == "na":
             cell = helper.init_na(f"na_{species}")
-            amplitudes = helper.Ina_AP1_5(cell, t, trace)
+            amplitudes = helper.Ina_AP1_5(cell, t, trace) if ap_count == 5 else helper.Ina_AP1_5_200(cell, t, trace)
             normalization = "AP1 (same as original Na source plot)"
         else:
             cell = helper.init_k(f"k_{species}")
-            amplitudes = helper.Ik_AP1_5(cell, t, trace)
+            amplitudes = helper.Ik_AP1_5(cell, t, trace) if ap_count == 5 else helper.Ik_AP1_5_200(cell, t, trace)
             normalization = "maximum amplitude (same as original K source plot)"
+        if len(amplitudes) != ap_count:
+            raise RuntimeError(f"Original helper returned {len(amplitudes)} amplitudes for {ap_count} APs")
         summary = finite_summary(amplitudes)
         return {
             "status": "completed",
@@ -198,7 +264,7 @@ def execute_model(helper: Any, h: Any, ion: str, species: str, trace: np.ndarray
                 pass
 
 
-def summarize_experimental_csv(payload: bytes, ion: str) -> dict[str, Any]:
+def summarize_experimental_csv(payload: bytes, ion: str, ap_count: int = 5) -> dict[str, Any]:
     from io import BytesIO
     frame = pd.read_csv(BytesIO(payload))
     output: dict[str, Any] = {
@@ -208,8 +274,8 @@ def summarize_experimental_csv(payload: bytes, ion: str) -> dict[str, Any]:
     if ion == "na":
         required = {"Species", "APnr", "relative_amp"}
         if required.issubset(frame.columns):
-            selected = frame.loc[frame["APnr"] <= 5]
-            output["first_five_by_species"] = {
+            selected = frame.loc[frame["APnr"] <= ap_count]
+            output["by_species"] = {
                 str(species): {
                     "n": int(len(group)),
                     "mean_by_ap": {
@@ -222,8 +288,8 @@ def summarize_experimental_csv(payload: bytes, ion: str) -> dict[str, Any]:
     else:
         required = {"species", "APnr", "amp"}
         if required.issubset(frame.columns):
-            selected = frame.loc[frame["APnr"] <= 5]
-            output["first_five_by_species"] = {
+            selected = frame.loc[frame["APnr"] <= ap_count]
+            output["by_species"] = {
                 str(species): {
                     "n": int(len(group)),
                     "mean_by_ap": {
@@ -266,6 +332,7 @@ def summarize_model_vs_experiment(
     models: dict[str, Any],
     amps_na_payload: bytes,
     amps_k_payload: bytes,
+    ap_count: int = 5,
 ) -> dict[str, Any]:
     from io import BytesIO
 
@@ -275,10 +342,10 @@ def summarize_model_vs_experiment(
     for species, source_species in (("human", "Human"), ("mouse", "Mouse")):
         exp = (
             na_frame.loc[na_frame["Species"] == source_species]
-            .loc[na_frame["APnr"] <= 5]
+            .loc[na_frame["APnr"] <= ap_count]
             .groupby("APnr")["relative_amp"]
             .mean()
-            .reindex(range(1, 6))
+            .reindex(range(1, ap_count + 1))
             .to_numpy(dtype=float)
         )
         model = models[f"na_{species}"]
@@ -293,10 +360,10 @@ def summarize_model_vs_experiment(
     for species, source_species in (("human", "H"), ("mouse", "M")):
         exp = (
             k_frame.loc[k_frame["species"] == source_species]
-            .loc[k_frame["APnr"] <= 5]
+            .loc[k_frame["APnr"] <= ap_count]
             .groupby("APnr")["amp"]
             .mean()
-            .reindex(range(1, 6))
+            .reindex(range(1, ap_count + 1))
             .to_numpy(dtype=float)
         )
         model = models[f"k_{species}"]
@@ -321,14 +388,14 @@ def summarize_model_vs_experiment(
             ),
         }
     return {
-        "ap_range": [1, 5],
+        "ap_range": [1, ap_count],
         "source_experimental_grouping": {
             "na": "amps_na.csv Species; means across the five AP-clamp recordings per species",
             "k": "amps_k.csv species; H_wide command waveform, means across recordings",
         },
         "comparisons": comparisons,
         "interpretation": (
-            "MAE/RMSE compare the exact five-AP replay from a single shared voltage command "
+            f"MAE/RMSE compare the exact {ap_count}-AP replay from a single shared voltage command "
             "with the released per-recording experimental means. The experimental means "
             "summarize recordings, while the model curve is one deterministic single-compartment "
             "simulation; these are descriptive discrepancies, not inferential statistics."
@@ -338,7 +405,10 @@ def summarize_model_vs_experiment(
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("wilbers-apclamp-replay.json"))
+    parser.add_argument("--ap-count", type=int, choices=(5, 200), default=5)
     args = parser.parse_args()
+    ap_count = args.ap_count
+    time_end_ms = protocol_end_ms(ap_count)
 
     with tempfile.TemporaryDirectory(prefix="amsn-wilbers-apclamp-") as tmp:
         root = Path(tmp)
@@ -356,11 +426,19 @@ def main() -> None:
             raise RuntimeError(f"Original trace loader expects a 1-D csv; observed shape {trace.shape}")
         peak_indices, peak_props = find_peaks(trace, prominence=50)
         start_index = round(TIME_START_MS * SAMPLE_FREQ_PER_MS)
-        end_index = round(TIME_END_MS * SAMPLE_FREQ_PER_MS) + 1
+        end_index = round(time_end_ms * SAMPLE_FREQ_PER_MS) + 1
         source_slice = trace[start_index:end_index]
-        if len(source_slice) != 13501:
-            raise RuntimeError(f"Expected the source's 13,501-sample slice, got {len(source_slice)}")
-        t = np.linspace(TIME_START_MS, TIME_END_MS, len(source_slice))
+        expected_samples = expected_protocol_samples(ap_count)
+        if len(source_slice) != expected_samples:
+            raise RuntimeError(
+                f"Expected the {ap_count}-AP source window to contain {expected_samples} samples, got {len(source_slice)}"
+            )
+        command_peaks = find_peaks(source_slice, prominence=50)[0]
+        if len(command_peaks) != ap_count:
+            raise RuntimeError(
+                f"Expected exactly {ap_count} voltage-command AP peaks, got {len(command_peaks)}"
+            )
+        t = np.linspace(TIME_START_MS, time_end_ms, len(source_slice))
         na_trace = source_slice + NA_VOLTAGE_OFFSET_MV
         k_trace = source_slice.copy()
 
@@ -388,14 +466,18 @@ def main() -> None:
             raise RuntimeError("NEURON failed to load the compiled source mechanisms")
         helper_path = cache / "apclamp_tools.py"
         helper_path.write_bytes(payloads["apclamp_tools"])
-        helper = load_original_helper(helper_path)
+        helper = load_original_helper(helper_path, ap_count=ap_count)
+        recorder_optimization = install_linear_current_recorders(helper, h) if ap_count == 200 else {
+            "enabled": False,
+            "reason": "The 5-AP baseline retains the original helper current recorders unchanged.",
+        }
         h.celsius = 34.0
         h.dt = 1000.0 / SAMPLE_RATE_HZ
 
         models = {}
         for ion, command in (("na", na_trace), ("k", k_trace)):
             for species in ("human", "mouse"):
-                models[f"{ion}_{species}"] = execute_model(helper, h, ion, species, command, t)
+                models[f"{ion}_{species}"] = execute_model(helper, h, ion, species, command, t, ap_count=ap_count)
                 try:
                     import matplotlib.pyplot as plt
                     plt.close("all")
@@ -425,11 +507,12 @@ def main() -> None:
                 "shared_helper": "apclamp_tools.py",
             },
             "source_time_start_ms": TIME_START_MS,
-            "source_time_end_ms": TIME_END_MS,
+            "source_time_end_ms": time_end_ms,
+            "requested_ap_count": ap_count,
             "slice_start_index": start_index,
             "slice_end_index_exclusive": end_index,
             "slice_samples": int(len(source_slice)),
-            "ap_train_voltage_peaks_in_slice": [float(x) for x in (find_peaks(source_slice, prominence=50)[0] / SAMPLE_FREQ_PER_MS + TIME_START_MS)],
+            "ap_train_voltage_peaks_in_slice": [float(x) for x in (command_peaks / SAMPLE_FREQ_PER_MS + TIME_START_MS)],
             "na_voltage_offset_mV": NA_VOLTAGE_OFFSET_MV,
             "k_voltage_offset_mV": 0.0,
             "command_sample_rate_hz": SAMPLE_RATE_HZ,
@@ -438,7 +521,8 @@ def main() -> None:
         }
         report = {
             "schema_version": 2,
-            "status": "raw_human_apclamp_trace_verified_original_neuron_helpers_replayed_and_compared_with_experimental_means",
+            "status": f"raw_human_apclamp_trace_verified_original_{ap_count}_ap_neuron_helpers_replayed_and_compared_with_experimental_means",
+            "requested_ap_count": ap_count,
             "runtime_eligible": False,
             "runtime_versions": {
                 "python": __import__("platform").python_version(),
@@ -459,13 +543,14 @@ def main() -> None:
             },
             "raw_trace": trace_info,
             "protocol": protocol,
-            "experimental_first_five_ap_amplitudes": {
-                "na": summarize_experimental_csv(payloads["amps_na"], "na"),
-                "k": summarize_experimental_csv(payloads["amps_k"], "k"),
+            "current_recorder_optimization": recorder_optimization,
+            "experimental_ap_amplitudes": {
+                "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
+                "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),
             },
             "original_model_replay": models,
-            "model_vs_experiment_first_five_aps": summarize_model_vs_experiment(
-                models, payloads["amps_na"], payloads["amps_k"]
+            "model_vs_experiment": summarize_model_vs_experiment(
+                models, payloads["amps_na"], payloads["amps_k"], ap_count=ap_count
             ),
             "interpretation_limits": [
                 "The original source helper code and unmodified human/mouse MOD files were executed; no mechanism correction was applied.",

@@ -1,7 +1,8 @@
-"""Small protocol invariants for the original AP-clamp replay runner."""
+"""Protocol invariants and small helper tests for the Wilbers AP-clamp replay runner."""
 from __future__ import annotations
 import importlib.util
 from pathlib import Path
+import pytest
 
 SCRIPT = Path(__file__).parents[1] / "examples" / "replay_wilbers_apclamp.py"
 SPEC = importlib.util.spec_from_file_location("replay_wilbers_apclamp", SCRIPT)
@@ -11,18 +12,24 @@ SPEC.loader.exec_module(MODULE)
 
 
 def test_original_five_ap_trace_window_is_exactly_13501_samples():
-    start = round(MODULE.TIME_START_MS * MODULE.SAMPLE_FREQ_PER_MS)
-    end = round(MODULE.TIME_END_MS * MODULE.SAMPLE_FREQ_PER_MS) + 1
-    assert start == 24875
-    assert end == 38376
-    assert end - start == 13501
+    assert MODULE.protocol_end_ms(5) == 307
+    assert MODULE.expected_protocol_samples(5) == 13501
+
+
+def test_original_200_ap_trace_window_is_exactly_622876_samples():
+    assert MODULE.protocol_end_ms(200) == 5182
+    assert MODULE.expected_protocol_samples(200) == 622876
+
+
+def test_only_five_or_two_hundred_aps_are_supported():
+    with pytest.raises(ValueError):
+        MODULE.protocol_end_ms(100)
 
 
 def test_ljp_offset_is_applied_only_to_na_command_trace():
     assert MODULE.NA_VOLTAGE_OFFSET_MV == -10.0
     assert MODULE.SAMPLE_RATE_HZ == 125000
     assert MODULE.SAMPLE_FREQ_PER_MS == 125
-
 
 
 def test_curve_metrics_compare_equal_length_series():

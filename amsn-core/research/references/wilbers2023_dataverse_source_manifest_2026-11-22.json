@@ -58,8 +58,9 @@
       "bytes": 15095411,
       "mime": "text/csv",
       "sha1": "e209550ce746483de580459f7d8e40de91ec3667",
-      "role": "Large AP-clamp trace matrix; not downloaded",
-      "downloaded": false
+      "role": "Large AP-clamp trace matrix; not downloaded; full 800,752-sample raw AP-clamp command validated and 5-AP replay passed; 200-AP replay next",
+      "downloaded": true,
+      "sha256": "10ccb67d0e6bb0d51032a4ebd7c727b473c0a9e356e772fda205f7f54795d719"
     },
     {
       "path": "Figures5_6/APclamp/amps_na.csv",

@@ -142,3 +142,10 @@ This is statistical reproduction of published AP-clamp amplitude adaptation, not
 ## Original AP-clamp time-domain replay — workflow added 23/11/2026
 
 The original raw `H_wide.csv` trace (Dataverse file ID 318541) is now the next reproducibility gate. A new workflow downloads the trace, experimental `amps_na.csv`/`amps_k.csv`, the original AP-clamp helper and protocol scripts, and four original Na/K human/mouse MOD mechanisms. It verifies official Dataverse SHA-1 and byte size, computes SHA-256, then replays the exact source 5-AP command window (199–307 ms, 125 kHz). The Na replay applies the source's -10 mV liquid-junction offset; K uses no offset. First CI result is pending. Original K numerical singularities remain visible; no code correction or production parameter change is applied.
+
+
+## 200-AP full-train replay gate — added 23/11/2026
+
+The verified raw `H_wide.csv` has 800,752 samples at 125 kHz and 240 voltage-command peaks over the full recording. The 200-AP source window is 199–5182 ms (622,876 samples), and is required to contain exactly the first 200 command peaks. A 200-AP execution mode now calls the original `Ina_AP1_5_200` / `Ik_AP1_5_200` helper functions and compares the full AP1–AP200 modeled curves with the experimental `amps_na.csv` / `amps_k.csv` recording means.
+
+To avoid the original helper's quadratic `np.append` current-recorder cost, only the 200-AP mode swaps its data collector for an equivalent list-backed recorder; the same NEURON VClamp command, 0.008 ms step, voltage initialization, current variable and time-stepping loop are retained. The 5-AP baseline remains on the untouched original collector. First 200-AP CI run is pending; no long-train result is accepted until its artifact is inspected.
