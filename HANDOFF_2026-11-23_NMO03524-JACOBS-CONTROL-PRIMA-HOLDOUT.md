@@ -1,35 +1,45 @@
 # Handoff — NMO_03524 Jacobs control PRIMA holdout
 
 **Date:** 23 November 2026  
-**Branch:** \`research/prima-jacobs-control-independent-holdout-2026-11-23\`  
-**Base:** PR #13 head \`c3888f5655f70f473ffc5d0a27bb38c2ebc53849\`
+**Branch:** research/prima-jacobs-control-independent-holdout-2026-11-23  
+**Base:** PR #13 branch, matched NMO_162186 7-port/9-port holdout
 
-## Goal
+## Read first
 
-Add a second external human morphology for passive PRIMA shift/order validation, distinct from the NMO_162186 epilepsy specimen. This specimen is published as Control and is from the Jacobs archive.
+1. amsn-core/data/human/neuromorpho_jacobs/NMO_03524_PROVENANCE.md
+2. amsn-core/research/NMO_03524_JACOBS_CONTROL_PRIMA_HOLDOUT_2026-11-23.md
+3. amsn-core/research/HUMAN_PASSIVE_PRIMA_ACCURACY_MEMORY_HOLDOUT_SYNTHESIS_2026-11-23.md
+4. PR #13 and workflow 45184621520 for the matched NMO_162186 7-port/9-port result
 
-## Current source checks
+## Validated source
 
-- NeuroMorpho ID: NMO_03524; cell 1-5-3.
-- 23-year-old male; temporal? No: occipital neocortex, Brodmann area 18.
-- Human pyramidal principal cell, control, in vitro, Golgi.
-- Soma + dendrites + incomplete axon; dendrites rated moderate.
-- Initial SWC inventory: 869 records, one root, no missing parents; type counts 1:3, 2:42, 3:816, 4:8.
-- Seven unique PRIMA ports were not yet executed locally; CI preflight checks them after Import3D.
+- NeuroMorpho NMO_03524 / Jacobs / cell 1-5-3.
+- Human, age 23, male; Control metadata; occipital neocortex, BA18; in vitro Golgi.
+- Dendrites moderate; axon incomplete. One cell, not a population.
+- 869 SWC records, one root, no missing parents; type counts 3 soma / 42 axon / 816 basal dendrite / 8 apical dendrite.
+- Source bytes: 31,199; SHA-256: 6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748.
+- Import3D/NEURON 9.0.2 preflight: 862 electrical compartments, 68 sections, 35,248 segments at max 0.125 µm, seven unique ports.
+- One terminal SWC probe (node 751 at x=1.0) uses a nearest-endpoint-segment readout; no interpolation extrapolation is performed.
 
-## Implementation
+## Validated workflow
 
-- Download original standardized SWC from the official NeuroMorpho direct file URL.
-- Recompute SHA-256, bytes, topology and type counts in the CI preflight.
-- Run NEURON 9.0.2 Import3D with 0.125 µm segment cap.
-- Verify seven unique PRIMA ports and 1 kHz passive response.
-- Run the existing nine-candidate seven-port shift/order matrix on identical passive scenarios/protocol.
-- Verify 81 model rows, 729 frequency rows and 3,402 transient-port rows; commit results and upload artifact.
+- Run 45196546471 passed 146/146 repository tests and the full morphology preflight.
+- All nine PRIMA shift/order candidates reached their requested rank and passed Cholesky passivity checks.
+- Exact coverage: 81 model rows, 729 frequency rows, 3,402 transient-port rows.
+- Artifact #14827204708; ZIP SHA-256 21f3298613f7660908388ddebc4a0d9e3df88123b513d22b60fdc6edece19ed6.
 
-## Status
+## Decision for this morphology
 
-Numerical replay and exact source hash are pending the Actions workflow. No result is claimed until CI, full matrix coverage and artifact archival pass.
+- Order112 + extended10kHz is the high-frequency precision candidate: median 10 kHz Z/Y 3.60e−10% / 1.81e−10%; numeric storage 0.928 MB.
+- Order84 + extended10kHz is the balanced candidate: median Z/Y 5.58e−7% / 2.88e−7%; storage 0.660 MB (~29% below order112).
+- Order56 + narrow3kHz is the low-footprint choice: 0.416 MB, but median 10 kHz Z/Y residuals are 0.00857% / 0.00546%.
+- Extended10kHz is the best high-frequency shift strategy for each of the tested orders on this holdout.
 
-## Scientific boundary
+These are passive linear-RC numerical comparisons against full Hines, not active-neuron validation. Full Hines remains canonical and no production default changes.
 
-Single control-condition morphology; moderate dendrites; incomplete axon. This is passive linear-RC validation only. No active-channel, nonlinear-synapse or population-level biological claim. Full Hines remains canonical.
+## Next work
+
+1. Run a matched 7-port/9-port order112/order168 test on NMO_03524. Until then do not claim the q25 conclusion transfers to the control morphology.
+2. Add another independent morphology, ideally with a more complete axon.
+3. Run controlled fixed-machine timing if runtime ranking becomes important.
+4. Continue active/nonlinear model validation as a distinct research track.
