@@ -181,7 +181,20 @@ def main() -> None:
             "source_node_ids": source_ids,
             "roles_by_node": {str(node): roles_by_node[node] for node in port_node_ids},
             "finite_1khz_passive_response": True,
-            "port_mapping_rows": mapped_sites,
+            "port_mapping_rows": [
+                {
+                    "swc_node_id": int(node_id),
+                    "section_name": site["section_name"],
+                    "normalized_x": float(site["normalized_x"]),
+                    "nearest_centre_offset_um": float(site["nearest_centre_offset_um"]),
+                    "geometry_offset_um": float(site["geometry_offset_um"]),
+                    "interpolation_lower_x": float(site["lower_x"]),
+                    "interpolation_upper_x": float(site["upper_x"]),
+                    "interpolation_upper_weight": float(site["interpolation_upper_weight"]),
+                    "interpolation_endpoint_fallback": site.get("interpolation_endpoint_fallback"),
+                }
+                for node_id, site in sorted(mapped_sites.items())
+            ],
         },
         "scientific_limits": [
             "The specimen is a human control morphology from the Jacobs archive, but it is a single cell and does not constitute a population.",
