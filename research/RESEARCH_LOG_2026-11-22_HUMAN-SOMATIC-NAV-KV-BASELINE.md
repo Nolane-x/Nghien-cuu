@@ -265,3 +265,8 @@ Compared with the canonical MOD baseline against the 14 human recordings in the 
 The snapshot increases MAE by **7.49%**, RMSE by **7.49%** and the AP200 overestimation by **7.94%**. It therefore makes the long-train match worse, despite running stably. The candidate is rejected as a replacement for the canonical K mechanism under this AP-clamp objective.
 
 The proper interpretation is a provenance discrepancy plus a negative sensitivity result: the printed fit snapshot is not the MOD default, and applying it does not explain or fix the 200-AP adaptation gap. No channel code, parameter default or production behaviour is changed. Machine-readable details are stored in [`wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json`](references/wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json) and [the CSV](../results/wilbers_k_human_fit_snapshot_sensitivity_2026-11-23.csv).
+
+
+## K-human two-factor interaction grid — implementation added 23/11/2026
+
+A 3×3 crossed sensitivity experiment is being added for `prop_inact` (0.70, 0.85, 0.95) and `h2tau_inact` (225, 450, 900 ms). The five canonical/one-factor grid cells are reused from the already completed AP1–AP200 runs; only the four crossed cells are newly simulated. Each point is scored against the 14 human K recordings using AP1-normalized `amp_h_n_` data, MAE/RMSE over all 200 APs, AP5 and AP200 gaps, and pointwise SEM overlap. The four crossed models are transient runtime overrides only; canonical MOD defaults and production runtime remain unchanged. The new CI result is pending.

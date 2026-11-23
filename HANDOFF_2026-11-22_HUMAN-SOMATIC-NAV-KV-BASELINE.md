@@ -172,3 +172,8 @@ The source reconciliation audit confirms the archived K-human final-fit dictiona
 - Against 14 human K recordings, snapshot worsens MAE 0.24192→0.26004 (+7.49%), RMSE 0.24322→0.26144 (+7.49%), AP200 model 0.67497→0.69462 vs experiment 0.42745; model overestimation becomes +0.26717 instead of +0.24752.
 - Do not promote the snapshot. It is a failed sensitivity variant under the 200-AP objective, not a fix.
 - Details: [audit report](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md), [JSON](amsn-core/research/references/wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json), [CSV](amsn-core/results/wilbers_k_human_fit_snapshot_sensitivity_2026-11-23.csv).
+
+
+## K-human two-factor interaction grid — implementation added 23/11/2026
+
+A 3×3 crossed sensitivity experiment is being added for `prop_inact` (0.70, 0.85, 0.95) and `h2tau_inact` (225, 450, 900 ms). The five canonical/one-factor grid cells are reused from the already completed AP1–AP200 runs; only the four crossed cells are newly simulated. Each point is scored against the 14 human K recordings using AP1-normalized `amp_h_n_` data, MAE/RMSE over all 200 APs, AP5 and AP200 gaps, and pointwise SEM overlap. The four crossed models are transient runtime overrides only; canonical MOD defaults and production runtime remain unchanged. The new CI result is pending.

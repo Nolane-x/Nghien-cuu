@@ -119,6 +119,16 @@ K_HUMAN_LONG_TRAIN_SENSITIVITY_BASELINE = {
     "h2tau_inact_rec": 2789.7929428108187,
     "inact_rate_factor": 1.0,
 }
+K_HUMAN_TWO_FACTOR_GRID_LEVELS = {
+    "prop_inact": (0.70, 0.85, 0.95),
+    "h2tau_inact": (225.0, 450.0, 900.0),
+}
+K_HUMAN_TWO_FACTOR_GRID_CROSS_TERMS = {
+    "prop_0.70_tau_225": {"prop_inact": 0.70, "h2tau_inact": 225.0},
+    "prop_0.70_tau_900": {"prop_inact": 0.70, "h2tau_inact": 900.0},
+    "prop_0.95_tau_225": {"prop_inact": 0.95, "h2tau_inact": 225.0},
+    "prop_0.95_tau_900": {"prop_inact": 0.95, "h2tau_inact": 900.0},
+}
 
 SAMPLE_FREQ_PER_MS = 125
 SAMPLE_RATE_HZ = 125000
@@ -965,6 +975,150 @@ def main() -> None:
                 ) else "completed_with_variant_failures"
             )
 
+        two_factor_parameter_grid = None
+        if ap_count == 200:
+            # Reuse canonical/one-factor corners already executed above and
+            # run only the four missing crossed cells of the 3x3 grid.
+            one_factor = long_train_parameter_sensitivity["variants"]
+            existing_points = {
+                (0.85, 450.0): {
+                    "model": models["k_human"],
+                    "comparison": baseline_k_comparison,
+                    "source": "canonical k_human.mod",
+                },
+                (0.70, 450.0): {
+                    "model": one_factor["prop_inact_low"]["model_replay"],
+                    "comparison": one_factor["prop_inact_low"]["comparison_vs_workbook"],
+                    "source": "existing one-factor prop_inact_low run",
+                },
+                (0.95, 450.0): {
+                    "model": one_factor["prop_inact_high"]["model_replay"],
+                    "comparison": one_factor["prop_inact_high"]["comparison_vs_workbook"],
+                    "source": "existing one-factor prop_inact_high run",
+                },
+                (0.85, 225.0): {
+                    "model": one_factor["h2tau_inact_fast"]["model_replay"],
+                    "comparison": one_factor["h2tau_inact_fast"]["comparison_vs_workbook"],
+                    "source": "existing one-factor h2tau_inact_fast run",
+                },
+                (0.85, 900.0): {
+                    "model": one_factor["h2tau_inact_slow"]["model_replay"],
+                    "comparison": one_factor["h2tau_inact_slow"]["comparison_vs_workbook"],
+                    "source": "existing one-factor h2tau_inact_slow run",
+                },
+            }
+            crossed_variants = {}
+            for variant_name, overrides in K_HUMAN_TWO_FACTOR_GRID_CROSS_TERMS.items():
+                variant_model = execute_model(
+                    helper, h, "k", "human", k_trace, t,
+                    ap_count=ap_count, parameter_overrides=overrides,
+                )
+                variant_comparison = (
+                    compare_k_fit_snapshot_with_workbook(
+                        variant_model, payloads["k_workbook"], ap_count
+                    ) if variant_model.get("status") == "completed" else None
+                )
+                crossed_variants[variant_name] = {
+                    "parameter_overrides": overrides,
+                    "model_replay": variant_model,
+                    "comparison_vs_workbook": variant_comparison,
+                    "canonical_mod_unchanged": True,
+                }
+                if variant_model.get("status") == "completed" and variant_comparison is not None:
+                    key = (float(overrides["prop_inact"]), float(overrides["h2tau_inact"]))
+                    existing_points[key] = {
+                        "model": variant_model,
+                        "comparison": variant_comparison,
+                        "source": "new crossed two-factor run",
+                    }
+
+            grid_points = []
+            expected_pairs = {
+                (float(prop), float(tau))
+                for prop in K_HUMAN_TWO_FACTOR_GRID_LEVELS["prop_inact"]
+                for tau in K_HUMAN_TWO_FACTOR_GRID_LEVELS["h2tau_inact"]
+            }
+            for prop, tau in sorted(expected_pairs):
+                point = existing_points.get((prop, tau))
+                if point is None or point["comparison"] is None:
+                    grid_points.append({
+                        "prop_inact": prop,
+                        "h2tau_inact": tau,
+                        "status": "missing_or_failed",
+                        "source": point["source"] if point else None,
+                    })
+                    continue
+                comparison = point["comparison"]
+                metrics = comparison["metrics_vs_recording_mean"]
+                model_curve = comparison["model_curve"]
+                grid_points.append({
+                    "prop_inact": prop,
+                    "h2tau_inact": tau,
+                    "status": point["model"].get("status", "completed"),
+                    "source": point["source"],
+                    "mae": float(metrics["mae"]),
+                    "rmse": float(metrics["rmse"]),
+                    "ap5_model": float(model_curve[4]),
+                    "ap5_experiment": float(comparison["ap5_experiment"]),
+                    "ap200_model": float(model_curve[-1]),
+                    "ap200_experiment": float(comparison["ap200_experiment"]),
+                    "ap200_sem": float(comparison["ap200_sem"]),
+                    "ap200_delta_model_minus_experiment": float(comparison["ap200_delta_model_minus_experiment"]),
+                    "points_within_pointwise_1_96_sem": int(comparison["model_points_within_mean_plus_minus_1_96_sem"]),
+                })
+
+            grid_by_key = {
+                (point["prop_inact"], point["h2tau_inact"]): point
+                for point in grid_points if point.get("mae") is not None
+            }
+            interaction = None
+            corner_keys = ((0.70, 225.0), (0.70, 450.0), (0.95, 225.0), (0.95, 450.0))
+            if all(key in grid_by_key for key in corner_keys):
+                low_fast = grid_by_key[(0.70, 225.0)]
+                low_base_tau = grid_by_key[(0.70, 450.0)]
+                high_fast = grid_by_key[(0.95, 225.0)]
+                high_base_tau = grid_by_key[(0.95, 450.0)]
+                interaction = {
+                    "mae_difference_in_differences": (
+                        high_fast["mae"] - high_base_tau["mae"]
+                        - low_fast["mae"] + low_base_tau["mae"]
+                    ),
+                    "ap200_gap_difference_in_differences": (
+                        high_fast["ap200_delta_model_minus_experiment"]
+                        - high_base_tau["ap200_delta_model_minus_experiment"]
+                        - low_fast["ap200_delta_model_minus_experiment"]
+                        + low_base_tau["ap200_delta_model_minus_experiment"]
+                    ),
+                    "definition": "(high prop, fast tau - high prop, baseline tau) - (low prop, fast tau - low prop, baseline tau)",
+                }
+
+            successful_points = [
+                point for point in grid_points
+                if point.get("status") == "completed" and point.get("mae") is not None
+            ]
+            two_factor_parameter_grid = {
+                "status": (
+                    "completed" if len(successful_points) == len(expected_pairs)
+                    and all(
+                        item["model_replay"].get("status") == "completed"
+                        and item["model_replay"].get("amplitude", {}).get("finite_count") == ap_count
+                        and item["model_replay"].get("amplitude", {}).get("nonfinite_count") == 0
+                        for item in crossed_variants.values()
+                    )
+                    else "completed_with_variant_failures"
+                ),
+                "design": "3x3 crossed sensitivity grid; prop_inact x h2tau_inact, other canonical K-human parameters unchanged",
+                "levels": K_HUMAN_TWO_FACTOR_GRID_LEVELS,
+                "target": "14 Human recordings, AP1-normalized workbook amp_h_n_ columns",
+                "metric": "MAE/RMSE over AP1-AP200; no parameter fitting or production promotion",
+                "points": grid_points,
+                "new_crossed_variants": crossed_variants,
+                "interaction_contrast": interaction,
+                "best_grid_point_by_mae": min(successful_points, key=lambda x: x["mae"]) if successful_points else None,
+                "canonical_mod_unchanged": True,
+                "production_runtime_unchanged": True,
+            }
+
         trace_info = {
             "file_id": FILES["trace"]["id"],
             "bytes": len(payloads["trace"]),
@@ -1028,6 +1182,7 @@ def main() -> None:
             "current_recorder_equivalence": recorder_equivalence,
             "parameter_sensitivity": parameter_sensitivity,
             "long_train_parameter_sensitivity": long_train_parameter_sensitivity,
+            "two_factor_parameter_grid": two_factor_parameter_grid,
             "experimental_ap_amplitudes": {
                 "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
                 "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),
@@ -1055,6 +1210,7 @@ def main() -> None:
             "protocol": protocol,
             "models": models,
             "model_vs_experiment": report["model_vs_experiment"],
+            "two_factor_parameter_grid": report["two_factor_parameter_grid"],
             "output": str(args.output),
         }, indent=2, allow_nan=False))
 

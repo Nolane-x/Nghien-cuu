@@ -82,3 +82,29 @@ def test_long_train_sensitivity_grid_is_one_factor_at_a_time():
     assert 0 < grid["prop_inact_high"]["prop_inact"] < 1
     assert grid["h2tau_inact_fast"]["h2tau_inact"] > 0
     assert grid["h2tau_inact_rec_slow"]["h2tau_inact_rec"] > baseline["h2tau_inact_rec"]
+
+
+
+def test_k_human_two_factor_grid_is_a_full_three_by_three_cross():
+    levels = MODULE.K_HUMAN_TWO_FACTOR_GRID_LEVELS
+    expected = {
+        (prop, tau)
+        for prop in levels["prop_inact"]
+        for tau in levels["h2tau_inact"]
+    }
+    assert len(expected) == 9
+    assert expected == {
+        (0.70, 225.0), (0.70, 450.0), (0.70, 900.0),
+        (0.85, 225.0), (0.85, 450.0), (0.85, 900.0),
+        (0.95, 225.0), (0.95, 450.0), (0.95, 900.0),
+    }
+
+
+def test_two_factor_runner_only_executes_missing_crossed_cells():
+    variants = MODULE.K_HUMAN_TWO_FACTOR_GRID_CROSS_TERMS
+    assert len(variants) == 4
+    assert set(variants) == {
+        "prop_0.70_tau_225", "prop_0.70_tau_900",
+        "prop_0.95_tau_225", "prop_0.95_tau_900",
+    }
+    assert all(set(values) == {"prop_inact", "h2tau_inact"} for values in variants.values())
