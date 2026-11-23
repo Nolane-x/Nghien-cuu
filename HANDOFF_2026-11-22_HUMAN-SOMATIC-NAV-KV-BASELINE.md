@@ -152,3 +152,8 @@ The 200-AP run is now extended to read the original Na/K Figure 2 Excel workbook
 - Recorder equivalence passed: original np.append and list-backed collector were compared on first-five-AP command for Na human/mouse and K human/mouse; max absolute amplitude difference = 0 in all four. No channel equation, command, VClamp, dt or integration-loop changes.
 - Per-recording comparisons show model AP200 exceeds experiment for all six groups; largest gap is mouse K +0.3548 (model 0.6284, experimental mean 0.2736). Na Hnarrow/Hwide remain separate; K comparison is AP1-normalized against the workbook normalized human-input series.
 - Report/JSON/CSV are committed in the research branch. Next gate: controlled parameter sensitivity/identifiability, not a direct production patch.
+
+
+## Fit-driver versus compiled MOD parameter reconciliation — implementation added 23/11/2026
+
+A new source-only audit has been added to verify whether the archived human Na/K `final best fit` dictionaries in the fitting drivers match the parameter values in the exact Dataverse MOD files. It downloads all four original sources by immutable file ID and checks official SHA-1, byte size and pinned SHA-256 before parsing. It only reports differences; it does not apply fit values or modify mechanisms. The first GitHub Actions result is pending. A K discrepancy would be a source-version/provenance issue to investigate, not proof of the AP-clamp mismatch's cause.

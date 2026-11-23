@@ -225,3 +225,8 @@ The 200-AP replay avoids quadratic `np.append` reallocations by storing the curr
 - This replay identifies a quantitative adaptation mismatch, not its cause. Channel kinetics, conductance density, slow inactivation, ionic accumulation and the limitations of a single-compartment model need separate controlled sensitivity/identifiability tests.
 
 Machine-readable summary: [`wilbers2023_200ap_replay_summary_2026-11-23.json`](references/wilbers2023_200ap_replay_summary_2026-11-23.json); CSV: [`wilbers_200ap_model_vs_recording_means_2026-11-23.csv`](../results/wilbers_200ap_model_vs_recording_means_2026-11-23.csv).
+
+
+## Fit-driver versus compiled MOD parameter reconciliation — implementation added 23/11/2026
+
+A new source-only audit has been added to verify whether the archived human Na/K `final best fit` dictionaries in the fitting drivers match the parameter values in the exact Dataverse MOD files. It downloads all four original sources by immutable file ID and checks official SHA-1, byte size and pinned SHA-256 before parsing. It only reports differences; it does not apply fit values or modify mechanisms. The first GitHub Actions result is pending. A K discrepancy would be a source-version/provenance issue to investigate, not proof of the AP-clamp mismatch's cause.

@@ -1,0 +1,45 @@
+name: AMSN Wilbers fitted parameter snapshot reconciliation
+
+on:
+  push:
+    branches:
+      - research/wilbers-human-active-channel-baseline-2026-11-22
+    paths:
+      - "amsn-core/examples/reconcile_wilbers_fit_snapshot.py"
+      - "amsn-core/tests/test_wilbers_fit_snapshot_reconciliation.py"
+      - ".github/workflows/amsn-wilbers-fit-snapshot-reconciliation.yml"
+      - "amsn-core/research/references/wilbers2023_dataverse_source_manifest_2026-11-22.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-wilbers-fit-snapshot-reconciliation
+  cancel-in-progress: false
+
+jobs:
+  reconcile-fit-snapshots:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependency
+        run: python -m pip install pytest==9.2.0
+      - name: Test source parsing and mismatch reporting
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_wilbers_fit_snapshot_reconciliation.py
+      - name: Download and compare checksum-pinned original fit and MOD files
+        working-directory: amsn-core
+        run: python examples/reconcile_wilbers_fit_snapshot.py --output artifacts/wilbers-fit-snapshot-reconciliation.json
+      - name: Upload fit-to-MOD provenance audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-fit-snapshot-reconciliation
+          path: amsn-core/artifacts/wilbers-fit-snapshot-reconciliation.json
+          if-no-files-found: warn
+          retention-days: 30
