@@ -118,3 +118,25 @@ The workbook contains 13 Human cells from 2 subject identifiers and 30 Mouse cel
 2. Repeat the model/target comparison at subject-level or with a hierarchical model that preserves cells nested within subjects.
 3. Investigate the exact \`k_human\` / \`k_human_hm12inf\` output identity and the source-bound slow-tau fits.
 4. Run current-clamp and morphology-level validation only after the endpoint-specific voltage-clamp discrepancies are understood.
+
+
+## Figure 2 AP-clamp waveform coverage audit
+
+A separate inventory of the released Figure 2 assets was completed after the voltage-clamp replay. The official \`Figure2/K_data_fig2.xlsx\` file (Dataverse ID 318669; 302,011 bytes; SHA-1 \`287720f8db3b20b167edd9e639dd67b0a1194def\`) contains a per-recording table with 25 rows (14 Human, 11 Mouse), 806 columns and four AP-amplitude series over AP1–AP201:
+
+- \`amp_h_\`: raw current amplitudes for the human AP-waveform condition
+- \`amp_m_\`: raw current amplitudes for the mouse AP-waveform condition
+- \`amp_h_n_\`: AP1-normalized human-waveform amplitudes
+- \`amp_m_n_\`: AP1-normalized mouse-waveform amplitudes
+
+The normalized columns were checked against the corresponding raw value divided by AP1 on the source rows; the tested values agree to floating-point precision. The Figure 2 plotting source transforms these prefixes into an \`Input wave\` dimension. The earlier PR #9 replay specifically used the \`amp_h_n_\` series (human AP command) for the 14 Human and 11 Mouse recording cohorts. Thus that experiment did compare both cell species under a common human waveform.
+
+The paper's Figure 2 methods state that recorded AP-train waveforms from human and mouse neurons were used as voltage commands, and that species differences remained independent of whether the command originated from human or mouse neurons (Supplementary Fig. S3). However, the public Dataverse \`Figures5_6/APclamp\` folder lists only \`H_wide.csv\` as a waveform command file; no corresponding \`M_wide.csv\` was found in the version 3 folder inventory. The workbook contains measured \`amp_m_n_\` responses, but it does not contain the time-series mouse command needed to replay that condition in NEURON.
+
+Consequently:
+- The existing model-to-data replay covers the published human waveform condition only.
+- The mouse-waveform experimental series is preserved as an identified, currently non-replayable validation target.
+- Do not claim that the model has been validated on both input waveforms.
+- A mouse AP-command trace is required before a faithful second-condition simulation can be run. Do not reconstruct it from the output amplitudes or substitute a synthetic waveform.
+
+The workbook is a derived per-recording amplitude table, not a raw current-trace archive. This inventory did not locate the original NWB current recordings in the inspected public dataset folders.
