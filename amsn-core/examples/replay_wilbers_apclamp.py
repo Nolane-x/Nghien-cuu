@@ -493,13 +493,13 @@ def summarize_model_vs_experiment(
 
 
 def parse_na_workbook_header(value: Any) -> tuple[str, int] | None:
-    match = re.fullmatch(r"relative_amp_(Hnarrow|Hwide)_\\s*(\\d+)", str(value).strip())
+    match = re.fullmatch(r"relative_amp_(Hnarrow|Hwide)_\s*(\d+)", str(value).strip())
     return (match.group(1), int(match.group(2))) if match else None
 
 
 def parse_k_workbook_header(value: Any) -> tuple[str, int] | None:
     normalized = str(value).replace(" ", "").strip()
-    match = re.fullmatch(r"amp_h_n_(\\d+)", normalized)
+    match = re.fullmatch(r"amp_h_n_(\d+)", normalized)
     return ("h", int(match.group(1))) if match else None
 
 
