@@ -19,7 +19,7 @@ SOURCE_URL = "https://neuromorpho.org/dableFiles/jacobs/CNG%20version/1-5-3.CNG.
 METADATA_URL = "https://neuromorpho.org/neuron_info.jsp?neuron_name=1-5-3"
 
 
-def parse_swc_records(text: str) -> tuple[list[dict], dict[int, int]]:
+def parse_swc_text(text: str) -> tuple[list[dict], dict[int, int]]:
     rows: list[dict] = []
     counts: Counter[int] = Counter()
     seen: set[int] = set()
@@ -56,11 +56,22 @@ def parse_swc_records(text: str) -> tuple[list[dict], dict[int, int]]:
     if missing:
         raise ValueError(f"SWC contains missing parent references: {missing[:10]}")
     observed = dict(sorted(counts.items()))
+    return rows, observed
+
+
+def parse_swc_records(text: str) -> tuple[list[dict], dict[int, int]]:
+    """Parse and enforce the immutable NeuroMorpho source record/type counts."""
+    rows, observed = parse_swc_text(text)
     if len(rows) != EXPECTED_NODE_COUNT:
         raise ValueError(f"SWC record count {len(rows)} != pinned {EXPECTED_NODE_COUNT}")
     if observed != EXPECTED_TYPE_COUNTS:
         raise ValueError(f"SWC neurite type counts {observed} != pinned {EXPECTED_TYPE_COUNTS}")
     return rows, observed
+
+
+def parse_swc_records_for_test(text: str) -> tuple[list[dict], dict[int, int]]:
+    """Expose generic structural parsing for small unit-test fixtures."""
+    return parse_swc_text(text)
 
 
 def main() -> None:
