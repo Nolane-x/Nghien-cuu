@@ -60,3 +60,12 @@ def test_k_workbook_parser_selects_normalized_human_input_only():
 
 def test_linear_recorder_equivalence_helper_is_exposed():
     assert callable(MODULE.validate_linear_current_recorder_equivalence)
+
+
+
+def test_k_human_final_fit_snapshot_is_pinned_and_isolated():
+    assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT["thi1"] == 20.386620488986296
+    assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT["qi2"] == 6.809126450666186
+    assert set(MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT) == {"thi1", "thi2", "qi1", "qi2", "Rd", "Rg"}
+    assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE["fit_file_id"] == 326237
+    assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE["status"].startswith("unapplied")

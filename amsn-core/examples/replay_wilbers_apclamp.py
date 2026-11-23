@@ -81,6 +81,25 @@ FILES = {
     },
 }
 
+K_HUMAN_FINAL_FIT_SNAPSHOT = {
+    "thi1": 20.386620488986296,
+    "thi2": -84.16487679230283,
+    "qi1": 25.748310780322146,
+    "qi2": 6.809126450666186,
+    "Rd": 0.0009968112992653684,
+    "Rg": 0.0004388884380488172,
+}
+K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE = {
+    "dataset_doi": "10.34894/L5J0SD",
+    "fit_file_id": 326237,
+    "fit_file_sha1": "c819e59813acd70fae7af7151752bb1d8bbc7357",
+    "fit_file_sha256": "842cbfffc8031b8fa03044cd862494474f55ccc2ac2493a2cf5bc3a1fa99958c",
+    "canonical_mod_file_id": 318647,
+    "canonical_mod_sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
+    "canonical_mod_sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0f9fc4bc1963f6caee5",
+    "status": "unapplied trailing final-best-fit dictionary; sensitivity only",
+}
+
 SAMPLE_FREQ_PER_MS = 125
 SAMPLE_RATE_HZ = 125000
 TIME_START_MS = 199
@@ -397,15 +416,29 @@ def validate_linear_current_recorder_equivalence(
 def execute_model(
     helper: Any, h: Any, ion: str, species: str,
     trace: np.ndarray, t: np.ndarray, ap_count: int = 5,
+    parameter_overrides: dict[str, float] | None = None,
 ) -> dict[str, Any]:
     cell = None
+    applied_overrides: dict[str, float] = {}
     try:
         if ion == "na":
             cell = helper.init_na(f"na_{species}")
+            mechanism = getattr(cell(0.5), f"na_{species}")
             amplitudes = helper.Ina_AP1_5(cell, t, trace) if ap_count == 5 else helper.Ina_AP1_5_200(cell, t, trace)
             normalization = "AP1 (same as original Na source plot)"
         else:
             cell = helper.init_k(f"k_{species}")
+            mechanism = getattr(cell(0.5), f"k_{species}")
+            if parameter_overrides:
+                if species != "human":
+                    raise ValueError("Archived fit snapshot applies only to human K")
+                for name, value in parameter_overrides.items():
+                    if not hasattr(mechanism, name):
+                        raise RuntimeError(f"k_human mechanism does not expose {name}")
+                    setattr(mechanism, name, float(value))
+                    applied_overrides[name] = float(getattr(mechanism, name))
+                    if not math.isclose(applied_overrides[name], float(value), rel_tol=0, abs_tol=1e-12):
+                        raise RuntimeError(f"Failed to apply fit snapshot parameter {name}")
             amplitudes = helper.Ik_AP1_5(cell, t, trace) if ap_count == 5 else helper.Ik_AP1_5_200(cell, t, trace)
             normalization = "maximum amplitude (same as original K source plot)"
         if len(amplitudes) != ap_count:
@@ -417,6 +450,7 @@ def execute_model(
             "amplitude": summary,
             "normalized": normalized(amplitudes, "first" if ion == "na" else "max"),
             "normalization": normalization,
+            "parameter_overrides_applied": applied_overrides,
         }
     except Exception as exc:
         return {
@@ -716,6 +750,46 @@ def summarize_model_vs_original_workbooks(
         ),
     }
 
+
+
+def compare_k_fit_snapshot_with_workbook(
+    model: dict[str, Any], workbook_payload: bytes, ap_count: int
+) -> dict[str, Any]:
+    from io import BytesIO
+    frame = pd.read_excel(BytesIO(workbook_payload), sheet_name="data")
+    columns: dict[int, str] = {}
+    for column in frame.columns:
+        parsed = parse_k_workbook_header(column)
+        if parsed and parsed[1] <= ap_count:
+            columns[parsed[1]] = str(column)
+    if sorted(columns) != list(range(1, ap_count + 1)):
+        raise RuntimeError("K human-input workbook columns are incomplete for fit-snapshot comparison")
+    selected = frame.loc[frame["species"].astype(str) == "H"]
+    rows = workbook_group_curve(selected, columns, selected, ap_count)
+    model_curve = normalize_by_first(model["amplitude"]["values"])
+    experiment = [row["mean"] for row in rows]
+    metrics = compare_curve(model_curve, experiment)
+    inband = [
+        abs(float(model_curve[i]) - float(rows[i]["mean"])) <= 1.96 * float(rows[i]["sem"])
+        for i in range(ap_count)
+        if rows[i]["sem"] is not None and rows[i]["mean"] is not None
+    ]
+    return {
+        "recording_count": int(selected["Filename"].nunique()),
+        "normalization": "model AP1-normalized against workbook amp_h_n_ series",
+        "model_curve": model_curve,
+        "experimental_per_ap": rows,
+        "metrics_vs_recording_mean": metrics,
+        "model_points_within_mean_plus_minus_1_96_sem": int(sum(inband)),
+        "ap5_model": model_curve[4] if ap_count >= 5 else None,
+        "ap5_experiment": rows[4]["mean"] if ap_count >= 5 else None,
+        "ap200_model": model_curve[-1],
+        "ap200_experiment": rows[-1]["mean"],
+        "ap200_sem": rows[-1]["sem"],
+        "ap200_delta_model_minus_experiment": float(model_curve[-1] - rows[-1]["mean"]),
+    }
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("wilbers-apclamp-replay.json"))
@@ -803,6 +877,26 @@ def main() -> None:
                 except Exception:
                     pass
 
+        parameter_sensitivity = None
+        if ap_count == 200:
+            fit_snapshot_model = execute_model(
+                helper, h, "k", "human", k_trace, t, ap_count=ap_count,
+                parameter_overrides=K_HUMAN_FINAL_FIT_SNAPSHOT,
+            )
+            parameter_sensitivity = {
+                "name": "k_human_archived_fit_driver_final_best_fit_snapshot",
+                "source": K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE,
+                "parameter_overrides": K_HUMAN_FINAL_FIT_SNAPSHOT,
+                "model_replay": fit_snapshot_model,
+                "comparison_vs_recording_workbook": (
+                    compare_k_fit_snapshot_with_workbook(
+                        fit_snapshot_model, payloads["k_workbook"], ap_count
+                    ) if fit_snapshot_model.get("status") == "completed" else None
+                ),
+                "canonical_mod_unchanged": True,
+                "production_runtime_unchanged": True,
+            }
+
         trace_info = {
             "file_id": FILES["trace"]["id"],
             "bytes": len(payloads["trace"]),
@@ -864,6 +958,7 @@ def main() -> None:
             "protocol": protocol,
             "current_recorder_optimization": recorder_optimization,
             "current_recorder_equivalence": recorder_equivalence,
+            "parameter_sensitivity": parameter_sensitivity,
             "experimental_ap_amplitudes": {
                 "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
                 "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),

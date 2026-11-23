@@ -190,3 +190,8 @@ Machine-readable summary: [`wilbers2023_200ap_replay_summary_2026-11-23.json`](r
 ## Fit-driver versus compiled MOD parameter reconciliation — implementation added 23/11/2026
 
 A new source-only audit has been added to verify whether the archived human Na/K `final best fit` dictionaries in the fitting drivers match the parameter values in the exact Dataverse MOD files. It downloads all four original sources by immutable file ID and checks official SHA-1, byte size and pinned SHA-256 before parsing. It only reports differences; it does not apply fit values or modify mechanisms. The first GitHub Actions result is pending. A K discrepancy would be a source-version/provenance issue to investigate, not proof of the AP-clamp mismatch's cause.
+
+
+## Runtime replay of archived K-human fit snapshot — CI pending
+
+The source reconciliation audit confirms the archived K-human final-fit dictionary differs from the canonical `k_human.mod` in six inactivation/recovery parameters. The 200-AP runner now evaluates that dictionary as a separate runtime-only sensitivity variant, with no MOD file edits. It uses the same 200-AP command and the K human-input recording workbook target; baseline and fit-snapshot outputs will be reported side by side. This is not a replacement mechanism or a production candidate. First sensitivity replay result is pending.
