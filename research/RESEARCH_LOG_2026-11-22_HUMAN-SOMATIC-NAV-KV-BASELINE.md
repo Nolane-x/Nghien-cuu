@@ -270,3 +270,8 @@ The proper interpretation is a provenance discrepancy plus a negative sensitivit
 ## K-human two-factor interaction grid — implementation added 23/11/2026
 
 A 3×3 crossed sensitivity experiment is being added for `prop_inact` (0.70, 0.85, 0.95) and `h2tau_inact` (225, 450, 900 ms). The five canonical/one-factor grid cells are reused from the already completed AP1–AP200 runs; only the four crossed cells are newly simulated. Each point is scored against the 14 human K recordings using AP1-normalized `amp_h_n_` data, MAE/RMSE over all 200 APs, AP5 and AP200 gaps, and pointwise SEM overlap. The four crossed models are transient runtime overrides only; canonical MOD defaults and production runtime remain unchanged. The new CI result is pending.
+
+
+## Local K-human parameter refinement around coarse-grid best point — implementation added 23/11/2026
+
+The coarse 3×3 grid selected `prop_inact=0.95`, `h2tau_inact=225 ms` as its best point. A second bounded 3×3 neighbourhood is being evaluated: `prop_inact={0.95, 0.975, 0.99}` and `h2tau_inact={112.5, 168.75, 225 ms}`. The known best point is reused, and the other eight points are run with temporary parameter overrides. The new report adds separate MAE for AP1–100 and AP101–200 so an apparent full-train improvement can be checked across early and late epochs. This remains exploratory; no runtime MOD defaults are changed and no fit candidate is promoted. CI is pending.

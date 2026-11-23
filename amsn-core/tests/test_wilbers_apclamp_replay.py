@@ -108,3 +108,20 @@ def test_two_factor_runner_only_executes_missing_crossed_cells():
         "prop_0.95_tau_225", "prop_0.95_tau_900",
     }
     assert all(set(values) == {"prop_inact", "h2tau_inact"} for values in variants.values())
+
+
+
+def test_k_human_local_refinement_grid_is_bounded_around_coarse_best():
+    levels = MODULE.K_HUMAN_LOCAL_REFINEMENT_GRID_LEVELS
+    assert levels["prop_inact"] == (0.95, 0.975, 0.99)
+    assert levels["h2tau_inact"] == (112.5, 168.75, 225.0)
+    assert 0 < min(levels["prop_inact"]) < max(levels["prop_inact"]) < 1
+    assert min(levels["h2tau_inact"]) > 0
+
+
+def test_local_refinement_reuses_one_best_point_and_runs_eight_missing_cells():
+    variants = MODULE.K_HUMAN_LOCAL_REFINEMENT_GRID_CROSS_TERMS
+    assert len(variants) == 8
+    assert "prop_0.95_tau_112.5" in variants
+    assert "prop_0.99_tau_225" in variants
+    assert all(set(values) == {"prop_inact", "h2tau_inact"} for values in variants.values())

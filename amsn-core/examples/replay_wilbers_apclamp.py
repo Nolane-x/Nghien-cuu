@@ -129,6 +129,20 @@ K_HUMAN_TWO_FACTOR_GRID_CROSS_TERMS = {
     "prop_0.95_tau_225": {"prop_inact": 0.95, "h2tau_inact": 225.0},
     "prop_0.95_tau_900": {"prop_inact": 0.95, "h2tau_inact": 900.0},
 }
+K_HUMAN_LOCAL_REFINEMENT_GRID_LEVELS = {
+    "prop_inact": (0.95, 0.975, 0.99),
+    "h2tau_inact": (112.5, 168.75, 225.0),
+}
+K_HUMAN_LOCAL_REFINEMENT_GRID_CROSS_TERMS = {
+    "prop_0.95_tau_112.5": {"prop_inact": 0.95, "h2tau_inact": 112.5},
+    "prop_0.95_tau_168.75": {"prop_inact": 0.95, "h2tau_inact": 168.75},
+    "prop_0.975_tau_112.5": {"prop_inact": 0.975, "h2tau_inact": 112.5},
+    "prop_0.975_tau_168.75": {"prop_inact": 0.975, "h2tau_inact": 168.75},
+    "prop_0.975_tau_225": {"prop_inact": 0.975, "h2tau_inact": 225.0},
+    "prop_0.99_tau_112.5": {"prop_inact": 0.99, "h2tau_inact": 112.5},
+    "prop_0.99_tau_168.75": {"prop_inact": 0.99, "h2tau_inact": 168.75},
+    "prop_0.99_tau_225": {"prop_inact": 0.99, "h2tau_inact": 225.0},
+}
 
 SAMPLE_FREQ_PER_MS = 125
 SAMPLE_RATE_HZ = 125000
@@ -1119,6 +1133,112 @@ def main() -> None:
                 "production_runtime_unchanged": True,
             }
 
+        local_refinement_parameter_grid = None
+        if ap_count == 200:
+            # Reuse the best point from the coarse grid and run the eight
+            # remaining cells in a tighter exploratory 3x3 neighbourhood.
+            coarse_best = two_factor_parameter_grid["best_grid_point_by_mae"]
+            reused_model = two_factor_parameter_grid["new_crossed_variants"]["prop_0.95_tau_225"]["model_replay"]
+            reused_comparison = two_factor_parameter_grid["new_crossed_variants"]["prop_0.95_tau_225"]["comparison_vs_workbook"]
+            refined_points = {
+                (0.95, 225.0): {
+                    "model": reused_model,
+                    "comparison": reused_comparison,
+                    "source": "best point reused from coarse 3x3 grid",
+                }
+            }
+            new_variants = {}
+            for variant_name, overrides in K_HUMAN_LOCAL_REFINEMENT_GRID_CROSS_TERMS.items():
+                variant_model = execute_model(
+                    helper, h, "k", "human", k_trace, t,
+                    ap_count=ap_count, parameter_overrides=overrides,
+                )
+                variant_comparison = (
+                    compare_k_fit_snapshot_with_workbook(
+                        variant_model, payloads["k_workbook"], ap_count
+                    ) if variant_model.get("status") == "completed" else None
+                )
+                new_variants[variant_name] = {
+                    "parameter_overrides": overrides,
+                    "model_replay": variant_model,
+                    "comparison_vs_workbook": variant_comparison,
+                    "canonical_mod_unchanged": True,
+                }
+                if variant_model.get("status") == "completed" and variant_comparison is not None:
+                    key = (float(overrides["prop_inact"]), float(overrides["h2tau_inact"]))
+                    refined_points[key] = {
+                        "model": variant_model,
+                        "comparison": variant_comparison,
+                        "source": "new local refinement run",
+                    }
+
+            expected_pairs = {
+                (float(prop), float(tau))
+                for prop in K_HUMAN_LOCAL_REFINEMENT_GRID_LEVELS["prop_inact"]
+                for tau in K_HUMAN_LOCAL_REFINEMENT_GRID_LEVELS["h2tau_inact"]
+            }
+            grid_rows = []
+            for prop, tau in sorted(expected_pairs):
+                item = refined_points.get((prop, tau))
+                if item is None or item["comparison"] is None:
+                    grid_rows.append({
+                        "prop_inact": prop,
+                        "h2tau_inact": tau,
+                        "status": "missing_or_failed",
+                        "source": item["source"] if item else None,
+                    })
+                    continue
+                comparison = item["comparison"]
+                model_curve = comparison["model_curve"]
+                experiment_curve = [row["mean"] for row in comparison["experimental_per_ap"]]
+                early = compare_curve(model_curve[:100], experiment_curve[:100])
+                late = compare_curve(model_curve[100:], experiment_curve[100:])
+                metrics = comparison["metrics_vs_recording_mean"]
+                grid_rows.append({
+                    "prop_inact": prop,
+                    "h2tau_inact": tau,
+                    "status": item["model"].get("status", "completed"),
+                    "source": item["source"],
+                    "mae_ap1_200": float(metrics["mae"]),
+                    "rmse_ap1_200": float(metrics["rmse"]),
+                    "mae_ap1_100": float(early["mae"]),
+                    "mae_ap101_200": float(late["mae"]),
+                    "ap5_model": float(comparison["ap5_model"]),
+                    "ap5_experiment": float(comparison["ap5_experiment"]),
+                    "ap200_model": float(comparison["ap200_model"]),
+                    "ap200_experiment": float(comparison["ap200_experiment"]),
+                    "ap200_sem": float(comparison["ap200_sem"]),
+                    "ap200_delta_model_minus_experiment": float(comparison["ap200_delta_model_minus_experiment"]),
+                    "points_within_pointwise_1_96_sem": int(comparison["model_points_within_mean_plus_minus_1_96_sem"]),
+                })
+            successful = [
+                row for row in grid_rows
+                if row.get("status") == "completed" and row.get("mae_ap1_200") is not None
+            ]
+            local_refinement_parameter_grid = {
+                "status": (
+                    "completed" if len(successful) == len(expected_pairs)
+                    and all(
+                        item["model_replay"].get("status") == "completed"
+                        and item["model_replay"].get("amplitude", {}).get("finite_count") == ap_count
+                        and item["model_replay"].get("amplitude", {}).get("nonfinite_count") == 0
+                        for item in new_variants.values()
+                    )
+                    else "completed_with_variant_failures"
+                ),
+                "design": "local 3x3 refinement around the best point from the coarse 3x3 grid; prop_inact x h2tau_inact",
+                "levels": K_HUMAN_LOCAL_REFINEMENT_GRID_LEVELS,
+                "target": "14 Human recordings, AP1-normalized workbook amp_h_n_ columns",
+                "metric": "MAE/RMSE over AP1-AP200 plus split MAE for AP1-100 and AP101-200",
+                "coarse_grid_best_point": coarse_best,
+                "points": grid_rows,
+                "new_variants": new_variants,
+                "best_grid_point_by_mae": min(successful, key=lambda x: x["mae_ap1_200"]) if successful else None,
+                "canonical_mod_unchanged": True,
+                "production_runtime_unchanged": True,
+                "interpretation_limit": "This is a bounded exploratory sensitivity surface around one shared voltage command and one recording cohort, not a statistically validated fit or biological parameter estimate.",
+            }
+
         trace_info = {
             "file_id": FILES["trace"]["id"],
             "bytes": len(payloads["trace"]),
@@ -1183,6 +1303,7 @@ def main() -> None:
             "parameter_sensitivity": parameter_sensitivity,
             "long_train_parameter_sensitivity": long_train_parameter_sensitivity,
             "two_factor_parameter_grid": two_factor_parameter_grid,
+            "local_refinement_parameter_grid": local_refinement_parameter_grid,
             "experimental_ap_amplitudes": {
                 "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
                 "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),
@@ -1211,6 +1332,7 @@ def main() -> None:
             "models": models,
             "model_vs_experiment": report["model_vs_experiment"],
             "two_factor_parameter_grid": report["two_factor_parameter_grid"],
+            "local_refinement_parameter_grid": report["local_refinement_parameter_grid"],
             "output": str(args.output),
         }, indent=2, allow_nan=False))
 
