@@ -126,3 +126,8 @@ The source-faithful Figure 2 statistics reproduction has been added. The first G
 - Cluster-robust-by-recording sensitivity: Na AP1–200 8.50e-11; Na AP1–5 5.80e-9; K AP1–200 0.00373; K AP1–5 0.0759. The early K result remains non-significant.
 - These are repeated-measures sensitivity checks, not the source paper's p-values. OLS does not account for within-recording dependence.
 - Output report, JSON and CSV are committed in the research branch. Full raw AP-clamp H_wide.csv trace replay remains pending.
+
+
+## Original AP-clamp time-domain replay — workflow added 23/11/2026
+
+The original raw `H_wide.csv` trace (Dataverse file ID 318541) is now the next reproducibility gate. A new workflow downloads the trace, experimental `amps_na.csv`/`amps_k.csv`, the original AP-clamp helper and protocol scripts, and four original Na/K human/mouse MOD mechanisms. It verifies official Dataverse SHA-1 and byte size, computes SHA-256, then replays the exact source 5-AP command window (199–307 ms, 125 kHz). The Na replay applies the source's -10 mV liquid-junction offset; K uses no offset. First CI result is pending. Original K numerical singularities remain visible; no code correction or production parameter change is applied.
