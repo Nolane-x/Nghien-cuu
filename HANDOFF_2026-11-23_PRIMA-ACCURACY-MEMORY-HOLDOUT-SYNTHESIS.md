@@ -2,27 +2,27 @@
 
 **Date:** 23 November 2026  
 **Repository:** https://github.com/Nolane-x/Nghien-cuu  
-**Branch:** \`research/prima-accuracy-memory-holdout-synthesis-2026-11-23\`  
-**Base:** main \`b5dfd77816db8b34de689f2a456ccb9b52b79e4f\`
+**Branch:** `research/prima-accuracy-memory-holdout-synthesis-2026-11-23`  
+**Base:** main `b5dfd77816db8b34de689f2a456ccb9b52b79e4f`
 
 ## Read first
 
-1. \`AGENTS.md\`
-2. \`HANDOFF.md\`
-3. \`amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_HIGH_ORDER_2026-11-22.md\`
-4. \`amsn-core/research/HUMAN_PASSIVE_PRIMA_ACCURACY_MEMORY_HOLDOUT_SYNTHESIS_2026-11-23.md\`
+1. `AGENTS.md`
+2. `HANDOFF.md`
+3. `amsn-core/research/HUMAN_PASSIVE_PRIMA_NINE_PORT_HIGH_ORDER_2026-11-22.md`
+4. `amsn-core/research/HUMAN_PASSIVE_PRIMA_ACCURACY_MEMORY_HOLDOUT_SYNTHESIS_2026-11-23.md`
 
 ## Why this checkpoint exists
 
 The passive PRIMA project had accumulated separate validated branches for shift/order accuracy, seven-vs-nine-port accuracy, high-order nine-port capacity, held-out morphology and resource benchmarking. Their conclusions were not yet joined into one conditional engineering decision.
 
-This report synthesizes the five evidence tracks while explicitly preserving their different configurations and comparison baselines.
+This report synthesizes shift/order accuracy, equal-order port-count behavior, two independent morphology holdouts, high-order capacity and resource evidence while preserving the distinct configurations and comparison baselines.
 
 ## Validated conclusion
 
 - Keep full Hines canonical.
 - Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate; extended10kHz is supported on both the NMO_162186 epilepsy and NMO_03524 Control holdouts.
-- Treat port count/order as morphology-dependent: NMO_162186 required order168 to restore nine-port shared-output parity, while NMO_03524 was already at parity at order112 with both q25 outputs accurate.
+- Treat port count/order as morphology-dependent: NMO_162186 required order168 to restore nine-port shared-output parity, while NMO_03524 was already at parity at order112 with both q25 outputs accurate. See matched PRs #13 and #15.
 - Treat 7-port order84 extended10kHz as a good accuracy/storage compromise on the NMO_03524 Control holdout; order84 remains the lower-memory region in the separate resource matrix.
 - Do not change production defaults.
 
@@ -34,9 +34,11 @@ This report synthesizes the five evidence tracks while explicitly preserving the
 - PR #4 / workflow 44979673244: nine-port order112/168 improve q90 transients across all 36 matched scenarios versus order84 references.
 - PR #5 / workflow 44989658844: 37/37 jobs pass; median peak RSS order84/112/168 = 267.90/276.15/301.73 MB. Wall/CPU medians are confounded by heterogeneous GitHub runner hardware.
 
-## Matched holdout result now completed
+## Matched holdout results now completed
 
-PR #13 / run 45184621520 passed the matched 7-port/9-port order112/168 comparison on NMO_162186. At order112, 9-port was worse on 377/378 shared pairs (median error ratio 8.162×). At order168, it was at parity (median ratio 0.99999985×; 190 better / 187 worse / 1 tie). q25 maximum NRMSE was 3.6711e−6% at order112 and 8.6226e−8% at order168; all 378 shared Hines checks were exact.
+PR #13 / run 45184621520 passed the matched 7-port/9-port comparison on NMO_162186. At order112, nine-port was worse on 377/378 shared pairs (median ratio 8.162×); at order168, it was at parity (0.99999985×). q25 maximum NRMSE was 3.6711e−6% at order112 and 8.6226e−8% at order168.
+
+PR #15 / run 45198630080 passed the same matched design on NMO_03524. At order112, 9-port was near parity (204 worse / 173 better / 1 tie; median ratio 1.00000465×); at order168 it was also at parity (189/189; 0.99999991×). q25 maximum NRMSE was 3.0585e−8% and 3.0586e−8%, respectively. The incremental port-count cost is morphology-dependent; do not impose a universal order168 requirement.
 
 ## Next work
 
@@ -60,3 +62,6 @@ PR #14 / run 45196546471 passed 146/146 tests and the full NMO_03524 seven-port 
 PR #15 / run 45198630080 passed the matched NMO_03524 Control-condition comparison. At order112, nine-port was worse on 204 shared pairs, better on 173 and tied on one; median ratio 1.00000465×. At order168, 189 pairs were better and 189 worse; median ratio 0.99999991×. q25 maximum NRMSE was 3.0585e−8% at order112 and 3.0586e−8% at order168. All 378 common Hines references were exact.
 
 Together with PR #13 on NMO_162186, this shows morphology-dependent incremental port cost, not a universal nine-port order168 rule. See the synthesis report's cross-morphology table and PR #15 artifact #14829912332.
+
+
+PR #15 / workflow 45198630080 adds the second matched 7/9-port morphology. Its results support morphology-dependent incremental port cost: NMO_03524 achieved shared-output parity at order112, whereas NMO_162186 did not.
