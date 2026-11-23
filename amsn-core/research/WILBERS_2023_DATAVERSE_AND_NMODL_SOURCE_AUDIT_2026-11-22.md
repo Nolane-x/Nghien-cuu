@@ -301,3 +301,14 @@ Compared with the canonical MOD baseline against the 14 human recordings in the 
 The snapshot increases MAE by **7.49%**, RMSE by **7.49%** and the AP200 overestimation by **7.94%**. It therefore makes the long-train match worse, despite running stably. The candidate is rejected as a replacement for the canonical K mechanism under this AP-clamp objective.
 
 The proper interpretation is a provenance discrepancy plus a negative sensitivity result: the printed fit snapshot is not the MOD default, and applying it does not explain or fix the 200-AP adaptation gap. No channel code, parameter default or production behaviour is changed. Machine-readable details are stored in [`wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json`](references/wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json) and [the CSV](../results/wilbers_k_human_fit_snapshot_sensitivity_2026-11-23.csv).
+
+
+## Original K MOD variant provenance audit — completed 23/11/2026
+
+GitHub Actions [45144507180](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180) completed successfully. The workflow passed all **5 source/parser tests**, verified each immutable Dataverse file ID against its official SHA-1 and exact byte size, calculated an independent SHA-256 for every source, parsed each NMODL PARAMETER/RANGE block, compared it with canonical `k_human.mod`, and compiled all **9 K mechanisms** under NEURON 9.0.2. There were zero compile failures. The artifact is [14803831434](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180/artifacts/14803831434), SHA-256 `7e6e4855a390610313d2769ac87f90bf60b418f5e5e3126aacd92f33acc24e43`.
+
+The eight additional source variants are `k_mouse`, `k_human_h1`, `k_human_hm12inf` and `k_hybrid1`–`k_hybrid5`. The original channel-kinetics helper labels the five hybrid variants as combinations of human activation/inactivation G/Gmax curves and human activation time constants. Two human variants have structurally different gates: `k_human_h1` uses `m,h`, while `k_human_hm12inf` uses `m,m1,m2,h1,h2`.
+
+A crucial fitting-provenance result: the human CMA fit vectors include the activation/inactivation threshold and rate parameters (`tha, qa, Ra, th_act_inf, q_act_inf, thi1, thi2, qi1, qi2, Rd, Rg`), but **do not include** the mixture/slow-inactivation parameters `prop_inact`, `prop_h2`, `h2tau_inact`, `h2tau_inact_rec` or `inact_rate_factor`. Those mixture terms were fixed in the published mechanism and were not estimated by the archived K fit vectors. This matters because the exploratory long-train grid that reduced AP-clamp MAE varied `prop_inact` and `h2tau_inact`; that grid is a diagnostic sensitivity experiment, not a direct reproduction of the original CMA fit.
+
+No K variant has yet been replayed against the 200-AP H_wide command in this provenance gate. Compilation and parameter diff are not evidence of physiological fit. All original mechanism files and production defaults remain unchanged.

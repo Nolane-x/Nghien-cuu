@@ -197,4 +197,14 @@ The coarse 3×3 grid selected `prop_inact=0.95`, `h2tau_inact=225 ms` as its bes
 
 ## Original K MOD variant provenance gate — CI pending 23/11/2026
 
-Added a separate workflow to inspect the nine released K MOD files (canonical human/mouse, two named human variants, and five hybrid models) together with the original channel-fitting helper and human/mouse fitting drivers. For each immutable Dataverse ID the script verifies the official metadata SHA-1 and exact byte size, records a SHA-256, parses the NMODL PARAMETER block, diffs it against canonical k_human, and independently compiles each source under NEURON 9.0.2. The original channel_kinetics.py comments identify hybrid1..5 as combinations of human activation/inactivation G/Gmax and activation-time-constant characteristics. Workflow 45144507180 is in progress; no variant AP-clamp replay or production promotion is claimed yet.
+Added a separate workflow to inspect the nine released K MOD files (canonical human/mouse, two named human variants, and five hybrid models) together with the original channel-fitting helper and human/mouse fitting drivers. For each immutable Dataverse ID the script verifies the official metadata SHA-1 and exact byte size, records a SHA-256, parses the NMODL PARAMETER block, diffs it against canonical k_human, and independently compiles each source under NEURON 9.0.2. The original channel_kinetics.py comments identify hybrid1..5 as combinations of human activation/inactivation G/Gmax and activation-time-constant characteristics. Workflow 45144507180 has completed successfully; all nine K variants compiled without failures. No variant AP-clamp replay or production promotion is claimed yet.
+
+
+## Original K MOD variant provenance audit — completed 23/11/2026
+
+- Workflow [45144507180](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180) passed 5/5 source/parser tests; artifact [14803831434](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180/artifacts/14803831434), SHA-256 `7e6e4855a390610313d2769ac87f90bf60b418f5e5e3126aacd92f33acc24e43`.
+- All 9 K mechanisms (canonical K-human plus 8 released variants) matched Dataverse metadata/hash checks and compiled under NEURON 9.0.2; zero compile failures.
+- The hybrid1..5 roles are source-documented combinations of human activation/inactivation G/Gmax and activation time constants. `k_human_h1` uses two gates m,h; `k_human_hm12inf` has m,m1,m2,h1,h2.
+- Original human fitting vectors do not optimize `prop_inact`, `prop_h2`, `h2tau_inact`, `h2tau_inact_rec` or `inact_rate_factor`. Therefore the AP200 exploratory mixture-parameter sweep is not the original fit procedure.
+- This is source provenance/compilation only; none of the eight variants has yet been replayed on the full AP-clamp trace. No canonical source/default was modified.
+- [Full variant audit report](amsn-core/research/WILBERS_2023_K_MOD_VARIANT_PROVENANCE_AUDIT_2026-11-23.md) and [machine-readable source manifest](amsn-core/research/references/wilbers2023_k_mod_variant_audit_2026-11-23.json).

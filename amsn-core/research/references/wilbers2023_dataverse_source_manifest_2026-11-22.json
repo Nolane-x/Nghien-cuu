@@ -236,17 +236,97 @@
       "sha256": "e220f0e8603976b99d67120e2aa91c8828d6e47bc3dc08b7b20cf4e3ce49fa5a",
       "role": "Original Figure 2 OLS/Type-II ANOVA script for Na/K AP-clamp amplitude adaptation",
       "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_mouse.mod",
+      "id": 318649,
+      "bytes": 4189,
+      "sha1": "1d83124eefc45aa7321a5a21337f080c2519ceed",
+      "sha256": "9636ce769e49ca56615b3891a22f7e1a7324174f288fe48da4d93dc0038e4796",
+      "role": "Original potassium mouse mechanism; canonical species comparator in AP-clamp study",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_human_h1.mod",
+      "id": 318627,
+      "bytes": 3587,
+      "sha1": "e9ded848fa149b86aec30f6d3f5b173f0c7cb523",
+      "sha256": "2d631d0bc60c41c0f60142a895279c173ec9143273347fd21568f9092d1c4ca0",
+      "role": "Original reduced-state human potassium variant with m,h gates",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_human_hm12inf.mod",
+      "id": 318604,
+      "bytes": 4614,
+      "sha1": "72ab45e927d542271fc8d54a9ed7e7cb14d771d2",
+      "sha256": "53fd2ba215a6b067a34224c4fb526974730429d556af488a8a4ec5b7ddd8aaf5",
+      "role": "Original human potassium variant with separate m,m1,m2 activation and h1,h2 inactivation states",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_hybrid1.mod",
+      "id": 318628,
+      "bytes": 4056,
+      "sha1": "3bb28fc3fcdace2b07392c69140518c91977ce1e",
+      "sha256": "f1fee53589dcb6508f51a1b306ba32aa45160b15f88a9853bc0f8375fa8c64ae",
+      "role": "Original hybrid K mechanism; human G/Gmax activation plus inactivation",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_hybrid2.mod",
+      "id": 318622,
+      "bytes": 4046,
+      "sha1": "05040e3bfe6d2914a14358e62bb631f0c9ef492b",
+      "sha256": "01d655c3f09a335494b9a3f818739ff2b75cf7f0a338edbc9f170385de3adc1e",
+      "role": "Original hybrid K mechanism; human G/Gmax activation",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_hybrid3.mod",
+      "id": 318609,
+      "bytes": 4046,
+      "sha1": "89e09570588d45e45ce413b9da42e5007ec98aa4",
+      "sha256": "8cac815ae8a1bca5d07dd9f68c5c8446d1f718b72463d64d9fa247d450958703",
+      "role": "Original hybrid K mechanism; human G/Gmax inactivation",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_hybrid4.mod",
+      "id": 318619,
+      "bytes": 4070,
+      "sha1": "b786dd01e95b7cbf89e652c4fe2d88e4295c9cae",
+      "sha256": "4acf94e36a0015b52a643bd321f61be1a17db829701a654fc5c04b8384c46296",
+      "role": "Original hybrid K mechanism; human activation time constant",
+      "mime": "audio/mod",
+      "downloaded": true
+    },
+    {
+      "path": "Figures5_6/MOD/k_hybrid5.mod",
+      "id": 318605,
+      "bytes": 4080,
+      "sha1": "0df02624547f1df97de4fa06d1992524f62e220f",
+      "sha256": "96f155043135433b97454efdfef70643168d69bc3dffef785a338435931d7625",
+      "role": "Original hybrid K mechanism; human G/Gmax activation plus activation time constant",
+      "mime": "audio/mod",
+      "downloaded": true
     }
   ],
   "acquisition": {
     "method": "DataverseNL public file API resolving to signed Surf object-store downloads, read with Python urllib in an isolated research session",
     "sha256_method": "SHA-256 over exact downloaded response bytes; size and SHA-1 cross-checked with the Dataverse file metadata API",
     "selected_file_count": 20,
-    "downloaded_read_and_sha256_checked_count": 15,
+    "downloaded_read_and_sha256_checked_count": 23,
     "raw_source_files_committed_to_amsn": false,
     "raw_workbooks_downloaded": false,
     "large_ap_clamp_h_wide_csv_downloaded": false,
-    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source. Figure 2 Na/K workbooks are downloaded and independently checked; AP-clamp H_wide.csv and other raw traces remain undownloaded. Figure 2 Na/K raw amplitude workbooks and original Figure 2 plot/statistics scripts have been downloaded, SHA-1/SHA-256 checked, and parsed. The large AP-clamp H_wide.csv raw trace file remains undownloaded.",
+    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source. Figure 2 Na/K workbooks are downloaded and independently checked; AP-clamp H_wide.csv and other raw traces remain undownloaded. Figure 2 Na/K raw amplitude workbooks and original Figure 2 plot/statistics scripts have been downloaded, SHA-1/SHA-256 checked, and parsed. The large AP-clamp H_wide.csv raw trace file remains undownloaded. The eight remaining original potassium MOD variants (k_mouse, k_human_h1, k_human_hm12inf, k_hybrid1..5) have been downloaded, verified against official Dataverse SHA-1 and byte size, independently SHA-256 hashed, parameter-diffed against canonical k_human, and successfully compiled with NEURON 9.0.2. The nine-file K compile audit contains zero failures; no original source bytes are vendored into AMSN.",
     "raw_numeric_data_files_downloaded": true
   },
   "provenance": {

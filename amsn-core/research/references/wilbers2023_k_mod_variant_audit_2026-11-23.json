@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "status": "official_dataverse_verified_k_mod_variant_diff_and_compile_completed",
+  "workflow_run": {
+    "id": 45144507180,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180",
+    "conclusion": "success",
+    "head_sha": "796bc18b9522c8ecebe33315afb33df9860b589b"
+  },
+  "artifact": {
+    "id": 14803831434,
+    "sha256": "7e6e4855a390610313d2769ac87f90bf60b418f5e5e3126aacd92f33acc24e43"
+  },
+  "runtime": {
+    "python": "3.12.16",
+    "neuron": "9.0.2"
+  },
+  "canonical_baseline": {
+    "file_id": 318647,
+    "path": "Figures5_6/MOD/k_human.mod",
+    "bytes": 4220,
+    "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
+    "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063"
+  },
+  "variants": [
+    {
+      "id": 318649,
+      "path": "Figures5_6/MOD/k_mouse.mod",
+      "bytes": 4189,
+      "sha1": "1d83124eefc45aa7321a5a21337f080c2519ceed",
+      "sha256": "9636ce769e49ca56615b3891a22f7e1a7324174f288fe48da4d93dc0038e4796",
+      "compile": "success",
+      "source_role": "Original potassium mouse mechanism; canonical species comparator in AP-clamp study"
+    },
+    {
+      "id": 318627,
+      "path": "Figures5_6/MOD/k_human_h1.mod",
+      "bytes": 3587,
+      "sha1": "e9ded848fa149b86aec30f6d3f5b173f0c7cb523",
+      "sha256": "2d631d0bc60c41c0f60142a895279c173ec9143273347fd21568f9092d1c4ca0",
+      "compile": "success",
+      "source_role": "Original reduced-state human potassium variant with m,h gates"
+    },
+    {
+      "id": 318604,
+      "path": "Figures5_6/MOD/k_human_hm12inf.mod",
+      "bytes": 4614,
+      "sha1": "72ab45e927d542271fc8d54a9ed7e7cb14d771d2",
+      "sha256": "53fd2ba215a6b067a34224c4fb526974730429d556af488a8a4ec5b7ddd8aaf5",
+      "compile": "success",
+      "source_role": "Original human potassium variant with separate m,m1,m2 activation and h1,h2 inactivation states"
+    },
+    {
+      "id": 318628,
+      "path": "Figures5_6/MOD/k_hybrid1.mod",
+      "bytes": 4056,
+      "sha1": "3bb28fc3fcdace2b07392c69140518c91977ce1e",
+      "sha256": "f1fee53589dcb6508f51a1b306ba32aa45160b15f88a9853bc0f8375fa8c64ae",
+      "compile": "success",
+      "source_role": "Original hybrid K mechanism; human G/Gmax activation plus inactivation"
+    },
+    {
+      "id": 318622,
+      "path": "Figures5_6/MOD/k_hybrid2.mod",
+      "bytes": 4046,
+      "sha1": "05040e3bfe6d2914a14358e62bb631f0c9ef492b",
+      "sha256": "01d655c3f09a335494b9a3f818739ff2b75cf7f0a338edbc9f170385de3adc1e",
+      "compile": "success",
+      "source_role": "Original hybrid K mechanism; human G/Gmax activation"
+    },
+    {
+      "id": 318609,
+      "path": "Figures5_6/MOD/k_hybrid3.mod",
+      "bytes": 4046,
+      "sha1": "89e09570588d45e45ce413b9da42e5007ec98aa4",
+      "sha256": "8cac815ae8a1bca5d07dd9f68c5c8446d1f718b72463d64d9fa247d450958703",
+      "compile": "success",
+      "source_role": "Original hybrid K mechanism; human G/Gmax inactivation"
+    },
+    {
+      "id": 318619,
+      "path": "Figures5_6/MOD/k_hybrid4.mod",
+      "bytes": 4070,
+      "sha1": "b786dd01e95b7cbf89e652c4fe2d88e4295c9cae",
+      "sha256": "4acf94e36a0015b52a643bd321f61be1a17db829701a654fc5c04b8384c46296",
+      "compile": "success",
+      "source_role": "Original hybrid K mechanism; human activation time constant"
+    },
+    {
+      "id": 318605,
+      "path": "Figures5_6/MOD/k_hybrid5.mod",
+      "bytes": 4080,
+      "sha1": "0df02624547f1df97de4fa06d1992524f62e220f",
+      "sha256": "96f155043135433b97454efdfef70643168d69bc3dffef785a338435931d7625",
+      "compile": "success",
+      "source_role": "Original hybrid K mechanism; human G/Gmax activation plus activation time constant"
+    },
+    {
+      "id": 318647,
+      "path": "Figures5_6/MOD/k_human.mod",
+      "bytes": 4220,
+      "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
+      "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063",
+      "compile": "success",
+      "source_role": "canonical human potassium mechanism"
+    }
+  ],
+  "compile_summary": {
+    "files_compiled": 9,
+    "failures": 0,
+    "all_compiled_with_neuron": "9.0.2",
+    "tests_passed": 5
+  },
+  "parameter_fit_context": {
+    "human_fitting_driver": "Figures5_6/Channel_fitting/fit_k_hh_cma_human.py (file ID 326237)",
+    "human_optimized_parameter_groups": [
+      [
+        "thi1",
+        "thi2",
+        "qi1",
+        "qi2",
+        "Rd",
+        "Rg"
+      ],
+      [
+        "tha",
+        "qa",
+        "Ra"
+      ],
+      [
+        "th_act_inf",
+        "q_act_inf"
+      ]
+    ],
+    "mechanism_mixture_parameters_not_in_fit_vectors": [
+      "prop_inact",
+      "prop_h2",
+      "h2tau_inact",
+      "h2tau_inact_rec",
+      "inact_rate_factor"
+    ],
+    "source_of_hybrid_roles": "Figures5_6/Channel_fitting/channel_kinetics.py (file ID 326241)"
+  },
+  "conclusions": [
+    "All nine original K mechanisms compile; the variant audit establishes provenance and state/parameter differences, not AP-clamp performance.",
+    "k_human_h1 is a two-state m,h version and does not expose the canonical h2 slow-inactivation state.",
+    "k_human_hm12inf uses separate activation gates m,m1,m2 and inactivation gates h1,h2.",
+    "The five hybrid files correspond to distinct human activation/inactivation G/Gmax and activation-time-constant combinations as annotated by the source channel_kinetics.py.",
+    "The mixture/slow-inactivation parameters that drive much of the long-train sensitivity experiment are not in the original CMA fit vectors; AP200 grid matching cannot be claimed as a direct reproduction of the authors' fitting procedure."
+  ],
+  "limitations": [
+    "No variant has been replayed on the original AP-clamp waveform in this provenance gate.",
+    "Compilation does not prove voltage-clamp or AP-clamp agreement.",
+    "No MOD source bytes, canonical K parameter defaults, AMSN runtime behavior or production settings were changed."
+  ]
+}
