@@ -41,7 +41,7 @@ Order112 nine-port regressed on 377/378 shared pairs; median 9/7 transient-error
 
 Updated conditional choice: use a matched seven/nine-port test on the target morphology. NMO_162186 needed order168 for shared-output parity; NMO_03524 did not. Extended10kHz remains the high-frequency shift family, with order84 a good accuracy/storage compromise on NMO_03524. Full Hines remains canonical.
 
-Outstanding work: repeat the matched-port matrix on a second independent morphology with different experimental context; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
+Outstanding work: add a third independent morphology with a more complete axon and distinct source study; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
 
 
 ## Second independent morphology completed — NMO_03524 Jacobs Control
