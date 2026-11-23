@@ -1,0 +1,92 @@
+name: NMO_162186 matched 7-port vs 9-port PRIMA holdout
+
+on:
+  push:
+    branches:
+      - research/prima-holdout-seven-nine-port-matched-order-2026-11-23
+    paths:
+      - "amsn-core/examples/replay_nmo162186_prima_7v9port.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/examples/allen_human_holdout_preflight.py"
+      - "amsn-core/tests/test_nmo162186_prima_7v9port.py"
+      - ".github/workflows/amsn-nmo162186-prima-7v9port-matched-order.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-nmo162186-prima-7v9port-matched-order
+  cancel-in-progress: false
+
+jobs:
+  matched-port-order-holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+      - name: Download standardized independent holdout SWC
+        working-directory: amsn-core
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-PRIMA-Holdout/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Run complete AMSN regression suite
+        working-directory: amsn-core
+        run: python -m pytest
+      - name: Re-run exact source morphology and Import3D preflight
+        working-directory: amsn-core
+        run: python examples/allen_human_holdout_preflight.py
+      - name: Verify matched-port runner unit tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_nmo162186_prima_7v9port.py
+      - name: Replay order112/order168 with identical shifts on seven and nine ports
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/NMO_162186_prima_7v9port_matched_order_2026-11-23.time.txt \
+            python examples/replay_nmo162186_prima_7v9port.py
+      - name: Commit validated matched-port results to this branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23_*.csv \
+                  amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23_report.json \
+                  amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23.time.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive matched 7-port 9-port holdout comparison"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve model curves, matched pairs and q25 evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmo162186-prima-7v9port-matched-order
+          path: |
+            amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23_*.csv
+            amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23_report.json
+            amsn-core/results/NMO_162186_prima_7v9port_matched_order_2026-11-23.time.txt
+          if-no-files-found: warn
+          retention-days: 90
