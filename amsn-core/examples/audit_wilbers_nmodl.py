@@ -354,7 +354,7 @@ def compile_compare_and_probe(
         for row in source_negative_time_constants
         for label in row["labels"]
     })
-    expected_negative_tau_labels = sorted(source["expected_source_negative_time_constants"])
+    expected_negative_tau_labels = sorted(source.get("expected_source_negative_time_constants", []))
     if observed_negative_tau_labels != expected_negative_tau_labels:
         raise RuntimeError(
             f"Original source negative time-constant probes differ from expected for {name}: "
