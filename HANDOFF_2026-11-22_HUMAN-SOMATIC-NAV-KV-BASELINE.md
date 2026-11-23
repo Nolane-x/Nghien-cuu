@@ -84,3 +84,21 @@ Workflow [45039313143](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039
 - K: 38 points. Positive exact singulars produced NaN; mirror branches produce negative `h1tau` around -40.5659 mV and at +75.9382 mV. At +29.9618 mV, source `mtau` differed by 91.61% from the stable diagnostic clone.
 - The 17 discrete static K test voltages match the stable diagnostic clone at exported precision. This is not a full time-domain voltage-clamp/AP-clamp reproduction; raw trace replay remains pending.
 - See [source audit report](amsn-core/research/WILBERS_2023_DATAVERSE_AND_NMODL_SOURCE_AUDIT_2026-11-22.md), [machine-readable audit](amsn-core/research/references/wilbers2023_nmodl_mechanism_audit_2026-11-22.json), and [artifact 14790704932](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45115543259/artifacts/14790704932).
+
+
+## Figure 2 raw workbook analysis gate — 23/11/2026
+
+Added a reproducible audit for the original Na/K Figure 2 workbooks and the Dataverse plotting/statistics scripts. The workbooks were downloaded in a research session and their official Dataverse SHA-1 and independent SHA-256 values were verified:
+
+- Na workbook, file ID 318668, 548,562 bytes, SHA-1 `cd702d7f1ca65b0b88a2565f289740546902e36b`, SHA-256 `2fac600523d596a4dccbe167d3283b2e506dfdb9c7b1caef2a490c2c5dff184a`. It contains 49 recordings and 4 × 200 normalized AP-amplitude groups.
+- K workbook, file ID 318669, 302,011 bytes, SHA-1 `287720f8db3b20b167edd9e639dd67b0a1194def`, SHA-256 `f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d`. It contains 25 recordings, explicit H/M species labels, and 201 raw/normalized AP measurements for human and mouse waveform inputs.
+
+Source script `Figure2/plots_fig2.py` assigns Na recording species by filename prefix (M = Mouse, otherwise Human), uses Hnarrow for the main Na Figure 2 curve, and uses Hwide/Mwide for the supplementary waveform comparison. The Na workbook variables sheet gives duplicate descriptions for Mwide and Hwide; the new audit preserves raw labels and flags the discrepancy rather than silently fixing it. K workbook explicitly separates cell species and input waveform.
+
+A GitHub Actions workflow has been added to verify Dataverse metadata SHA-1, raw SHA-256, parse the original workbooks and output descriptive per-recording normalized-amplitude curves. It deliberately does not generate inferential p-values or claim complete trace replay. First Actions result is pending. The larger 15.1 MB AP-clamp H_wide.csv trace file remains not downloaded.
+
+## Figure 2 data audit branch files
+- Report: `amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md`
+- Script: `amsn-core/examples/audit_wilbers_figure2_data.py`
+- Workflow: `.github/workflows/amsn-wilbers-figure2-data-audit.yml`
+- Workbook SHA-1/SHA-256 pinned in the Dataverse manifest. First Actions result is pending.

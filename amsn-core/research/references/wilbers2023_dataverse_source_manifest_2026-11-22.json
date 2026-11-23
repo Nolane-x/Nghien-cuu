@@ -38,8 +38,9 @@
       "bytes": 548562,
       "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
-      "role": "Figure 2 sodium data workbook",
-      "downloaded": false
+      "role": "Figure 2 sodium data workbook; raw workbook payload SHA-1 and SHA-256 verified and workbook sheets parsed",
+      "downloaded": true,
+      "sha256": "2fac600523d596a4dccbe167d3283b2e506dfdb9c7b1caef2a490c2c5dff184a"
     },
     {
       "path": "Figure2/K_data_fig2.xlsx",
@@ -47,8 +48,9 @@
       "bytes": 302011,
       "mime": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
-      "role": "Figure 2 potassium data workbook",
-      "downloaded": false
+      "role": "Figure 2 potassium data workbook; raw workbook payload SHA-1 and SHA-256 verified and workbook sheets parsed",
+      "downloaded": true,
+      "sha256": "f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d"
     },
     {
       "path": "Figures5_6/APclamp/H_wide.csv",
@@ -219,11 +221,12 @@
     "method": "DataverseNL public file API resolving to signed Surf object-store downloads, read with Python urllib in an isolated research session",
     "sha256_method": "SHA-256 over exact downloaded response bytes; size and SHA-1 cross-checked with the Dataverse file metadata API",
     "selected_file_count": 20,
-    "downloaded_read_and_sha256_checked_count": 11,
+    "downloaded_read_and_sha256_checked_count": 13,
     "raw_source_files_committed_to_amsn": false,
     "raw_workbooks_downloaded": false,
     "large_ap_clamp_h_wide_csv_downloaded": false,
-    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source."
+    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source. Figure 2 Na/K workbooks are downloaded and independently checked; AP-clamp H_wide.csv and other raw traces remain undownloaded.",
+    "raw_numeric_data_files_downloaded": true
   },
   "provenance": {
     "sodium": "Source comment attributes the HH-style mechanism to Mainen (1994), edited by Kole (2006), modified/fitted by René Wilbers at VU (2020).",
