@@ -58,13 +58,13 @@ jobs:
       - name: Replay matched order112/order168 with seven and nine ports
         working-directory: amsn-core
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x'             -o results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt             python examples/replay_nmo03524_prima_7v9port.py
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt python examples/replay_nmo03524_prima_7v9port.py
       - name: Commit validated matched-port results
         if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv                   amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json                   amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
+          git add amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
           if ! git diff --cached --quiet; then
             git commit -m "results: archive Jacobs control matched 7-port 9-port comparison"
             git fetch origin "$GITHUB_REF_NAME"
