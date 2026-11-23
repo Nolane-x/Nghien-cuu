@@ -57,3 +57,12 @@ Validate against raw voltage-clamp current traces where available, preserve subj
 ## Next gate
 
 If one or more variants agree better on independent Figure 4 endpoints, validate that ranking on raw independent voltage-clamp traces or another released voltage-clamp dataset, check subject-level uncertainty, then evaluate current-clamp/morphology behavior. No mechanism is promoted to production in this branch.
+
+
+## Supplementary Figure 2 waveform availability
+
+The public Figure 2 K workbook (file ID 318669) contains 25 per-recording rows (14 Human, 11 Mouse) and AP1–AP201 amplitudes under human and mouse AP-waveform conditions. PR #9 used the normalized human-command columns \`amp_h_n_\`; it did not run both waveform conditions.
+
+The Figure 2 analysis script treats the four prefixes \`amp_h_\`, \`amp_m_\`, \`amp_h_n_\`, \`amp_m_n_\` as an \`Input wave\` dimension. The paper reports that the experimental species difference was independent of human versus mouse input AP waveform (Fig. S3). But the public APclamp folder lists \`H_wide.csv\` only and no \`M_wide.csv\`. The mouse-waveform target \`amp_m_n_\` therefore cannot be faithfully replayed in the current public dataset. Do not fabricate a mouse waveform or claim dual-waveform model validation.
+
+Next external-data action: request the original mouse AP-train command used for Fig. S3 from the authors or locate a published supplemental trace, then add a second identical-protocol model replay.
