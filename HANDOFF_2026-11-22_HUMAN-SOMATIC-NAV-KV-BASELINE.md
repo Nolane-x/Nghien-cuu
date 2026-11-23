@@ -116,3 +116,13 @@ A GitHub Actions workflow has been added to verify Dataverse metadata SHA-1, raw
 ## Original OLS/Type-II ANOVA reproduction — CI pending
 
 The source-faithful Figure 2 statistics reproduction has been added. The first GitHub Actions run will validate the four original models (Na AP1–200 / AP1–5; K AP1–200 / AP1–5), compare their interaction p-values against the article's reported thresholds, and emit a distinct cluster-robust-by-recording sensitivity analysis. No new p-value is accepted until the workflow passes and its artifact is inspected.
+
+
+## Figure 2 statistics reproduction — completed 23/11/2026
+
+- Original `stats_fig2.py` executed unchanged in pinned Python 3.12.16 / pandas 2.2.3 / SciPy 1.15.3 / statsmodels 0.14.4 after source checksum verification.
+- Workflow [45117497613](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45117497613) passed 18/18 tests; artifact [14792550979](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45117497613/artifacts/14792550979).
+- Original OLS/Type-II interaction p-values: Na AP1–200 underflow below 1e-323; Na AP1–5 1.41e-54; K AP1–200 3.19e-46; K AP1–5 0.0721. All four match article thresholds.
+- Cluster-robust-by-recording sensitivity: Na AP1–200 8.50e-11; Na AP1–5 5.80e-9; K AP1–200 0.00373; K AP1–5 0.0759. The early K result remains non-significant.
+- These are repeated-measures sensitivity checks, not the source paper's p-values. OLS does not account for within-recording dependence.
+- Output report, JSON and CSV are committed in the research branch. Full raw AP-clamp H_wide.csv trace replay remains pending.

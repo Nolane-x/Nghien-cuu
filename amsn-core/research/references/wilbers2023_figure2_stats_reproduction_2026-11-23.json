@@ -1,0 +1,214 @@
+{
+  "schema_version": 1,
+  "status": "original_stats_fig2_py_executed_four_type_ii_anova_tables_captured",
+  "workflow_run": {
+    "id": 45117497613,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45117497613",
+    "conclusion": "success",
+    "head_sha": "764c47c8400942258b93d963835bd3094136d99e"
+  },
+  "artifact": {
+    "id": 14792550979,
+    "sha256": "7eceadaadbe5f80a80e39760cf5492fa0d0dabd69bb8f6ee05aa947752601d3a"
+  },
+  "runtime_versions": {
+    "python": "3.12.16",
+    "pandas": "2.2.3",
+    "scipy": "1.15.3",
+    "statsmodels": "0.14.4"
+  },
+  "source_files": {
+    "na": {
+      "id": 318668,
+      "bytes": 548562,
+      "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
+      "sha256": "2fac600523d596a4dccbe167d3283b2e506dfdb9c7b1caef2a490c2c5dff184a"
+    },
+    "k": {
+      "id": 318669,
+      "bytes": 302011,
+      "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
+      "sha256": "f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d"
+    },
+    "stats_script": {
+      "id": 318531,
+      "bytes": 2282,
+      "sha1": "45ffcd0be45743c7937d3e0a323ac52832aa845e",
+      "sha256": "e220f0e8603976b99d67120e2aa91c8828d6e47bc3dc08b7b20cf4e3ce49fa5a"
+    }
+  },
+  "original_script": {
+    "executed_unchanged": true,
+    "tables": [
+      {
+        "label": "Na AP1-200",
+        "formula": "relative_amp ~ APnr*C(Species) - C(Species)",
+        "observations": 39200,
+        "recordings": 49,
+        "r_squared": 0.3155739748027766,
+        "anova_type": 2,
+        "anova_table": [
+          {
+            "term": "APnr",
+            "sum_sq": 4.035771536952387,
+            "df": 1,
+            "F": 203.7171911523284,
+            "p": 4.2108996248551364e-46
+          },
+          {
+            "term": "APnr:C(Species)",
+            "sum_sq": 353.99997356286104,
+            "df": 1,
+            "F": 17869.168168196877,
+            "p": 0,
+            "p_note": "double-precision underflow"
+          },
+          {
+            "term": "Residual",
+            "sum_sq": 776.5183489872335,
+            "df": 39197
+          }
+        ]
+      },
+      {
+        "label": "Na AP1-5",
+        "formula": "relative_amp ~ APnr*C(Species) - C(Species)",
+        "observations": 980,
+        "recordings": 49,
+        "r_squared": 0.40081517733485084,
+        "anova_type": 2,
+        "anova_table": [
+          {
+            "term": "APnr",
+            "sum_sq": 13.204338298140254,
+            "df": 1,
+            "F": 378.72844260767636,
+            "p": 1.5128430514933224e-71
+          },
+          {
+            "term": "APnr:C(Species)",
+            "sum_sq": 9.581585378465034,
+            "df": 1,
+            "F": 274.8202012220212,
+            "p": 1.4086863244904532e-54
+          },
+          {
+            "term": "Residual",
+            "sum_sq": 34.06303056738403,
+            "df": 977
+          }
+        ]
+      },
+      {
+        "label": "K AP1-200",
+        "formula": "amp ~ APnr*C(species)",
+        "observations": 5000,
+        "recordings": 25,
+        "r_squared": 0.4331395670765861,
+        "anova_type": 2,
+        "anova_table": [
+          {
+            "term": "C(species)",
+            "sum_sq": 10.225482807327023,
+            "df": 1,
+            "F": 766.2391600308418,
+            "p": 4.9200425231293706e-157
+          },
+          {
+            "term": "APnr",
+            "sum_sq": 37.943176144844465,
+            "df": 1,
+            "F": 2843.24446737081,
+            "p": 0,
+            "p_note": "double-precision underflow"
+          },
+          {
+            "term": "APnr:C(species)",
+            "sum_sq": 2.7754092254225213,
+            "df": 1,
+            "F": 207.97328338430898,
+            "p": 3.1883192436943598e-46
+          },
+          {
+            "term": "Residual",
+            "sum_sq": 66.67175833632612,
+            "df": 4996
+          }
+        ]
+      },
+      {
+        "label": "K AP1-5",
+        "formula": "amp ~ APnr*C(species)",
+        "observations": 125,
+        "recordings": 25,
+        "r_squared": 0.4711631859505945,
+        "anova_type": 2,
+        "anova_table": [
+          {
+            "term": "C(species)",
+            "sum_sq": 0.05290446508264885,
+            "df": 1,
+            "F": 5.95162231899246,
+            "p": 0.016154134145804248
+          },
+          {
+            "term": "APnr",
+            "sum_sq": 0.8761118963977864,
+            "df": 1,
+            "F": 98.56043546400042,
+            "p": 2.3650226480300197e-17
+          },
+          {
+            "term": "APnr:C(species)",
+            "sum_sq": 0.029262710805798387,
+            "df": 1,
+            "F": 3.2919830580260645,
+            "p": 0.07209641830375878
+          },
+          {
+            "term": "Residual",
+            "sum_sq": 1.0755790491901038,
+            "df": 121
+          }
+        ]
+      }
+    ]
+  },
+  "comparisons": [
+    {
+      "label": "Na AP1-200",
+      "interaction_p": 0,
+      "article_reference": "p < 10^-323",
+      "cluster_robust_p": 8.498708393521945e-11,
+      "cluster_count": 49
+    },
+    {
+      "label": "Na AP1-5",
+      "interaction_p": 1.4086863244904532e-54,
+      "article_reference": "p < 10^-53",
+      "cluster_robust_p": 5.7967608330600256e-9,
+      "cluster_count": 49
+    },
+    {
+      "label": "K AP1-200",
+      "interaction_p": 3.1883192436943598e-46,
+      "article_reference": "p < 10^-45",
+      "cluster_robust_p": 0.0037326632175269684,
+      "cluster_count": 25
+    },
+    {
+      "label": "K AP1-5",
+      "interaction_p": 0.07209641830375878,
+      "article_reference": "p = 0.07",
+      "cluster_robust_p": 0.07589849603742752,
+      "cluster_count": 25
+    }
+  ],
+  "caveats": [
+    "The source OLS does not model within-recording repeated AP observations.",
+    "Cluster-robust-by-Filename is a separate sensitivity test, not the authors' original inferential test.",
+    "Na stacks four APwave groups without including APwave in the formula.",
+    "K uses only normalized human-input waveform _h_n_.",
+    "This is a statistical reproduction, not raw time-series replay."
+  ]
+}

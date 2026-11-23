@@ -1,0 +1,5 @@
+model,observations,recordings,original_ols_interaction_p,cluster_robust_interaction_p,article_reference,article_match
+Na AP1-200,39200,49,0.0_underflow,8.498708393521945e-11,<1e-323,true
+Na AP1-5,980,49,1.4086863244904532e-54,5.7967608330600256e-9,<1e-53,true
+K AP1-200,5000,25,3.1883192436943598e-46,0.0037326632175269684,<1e-45,true
+K AP1-5,125,25,0.07209641830375878,0.07589849603742752,0.07,true

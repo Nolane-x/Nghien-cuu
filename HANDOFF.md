@@ -1,3 +1,14 @@
+## Latest active-channel research checkpoint — Figure 2 inferential statistics reproduced (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- Original `stats_fig2.py` executed unchanged after SHA-1/SHA-256 verification; workflow [45117497613](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45117497613) passed 18/18 tests.
+- OLS/Type-II interaction p-values reproduce all four article values: Na AP1–200 underflow <1e-323; Na AP1–5 1.41e-54; K AP1–200 3.19e-46; K AP1–5 0.0721.
+- Cluster-robust sensitivity by recording: Na AP1–200 8.50e-11 / AP1–5 5.80e-9; K AP1–200 0.00373; K AP1–5 0.0759. Interpret separately from original OLS.
+- Raw AP-clamp H_wide.csv trace replay remains pending. No runtime channel mechanism or production default changed.
+
+---
+
 ## Latest active-channel research checkpoint — Figure 2 AP-clamp raw data verified (23/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
