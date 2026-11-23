@@ -1,0 +1,47 @@
+name: AMSN Wilbers original potassium MOD variant provenance audit
+
+on:
+  push:
+    branches:
+      - research/wilbers-human-active-channel-baseline-2026-11-22
+    paths:
+      - "amsn-core/examples/audit_wilbers_k_mod_variants.py"
+      - "amsn-core/tests/test_wilbers_k_mod_variants.py"
+      - ".github/workflows/amsn-wilbers-k-mod-variant-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-wilbers-k-mod-variant-audit
+  cancel-in-progress: false
+
+jobs:
+  audit-original-k-variants:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install NEURON 9.0.2 and test dependencies
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" neuron==9.0.2
+      - name: Test source verification, parser and fitting-context extraction
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_wilbers_k_mod_variants.py
+      - name: Download official sources, verify Dataverse SHA-1 and size, diff and compile each K MOD
+        working-directory: amsn-core
+        run: python examples/audit_wilbers_k_mod_variants.py --output artifacts/wilbers-k-mod-variant-audit.json
+      - name: Upload original K variant hashes, parameter diffs and compile results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-original-k-mod-variant-audit
+          path: amsn-core/artifacts/wilbers-k-mod-variant-audit.json
+          if-no-files-found: warn
+          retention-days: 30
