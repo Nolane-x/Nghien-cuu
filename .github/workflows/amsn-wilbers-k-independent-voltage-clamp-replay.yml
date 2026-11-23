@@ -1,0 +1,81 @@
+name: AMSN Wilbers independent K voltage-clamp replay
+
+on:
+  push:
+    branches:
+      - research/wilbers-k-independent-voltage-clamp-replay-2026-11-23
+    paths:
+      - "amsn-core/examples/replay_wilbers_k_voltage_clamp.py"
+      - "amsn-core/examples/audit_wilbers_k_mod_variants.py"
+      - "amsn-core/results/wilbers_figure4_voltage_clamp_audit_2026-11-23.json"
+      - "amsn-core/results/wilbers_figure4_voltage_clamp_per_recording_2026-11-23.csv"
+      - "amsn-core/tests/test_wilbers_k_voltage_clamp_replay.py"
+      - ".github/workflows/amsn-wilbers-k-independent-voltage-clamp-replay.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-wilbers-k-independent-voltage-clamp-replay
+  cancel-in-progress: false
+
+jobs:
+  independent-k-voltage-clamp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NEURON_NOGUI: "1"
+      MPLBACKEND: "Agg"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned NEURON and original source helper dependencies
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" neuron==9.0.2 scipy==1.15.3 pandas==2.2.3 numpy==2.2.5 matplotlib==3.10.1 seaborn==0.13.2 openpyxl==3.1.5
+      - name: Run original protocol, source pin and cohort comparison tests
+        working-directory: amsn-core
+        run: |
+          python -m pytest -q tests/test_wilbers_k_voltage_clamp_replay.py
+      - name: Verify nine unchanged MODs and replay original K_IV_ss and K_recovery_ss
+        working-directory: amsn-core
+        run: |
+          python examples/replay_wilbers_k_voltage_clamp.py \
+            --figure4-json results/wilbers_figure4_voltage_clamp_audit_2026-11-23.json \
+            --per-recording-csv results/wilbers_figure4_voltage_clamp_per_recording_2026-11-23.csv \
+            --output-json results/wilbers_k_voltage_clamp_replay_2026-11-23.json \
+            --curves-csv results/wilbers_k_voltage_clamp_model_curves_2026-11-23.csv \
+            --comparison-csv results/wilbers_k_voltage_clamp_per_voltage_comparison_2026-11-23.csv \
+            --summary-csv results/wilbers_k_voltage_clamp_summary_2026-11-23.csv
+      - name: Commit validated voltage-clamp replay results to this research branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/wilbers_k_voltage_clamp_replay_2026-11-23.json \
+            amsn-core/results/wilbers_k_voltage_clamp_model_curves_2026-11-23.csv \
+            amsn-core/results/wilbers_k_voltage_clamp_per_voltage_comparison_2026-11-23.csv \
+            amsn-core/results/wilbers_k_voltage_clamp_summary_2026-11-23.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive independent Wilbers K voltage-clamp replays"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve complete voltage-clamp curves and per-cell comparisons
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-independent-k-voltage-clamp-replay
+          path: |
+            amsn-core/results/wilbers_k_voltage_clamp_replay_2026-11-23.json
+            amsn-core/results/wilbers_k_voltage_clamp_model_curves_2026-11-23.csv
+            amsn-core/results/wilbers_k_voltage_clamp_per_voltage_comparison_2026-11-23.csv
+            amsn-core/results/wilbers_k_voltage_clamp_summary_2026-11-23.csv
+          if-no-files-found: warn
+          retention-days: 90
