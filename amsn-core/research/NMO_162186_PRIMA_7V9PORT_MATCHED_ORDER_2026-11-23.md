@@ -3,7 +3,7 @@
 **Date:** 23 November 2026  
 **Morphology:** NMO_162186 / 770307286_transformed (Allen Cell Types)  
 **SWC SHA-256:** \`a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc\`  
-**Status:** implementation and CI added; numerical result pending the Actions replay
+**Status:** validated — full matched 7-port/9-port holdout replay passed
 
 ## Research question
 
@@ -59,3 +59,67 @@ It does not validate active ion channels, nonlinear synapses, plasticity or biol
 - \`NMO_162186_prima_7v9port_matched_order_2026-11-23_summary.csv\`
 
 The workflow commits outputs to the branch and uploads a run artifact. Full Hines remains canonical; this experiment does not change production defaults.
+
+
+## Validated numerical results — GitHub Actions run 45184621520
+
+**Status:** passed on 23 November 2026  
+**Workflow:** https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520  
+**Artifact:** \`nmo162186-prima-7v9port-matched-order\`, ID \`14824270534\`  
+**Artifact ZIP SHA-256:** \`56c2fc8a7aa8fbb4a5d1b58efa92a757d60c550b6b24eee71e21065a462806fe\`  
+**Runtime:** Python 3.12.16, NEURON 9.0.2, NumPy 2.5.5
+
+All setup, complete AMSN regression, source SWC SHA-256, Import3D/area/port preflight and matched-port unit-test steps passed. The replay ran for 422.61 s wall time, 518.23 s user CPU, with peak process RSS 187,160 KiB. All 36 models achieved their requested basis order and passed Cholesky passivity checks.
+
+The runner completed every expected output:
+- 36 model × port-count × order × parameter-scenario rows
+- 324 frequency-matrix rows
+- 1,728 per-port transient rows
+- 756 matched pairs on the seven shared output nodes (378 per order)
+- 216 q25-only observations (108 per order)
+- 378 full-Hines shared-node consistency checks
+
+### Matched shared outputs
+
+| Basis order | 9-port worse | 9-port better | Ties | Median 9/7 transient-error ratio | Maximum 9/7 ratio |
+|---:|---:|---:|---:|---:|---:|
+| 112 | 377/378 | 1/378 | 0 | **8.1620×** | 395.2606× |
+| 168 | 187/378 | 190/378 | 1 | **0.99999985×** | 1.00144× |
+
+At order 112, adding the two q25 outputs is not a free improvement: the nine-port model is worse on 377 of 378 shared-output comparisons. The median transient error ratio is 8.16×. The absolute worst nine-port per-port transient NRMSE is still only 1.0655e−5%, but relative degradation is systematic and measurable.
+
+At order 168, the same seven shared outputs are at numerical parity: the median ratio is 0.99999985× and the maximum ratio is 1.00144×. Improvements and regressions are balanced (190 versus 187), with one tie.
+
+### Added q25 outputs
+
+| Basis order | Observations | Median q25 NRMSE | Maximum q25 NRMSE |
+|---:|---:|---:|---:|
+| 112 | 108 | 8.3418e−8% | 3.6711e−6% |
+| 168 | 108 | 8.6262e−9% | **8.6226e−8%** |
+
+The two added outputs are represented accurately at both orders against full Hines. However, only order 168 preserves near-parity on the original shared outputs. This reproduces the order-dependent conclusion from PR #6 on an independent morphology.
+
+### High-frequency AC and numeric storage
+
+| Port count | Order | Median Z residual at 10 kHz | Median Y residual at 10 kHz | Median numeric storage |
+|---:|---:|---:|---:|---:|
+| 7 | 112 | 4.6124e−6% | 9.5816e−6% | 6.4104 MB |
+| 9 | 112 | 1.0498e−4% | 2.5063e−4% | 6.4104 MB |
+| 7 | 168 | 2.7305e−10% | 7.2223e−10% | 9.7592 MB |
+| 9 | 168 | 3.3864e−8% | 9.8754e−8% | 9.7592 MB |
+
+Numeric storage here is the measured basis plus reduced G/C arrays, not whole-process RSS. At a matched order it is identical between the two port layouts in this implementation. The workflow's overall peak process RSS was 187,160 KiB; it is a single run and is not a controlled per-candidate memory benchmark.
+
+The 378 shared-node full-Hines checks were exact: maximum absolute trace difference and relative L2 difference were both 0 for every matched reference. This establishes that the 7-port/9-port comparison did not change the underlying reference traces at shared nodes.
+
+### Updated conditional recommendation
+
+- **Seven outputs only:** keep 7-port order112 extended10kHz as the smaller high-frequency research candidate. The matched holdout also shows 7-port order168 has still lower AC residuals, at greater numeric storage.
+- **Need basal-q25 and apical-q25:** choose 9-port order168 among the configurations tested. It preserves shared-output parity and has maximum q25 transient NRMSE below 1e−7%.
+- **Do not choose 9-port order112** solely to obtain q25. It fits the q25 outputs well, but degrades the seven shared transient outputs systematically relative to 7-port order112.
+- **Order84** remains the lower-memory alternative from the separate nine-port resource audit, but it was not part of this NMO_162186 matched-order run.
+- Full Hines remains canonical; no production default or runtime path is changed.
+
+### Scientific limits
+
+NMO_162186 is one epilepsy surgical specimen with incomplete axon. This is a second protocol dimension on one external morphology, not a second morphology and not population-level validation. Results remain passive linear-RC numerical comparisons. They do not validate active channels, nonlinear synapses, plasticity or biological function.
