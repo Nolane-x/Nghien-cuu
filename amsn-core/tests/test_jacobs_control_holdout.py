@@ -81,7 +81,7 @@ def test_segment_centre_bracket_interpolates_inside_section():
         [0.1, 0.3, 0.5, 0.7, 0.9], 0.4
     )
     assert (lower, upper) == (1, 2)
-    assert weight == 0.5
+    assert abs(weight - 0.5) < 1e-12
     assert fallback is None
 
 
