@@ -1,17 +1,17 @@
 # PRIMA accuracy–memory–holdout synthesis
 
 **Date:** 23 November 2026  
-**Repository:** \`Nolane-x/Nghien-cuu\`  
+**Repository:** `Nolane-x/Nghien-cuu`  
 **Scope:** passive linear-RC neuron reduction only  
-**Status:** evidence synthesis across validated PRs #4–#8; no production default changed
+**Status:** evidence synthesis across validated PRs #4–#15; no production default changed
 
 ## Executive conclusion
 
 There is no single PRIMA configuration that is best for every port set, output location, frequency band, transient protocol and resource budget. The current evidence supports three *conditional* choices:
 
-1. **Seven-port, order 112, extended 10 kHz shifts** is the strongest high-frequency passive candidate in the seven-output shift/order sweep. It retains very low transient error and reproduced its advantage on one independent held-out morphology.
-2. **Nine-port, order 168** is the defensible choice when basal-q25 and apical-q25 outputs are specifically required. It is the first tested equal-order point where the two additional outputs are accurate while the seven shared outputs remain effectively at parity with the seven-port model.
-3. **Order 84** is the lower-memory point among the resource-benchmarked nine-port candidates. It remains a useful constrained alternative, but its accuracy depends on shift placement and the target outputs.
+1. **Seven-port, order 112, extended 10 kHz shifts** is the strongest high-frequency passive candidate in the seven-output shift/order sweep. It retains very low transient error and reproduced its high-frequency advantage on both NMO_162186 and NMO_03524, two individual human holdouts with different source contexts.
+2. **Nine-port order must be selected per morphology** when basal-q25 and apical-q25 outputs are required. NMO_162186 needed order168 to restore shared-output parity; NMO_03524 was already at parity at order112, with accurate q25 outputs at both orders.
+3. **Seven-port order84 with extended10kHz shifts** is a useful accuracy/storage compromise on NMO_03524; order56 remains the lowest-footprint option on that morphology. The separate process-RSS benchmark still shows increasing peak RSS with order, but its absolute values come from a different nine-port audit.
 
 **Full Hines remains the canonical reference.** Existing production order defaults remain unchanged. Matched 7-port/9-port tests on NMO_162186 and NMO_03524 show that the incremental numerical cost of adding q25 ports is morphology-dependent; there is no universal order threshold for nine-port models.
 
@@ -34,9 +34,9 @@ The experiments are related but not interchangeable. In particular, the PR #7 se
 
 PR #7 evaluated three positive-real shift distributions:
 
-- \`narrow_3khz\`: 0, 100, 1,000 and 3,000 Hz
-- \`extended_10khz\`: 0, 100, 1,000, 3,000, 6,000 and 10,000 Hz
-- \`balanced_10khz\`: 0, 10, 100, 1,000, 3,000 and 10,000 Hz
+- `narrow_3khz`: 0, 100, 1,000 and 3,000 Hz
+- `extended_10khz`: 0, 100, 1,000, 3,000, 6,000 and 10,000 Hz
+- `balanced_10khz`: 0, 10, 100, 1,000, 3,000 and 10,000 Hz
 
 Each was tested at orders 56, 84 and 112 on three morphology fixtures, with nine deterministic passive-parameter scenarios per morphology. All 243 reduced models achieved the requested rank and passed Cholesky positive-definiteness checks. All nine candidates remained non-dominated across 19 objectives; no weighted score was used to manufacture one universal winner.
 
@@ -51,17 +51,17 @@ Each was tested at orders 56, 84 and 112 on three morphology fixtures, with nine
 | Worst transient per-port NRMSE | 3.44984e−6% | 3.44983e−6% |
 | Median numeric storage | 10.79 MB | 10.79 MB |
 
-At order 112, extending the shift band lowers the median 10 kHz impedance/admittance residual by approximately **41.7× / 44.8×** versus the narrow set. Median transient NRMSE is only about 1.38% higher; the worst transient error is effectively unchanged. This makes \`order112_extended_10khz\` a strong high-frequency passive research candidate.
+At order 112, extending the shift band lowers the median 10 kHz impedance/admittance residual by approximately **41.7× / 44.8×** versus the narrow set. Median transient NRMSE is only about 1.38% higher; the worst transient error is effectively unchanged. This makes `order112_extended_10khz` a strong high-frequency passive research candidate.
 
 The same shift does not behave as well at every order. At order 56, extended shifts materially increase transient error. At order 84, the extended set improves high-frequency residuals but raises transient error relative to narrow shifts. Shift strategy and basis order must be selected together.
 
 ## 2. Independent morphology holdout
 
-PR #8 tested nine candidates (orders 56/84/112 × the three shift strategies) on NMO_162186 / Allen Cell Types \`770307286_transformed\`, a human L2–3 specimen from right middle temporal gyrus.
+PR #8 tested nine candidates (orders 56/84/112 × the three shift strategies) on NMO_162186 / Allen Cell Types `770307286_transformed`, a human L2–3 specimen from right middle temporal gyrus.
 
 The source is a **single epilepsy surgical specimen**. NeuroMorpho marks dendrites complete and axon incomplete. It is an external dendritic morphology holdout, not a healthy control, a complete axon-to-dendrite neuron, or a representative population.
 
-The source SWC was checksum-pinned (SHA-256 \`a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc\`). The holdout workflow passed 2/2 jobs; all 81 models achieved their requested orders and passed reduced G/C Cholesky checks.
+The source SWC was checksum-pinned (SHA-256 `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`). The holdout workflow passed 2/2 jobs; all 81 models achieved their requested orders and passed reduced G/C Cholesky checks.
 
 ### Holdout results at order 112
 
@@ -75,7 +75,7 @@ The source SWC was checksum-pinned (SHA-256 \`a05ad0770e857676b6be415f6f81a7548d
 | Maximum transient per-port NRMSE | 1.45426e−7% | 1.45425e−7% |
 | Median numeric storage | 6.72 MB | 6.72 MB |
 
-On this one holdout, order112 extended reduces median high-frequency Z/Y residual by **30.15× / 38.39×** compared with order112 narrow while preserving essentially the same transient metrics. This is positive external-morphology evidence, but it is still one morphology from one disease-affected specimen. It does not establish population-level generalization.
+On this epilepsy holdout, order112 extended reduces median high-frequency Z/Y residual by **30.15× / 38.39×** compared with order112 narrow while preserving essentially the same transient metrics. This is positive external-morphology evidence, but it is one epilepsy specimen and does not establish population-level generalization. A second, distinct Jacobs Control-condition morphology is summarized in Section 8.
 
 ## 3. Seven ports versus nine ports: order is inseparable from port count
 
@@ -127,7 +127,7 @@ All 12 matched peak-RSS comparisons were positive at each order increase:
 
 The memory trend is consistent within this experiment. Timing is **not** a controlled ranking: jobs ran across seven AMD EPYC/Intel Xeon CPU models, and the measured command includes model setup, full reference calculations and the complete sweep, not only the reduced solver kernel. Do not conclude that order168 is faster than order112 from these medians.
 
-This is a separate nine-port resource experiment. Its RSS measurements should be used as order-level guidance, not presented as a direct memory measurement of the seven-port \`order112_extended_10khz\` candidate.
+This is a separate nine-port resource experiment. Its RSS measurements should be used as order-level guidance, not presented as a direct memory measurement of the seven-port `order112_extended_10khz` candidate.
 
 ## 5. Conditional design recommendation
 
@@ -155,6 +155,9 @@ This table is a research selection guide, not a production-default change. All p
 - [PR #6 — equal-order seven-vs-nine-port](https://github.com/Nolane-x/Nghien-cuu/pull/6); [workflow 44987393352](https://github.com/Nolane-x/Nghien-cuu/actions/runs/44987393352); [report](https://github.com/Nolane-x/Nghien-cuu/blob/research/prima-equal-order-seven-vs-nine-ports-2026-11-22/amsn-core/research/HUMAN_PASSIVE_PRIMA_EQUAL_ORDER_PORT_COUNT_2026-11-22.md).
 - [PR #7 — shift/order Pareto](https://github.com/Nolane-x/Nghien-cuu/pull/7); [workflow 45002816664](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45002816664); [report](https://github.com/Nolane-x/Nghien-cuu/blob/research/prima-basis-transfer-protocol-robustness-2026-11-22/amsn-core/research/HUMAN_PRIMA_SHIFT_ORDER_PARETO_2026-11-22.md).
 - [PR #8 — held-out morphology](https://github.com/Nolane-x/Nghien-cuu/pull/8); [workflow 45012282648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45012282648); [report](https://github.com/Nolane-x/Nghien-cuu/blob/research/allen-human-morphology-heldout-preflight-2026-11-22/amsn-core/research/HUMAN_PASSIVE_PRIMA_VALIDATED_RESULTS_2026-11-22.md).
+- [PR #13 — NMO_162186 matched 7/9 ports](https://github.com/Nolane-x/Nghien-cuu/pull/13); [workflow 45184621520](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520).
+- [PR #14 — NMO_03524 Control shift/order holdout](https://github.com/Nolane-x/Nghien-cuu/pull/14); [workflow 45196546471](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471).
+- [PR #15 — NMO_03524 matched 7/9 ports](https://github.com/Nolane-x/Nghien-cuu/pull/15); [workflow 45198630080](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080).
 
 ## Final guardrails
 
@@ -196,7 +199,7 @@ Source: [PR #13](https://github.com/Nolane-x/Nghien-cuu/pull/13), [validated wor
 
 PR #14 / workflow 45196546471 adds a distinct Control-condition human pyramidal morphology from the Jacobs archive (NeuroMorpho NMO_03524 / 1-5-3), a 23-year-old male occipital BA18 reconstruction. NeuroMorpho metadata describes dendrites as moderate and the axon incomplete. This is one cell, not a population sample.
 
-The pinned SWC (31,199 bytes; SHA-256 \`6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748\`) contains 869 records, 862 AMSN electrical compartments, 68 NEURON sections and 35,248 NEURON segments at a maximum 0.125 µm segment length. Seven PRIMA ports were identified. A terminal basal-q90 probe at x=1.0 uses a logged nearest-endpoint-segment readout rather than extrapolating past the segment-centre interval.
+The pinned SWC (31,199 bytes; SHA-256 `6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748`) contains 869 records, 862 AMSN electrical compartments, 68 NEURON sections and 35,248 NEURON segments at a maximum 0.125 µm segment length. Seven PRIMA ports were identified. A terminal basal-q90 probe at x=1.0 uses a logged nearest-endpoint-segment readout rather than extrapolating past the segment-centre interval.
 
 The CI passed 146/146 repository tests and the full morphology preflight. It evaluated all nine seven-port candidates (orders 56/84/112 × three shift distributions) across nine passive parameter scenarios, yielding 81 model rows, 729 AC rows and 3,402 transient rows. Every candidate achieved its requested order and passed Cholesky checks.
 
@@ -213,18 +216,18 @@ Order112 extended10kHz is the highest-precision candidate. Order84 extended10kHz
 
 This provides independent support for the extended10kHz shift family in a distinct human morphology and Control metadata context. The two morphology datasets differ in size and reconstruction context and must not be pooled as one factorial experiment.
 
-**Important port-count limitation:** PR #14 is a seven-port sweep. It does not re-test basal-q25/apical-q25 or the 9-port order168 parity observed in PR #13 on NMO_162186. That q25/9-port decision remains morphology-specific until a matched 7-port/9-port test is run on NMO_03524.
+**Port-count follow-up:** PR #15 has now run the matched seven-port/nine-port order112/order168 comparison on NMO_03524. It found near-parity already at order112 and q25 maximum NRMSE below 3.1e−8% at both orders; see Section 9.
 
 Source: [PR #14](https://github.com/Nolane-x/Nghien-cuu/pull/14), [validated CI run](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471), [artifact #14827204708](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471/artifacts/14827204708).
 
 
 ## 9. Second matched port-count morphology: NMO_03524 Jacobs Control
 
-PR #15 / [workflow 45198630080](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080) completed the second matched port-count holdout. It used the NMO_03524 Jacobs Control morphology (869 SWC records; SHA-256 \`6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748\`), seven shared SWC nodes, and two q25-only nodes: basal 272 and apical 864.
+PR #15 / [workflow 45198630080](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080) completed the second matched port-count holdout. It used the NMO_03524 Jacobs Control morphology (869 SWC records; SHA-256 `6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748`), seven shared SWC nodes, and two q25-only nodes: basal 272 and apical 864.
 
 The run passed the full AMSN regression suite, source checksum, Import3D preflight, matched replay, idempotent result archive and artifact upload. It produced 36 model rows, 324 AC rows, 1,728 transient-port rows, 756 shared pairs, 216 q25-only observations and 378 shared-Hines checks. All models achieved the requested order and passed Cholesky checks; all 378 common Hines reference traces were exactly equal.
 
-Artifact #14829912332; ZIP SHA-256 \`cba24b3c36c24b125339feefbb3a10d0f105adf9cda2c80030a5577e80350b03\`.
+Artifact #14829912332; ZIP SHA-256 `cba24b3c36c24b125339feefbb3a10d0f105adf9cda2c80030a5577e80350b03`.
 
 ### Shared-output parity
 
