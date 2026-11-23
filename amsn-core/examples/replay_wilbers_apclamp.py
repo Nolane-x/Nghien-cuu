@@ -236,6 +236,105 @@ def summarize_experimental_csv(payload: bytes, ion: str) -> dict[str, Any]:
     return output
 
 
+
+def compare_curve(model: Any, experiment: Any) -> dict[str, Any]:
+    model_values = np.asarray(model, dtype=float).reshape(-1)
+    experiment_values = np.asarray(experiment, dtype=float).reshape(-1)
+    if model_values.size != experiment_values.size:
+        raise ValueError("Model and experimental AP series have different lengths")
+    finite = np.isfinite(model_values) & np.isfinite(experiment_values)
+    if not finite.any():
+        return {"n": 0, "mae": None, "rmse": None, "max_abs_error": None, "difference": []}
+    difference = model_values[finite] - experiment_values[finite]
+    return {
+        "n": int(finite.sum()),
+        "mae": float(np.mean(np.abs(difference))),
+        "rmse": float(np.sqrt(np.mean(difference**2))),
+        "max_abs_error": float(np.max(np.abs(difference))),
+        "difference": [float(x) for x in difference],
+    }
+
+
+def normalize_by_first(values: Any) -> list[float | None]:
+    array = np.asarray(values, dtype=float).reshape(-1)
+    if array.size == 0 or not np.isfinite(array[0]) or abs(float(array[0])) < 1e-30:
+        return [None] * int(array.size)
+    return [float(value / array[0]) if np.isfinite(value) else None for value in array]
+
+
+def summarize_model_vs_experiment(
+    models: dict[str, Any],
+    amps_na_payload: bytes,
+    amps_k_payload: bytes,
+) -> dict[str, Any]:
+    from io import BytesIO
+
+    na_frame = pd.read_csv(BytesIO(amps_na_payload))
+    k_frame = pd.read_csv(BytesIO(amps_k_payload))
+    comparisons: dict[str, Any] = {}
+    for species, source_species in (("human", "Human"), ("mouse", "Mouse")):
+        exp = (
+            na_frame.loc[na_frame["Species"] == source_species]
+            .loc[na_frame["APnr"] <= 5]
+            .groupby("APnr")["relative_amp"]
+            .mean()
+            .reindex(range(1, 6))
+            .to_numpy(dtype=float)
+        )
+        model = models[f"na_{species}"]
+        model_curve = model["normalized"]
+        comparisons[f"na_{species}"] = {
+            "source_plot_normalization": "divide modeled peak amplitude by AP1",
+            "model_normalized_curve": model_curve,
+            "experimental_recording_mean_curve": [float(x) for x in exp],
+            "source_normalization_metrics": compare_curve(model_curve, exp),
+        }
+
+    for species, source_species in (("human", "H"), ("mouse", "M")):
+        exp = (
+            k_frame.loc[k_frame["species"] == source_species]
+            .loc[k_frame["APnr"] <= 5]
+            .groupby("APnr")["amp"]
+            .mean()
+            .reindex(range(1, 6))
+            .to_numpy(dtype=float)
+        )
+        model = models[f"k_{species}"]
+        source_curve = model["normalized"]
+        raw_values = model["amplitude"]["values"]
+        ap1_curve = normalize_by_first(raw_values)
+        comparisons[f"k_{species}"] = {
+            "source_plot_normalization": "divide modeled amplitude by maximum modeled amplitude",
+            "model_normalized_curve_source_exact": source_curve,
+            "experimental_recording_mean_curve": [float(x) for x in exp],
+            "source_normalization_metrics": compare_curve(source_curve, exp),
+            "additional_shape_only_check": {
+                "normalization": "divide modeled amplitude by model AP1; not the original potassium script",
+                "model_normalized_curve": ap1_curve,
+                "metrics": compare_curve(ap1_curve, exp),
+            },
+            "normalization_warning": (
+                "The original potassium script normalizes model output by its maximum, "
+                "while the experimental amp column has AP1 mean 1.0 in the released data. "
+                "The model's largest response occurs at AP2; preserve the source's exact "
+                "normalization and report AP1-normalized shape comparison separately."
+            ),
+        }
+    return {
+        "ap_range": [1, 5],
+        "source_experimental_grouping": {
+            "na": "amps_na.csv Species; means across the five AP-clamp recordings per species",
+            "k": "amps_k.csv species; H_wide command waveform, means across recordings",
+        },
+        "comparisons": comparisons,
+        "interpretation": (
+            "MAE/RMSE compare the exact five-AP replay from a single shared voltage command "
+            "with the released per-recording experimental means. The experimental means "
+            "summarize recordings, while the model curve is one deterministic single-compartment "
+            "simulation; these are descriptive discrepancies, not inferential statistics."
+        ),
+    }
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("wilbers-apclamp-replay.json"))
@@ -338,8 +437,8 @@ def main() -> None:
             "model_section": "single 10 um diameter section, Ra=200 ohm cm, Cm=1 uF/cm2",
         }
         report = {
-            "schema_version": 1,
-            "status": "raw_human_apclamp_trace_verified_and_original_neuron_helpers_replayed",
+            "schema_version": 2,
+            "status": "raw_human_apclamp_trace_verified_original_neuron_helpers_replayed_and_compared_with_experimental_means",
             "runtime_eligible": False,
             "runtime_versions": {
                 "python": __import__("platform").python_version(),
@@ -365,6 +464,9 @@ def main() -> None:
                 "k": summarize_experimental_csv(payloads["amps_k"], "k"),
             },
             "original_model_replay": models,
+            "model_vs_experiment_first_five_aps": summarize_model_vs_experiment(
+                models, payloads["amps_na"], payloads["amps_k"]
+            ),
             "interpretation_limits": [
                 "The original source helper code and unmodified human/mouse MOD files were executed; no mechanism correction was applied.",
                 "Na waveform offset is -10 mV per the original apclamp_na.py; K receives no offset per apclamp_k.py.",
@@ -380,6 +482,7 @@ def main() -> None:
             "trace": trace_info,
             "protocol": protocol,
             "models": models,
+            "model_vs_experiment_first_five_aps": report["model_vs_experiment_first_five_aps"],
             "output": str(args.output),
         }, indent=2, allow_nan=False))
 

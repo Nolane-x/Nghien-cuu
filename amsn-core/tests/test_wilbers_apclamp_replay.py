@@ -22,3 +22,16 @@ def test_ljp_offset_is_applied_only_to_na_command_trace():
     assert MODULE.NA_VOLTAGE_OFFSET_MV == -10.0
     assert MODULE.SAMPLE_RATE_HZ == 125000
     assert MODULE.SAMPLE_FREQ_PER_MS == 125
+
+
+
+def test_curve_metrics_compare_equal_length_series():
+    result = MODULE.compare_curve([1.0, 0.9], [1.0, 0.8])
+    assert result["n"] == 2
+    assert abs(result["mae"] - 0.05) < 1e-12
+    assert abs(result["rmse"] - (0.01 / 2) ** 0.5) < 1e-12
+
+
+def test_ap1_normalization_is_explicit_and_rejects_zero_denominator():
+    assert MODULE.normalize_by_first([2.0, 1.0, 0.5]) == [1.0, 0.5, 0.25]
+    assert MODULE.normalize_by_first([0.0, 1.0]) == [None, None]
