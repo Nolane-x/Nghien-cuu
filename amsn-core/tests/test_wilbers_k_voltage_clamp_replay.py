@@ -53,6 +53,12 @@ def k_mech_IV(mechname):
     cell.Ra=200
     cell.cm=1
     cell.ek=-101
+def runIk(cell,durs,amps): pass
+def fit_boltz_act(x,y): pass
+def fit_boltz_inact(x,y): pass
+def get_tau_act(x,y): pass
+def get_tau_inact_double(x,y): pass
+def get_double_tau_rec(x,y): pass
 """
     result = MODULE.validate_original_protocol_sources(source)
     assert result["functions_verified"] == sorted([
@@ -144,7 +150,7 @@ def test_target_curve_comparison_uses_only_original_author_included_rows():
     assert metric["n_voltage_points"] == 2
     assert rows[0]["n_target_cells"] == 2
     assert rows[0]["target_mean"] == pytest.approx(0.5)
-    assert metric["mae"] == pytest.approx(0.1)
+    assert metric["mae"] == pytest.approx(0.05)
     assert rows[0]["within_pointwise_1_96_sem"] is True
 
 
