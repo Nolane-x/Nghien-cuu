@@ -14,27 +14,43 @@
 
 ## Why this branch exists
 
-The previous source-provenance checkpoint verified nine released K mechanisms and compiled all nine independently, but explicitly stated that no released variant had yet been replayed against the original 200-AP H_wide command. This branch implements that exact next gate.
+The previous source-provenance checkpoint verified nine released K mechanisms and compiled all nine independently, but explicitly left replay against the original 200-AP H_wide command as an uncompleted validation gate. This branch implements and validates that gate.
 
 ## Implementation
 
 - Reuses the hash-verified Dataverse download helper, original AP-clamp helper, protocol slicing, workbook parser and list-backed recorder from \`replay_wilbers_apclamp.py\`.
 - Verifies exact source-declared SUFFIX and records STATE/RANGE/parameter metadata for every mechanism.
 - Compiles the nine unchanged K MOD payloads together, then separately instantiates each exact suffix.
-- Runs the original five-AP helper for each mechanism before the recorder optimization, then the full 200-AP helper after optimization.
-- Repeats the same original five-AP helper before and after the recorder replacement for every mechanism and requires identical outputs within 1e-12. It records the difference between the distinct five-AP and 200-AP source helpers descriptively, without assuming those routines are equivalent.
+- Runs the original five-AP helper before and after recorder replacement for every source mechanism and requires identical outputs within 1e-12.
+- Records the difference between the distinct five-AP and 200-AP source helper outputs descriptively; does not incorrectly assert that the two separate routines must match.
 - Compares AP1-normalized curves against the original K workbook's human-input columns for Human and Mouse recording cohorts separately.
-- Produces machine-readable JSON, cohort summary CSV and per-AP residual CSV.
+- Produces the complete JSON result, cohort summary CSV and per-AP residual CSV.
 - No source MOD text, fitted defaults or AMSN runtime configuration is changed.
 
-## Validation status
+## Validation result
 
-The GitHub Actions workflow is triggered by this branch's implementation commit. An early run showed that Ik_AP1_5 and Ik_AP1_5_200 produce different initial amplitudes. That was an invalid cross-helper equality assumption, not proof of a channel-model failure. The acceptance gate was corrected to compare the same five-AP helper before/after recorder replacement. Until the corrected run completes and the artifact is inspected, do not quote variant performance numbers.
+**PASSED — GitHub Actions**
 
-## Next actions after CI
+- Run: https://github.com/Nolane-x/Nghien-cuu/actions/runs/45170480109
+- Artifact: \`wilbers-released-k-mod-variant-apclamp-replay\` (ID \`14817955509\`)
+- Tests: 30 passed
+- Source integrity: all nine immutable Dataverse MOD file ID, byte-size and SHA-1 pins matched
+- Compilation: 9/9 K MOD sources compiled together on NEURON 9.0.2
+- Replay: 9/9 mechanisms returned 200 finite AP amplitudes
+- Recorder control: 9/9 same-helper comparisons exact (max absolute difference 0)
+- Evidence tables: 18 cohort summary rows and 3,600 AP-level residual rows
 
-1. Inspect the complete workflow run and all nine mechanism outcomes.
-2. Inspect the JSON and CSV artifacts, especially finite AP coverage, the 5-AP/full-run prefix check, workbook cohort counts and the source SHA-1/SHA-256 manifest.
-3. Add the actual measured results, failures and interpretation to the research report and research log.
-4. Open a PR for review; do not merge into \`main\` automatically.
-5. If a released mechanism looks promising, test it against original steady-state activation, inactivation and recovery protocols before considering a biological claim.
+The best full-train AP-clamp MAE was \`k_hybrid2\` for both cohorts: 0.189698 (Human, n=14) and 0.280801 (Mouse, n=11). This is a relative ranking, not a validated biological model. AP200 current remains above recording means (+0.194293 Human; +0.348123 Mouse), and only 1/200 points falls inside the pointwise mean ±1.96 SEM band for every tested mechanism/cohort pair. No variant is promoted to runtime.
+
+## Next research gate — independent K voltage-clamp validation
+
+1. Inspect the original Wilbers \`channel_kinetics.py\`, \`channel_tools.py\` and \`fit_k_hh_cma_human.py\` protocols and source workbook data.
+2. Reconstruct independent steady-state activation and inactivation curves from the released source data; preserve individual recording identity and the original voltage steps.
+3. Reproduce activation and inactivation time constants and recovery kinetics using the original source fitting routines or a validated equivalent.
+4. Evaluate \`k_hybrid2\`, \`k_hybrid5\`, \`k_hybrid4\`, canonical \`k_human\` and \`k_mouse\` against those independent targets. Do not select and validate on the same AP-clamp metric.
+5. Investigate why \`k_human_hm12inf\` and \`k_human\` give exactly identical amplitude trajectories under this one AP-clamp protocol despite different declared gate structures.
+6. Only after independent voltage-clamp reproduction, morphology/current-clamp evaluation and uncertainty analysis should any candidate be considered for a model-level decision.
+
+## Pull-request scope
+
+The feature branch is intended to target \`research/wilbers-human-active-channel-baseline-2026-11-22\`, not \`main\`: comparing against \`main\` would drag 76 prior research commits and 85 files into this focused PR. Do not merge this work into \`main\` automatically.
