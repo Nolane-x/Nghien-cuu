@@ -22,6 +22,8 @@ def test_catalog_contains_all_nine_pinned_released_k_mechanisms():
     assert len({item["id"] for item in MODULE.K_VARIANTS.values()}) == 9
     assert MODULE.K_VARIANTS["k_human"]["id"] == 318647
     assert MODULE.K_VARIANTS["k_human_hm12inf"]["id"] == 318604
+    assert MODULE.K_VARIANT_PINS["k_human"]["sha1"] == "d299b3430ecda7a94f6d1c37ac76b2878052c7d5"
+    assert MODULE.K_VARIANT_PINS["k_hybrid5"]["bytes"] == 4080
 
 
 def test_hybrid_roles_are_transcribed_from_original_source_audit():
