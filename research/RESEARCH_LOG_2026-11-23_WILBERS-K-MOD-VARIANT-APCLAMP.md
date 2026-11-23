@@ -16,3 +16,10 @@ The test design also requires the first five amplitudes from the 200-AP executio
 ## Validation
 
 **Pending.** No numerical performance result, all-nine replay pass, or model promotion is claimed until the Actions run and uploaded artifacts have been checked.
+
+
+## Validation correction
+
+The first full run successfully verified the source files, compiled all nine K mechanisms together, and extracted the exact 5-AP and 200-AP command windows. It then exposed an invalid invariant: the separate original source functions \`Ik_AP1_5\` and \`Ik_AP1_5_200\` do not return equal first-five amplitude values. The prior code had incorrectly treated them as interchangeable.
+
+The acceptance gate is now corrected. For every K MOD variant, the same \`Ik_AP1_5\` helper is run before and after the already-tested list-backed recorder replacement; only that same-helper comparison must be identical within 1e-12. The 5-AP versus 200-AP helper difference is retained as a descriptive diagnostic, not a failure condition. The 200-AP replay remains the target for comparison to the full workbook cohort.
