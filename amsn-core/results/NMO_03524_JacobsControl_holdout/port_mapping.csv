@@ -1,0 +1,8 @@
+swc_node_id,electrical_node_name,electrical_index,roles
+1,swc_1,0,soma
+583,swc_583,698,basal_q75
+867,swc_867,43,apical_q75
+367,swc_367,447,basal_q50
+751,swc_751,777,basal_q90
+866,swc_866,32,apical_q50
+868,swc_868,56,apical_q90
