@@ -190,7 +190,7 @@ For high-frequency AC at 10 kHz on this holdout, median Z/Y residuals were 4.612
 
 The model-array numeric storage (basis plus reduced G/C matrices) was 6.4104 MB at order112 and 9.7592 MB at order168 for both port counts in this implementation. This is not whole-process RSS. The entire run took 422.61 s wall time, used 518.23 s CPU and peaked at 187,160 KiB RSS; this one end-to-end measurement is not a per-candidate resource benchmark.
 
-**Updated decision:** use 7-port order112 extended10kHz when the original seven outputs are sufficient and high-frequency accuracy is the objective. Use 9-port order168 only when basal-q25 and apical-q25 outputs are specifically required. Do not select 9-port order112 solely to add q25. Order84 remains the lower-memory option from the separate resource benchmark. Full Hines remains canonical; no production default is changed.
+**Updated decision:** use 7-port order112 extended10kHz when the original seven outputs are sufficient and high-frequency accuracy is the objective. When q25 outputs are required, run the matched 7/9-port comparison on the target morphology: NMO_162186 needed order168 for parity, whereas NMO_03524 was already at parity at order112. Order84 extended10kHz remains a good accuracy/storage compromise on NMO_03524, and order84 is also the lower-memory region in the separate resource benchmark. Full Hines remains canonical; no production default is changed.
 
 Source: [PR #13](https://github.com/Nolane-x/Nghien-cuu/pull/13), [validated workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520), [artifact #14824270534](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520/artifacts/14824270534).
 
