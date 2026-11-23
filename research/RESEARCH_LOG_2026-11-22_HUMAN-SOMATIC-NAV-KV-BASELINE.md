@@ -313,3 +313,8 @@ The archived K-human fitting driver (Dataverse file ID 326237) fits the voltage-
 No MOD file, canonical parameter default, or production runtime was modified. The result is an exploratory calibration signal only. Next work should establish provenance/physiological bounds for the mixture parameters and cross-check against the other published K MOD variants or independent protocols before any further tuning.
 
 Machine-readable results: [JSON](references/wilbers2023_k_human_local_refinement_grid_2026-11-23.json) and [CSV](../results/wilbers_k_human_local_refinement_grid_2026-11-23.csv).
+
+
+## Original K MOD variant provenance gate — CI pending 23/11/2026
+
+Added a separate workflow to inspect the nine released K MOD files (canonical human/mouse, two named human variants, and five hybrid models) together with the original channel-fitting helper and human/mouse fitting drivers. For each immutable Dataverse ID the script verifies the official metadata SHA-1 and exact byte size, records a SHA-256, parses the NMODL PARAMETER block, diffs it against canonical k_human, and independently compiles each source under NEURON 9.0.2. The original channel_kinetics.py comments identify hybrid1..5 as combinations of human activation/inactivation G/Gmax and activation-time-constant characteristics. Workflow 45144507180 is in progress; no variant AP-clamp replay or production promotion is claimed yet.

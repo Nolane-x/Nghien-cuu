@@ -193,3 +193,8 @@ The coarse 3×3 grid selected `prop_inact=0.95`, `h2tau_inact=225 ms` as its bes
 - Provenance warning: source fit script 326237 does not fit `prop_inact` or `h2tau_inact`; they are fixed mixture parameters in published MOD. The best point is at both local-grid boundaries, so do not claim a valid biological fit or promote to runtime.
 - No MOD or production defaults changed. Summary: [audit](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md), [JSON](amsn-core/research/references/wilbers2023_k_human_local_refinement_grid_2026-11-23.json), [CSV](amsn-core/results/wilbers_k_human_local_refinement_grid_2026-11-23.csv).
 - Next: audit the other released K MOD variants with official metadata SHA1/size verification; identify the provenance of the mixture terms, then test independent protocols rather than extrapolating an unbounded sensitivity sweep.
+
+
+## Original K MOD variant provenance gate — CI pending 23/11/2026
+
+Added a separate workflow to inspect the nine released K MOD files (canonical human/mouse, two named human variants, and five hybrid models) together with the original channel-fitting helper and human/mouse fitting drivers. For each immutable Dataverse ID the script verifies the official metadata SHA-1 and exact byte size, records a SHA-256, parses the NMODL PARAMETER block, diffs it against canonical k_human, and independently compiles each source under NEURON 9.0.2. The original channel_kinetics.py comments identify hybrid1..5 as combinations of human activation/inactivation G/Gmax and activation-time-constant characteristics. Workflow 45144507180 is in progress; no variant AP-clamp replay or production promotion is claimed yet.

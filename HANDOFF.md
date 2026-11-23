@@ -1,3 +1,13 @@
+## Latest active-channel research checkpoint — original K MOD variant provenance CI underway (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- The best K-human 200-AP sensitivity point remains exploratory: prop_inact=0.99, h2tau_inact=112.5 ms; MAE 0.07229 vs canonical 0.24192, but the AP200 residual remains ~2.21 SEM and the point is at the tested boundaries.
+- Original K fitting drivers do not optimize prop_inact/h2tau_inact; do not promote this sensitivity point as a biological fit.
+- Added original K MOD provenance/compile gate; workflow [45144507180](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45144507180) is in progress. No canonical MOD or runtime changes.
+
+---
+
 ## Latest active-channel research checkpoint — K-human AP-clamp local sensitivity completed (23/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
