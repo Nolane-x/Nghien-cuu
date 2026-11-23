@@ -1,3 +1,14 @@
+## Latest active-channel checkpoint — 200-AP AP-clamp validated (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- 200-AP workflow [45126687672](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672): success, 9/9 tests; artifact [14796251799](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672/artifacts/14796251799).
+- Four original human/mouse Na/K models produced 200/200 finite amplitudes on the verified H_wide trace. Optimized current collector matched the original np.append output exactly on the 5-AP reference for all four models.
+- Per-recording workbook comparison: model AP200 is above experimental mean in all six groups. Largest gap: mouse K 0.6284 model vs 0.2736 experiment. Keep Na Hnarrow/Hwide separate.
+- Report/JSON/CSV committed; next is controlled sensitivity/identifiability, without changing runtime channel defaults.
+
+---
+
 ## Latest active-channel research checkpoint — Figure 2 inferential statistics reproduced (23/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.

@@ -143,3 +143,12 @@ To avoid the original helper's quadratic `np.append` current-recorder cost, only
 ## Per-recording workbook cross-check for the 200-AP command — implementation added 23/11/2026
 
 The 200-AP run is now extended to read the original Na/K Figure 2 Excel workbooks after SHA-1/size verification. It will compare the complete model curves with per-recording means, SD and SEM from the workbook, rather than relying only on the legacy `amps_na.csv`/`amps_k.csv` mean series. For Na, both `Hnarrow` (main Figure 2 group, also matching the legacy CSV mean curve) and `Hwide` (candidate suggested by the raw input filename) are reported separately because the workbook's own waveform descriptions conflict. For K, the explicit normalized human-input columns `amp_h_n_` are used, matching the AP command family. This gives n=16/33 Na recordings and n=14/11 K recordings, with per-AP SD/SEM. First CI result is pending.
+
+
+## Full 200-AP replay — validated 23/11/2026
+
+- Workflow [45126687672](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672) succeeded, 9/9 tests. Artifact [14796251799](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672/artifacts/14796251799), SHA-256 `81e6fc2cd8d5859bdf92a75b330711fd8ea0b9693fdd4e913868c75572bda1b2`.
+- Exact first-200-AP H_wide command: 199–5182 ms, 622,876 samples, 125 kHz; raw file hash verified. Four source mechanisms produced 200/200 finite amplitudes.
+- Recorder equivalence passed: original np.append and list-backed collector were compared on first-five-AP command for Na human/mouse and K human/mouse; max absolute amplitude difference = 0 in all four. No channel equation, command, VClamp, dt or integration-loop changes.
+- Per-recording comparisons show model AP200 exceeds experiment for all six groups; largest gap is mouse K +0.3548 (model 0.6284, experimental mean 0.2736). Na Hnarrow/Hwide remain separate; K comparison is AP1-normalized against the workbook normalized human-input series.
+- Report/JSON/CSV are committed in the research branch. Next gate: controlled parameter sensitivity/identifiability, not a direct production patch.

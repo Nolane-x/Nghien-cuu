@@ -1,0 +1,202 @@
+{
+  "schema_version": 1,
+  "status": "validated_200_ap_original_human_apclamp_replay_and_per_recording_workbook_comparison",
+  "workflow": {
+    "id": 45126687672,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672",
+    "status": "success",
+    "tests_passed": 9,
+    "head_sha": "47743308b9c9184fadac2143316474fed5782aa4"
+  },
+  "five_ap_reference_workflow": {
+    "id": 45126687604,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687604",
+    "status": "success"
+  },
+  "artifact": {
+    "id": 14796251799,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672/artifacts/14796251799",
+    "bytes": 167515,
+    "sha256": "81e6fc2cd8d5859bdf92a75b330711fd8ea0b9693fdd4e913868c75572bda1b2"
+  },
+  "protocol": {
+    "trace_file_id": 318541,
+    "bytes": 15095411,
+    "sha1": "e209550ce746483de580459f7d8e40de91ec3667",
+    "sha256": "10ccb67d0e6bb0d51032a4ebd7c727b473c0a9e356e772fda205f7f54795d719",
+    "window_ms": [
+      199,
+      5182
+    ],
+    "samples": 622876,
+    "sample_rate_hz": 125000,
+    "dt_ms": 0.008,
+    "command_peaks": 200,
+    "temperature_c": 34,
+    "na_voltage_offset_mV": -10,
+    "k_voltage_offset_mV": 0,
+    "compartment": "single 10 um diameter, Ra=200 ohm cm, Cm=1 uF/cm2"
+  },
+  "models": {
+    "neuron_version": "9.0.2",
+    "models": [
+      "na_human",
+      "na_mouse",
+      "k_human",
+      "k_mouse"
+    ],
+    "finite_amplitudes_each": 200,
+    "nonfinite_amplitudes_each": 0,
+    "all_completed": true
+  },
+  "recorder_equivalence": {
+    "status": "passed",
+    "test_command": "original first 5 APs",
+    "tolerance": {
+      "rtol": 1e-12,
+      "atol": 1e-12
+    },
+    "results": {
+      "na_human": {
+        "max_abs_amplitude_difference": 0
+      },
+      "na_mouse": {
+        "max_abs_amplitude_difference": 0
+      },
+      "k_human": {
+        "max_abs_amplitude_difference": 0
+      },
+      "k_mouse": {
+        "max_abs_amplitude_difference": 0
+      }
+    },
+    "optimization": "Replaced only np.append current storage by list-backed recording in long replay; no changes to voltage command, VClamp, initialization, dt, integration loop, current variable or NMODL equations."
+  },
+  "workbooks": {
+    "na": {
+      "id": 318668,
+      "bytes": 548562,
+      "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
+      "sha256": "2fac600523d596a4dccbe167d3283b2e506dfdb9c7b1caef2a490c2c5dff184a",
+      "recordings": {
+        "Human": 16,
+        "Mouse": 33
+      }
+    },
+    "k": {
+      "id": 318669,
+      "bytes": 302011,
+      "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
+      "sha256": "f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d",
+      "recordings": {
+        "Human": 14,
+        "Mouse": 11
+      }
+    }
+  },
+  "comparisons": [
+    {
+      "key": "na_human_hnarrow",
+      "ion": "Na",
+      "cell": "Human",
+      "group": "Hnarrow",
+      "n": 16,
+      "mae": 0.0939713408590412,
+      "rmse": 0.09952479721079023,
+      "ap5m": 0.7937,
+      "ap5e": 0.7745,
+      "ap200m": 0.8931435096799717,
+      "ap200e": 0.7487170321404135,
+      "sem": 0.03027145457719074,
+      "delta": 0.14442647753955817,
+      "inband": 18
+    },
+    {
+      "key": "na_mouse_hnarrow",
+      "ion": "Na",
+      "cell": "Mouse",
+      "group": "Hnarrow",
+      "n": 33,
+      "mae": 0.21365107003229242,
+      "rmse": 0.21692485625432595,
+      "ap5m": 0.6345,
+      "ap5e": 0.5244,
+      "ap200m": 0.7534617168191619,
+      "ap200e": 0.5166544255362026,
+      "sem": 0.015365779895279097,
+      "delta": 0.2368072912829593,
+      "inband": 2
+    },
+    {
+      "key": "na_human_hwide",
+      "ion": "Na",
+      "cell": "Human",
+      "group": "Hwide",
+      "n": 16,
+      "mae": 0.11615842940594391,
+      "rmse": 0.12363366862632016,
+      "ap5m": 0.7937,
+      "ap5e": 0.7704,
+      "ap200m": 0.8931435096799717,
+      "ap200e": 0.7327220726918119,
+      "sem": 0.02809414978896214,
+      "delta": 0.1604214369881598,
+      "inband": 20
+    },
+    {
+      "key": "na_mouse_hwide",
+      "ion": "Na",
+      "cell": "Mouse",
+      "group": "Hwide",
+      "n": 33,
+      "mae": 0.1859850025637774,
+      "rmse": 0.18979222164836784,
+      "ap5m": 0.6345,
+      "ap5e": 0.561,
+      "ap200m": 0.7534617168191619,
+      "ap200e": 0.508001224791546,
+      "sem": 0.014996130686558062,
+      "delta": 0.24546049202761588,
+      "inband": 1
+    },
+    {
+      "key": "k_human_human_input",
+      "ion": "K",
+      "cell": "Human",
+      "group": "normalized human input",
+      "n": 14,
+      "mae": 0.2419164755395716,
+      "rmse": 0.24321995749005634,
+      "ap5m": 0.9389,
+      "ap5e": 0.7214,
+      "ap200m": 0.6749712151142749,
+      "ap200e": 0.42745036911271805,
+      "sem": 0.03212983105220731,
+      "delta": 0.24752084600155688,
+      "inband": 1
+    },
+    {
+      "key": "k_mouse_human_input",
+      "ion": "K",
+      "cell": "Mouse",
+      "group": "normalized human input",
+      "n": 11,
+      "mae": 0.2856839255710892,
+      "rmse": 0.29427346046126884,
+      "ap5m": 0.9209,
+      "ap5e": 0.7928,
+      "ap200m": 0.6283946410925707,
+      "ap200e": 0.27362051169513923,
+      "sem": 0.023103617233046544,
+      "delta": 0.35477412939743147,
+      "inband": 1
+    }
+  ],
+  "interpretation": {
+    "main_finding": "All six comparisons show model AP200 normalized current above the experimental recording mean; model use-dependent attenuation is too weak over the long train, most strongly for mouse K.",
+    "waveform_uncertainty": "Hnarrow is main Figure 2 Na group. Hwide is retained separately as a possible match to raw H_wide.csv. Workbook description of Hwide/Mwide is inconsistent; no silent relabelling or pooling.",
+    "k_normalization": "K model is AP1-normalized for comparison with amp_h_n_ workbook data. The original K plotting helper uses model-maximum normalization; that separate legacy comparison remains in the replay artifact.",
+    "statistics": "All figures are descriptive model-versus-recording-mean comparisons. Pointwise mean±1.96 SEM overlap is not an inferential test or simultaneous confidence band.",
+    "next_gate": "Controlled sensitivity/identifiability analysis for Na/K kinetics and conductance density, using all 200 AP points and per-recording workbook targets. No runtime mechanism or production default is changed."
+  }
+}

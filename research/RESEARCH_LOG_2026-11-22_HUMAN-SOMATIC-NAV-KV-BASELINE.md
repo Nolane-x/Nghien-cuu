@@ -194,3 +194,34 @@ To avoid the original helper's quadratic `np.append` current-recorder cost, only
 ## Per-recording workbook cross-check for the 200-AP command — implementation added 23/11/2026
 
 The 200-AP run is now extended to read the original Na/K Figure 2 Excel workbooks after SHA-1/size verification. It will compare the complete model curves with per-recording means, SD and SEM from the workbook, rather than relying only on the legacy `amps_na.csv`/`amps_k.csv` mean series. For Na, both `Hnarrow` (main Figure 2 group, also matching the legacy CSV mean curve) and `Hwide` (candidate suggested by the raw input filename) are reported separately because the workbook's own waveform descriptions conflict. For K, the explicit normalized human-input columns `amp_h_n_` are used, matching the AP command family. This gives n=16/33 Na recordings and n=14/11 K recordings, with per-AP SD/SEM. First CI result is pending.
+
+
+## Full 200-AP replay and per-recording workbook validation — completed 23/11/2026
+
+GitHub Actions [45126687672](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672) completed successfully with **9/9 tests passing**. The original Dataverse `H_wide.csv` command was downloaded and checksum verified; NEURON 9.0.2 compiled and replayed the original human/mouse Na/K mechanisms through the first 200 AP peaks over 199–5182 ms (622,876 samples at 125 kHz). Each of the four models returned exactly 200 finite peak amplitudes; none were non-finite. The artifact is [14796251799](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45126687672/artifacts/14796251799), SHA-256 `81e6fc2cd8d5859bdf92a75b330711fd8ea0b9693fdd4e913868c75572bda1b2`.
+
+The full replay compares model curves against the original Figure 2 workbooks at the recording level, not just against legacy aggregate CSV curves. Na uses separate Hnarrow and Hwide groups; K uses normalized human-input workbook columns `amp_h_n_`.
+
+| Comparison | Recordings | MAE | RMSE | Model AP200 | Experiment AP200 mean ± SEM | Delta | Pointwise ±1.96 SEM overlaps |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Na human · Hnarrow | 16 | 0.0940 | 0.0995 | 0.8931 | 0.7487 ± 0.0303 | +0.1444 | 18/200 |
+| Na mouse · Hnarrow | 33 | 0.2137 | 0.2169 | 0.7535 | 0.5167 ± 0.0154 | +0.2368 | 2/200 |
+| Na human · Hwide | 16 | 0.1162 | 0.1236 | 0.8931 | 0.7327 ± 0.0281 | +0.1604 | 20/200 |
+| Na mouse · Hwide | 33 | 0.1860 | 0.1898 | 0.7535 | 0.5080 ± 0.0150 | +0.2455 | 1/200 |
+| K human · human input | 14 | 0.2419 | 0.2432 | 0.6750 | 0.4275 ± 0.0321 | +0.2475 | 1/200 |
+| K mouse · human input | 11 | 0.2857 | 0.2943 | 0.6284 | 0.2736 ± 0.0231 | +0.3548 | 1/200 |
+
+All six comparisons have a positive AP200 model-minus-experiment gap. This means the original single-compartment models retain too much normalized current late in the train (i.e. model use-dependent attenuation is too weak), with the largest difference in mouse K. The gap is visible well before AP200: for example, at AP5 the human-input K model is 0.9389 (human) / 0.9209 (mouse) after AP1 normalization, whereas the workbook means are 0.7214 / 0.7928.
+
+### Equivalence of the long-run performance optimization
+
+The 200-AP replay avoids quadratic `np.append` reallocations by storing the current samples in a list. Before the long replay, all four models were run on the exact original first-five-AP command once with the original collector and once with the optimized collector. The four amplitude series were identical: maximum absolute difference was **0** for Na human, Na mouse, K human and K mouse (comparison tolerance rtol/atol (10^{-12})). Only the recorder storage changed; VClamp, voltage command, initialization, 0.008 ms time step, integration loop, current variable and NMODL equations were unchanged.
+
+### Interpretation boundaries
+
+- `Hnarrow` is the main Figure 2 Na waveform group. `Hwide` is retained separately as a candidate match to the raw `H_wide.csv` filename because the workbook description of Hwide/Mwide is inconsistent. No silent relabelling or pooling is performed.
+- K model values in the workbook comparison are normalized to AP1 to match the workbook's `amp_h_n_` series. The original K plotting code separately uses model-maximum normalization; that legacy comparison remains distinct in the replay artifact.
+- MAE/RMSE and AP200 differences are descriptive, not new significance tests. Pointwise mean ±1.96 SEM overlap counts are not simultaneous confidence bands or hypothesis tests.
+- This replay identifies a quantitative adaptation mismatch, not its cause. Channel kinetics, conductance density, slow inactivation, ionic accumulation and the limitations of a single-compartment model need separate controlled sensitivity/identifiability tests.
+
+Machine-readable summary: [`wilbers2023_200ap_replay_summary_2026-11-23.json`](references/wilbers2023_200ap_replay_summary_2026-11-23.json); CSV: [`wilbers_200ap_model_vs_recording_means_2026-11-23.csv`](../results/wilbers_200ap_model_vs_recording_means_2026-11-23.csv).
