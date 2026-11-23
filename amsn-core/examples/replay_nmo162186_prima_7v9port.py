@@ -213,7 +213,12 @@ def build_port_layouts(morphology, reader, sections, base: CableTree):
     return {7: seven, 9: nine}, common, q25_extra
 
 
-def build_matched_shared_rows(transient_rows: list[dict], common_node_ids: list[int]) -> list[dict]:
+def build_matched_shared_rows(
+    transient_rows: list[dict],
+    common_node_ids: list[int],
+    *,
+    expected_count: int = EXPECTED_SHARED_ROWS,
+) -> list[dict]:
     index = {}
     for row in transient_rows:
         if row["port_count"] not in (7, 9):
@@ -230,7 +235,7 @@ def build_matched_shared_rows(transient_rows: list[dict], common_node_ids: list[
         index[(row["port_count"], *key)] = row
     keys7 = {key[1:] for key in index if key[0] == 7}
     keys9 = {key[1:] for key in index if key[0] == 9}
-    if keys7 != keys9 or len(keys7) != EXPECTED_SHARED_ROWS:
+    if keys7 != keys9 or len(keys7) != expected_count:
         raise ValueError(
             f"matched shared output coverage mismatch: 7-port={len(keys7)}, "
             f"9-port={len(keys9)}, expected={EXPECTED_SHARED_ROWS}"
