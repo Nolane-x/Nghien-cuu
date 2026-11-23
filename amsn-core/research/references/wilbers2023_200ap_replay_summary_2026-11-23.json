@@ -198,5 +198,183 @@
     "k_normalization": "K model is AP1-normalized for comparison with amp_h_n_ workbook data. The original K plotting helper uses model-maximum normalization; that separate legacy comparison remains in the replay artifact.",
     "statistics": "All figures are descriptive model-versus-recording-mean comparisons. Pointwise mean±1.96 SEM overlap is not an inferential test or simultaneous confidence band.",
     "next_gate": "Controlled sensitivity/identifiability analysis for Na/K kinetics and conductance density, using all 200 AP points and per-recording workbook targets. No runtime mechanism or production default is changed."
+  },
+  "k_human_fit_snapshot_sensitivity": {
+    "status": "success",
+    "workflow": {
+      "id": 45128132847,
+      "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128132847",
+      "tests_passed": 3
+    },
+    "artifact": {
+      "id": 14796452988,
+      "sha256": "96e55c4e19b1fe644d707a6868921de1233a3bae8f1688458c0a84887599f0e4"
+    },
+    "sources": {
+      "na_mod": {
+        "id": 318629,
+        "sha1": "b199d70c3d0e7a2e991fd8d26c54b1318e3c0970",
+        "sha256": "e23ed354aa683639bfd2ffdeae4b2544adf8c5cce6f8a4adbada42549310f2fd",
+        "bytes": 3602
+      },
+      "k_mod": {
+        "id": 318647,
+        "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
+        "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063",
+        "bytes": 4220
+      },
+      "na_fit": {
+        "id": 326238,
+        "sha1": "3fac7eb5d25c2e02f6a3530d746de292548ef368",
+        "sha256": "ccb66f0d63514ba8eae60b17c61394630df15238cfbf67ddfb62c0d6a80c4f27",
+        "bytes": 3663
+      },
+      "k_fit": {
+        "id": 326237,
+        "sha1": "c819e59813acd70fae7af7151752bb1d8bbc7357",
+        "sha256": "842cbfffc8031b8fa03044cd862494474f55ccc2ac2493a2cf5bc3a1fa99958c",
+        "bytes": 3875
+      }
+    },
+    "reconciliation": {
+      "na_human": {
+        "final_fit_parameters": 13,
+        "matched_mod_defaults": 13,
+        "mismatched": 0,
+        "all_match": true
+      },
+      "k_human": {
+        "final_fit_parameters": 11,
+        "matched_mod_defaults": 5,
+        "mismatched": 6,
+        "all_match": false,
+        "mismatches": [
+          {
+            "parameter": "Rd",
+            "mod_default": 0.0016901435659310753,
+            "fit_snapshot": 0.0009968112992653684,
+            "absolute_delta": -0.0006933322666657069,
+            "relative_delta_pct": -41.022093071943296
+          },
+          {
+            "parameter": "Rg",
+            "mod_default": 0.0004968791312639546,
+            "fit_snapshot": 0.0004388884380488172,
+            "absolute_delta": -0.00005799069321513737,
+            "relative_delta_pct": -11.670985872886513
+          },
+          {
+            "parameter": "qi1",
+            "mod_default": 26.773929244740913,
+            "fit_snapshot": 25.748310780322146,
+            "absolute_delta": -1.0256184644187663,
+            "relative_delta_pct": -3.8306609950432438
+          },
+          {
+            "parameter": "qi2",
+            "mod_default": 0.40183382749400054,
+            "fit_snapshot": 6.809126450666186,
+            "absolute_delta": 6.407292623172186,
+            "relative_delta_pct": 1594.5130013395521
+          },
+          {
+            "parameter": "thi1",
+            "mod_default": 40.5659148938157,
+            "fit_snapshot": 20.386620488986296,
+            "absolute_delta": -20.179294404829406,
+            "relative_delta_pct": -49.74445777360183
+          },
+          {
+            "parameter": "thi2",
+            "mod_default": -75.93822659307075,
+            "fit_snapshot": -84.16487679230283,
+            "absolute_delta": -8.226650199232083,
+            "relative_delta_pct": -10.833345165296173
+          }
+        ]
+      },
+      "provenance_note": "The K fitting driver ends with a literal final-best-fit dictionary after its fitting calls; it does not call mod_cell(cell, final_best_fit_dict) after that marker. The dictionary is therefore an archived, unapplied fit snapshot, not proof that those are the parameters in the shipped MOD file."
+    },
+    "sensitivity_replay": {
+      "workflow": {
+        "id": 45128589224,
+        "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224",
+        "status": "success",
+        "tests_passed": 10,
+        "head_sha": "78814140e3378b66a390877bd14de8649d0e288b"
+      },
+      "artifact": {
+        "id": 14796936650,
+        "sha256": "8848be91b545d0d43def0a8a76e6bec7722e8d9e17ad9000c37a05e137fc59e1",
+        "bytes": 189286
+      },
+      "neuron_version": "9.0.2",
+      "protocol": {
+        "ap_count": 200,
+        "trace_sha256": "10ccb67d0e6bb0d51032a4ebd7c727b473c0a9e356e772fda205f7f54795d719",
+        "start_ms": 199,
+        "end_ms": 5182,
+        "samples": 622876,
+        "sample_rate_hz": 125000,
+        "temperature_c": 34
+      },
+      "candidate": {
+        "status": "completed",
+        "finite_amplitudes": 200,
+        "nonfinite_amplitudes": 0,
+        "parameter_readback_matches_snapshot": true,
+        "parameters": {
+          "thi1": 20.386620488986296,
+          "thi2": -84.16487679230283,
+          "qi1": 25.748310780322146,
+          "qi2": 6.809126450666186,
+          "Rd": 0.0009968112992653684,
+          "Rg": 0.0004388884380488172
+        }
+      },
+      "matched_target": {
+        "cell_species": "Human",
+        "workbook_condition": "normalized human-input K data, amp_h_n_",
+        "n_recordings": 14,
+        "normalization": "model AP1 normalized to match workbook"
+      },
+      "baseline": {
+        "mae": 0.2419164755395716,
+        "rmse": 0.24321995749005634,
+        "ap5_model": 0.9388805594394221,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6749712151142749,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_delta_model_minus_experiment": 0.24752084600155688,
+        "points_within_pointwise_1_96_sem": 1
+      },
+      "fit_snapshot": {
+        "mae": 0.2600391470205344,
+        "rmse": 0.2614412799471324,
+        "ap5_model": 0.9490502363813421,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6946217196032345,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_delta_model_minus_experiment": 0.26717135049051643,
+        "points_within_pointwise_1_96_sem": 1
+      },
+      "change_from_baseline": {
+        "mae_absolute": 0.018122671480962776,
+        "mae_relative_pct": 7.4912927862982,
+        "rmse_absolute": 0.018221322457076056,
+        "rmse_relative_pct": 7.491705304578472,
+        "ap200_overestimate_absolute": 0.019650504488959553,
+        "ap200_overestimate_relative_pct": 7.93892910693912
+      },
+      "conclusion": "The archived fit snapshot worsens the 200-AP match to human K experimental means. It must not replace the canonical MOD defaults."
+    },
+    "limitations": [
+      "The six parameter fit snapshot is a sensitivity variant only; canonical MOD bytes are unchanged.",
+      "The comparison is descriptive, one shared human AP command and per-recording workbook means, not a newly fitted statistically validated model.",
+      "This result does not establish why the fit snapshot differs from the MOD defaults or which alternate parameter set is biologically correct.",
+      "No production defaults or runtime channel mechanisms are changed."
+    ]
   }
 }

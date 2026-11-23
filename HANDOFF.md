@@ -1,3 +1,13 @@
+## Latest active-channel checkpoint — K fit-snapshot sensitivity rejected (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- Dataverse source reconciliation [45128132847](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128132847): Na final-fit 13/13 parameters match MOD; K only 5/11 match.
+- K-human terminal fit snapshot, replayed as runtime-only sensitivity [45128589224](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224), worsens 200-AP MAE by 7.49% and RMSE by 7.49%. All 200 amplitudes finite; canonical MOD unchanged.
+- Do not promote archived snapshot. Next focus is controlled kinetic/density identifiability rather than copying the terminal fit dictionary.
+
+---
+
 ## Latest active-channel checkpoint — 200-AP AP-clamp validated (23/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.

@@ -195,3 +195,33 @@ A new source-only audit has been added to verify whether the archived human Na/K
 ## Runtime replay of archived K-human fit snapshot — CI pending
 
 The source reconciliation audit confirms the archived K-human final-fit dictionary differs from the canonical `k_human.mod` in six inactivation/recovery parameters. The 200-AP runner now evaluates that dictionary as a separate runtime-only sensitivity variant, with no MOD file edits. It uses the same 200-AP command and the K human-input recording workbook target; baseline and fit-snapshot outputs will be reported side by side. This is not a replacement mechanism or a production candidate. First sensitivity replay result is pending.
+
+
+## K-human final-fit snapshot provenance and runtime sensitivity — 23/11/2026
+
+The source reconciliation workflow [45128132847](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128132847) passed 3/3 tests and checksum-verified the original Dataverse MOD files and fitting drivers. It found:
+
+- Na human: all **13/13** values in the terminal final-fit dictionary match the canonical `na_human.mod` PARAMETER block.
+- K human: only **5/11** match the canonical `k_human.mod` defaults. Six archived fitting-driver values differ: `Rd`, `Rg`, `qi1`, `qi2`, `thi1`, and `thi2`. The largest proportional difference is `qi2`: 0.4018338 in the canonical MOD versus 6.8091265 in the terminal snapshot (~16.95×).
+
+This snapshot is printed at the end of the original K fitting driver after the fitting calls; the script does not pass the terminal dictionary to `mod_cell` after that marker. It is therefore a saved, unapplied candidate snapshot and not proof that the compiled MOD uses those values.
+
+### Runtime-only 200-AP K-human sensitivity
+
+A separate NEURON 9.0.2 run [45128589224](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224) passed 10/10 tests and applied the six snapshot values only to a temporary K-human mechanism instance. Parameter readback matched all six requested values, all 200 AP peaks remained finite, and the canonical `.mod` source and production runtime were unchanged. The artifact is [14796936650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224/artifacts/14796936650), SHA-256 `8848be91b545d0d43def0a8a76e6bec7722e8d9e17ad9000c37a05e137fc59e1`.
+
+Compared with the canonical MOD baseline against the 14 human recordings in the normalized human-input K workbook condition:
+
+| Metric | Canonical MOD | Archived fit snapshot |
+|---|---:|---:|
+| MAE, AP1–200 | 0.24192 | 0.26004 |
+| RMSE, AP1–200 | 0.24322 | 0.26144 |
+| Model AP5 | 0.93888 | 0.94905 |
+| Experimental AP5 mean | 0.72142 | 0.72142 |
+| Model AP200 | 0.67497 | 0.69462 |
+| Experimental AP200 mean ± SEM | 0.42745 ± 0.03213 | 0.42745 ± 0.03213 |
+| AP200 model-minus-experiment | +0.24752 | +0.26717 |
+
+The snapshot increases MAE by **7.49%**, RMSE by **7.49%** and the AP200 overestimation by **7.94%**. It therefore makes the long-train match worse, despite running stably. The candidate is rejected as a replacement for the canonical K mechanism under this AP-clamp objective.
+
+The proper interpretation is a provenance discrepancy plus a negative sensitivity result: the printed fit snapshot is not the MOD default, and applying it does not explain or fix the 200-AP adaptation gap. No channel code, parameter default or production behaviour is changed. Machine-readable details are stored in [`wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json`](references/wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json) and [the CSV](../results/wilbers_k_human_fit_snapshot_sensitivity_2026-11-23.csv).

@@ -162,3 +162,13 @@ A new source-only audit has been added to verify whether the archived human Na/K
 ## Runtime replay of archived K-human fit snapshot — CI pending
 
 The source reconciliation audit confirms the archived K-human final-fit dictionary differs from the canonical `k_human.mod` in six inactivation/recovery parameters. The 200-AP runner now evaluates that dictionary as a separate runtime-only sensitivity variant, with no MOD file edits. It uses the same 200-AP command and the K human-input recording workbook target; baseline and fit-snapshot outputs will be reported side by side. This is not a replacement mechanism or a production candidate. First sensitivity replay result is pending.
+
+
+## K-human fit-snapshot audit and sensitivity — completed 23/11/2026
+
+- Fit reconciliation workflow [45128132847](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128132847) passed 3/3 tests. Na final-fit dictionary matches its MOD defaults 13/13; K matches only 5/11. Six K differences: `Rd`, `Rg`, `qi1`, `qi2`, `thi1`, `thi2`.
+- Archived K fitting-driver final-best-fit dictionary is printed but not applied after its marker; it is not the canonical MOD state.
+- Runtime-only K-human snapshot replay [45128589224](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224) passed 10/10; artifact [14796936650](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45128589224/artifacts/14796936650). Six override values read back exactly; all 200 amplitudes finite; canonical MOD unchanged.
+- Against 14 human K recordings, snapshot worsens MAE 0.24192→0.26004 (+7.49%), RMSE 0.24322→0.26144 (+7.49%), AP200 model 0.67497→0.69462 vs experiment 0.42745; model overestimation becomes +0.26717 instead of +0.24752.
+- Do not promote the snapshot. It is a failed sensitivity variant under the 200-AP objective, not a fix.
+- Details: [audit report](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md), [JSON](amsn-core/research/references/wilbers2023_k_human_fit_snapshot_sensitivity_2026-11-23.json), [CSV](amsn-core/results/wilbers_k_human_fit_snapshot_sensitivity_2026-11-23.csv).
