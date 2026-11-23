@@ -599,7 +599,7 @@ def main() -> None:
             "model_section": "single 10 um diameter section, Ra=200 ohm cm, Cm=1 uF/cm2",
         }
         report = {
-            "schema_version": 2,
+            "schema_version": 3,
             "status": f"raw_human_apclamp_trace_verified_original_{ap_count}_ap_neuron_helpers_replayed_and_compared_with_experimental_means",
             "requested_ap_count": ap_count,
             "runtime_eligible": False,
@@ -634,7 +634,7 @@ def main() -> None:
             "interpretation_limits": [
                 "The original source helper code and unmodified human/mouse MOD files were executed; no mechanism correction was applied.",
                 "Na waveform offset is -10 mV per the original apclamp_na.py; K receives no offset per apclamp_k.py.",
-                "This command replay is only the first five APs from the H_wide waveform; it is not a 200-AP trace reproduction.",
+                f"This command replay covers the first {ap_count} APs from the H_wide waveform.",
                 "The K source trap0 anomalies may produce unstable or non-finite simulation output; do not conceal failed or non-finite results.",
                 "No AMSN runtime active-channel mechanism or production defaults are changed.",
             ],
@@ -646,7 +646,7 @@ def main() -> None:
             "trace": trace_info,
             "protocol": protocol,
             "models": models,
-            "model_vs_experiment_first_five_aps": report["model_vs_experiment_first_five_aps"],
+            "model_vs_experiment": report["model_vs_experiment"],
             "output": str(args.output),
         }, indent=2, allow_nan=False))
 
