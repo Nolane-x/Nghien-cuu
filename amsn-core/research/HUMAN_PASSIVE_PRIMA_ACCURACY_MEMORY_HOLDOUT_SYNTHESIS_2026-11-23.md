@@ -23,6 +23,7 @@ There is no single PRIMA configuration that is best for every port set, output l
 | Independent morphology holdout | PR #8, run 45012282648 | NMO_162186; 81 model rows, 729 AC rows, 3,402 transient-port rows | Order112 extended10kHz maintains very low high-frequency residuals on one held-out morphology |
 | Equal-order port-count test | PR #6, run 44987393352 | 3 morphologies × 2 mesh caps × 7/9 ports × orders 56/112/168; 3,072 sweep rows | Port count and order must be selected together; nine-port order168 restores shared-output parity and resolves q25 |
 | Matched port-count × independent holdout | PR #13, run 45184621520 | NMO_162186; 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations | Confirms order-dependent result: nine-port order112 regresses shared outputs; order168 restores parity |
+| Independent Control-condition morphology holdout | PR #14, run 45196546471 | NMO_03524 Jacobs; 81 models, 729 AC rows, 3,402 transient rows | Independently supports extended10kHz shift family; order84 extended10kHz is strong accuracy/storage compromise on this smaller Control morphology |
 | Nine-port high-order capacity | merged PR #4, run 44979673244 | 3 morphologies × 2 mesh caps; orders 28/56/84/112/168; 2,520 rows | Higher capacity sharply reduces apical-q90 transient error |
 | Runtime and peak RSS | PR #5, run 44989658844 | 36 measurements: 3 morphologies × 2 mesh caps × orders 84/112/168 × 2 repetitions; 37/37 jobs pass | Peak RSS increases consistently with order; timing is confounded by heterogeneous GitHub CPUs |
 
@@ -131,8 +132,10 @@ This is a separate nine-port resource experiment. Its RSS measurements should be
 
 | Use case | Research candidate | Evidence-based reason | Limitation |
 |---|---|---|---|
-| High-frequency accuracy on the seven retained outputs | **7-port, order112, extended10kHz** | Best 3–10 kHz residuals in PR #7; advantage reproduced on NMO_162186 | Only one external holdout; passive RC only |
-| Lower-memory passive alternative | **Order84** (choose shift set for required frequency/transient domain) | Lowest median peak RSS in the separate order resource matrix | No one order84 shift strategy is best on every endpoint |
+| High-frequency accuracy on the seven retained outputs | **7-port, order112, extended10kHz** | Best 3–10 kHz residuals in PR #7; extended10kHz also leads on both NMO_162186 and NMO_03524 | Passive RC only; holdout morphologies are individual specimens |
+| Lower-memory passive compromise | **7-port, order84, extended10kHz** | On NMO_03524, median 10 kHz Z/Y residuals 5.58e−7% / 2.88e−7% at 0.660 MB numeric storage | Validated on the smaller Jacobs Control morphology; re-evaluate on additional morphologies |
+| Lowest footprint | **Order56** (choose shift set by frequency/transient needs) | 0.416 MB numeric storage on NMO_03524; narrow3kHz preserves very small transient errors | Accept higher high-frequency AC residuals |
+| Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−7% on NMO_162186 | The q25/9-port decision is not yet tested on the NMO_03524 Control morphology |
 | Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−7% on NMO_162186 | Higher resource use than order84; holdout is one epilepsy surgical morphology |
 | Canonical reference | **Full Hines** | Remains the unreduced reference against which all passive candidates are measured | More states and resource cost; not being replaced |
 
@@ -188,3 +191,29 @@ The model-array numeric storage (basis plus reduced G/C matrices) was 6.4104 MB 
 **Updated decision:** use 7-port order112 extended10kHz when the original seven outputs are sufficient and high-frequency accuracy is the objective. Use 9-port order168 only when basal-q25 and apical-q25 outputs are specifically required. Do not select 9-port order112 solely to add q25. Order84 remains the lower-memory option from the separate resource benchmark. Full Hines remains canonical; no production default is changed.
 
 Source: [PR #13](https://github.com/Nolane-x/Nghien-cuu/pull/13), [validated workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520), [artifact #14824270534](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520/artifacts/14824270534).
+
+
+## 8. Second independent morphology: NMO_03524 Jacobs Control context
+
+PR #14 / workflow 45196546471 adds a distinct Control-condition human pyramidal morphology from the Jacobs archive (NeuroMorpho NMO_03524 / 1-5-3), a 23-year-old male occipital BA18 reconstruction. NeuroMorpho metadata describes dendrites as moderate and the axon incomplete. This is one cell, not a population sample.
+
+The pinned SWC (31,199 bytes; SHA-256 \`6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748\`) contains 869 records, 862 AMSN electrical compartments, 68 NEURON sections and 35,248 NEURON segments at a maximum 0.125 µm segment length. Seven PRIMA ports were identified. A terminal basal-q90 probe at x=1.0 uses a logged nearest-endpoint-segment readout rather than extrapolating past the segment-centre interval.
+
+The CI passed 146/146 repository tests and the full morphology preflight. It evaluated all nine seven-port candidates (orders 56/84/112 × three shift distributions) across nine passive parameter scenarios, yielding 81 model rows, 729 AC rows and 3,402 transient rows. Every candidate achieved its requested order and passed Cholesky checks.
+
+### High-frequency candidate summary on NMO_03524
+
+| Candidate | Median Z at 10 kHz | Median Y at 10 kHz | Median transient NRMSE | Numeric storage |
+|---|---:|---:|---:|---:|
+| Order56 narrow3kHz | 0.0085692% | 0.0054551% | 3.5394e−9% | 0.4161 MB |
+| Order56 extended10kHz | 0.0011971% | 0.00024464% | 9.0554e−9% | 0.4161 MB |
+| Order84 extended10kHz | 5.5775e−7% | 2.8753e−7% | 3.2709e−9% | 0.6601 MB |
+| Order112 extended10kHz | **3.6005e−10%** | **1.8143e−10%** | 3.2708e−9% | 0.9280 MB |
+
+Order112 extended10kHz is the highest-precision candidate. Order84 extended10kHz is a strong accuracy/storage compromise, using about 29% less numeric storage than order112 while keeping 10 kHz residuals extremely small. Order56 is the lowest-footprint option, but its shift choice materially affects high-frequency AC accuracy. On this Control morphology, extended10kHz gives the best high-frequency residuals at each tested order.
+
+This provides independent support for the extended10kHz shift family in a distinct human morphology and Control metadata context. The two morphology datasets differ in size and reconstruction context and must not be pooled as one factorial experiment.
+
+**Important port-count limitation:** PR #14 is a seven-port sweep. It does not re-test basal-q25/apical-q25 or the 9-port order168 parity observed in PR #13 on NMO_162186. That q25/9-port decision remains morphology-specific until a matched 7-port/9-port test is run on NMO_03524.
+
+Source: [PR #14](https://github.com/Nolane-x/Nghien-cuu/pull/14), [validated CI run](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471), [artifact #14827204708](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471/artifacts/14827204708).
