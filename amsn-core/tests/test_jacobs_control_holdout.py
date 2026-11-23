@@ -71,3 +71,48 @@ def test_metadata_remains_control_and_partial_axon():
     assert MODULE.SOURCE_URL.endswith("/1-5-3.CNG.swc")
     assert "Jacobs" in MODULE.LABEL
     assert MODULE.EXPECTED_TYPE_COUNTS[2] > 0
+
+
+
+def test_segment_centre_bracket_interpolates_inside_section():
+    import human_fine_mesh_passive_dc_audit as FINE
+
+    lower, upper, weight, fallback = FINE.segment_centre_bracket(
+        [0.1, 0.3, 0.5, 0.7, 0.9], 0.4
+    )
+    assert (lower, upper) == (1, 2)
+    assert weight == 0.5
+    assert fallback is None
+
+
+def test_segment_centre_bracket_uses_nearest_segment_at_right_endpoint():
+    import human_fine_mesh_passive_dc_audit as FINE
+
+    lower, upper, weight, fallback = FINE.segment_centre_bracket(
+        [0.1, 0.3, 0.5, 0.7, 0.9], 1.0
+    )
+    assert (lower, upper) == (4, 4)
+    assert weight == 0.0
+    assert fallback == "right_endpoint_nearest_segment"
+
+
+def test_segment_centre_bracket_uses_nearest_segment_at_left_endpoint():
+    import human_fine_mesh_passive_dc_audit as FINE
+
+    lower, upper, weight, fallback = FINE.segment_centre_bracket(
+        [0.1, 0.3, 0.5, 0.7, 0.9], 0.0
+    )
+    assert (lower, upper) == (0, 0)
+    assert weight == 0.0
+    assert fallback == "left_endpoint_nearest_segment"
+
+
+def test_segment_centre_bracket_rejects_unsorted_centres():
+    import human_fine_mesh_passive_dc_audit as FINE
+
+    try:
+        FINE.segment_centre_bracket([0.1, 0.5, 0.4], 0.45)
+    except ValueError as exc:
+        assert "strictly increasing" in str(exc)
+    else:
+        raise AssertionError("non-monotonic segment centres must fail closed")
