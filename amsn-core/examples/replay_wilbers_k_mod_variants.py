@@ -123,15 +123,47 @@ def validate_amplitudes(values: Any, expected_count: int, mechanism_name: str) -
     return [float(value) for value in array]
 
 
-def validate_first_five_consistency(
-    short_values: Any,
-    long_values: Any,
+def validate_recorder_equivalence(
+    original_values: Any,
+    optimized_values: Any,
     mechanism_name: str,
     *,
     rtol: float = 1e-12,
     atol: float = 1e-12,
 ) -> dict[str, Any]:
-    """Cross-check the original 5-AP helper against the prefix of the 200-AP run."""
+    """Require the same original 5-AP helper to survive the recorder replacement."""
+    import numpy as np
+
+    original = np.asarray(original_values, dtype=float).reshape(-1)
+    optimized = np.asarray(optimized_values, dtype=float).reshape(-1)
+    if original.size != 5 or optimized.size != 5:
+        raise ValueError(
+            f"{mechanism_name}: expected two five-AP arrays, observed {original.size}/{optimized.size}"
+        )
+    if not np.isfinite(original).all() or not np.isfinite(optimized).all():
+        raise ValueError(f"{mechanism_name}: recorder-equivalence arrays contain non-finite values")
+    difference = np.abs(original - optimized)
+    if not np.allclose(original, optimized, rtol=rtol, atol=atol):
+        raise ValueError(
+            f"{mechanism_name}: optimized current recorder changed the original 5-AP helper output; "
+            f"max_abs_difference={float(difference.max())}"
+        )
+    return {
+        "status": "identical_within_tolerance",
+        "same_helper": "Ik_AP1_5",
+        "ap_count": 5,
+        "rtol": rtol,
+        "atol": atol,
+        "max_absolute_amplitude_difference": float(difference.max()),
+    }
+
+
+def compare_short_helper_with_long_prefix(
+    short_values: Any,
+    long_values: Any,
+    mechanism_name: str,
+) -> dict[str, Any]:
+    """Record, but do not assert, differences between the two distinct source routines."""
     import numpy as np
 
     short = np.asarray(short_values, dtype=float).reshape(-1)
@@ -141,19 +173,17 @@ def validate_first_five_consistency(
             f"{mechanism_name}: expected 5/200 AP arrays, observed {short.size}/{long.size}"
         )
     if not np.isfinite(short).all() or not np.isfinite(long[:5]).all():
-        raise ValueError(f"{mechanism_name}: first-five comparison contains non-finite values")
-    difference = np.abs(short - long[:5])
-    if not np.allclose(short, long[:5], rtol=rtol, atol=atol):
-        raise ValueError(
-            f"{mechanism_name}: 5-AP source helper differs from 200-AP prefix; "
-            f"max_abs_difference={float(difference.max())}"
-        )
+        raise ValueError(f"{mechanism_name}: helper-prefix diagnostic contains non-finite values")
+    difference = short - long[:5]
     return {
-        "status": "identical_within_tolerance",
-        "ap_count": 5,
-        "rtol": rtol,
-        "atol": atol,
-        "max_absolute_amplitude_difference": float(difference.max()),
+        "status": "descriptive_only_separate_source_helpers",
+        "short_helper": "Ik_AP1_5",
+        "long_helper": "Ik_AP1_5_200",
+        "equality_asserted": False,
+        "short_helper_amplitudes": [float(value) for value in short],
+        "long_helper_first_five_amplitudes": [float(value) for value in long[:5]],
+        "signed_difference_short_minus_long_prefix": [float(value) for value in difference],
+        "max_absolute_difference": float(np.abs(difference).max()),
     }
 
 
@@ -408,18 +438,47 @@ def main() -> None:
         if not hasattr(helper, "Ik_AP1_5"):
             raise RuntimeError("The original AP-clamp helper does not expose its five-AP K routine")
 
-        # Run the original five-AP routine before replacing its original
-        # np.append recorder. It provides an independent prefix check for each
-        # mechanism, not just the canonical K source.
-        short_results: dict[str, list[float]] = {}
+        # Record the original five-AP helper output for each source mechanism.
+        # The five- and 200-AP helper functions are distinct source procedures;
+        # their amplitudes are not assumed to be identical.
+        short_original: dict[str, list[float]] = {}
+        short_original_failures: dict[str, str] = {}
         for name in K_VARIANT_NAMES:
-            short_results[name] = run_k_mechanism(
-                helper, h, name, command5, time5, ap_count=5
-            )
+            try:
+                short_original[name] = run_k_mechanism(
+                    helper, h, name, command5, time5, ap_count=5
+                )
+            except Exception as exc:
+                short_original_failures[name] = f"{type(exc).__name__}: {exc}"
 
         recorder_info = replay.install_linear_current_recorders(helper, h)
         h.celsius = 34.0
         h.dt = 1000.0 / replay.SAMPLE_RATE_HZ
+
+        # Correct equivalence gate: run the *same* 5-AP helper before and after
+        # the recorder swap for each of the nine mechanisms.
+        short_optimized: dict[str, list[float]] = {}
+        recorder_equivalence: dict[str, Any] = {}
+        for name in K_VARIANT_NAMES:
+            if name in short_original_failures:
+                recorder_equivalence[name] = {
+                    "status": "not_tested_original_helper_failed",
+                    "error": short_original_failures[name],
+                }
+                continue
+            try:
+                short_optimized[name] = run_k_mechanism(
+                    helper, h, name, command5, time5, ap_count=5
+                )
+                recorder_equivalence[name] = validate_recorder_equivalence(
+                    short_original[name], short_optimized[name], name
+                )
+            except Exception as exc:
+                recorder_equivalence[name] = {
+                    "status": "failed",
+                    "error_type": type(exc).__name__,
+                    "error": str(exc),
+                }
 
         models: dict[str, Any] = {}
         comparisons: dict[str, Any] = {}
@@ -429,11 +488,16 @@ def main() -> None:
 
         for name in K_VARIANT_NAMES:
             try:
+                if recorder_equivalence[name].get("status") != "identical_within_tolerance":
+                    raise RuntimeError(
+                        "Cannot accept this 200-AP replay because same-helper recorder equivalence "
+                        f"did not pass: {recorder_equivalence[name]}"
+                    )
                 long_values = run_k_mechanism(
                     helper, h, name, command200, time200, ap_count=200
                 )
-                consistency = validate_first_five_consistency(
-                    short_results[name], long_values, name
+                helper_prefix_diagnostic = compare_short_helper_with_long_prefix(
+                    short_optimized[name], long_values, name
                 )
                 normalized = replay.normalize_by_first(long_values)
                 if any(value is None or not math.isfinite(float(value)) for value in normalized):
@@ -444,8 +508,10 @@ def main() -> None:
                     "source_role": SOURCE_ROLES[name],
                     "amplitude": replay.finite_summary(long_values),
                     "normalized_ap1_curve": [float(value) for value in normalized],
-                    "original_five_ap_amplitudes": short_results[name],
-                    "first_five_prefix_equivalence": consistency,
+                    "original_five_ap_amplitudes": short_original[name],
+                    "optimized_five_ap_amplitudes": short_optimized[name],
+                    "same_helper_recorder_equivalence": recorder_equivalence[name],
+                    "five_ap_helper_vs_200_ap_helper_prefix": helper_prefix_diagnostic,
                     "normalization": "divide model current peak amplitudes by that model's AP1 amplitude",
                     "source_mod_unchanged": True,
                 }
@@ -457,6 +523,7 @@ def main() -> None:
                     "source_role": SOURCE_ROLES[name],
                     "error_type": type(exc).__name__,
                     "error": str(exc),
+                    "same_helper_recorder_equivalence": recorder_equivalence.get(name),
                     "source_mod_unchanged": True,
                 }
 
@@ -602,6 +669,8 @@ def main() -> None:
                 "source_files_modified": False,
             },
             "current_recorder_optimization": recorder_info,
+            "five_ap_same_helper_recorder_equivalence": recorder_equivalence,
+            "five_ap_original_helper_failures": short_original_failures,
             "models": models,
             "comparisons": comparisons,
             "summary_rows": summary_rows,
@@ -624,7 +693,7 @@ def main() -> None:
                 "The original mechanism files are compiled unchanged; no model equation, parameter default or production runtime is modified.",
                 "The workbook comparison uses amp_h_n_ columns (human input waveform) and keeps Human and Mouse recording cohorts separate.",
                 "The model is a deterministic single-compartment replay; cohort MAE/RMSE and pointwise mean +/- 1.96 SEM overlap are descriptive, not inferential statistics.",
-                "The five-AP/full-train prefix comparison checks execution consistency; it does not establish biological validity.",
+                "For each mechanism, original and optimized recorders are compared using the same original Ik_AP1_5 helper; the distinct Ik_AP1_5 and Ik_AP1_5_200 outputs are recorded side-by-side without asserting equality.",
                 "The released hybrid mechanism roles are sourced from the original channel_kinetics.py comments and not inferred from AP-clamp fit.",
                 "A better match to this one AP-clamp protocol does not establish parameter identifiability or agreement with independent voltage-clamp protocols.",
                 "No variant is promoted to AMSN runtime or recommended as a default by this experiment alone.",
