@@ -61,20 +61,32 @@ def test_amplitude_validator_requires_full_finite_ap_coverage():
         MODULE.validate_amplitudes([1.0, float("nan"), 0.6], 3, "synthetic")
 
 
-def test_five_ap_source_replay_must_match_full_train_prefix():
-    result = MODULE.validate_first_five_consistency(
+def test_same_five_ap_helper_is_identical_before_and_after_recorder_swap():
+    result = MODULE.validate_recorder_equivalence(
         [10.0, 8.0, 7.0, 6.0, 5.0],
-        [10.0, 8.0, 7.0, 6.0, 5.0] + [4.0] * 195,
+        [10.0, 8.0, 7.0, 6.0, 5.0],
         "synthetic",
     )
     assert result["status"] == "identical_within_tolerance"
+    assert result["same_helper"] == "Ik_AP1_5"
     assert result["max_absolute_amplitude_difference"] == 0.0
-    with pytest.raises(ValueError, match="differs from 200-AP prefix"):
-        MODULE.validate_first_five_consistency(
+    with pytest.raises(ValueError, match="changed the original 5-AP helper output"):
+        MODULE.validate_recorder_equivalence(
             [10.0, 8.0, 7.0, 6.0, 5.0],
-            [10.0, 8.0, 7.0, 6.0, 5.2] + [4.0] * 195,
+            [10.0, 8.0, 7.0, 6.0, 5.2],
             "synthetic",
         )
+
+
+def test_distinct_five_and_two_hundred_ap_helpers_are_compared_descriptively():
+    result = MODULE.compare_short_helper_with_long_prefix(
+        [10.0, 8.0, 7.0, 6.0, 5.0],
+        [10.0, 8.0, 7.0, 6.0, 5.2] + [4.0] * 195,
+        "synthetic",
+    )
+    assert result["status"] == "descriptive_only_separate_source_helpers"
+    assert result["equality_asserted"] is False
+    assert result["max_absolute_difference"] == pytest.approx(0.2)
 
 
 def test_epoch_metrics_separate_early_and_late_adaptation():
