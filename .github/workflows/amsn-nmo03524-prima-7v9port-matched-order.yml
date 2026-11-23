@@ -64,12 +64,24 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
-          if ! git diff --cached --quiet; then
-            git commit -m "results: archive Jacobs control matched 7-port 9-port comparison"
-            git fetch origin "$GITHUB_REF_NAME"
-            git rebase "origin/$GITHUB_REF_NAME"
-            git push origin "HEAD:$GITHUB_REF_NAME"
+          git fetch origin "$GITHUB_REF_NAME"
+          REPORT="amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json"
+          SUMMARY="amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_matched_summary.csv"
+          Q25="amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_q25_summary.csv"
+          if git cat-file -e "origin/$GITHUB_REF_NAME:$REPORT" \
+             && git cat-file -e "origin/$GITHUB_REF_NAME:$SUMMARY" \
+             && git cat-file -e "origin/$GITHUB_REF_NAME:$Q25"; then
+            echo "A validated matched-port result set is already archived on the remote branch; keeping that commit and preserving this run as a separate artifact."
+          else
+            git add amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv \
+                    amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json \
+                    amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
+            if ! git diff --cached --quiet; then
+              git commit -m "results: archive Jacobs control matched 7-port 9-port comparison"
+              git fetch origin "$GITHUB_REF_NAME"
+              git rebase "origin/$GITHUB_REF_NAME"
+              git push origin "HEAD:$GITHUB_REF_NAME"
+            fi
           fi
       - name: Preserve paired curves, q25 outputs and Hines checks
         if: always()
