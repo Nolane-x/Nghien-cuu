@@ -26,7 +26,7 @@ def test_parser_accepts_valid_swc_with_three_point_soma_and_all_domains():
 5 3 1 0 0 1 1
 6 4 0 1 1 1 2
 """
-    rows, counts = MODULE.parse_swc_records_for_test(source)
+    rows, counts = MODULE.parse_swc_text(source)
     assert len(rows) == 6
     assert counts == {1: 3, 2: 1, 3: 1, 4: 1}
 
@@ -36,7 +36,7 @@ def test_parser_rejects_duplicate_node_ids():
 1 3 1 0 0 1 1
 """
     try:
-        MODULE.parse_swc_records_for_test(source)
+        MODULE.parse_swc_text(source)
     except ValueError as exc:
         assert "duplicate" in str(exc).lower()
     else:
@@ -48,7 +48,7 @@ def test_parser_rejects_missing_parent_references():
 2 3 1 0 0 1 99
 """
     try:
-        MODULE.parse_swc_records_for_test(source)
+        MODULE.parse_swc_text(source)
     except ValueError as exc:
         assert "missing parent" in str(exc).lower()
     else:
@@ -60,7 +60,7 @@ def test_parser_rejects_multiple_roots():
 2 1 1 0 0 2 -1
 """
     try:
-        MODULE.parse_swc_records_for_test(source)
+        MODULE.parse_swc_text(source)
     except ValueError as exc:
         assert "one soma root" in str(exc).lower()
     else:
