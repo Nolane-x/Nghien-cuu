@@ -18,16 +18,23 @@
 - q25-only ports: basal node 272; apical node 864.
 - Source injection nodes: soma 1; basal-q75 583; apical-q75 867.
 
-The q25 IDs were derived using the original path-distance/quantile definition and are required to remain distinct.
+## Validated run
 
-## Implementation
+- GitHub Actions run 45198027785 passed all steps, including full AMSN regression, source checksum/preflight, matched replay, result commit and artifact upload.
+- Artifact #14829710906; ZIP SHA-256 `eda28de9a4ce1fdf4742f88486671207d034bb12fb358e88280bb6601df72e06`.
+- Coverage: 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations, 378 exact Hines checks.
+- All 36 reduced G/C matrices passed Cholesky checks; all requested orders were achieved.
 
-Reuses the validated NMO_162186 matched-port runner and changes only the pinned morphology identity, preflight schema and output paths. Same order112/order168, six extended10kHz shifts, nine passive scenarios, nine AC frequencies, three sources and two pulse widths. Shared outputs pair by exact SWC ID; q25 output errors are separately reported. Full-Hines references are checked for exact identity on all seven shared nodes.
+## Key finding
 
-## Status
+Unlike NMO_162186, the Jacobs Control morphology does **not** show a meaningful order112 penalty for nine ports:
+- Order112: 204 worse / 173 better / 1 tie; median 9/7 error ratio 1.00000465×; maximum 1.00614×.
+- Order168: 189 worse / 189 better; median 0.99999991×; maximum 1.00721×.
+- q25 max NRMSE: 3.0585e−8% at order112; 3.0586e−8% at order168.
+- 378 common Hines references were exactly equal.
 
-Runner, tests, workflow, report and handoff are committed. CI replay is pending. Expected coverage: 36 models, 324 frequency rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations and 378 Hines consistency checks.
+This indicates morphology-dependent incremental port cost. NMO_162186 required order168 to recover nine-port parity; NMO_03524 did not. Do not apply a universal order168 requirement without a morphology-specific check.
 
-## Scientific boundaries
+## Scientific boundary
 
-Single human Control-condition morphology with moderate dendrites and incomplete axon. Passive linear-RC only. No production defaults or solver behavior change.
+Single human Control-condition morphology with moderate dendrites and incomplete axon. Passive linear-RC only. No production defaults or solver behavior change. Full Hines remains canonical.
