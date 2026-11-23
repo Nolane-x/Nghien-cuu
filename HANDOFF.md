@@ -1,3 +1,14 @@
+## Latest active-channel research checkpoint — K-human AP-clamp local sensitivity completed (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- 200-AP workflow [45142188274](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274) succeeded; artifact [14801794804](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274/artifacts/14801794804).
+- Best exploratory K-human point in local 3×3 grid: prop_inact 0.99, h2tau_inact 112.5 ms; MAE 0.07229 vs canonical 0.24192 (70.1% reduction). AP200 gap remains +0.07107, ~2.21 SEM; only 6/200 points within pointwise 1.96 SEM.
+- Important: original voltage-clamp fit driver doesn't optimize prop_inact/h2tau_inact; this is sensitivity outside its fitted vector. Best point at tested boundaries, so no biologic/production promotion.
+- Canonical MOD and production runtime unchanged. See the detailed handoff for all grids and next action: audit other original MOD variants and their parameter lineage.
+
+---
+
 ## Latest active-channel checkpoint — K fit-snapshot sensitivity rejected (23/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.

@@ -235,3 +235,41 @@ A 3×3 crossed sensitivity experiment is being added for `prop_inact` (0.70, 0.8
 ## Local K-human parameter refinement around coarse-grid best point — implementation added 23/11/2026
 
 The coarse 3×3 grid selected `prop_inact=0.95`, `h2tau_inact=225 ms` as its best point. A second bounded 3×3 neighbourhood is being evaluated: `prop_inact={0.95, 0.975, 0.99}` and `h2tau_inact={112.5, 168.75, 225 ms}`. The known best point is reused, and the other eight points are run with temporary parameter overrides. The new report adds separate MAE for AP1–100 and AP101–200 so an apparent full-train improvement can be checked across early and late epochs. This remains exploratory; no runtime MOD defaults are changed and no fit candidate is promoted. CI is pending.
+
+
+## K-human 200-AP crossed sensitivity and local refinement — completed 23/11/2026
+
+The full-train sensitivity workflows completed successfully on NEURON 9.0.2 using the checksum-verified H_wide command and the 14 human K recordings in the normalized human-input `amp_h_n_` workbook condition. The latest 200-AP workflow is [45142188274](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274); artifact [14801794804](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274/artifacts/14801794804), SHA-256 `fa517cf33b541f3826c64dd64003d5ee02a2ac6eb63803a4fd21581c972789cc` (676,046 bytes).
+
+### Crossed 3×3 grid
+
+A coarse `prop_inact × h2tau_inact` grid at prop={0.70,0.85,0.95} and tau={225,450,900 ms} completed 9/9 points. The best point was (0.95,225 ms), MAE 0.14956 versus 0.24192 for the canonical MOD defaults.
+
+### Local 3×3 refinement
+
+A second grid around that point at prop={0.95,0.975,0.99} and tau={112.5,168.75,225 ms} also completed 9/9 points; each new model returned 200/200 finite amplitudes and the parameter overrides were read back. Best tested point:
+
+| Metric | Canonical MOD | Best tested sensitivity |
+|---|---:|---:|
+| `prop_inact` | 0.85 | 0.99 |
+| `h2tau_inact` | 450 ms | 112.5 ms |
+| MAE, AP1–200 | 0.24192 | **0.07229** |
+| RMSE, AP1–200 | 0.24322 | **0.07424** |
+| MAE, AP1–100 | — | 0.06960 |
+| MAE, AP101–200 | — | 0.07498 |
+| AP5 model | 0.93888 | 0.86576 |
+| AP5 experiment | 0.72142 | 0.72142 |
+| AP200 model | 0.67497 | 0.49852 |
+| AP200 experiment ± SEM | 0.42745 ± 0.03213 | 0.42745 ± 0.03213 |
+| AP200 model-minus-experiment | +0.24752 | +0.07107 |
+| points within pointwise mean ±1.96 SEM | 1/200 | 6/200 |
+
+MAE falls by 70.1% relative to canonical defaults. The improvement appears in both halves of the train, not only at AP200. However the AP200 gap remains about 2.21 SEM, and only 6/200 points lie within their pointwise mean ±1.96 SEM. This is not a complete model fit.
+
+### Critical provenance boundary
+
+The archived K-human fitting driver (Dataverse file ID 326237) fits the voltage-clamp parameter vector `thi1, thi2, qi1, qi2, Rd, Rg, tha, qa, Ra, th_act_inf, q_act_inf`. It does **not** fit `prop_inact` or `h2tau_inact`; these remain fixed mixture parameters in the distributed MOD source. Consequently this sensitivity grid explores parameters outside the original voltage-clamp fit vector. Its best point lies at both tested boundaries (largest prop, shortest tau), which is a reason to stop unrestricted MAE chasing, not evidence that those values are biologically correct.
+
+No MOD file, canonical parameter default, or production runtime was modified. The result is an exploratory calibration signal only. Next work should establish provenance/physiological bounds for the mixture parameters and cross-check against the other published K MOD variants or independent protocols before any further tuning.
+
+Machine-readable results: [JSON](references/wilbers2023_k_human_local_refinement_grid_2026-11-23.json) and [CSV](../results/wilbers_k_human_local_refinement_grid_2026-11-23.csv).

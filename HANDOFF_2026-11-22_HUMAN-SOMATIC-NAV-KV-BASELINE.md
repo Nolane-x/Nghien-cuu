@@ -182,3 +182,14 @@ A 3×3 crossed sensitivity experiment is being added for `prop_inact` (0.70, 0.8
 ## Local K-human parameter refinement around coarse-grid best point — implementation added 23/11/2026
 
 The coarse 3×3 grid selected `prop_inact=0.95`, `h2tau_inact=225 ms` as its best point. A second bounded 3×3 neighbourhood is being evaluated: `prop_inact={0.95, 0.975, 0.99}` and `h2tau_inact={112.5, 168.75, 225 ms}`. The known best point is reused, and the other eight points are run with temporary parameter overrides. The new report adds separate MAE for AP1–100 and AP101–200 so an apparent full-train improvement can be checked across early and late epochs. This remains exploratory; no runtime MOD defaults are changed and no fit candidate is promoted. CI is pending.
+
+
+## K-human 200-AP parameter sensitivity — completed 23/11/2026
+
+- 200-AP workflow [45142188274](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274) succeeded on commit `439b26ec5b29b3da15ffc40a8bc03513c6927eeb`; artifact [14801794804](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274/artifacts/14801794804), SHA-256 `fa517cf33b541f3826c64dd64003d5ee02a2ac6eb63803a4fd21581c972789cc`.
+- Coarse crossed 3×3 grid (prop 0.70/0.85/0.95 × h2tau 225/450/900 ms) completed 9/9. Best (0.95,225): MAE 0.14956.
+- Local refinement 3×3 (prop 0.95/0.975/0.99 × h2tau 112.5/168.75/225 ms) completed 9/9. Best tested (0.99,112.5): MAE 0.07229, RMSE 0.07424; MAE AP1–100 0.06960; AP101–200 0.07498. All eight newly simulated variants produced 200/200 finite responses.
+- Versus canonical K-human defaults, MAE reduced 70.1%. AP200 model 0.49852 vs experimental 0.42745 ±0.03213; remaining gap +0.07107 (~2.21 SEM); only 6/200 points within pointwise ±1.96SEM.
+- Provenance warning: source fit script 326237 does not fit `prop_inact` or `h2tau_inact`; they are fixed mixture parameters in published MOD. The best point is at both local-grid boundaries, so do not claim a valid biological fit or promote to runtime.
+- No MOD or production defaults changed. Summary: [audit](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md), [JSON](amsn-core/research/references/wilbers2023_k_human_local_refinement_grid_2026-11-23.json), [CSV](amsn-core/results/wilbers_k_human_local_refinement_grid_2026-11-23.csv).
+- Next: audit the other released K MOD variants with official metadata SHA1/size verification; identify the provenance of the mixture terms, then test independent protocols rather than extrapolating an unbounded sensitivity sweep.

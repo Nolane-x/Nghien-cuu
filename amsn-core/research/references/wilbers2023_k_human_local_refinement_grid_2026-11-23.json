@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "status": "completed_exploratory_k_human_200ap_sensitivity_grids",
+  "source_and_protocol": {
+    "trace_file_id": 318541,
+    "trace_sha256": "10ccb67d0e6bb0d51032a4ebd7c727b473c0a9e356e772fda205f7f54795d719",
+    "k_workbook_file_id": 318669,
+    "k_workbook_sha256": "f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d",
+    "target": "14 human K recordings, normalized human-input workbook amp_h_n_",
+    "ap_count": 200,
+    "temperature_c": 34,
+    "neuron_version": "9.0.2"
+  },
+  "execution": {
+    "workflow_run_id": 45142188274,
+    "workflow_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45142188274",
+    "conclusion": "success",
+    "head_sha": "439b26ec5b29b3da15ffc40a8bc03513c6927eeb",
+    "artifact_id": 14801794804,
+    "artifact_sha256": "fa517cf33b541f3826c64dd64003d5ee02a2ac6eb63803a4fd21581c972789cc",
+    "artifact_bytes": 676046
+  },
+  "canonical": {
+    "prop_inact": 0.85,
+    "h2tau_inact_ms": 450,
+    "mae": 0.2419164755395716,
+    "rmse": 0.24321995749005634,
+    "ap200_model": 0.6749712151142749,
+    "ap200_experiment": 0.42745036911271805,
+    "ap200_sem": 0.03212983105220731
+  },
+  "coarse_grid": {
+    "levels": {
+      "prop_inact": [
+        0.7,
+        0.85,
+        0.95
+      ],
+      "h2tau_inact_ms": [
+        225,
+        450,
+        900
+      ]
+    },
+    "points": [
+      {
+        "prop_inact": 0.7,
+        "h2tau_inact_ms": 225,
+        "mae": 0.2768444086490035,
+        "rmse": 0.2784586253387479,
+        "ap5_model": 0.9528071333062003,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.7148680755929089,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.7,
+        "h2tau_inact_ms": 450,
+        "mae": 0.30773553265755693,
+        "rmse": 0.309701846179819,
+        "ap5_model": 0.9650466442606821,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.7471599403165988,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.7,
+        "h2tau_inact_ms": 900,
+        "mae": 0.33273438107272185,
+        "rmse": 0.33509236054022296,
+        "ap5_model": 0.9724282685484852,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.7746324548897466,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.85,
+        "h2tau_inact_ms": 225,
+        "mae": 0.2026966725409195,
+        "rmse": 0.2036659381332996,
+        "ap5_model": 0.9233406219382607,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6339684006020122,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.85,
+        "h2tau_inact_ms": 450,
+        "mae": 0.2419164755395716,
+        "rmse": 0.24321995749005634,
+        "ap5_model": 0.9388805594394221,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6749712151142749,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.85,
+        "h2tau_inact_ms": 900,
+        "mae": 0.2736236204903754,
+        "rmse": 0.27535816628827453,
+        "ap5_model": 0.9482467094838516,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.7098163147353871,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 225,
+        "mae": 0.14955553127540855,
+        "rmse": 0.1503255324386765,
+        "ap5_model": 0.9022212612810431,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5759856422802845,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 450,
+        "mae": 0.19476243169993201,
+        "rmse": 0.19570915716318488,
+        "ap5_model": 0.9201338571893777,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6232515679473696,
+        "ap200_experiment": 0.42745036911271805
+      },
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 900,
+        "mae": 0.2312834555484924,
+        "rmse": 0.2326299257443899,
+        "ap5_model": 0.9309251347582712,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.6633876411034949,
+        "ap200_experiment": 0.42745036911271805
+      }
+    ],
+    "best": {
+      "prop_inact": 0.95,
+      "h2tau_inact_ms": 225,
+      "mae": 0.14955553127540855,
+      "rmse": 0.1503255324386765,
+      "ap5_model": 0.9022212612810431,
+      "ap5_experiment": 0.7214215956764292,
+      "ap200_model": 0.5759856422802845,
+      "ap200_experiment": 0.42745036911271805
+    },
+    "status": "completed_9_of_9"
+  },
+  "local_refinement_grid": {
+    "levels": {
+      "prop_inact": [
+        0.95,
+        0.975,
+        0.99
+      ],
+      "h2tau_inact_ms": [
+        112.5,
+        168.75,
+        225
+      ]
+    },
+    "points": [
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 112.5,
+        "mae": 0.09737016602309792,
+        "rmse": 0.09861653792718367,
+        "mae_ap1_100": 0.0927615033614876,
+        "mae_ap101_200": 0.10197882868470826,
+        "ap5_model": 0.8760286922571434,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5255362727168029,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.09808590360408487,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 168.75,
+        "mae": 0.12847483145296115,
+        "rmse": 0.12931304755403858,
+        "mae_ap1_100": 0.12380539880415059,
+        "mae_ap101_200": 0.1331442641017717,
+        "ap5_model": 0.8923490072325969,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5548597501231447,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.12740938101042665,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.95,
+        "h2tau_inact_ms": 225,
+        "mae": 0.14955553127540855,
+        "rmse": 0.1503255324386765,
+        "mae_ap1_100": 0.14403463765957622,
+        "mae_ap101_200": 0.1550764248912409,
+        "ap5_model": 0.9022212612810431,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5759856422802845,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.14853527316756643,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.975,
+        "h2tau_inact_ms": 112.5,
+        "mae": 0.08176537678305013,
+        "rmse": 0.08337761858142578,
+        "mae_ap1_100": 0.07835080144799918,
+        "mae_ap101_200": 0.08517995211810106,
+        "ap5_model": 0.8696405124550247,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5087309148696945,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.08128054575697641,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.975,
+        "h2tau_inact_ms": 168.75,
+        "mae": 0.11395678343398118,
+        "rmse": 0.11490127304269991,
+        "mae_ap1_100": 0.11047733695905658,
+        "mae_ap101_200": 0.1174362299089058,
+        "ap5_model": 0.886528134223482,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5390825732344001,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.11163220412168207,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.975,
+        "h2tau_inact_ms": 225,
+        "mae": 0.13576791055155188,
+        "rmse": 0.13655932215833938,
+        "mae_ap1_100": 0.13140697566129156,
+        "mae_ap101_200": 0.1401288454418122,
+        "ap5_model": 0.8967416998592689,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5609416213792501,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.13349125226653202,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.99,
+        "h2tau_inact_ms": 112.5,
+        "mae": 0.07228744609180353,
+        "rmse": 0.0742408404852543,
+        "mae_ap1_100": 0.0695981288379727,
+        "mae_ap101_200": 0.07497676334563433,
+        "ap5_model": 0.8657604818969282,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.49852373454248883,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.07107336542977077,
+        "points_within_sem": 6
+      },
+      {
+        "prop_inact": 0.99,
+        "h2tau_inact_ms": 168.75,
+        "mae": 0.10513970042341311,
+        "rmse": 0.10619079996853875,
+        "mae_ap1_100": 0.1023829884426317,
+        "mae_ap101_200": 0.10789641240419455,
+        "ap5_model": 0.8829929852031367,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5295007334746935,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.10205036436197545,
+        "points_within_sem": 1
+      },
+      {
+        "prop_inact": 0.99,
+        "h2tau_inact_ms": 225,
+        "mae": 0.12739481021047103,
+        "rmse": 0.1282225620819464,
+        "mae_ap1_100": 0.12373830750135446,
+        "mae_ap101_200": 0.1310513129195876,
+        "ap5_model": 0.8934139845197326,
+        "ap5_experiment": 0.7214215956764292,
+        "ap200_model": 0.5518054485829238,
+        "ap200_experiment": 0.42745036911271805,
+        "ap200_sem": 0.03212983105220731,
+        "ap200_gap": 0.12435507947020574,
+        "points_within_sem": 1
+      }
+    ],
+    "best": {
+      "prop_inact": 0.99,
+      "h2tau_inact_ms": 112.5,
+      "mae": 0.07228744609180353,
+      "rmse": 0.0742408404852543,
+      "mae_ap1_100": 0.0695981288379727,
+      "mae_ap101_200": 0.07497676334563433,
+      "ap5_model": 0.8657604818969282,
+      "ap5_experiment": 0.7214215956764292,
+      "ap200_model": 0.49852373454248883,
+      "ap200_experiment": 0.42745036911271805,
+      "ap200_sem": 0.03212983105220731,
+      "ap200_gap": 0.07107336542977077,
+      "points_within_sem": 6
+    },
+    "status": "completed_9_of_9"
+  },
+  "best_vs_canonical": {
+    "mae_absolute_change": -0.1696290294477681,
+    "mae_relative_reduction_pct": 70.11884125272027,
+    "rmse_relative_reduction_pct": 69.47584349105502,
+    "ap200_model_minus_experiment": 0.07107336542977077,
+    "ap200_gap_in_sem": 2.2120678230235526,
+    "points_within_pointwise_1_96_sem": 6,
+    "early_vs_late_mae": {
+      "ap1_100": 0.0695981288379727,
+      "ap101_200": 0.07497676334563433
+    }
+  },
+  "provenance_and_limits": {
+    "original_k_fit_driver_file_id": 326237,
+    "original_fit_parameter_vector": [
+      "thi1",
+      "thi2",
+      "qi1",
+      "qi2",
+      "Rd",
+      "Rg",
+      "tha",
+      "qa",
+      "Ra",
+      "th_act_inf",
+      "q_act_inf"
+    ],
+    "prop_inact_and_h2tau_inact_in_original_fit_vector": false,
+    "interpretation": "prop_inact and h2tau_inact are fixed mixture parameters in the distributed MOD and were not directly fitted by the archived voltage-clamp optimization. The grid is exploratory, not an author-validated fit or biological parameter estimate.",
+    "grid_best_at_tested_boundary": true,
+    "further_unbounded_sweeps_not_justified": true,
+    "canonical_mod_unchanged": true,
+    "production_runtime_unchanged": true,
+    "runtime_eligible": false,
+    "pointwise_sem_overlap_is_not_a_hypothesis_test": true
+  }
+}
