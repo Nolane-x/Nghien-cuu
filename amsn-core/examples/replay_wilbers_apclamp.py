@@ -100,6 +100,26 @@ K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE = {
     "status": "unapplied trailing final-best-fit dictionary; sensitivity only",
 }
 
+K_HUMAN_LONG_TRAIN_SENSITIVITY = {
+    "prop_inact_low": {"prop_inact": 0.70},
+    "prop_inact_high": {"prop_inact": 0.95},
+    "prop_h2_low": {"prop_h2": 0.20},
+    "prop_h2_high": {"prop_h2": 0.60},
+    "h2tau_inact_fast": {"h2tau_inact": 225.0},
+    "h2tau_inact_slow": {"h2tau_inact": 900.0},
+    "h2tau_inact_rec_fast": {"h2tau_inact_rec": 1394.8964714104094},
+    "h2tau_inact_rec_slow": {"h2tau_inact_rec": 5579.585885641637},
+    "inact_rate_factor_low": {"inact_rate_factor": 0.75},
+    "inact_rate_factor_high": {"inact_rate_factor": 1.25},
+}
+K_HUMAN_LONG_TRAIN_SENSITIVITY_BASELINE = {
+    "prop_inact": 0.85,
+    "prop_h2": 0.40,
+    "h2tau_inact": 450.0,
+    "h2tau_inact_rec": 2789.7929428108187,
+    "inact_rate_factor": 1.0,
+}
+
 SAMPLE_FREQ_PER_MS = 125
 SAMPLE_RATE_HZ = 125000
 TIME_START_MS = 199
@@ -897,6 +917,54 @@ def main() -> None:
                 "production_runtime_unchanged": True,
             }
 
+        long_train_parameter_sensitivity = None
+        if ap_count == 200:
+            baseline_k_comparison = compare_k_fit_snapshot_with_workbook(
+                models["k_human"], payloads["k_workbook"], ap_count
+            )
+            baseline_mae = float(baseline_k_comparison["metrics_vs_recording_mean"]["mae"])
+            baseline_rmse = float(baseline_k_comparison["metrics_vs_recording_mean"]["rmse"])
+            long_train_parameter_sensitivity = {
+                "status": "running",
+                "design": "one-factor-at-a-time; one RANGE parameter differs from canonical k_human.mod in each variant",
+                "baseline_parameter_values": K_HUMAN_LONG_TRAIN_SENSITIVITY_BASELINE,
+                "comparison_target": "14 Human recordings, normalized human-input K workbook columns amp_h_n_",
+                "variants": {},
+            }
+            for variant_name, overrides in K_HUMAN_LONG_TRAIN_SENSITIVITY.items():
+                variant_model = execute_model(
+                    helper, h, "k", "human", k_trace, t,
+                    ap_count=ap_count, parameter_overrides=overrides,
+                )
+                variant_comparison = (
+                    compare_k_fit_snapshot_with_workbook(
+                        variant_model, payloads["k_workbook"], ap_count
+                    ) if variant_model.get("status") == "completed" else None
+                )
+                if variant_comparison is not None:
+                    mae = float(variant_comparison["metrics_vs_recording_mean"]["mae"])
+                    rmse = float(variant_comparison["metrics_vs_recording_mean"]["rmse"])
+                    variant_comparison["delta_vs_canonical_baseline"] = {
+                        "mae_absolute": mae - baseline_mae,
+                        "mae_relative_pct": 100.0 * (mae - baseline_mae) / baseline_mae,
+                        "rmse_absolute": rmse - baseline_rmse,
+                        "rmse_relative_pct": 100.0 * (rmse - baseline_rmse) / baseline_rmse,
+                    }
+                long_train_parameter_sensitivity["variants"][variant_name] = {
+                    "parameter_overrides": overrides,
+                    "model_replay": variant_model,
+                    "comparison_vs_workbook": variant_comparison,
+                    "canonical_mod_unchanged": True,
+                }
+            long_train_parameter_sensitivity["status"] = (
+                "completed" if all(
+                    item["model_replay"].get("status") == "completed"
+                    and item["model_replay"].get("amplitude", {}).get("finite_count") == ap_count
+                    and item["model_replay"].get("amplitude", {}).get("nonfinite_count") == 0
+                    for item in long_train_parameter_sensitivity["variants"].values()
+                ) else "completed_with_variant_failures"
+            )
+
         trace_info = {
             "file_id": FILES["trace"]["id"],
             "bytes": len(payloads["trace"]),
@@ -959,6 +1027,7 @@ def main() -> None:
             "current_recorder_optimization": recorder_optimization,
             "current_recorder_equivalence": recorder_equivalence,
             "parameter_sensitivity": parameter_sensitivity,
+            "long_train_parameter_sensitivity": long_train_parameter_sensitivity,
             "experimental_ap_amplitudes": {
                 "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
                 "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),

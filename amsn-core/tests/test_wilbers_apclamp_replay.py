@@ -69,3 +69,16 @@ def test_k_human_final_fit_snapshot_is_pinned_and_isolated():
     assert set(MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT) == {"thi1", "thi2", "qi1", "qi2", "Rd", "Rg"}
     assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE["fit_file_id"] == 326237
     assert MODULE.K_HUMAN_FINAL_FIT_SNAPSHOT_SOURCE["status"].startswith("unapplied")
+
+
+
+def test_long_train_sensitivity_grid_is_one_factor_at_a_time():
+    grid = MODULE.K_HUMAN_LONG_TRAIN_SENSITIVITY
+    baseline = MODULE.K_HUMAN_LONG_TRAIN_SENSITIVITY_BASELINE
+    assert len(grid) == 10
+    assert all(len(overrides) == 1 for overrides in grid.values())
+    assert set().union(*(set(x) for x in grid.values())) == set(baseline)
+    assert 0 < grid["prop_h2_low"]["prop_h2"] < 1
+    assert 0 < grid["prop_inact_high"]["prop_inact"] < 1
+    assert grid["h2tau_inact_fast"]["h2tau_inact"] > 0
+    assert grid["h2tau_inact_rec_slow"]["h2tau_inact_rec"] > baseline["h2tau_inact_rec"]
