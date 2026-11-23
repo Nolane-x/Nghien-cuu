@@ -24,12 +24,11 @@ The separate resource benchmark reports median peak RSS 267.90 / 276.15 / 301.73
 
 ## Decision
 
-Full Hines remains canonical. Do not change production defaults. Keep 7-port order112 extended10kHz as a high-frequency passive research candidate; 9-port order168 as opt-in only when q25 outputs are needed; order84 as lower-memory alternative. These are conditional choices, not one universal winner.
+Full Hines remains canonical. Do not change production defaults. Keep 7-port order112 extended10kHz as a high-frequency passive candidate and order84 extended10kHz as an accuracy/storage compromise on NMO_03524. Matched port-count tests show the incremental cost of q25 ports is morphology-dependent: order168 was needed for parity on NMO_162186, while NMO_03524 was already at parity at order112.
 
 ## Remaining validation gaps
 
-- No matched 7/9-port order112/168 matrix on the NMO_162186 held-out morphology.
-- Only one external holdout, from an epilepsy surgical specimen with incomplete axon.
+- Only two matched 7/9-port morphology holdouts have been tested; both are individual cells with incomplete axons or other reconstruction limitations. A third morphology with a more complete axon is needed.
 - No controlled fixed-hardware timing comparison.
 - No active/nonlinear biological validation.
 
@@ -56,3 +55,16 @@ The sweep covered 81 models, 729 frequency rows and 3,402 transient-port rows, a
 Conclusion: extended10kHz shift family is independently supported on a second human morphology in a Control metadata context. It is not a matched factorial comparison with NMO_162186. PR #14 is seven-port only and does not replicate q25/9-port transfer there.
 
 Next gate: run matched 7-port/9-port order112/168 on NMO_03524, then add a third independent morphology with preferably more complete axon; fixed-hardware timing and active/nonlinear validation remain separate.
+
+
+## Second matched port-count morphology completed — NMO_03524
+
+PR #15 / workflow 45198630080 passed the matched seven-port/nine-port order112/order168 comparison on the NMO_03524 Jacobs Control-condition morphology. Exact coverage: 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations and 378 shared-Hines checks. All 378 common Hines references were identical.
+
+At order112, nine-port was worse on 204 shared pairs, better on 173 and tied on one; median nine/seven transient-error ratio 1.000004647 and maximum 1.006136. At order168, there were 189 better and 189 worse; median ratio 0.999999905 and maximum 1.007211. q25 maximum NRMSE was 3.058499e−8% at order112 and 3.058557e−8% at order168.
+
+This contrasts with NMO_162186 (PR #13): order112 nine-port had 377/378 regressions and median error ratio 8.162×, while order168 restored parity. Port-count cost is morphology-dependent under the tested passive protocol, not a universal order threshold.
+
+Artifact #14829912332; ZIP SHA-256 cba24b3c36c24b125339feefbb3a10d0f105adf9cda2c80030a5577e80350b03.
+
+Next: add a third independent morphology with a more complete axon and different source study. Fixed-hardware timing and active/nonlinear validation remain separate.
