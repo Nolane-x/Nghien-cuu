@@ -19,9 +19,9 @@ This is the next gate identified by the 23 November source-provenance audit. Tha
 - Compile all nine unchanged MOD sources into one NEURON 9.0.2 mechanism library and load each source-declared SUFFIX separately.
 - Replay the original first-five-AP window (199–307 ms, 13,501 samples) with the original helper recorder.
 - Replay the complete first-200-AP window (199–5,182 ms, 622,876 samples; 125 kHz; dt 0.008 ms; 34 °C) using the already-tested list-backed current recorder. The potassium command has no liquid-junction offset.
-- Require each 200-AP output to contain exactly 200 finite amplitudes and require its first five amplitudes to match the independent original five-AP replay within 1e-12.
+- Require each 200-AP output to contain exactly 200 finite amplitudes. For each mechanism, run the same original five-AP helper before and after the current-recorder replacement and require identical outputs within 1e-12. Keep the distinct 5-AP and 200-AP helper outputs side by side as a diagnostic; do not assume the two source routines produce equal amplitudes.
 - Normalize each model by its own AP1 amplitude and compare against the K workbook's human-input \`amp_h_n_\` columns. Keep Human and Mouse recording cohorts separate (14 and 11 recordings, respectively).
-- Report MAE/RMSE over AP1–200 and separately over AP1–5, AP1–100 and AP101–200, as well as AP5/AP200 error and pointwise mean ±1.96 SEM overlap. The overlap count is descriptive, not a hypothesis test.
+- Report MAE/RMSE over AP1–200 and separately over AP1–5, AP1–100 and AP101–200, as well as AP5/AP200 error and pointwise mean ±1.96 SEM overlap. The overlap count is descriptive, not a hypothesis test. The source's five-AP and 200-AP helpers are separate procedures; only same-helper recorder equivalence is an acceptance gate.
 
 ## Mechanisms in scope
 
