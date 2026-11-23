@@ -70,3 +70,8 @@ None is promoted to AMSN runtime defaults. The somatic patch values are not axon
 ## Executable source-reproduction workflow
 
 A dedicated workflow is now added at `.github/workflows/amsn-wilbers-nmodl-reproduction-audit.yml`. It installs pinned `neuron==9.0.2`, runs the evidence-registry tests, downloads the two canonical MOD files, verifies their SHA-256 values, compiles the unchanged sources with `nrnivmodl`, probes rate observables around the source-declared characteristic voltages and uploads a JSON artifact. Its first CI result is pending; no compilation/probe success is claimed.
+
+
+## Initial NEURON 9.0.2 compilation result
+
+Workflow [45039313143](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143) succeeded: 11 provenance tests passed; original Na/K source hashes verified; both mechanisms compiled and loaded. Initial point probe: Na all finite at tested points; K returned non-finite `mtau` at `tha`, and non-finite `h1tau` at `thi1` and `thi2` (the exact source singular voltages). Adjacent points were finite. This is a confirmed source runtime issue at exact probe values, but not yet a measured protocol-level failure. The workflow now adds a stable diagnostic clone comparison; it never modifies the original file and is not runtime-eligible. Artifact: [14764015969](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143/artifacts/14764015969).

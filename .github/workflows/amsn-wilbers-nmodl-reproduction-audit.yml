@@ -37,7 +37,7 @@ jobs:
       - name: Validate evidence and source manifests
         working-directory: amsn-core
         run: python -m pytest -q tests/test_human_channel_evidence_registry.py
-      - name: Download, hash, compile and probe original MOD mechanisms
+      - name: Download, hash, compile and compare original and diagnostic MOD mechanisms
         working-directory: amsn-core
         run: python examples/audit_wilbers_nmodl.py --output artifacts/wilbers-nmodl-probe.json
       - name: Upload reproducibility evidence

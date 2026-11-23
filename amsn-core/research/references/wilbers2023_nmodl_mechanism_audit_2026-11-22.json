@@ -123,8 +123,8 @@
       ],
       "observed": "Branch checks fabs((v+th)/q), while main quotient uses (v-th)/(1-exp(-(v-th)/q)); commented intended limit is a*q but active fallback is q*(1--(v-th)/q/2), omitting a.",
       "issue": "At v=th the quotient has a removable 0/0 limit, but for nonzero th the branch condition does not select it. The active fallback is also not the standard a*q limit.",
-      "status": "Source-level warning only; exact impact on compiled NEURON mechanism and trajectories has not been tested.",
-      "next_test": "Compile original MOD; probe at v=th-epsilon, v=th, v=th+epsilon; compare with stable analytic reference and the published voltage-clamp protocols."
+      "status": "NEURON 9.0.2 runtime reproduction confirms K mtau/h1tau return non-finite values at the three positive source singular voltages; Na probe remained finite on its tested points because its rates use TABLE. Both sources compile. Protocol-grid and corrected-clone comparison is being added; this is not yet a full voltage-clamp reproduction.",
+      "next_test": "Compare unchanged original with a diagnostic-only stable trap0 clone at +/- singular voltages and every published protocol test voltage; require the stable clone to remain finite with positive time constants, then execute the source's full clamp commands against raw data."
     },
     {
       "id": "potassium_fit_snapshot_mismatch",
@@ -136,16 +136,18 @@
     "selected_source_bytes_downloaded_read_sha256_checked": true,
     "complete_archive_mirrored": false,
     "raw_numeric_files_downloaded": false,
-    "original_nmodl_compiled_or_executed": false,
+    "original_nmodl_compiled_or_executed": true,
     "voltage_clamp_or_ap_clamp_reproduced": false,
     "mechanism_implemented_in_amsn": false,
-    "production_defaults_changed": false
+    "production_defaults_changed": false,
+    "original_nmodl_compile_verified_in_neuron_9_0_2": true,
+    "initial_probe_finds_k_nonfinite_at_three_positive_singulars": true
   },
   "reproduction_workflow": {
     "path": ".github/workflows/amsn-wilbers-nmodl-reproduction-audit.yml",
     "script": "amsn-core/examples/audit_wilbers_nmodl.py",
     "neuron_version": "9.0.2",
     "trigger": "push to dedicated research branch or manual workflow dispatch",
-    "status": "added; awaiting first Actions result"
+    "status": "initial run 45039313143 succeeded: 11 provenance tests passed; both original MOD files hash-verified, compiled and loaded; K non-finite rates found at tha/thi1/thi2 exact positive singularities; extended stable-clone comparison pending."
   }
 }

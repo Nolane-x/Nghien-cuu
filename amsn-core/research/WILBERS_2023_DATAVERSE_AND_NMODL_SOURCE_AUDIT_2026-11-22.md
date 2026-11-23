@@ -66,3 +66,17 @@ Not yet completed: NEURON compilation/execution of the original MOD files, repro
 6. Only then implement an opt-in human somatic channel mechanism. Do not infer AIS, axonal or dendritic densities from soma measurements.
 
 A dedicated GitHub Actions source audit was added to re-download the exact canonical MOD files, verify SHA-256, compile with NEURON 9.0.2 and probe near source-declared characteristic voltages. The first workflow result is pending. No human mechanism was added to AMSN runtime and no production defaults were changed.
+
+
+## First compiled NEURON result — 22/11/2026
+
+GitHub Actions run [45039313143](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143) completed successfully on Python 3.12 / NEURON 9.0.2. All 11 provenance-registry tests passed. Both original Dataverse MOD files were downloaded again, their SHA-256 values matched the pinned manifest, and both compiled and loaded into NEURON.
+
+The initial point probe found:
+
+- NaV source: all 9 tested exact/near-positive-singularity observations were finite. This is not proof of correctness; the Na mechanism uses a 199-point TABLE.
+- KV source: non-finite time constants were observed exactly at `tha=-29.9618 mV` (`mtau`), `thi1=40.5659 mV` (`h1tau`) and `thi2=-75.9382 mV` (`h1tau`). At the immediately adjacent ±0.00001 mV values, the same observables were finite.
+
+The source workflow therefore proves successful compilation but exposes a real pointwise runtime singularity in the unmodified potassium mechanism. It does not yet prove how often the singularity is encountered in physiological voltage trajectories or how much it distorts the published protocols. An extended comparison now compiles a temporary corrected `trap0` clone for diagnostic reference only, probes both +th and -th as well as the published command-voltage grids, and requires the diagnostic clone to maintain finite positive time constants. The original Dataverse source remains unchanged; the corrected clone is not accepted for production.
+
+The first workflow artifact is [`wilbers-original-nmodl-source-audit`](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143/artifacts/14764015969). The run's artifact ZIP SHA-256 is `31a5883d6cb46670b3b8795afc7fa656ba0632ef544db2b328e922921ce82658`.
