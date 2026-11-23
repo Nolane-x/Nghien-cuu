@@ -22,6 +22,7 @@ There is no single PRIMA configuration that is best for every port set, output l
 | Shift/order and protocol robustness | PR #7, run 45002816664 | 3 morphologies × 9 candidates × 9 passive-parameter scenarios; 243 models, 2,187 AC rows, 10,206 transient-port rows | All candidates pass passivity checks; order112 extended10kHz leads high-frequency accuracy |
 | Independent morphology holdout | PR #8, run 45012282648 | NMO_162186; 81 model rows, 729 AC rows, 3,402 transient-port rows | Order112 extended10kHz maintains very low high-frequency residuals on one held-out morphology |
 | Equal-order port-count test | PR #6, run 44987393352 | 3 morphologies × 2 mesh caps × 7/9 ports × orders 56/112/168; 3,072 sweep rows | Port count and order must be selected together; nine-port order168 restores shared-output parity and resolves q25 |
+| Matched port-count × independent holdout | PR #13, run 45184621520 | NMO_162186; 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations | Confirms order-dependent result: nine-port order112 regresses shared outputs; order168 restores parity |
 | Nine-port high-order capacity | merged PR #4, run 44979673244 | 3 morphologies × 2 mesh caps; orders 28/56/84/112/168; 2,520 rows | Higher capacity sharply reduces apical-q90 transient error |
 | Runtime and peak RSS | PR #5, run 44989658844 | 36 measurements: 3 morphologies × 2 mesh caps × orders 84/112/168 × 2 repetitions; 37/37 jobs pass | Peak RSS increases consistently with order; timing is confounded by heterogeneous GitHub CPUs |
 
@@ -88,6 +89,8 @@ PR #6 compared seven-port and nine-port reductions at equal achieved orders 56, 
 
 At order 112, the nine-port error ratios are affected by very small seven-port denominators. The absolute maximum single-output NRMSE is still only 0.00003447% for nine ports versus 0.00000345% for seven ports. At order 168, the two models are effectively indistinguishable on the seven shared outputs.
 
+This conclusion is now independently reproduced on NMO_162186 by PR #13 (run 45184621520), with a matched 7-port/9-port comparison at orders 112 and 168 using the same six extended10kHz shifts and nine passive-parameter scenarios. At order112 the nine-port model was worse on 377/378 shared-output pairs (median 9/7 transient-error ratio 8.162×). At order168 it was effectively at parity: 190 pairs improved, 187 regressed and one tied; median ratio 0.99999985×. The maximum ratio at order168 was 1.00144×.
+
 ### Additional q25 outputs
 
 | Order | q25 observations | Median NRMSE | Maximum NRMSE |
@@ -97,6 +100,8 @@ At order 112, the nine-port error ratios are affected by very small seven-port d
 | 168 | 72 | 9.78181e−8% | **0.00000097486%** |
 
 Order 168 is the first tested equal-order point at which the nine-port expansion preserves near-parity on shared outputs while representing the two additional q25 outputs accurately. Against the seven-port order-84 reference, nine-port order112 and order168 improve all 36 matched apical-q90 cases; however, this comparison is not the same as comparing seven and nine ports at equal order.
+
+On the independent NMO_162186 holdout (PR #13), the nine-port q25 outputs also remained accurate: order112 median/maximum NRMSE 8.3418e−8% / 3.6711e−6%; order168 8.6262e−9% / 8.6226e−8%. The 378 shared Hines-reference checks on this holdout were exact (zero voltage difference), confirming that the shared reference traces are identical between port layouts.
 
 **Decision:** do not select nine ports at order 56 or 112 merely because more outputs are retained. Use nine-port order168 only when q25 outputs are required and the added memory/capacity is justified. Otherwise retain the seven-port reference.
 
@@ -128,7 +133,7 @@ This is a separate nine-port resource experiment. Its RSS measurements should be
 |---|---|---|---|
 | High-frequency accuracy on the seven retained outputs | **7-port, order112, extended10kHz** | Best 3–10 kHz residuals in PR #7; advantage reproduced on NMO_162186 | Only one external holdout; passive RC only |
 | Lower-memory passive alternative | **Order84** (choose shift set for required frequency/transient domain) | Lowest median peak RSS in the separate order resource matrix | No one order84 shift strategy is best on every endpoint |
-| Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−6% in equal-order test | Higher RSS and fewer retained full-state degrees than order84; holdout port-count replication still needed |
+| Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−7% on NMO_162186 | Higher resource use than order84; holdout is one epilepsy surgical morphology |
 | Canonical reference | **Full Hines** | Remains the unreduced reference against which all passive candidates are measured | More states and resource cost; not being replaced |
 
 This table is a research selection guide, not a production-default change. All passive models remain candidates for specific protocols and output sets.
@@ -156,3 +161,30 @@ This table is a research selection guide, not a production-default change. All p
 - A lower Hines-relative residual is not the same as lower discrepancy to native NEURON; both comparisons must remain separate.
 - Resource results are specific to the complete audit process and mixed GitHub runner hardware.
 - Passive linear-RC validation must not be described as active-neuron or biological validation.
+
+
+## 7. Matched port-count validation on the independent NMO_162186 holdout
+
+PR #13 / GitHub Actions run 45184621520 completed the previously missing cross-check. The same NMO_162186 morphology (7,287 SWC records; 7,278 electrical compartments), seven canonical output nodes, passive parameter scenarios, square-pulse protocol and six extended10kHz shifts were used for both port layouts. The nine-port layout added only basal-q25 and apical-q25.
+
+The replay passed all validation steps and archived 36 model rows, 324 AC rows, 1,728 transient-port rows, 756 shared-output pairs, 216 q25-only observations and 378 exact Hines consistency checks. All 36 reduced matrices passed Cholesky checks.
+
+| Matched holdout metric | Order112 | Order168 |
+|---|---:|---:|
+| Shared pairs | 378 | 378 |
+| Nine-port worse / better / tie | 377 / 1 / 0 | 187 / 190 / 1 |
+| Median 9/7 transient-error ratio | **8.1620×** | **0.99999985×** |
+| Maximum 9/7 ratio | 395.2606× | 1.00144× |
+| Maximum 9-port shared transient NRMSE | 1.0655e−5% | 1.4543e−7% |
+| q25 median NRMSE | 8.3418e−8% | 8.6262e−9% |
+| q25 maximum NRMSE | 3.6711e−6% | **8.6226e−8%** |
+
+The result confirms that adding the two q25 outputs at order112 systematically degrades the seven shared outputs, even though q25 itself is represented accurately. At order168, shared-output parity is recovered while q25 remains accurate. All 378 paired full-Hines traces on the shared nodes were exactly equal, with maximum absolute voltage difference 0 V.
+
+For high-frequency AC at 10 kHz on this holdout, median Z/Y residuals were 4.6124e−6% / 9.5816e−6% (7-port order112), 1.0498e−4% / 2.5063e−4% (9-port order112), 2.7305e−10% / 7.2223e−10% (7-port order168), and 3.3864e−8% / 9.8754e−8% (9-port order168).
+
+The model-array numeric storage (basis plus reduced G/C matrices) was 6.4104 MB at order112 and 9.7592 MB at order168 for both port counts in this implementation. This is not whole-process RSS. The entire run took 422.61 s wall time, used 518.23 s CPU and peaked at 187,160 KiB RSS; this one end-to-end measurement is not a per-candidate resource benchmark.
+
+**Updated decision:** use 7-port order112 extended10kHz when the original seven outputs are sufficient and high-frequency accuracy is the objective. Use 9-port order168 only when basal-q25 and apical-q25 outputs are specifically required. Do not select 9-port order112 solely to add q25. Order84 remains the lower-memory option from the separate resource benchmark. Full Hines remains canonical; no production default is changed.
+
+Source: [PR #13](https://github.com/Nolane-x/Nghien-cuu/pull/13), [validated workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520), [artifact #14824270534](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45184621520/artifacts/14824270534).
