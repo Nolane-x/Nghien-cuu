@@ -1,3 +1,15 @@
+## Latest active-channel research checkpoint — Figure 2 AP-clamp raw data verified (23/11/2026)
+
+Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.
+
+- Figure 2 Na/K workbook and original plot/stat scripts SHA-1/SHA-256 verified; data workflow [45116703439](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45116703439) passed.
+- Na 49 recordings (16 H, 33 M), main Hnarrow AP200 mean normalized current: 0.7487 H, 0.5167 M.
+- K 25 recordings (14 H, 11 M), AP200 normalized current: H cells 0.4275 (H input)/0.4063 (M input); M cells 0.2736/0.2693.
+- Exact source stats script inspected; OLS/Type-II ANOVA reproduction not yet run. Na workbook has unresolved Mwide/Hwide description duplication. 15.1 MB AP-clamp time-series matrix not yet replayed.
+- NMODL source-vs-stable probe remains successful on NEURON 9.0.2; no runtime mechanism or production default changed.
+
+---
+
 ## Latest research checkpoint — Wilbers Dataverse v3 / NMODL source audit (22/11/2026)
 
 Continue from [HANDOFF_2026-11-22_HUMAN-SOMATIC-NAV-KV-BASELINE.md](HANDOFF_2026-11-22-HUMAN-SOMATIC-NAV-KV-BASELINE.md) on branch `research/wilbers-human-active-channel-baseline-2026-11-22`.

@@ -1,0 +1,388 @@
+{
+  "schema_version": 1,
+  "status": "dataverse_figure2_raw_workbooks_and_source_scripts_sha1_sha256_verified_descriptive_analysis_passed",
+  "workflow_run_id": 45116703439,
+  "workflow_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45116703439",
+  "artifact_id": 14791708917,
+  "artifact_sha256": "2b6ecc549d07b498e3e6122f8677c0da4a3abad2134f752b41ce4e7146900432",
+  "dataset": {
+    "doi": "10.34894/L5J0SD",
+    "version": 3,
+    "license": "CC0-1.0",
+    "total_files": 65
+  },
+  "files": {
+    "na": {
+      "id": 318668,
+      "bytes": 548562,
+      "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
+      "sha256": "2fac600523d596a4dccbe167d3283b2e506dfdb9c7b1caef2a490c2c5dff184a"
+    },
+    "k": {
+      "id": 318669,
+      "bytes": 302011,
+      "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
+      "sha256": "f00714c534c9658b8c07d2a473d39b2fd5a99c392e6e2ab50fb52fbb3b6ca74d"
+    },
+    "plots_fig2": {
+      "id": 318530,
+      "bytes": 2795,
+      "sha1": "5a0aeeb41269e9a0630851b0ce7ad70d188b82fa",
+      "sha256": "58380f2df0d216cc0fa7f66f5c733f392c659a1bc3987bd72e3ecb6893961d04"
+    },
+    "stats_fig2": {
+      "id": 318531,
+      "bytes": 2282,
+      "sha1": "45ffcd0be45743c7937d3e0a323ac52832aa845e",
+      "sha256": "e220f0e8603976b99d67120e2aa91c8828d6e47bc3dc08b7b20cf4e3ce49fa5a"
+    }
+  },
+  "na": {
+    "recordings": 49,
+    "species_counts": {
+      "Human": 16,
+      "Mouse": 33
+    },
+    "ap_columns_per_group": 200,
+    "groups": [
+      "Hnarrow",
+      "Mnarrow",
+      "Mwide",
+      "Hwide"
+    ],
+    "main_figure_group": "Hnarrow",
+    "main_figure_means": {
+      "Human": {
+        "AP5": 0.774502,
+        "AP200": 0.748717
+      },
+      "Mouse": {
+        "AP5": 0.524437,
+        "AP200": 0.516654
+      }
+    },
+    "variable_metadata_warning": "Mwide and Hwide both described as Human waveform 2 in variables sheet; plotting script treats them as distinct groups. Raw group codes preserved."
+  },
+  "k": {
+    "recordings": 25,
+    "species_counts": {
+      "H": 14,
+      "M": 11
+    },
+    "ap_columns_per_group": 201,
+    "analysis_ap_range": [
+      1,
+      200
+    ],
+    "human_input_means": {
+      "Human": {
+        "AP5": 0.721422,
+        "AP200": 0.42745
+      },
+      "Mouse": {
+        "AP5": 0.792762,
+        "AP200": 0.273621
+      }
+    },
+    "mouse_input_means": {
+      "Human": {
+        "AP5": 0.730966,
+        "AP200": 0.406254
+      },
+      "Mouse": {
+        "AP5": 0.789985,
+        "AP200": 0.269274
+      }
+    }
+  },
+  "stats_script_source_audit": {
+    "file_id": 318531,
+    "executed": false,
+    "na_formula": "relative_amp ~ APnr*C(Species) - C(Species)",
+    "na_ap_windows": [
+      "AP1-AP200",
+      "AP1-AP5"
+    ],
+    "na_groups": "all four APwave groups are stacked; the formula has no APwave term",
+    "k_formula": "amp ~ APnr*C(species)",
+    "k_input_wave_filter": "_h_n_ (normalized human AP input waveform only)",
+    "k_ap_windows": [
+      "AP1-AP200",
+      "AP1-AP5"
+    ],
+    "note": "The original inferential script has been inspected and checksum verified, but its ANOVA has not yet been re-executed in this checkpoint."
+  },
+  "limitations": [
+    "All summaries are descriptive means/medians/SD/SEM across recordings, not new significance tests.",
+    "Values are normalized current amplitudes from somatic nucleated-patch AP-clamp; they are not conductance densities.",
+    "Na group metadata conflict is unresolved and is preserved.",
+    "Original AP-clamp time-series trace H_wide.csv remains not downloaded or replayed.",
+    "No active-channel runtime mechanism or production default has changed."
+  ],
+  "descriptive_summary_rows": [
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Hnarrow",
+      "ap_number": 5,
+      "n": 16,
+      "mean_normalized_amplitude": 0.774502,
+      "median_normalized_amplitude": 0.775804,
+      "sd": 0.098508,
+      "sem": 0.024627
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Hnarrow",
+      "ap_number": 5,
+      "n": 33,
+      "mean_normalized_amplitude": 0.524437,
+      "median_normalized_amplitude": 0.531771,
+      "sd": 0.109316,
+      "sem": 0.019029
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Hnarrow",
+      "ap_number": 200,
+      "n": 16,
+      "mean_normalized_amplitude": 0.748717,
+      "median_normalized_amplitude": 0.757356,
+      "sd": 0.121086,
+      "sem": 0.030271
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Hnarrow",
+      "ap_number": 200,
+      "n": 33,
+      "mean_normalized_amplitude": 0.516654,
+      "median_normalized_amplitude": 0.515533,
+      "sd": 0.08827,
+      "sem": 0.015366
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Mnarrow",
+      "ap_number": 5,
+      "n": 16,
+      "mean_normalized_amplitude": 0.63408,
+      "median_normalized_amplitude": 0.58637,
+      "sd": 0.174864,
+      "sem": 0.043716
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Mnarrow",
+      "ap_number": 5,
+      "n": 33,
+      "mean_normalized_amplitude": 0.385085,
+      "median_normalized_amplitude": 0.369266,
+      "sd": 0.120052,
+      "sem": 0.020898
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Mnarrow",
+      "ap_number": 200,
+      "n": 16,
+      "mean_normalized_amplitude": 0.641918,
+      "median_normalized_amplitude": 0.638018,
+      "sd": 0.137676,
+      "sem": 0.034419
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Mnarrow",
+      "ap_number": 200,
+      "n": 33,
+      "mean_normalized_amplitude": 0.369479,
+      "median_normalized_amplitude": 0.387736,
+      "sd": 0.090712,
+      "sem": 0.015791
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Mwide",
+      "ap_number": 5,
+      "n": 16,
+      "mean_normalized_amplitude": 0.765553,
+      "median_normalized_amplitude": 0.777413,
+      "sd": 0.127053,
+      "sem": 0.031763
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Mwide",
+      "ap_number": 5,
+      "n": 33,
+      "mean_normalized_amplitude": 0.492035,
+      "median_normalized_amplitude": 0.498716,
+      "sd": 0.110423,
+      "sem": 0.019222
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Mwide",
+      "ap_number": 200,
+      "n": 16,
+      "mean_normalized_amplitude": 0.712858,
+      "median_normalized_amplitude": 0.733394,
+      "sd": 0.127942,
+      "sem": 0.031986
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Mwide",
+      "ap_number": 200,
+      "n": 33,
+      "mean_normalized_amplitude": 0.540156,
+      "median_normalized_amplitude": 0.531878,
+      "sd": 0.132468,
+      "sem": 0.02306
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Hwide",
+      "ap_number": 5,
+      "n": 16,
+      "mean_normalized_amplitude": 0.770398,
+      "median_normalized_amplitude": 0.787648,
+      "sd": 0.12299,
+      "sem": 0.030747
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Hwide",
+      "ap_number": 5,
+      "n": 33,
+      "mean_normalized_amplitude": 0.561004,
+      "median_normalized_amplitude": 0.566819,
+      "sd": 0.102532,
+      "sem": 0.017848
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Human",
+      "condition": "Hwide",
+      "ap_number": 200,
+      "n": 16,
+      "mean_normalized_amplitude": 0.732722,
+      "median_normalized_amplitude": 0.75668,
+      "sd": 0.112377,
+      "sem": 0.028094
+    },
+    {
+      "ion": "Na",
+      "cell_species": "Mouse",
+      "condition": "Hwide",
+      "ap_number": 200,
+      "n": 33,
+      "mean_normalized_amplitude": 0.508001,
+      "median_normalized_amplitude": 0.502127,
+      "sd": 0.086146,
+      "sem": 0.014996
+    },
+    {
+      "ion": "K",
+      "cell_species": "Human",
+      "condition": "human_input_waveform",
+      "ap_number": 5,
+      "n": 14,
+      "mean_normalized_amplitude": 0.721422,
+      "median_normalized_amplitude": 0.729547,
+      "sd": 0.071169,
+      "sem": 0.019021
+    },
+    {
+      "ion": "K",
+      "cell_species": "Mouse",
+      "condition": "human_input_waveform",
+      "ap_number": 5,
+      "n": 11,
+      "mean_normalized_amplitude": 0.792762,
+      "median_normalized_amplitude": 0.786375,
+      "sd": 0.154755,
+      "sem": 0.04666
+    },
+    {
+      "ion": "K",
+      "cell_species": "Human",
+      "condition": "human_input_waveform",
+      "ap_number": 200,
+      "n": 14,
+      "mean_normalized_amplitude": 0.42745,
+      "median_normalized_amplitude": 0.391329,
+      "sd": 0.120219,
+      "sem": 0.03213
+    },
+    {
+      "ion": "K",
+      "cell_species": "Mouse",
+      "condition": "human_input_waveform",
+      "ap_number": 200,
+      "n": 11,
+      "mean_normalized_amplitude": 0.273621,
+      "median_normalized_amplitude": 0.309536,
+      "sd": 0.076626,
+      "sem": 0.023104
+    },
+    {
+      "ion": "K",
+      "cell_species": "Human",
+      "condition": "mouse_input_waveform",
+      "ap_number": 5,
+      "n": 14,
+      "mean_normalized_amplitude": 0.730966,
+      "median_normalized_amplitude": 0.730643,
+      "sd": 0.078,
+      "sem": 0.020846
+    },
+    {
+      "ion": "K",
+      "cell_species": "Mouse",
+      "condition": "mouse_input_waveform",
+      "ap_number": 5,
+      "n": 11,
+      "mean_normalized_amplitude": 0.789985,
+      "median_normalized_amplitude": 0.771391,
+      "sd": 0.118824,
+      "sem": 0.035827
+    },
+    {
+      "ion": "K",
+      "cell_species": "Human",
+      "condition": "mouse_input_waveform",
+      "ap_number": 200,
+      "n": 14,
+      "mean_normalized_amplitude": 0.406254,
+      "median_normalized_amplitude": 0.388626,
+      "sd": 0.085185,
+      "sem": 0.022767
+    },
+    {
+      "ion": "K",
+      "cell_species": "Mouse",
+      "condition": "mouse_input_waveform",
+      "ap_number": 200,
+      "n": 11,
+      "mean_normalized_amplitude": 0.269274,
+      "median_normalized_amplitude": 0.290781,
+      "sd": 0.064136,
+      "sem": 0.019338
+    }
+  ]
+}

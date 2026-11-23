@@ -215,17 +215,37 @@
       "sha1": "6867798db8a5a2a77a66bb72b7cae77590ff0247",
       "role": "K conductance-density interpolation grid",
       "downloaded": false
+    },
+    {
+      "id": 318530,
+      "path": "Figure2/plots_fig2.py",
+      "bytes": 2795,
+      "mime": "text/x-python-script",
+      "sha1": "5a0aeeb41269e9a0630851b0ce7ad70d188b82fa",
+      "sha256": "58380f2df0d216cc0fa7f66f5c733f392c659a1bc3987bd72e3ecb6893961d04",
+      "role": "Original Figure 2 plotting script; encodes Na species classification and main/supplementary APwave group selection",
+      "downloaded": true
+    },
+    {
+      "id": 318531,
+      "path": "Figure2/stats_fig2.py",
+      "bytes": 2282,
+      "mime": "text/x-python-script",
+      "sha1": "45ffcd0be45743c7937d3e0a323ac52832aa845e",
+      "sha256": "e220f0e8603976b99d67120e2aa91c8828d6e47bc3dc08b7b20cf4e3ce49fa5a",
+      "role": "Original Figure 2 OLS/Type-II ANOVA script for Na/K AP-clamp amplitude adaptation",
+      "downloaded": true
     }
   ],
   "acquisition": {
     "method": "DataverseNL public file API resolving to signed Surf object-store downloads, read with Python urllib in an isolated research session",
     "sha256_method": "SHA-256 over exact downloaded response bytes; size and SHA-1 cross-checked with the Dataverse file metadata API",
     "selected_file_count": 20,
-    "downloaded_read_and_sha256_checked_count": 13,
+    "downloaded_read_and_sha256_checked_count": 15,
     "raw_source_files_committed_to_amsn": false,
     "raw_workbooks_downloaded": false,
     "large_ap_clamp_h_wide_csv_downloaded": false,
-    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source. Figure 2 Na/K workbooks are downloaded and independently checked; AP-clamp H_wide.csv and other raw traces remain undownloaded.",
+    "note": "Selected source code/mechanism bytes were inspected and hashed in the remote session but were not stored in the repository. Dataverse remains the canonical distribution source. Figure 2 Na/K workbooks are downloaded and independently checked; AP-clamp H_wide.csv and other raw traces remain undownloaded. Figure 2 Na/K raw amplitude workbooks and original Figure 2 plot/statistics scripts have been downloaded, SHA-1/SHA-256 checked, and parsed. The large AP-clamp H_wide.csv raw trace file remains undownloaded.",
     "raw_numeric_data_files_downloaded": true
   },
   "provenance": {

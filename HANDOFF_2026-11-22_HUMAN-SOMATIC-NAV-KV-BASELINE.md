@@ -102,3 +102,12 @@ A GitHub Actions workflow has been added to verify Dataverse metadata SHA-1, raw
 - Script: `amsn-core/examples/audit_wilbers_figure2_data.py`
 - Workflow: `.github/workflows/amsn-wilbers-figure2-data-audit.yml`
 - Workbook SHA-1/SHA-256 pinned in the Dataverse manifest. First Actions result is pending.
+
+
+## Verified Figure 2 AP-clamp workbook results — 23/11/2026
+
+- Figure 2 data workflow [45116703439](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45116703439) passed, with artifact [14791708917](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45116703439/artifacts/14791708917). It verified SHA-1 and SHA-256 for both workbooks and the original plot/statistics scripts.
+- Na: 49 recordings (16 Human, 33 Mouse per the source filename rule), 4 distinct APwave groups × 200 APs. Main Hnarrow normalized Na amplitude at AP200: Human 0.7487 (SD 0.1211), Mouse 0.5167 (SD 0.0883). Keep Mwide/Hwide description conflict visible.
+- K: 25 recordings (14 H, 11 M), 2 input waveforms × 201 samples; original code uses AP1–AP200. Human cells at AP200: 0.4275 under H input and 0.4063 under M input; Mouse cells: 0.2736 and 0.2693.
+- Descriptive only; no new p-values. Original OLS/Type-II ANOVA script inspected; exact execution is next. Raw AP-clamp H_wide.csv still not replayed.
+- Summary report: [WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md). Summary CSV: [wilbers_figure2_apclamp_normalized_summary_2026-11-23.csv](amsn-core/results/wilbers_figure2_apclamp_normalized_summary_2026-11-23.csv).
