@@ -130,7 +130,9 @@ def test_source_level_numerical_and_parameter_warnings_remain_blocking():
     potassium = audit["potassium"]["fitting"]
     assert potassium["intermediate_inactivation_fit_matches_mod"] is True
     assert potassium["later_final_best_fit_matches_mod"] is False
-    assert audit["execution_status"]["original_nmodl_compiled_or_executed"] is False
+    assert audit["execution_status"]["original_nmodl_compiled_or_executed"] is True
+    assert audit["execution_status"]["original_nmodl_compile_verified_in_neuron_9_0_2"] is True
+    assert audit["execution_status"]["voltage_clamp_or_ap_clamp_reproduced"] is False
 
 
 def test_current_clamp_density_fit_is_not_mislabelled_human_only():
@@ -144,5 +146,7 @@ def test_current_clamp_density_fit_is_not_mislabelled_human_only():
 def test_original_nmodl_source_audit_is_diagnostic_and_not_runtime_ready():
     audit = load_mechanism_audit()
     assert audit["runtime_eligible"] is False
-    assert audit["execution_status"]["original_nmodl_compiled_or_executed"] is False
+    assert audit["execution_status"]["original_nmodl_compiled_or_executed"] is True
+    assert audit["execution_status"]["original_nmodl_compile_verified_in_neuron_9_0_2"] is True
+    assert audit["execution_status"]["voltage_clamp_or_ap_clamp_reproduced"] is False
     assert audit["source_manifest"].endswith("wilbers2023_dataverse_source_manifest_2026-11-22.json")
