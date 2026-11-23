@@ -25,6 +25,7 @@ SOURCES: dict[str, dict[str, Any]] = {
     "na_human": {
         "path": "Figures5_6/MOD/na_human.mod",
         "file_id": 318629,
+        "sha1": "b199d70c3d0e7a2e991fd8d26c54b1318e3c0970",
         "sha256": "e23ed354aa683639bfd2ffdeae4b2544adf8c5cce6f8a4adbada42549310f2fd",
         "reference_temperature_c": 25.0,
         "voltage_symbols": ("tha", "thi1", "thi2"),
@@ -37,6 +38,7 @@ SOURCES: dict[str, dict[str, Any]] = {
     "k_human": {
         "path": "Figures5_6/MOD/k_human.mod",
         "file_id": 318647,
+        "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
         "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063",
         "reference_temperature_c": 34.0,
         "voltage_symbols": ("tha", "thi1", "thi2"),
@@ -55,20 +57,74 @@ EPSILON_MV = 1e-5
 RELATIVE_EPSILON = 1e-6
 
 
-def download_verified(source: dict[str, Any]) -> bytes:
-    url = f"{DATAFILE_BASE}/{source['path']}/{source['file_id']}"
-    request = urllib.request.Request(
-        url, headers={"User-Agent": "AMSN-Wilbers-source-reproduction/1.0"}
-    )
-    with urllib.request.urlopen(request, timeout=60) as response:
-        payload = response.read()
-    observed = hashlib.sha256(payload).hexdigest()
-    if observed != source["sha256"]:
+def download_verified(source: dict[str, Any]) -> tuple[bytes, dict[str, Any]]:
+    """Fetch the immutable Dataverse file ID and verify both official SHA-1 and pinned SHA-256."""
+    metadata_url = f"https://dataverse.nl/api/files/{source['file_id']}"
+    with urllib.request.urlopen(metadata_url, timeout=60) as response:
+        metadata_payload = response.read()
+    metadata = json.loads(metadata_payload)["data"]["dataFile"]
+    official_sha1 = metadata["checksum"]["value"]
+    official_size = int(metadata["filesize"])
+    if official_sha1 != source["sha1"]:
         raise RuntimeError(
-            f"SHA-256 mismatch for {source['path']}: "
-            f"expected {source['sha256']}, observed {observed}"
+            f"Dataverse metadata SHA-1 changed for file {source['file_id']}: "
+            f"expected {source['sha1']}, observed {official_sha1}"
         )
-    return payload
+
+    urls = [
+        f"{DATAFILE_BASE}/{source['path']}/{source['file_id']}",
+        f"{DATAFILE_BASE}/{source['file_id']}",
+    ]
+    attempts = []
+    for url in urls:
+        request = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": "AMSN-Wilbers-source-reproduction/1.0",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+                "Accept": "*/*",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                payload = response.read()
+                content_type = response.headers.get("Content-Type")
+                content_encoding = response.headers.get("Content-Encoding")
+                final_url = response.url.split("?", 1)[0]
+            observed_sha1 = hashlib.sha1(payload).hexdigest()
+            observed_sha256 = hashlib.sha256(payload).hexdigest()
+            attempt = {
+                "url": url,
+                "final_url": final_url,
+                "bytes": len(payload),
+                "content_type": content_type,
+                "content_encoding": content_encoding,
+                "sha1": observed_sha1,
+                "sha256": observed_sha256,
+                "sha1_matches_dataverse": observed_sha1 == official_sha1,
+                "sha256_matches_pinned_source": observed_sha256 == source["sha256"],
+            }
+            attempts.append(attempt)
+            if (
+                len(payload) == official_size
+                and observed_sha1 == official_sha1
+                and observed_sha256 == source["sha256"]
+            ):
+                return payload, {
+                    "dataverse_metadata_sha1": official_sha1,
+                    "dataverse_metadata_bytes": official_size,
+                    "download_attempts": attempts,
+                    "accepted_endpoint": url,
+                }
+        except Exception as exc:
+            attempts.append({"url": url, "error": repr(exc)})
+
+    raise RuntimeError(
+        "Dataverse source download did not match both official SHA-1 and pinned SHA-256. "
+        f"file_id={source['file_id']}; official_sha1={official_sha1}; "
+        f"official_bytes={official_size}; attempts={json.dumps(attempts, sort_keys=True)}"
+    )
 
 
 def finite_value(value: Any) -> float | None:
@@ -150,7 +206,7 @@ def relative_difference(left: float | None, right: float | None) -> float | None
 def compile_compare_and_probe(
     name: str, source: dict[str, Any], work: Path
 ) -> dict[str, Any]:
-    payload = download_verified(source)
+    payload, download_metadata = download_verified(source)
     clone_payload = make_diagnostic_clone(payload, name)
     build_dir = work / name
     build_dir.mkdir(parents=True)
@@ -337,6 +393,7 @@ def compile_compare_and_probe(
         "file_id": source["file_id"],
         "download_bytes": len(payload),
         "sha256_verified": hashlib.sha256(payload).hexdigest() == source["sha256"],
+        "download_metadata": download_metadata,
         "compiled_original_and_stable_diagnostic_clone": True,
         "loaded_into_neuron": True,
         "neuron_version": __import__("neuron").__version__,
