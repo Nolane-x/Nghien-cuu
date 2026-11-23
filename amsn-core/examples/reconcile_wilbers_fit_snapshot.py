@@ -30,7 +30,7 @@ FILES = {
     "k_mod": {
         "id": 318647, "path": "Figures5_6/MOD/k_human.mod", "bytes": 4220,
         "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5",
-        "sha256": "899aa0dfa697b7f735258e10b002c8876c108902af8c0f9fc4bc1963f6caee5",
+        "sha256": "899aa0dfa697b7f735258e10b002c8876c108902afc0c13b82fc619decb66063",
         "kind": "mod", "suffix": "_k_human",
     },
     "na_fit": {
