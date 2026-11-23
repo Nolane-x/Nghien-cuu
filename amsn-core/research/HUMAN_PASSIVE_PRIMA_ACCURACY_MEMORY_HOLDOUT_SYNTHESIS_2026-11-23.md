@@ -13,7 +13,7 @@ There is no single PRIMA configuration that is best for every port set, output l
 2. **Nine-port, order 168** is the defensible choice when basal-q25 and apical-q25 outputs are specifically required. It is the first tested equal-order point where the two additional outputs are accurate while the seven shared outputs remain effectively at parity with the seven-port model.
 3. **Order 84** is the lower-memory point among the resource-benchmarked nine-port candidates. It remains a useful constrained alternative, but its accuracy depends on shift placement and the target outputs.
 
-**Full Hines remains the canonical reference.** Existing production order defaults remain unchanged. Orders 112 and 168 remain opt-in research configurations.
+**Full Hines remains the canonical reference.** Existing production order defaults remain unchanged. Matched 7-port/9-port tests on NMO_162186 and NMO_03524 show that the incremental numerical cost of adding q25 ports is morphology-dependent; there is no universal order threshold for nine-port models.
 
 ## Evidence map
 
@@ -23,7 +23,8 @@ There is no single PRIMA configuration that is best for every port set, output l
 | Independent morphology holdout | PR #8, run 45012282648 | NMO_162186; 81 model rows, 729 AC rows, 3,402 transient-port rows | Order112 extended10kHz maintains very low high-frequency residuals on one held-out morphology |
 | Equal-order port-count test | PR #6, run 44987393352 | 3 morphologies × 2 mesh caps × 7/9 ports × orders 56/112/168; 3,072 sweep rows | Port count and order must be selected together; nine-port order168 restores shared-output parity and resolves q25 |
 | Matched port-count × independent holdout | PR #13, run 45184621520 | NMO_162186; 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations | Confirms order-dependent result: nine-port order112 regresses shared outputs; order168 restores parity |
-| Independent Control-condition morphology holdout | PR #14, run 45196546471 | NMO_03524 Jacobs; 81 models, 729 AC rows, 3,402 transient rows | Independently supports extended10kHz shift family; order84 extended10kHz is strong accuracy/storage compromise on this smaller Control morphology |
+| Independent Control-condition morphology holdout | PR #14, run 45196546471 | NMO_03524 Jacobs; 81 models, 729 AC rows, 3,402 transient rows | Independently supports extended10kHz shift family; order84 extended10kHz is strong accuracy/storage compromise |
+| Matched 7/9-port Control holdout | PR #15, run 45198630080 | NMO_03524; 36 models, 756 shared pairs, 216 q25 observations, 378 Hines checks | Nine-port order112 and168 both preserve shared-output parity on this morphology; q25 errors <3.1e−8% |
 | Nine-port high-order capacity | merged PR #4, run 44979673244 | 3 morphologies × 2 mesh caps; orders 28/56/84/112/168; 2,520 rows | Higher capacity sharply reduces apical-q90 transient error |
 | Runtime and peak RSS | PR #5, run 44989658844 | 36 measurements: 3 morphologies × 2 mesh caps × orders 84/112/168 × 2 repetitions; 37/37 jobs pass | Peak RSS increases consistently with order; timing is confounded by heterogeneous GitHub CPUs |
 
@@ -104,7 +105,7 @@ Order 168 is the first tested equal-order point at which the nine-port expansion
 
 On the independent NMO_162186 holdout (PR #13), the nine-port q25 outputs also remained accurate: order112 median/maximum NRMSE 8.3418e−8% / 3.6711e−6%; order168 8.6262e−9% / 8.6226e−8%. The 378 shared Hines-reference checks on this holdout were exact (zero voltage difference), confirming that the shared reference traces are identical between port layouts.
 
-**Decision:** do not select nine ports at order 56 or 112 merely because more outputs are retained. Use nine-port order168 only when q25 outputs are required and the added memory/capacity is justified. Otherwise retain the seven-port reference.
+**Decision:** choose the port count and order using a matched morphology-specific test. NMO_162186 showed that nine-port order112 degrades shared outputs and order168 restores parity; NMO_03524 showed that nine-port order112 is already at parity and both q25 outputs are accurate. Do not impose a universal order168 threshold from one morphology.
 
 ## 4. Runtime and peak memory
 
@@ -135,19 +136,17 @@ This is a separate nine-port resource experiment. Its RSS measurements should be
 | High-frequency accuracy on the seven retained outputs | **7-port, order112, extended10kHz** | Best 3–10 kHz residuals in PR #7; extended10kHz also leads on both NMO_162186 and NMO_03524 | Passive RC only; holdout morphologies are individual specimens |
 | Lower-memory passive compromise | **7-port, order84, extended10kHz** | On NMO_03524, median 10 kHz Z/Y residuals 5.58e−7% / 2.88e−7% at 0.660 MB numeric storage | Validated on the smaller Jacobs Control morphology; re-evaluate on additional morphologies |
 | Lowest footprint | **Order56** (choose shift set by frequency/transient needs) | 0.416 MB numeric storage on NMO_03524; narrow3kHz preserves very small transient errors | Accept higher high-frequency AC residuals |
-| Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−7% on NMO_162186 | The q25/9-port decision is not yet tested on the NMO_03524 Control morphology |
-| Need basal-q25 and apical-q25 outputs | **9-port, order168** | Near-parity on shared outputs and q25 maximum NRMSE <1e−7% on NMO_162186 | Higher resource use than order84; holdout is one epilepsy surgical morphology |
+| Need basal-q25 and apical-q25 outputs | **9-port, morphology-tested order112 or168** | NMO_162186 required order168 for parity; NMO_03524 was already at parity at order112, with q25 max NRMSE 3.06e−8% | Do not impose a universal order168 threshold; only two individual morphologies tested |
 | Canonical reference | **Full Hines** | Remains the unreduced reference against which all passive candidates are measured | More states and resource cost; not being replaced |
 
 This table is a research selection guide, not a production-default change. All passive models remain candidates for specific protocols and output sets.
 
 ## 6. Unresolved validation gates
 
-1. **Cross the port-count and holdout dimensions.** The NMO_162186 holdout tested the nine shift/order candidates, while the equal-order 7-vs-9 matrix used three other morphologies. Run the seven-port and nine-port designs at matched orders on NMO_162186 before claiming the q25 port decision generalizes to that holdout.
-2. **Add another independent morphology.** NMO_162186 is a single epilepsy specimen with incomplete axon. Add at least one independently sourced morphology with clear metadata and different experimental context; do not label a single morphology as a population.
-3. **Control performance timing.** Re-run order84/112/168 and the exact seven-port order112-extended candidate on one fixed machine or a controlled self-hosted runner with repeated isolated kernel timings. GitHub hosted CPU heterogeneity prevents a clean wall-time ranking.
-4. **Test active/nonlinear biology separately.** These results validate passive linear-RC reduction only. They do not validate action potentials, active dendritic ion channels, nonlinear synapses, calcium, plasticity, metabolism or cognition.
-5. **Retain uncertainty and negative results.** The ±20% Rm/Cm/Ra scenarios are deterministic stress tests, not fitted biological distributions. A hierarchical or subject-level uncertainty treatment is not applicable to these numerical morphology fixtures but should be applied when biological measurements are introduced.
+1. **Add a third independent morphology.** Matched 7-port/9-port order112/order168 comparisons are now complete on NMO_162186 (epilepsy surgical specimen) and NMO_03524 (Jacobs Control-condition specimen). Both have incomplete axons or other reconstruction limits. Add a further independently sourced morphology, preferably with a more complete axon and distinct experimental context, before proposing a general port/order rule.
+2. **Control performance timing.** Re-run order84/112/168 and the exact seven-port order112-extended candidate on one fixed machine or a controlled self-hosted runner with repeated isolated kernel timings. GitHub hosted CPU heterogeneity prevents a clean wall-time ranking.
+3. **Test active/nonlinear biology separately.** These results validate passive linear-RC reduction only. They do not validate action potentials, active dendritic ion channels, nonlinear synapses, calcium, plasticity, metabolism or cognition.
+4. **Retain uncertainty and negative results.** The ±20% Rm/Cm/Ra scenarios are deterministic stress tests, not fitted biological distributions. A hierarchical or subject-level uncertainty treatment is not applicable to these numerical morphology fixtures but should be applied when biological measurements are introduced.
 
 ## Source experiments and audit links
 
@@ -217,3 +216,41 @@ This provides independent support for the extended10kHz shift family in a distin
 **Important port-count limitation:** PR #14 is a seven-port sweep. It does not re-test basal-q25/apical-q25 or the 9-port order168 parity observed in PR #13 on NMO_162186. That q25/9-port decision remains morphology-specific until a matched 7-port/9-port test is run on NMO_03524.
 
 Source: [PR #14](https://github.com/Nolane-x/Nghien-cuu/pull/14), [validated CI run](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471), [artifact #14827204708](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45196546471/artifacts/14827204708).
+
+
+## 9. Second matched port-count morphology: NMO_03524 Jacobs Control
+
+PR #15 / [workflow 45198630080](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080) completed the second matched port-count holdout. It used the NMO_03524 Jacobs Control morphology (869 SWC records; SHA-256 \`6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748\`), seven shared SWC nodes, and two q25-only nodes: basal 272 and apical 864.
+
+The run passed the full AMSN regression suite, source checksum, Import3D preflight, matched replay, idempotent result archive and artifact upload. It produced 36 model rows, 324 AC rows, 1,728 transient-port rows, 756 shared pairs, 216 q25-only observations and 378 shared-Hines checks. All models achieved the requested order and passed Cholesky checks; all 378 common Hines reference traces were exactly equal.
+
+Artifact #14829912332; ZIP SHA-256 \`cba24b3c36c24b125339feefbb3a10d0f105adf9cda2c80030a5577e80350b03\`.
+
+### Shared-output parity
+
+| Basis order | 9-port worse / better / tie | Median 9/7 transient-error ratio | Maximum ratio |
+|---:|---:|---:|---:|
+| 112 | 204 / 173 / 1 | **1.00000465×** | 1.00614× |
+| 168 | 189 / 189 / 0 | **0.99999991×** | 1.00721× |
+
+On NMO_03524, nine-port order112 is already at near-parity on the seven shared outputs. At order168 the layouts are also at parity.
+
+### q25 accuracy
+
+| Basis order | q25 observations | Median q25 NRMSE | Maximum q25 NRMSE |
+|---:|---:|---:|---:|
+| 112 | 108 | 3.7497e−9% | 3.0585e−8% |
+| 168 | 108 | 3.7498e−9% | 3.0586e−8% |
+
+The two q25 output probes are accurate at both tested orders.
+
+### Cross-morphology comparison
+
+| Morphology | Experimental context | Order112 median 9/7 error ratio | Order168 median 9/7 error ratio | Practical finding |
+|---|---|---:|---:|---|
+| NMO_162186 | Epilepsy surgical specimen; axon incomplete | **8.162×** | 0.99999985× | Order168 needed to restore shared-output parity when adding q25 ports |
+| NMO_03524 | Jacobs Control-condition Golgi cell; dendrites moderate, axon incomplete | **1.00000465×** | 0.99999991× | Order112 already preserves parity while adding q25 outputs |
+
+The incremental cost of adding q25 ports is therefore **morphology-dependent**. On NMO_162186, nine-port order112 caused a strong regression; on NMO_03524, order112 was effectively at parity. A new morphology should receive a matched seven-port/nine-port order comparison before fixing its order. The two tested morphologies are individual cells with incomplete axons or other structural limits; they do not support a population-wide rule.
+
+Source: [PR #15](https://github.com/Nolane-x/Nghien-cuu/pull/15), [validated workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080), [artifact #14829912332](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080/artifacts/14829912332).
