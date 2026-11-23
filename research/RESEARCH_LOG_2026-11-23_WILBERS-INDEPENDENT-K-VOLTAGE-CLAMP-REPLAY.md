@@ -29,3 +29,10 @@ The Figure 4 targets represent 13 Human cells nested in 2 subjects and 30 Mouse 
 ## Next gate
 
 Compare with raw voltage-clamp current traces if available, use subject-aware uncertainty, investigate identical K mechanism outputs and source-bound fits, then evaluate current-clamp and morphology behavior.
+
+
+## Figure 2 AP-clamp waveform coverage audit
+
+Inspected the official Figure 2 K workbook and original \`plots_fig2.py\` source. The workbook has 25 recording rows (14 Human, 11 Mouse), AP1–AP201 columns for four series (\`amp_h_\`, \`amp_m_\`, \`amp_h_n_\`, \`amp_m_n_\`) and exact AP1 normalization. PR #9 already compared all 14 Human and 11 Mouse recordings against the \`amp_h_n_\` normalized human-waveform series.
+
+The Figure 2 article describes applying both human- and mouse-origin AP command waveforms and reports that species differences were independent of command waveform origin. The public Dataverse APclamp directory contains \`H_wide.csv\`, but no \`M_wide.csv\` command was present in the inspected v3 directory inventory. Thus the mouse-waveform response series \`amp_m_n_\` is a measured target without its corresponding downloadable command waveform. A faithful second-condition model replay cannot be performed from these public assets alone; no synthetic substitution should be made.
