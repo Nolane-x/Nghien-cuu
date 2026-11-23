@@ -5,7 +5,7 @@
 
 ## Work performed
 
-Read and cross-checked the validated reports and CSVs from PRs #4–#8, then incorporated the matched NMO_162186 and NMO_03524 holdouts:
+Read and cross-checked validated reports and CSVs from PRs #4–#8, then incorporated shift/order, matched port-count and two distinct morphology holdouts:
 - PR #4 high-order nine-port matrix
 - PR #5 resource/RSS benchmark
 - PR #6 equal-order seven-port versus nine-port
@@ -39,7 +39,7 @@ PR #13 / workflow 45184621520 closed the previous port-count × holdout validati
 
 Order112 nine-port regressed on 377/378 shared pairs; median 9/7 transient-error ratio 8.162×. Order168 was effectively at parity (190 better, 187 worse, 1 tie; median 0.99999985×). q25 max NRMSE was 3.6711e−6% at order112 and 8.6226e−8% at order168.
 
-Updated conditional choice: 7-port order112 extended10kHz for the original seven outputs; 9-port order168 when q25 outputs are required; avoid nine-port order112. Order84 remains the lower-memory candidate from the separate resource audit. Full Hines remains canonical.
+Updated conditional choice: use a matched seven/nine-port test on the target morphology. NMO_162186 needed order168 for shared-output parity; NMO_03524 did not. Extended10kHz remains the high-frequency shift family, with order84 a good accuracy/storage compromise on NMO_03524. Full Hines remains canonical.
 
 Outstanding work: repeat the matched-port matrix on a second independent morphology with different experimental context; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
 
@@ -54,7 +54,7 @@ The sweep covered 81 models, 729 frequency rows and 3,402 transient-port rows, a
 
 Conclusion: extended10kHz shift family is independently supported on a second human morphology in a Control metadata context. It is not a matched factorial comparison with NMO_162186. PR #14 is seven-port only and does not replicate q25/9-port transfer there.
 
-Next gate: run matched 7-port/9-port order112/168 on NMO_03524, then add a third independent morphology with preferably more complete axon; fixed-hardware timing and active/nonlinear validation remain separate.
+Next gate: add a third independent morphology, preferably with a more complete axon; fixed-hardware timing and active/nonlinear validation remain separate.
 
 
 ## Second matched port-count morphology completed — NMO_03524
@@ -68,3 +68,8 @@ This contrasts with NMO_162186 (PR #13): order112 nine-port had 377/378 regressi
 Artifact #14829912332; ZIP SHA-256 cba24b3c36c24b125339feefbb3a10d0f105adf9cda2c80030a5577e80350b03.
 
 Next: add a third independent morphology with a more complete axon and different source study. Fixed-hardware timing and active/nonlinear validation remain separate.
+
+
+## Updated synthesis decision after PR #15
+
+Do not encode a universal order168 requirement for nine-port PRIMA. The same matched design gave a median nine/seven error ratio 8.162× at order112 on NMO_162186, but 1.00000465× on NMO_03524. Both q25 probes were accurate on NMO_03524 at order112 (maximum NRMSE 3.0585e−8%). This is morphology-specific evidence; a third, structurally more complete morphology is the next gate.
