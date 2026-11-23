@@ -1,0 +1,84 @@
+name: NMO_03524 Jacobs control matched 7-port vs 9-port PRIMA
+
+on:
+  push:
+    branches:
+      - research/prima-jacobs-control-matched-seven-nine-port-2026-11-23
+    paths:
+      - ".github/workflows/amsn-nmo03524-prima-7v9port-matched-order.yml"
+      - "amsn-core/examples/replay_nmo03524_prima_7v9port.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/examples/prepare_jacobs_control_holdout.py"
+      - "amsn-core/tests/test_nmo03524_prima_7v9port.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-nmo03524-prima-7v9port-matched-order
+  cancel-in-progress: false
+
+jobs:
+  matched-port-order-control-holdout:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.125"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+      - name: Verify pinned Jacobs control SWC in repository
+        working-directory: amsn-core
+        run: |
+          test -s data/human/neuromorpho_jacobs/1-5-3.CNG.swc
+          echo "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748  data/human/neuromorpho_jacobs/1-5-3.CNG.swc" | sha256sum --check -
+      - name: Run complete AMSN regression suite
+        working-directory: amsn-core
+        run: python -m pytest
+      - name: Verify Jacobs control source parser and metadata
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_jacobs_control_holdout.py tests/test_nmo03524_prima_7v9port.py
+      - name: Re-run Import3D, seven canonical ports and passive preflight
+        working-directory: amsn-core
+        run: python examples/prepare_jacobs_control_holdout.py
+      - name: Replay matched order112/order168 with seven and nine ports
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x'             -o results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt             python examples/replay_nmo03524_prima_7v9port.py
+      - name: Commit validated matched-port results
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv                   amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json                   amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive Jacobs control matched 7-port 9-port comparison"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve paired curves, q25 outputs and Hines checks
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmo03524-jacobs-control-prima-7v9port-matched-order
+          path: |
+            amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_*.csv
+            amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_report.json
+            amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23.time.txt
+          if-no-files-found: warn
+          retention-days: 90
