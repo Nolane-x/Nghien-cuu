@@ -32,3 +32,14 @@ Full Hines remains canonical. Do not change production defaults. Keep 7-port ord
 - Only one external holdout, from an epilepsy surgical specimen with incomplete axon.
 - No controlled fixed-hardware timing comparison.
 - No active/nonlinear biological validation.
+
+
+## Matched 7-port / 9-port holdout completed
+
+PR #13 / workflow 45184621520 closed the previous port-count × holdout validation gap on NMO_162186. Coverage was 36 models, 324 frequency rows, 1,728 transient rows, 756 shared-output pairs, 216 q25-only observations and 378 full-Hines shared-port checks. All 378 Hines comparisons were exactly equal.
+
+Order112 nine-port regressed on 377/378 shared pairs; median 9/7 transient-error ratio 8.162×. Order168 was effectively at parity (190 better, 187 worse, 1 tie; median 0.99999985×). q25 max NRMSE was 3.6711e−6% at order112 and 8.6226e−8% at order168.
+
+Updated conditional choice: 7-port order112 extended10kHz for the original seven outputs; 9-port order168 when q25 outputs are required; avoid nine-port order112. Order84 remains the lower-memory candidate from the separate resource audit. Full Hines remains canonical.
+
+Outstanding work: repeat the matched-port matrix on a second independent morphology with different experimental context; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
