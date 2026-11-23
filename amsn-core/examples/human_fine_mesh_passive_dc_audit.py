@@ -52,6 +52,45 @@ def path_distances_um(morphology):
     return reference.path_distances_um(morphology)
 
 
+def segment_centre_bracket(segment_centres, normalized_x):
+    """Return interpolation indices without extrapolating beyond segment centres.
+
+    An SWC point may lie exactly at a section endpoint (x=0 or x=1), while
+    NEURON voltage values exist at segment centres only. Outside that centre
+    interval, use the nearest endpoint segment for the diagnostic readout.
+    """
+    xs = np.asarray(segment_centres, dtype=float)
+    x = float(normalized_x)
+    if xs.ndim != 1 or xs.size == 0:
+        raise ValueError("segment centres must be a non-empty one-dimensional array")
+    if not np.isfinite(xs).all() or not np.isfinite(x):
+        raise ValueError("segment centres and normalized x must be finite")
+    if np.any(np.diff(xs) <= 0.0):
+        raise ValueError("segment centres must be strictly increasing")
+
+    if x < float(xs[0]):
+        return 0, 0, 0.0, "left_endpoint_nearest_segment"
+    if x > float(xs[-1]):
+        last = int(xs.size - 1)
+        return last, last, 0.0, "right_endpoint_nearest_segment"
+    if x == float(xs[0]):
+        return 0, 0, 0.0, None
+    if x == float(xs[-1]):
+        last = int(xs.size - 1)
+        return last, last, 0.0, None
+
+    upper = int(np.searchsorted(xs, x, side="left"))
+    lower = upper - 1
+    x0 = float(xs[lower])
+    x1 = float(xs[upper])
+    if not (x0 <= x <= x1) or x1 <= x0:
+        raise ValueError(
+            f"invalid segment-centre bracket: {x0} <= {x} <= {x1}"
+        )
+    weight = (x - x0) / (x1 - x0)
+    return lower, upper, float(weight), None
+
+
 def build_sites(morphology, reader, sections):
     distances = path_distances_um(morphology)
     injections = [
@@ -78,21 +117,10 @@ def build_sites(morphology, reader, sections):
         section = section_by_name[section_name]
         segments = list(section)
         xs = np.array([float(segment.x) for segment in segments])
-        insertion = int(np.searchsorted(xs, normalized))
-        lower = insertion - 1
-        upper = insertion
-        if lower < 0 or upper >= len(segments):
-            raise RuntimeError(
-                f"SWC node {node_id} at x={normalized:.9f} is outside "
-                "the segment-centre interpolation interval"
-            )
+        lower, upper, weight, endpoint_fallback = segment_centre_bracket(
+            xs, normalized
+        )
         x0, x1 = float(xs[lower]), float(xs[upper])
-        if not (x0 <= normalized <= x1) or x1 <= x0:
-            raise RuntimeError(
-                f"invalid interpolation bracket for SWC node {node_id}: "
-                f"{x0} <= {normalized} <= {x1}"
-            )
-        weight = (normalized - x0) / (x1 - x0)
         mapped[node_id] = {
             "nearest_segment": nearest,
             "section": section,
@@ -103,6 +131,7 @@ def build_sites(morphology, reader, sections):
             "lower_x": x0,
             "upper_x": x1,
             "interpolation_upper_weight": float(weight),
+            "interpolation_endpoint_fallback": endpoint_fallback,
             "total_mapping_offset_um": float(total),
             "geometry_offset_um": float(geometry),
             "nearest_centre_offset_um": float(centre),
