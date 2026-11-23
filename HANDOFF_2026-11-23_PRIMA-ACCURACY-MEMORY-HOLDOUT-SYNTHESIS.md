@@ -22,7 +22,7 @@ This report synthesizes the five evidence tracks while explicitly preserving the
 
 - Keep full Hines canonical.
 - Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate; extended10kHz is supported on both the NMO_162186 epilepsy and NMO_03524 Control holdouts.
-- Treat 9-port order168 as an opt-in research candidate only when basal/apical q25 outputs are required.
+- Treat port count/order as morphology-dependent: NMO_162186 required order168 to restore nine-port shared-output parity, while NMO_03524 was already at parity at order112 with both q25 outputs accurate.
 - Treat 7-port order84 extended10kHz as a good accuracy/storage compromise on the NMO_03524 Control holdout; order84 remains the lower-memory region in the separate resource matrix.
 - Do not change production defaults.
 
@@ -40,10 +40,9 @@ PR #13 / run 45184621520 passed the matched 7-port/9-port order112/168 compariso
 
 ## Next work
 
-1. Run matched 7-port/9-port order112/168 on NMO_03524 to test q25 transfer to the Control morphology.
-2. Add a further independent morphology, preferably with a more complete axon and a different source study.
-3. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
-4. Keep active-channel and nonlinear-synapse validation as separate research stages.
+1. Add a third independent morphology with a more complete axon and distinct source study; repeat the matched 7-port/9-port order112/168 test.
+2. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
+3. Keep active-channel and nonlinear-synapse validation as separate research stages.
 
 ## Scope
 
@@ -54,3 +53,10 @@ See PR #13 and its run 45184621520 for the completed matched-port holdout result
 
 
 PR #14 / run 45196546471 passed 146/146 tests and the full NMO_03524 seven-port shift/order matrix. Order112 extended10kHz is the precision candidate; order84 extended10kHz is the accuracy/storage compromise. The 9-port q25 conclusion is not tested on this morphology.
+
+
+## Second matched port-count morphology now complete
+
+PR #15 / run 45198630080 passed the matched NMO_03524 Control-condition comparison. At order112, nine-port was worse on 204 shared pairs, better on 173 and tied on one; median ratio 1.00000465×. At order168, 189 pairs were better and 189 worse; median ratio 0.99999991×. q25 maximum NRMSE was 3.0585e−8% at order112 and 3.0586e−8% at order168. All 378 common Hines references were exact.
+
+Together with PR #13 on NMO_162186, this shows morphology-dependent incremental port cost, not a universal nine-port order168 rule. See the synthesis report's cross-morphology table and PR #15 artifact #14829912332.
