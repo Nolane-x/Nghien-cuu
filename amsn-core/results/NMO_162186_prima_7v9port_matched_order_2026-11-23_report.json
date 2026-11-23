@@ -1,0 +1,288 @@
+{
+  "exact_coverage": {
+    "frequency": 324,
+    "hines_shared": 378,
+    "matched_shared": 756,
+    "models": 36,
+    "q25_only": 216,
+    "transient": 1728
+  },
+  "matched_shared_summary": [
+    {
+      "basis_order": 112,
+      "matched_shared_output_pairs": 378,
+      "max_error_ratio_nine_over_seven": 395.260567914119,
+      "max_nine_port_nrmse_pct": 1.065522603220811e-05,
+      "max_seven_port_nrmse_pct": 1.4542491009542166e-07,
+      "median_error_ratio_nine_over_seven": 8.162028606350876,
+      "nine_port_better_pairs": 1,
+      "nine_port_worse_pairs": 377,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 168,
+      "matched_shared_output_pairs": 378,
+      "max_error_ratio_nine_over_seven": 1.0014400270635588,
+      "max_nine_port_nrmse_pct": 1.4542523665735935e-07,
+      "max_seven_port_nrmse_pct": 1.4542442018733834e-07,
+      "median_error_ratio_nine_over_seven": 0.9999998484896274,
+      "nine_port_better_pairs": 190,
+      "nine_port_worse_pairs": 187,
+      "ties_within_1e_15_pct_points": 1
+    }
+  ],
+  "model_summary": [
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 1.4542491009542166e-07,
+      "max_y_error_10khz_pct": 1.50137685664533e-05,
+      "max_z_error_10khz_pct": 6.762056336206029e-06,
+      "median_basis_build_seconds": 1.078926564000028,
+      "median_numeric_storage_mb": 6.410400390625,
+      "median_transient_port_nrmse_pct": 8.727709669639764e-09,
+      "median_y_error_10khz_pct": 9.581632265150854e-06,
+      "median_z_error_10khz_pct": 4.612436543762152e-06,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 168,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 1.4542442018733834e-07,
+      "max_y_error_10khz_pct": 1.2796725967598767e-09,
+      "max_z_error_10khz_pct": 6.575455196561446e-10,
+      "median_basis_build_seconds": 1.7176018760000034,
+      "median_numeric_storage_mb": 9.7591552734375,
+      "median_transient_port_nrmse_pct": 8.723227502027962e-09,
+      "median_y_error_10khz_pct": 7.222278364579225e-10,
+      "median_z_error_10khz_pct": 2.730539602088317e-10,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 1.065522603220811e-05,
+      "max_y_error_10khz_pct": 0.000321347477919471,
+      "max_z_error_10khz_pct": 0.00010864778112589738,
+      "median_basis_build_seconds": 0.9538625060000072,
+      "median_numeric_storage_mb": 6.410400390625,
+      "median_transient_port_nrmse_pct": 7.967732481749303e-08,
+      "median_y_error_10khz_pct": 0.0002506267557704493,
+      "median_z_error_10khz_pct": 0.00010498302909056452,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    },
+    {
+      "basis_order": 168,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 1.4542523665735935e-07,
+      "max_y_error_10khz_pct": 2.0125099802386952e-07,
+      "max_z_error_10khz_pct": 1.1435006953449198e-07,
+      "median_basis_build_seconds": 1.4447183500000165,
+      "median_numeric_storage_mb": 9.7591552734375,
+      "median_transient_port_nrmse_pct": 8.633546412748479e-09,
+      "median_y_error_10khz_pct": 9.875427819007508e-08,
+      "median_z_error_10khz_pct": 3.386431714026435e-08,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    }
+  ],
+  "morphology": {
+    "axon_complete": false,
+    "electrical_compartments": 7278,
+    "experimental_condition": "epilepsy surgical specimen",
+    "label": "NMO_162186_AllenL23",
+    "preflight_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+    "swc_path": "data/human/allen_cell_types/770307286_transformed.CNG.swc",
+    "swc_record_count": 7287,
+    "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+  },
+  "port_layouts": {
+    "7": {
+      "node_ids": [
+        1,
+        2304,
+        4262,
+        2261,
+        515,
+        6608,
+        4180
+      ],
+      "roles_by_node": {
+        "1": [
+          "soma"
+        ],
+        "2261": [
+          "basal_q50"
+        ],
+        "2304": [
+          "basal_q75"
+        ],
+        "4180": [
+          "apical_q90"
+        ],
+        "4262": [
+          "apical_q75"
+        ],
+        "515": [
+          "basal_q90"
+        ],
+        "6608": [
+          "apical_q50"
+        ]
+      },
+      "source_ids": {
+        "apical_q75": 4262,
+        "basal_q75": 2304,
+        "soma": 1
+      }
+    },
+    "9": {
+      "node_ids": [
+        1,
+        2304,
+        4262,
+        2261,
+        515,
+        6608,
+        4180,
+        2713,
+        4488
+      ],
+      "roles_by_node": {
+        "1": [
+          "soma"
+        ],
+        "2261": [
+          "basal_q50"
+        ],
+        "2304": [
+          "basal_q75"
+        ],
+        "2713": [
+          "basal_q25"
+        ],
+        "4180": [
+          "apical_q90"
+        ],
+        "4262": [
+          "apical_q75"
+        ],
+        "4488": [
+          "apical_q25"
+        ],
+        "515": [
+          "basal_q90"
+        ],
+        "6608": [
+          "apical_q50"
+        ]
+      },
+      "source_ids": {
+        "apical_q75": 4262,
+        "basal_q75": 2304,
+        "soma": 1
+      }
+    }
+  },
+  "protocol": {
+    "dt_ms": 0.1,
+    "duration_ms": 20.0,
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "frequencies_hz": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      300.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "mesh_max_segment_um": 0.125,
+    "orders": [
+      112,
+      168
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "shift_strategy": "extended_10khz",
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ]
+  },
+  "q25_only_swc_node_ids": [
+    2713,
+    4488
+  ],
+  "q25_summary": [
+    {
+      "basis_order": 112,
+      "max_q25_nrmse_pct": 3.67111725887009e-06,
+      "median_q25_nrmse_pct": 8.341815291926324e-08,
+      "q25_observations": 108
+    },
+    {
+      "basis_order": 168,
+      "max_q25_nrmse_pct": 8.622643926666848e-08,
+      "median_q25_nrmse_pct": 8.626172826867808e-09,
+      "q25_observations": 108
+    }
+  ],
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16"
+  },
+  "runtime_promotion": false,
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is a passive linear-RC numerical comparison against full Hines on one independent morphology.",
+    "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds basal-q25 and apical-q25 only.",
+    "Orders 112 and 168 use identical six-shift extended-10kHz expansion frequencies for both port counts.",
+    "The morphology is one epilepsy surgical specimen with incomplete axon; it is not a healthy control or representative human population.",
+    "The comparison does not establish active-channel, nonlinear-synapse, plasticity or biological validity.",
+    "No production order default, canonical Hines reference or runtime behavior is modified."
+  ],
+  "shared_swc_node_ids": [
+    1,
+    515,
+    2261,
+    2304,
+    4180,
+    4262,
+    6608
+  ],
+  "status": "matched_7port_9port_prima_holdout_replay_passed"
+}
