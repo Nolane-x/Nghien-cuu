@@ -21,9 +21,9 @@ This report synthesizes the five evidence tracks while explicitly preserving the
 ## Validated conclusion
 
 - Keep full Hines canonical.
-- Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate, supported on three morphologies and one independent holdout.
+- Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate; extended10kHz is supported on both the NMO_162186 epilepsy and NMO_03524 Control holdouts.
 - Treat 9-port order168 as an opt-in research candidate only when basal/apical q25 outputs are required.
-- Treat order84 as the lower-memory candidate from the separate nine-port resource matrix.
+- Treat 7-port order84 extended10kHz as a good accuracy/storage compromise on the NMO_03524 Control holdout; order84 remains the lower-memory region in the separate resource matrix.
 - Do not change production defaults.
 
 ## Main evidence
@@ -40,9 +40,10 @@ PR #13 / run 45184621520 passed the matched 7-port/9-port order112/168 compariso
 
 ## Next work
 
-1. Add another independently sourced morphology with different experimental context and repeat the matched 7/9-port order112/168 matrix.
-2. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
-3. Keep active-channel and nonlinear-synapse validation as separate research stages.
+1. Run matched 7-port/9-port order112/168 on NMO_03524 to test q25 transfer to the Control morphology.
+2. Add a further independent morphology, preferably with a more complete axon and a different source study.
+3. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
+4. Keep active-channel and nonlinear-synapse validation as separate research stages.
 
 ## Scope
 
@@ -50,3 +51,6 @@ This report changes no solver, default order, port set, Hines reference or produ
 
 
 See PR #13 and its run 45184621520 for the completed matched-port holdout results and artifact 14824270534.
+
+
+PR #14 / run 45196546471 passed 146/146 tests and the full NMO_03524 seven-port shift/order matrix. Order112 extended10kHz is the precision candidate; order84 extended10kHz is the accuracy/storage compromise. The 9-port q25 conclusion is not tested on this morphology.
