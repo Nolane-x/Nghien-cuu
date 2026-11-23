@@ -313,6 +313,87 @@ def normalized(values: Any, by: str) -> list[float | None]:
     return [float(x / denominator) if np.isfinite(x) else None for x in array]
 
 
+def validate_linear_current_recorder_equivalence(
+    helper: Any,
+    h: Any,
+    source_trace: np.ndarray,
+) -> dict[str, Any]:
+    """Prove list-backed current sampling preserves the original 5-AP helper output."""
+    start = round(TIME_START_MS * SAMPLE_FREQ_PER_MS)
+    end_ms = protocol_end_ms(5)
+    end = round(end_ms * SAMPLE_FREQ_PER_MS) + 1
+    command = np.asarray(source_trace[start:end], dtype=float)
+    if command.size != expected_protocol_samples(5):
+        raise RuntimeError("Could not extract the expected five-AP command for recorder equivalence")
+    time_axis = np.linspace(TIME_START_MS, end_ms, len(command))
+    outputs: dict[str, np.ndarray] = {}
+
+    # First run uses both original np.append-based APclamp recorders unchanged.
+    for ion, voltage in (("na", command + NA_VOLTAGE_OFFSET_MV), ("k", command.copy())):
+        for species in ("human", "mouse"):
+            section = None
+            try:
+                section = helper.init_na(f"na_{species}") if ion == "na" else helper.init_k(f"k_{species}")
+                result = (
+                    helper.Ina_AP1_5(section, time_axis, voltage)
+                    if ion == "na" else helper.Ik_AP1_5(section, time_axis, voltage)
+                )
+                outputs[f"{ion}_{species}"] = np.asarray(result, dtype=float).reshape(-1)
+            finally:
+                if section is not None:
+                    h.delete_section(sec=section)
+                try:
+                    import matplotlib.pyplot as plt
+                    plt.close("all")
+                except Exception:
+                    pass
+
+    # Replace only the two recorder functions with the optimized implementation.
+    recorder_info = install_linear_current_recorders(helper, h)
+    comparisons = {}
+    for ion, voltage in (("na", command + NA_VOLTAGE_OFFSET_MV), ("k", command.copy())):
+        for species in ("human", "mouse"):
+            section = None
+            try:
+                section = helper.init_na(f"na_{species}") if ion == "na" else helper.init_k(f"k_{species}")
+                result = (
+                    helper.Ina_AP1_5(section, time_axis, voltage)
+                    if ion == "na" else helper.Ik_AP1_5(section, time_axis, voltage)
+                )
+                optimized = np.asarray(result, dtype=float).reshape(-1)
+                original = outputs[f"{ion}_{species}"]
+                if optimized.shape != original.shape:
+                    raise RuntimeError(
+                        f"{ion}_{species} recorder length changed: {optimized.size} vs {original.size}"
+                    )
+                if not np.allclose(optimized, original, rtol=1e-12, atol=1e-12, equal_nan=True):
+                    max_abs = float(np.nanmax(np.abs(optimized - original)))
+                    raise RuntimeError(
+                        f"{ion}_{species} list-backed recorder changed AP amplitudes; max abs diff={max_abs}"
+                    )
+                comparisons[f"{ion}_{species}"] = {
+                    "status": "identical_within_1e-12",
+                    "ap_count": int(optimized.size),
+                    "max_absolute_amplitude_difference": float(np.nanmax(np.abs(optimized - original))),
+                }
+            finally:
+                if section is not None:
+                    h.delete_section(sec=section)
+                try:
+                    import matplotlib.pyplot as plt
+                    plt.close("all")
+                except Exception:
+                    pass
+
+    return {
+        "status": "passed",
+        "protocol": "original first-five-AP command, identical to the source 5-AP slice",
+        "recorder_optimization": recorder_info,
+        "comparison_tolerance": {"rtol": 1e-12, "atol": 1e-12},
+        "model_comparisons": comparisons,
+    }
+
+
 def execute_model(
     helper: Any, h: Any, ion: str, species: str,
     trace: np.ndarray, t: np.ndarray, ap_count: int = 5,
@@ -700,10 +781,15 @@ def main() -> None:
         helper_path = cache / "apclamp_tools.py"
         helper_path.write_bytes(payloads["apclamp_tools"])
         helper = load_original_helper(helper_path, ap_count=ap_count)
-        recorder_optimization = install_linear_current_recorders(helper, h) if ap_count == 200 else {
-            "enabled": False,
-            "reason": "The 5-AP baseline retains the original helper current recorders unchanged.",
-        }
+        recorder_equivalence = None
+        if ap_count == 200:
+            recorder_equivalence = validate_linear_current_recorder_equivalence(helper, h, trace)
+            recorder_optimization = recorder_equivalence["recorder_optimization"]
+        else:
+            recorder_optimization = {
+                "enabled": False,
+                "reason": "The 5-AP baseline retains the original helper current recorders unchanged.",
+            }
         h.celsius = 34.0
         h.dt = 1000.0 / SAMPLE_RATE_HZ
 
@@ -777,6 +863,7 @@ def main() -> None:
             "raw_trace": trace_info,
             "protocol": protocol,
             "current_recorder_optimization": recorder_optimization,
+            "current_recorder_equivalence": recorder_equivalence,
             "experimental_ap_amplitudes": {
                 "na": summarize_experimental_csv(payloads["amps_na"], "na", ap_count=ap_count),
                 "k": summarize_experimental_csv(payloads["amps_k"], "k", ap_count=ap_count),

@@ -55,3 +55,8 @@ def test_k_workbook_parser_selects_normalized_human_input_only():
     assert MODULE.parse_k_workbook_header("amp_h_n_  1") == ("h", 1)
     assert MODULE.parse_k_workbook_header("amp_m_n_  1") is None
     assert MODULE.parse_k_workbook_header("amp_h_  1") is None
+
+
+
+def test_linear_recorder_equivalence_helper_is_exposed():
+    assert callable(MODULE.validate_linear_current_recorder_equivalence)
