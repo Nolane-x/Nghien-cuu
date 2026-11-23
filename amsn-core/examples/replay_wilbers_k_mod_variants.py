@@ -42,6 +42,20 @@ K_VARIANT_NAMES = (
     "k_hybrid5",
 )
 K_VARIANTS = {name: audit.SOURCES[name] for name in K_VARIANT_NAMES}
+# Immutable pins copied from the completed Dataverse provenance audit artifact.
+# The runtime fetch also checks live official Dataverse metadata before bytes
+# are accepted; both the published pins and live metadata must agree.
+K_VARIANT_PINS = {
+    "k_human": {"id": 318647, "bytes": 4220, "sha1": "d299b3430ecda7a94f6d1c37ac76b2878052c7d5"},
+    "k_mouse": {"id": 318649, "bytes": 4189, "sha1": "1d83124eefc45aa7321a5a21337f080c2519ceed"},
+    "k_human_h1": {"id": 318627, "bytes": 3587, "sha1": "e9ded848fa149b86aec30f6d3f5b173f0c7cb523"},
+    "k_human_hm12inf": {"id": 318604, "bytes": 4614, "sha1": "72ab45e927d542271fc8d54a9ed7e7cb14d771d2"},
+    "k_hybrid1": {"id": 318628, "bytes": 4056, "sha1": "3bb28fc3fcdace2b07392c69140518c91977ce1e"},
+    "k_hybrid2": {"id": 318622, "bytes": 4046, "sha1": "05040e3bfe6d2914a14358e62bb631f0c9ef492b"},
+    "k_hybrid3": {"id": 318609, "bytes": 4046, "sha1": "89e09570588d45e45ce413b9da42e5007ec98aa4"},
+    "k_hybrid4": {"id": 318619, "bytes": 4070, "sha1": "b786dd01e95b7cbf89e652c4fe2d88e4295c9cae"},
+    "k_hybrid5": {"id": 318605, "bytes": 4080, "sha1": "0df02624547f1df97de4fa06d1992524f62e220f"},
+}
 SOURCE_ROLES = {
     "k_human": "canonical human potassium reference",
     "k_mouse": "canonical mouse potassium comparator",
@@ -61,10 +75,13 @@ def validate_variant_catalog() -> None:
     if len(ids) != len(set(ids)):
         raise ValueError("K MOD catalog contains duplicate Dataverse file IDs")
     for name, spec in K_VARIANTS.items():
+        pin = K_VARIANT_PINS[name]
         if spec.get("kind") != "mod" or Path(spec["path"]).name != f"{name}.mod":
             raise ValueError(f"Unexpected Dataverse source mapping for {name}: {spec!r}")
-        if len(str(spec.get("sha1", ""))) != 40 or int(spec.get("bytes", 0)) <= 0:
-            raise ValueError(f"Missing immutable size/SHA-1 pin for {name}")
+        if int(spec["id"]) != pin["id"] or int(spec["id"]) <= 0:
+            raise ValueError(f"Dataverse immutable file ID changed for {name}")
+        if len(pin["sha1"]) != 40 or pin["bytes"] <= 0:
+            raise ValueError(f"Missing immutable provenance pin for {name}")
 
 
 def parse_mod_identity(payload: bytes, expected_name: str) -> dict[str, Any]:
@@ -254,10 +271,9 @@ def build_workbook_targets(payload: bytes) -> tuple[Any, dict[str, list[dict[str
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
-    if not rows:
-        raise ValueError(f"Refusing to write an empty CSV: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
-    fieldnames = list(rows[0])
+    # Preserve an explicit empty-result artifact when every variant fails.
+    fieldnames = list(rows[0]) if rows else ["status"]
     with path.open("w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="raise")
         writer.writeheader()
@@ -301,7 +317,20 @@ def main() -> None:
         variant_payloads: dict[str, bytes] = {}
         source_audit: dict[str, Any] = {}
         for name, spec in K_VARIANTS.items():
-            payload, verified = replay.fetch_verified(f"{name}.mod", spec, cache)
+            payload, verified = audit.fetch_verified(name, spec, cache)
+            pin = K_VARIANT_PINS[name]
+            if (
+                int(verified["id"]) != pin["id"]
+                or int(verified["bytes"]) != pin["bytes"]
+                or str(verified["official_sha1"]).lower() != pin["sha1"]
+                or str(verified["observed_sha1"]).lower() != pin["sha1"]
+            ):
+                raise RuntimeError(
+                    f"{name}: live Dataverse metadata/download does not match "
+                    f"the previously published immutable ID/size/SHA-1 pin"
+                )
+            verified["previous_audit_pin"] = pin
+            verified["pin_match"] = True
             variant_payloads[name] = payload
             integrity[name] = verified
             source_audit[name] = parse_mod_identity(payload, name)
@@ -472,11 +501,11 @@ def main() -> None:
                     ],
                     "mae_delta_vs_canonical_k_human": (
                         metrics["mae"] - canonical_metrics["mae"]
-                        if canonical_metrics and canonical_metrics.get("mae") is not None else 0.0
+                        if canonical_metrics and canonical_metrics.get("mae") is not None else None
                     ),
                     "rmse_delta_vs_canonical_k_human": (
                         metrics["rmse"] - canonical_metrics["rmse"]
-                        if canonical_metrics and canonical_metrics.get("rmse") is not None else 0.0
+                        if canonical_metrics and canonical_metrics.get("rmse") is not None else None
                     ),
                 })
 
@@ -506,19 +535,22 @@ def main() -> None:
         # independent of the source mechanism iteration order.
         for row in summary_rows:
             canonical = next(
-                item for item in summary_rows
-                if item["mechanism"] == "k_human" and item["cell_species"] == row["cell_species"]
+                (
+                    item for item in summary_rows
+                    if item["mechanism"] == "k_human" and item["cell_species"] == row["cell_species"]
+                ),
+                None,
             )
-            comparison = next(
-                item for item in summary_rows
-                if item["mechanism"] == row["mechanism"] and item["cell_species"] == row["cell_species"]
-            )
-            comparison["mae_delta_vs_canonical_k_human"] = (
-                comparison["mae_ap1_200"] - canonical["mae_ap1_200"]
-            )
-            comparison["rmse_delta_vs_canonical_k_human"] = (
-                comparison["rmse_ap1_200"] - canonical["rmse_ap1_200"]
-            )
+            if canonical is None:
+                row["mae_delta_vs_canonical_k_human"] = None
+                row["rmse_delta_vs_canonical_k_human"] = None
+            else:
+                row["mae_delta_vs_canonical_k_human"] = (
+                    row["mae_ap1_200"] - canonical["mae_ap1_200"]
+                )
+                row["rmse_delta_vs_canonical_k_human"] = (
+                    row["rmse_ap1_200"] - canonical["rmse_ap1_200"]
+                )
 
         successful_count = sum(item.get("status") == "completed" for item in models.values())
         status = (
