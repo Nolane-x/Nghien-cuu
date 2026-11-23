@@ -18,6 +18,8 @@ import math
 import shutil
 import subprocess
 import tempfile
+import time
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -93,8 +95,56 @@ def expected_protocol_samples(ap_count: int) -> int:
 
 def fetch_verified(name: str, spec: dict[str, Any], cache: Path) -> tuple[bytes, dict[str, Any]]:
     metadata_url = f"{BASE}/files/{spec['id']}"
-    with urllib.request.urlopen(metadata_url, timeout=60) as response:
-        metadata = json.loads(response.read())["data"]["dataFile"]
+    metadata_attempts = []
+    metadata = None
+    for attempt in range(5):
+        try:
+            request = urllib.request.Request(
+                metadata_url,
+                headers={
+                    "User-Agent": "AMSN-Wilbers-APclamp-reproduction/1.0",
+                    "Cache-Control": "no-cache",
+                    "Pragma": "no-cache",
+                    "Accept": "application/json",
+                },
+            )
+            with urllib.request.urlopen(request, timeout=60) as response:
+                body = response.read()
+                content_type = response.headers.get("Content-Type")
+                status_code = getattr(response, "status", None)
+            if not body:
+                raise ValueError("Dataverse metadata endpoint returned an empty body")
+            parsed = json.loads(body)
+            metadata = parsed["data"]["dataFile"]
+            metadata_attempts.append({
+                "attempt": attempt + 1,
+                "status": status_code,
+                "content_type": content_type,
+                "body_bytes": len(body),
+                "result": "success",
+            })
+            break
+        except (
+            urllib.error.URLError,
+            urllib.error.HTTPError,
+            TimeoutError,
+            ValueError,
+            KeyError,
+            TypeError,
+            json.JSONDecodeError,
+        ) as exc:
+            metadata_attempts.append({
+                "attempt": attempt + 1,
+                "error": repr(exc),
+            })
+            if attempt < 4:
+                time.sleep((1.5, 3.0, 6.0, 10.0)[attempt])
+    if metadata is None:
+        raise RuntimeError(
+            f"Dataverse metadata unavailable for {name} after 5 attempts: "
+            + json.dumps(metadata_attempts, sort_keys=True)
+        )
+
     official_sha1 = metadata["checksum"]["value"]
     official_bytes = int(metadata["filesize"])
     if official_sha1 != spec["sha1"] or official_bytes != spec["bytes"]:
@@ -104,39 +154,68 @@ def fetch_verified(name: str, spec: dict[str, Any], cache: Path) -> tuple[bytes,
         )
 
     attempts = []
-    for url in (
+    urls = (
         f"{BASE}/access/datafile/{spec['path']}/{spec['id']}",
         f"{BASE}/access/datafile/{spec['id']}",
-    ):
-        request = urllib.request.Request(url, headers={
-            "User-Agent": "AMSN-Wilbers-APclamp-reproduction/1.0",
-            "Cache-Control": "no-cache", "Pragma": "no-cache", "Accept": "*/*",
-        })
-        try:
-            with urllib.request.urlopen(request, timeout=180) as response:
-                payload = response.read()
-                content_type = response.headers.get("Content-Type")
-                final_url = response.url.split("?", 1)[0]
-            sha1 = hashlib.sha1(payload).hexdigest()
-            sha256 = hashlib.sha256(payload).hexdigest()
-            attempts.append({
-                "url": url, "final_url": final_url, "bytes": len(payload),
-                "content_type": content_type, "sha1": sha1, "sha256": sha256,
+    )
+    for url in urls:
+        accepted = False
+        for attempt in range(3):
+            request = urllib.request.Request(url, headers={
+                "User-Agent": "AMSN-Wilbers-APclamp-reproduction/1.0",
+                "Cache-Control": "no-cache",
+                "Pragma": "no-cache",
+                "Accept": "*/*",
             })
-            if len(payload) == spec["bytes"] and sha1 == official_sha1:
-                (cache / name).write_bytes(payload)
-                return payload, {
-                    "official_sha1": official_sha1,
-                    "official_bytes": official_bytes,
-                    "observed_sha1": sha1,
-                    "observed_sha256": sha256,
-                    "attempts": attempts,
+            try:
+                with urllib.request.urlopen(request, timeout=180) as response:
+                    payload = response.read()
+                    content_type = response.headers.get("Content-Type")
+                    final_url = response.url.split("?", 1)[0]
+                    status_code = getattr(response, "status", None)
+                if not payload:
+                    raise ValueError("Dataverse data endpoint returned an empty body")
+                sha1 = hashlib.sha1(payload).hexdigest()
+                sha256 = hashlib.sha256(payload).hexdigest()
+                observation = {
+                    "url": url,
+                    "attempt": attempt + 1,
+                    "final_url": final_url,
+                    "status": status_code,
+                    "bytes": len(payload),
+                    "content_type": content_type,
+                    "sha1": sha1,
+                    "sha256": sha256,
                 }
-        except Exception as exc:
-            attempts.append({"url": url, "error": repr(exc)})
+                attempts.append(observation)
+                if len(payload) == spec["bytes"] and sha1 == official_sha1:
+                    (cache / name).write_bytes(payload)
+                    return payload, {
+                        "official_sha1": official_sha1,
+                        "official_bytes": official_bytes,
+                        "observed_sha1": sha1,
+                        "observed_sha256": sha256,
+                        "metadata_attempts": metadata_attempts,
+                        "download_attempts": attempts,
+                    }
+                if attempt < 2:
+                    time.sleep((2.0, 5.0)[attempt])
+                else:
+                    accepted = False
+            except (
+                urllib.error.URLError,
+                urllib.error.HTTPError,
+                TimeoutError,
+                ValueError,
+            ) as exc:
+                attempts.append({"url": url, "attempt": attempt + 1, "error": repr(exc)})
+                if attempt < 2:
+                    time.sleep((2.0, 5.0)[attempt])
+        if accepted:
+            break
     raise RuntimeError(
         f"Download did not match official Dataverse SHA-1 for {name}: "
-        + json.dumps(attempts, sort_keys=True)
+        + json.dumps({"metadata_attempts": metadata_attempts, "download_attempts": attempts}, sort_keys=True)
     )
 
 
