@@ -34,13 +34,19 @@ This report synthesizes the five evidence tracks while explicitly preserving the
 - PR #4 / workflow 44979673244: nine-port order112/168 improve q90 transients across all 36 matched scenarios versus order84 references.
 - PR #5 / workflow 44989658844: 37/37 jobs pass; median peak RSS order84/112/168 = 267.90/276.15/301.73 MB. Wall/CPU medians are confounded by heterogeneous GitHub runner hardware.
 
+## Matched holdout result now completed
+
+PR #13 / run 45184621520 passed the matched 7-port/9-port order112/168 comparison on NMO_162186. At order112, 9-port was worse on 377/378 shared pairs (median error ratio 8.162×). At order168, it was at parity (median ratio 0.99999985×; 190 better / 187 worse / 1 tie). q25 maximum NRMSE was 3.6711e−6% at order112 and 8.6226e−8% at order168; all 378 shared Hines checks were exact.
+
 ## Next work
 
-1. Run a matched seven-port versus nine-port order112/order168 comparison on NMO_162186.
-2. Add another independent morphology with clear source metadata and a different experimental context.
-3. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
-4. Keep active-channel and nonlinear-synapse validation as separate research stages.
+1. Add another independently sourced morphology with different experimental context and repeat the matched 7/9-port order112/168 matrix.
+2. Re-benchmark runtime on fixed hardware before claiming a time-performance winner.
+3. Keep active-channel and nonlinear-synapse validation as separate research stages.
 
 ## Scope
 
 This report changes no solver, default order, port set, Hines reference or production behavior. It synthesizes passive linear-RC experiments only.
+
+
+See PR #13 and its run 45184621520 for the completed matched-port holdout results and artifact 14824270534.
