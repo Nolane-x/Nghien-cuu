@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).parents[1]
-RESULTS = ROOT / "results" / "NMO_03524_JacobsControl_prima_shift_order_pareto_2026-11-23"
+RESULTS = ROOT / "results"
 PREFLIGHT = ROOT / "results" / "NMO_03524_JacobsControl_holdout" / "preflight.json"
 STEM = "NMO_03524_JacobsControl_human_prima_shift_order_pareto_2026-11-23"
 EXPECTED = {"models": 81, "frequency": 729, "transient": 3402}
