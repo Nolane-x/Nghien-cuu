@@ -68,7 +68,7 @@ def test_matched_shared_rows_pair_by_exact_swc_id_and_protocol():
                 "port_roles":"probe",
                 "port_nrmse_pct":value,
             })
-    result = MODULE.build_matched_shared_rows(rows, [100,200])
+    result = MODULE.build_matched_shared_rows(rows, [100,200], expected_count=2)
     assert len(result) == 2
     assert result[0]["port_swc_id"] == 100
     assert result[0]["error_ratio_nine_over_seven"] == pytest.approx(1.1)
