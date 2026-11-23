@@ -197,3 +197,15 @@ The source `Figure2/stats_fig2.py` was also downloaded and checksum verified. It
 The original script has been inspected but its four ANOVA tables have **not yet been re-executed** in this audit. A separate reproduction step is planned so source-faithful p-values can be checked against the article without conflating them with the descriptive summaries. The repeated AP observations and multiple APwave conditions should also be retained as a statistical-design caveat when considering any independent model.
 
 The machine-readable summary is [`wilbers2023_figure2_data_summary_2026-11-23.json`](references/wilbers2023_figure2_data_summary_2026-11-23.json). The raw 15.1 MB `Figures5_6/APclamp/H_wide.csv` trace matrix is still not downloaded; thus the voltage-command current traces are not yet replayed.
+
+
+## Original Figure 2 inferential statistics — source reproduction underway
+
+The article reports species-by-AP-number interactions in its original OLS analysis: Na current adaptation AP1–200, (p<10^{-323}); Na AP1–5, (p<10^{-53}); K AP1–200, (p<10^{-45}); and K AP1–5, (p=0.07). These are the publication's reported results, not yet results from the AMSN reproduction. <Cite refs={["turn465333search0"]}/>
+
+The new runner downloads the exact Na/K workbooks and `Figure2/stats_fig2.py`, verifies official Dataverse SHA-1 plus pinned SHA-256, and executes the original script unchanged. Only its Windows Excel paths and imported ANOVA function are wrapped so the four Type-II tables can be captured. A separate cluster-robust interaction test groups by recording filename to assess the repeated-AP design; those are additional sensitivity tests and must not be confused with the publication's OLS p-values.
+
+
+## Original OLS/Type-II ANOVA reproduction — CI pending
+
+The source-faithful Figure 2 statistics reproduction has been added. The first GitHub Actions run will validate the four original models (Na AP1–200 / AP1–5; K AP1–200 / AP1–5), compare their interaction p-values against the article's reported thresholds, and emit a distinct cluster-robust-by-recording sensitivity analysis. No new p-value is accepted until the workflow passes and its artifact is inspected.

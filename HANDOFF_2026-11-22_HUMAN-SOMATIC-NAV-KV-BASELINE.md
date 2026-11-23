@@ -111,3 +111,8 @@ A GitHub Actions workflow has been added to verify Dataverse metadata SHA-1, raw
 - K: 25 recordings (14 H, 11 M), 2 input waveforms × 201 samples; original code uses AP1–AP200. Human cells at AP200: 0.4275 under H input and 0.4063 under M input; Mouse cells: 0.2736 and 0.2693.
 - Descriptive only; no new p-values. Original OLS/Type-II ANOVA script inspected; exact execution is next. Raw AP-clamp H_wide.csv still not replayed.
 - Summary report: [WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md](amsn-core/research/WILBERS_2023_FIGURE2_RAW_DATA_AUDIT_2026-11-23.md). Summary CSV: [wilbers_figure2_apclamp_normalized_summary_2026-11-23.csv](amsn-core/results/wilbers_figure2_apclamp_normalized_summary_2026-11-23.csv).
+
+
+## Original OLS/Type-II ANOVA reproduction — CI pending
+
+The source-faithful Figure 2 statistics reproduction has been added. The first GitHub Actions run will validate the four original models (Na AP1–200 / AP1–5; K AP1–200 / AP1–5), compare their interaction p-values against the article's reported thresholds, and emit a distinct cluster-robust-by-recording sensitivity analysis. No new p-value is accepted until the workflow passes and its artifact is inspected.

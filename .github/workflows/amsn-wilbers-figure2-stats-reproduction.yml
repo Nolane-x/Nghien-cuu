@@ -1,0 +1,48 @@
+name: AMSN Wilbers Figure 2 source statistics reproduction
+
+on:
+  push:
+    branches:
+      - research/wilbers-human-active-channel-baseline-2026-11-22
+    paths:
+      - "amsn-core/examples/reproduce_wilbers_figure2_stats.py"
+      - "amsn-core/tests/test_wilbers_figure2_stats_reproduction.py"
+      - "amsn-core/research/references/wilbers2023_dataverse_source_manifest_2026-11-22.json"
+      - ".github/workflows/amsn-wilbers-figure2-stats-reproduction.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amsn-wilbers-figure2-stats
+  cancel-in-progress: false
+
+jobs:
+  stats-reproduction:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned analysis environment
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" pandas==2.2.3 scipy==1.15.3 statsmodels==0.14.4 openpyxl==3.1.5
+      - name: Test source-statistics helpers
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_wilbers_figure2_stats_reproduction.py tests/test_wilbers_figure2_data_audit.py tests/test_human_channel_evidence_registry.py
+      - name: Execute original Figure 2 OLS and Type-II ANOVA source
+        working-directory: amsn-core
+        run: python examples/reproduce_wilbers_figure2_stats.py --output artifacts/wilbers-figure2-stats-reproduction.json
+      - name: Upload source-faithful ANOVA tables and cluster sensitivity
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-figure2-statistics-reproduction
+          path: amsn-core/artifacts/wilbers-figure2-stats-reproduction.json
+          if-no-files-found: warn
+          retention-days: 30
