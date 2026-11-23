@@ -15,6 +15,7 @@ import hashlib
 import importlib.util
 import json
 import math
+import re
 import shutil
 import subprocess
 import tempfile
@@ -33,6 +34,14 @@ FILES = {
     "trace": {
         "id": 318541, "path": "Figures5_6/APclamp/H_wide.csv",
         "bytes": 15095411, "sha1": "e209550ce746483de580459f7d8e40de91ec3667",
+    },
+    "na_workbook": {
+        "id": 318668, "path": "Figure2/Na_data_fig2.xlsx",
+        "bytes": 548562, "sha1": "cd702d7f1ca65b0b88a2565f289740546902e36b",
+    },
+    "k_workbook": {
+        "id": 318669, "path": "Figure2/K_data_fig2.xlsx",
+        "bytes": 302011, "sha1": "287720f8db3b20b167edd9e639dd67b0a1194def",
     },
     "amps_na": {
         "id": 318540, "path": "Figures5_6/APclamp/amps_na.csv",
@@ -481,6 +490,151 @@ def summarize_model_vs_experiment(
         ),
     }
 
+
+
+def parse_na_workbook_header(value: Any) -> tuple[str, int] | None:
+    match = re.fullmatch(r"relative_amp_(Hnarrow|Hwide)_\\s*(\\d+)", str(value).strip())
+    return (match.group(1), int(match.group(2))) if match else None
+
+
+def parse_k_workbook_header(value: Any) -> tuple[str, int] | None:
+    normalized = str(value).replace(" ", "").strip()
+    match = re.fullmatch(r"amp_h_n_(\\d+)", normalized)
+    return ("h", int(match.group(1))) if match else None
+
+
+def workbook_group_curve(
+    frame: pd.DataFrame,
+    columns_by_ap: dict[int, str],
+    selected: pd.DataFrame,
+    ap_count: int,
+) -> list[dict[str, Any]]:
+    output = []
+    for ap in range(1, ap_count + 1):
+        col = columns_by_ap[ap]
+        values = pd.to_numeric(selected[col], errors="coerce").dropna().to_numpy(dtype=float)
+        n = int(values.size)
+        sd = float(np.std(values, ddof=1)) if n > 1 else 0.0 if n == 1 else None
+        sem = float(sd / math.sqrt(n)) if n and sd is not None else None
+        output.append({
+            "ap": ap,
+            "n_recordings": n,
+            "mean": float(np.mean(values)) if n else None,
+            "median": float(np.median(values)) if n else None,
+            "sd": sd,
+            "sem": sem,
+            "min": float(np.min(values)) if n else None,
+            "max": float(np.max(values)) if n else None,
+        })
+    return output
+
+
+def summarize_model_vs_original_workbooks(
+    models: dict[str, Any],
+    na_workbook_payload: bytes,
+    k_workbook_payload: bytes,
+    ap_count: int,
+) -> dict[str, Any]:
+    """Compare model curves with each recording in the original Figure 2 workbooks."""
+    from io import BytesIO
+
+    na_frame = pd.read_excel(BytesIO(na_workbook_payload), sheet_name="data")
+    k_frame = pd.read_excel(BytesIO(k_workbook_payload), sheet_name="data")
+
+    na_columns: dict[str, dict[int, str]] = {"Hnarrow": {}, "Hwide": {}}
+    for column in na_frame.columns:
+        parsed = parse_na_workbook_header(column)
+        if parsed:
+            group, ap = parsed
+            na_columns[group][ap] = str(column)
+    for group, mapping in na_columns.items():
+        missing = sorted(set(range(1, ap_count + 1)) - set(mapping))
+        if missing:
+            raise RuntimeError(f"Na workbook group {group} missing AP columns: {missing[:10]}")
+
+    na_species = na_frame["Filename"].astype(str).map(
+        lambda filename: "Mouse" if filename.startswith("M") else "Human"
+    )
+    comparisons: dict[str, Any] = {}
+    for waveform in ("Hnarrow", "Hwide"):
+        for species in ("Human", "Mouse"):
+            selected = na_frame.loc[na_species == species]
+            rows = workbook_group_curve(selected, na_columns[waveform], selected, ap_count)
+            model_curve = models[f"na_{species.lower()}"]["normalized"]
+            experiment_mean = [row["mean"] for row in rows]
+            metrics = compare_curve(model_curve, experiment_mean)
+            valid = [
+                abs(float(model_curve[i]) - float(rows[i]["mean"])) <= 1.96 * float(rows[i]["sem"])
+                for i in range(ap_count)
+                if rows[i]["sem"] is not None and rows[i]["mean"] is not None
+            ]
+            comparisons[f"na_{species.lower()}_{waveform.lower()}"] = {
+                "cell_species": species,
+                "waveform_group": waveform,
+                "waveform_group_interpretation": (
+                    "Main Figure 2 group" if waveform == "Hnarrow"
+                    else "Raw Hwide candidate; retained separately because the source workbook descriptions for Hwide and Mwide conflict"
+                ),
+                "recording_count": int(selected["Filename"].nunique()),
+                "model_normalization": "AP1",
+                "model_curve": model_curve,
+                "experimental_per_ap": rows,
+                "metrics_vs_recording_mean": metrics,
+                "model_points_within_mean_plus_minus_1_96_sem": int(sum(valid)),
+                "fraction_points_within_mean_plus_minus_1_96_sem": float(sum(valid) / len(valid)) if valid else None,
+                "ap200_model": model_curve[-1],
+                "ap200_experimental_mean": rows[-1]["mean"],
+                "ap200_experimental_sem": rows[-1]["sem"],
+            }
+
+    k_columns: dict[int, str] = {}
+    for column in k_frame.columns:
+        parsed = parse_k_workbook_header(column)
+        if parsed and parsed[1] <= ap_count:
+            k_columns[parsed[1]] = str(column)
+    missing = sorted(set(range(1, ap_count + 1)) - set(k_columns))
+    if missing:
+        raise RuntimeError(f"K workbook normalized human-input columns missing APs: {missing[:10]}")
+
+    for code, species in (("H", "Human"), ("M", "Mouse")):
+        selected = k_frame.loc[k_frame["species"].astype(str) == code]
+        rows = workbook_group_curve(selected, k_columns, selected, ap_count)
+        model_raw = models[f"k_{species.lower()}"]["amplitude"]["values"]
+        model_curve = normalize_by_first(model_raw)
+        experiment_mean = [row["mean"] for row in rows]
+        metrics = compare_curve(model_curve, experiment_mean)
+        valid = [
+            abs(float(model_curve[i]) - float(rows[i]["mean"])) <= 1.96 * float(rows[i]["sem"])
+            for i in range(ap_count)
+            if rows[i]["sem"] is not None and rows[i]["mean"] is not None
+        ]
+        comparisons[f"k_{species.lower()}_human_input"] = {
+            "cell_species": species,
+            "waveform_group": "human input waveform (amp_h_n_ columns)",
+            "recording_count": int(selected["Filename"].nunique()),
+            "model_normalization": "AP1, matching workbook normalized columns",
+            "model_curve": model_curve,
+            "experimental_per_ap": rows,
+            "metrics_vs_recording_mean": metrics,
+            "model_points_within_mean_plus_minus_1_96_sem": int(sum(valid)),
+            "fraction_points_within_mean_plus_minus_1_96_sem": float(sum(valid) / len(valid)) if valid else None,
+            "ap200_model": model_curve[-1],
+            "ap200_experimental_mean": rows[-1]["mean"],
+            "ap200_experimental_sem": rows[-1]["sem"],
+        }
+
+    return {
+        "comparison_source": {
+            "na": "Na_data_fig2.xlsx, per-recording relative_amp columns, Hnarrow and Hwide retained separately",
+            "k": "K_data_fig2.xlsx, per-recording amp_h_n_ normalized human-input columns",
+        },
+        "ap_range": [1, ap_count],
+        "comparisons": comparisons,
+        "caveat": (
+            "The Hwide AP-command and Na workbook group mapping is not silently assumed. Both Hnarrow (the main published Figure 2 group, which matches the legacy amps_na.csv curve) and Hwide (the candidate matching the raw trace filename) are reported. K uses the explicit normalized human-input condition. CI-band overlap is a descriptive pointwise check, not a simultaneous confidence band or hypothesis test."
+        ),
+    }
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--output", type=Path, default=Path("wilbers-apclamp-replay.json"))
@@ -630,6 +784,9 @@ def main() -> None:
             "original_model_replay": models,
             "model_vs_experiment": summarize_model_vs_experiment(
                 models, payloads["amps_na"], payloads["amps_k"], ap_count=ap_count
+            ),
+            "model_vs_original_workbooks": summarize_model_vs_original_workbooks(
+                models, payloads["na_workbook"], payloads["k_workbook"], ap_count=ap_count
             ),
             "interpretation_limits": [
                 "The original source helper code and unmodified human/mouse MOD files were executed; no mechanism correction was applied.",

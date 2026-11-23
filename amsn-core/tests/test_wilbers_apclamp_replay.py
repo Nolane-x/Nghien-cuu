@@ -42,3 +42,16 @@ def test_curve_metrics_compare_equal_length_series():
 def test_ap1_normalization_is_explicit_and_rejects_zero_denominator():
     assert MODULE.normalize_by_first([2.0, 1.0, 0.5]) == [1.0, 0.5, 0.25]
     assert MODULE.normalize_by_first([0.0, 1.0]) == [None, None]
+
+
+
+def test_na_workbook_parser_retains_hnarrow_and_hwide_groups():
+    assert MODULE.parse_na_workbook_header("relative_amp_Hnarrow_  1") == ("Hnarrow", 1)
+    assert MODULE.parse_na_workbook_header("relative_amp_Hwide_ 200") == ("Hwide", 200)
+    assert MODULE.parse_na_workbook_header("relative_amp_Mwide_ 200") is None
+
+
+def test_k_workbook_parser_selects_normalized_human_input_only():
+    assert MODULE.parse_k_workbook_header("amp_h_n_  1") == ("h", 1)
+    assert MODULE.parse_k_workbook_header("amp_m_n_  1") is None
+    assert MODULE.parse_k_workbook_header("amp_h_  1") is None
