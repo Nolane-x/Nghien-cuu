@@ -80,3 +80,17 @@ The initial point probe found:
 The source workflow therefore proves successful compilation but exposes a real pointwise runtime singularity in the unmodified potassium mechanism. It does not yet prove how often the singularity is encountered in physiological voltage trajectories or how much it distorts the published protocols. An extended comparison now compiles a temporary corrected `trap0` clone for diagnostic reference only, probes both +th and -th as well as the published command-voltage grids, and requires the diagnostic clone to maintain finite positive time constants. The original Dataverse source remains unchanged; the corrected clone is not accepted for production.
 
 The first workflow artifact is [`wilbers-original-nmodl-source-audit`](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143/artifacts/14764015969). The run's artifact ZIP SHA-256 is `31a5883d6cb46670b3b8795afc7fa656ba0632ef544db2b328e922921ce82658`.
+
+
+## Extended original-vs-stable `trap0` comparison — 23/11/2026
+
+Workflow [45115543259](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45115543259) passed after the registry assertions were synchronized with the already verified NEURON compilation. It compiled both the unmodified source and a separate diagnostic-only clone whose `trap0` branch uses `v-th` and whose limiting expansion is (a q(1+(v-th)/(2q))). Original source files remain unchanged.
+
+The extended audit tested both signs of each characteristic voltage, adjacent points at ±0.00001 mV, and the discrete command-voltage grids listed in the original fitting helpers:
+
+- Na: 41 points, 19 command test voltages. Original and diagnostic rates were identical at exported precision at every probe; all original and diagnostic time constants were finite and positive.
+- K: 38 points, 17 command test voltages. The original mechanism has three non-finite time-constant points at the positive source singularities: `mtau` at -29.9618 mV; `h1tau` at +40.5659 mV and -75.9382 mV.
+- The mirror-branch defect also creates negative K `h1tau`: -0.072506 ms around -40.56590 mV, and -0.013253 ms at +75.9382 mV. At +29.9618 mV, original K `mtau` is 0.075868 ms versus 0.903835 ms for the stable diagnostic clone (91.61% relative difference).
+- On the *discrete static test-voltage samples* in the archived fitting scripts, K source and diagnostic outputs agree at the exported precision and all original time constants are positive. This does not prove full time-domain clamp equivalence: dynamic membrane voltage passes through values between those test steps, and raw trace replay has not yet been performed.
+
+The stable clone is only a mathematical diagnostic comparator. It is not the published source, not a validated fix, and not eligible for AMSN runtime. See the complete point-level JSON artifact [14790704932](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45115543259/artifacts/14790704932) (artifact ZIP SHA-256 `c53df1ef02993fddc2ee466203c700e949e36cc71a0e2cfb74ab25ac07fec7d3`).

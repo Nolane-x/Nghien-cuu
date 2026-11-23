@@ -83,3 +83,12 @@ Files added:
 - `amsn-core/research/WILBERS_2023_DATAVERSE_AND_NMODL_SOURCE_AUDIT_2026-11-22.md`
 
 Next gate: compile original MOD files with pinned NEURON, probe trap0 around singular points, reproduce voltage clamp and AP-clamp traces, and resolve the K fit snapshot before implementing a distinct opt-in human somatic channel.
+
+
+## Extended NMODL stable-reference comparison — 23/11/2026
+
+- Workflow 45115543259 passed with 11 registry tests. The audit compiled unchanged source and a separate diagnostic clone with mathematically stable trap0 handling.
+- Na: no non-finite values on 41 probe points; all fields matched the diagnostic clone at exported precision.
+- K: three non-finite values at positive singular parameters; negative h1tau in the mirror region around -thi1 and at -thi2; 91.61% mtau discrepancy at -tha's mirror voltage.
+- On 19 discrete Na and 17 discrete K command test-step voltages, original and diagnostic clone outputs matched at exported precision; this is only static initialization of rate variables, not a time-domain voltage-clamp or AP-clamp replay.
+- No stable clone was promoted into runtime; raw workbooks/traces remain to be replayed.

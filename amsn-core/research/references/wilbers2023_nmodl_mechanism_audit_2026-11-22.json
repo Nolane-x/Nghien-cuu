@@ -123,8 +123,8 @@
       ],
       "observed": "Branch checks fabs((v+th)/q), while main quotient uses (v-th)/(1-exp(-(v-th)/q)); commented intended limit is a*q but active fallback is q*(1--(v-th)/q/2), omitting a.",
       "issue": "At v=th the quotient has a removable 0/0 limit, but for nonzero th the branch condition does not select it. The active fallback is also not the standard a*q limit.",
-      "status": "NEURON 9.0.2 runtime reproduction confirms K mtau/h1tau return non-finite values at the three positive source singular voltages; Na probe remained finite on its tested points because its rates use TABLE. Both sources compile. Protocol-grid and corrected-clone comparison is being added; this is not yet a full voltage-clamp reproduction.",
-      "next_test": "Compare unchanged original with a diagnostic-only stable trap0 clone at +/- singular voltages and every published protocol test voltage; require the stable clone to remain finite with positive time constants, then execute the source's full clamp commands against raw data."
+      "status": "NEURON 9.0.2 confirms source-level runtime anomalies in K: NaN time constants at positive tha/thi1/thi2, negative h1tau around -thi1 and at -thi2, and a 91.6% mtau discrepancy at -tha versus a diagnostic stable trap0 clone. Na remains finite on the probed points because the published mechanism uses TABLE. On the static published test-step grid, original and diagnostic values agree at the recorded precision; this is not a complete clamp-trace reproduction.",
+      "next_test": "Reproduce the complete step voltage-clamp current traces and AP-clamp command traces against the archived experimental workbooks/CSV, then test dynamic trajectories around the mirror-voltage singularities. The stable clone remains diagnostic only."
     },
     {
       "id": "potassium_fit_snapshot_mismatch",
@@ -149,5 +149,71 @@
     "neuron_version": "9.0.2",
     "trigger": "push to dedicated research branch or manual workflow dispatch",
     "status": "initial run 45039313143 succeeded: 11 provenance tests passed; both original MOD files hash-verified, compiled and loaded; K non-finite rates found at tha/thi1/thi2 exact positive singularities; extended stable-clone comparison pending."
+  },
+  "initial_neuron_9_0_2_probe": {
+    "workflow_run_id": 45039313143,
+    "workflow_run_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143",
+    "tests_passed": 11,
+    "neuron_version": "9.0.2",
+    "na": {
+      "compiled": true,
+      "sha256_verified": true,
+      "nonfinite_observations": 0,
+      "max_relative_difference_to_stable_diagnostic": {
+        "minf": 0,
+        "hinf": 0,
+        "mtau": 0,
+        "htau": 0
+      }
+    },
+    "k": {
+      "compiled": true,
+      "sha256_verified": true,
+      "nonfinite_time_constants": {
+        "tha=-29.9618mV": "mtau",
+        "thi1=40.5659mV": "h1tau",
+        "thi2=-75.9382mV": "h1tau"
+      },
+      "negative_h1tau_at_mirror_voltages": [
+        {
+          "voltage_mV": -40.56591,
+          "h1tau_ms": -0.07250577417859115
+        },
+        {
+          "voltage_mV": -40.5659,
+          "h1tau_ms": -0.07250580046403714
+        },
+        {
+          "voltage_mV": -40.56589,
+          "h1tau_ms": -0.07250582674950216
+        },
+        {
+          "voltage_mV": 75.9382,
+          "h1tau_ms": -0.013252963095498607
+        }
+      ],
+      "mirror_tha_relative_mtau_difference": {
+        "voltage_mV": 29.9618,
+        "source_ms": 0.07586781399032837,
+        "stable_diagnostic_ms": 0.9038350068291261,
+        "relative_difference": 0.9160601067483641
+      },
+      "source_protocol_grid": {
+        "test_step_count": 17,
+        "source_time_constants_finite_and_positive": true,
+        "max_relative_difference_to_stable_diagnostic": 0,
+        "interpretation": "Static initialization at the discrete protocol test voltages only, not a time-domain clamp trace."
+      }
+    },
+    "diagnostic_clone": {
+      "corrected_trap0_branch": "fabs((v-th)/q)",
+      "stable_limit": "a*q*(1+(v-th)/(2*q))",
+      "purpose": "diagnostic comparator only",
+      "runtime_eligible": false
+    },
+    "artifact": {
+      "id": 14790704932,
+      "sha256": "c53df1ef02993fddc2ee466203c700e949e36cc71a0e2cfb74ab25ac07fec7d3"
+    }
   }
 }

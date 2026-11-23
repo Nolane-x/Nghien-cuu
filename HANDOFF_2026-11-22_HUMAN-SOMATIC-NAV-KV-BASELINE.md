@@ -75,3 +75,12 @@ A dedicated workflow is now added at `.github/workflows/amsn-wilbers-nmodl-repro
 ## Initial NEURON 9.0.2 compilation result
 
 Workflow [45039313143](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143) succeeded: 11 provenance tests passed; original Na/K source hashes verified; both mechanisms compiled and loaded. Initial point probe: Na all finite at tested points; K returned non-finite `mtau` at `tha`, and non-finite `h1tau` at `thi1` and `thi2` (the exact source singular voltages). Adjacent points were finite. This is a confirmed source runtime issue at exact probe values, but not yet a measured protocol-level failure. The workflow now adds a stable diagnostic clone comparison; it never modifies the original file and is not runtime-eligible. Artifact: [14764015969](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45039313143/artifacts/14764015969).
+
+
+## Extended NEURON source-vs-stable comparison — 23/11/2026
+
+- Workflow [45115543259](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45115543259) succeeded; both unmodified and diagnostic clone compiled with NEURON 9.0.2; 11 evidence tests passed.
+- Na: 41 probe points, including 19 source test voltages. Rates and time constants matched the diagnostic clone at exported precision; all were finite/positive.
+- K: 38 points. Positive exact singulars produced NaN; mirror branches produce negative `h1tau` around -40.5659 mV and at +75.9382 mV. At +29.9618 mV, source `mtau` differed by 91.61% from the stable diagnostic clone.
+- The 17 discrete static K test voltages match the stable diagnostic clone at exported precision. This is not a full time-domain voltage-clamp/AP-clamp reproduction; raw trace replay remains pending.
+- See [source audit report](amsn-core/research/WILBERS_2023_DATAVERSE_AND_NMODL_SOURCE_AUDIT_2026-11-22.md), [machine-readable audit](amsn-core/research/references/wilbers2023_nmodl_mechanism_audit_2026-11-22.json), and [artifact 14790704932](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45115543259/artifacts/14790704932).

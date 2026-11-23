@@ -45,6 +45,9 @@ SOURCES: dict[str, dict[str, Any]] = {
         "protocol_voltages_mV": [float(v) for v in range(-110, 51, 10)],
         "protocol_name": "K voltage-clamp test-step grid; hold -140 mV for 20 ms, test 500 ms, +60 mV for 50 ms, tail -140 mV",
         "expected_source_nonfinite": ["tha", "thi1", "thi2"],
+        "expected_source_negative_time_constants": [
+            "thi1:negative-epsilon", "thi1:negative", "thi1:negative+epsilon", "thi2:negative"
+        ],
     },
 }
 DATAFILE_BASE = "https://dataverse.nl/api/access/datafile"
@@ -239,6 +242,18 @@ def compile_compare_and_probe(
         row for row in observations
         if not row["source_all_finite"]
     ]
+    source_invalid_time_constants = [
+        row for row in observations
+        if not row["source_all_time_constants_positive"]
+    ]
+    source_negative_time_constants = [
+        row for row in observations
+        if any(
+            original[field] is not None and original[field] <= 0
+            for field in source["time_constants"]
+            for original in [row["source"]]
+        )
+    ]
     stable_failures = [
         row for row in observations
         if not row["stable_all_finite"] or not row["stable_all_time_constants_positive"]
@@ -278,6 +293,32 @@ def compile_compare_and_probe(
             f"Original source exact-positive singular probes differ from expected for {name}: "
             f"expected={sorted(expected)}, observed={sorted(observed_positive_nonfinite)}"
         )
+    observed_negative_tau_labels = sorted({
+        label
+        for row in source_negative_time_constants
+        for label in row["labels"]
+    })
+    expected_negative_tau_labels = sorted(source["expected_source_negative_time_constants"])
+    if observed_negative_tau_labels != expected_negative_tau_labels:
+        raise RuntimeError(
+            f"Original source negative time-constant probes differ from expected for {name}: "
+            f"expected={expected_negative_tau_labels}, observed={observed_negative_tau_labels}"
+        )
+
+    protocol_max_relative: dict[str, float | None] = {}
+    for field in source["observables"]:
+        values = [
+            row["relative_difference_source_vs_stable"][field]
+            for row in protocol_rows
+            if row["relative_difference_source_vs_stable"][field] is not None
+        ]
+        protocol_max_relative[field] = max(values) if values else None
+    finite_protocol_differences = [v for v in protocol_max_relative.values() if v is not None]
+    if any(v > 1e-10 for v in finite_protocol_differences):
+        raise RuntimeError(
+            f"Original vs stable diagnostic rates differ on the published static command grid for {name}: "
+            f"{protocol_max_relative}"
+        )
 
     max_relative: dict[str, float | None] = {}
     for field in source["observables"]:
@@ -306,7 +347,13 @@ def compile_compare_and_probe(
         "probe_count": len(observations),
         "source_nonfinite_probe_count": len(source_nonfinite),
         "source_nonfinite_probe_labels": [row["labels"] for row in source_nonfinite],
+        "source_invalid_time_constant_probe_count": len(source_invalid_time_constants),
+        "source_invalid_time_constant_probe_labels": [row["labels"] for row in source_invalid_time_constants],
+        "source_negative_time_constant_probe_count": len(source_negative_time_constants),
+        "source_negative_time_constant_probe_labels": [row["labels"] for row in source_negative_time_constants],
         "source_protocol_step_failures": [],
+        "protocol_grid_max_relative_difference": protocol_max_relative,
+        "protocol_grid_max_relative_difference_tolerance": 1e-10,
         "stable_clone_all_probe_rates_finite_and_time_constants_positive": True,
         "max_relative_difference_source_vs_stable_clone": max_relative,
         "observations": observations,
