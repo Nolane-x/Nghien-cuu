@@ -22,14 +22,14 @@ The previous source-provenance checkpoint verified nine released K mechanisms an
 - Verifies exact source-declared SUFFIX and records STATE/RANGE/parameter metadata for every mechanism.
 - Compiles the nine unchanged K MOD payloads together, then separately instantiates each exact suffix.
 - Runs the original five-AP helper for each mechanism before the recorder optimization, then the full 200-AP helper after optimization.
-- Requires the first five amplitudes from the two runs to match within 1e-12.
+- Repeats the same original five-AP helper before and after the recorder replacement for every mechanism and requires identical outputs within 1e-12. It records the difference between the distinct five-AP and 200-AP source helpers descriptively, without assuming those routines are equivalent.
 - Compares AP1-normalized curves against the original K workbook's human-input columns for Human and Mouse recording cohorts separately.
 - Produces machine-readable JSON, cohort summary CSV and per-AP residual CSV.
 - No source MOD text, fitted defaults or AMSN runtime configuration is changed.
 
 ## Validation status
 
-The GitHub Actions workflow is triggered by this branch's implementation commit. Until its run completes and the artifact is inspected, do not state that the variants were successfully replayed or quote performance numbers.
+The GitHub Actions workflow is triggered by this branch's implementation commit. An early run showed that Ik_AP1_5 and Ik_AP1_5_200 produce different initial amplitudes. That was an invalid cross-helper equality assumption, not proof of a channel-model failure. The acceptance gate was corrected to compare the same five-AP helper before/after recorder replacement. Until the corrected run completes and the artifact is inspected, do not quote variant performance numbers.
 
 ## Next actions after CI
 
