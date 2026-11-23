@@ -1,0 +1,68 @@
+name: AMSN Wilbers Figure 4 independent K voltage-clamp data audit
+
+on:
+  push:
+    branches:
+      - research/wilbers-k-figure4-voltage-clamp-audit-2026-11-23
+    paths:
+      - "amsn-core/examples/audit_wilbers_figure4_voltage_clamp.py"
+      - "amsn-core/examples/audit_wilbers_k_mod_variants.py"
+      - "amsn-core/tests/test_wilbers_figure4_voltage_clamp.py"
+      - ".github/workflows/amsn-wilbers-figure4-voltage-clamp-audit.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-wilbers-figure4-voltage-clamp-audit
+  cancel-in-progress: false
+
+jobs:
+  figure4-source-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install pinned data-audit dependencies
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]" pandas==2.2.3 openpyxl==3.1.5 numpy==2.2.5
+      - name: Run provenance, source-filter and workbook-schema regression tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_wilbers_figure4_voltage_clamp.py
+      - name: Verify official Figure 4 bytes and build per-recording voltage-clamp targets
+        working-directory: amsn-core
+        run: |
+          python examples/audit_wilbers_figure4_voltage_clamp.py \
+            --output-json results/wilbers_figure4_voltage_clamp_audit_2026-11-23.json \
+            --per-recording-csv results/wilbers_figure4_voltage_clamp_per_recording_2026-11-23.csv \
+            --cohort-summary-csv results/wilbers_figure4_voltage_clamp_cohort_summary_2026-11-23.csv
+      - name: Commit validated Figure 4 targets to this branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/wilbers_figure4_voltage_clamp_audit_2026-11-23.json \
+            amsn-core/results/wilbers_figure4_voltage_clamp_per_recording_2026-11-23.csv \
+            amsn-core/results/wilbers_figure4_voltage_clamp_cohort_summary_2026-11-23.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive Wilbers Figure 4 voltage-clamp audit"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve source verification and per-recording audit artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: wilbers-figure4-voltage-clamp-data-audit
+          path: |
+            amsn-core/results/wilbers_figure4_voltage_clamp_audit_2026-11-23.json
+            amsn-core/results/wilbers_figure4_voltage_clamp_per_recording_2026-11-23.csv
+            amsn-core/results/wilbers_figure4_voltage_clamp_cohort_summary_2026-11-23.csv
+          if-no-files-found: warn
+          retention-days: 90
