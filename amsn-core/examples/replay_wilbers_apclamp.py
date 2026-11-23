@@ -288,6 +288,7 @@ def main() -> None:
         if h.nrn_load_dll(str(libs[0])) == 0:
             raise RuntimeError("NEURON failed to load the compiled source mechanisms")
         helper_path = cache / "apclamp_tools.py"
+        helper_path.write_bytes(payloads["apclamp_tools"])
         helper = load_original_helper(helper_path)
         h.celsius = 34.0
         h.dt = 1000.0 / SAMPLE_RATE_HZ
