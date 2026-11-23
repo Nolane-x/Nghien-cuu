@@ -63,7 +63,7 @@ jobs:
             amsn-core/results/wilbers_k_mod_variant_apclamp_per_ap_2026-11-23.csv
           if ! git diff --cached --quiet; then
             git commit -m "results: archive validated Wilbers K variant AP-clamp replay"
-            git push origin "HEAD:\${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
       - name: Preserve source hashes, raw replay curves, comparisons and summaries
         if: always()
