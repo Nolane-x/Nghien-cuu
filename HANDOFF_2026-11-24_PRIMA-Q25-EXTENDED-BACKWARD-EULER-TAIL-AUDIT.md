@@ -23,7 +23,7 @@ The full cable matrix is assembled from the exact passive tree G/C and factorize
 
 - 6,048 per-layout cumulative transient rows.
 - 3,024 paired dual-q25/seven comparisons.
-- 756 20-ms archived parity rows.
+- 1,512 20-ms archived parity rows.
 - 672 per-output summaries.
 - 336 per-output comparison summaries.
 - 48 by-source summaries.
