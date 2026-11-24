@@ -136,7 +136,7 @@ def test_finite_identity_residual_uses_output_scale_not_tiny_error_scale():
     actual = np.array([1e-9 + 0j, -1e-9 + 0j])
     reconstructed = actual + np.array([1e-12 + 0j, -1e-12 + 0j])
     relative, absolute = audit._finite_identity_error(
-        actual, reconstructed, scale_norm=float(np.linalg.norm(actual) * 1e6)
+        actual, reconstructed, scale_norm=float(np.linalg.norm(actual) * 1e3)
     )
     assert absolute == pytest.approx(np.sqrt(2.0) * 1e-12)
     assert relative == pytest.approx(1e-6)
