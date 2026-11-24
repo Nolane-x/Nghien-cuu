@@ -121,6 +121,82 @@ def build_sparse_hines_factor(tree, dt_s: float):
     factor = splu(matrix)
     return factor, np.asarray(tree.capacitance_f, dtype=float) / dt
 
+def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, np.ndarray]:
+    """Pre-factor the backward-Euler tree operator using canonical Hines elimination.
+
+    The diagonal/pivot and child multipliers are computed once per scenario.
+    Every time step then applies the same forward elimination/back substitution
+    as CableTree.step_linear, but vectorized over all source/pulse columns. This
+    avoids sparse-LU rounding noise on very small distal-port residuals.
+    """
+    dt = float(dt_s)
+    require(np.isfinite(dt) and dt > 0.0, "dt_s must be finite and positive")
+    capacitance = np.asarray(tree.capacitance_f, dtype=float)
+    c_over_dt = capacitance / dt
+    parent = np.asarray(tree.parent_index, dtype=int).copy()
+    axial = np.asarray(tree.axial_g_s, dtype=float).copy()
+    pivot = np.asarray(tree.membrane_leak_s, dtype=float) + c_over_dt
+    pivot = np.array(pivot, dtype=float, copy=True)
+    for child in range(1, tree.n_compartments):
+        conductance = float(axial[child])
+        p = int(parent[child])
+        pivot[child] += conductance
+        pivot[p] += conductance
+
+    multipliers = np.zeros(tree.n_compartments, dtype=float)
+    for child in range(tree.n_compartments - 1, 0, -1):
+        p = int(parent[child])
+        conductance = float(axial[child])
+        denominator = float(pivot[child])
+        require(np.isfinite(denominator) and denominator > 0.0,
+                "non-positive child pivot in canonical Hines factorization")
+        multiplier = conductance / denominator
+        multipliers[child] = multiplier
+        pivot[p] -= conductance * multiplier
+
+    require(np.isfinite(pivot[0]) and pivot[0] > 0.0,
+            "non-positive root pivot in canonical Hines factorization")
+    return {
+        "pivot_diagonal": pivot,
+        "multipliers": multipliers,
+        "parent_index": parent,
+        "axial_g_s": axial,
+        "c_over_dt": c_over_dt,
+    }
+
+
+def tree_hines_backward_euler_step(
+    factor: dict[str, np.ndarray],
+    voltage_perturbation: np.ndarray,
+    current_a: np.ndarray,
+) -> np.ndarray:
+    """Advance multiple perturbation traces using the canonical Hines recurrence."""
+    pivot = factor["pivot_diagonal"]
+    multipliers = factor["multipliers"]
+    parent = factor["parent_index"]
+    axial = factor["axial_g_s"]
+    c_over_dt = factor["c_over_dt"]
+    previous = np.asarray(voltage_perturbation, dtype=float)
+    current = np.asarray(current_a, dtype=float)
+    require(previous.ndim == 2 and previous.shape[0] == pivot.size,
+            "Hines previous state must have shape (compartments, columns)")
+    require(current.shape == previous.shape,
+            "Hines current matrix must match the previous state")
+    work = c_over_dt[:, None] * previous + current
+    for child in range(pivot.size - 1, 0, -1):
+        p = int(parent[child])
+        work[p, :] += multipliers[child] * work[child, :]
+    following = np.empty_like(work)
+    following[0, :] = work[0, :] / pivot[0]
+    for child in range(1, pivot.size):
+        p = int(parent[child])
+        following[child, :] = (
+            work[child, :] + axial[child] * following[p, :]
+        ) / pivot[child]
+    require(np.all(np.isfinite(following)), "non-finite state in canonical Hines step")
+    return following
+
+
 
 def reduced_backward_euler_operators(model, dt_s: float) -> tuple[np.ndarray, np.ndarray]:
     """Precompute x[n] = P*x[n-1] + Q*i[n] for the exact model BE step."""
@@ -187,8 +263,7 @@ def simulate_full_hines_windows(
             protocol,
             step,
         )
-        rhs = c_over_dt[:, None] * voltage + current
-        voltage = factor.solve(rhs)
+        voltage = tree_hines_backward_euler_step(factor, voltage, current)
         trace[step, :, :] = voltage[np.asarray(output_indices, dtype=int), :]
     require(np.all(np.isfinite(trace)), "non-finite full-Hines extended trace")
     return trace, protocol
@@ -497,7 +572,8 @@ def main() -> None:
 
         for scenario_name, scales in baseline.parameter_cases().items():
             target = conditioning.build_target_tree(module, base_tree, scales)
-            hines_factor, c_over_dt = build_sparse_hines_factor(target, dt_s)
+            hines_factor = build_tree_hines_be_factor(target, dt_s)
+            c_over_dt = hines_factor["c_over_dt"]
             full_layout = layouts["nine_both_q25"]
             source_indices_full = [
                 int(full_layout["ports"][int(full_layout["source_indices"][source])])
@@ -567,7 +643,7 @@ def main() -> None:
                         "layout_id": probe_layout_id,
                         "source_name": probe_source,
                         "pulse_width_ms": probe_width_ms,
-                        "legacy_full_vs_sparse_full_relative_l2_pct": relative_l2_percent(
+                        "legacy_full_vs_vectorized_hines_relative_l2_pct": relative_l2_percent(
                             legacy_full_shared, new_full_shared
                         ),
                         "legacy_reduced_vs_precomputed_reduced_relative_l2_pct": relative_l2_percent(
