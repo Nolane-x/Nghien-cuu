@@ -73,3 +73,20 @@ Next: add a third independent morphology with a more complete axon and different
 ## Updated synthesis decision after PR #15
 
 Do not encode a universal order168 requirement for nine-port PRIMA. The same matched design gave a median nine/seven error ratio 8.162× at order112 on NMO_162186, but 1.00000465× on NMO_03524. Both q25 probes were accurate on NMO_03524 at order112 (maximum NRMSE 3.0585e−8%). This is morphology-specific evidence; a third, structurally more complete morphology is the next gate.
+
+
+## Third matched port-count morphology validated — NMO_163775
+
+PR #16 / workflow 45311916600 passed all 173 AMSN tests, 19 Peng-specific tests, source SHA-256, Import3D preflight, exact replay coverage, result archive and artifact upload. Artifact #14883752560; ZIP SHA-256 9060b04e6e769a1e9b40700197361bf67a59b164965441849e8cd3effb716a58.
+
+NMO_163775 is a mouse Peng archive Control-condition somatosensory neocortical L2–3 pyramidal IT projection cell. NeuroMorpho marks dendrites and axon complete but lists No Diameter. SWC SHA-256 94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f; 4,209 records; 4,200 electrical compartments. NEURON preflight: 251 sections, 82,587 segments, 0.5 µm maximum mesh cap, observed maximum 0.49999436 µm. Shared ports: [1,40,144,3926,3948,4104,4180]; q25 probes basal 224, apical 4096.
+
+Exact replay coverage: 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations, 378 shared-Hines checks. All 378 Hines traces were exactly equal (0 V difference).
+
+Order112: 9-port worse on all 378 shared pairs, median 9/7 error ratio 78.051×, max ratio 6,739.21×. Maximum absolute nine-port shared NRMSE was only 0.0001933%. Order168: 347 worse / 31 better, median ratio 14.501×, max ratio 300.22×; maximum absolute nine-port shared NRMSE 6.0657e−7%. q25 max NRMSE 2.1588e−4% at order112 and 4.2824e−7% at order168.
+
+The high 9/7 ratios are relative to a very small seven-port baseline; use the absolute NRMSE values when comparing to a predeclared application tolerance. At 10 kHz, nine-port median Z/Y residuals are 3.2464e−5% / 4.8096e−5% at order112 and 6.8670e−9% / 4.8906e−8% at order168. Numeric storage is 3.7803 MB / 5.8140 MB at orders112/168. Runtime 187.50 s wall, 273.21 s user CPU, peak RSS 160,272 KiB.
+
+The third morphology strengthens the morphology-dependent conclusion. Unlike the two earlier human fixtures it has complete arbors by repository metadata, but No Diameter and a 0.5 µm mesh cap (vs 0.125 µm for the human holdouts). Do not interpret this as diameter-grounded biological validation or pool absolute errors across different meshes. Full Hines remains canonical; no production defaults change.
+
+Source: [PR #16](https://github.com/Nolane-x/Nghien-cuu/pull/16), [run 45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600), [artifact #14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560).
