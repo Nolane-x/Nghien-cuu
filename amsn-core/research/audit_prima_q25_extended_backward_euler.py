@@ -599,6 +599,51 @@ def main() -> None:
             f"20-ms parity rows {len(parity_rows)} != {EXPECTED_PARITY_ROWS}")
     max_parity_relative = max(float(r["relative_delta_pct"]) for r in parity_rows)
     max_parity_absolute = max(float(r["absolute_delta_pct_points"]) for r in parity_rows)
+
+    # Emit diagnostics before the strict parity guard so a failed run identifies
+    # the exact morphology/layout/source/output pair rather than only one scalar.
+    parity_groups: dict[tuple, list[dict[str, Any]]] = defaultdict(list)
+    for row in parity_rows:
+        group_key = (row["morphology"], row["layout_id"])
+        parity_groups[group_key].append(row)
+    group_diagnostics = []
+    for key, subset in sorted(parity_groups.items()):
+        worst = max(subset, key=lambda row: float(row["absolute_delta_pct_points"]))
+        group_diagnostics.append({
+            "morphology": key[0],
+            "layout_id": key[1],
+            "rows": len(subset),
+            "max_absolute_delta_pct_points": float(worst["absolute_delta_pct_points"]),
+            "max_relative_delta_pct": max(float(x["relative_delta_pct"]) for x in subset),
+            "worst_pair": {
+                "source_name": worst["source_name"],
+                "output_swc_id": worst["output_swc_id"],
+                "pulse_width_ms": worst["pulse_width_ms"],
+                "computed_20ms_nrmse_pct": worst["computed_20ms_nrmse_pct"],
+                "archived_20ms_nrmse_pct": worst["archived_20ms_nrmse_pct"],
+            },
+        })
+    worst_absolute = sorted(
+        parity_rows,
+        key=lambda row: float(row["absolute_delta_pct_points"]),
+        reverse=True,
+    )[:20]
+    worst_relative = sorted(
+        parity_rows,
+        key=lambda row: float(row["relative_delta_pct"]),
+        reverse=True,
+    )[:20]
+    print(json.dumps({
+        "parity_diagnostics": {
+            "rows": len(parity_rows),
+            "max_absolute_delta_pct_points": max_parity_absolute,
+            "max_relative_delta_pct": max_parity_relative,
+            "by_morphology_layout": group_diagnostics,
+            "worst_absolute_pairs": worst_absolute,
+            "worst_relative_pairs": worst_relative,
+        }
+    }, indent=2, allow_nan=False), flush=True)
+
     require(
         all(
             float(r["absolute_delta_pct_points"]) <= max(
