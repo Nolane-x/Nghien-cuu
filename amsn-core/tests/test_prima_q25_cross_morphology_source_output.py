@@ -45,7 +45,7 @@ def test_output_group_summary_counts_sign_and_percentiles():
         row(ratio=1.0, delta=0.0, pulse=2.0),
         row(ratio=2.0, delta=1.0, pulse=10.0),
     ]
-    summary = analysis.summarize_output_groups(rows)
+    summary = analysis.summarize_output_groups(rows, enforce_complete=False)
     assert len(summary) == 1
     assert summary[0]["matched_pairs"] == 2
     assert summary[0]["worse_pairs"] == 1
@@ -62,7 +62,7 @@ def test_source_summary_aggregates_seven_outputs():
             row(output_id=output_id, ratio=2.0, delta=1.0, pulse=10.0),
         ])
     output = analysis.summarize_output_groups(rows)
-    summary = analysis.summarize_source_groups(output)
+    summary = analysis.summarize_source_groups(output, enforce_complete=False)
     assert len(summary) == 1
     assert summary[0]["output_ports"] == 7
     assert summary[0]["matched_pairs"] == 14
