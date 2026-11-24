@@ -1,0 +1,3 @@
+basis_order,matched_shared_output_pairs,nine_port_worse_pairs,nine_port_better_pairs,ties_within_1e_15_pct_points,median_error_ratio_nine_over_seven,max_error_ratio_nine_over_seven,max_seven_port_nrmse_pct,max_nine_port_nrmse_pct
+112,378,378,0,0,42.71807805000821,140.02910357293948,7.667127570041268e-07,3.950655651229636e-05
+168,378,214,164,0,1.0010214503128352,4.37298193183125,5.451146441822332e-07,5.455892576025842e-07
