@@ -372,9 +372,8 @@ def simulate_reduced_windows(
     output_slots = np.asarray([
         common_slot_by_id[int(node_id)] for node_id in common_output_ids
     ], dtype=int)
-    port_basis = model.basis[np.asarray(layout["ports"], dtype=int), :]
-    output_basis = port_basis[output_slots, :]
     trace = np.empty((steps, len(common_output_ids), len(protocol)), dtype=float)
+    step_port_trace = np.empty((layout["port_count"], len(protocol)), dtype=float)
 
     for step in range(steps):
         port_current.fill(0.0)
@@ -398,7 +397,13 @@ def simulate_reduced_windows(
                 state[:, column] = reduced_backward_euler_step_factorized(
                     model, factor, state[:, column], port_current[:, column], DT_S
                 )
-        trace[step, :, :] = output_basis @ state
+        # Match the archived simulator's per-RHS port projection exactly:
+        # model.port_voltages performs one matrix-vector multiply per trace,
+        # whereas output_basis @ state would use a matrix-matrix path with
+        # slightly different rounding for tiny distal residuals.
+        for column in range(len(protocol)):
+            step_port_trace[:, column] = model.port_voltages(state[:, column])
+        trace[step, :, :] = step_port_trace[output_slots, :]
 
     require(np.all(np.isfinite(trace)), "non-finite reduced extended trace")
     return trace
