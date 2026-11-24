@@ -90,10 +90,18 @@ def test_protocol_has_correct_inclusive_and_exclusive_edges():
         ("apical_q75", 2.0), ("apical_q75", 10.0),
     ]
     current = audit._make_current_matrix(4, [0, 1, 2], protocol, 20)
-    assert np.all(current[[0, 1, 2], :] > 0.0)
+    expected_start = np.zeros((4, 6), dtype=float)
+    expected_start[0, 0:2] = audit.CURRENT_A
+    expected_start[1, 2:4] = audit.CURRENT_A
+    expected_start[2, 4:6] = audit.CURRENT_A
+    np.testing.assert_array_equal(current, expected_start)
+
     current_end_2ms = audit._make_current_matrix(4, [0, 1, 2], protocol, 40)
-    assert np.all(current_end_2ms[:, [0, 2, 4]] == 0.0)
-    assert np.all(current_end_2ms[[0, 1, 2], [1, 3, 5]] > 0.0)
+    expected_after_2ms = np.zeros((4, 6), dtype=float)
+    expected_after_2ms[0, 1] = audit.CURRENT_A
+    expected_after_2ms[1, 3] = audit.CURRENT_A
+    expected_after_2ms[2, 5] = audit.CURRENT_A
+    np.testing.assert_array_equal(current_end_2ms, expected_after_2ms)
 
 
 def test_sparse_factor_uses_scipy_and_finite_protocol():
