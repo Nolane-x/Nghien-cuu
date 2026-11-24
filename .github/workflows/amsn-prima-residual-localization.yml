@@ -13,8 +13,6 @@ on:
       - "amsn-core/results/NMO_03524_JacobsControl_prima_7v9port_matched_order_2026-11-23_matched_shared.csv"
       - "amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_matched_shared.csv"
       - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_7v9port_matched_order_2026-11-24_matched_shared.csv"
-      - "HANDOFF_2026-11-24_PRIMA-RESIDUAL-LOCALIZATION.md"
-      - "research/RESEARCH_LOG_2026-11-24_PRIMA-RESIDUAL-LOCALIZATION.md"
   workflow_dispatch:
 
 permissions:
