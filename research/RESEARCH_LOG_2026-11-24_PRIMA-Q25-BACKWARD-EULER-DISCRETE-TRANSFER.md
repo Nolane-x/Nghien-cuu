@@ -64,3 +64,8 @@ Run 45417470042 subsequently passed the eight focused tests but reproduced the s
 ## Limits and next step
 
 The continuous comparator is sampled at discrete DFT frequencies and weighted by the ZOH input spectrum; it is not the exact sampled response of the continuous-time ODE. Only two passive linear-RC morphologies are included. After CI, compare absolute weighted norms, ratios, transient NRMSE and boundary correction separately. Keep full Hines canonical.
+
+
+## Perturbation-coordinate parity regression added
+
+Commit `6488d38a68127debe82c28dd421ece02070d659f` adds a focused synthetic three-compartment test that runs both the canonical absolute-voltage Hines replay and the zero-origin perturbation-coordinate Hines replay over the same pulse protocol, then checks their relative waveform delta. The test complements the full-morphology DFT identity gate; it is not a substitute for that gate. Workflow `45420670698` is queued on this commit to run the newest nine-test suite and complete matrix. Workflow `45419651741` is currently executing the eight-test version on commit `71de870b1d27af05737cc1e4b7285ecfa46967f3`.
