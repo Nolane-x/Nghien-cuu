@@ -78,6 +78,8 @@ jobs:
             git add amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_*.csv \
                     amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_report.json \
                     amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24.time.txt
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/NMO_163775_PengControl_holdout/port_mapping.csv
             if ! git diff --cached --quiet; then
               git commit -m "results: archive Peng control matched 7-port 9-port comparison"
               git fetch origin "$GITHUB_REF_NAME"
