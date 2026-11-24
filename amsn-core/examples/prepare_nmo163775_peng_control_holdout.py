@@ -14,6 +14,9 @@ ROOT = Path(__file__).parents[1]
 SWC = ROOT / "data" / "mouse" / "neuromorpho_peng" / "NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
 EXPECTED_NODE_COUNT = 4209
 EXPECTED_TYPE_COUNTS = {1: 3, 2: 3602, 3: 306, 4: 298}
+EXPECTED_SWC_SHA256 = "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+EXPECTED_SEVEN_PORT_IDS = {1, 54, 144, 4151, 3886, 3926, 3948}
+EXPECTED_Q25_NODE_IDS = (224, 4096)
 LABEL = "NMO_163775_PengControl"
 SOURCE_URL = "https://neuromorpho.org/dableFiles/peng/CNG%20version/18453_5766_x31719_y6139-semi_r.CNG.swc"
 METADATA_URL = "https://neuromorpho.org/neuron_info.jsp?neuron_name=18453_5766_x31719_y6139-semi_r"
@@ -83,6 +86,8 @@ def main() -> None:
     text = payload.decode("utf-8-sig")
     rows, type_counts = parse_swc_records(text)
     digest = hashlib.sha256(payload).hexdigest()
+    if digest != EXPECTED_SWC_SHA256:
+        raise RuntimeError(f"SWC SHA-256 mismatch: {digest}")
 
     from amsn.provenance import validate_swc_morphology
     morphology_validation = validate_swc_morphology(
@@ -94,17 +99,26 @@ def main() -> None:
     morphology = morphology_validation.morphology
 
     import neuron_cross_validation as reference
-    import mouse_fine_mesh_passive_dc_audit as fine_audit
+    import human_fine_mesh_passive_dc_audit as fine_audit
     import neuron
     reference.DATA = SWC
     reference.MAX_NEURON_SEGMENT_UM = 0.5
     reader, sections = reference.import_swc_with_neuron()
     injections, probes, mapped_sites = fine_audit.build_sites(morphology, reader, sections)
     port_node_ids = list(dict.fromkeys(node_id for _, node_id in injections + probes))
+    if set(port_node_ids) != EXPECTED_SEVEN_PORT_IDS:
+        raise RuntimeError(f"canonical seven-port IDs changed: {port_node_ids}")
     if len(port_node_ids) != 7:
         raise RuntimeError(f"expected seven unique retained ports, got {len(port_node_ids)}")
 
     source_ids = {name: node_id for name, node_id in injections}
+    import human_prima_port_enrichment as port_enrichment
+    _, _, q25_mapped = port_enrichment.build_sites(
+        morphology, reader, sections, extra_probe_quantiles=(0.25,)
+    )
+    q25_ids = tuple(sorted(set(q25_mapped) - set(mapped_sites)))
+    if q25_ids != EXPECTED_Q25_NODE_IDS:
+        raise RuntimeError(f"q25 SWC node IDs changed: {q25_ids}")
     if set(source_ids) != {"soma", "basal_q75", "apical_q75"}:
         raise RuntimeError(f"unexpected source site set: {source_ids}")
     electrical_mapping = morphology.electrical_node_mapping()
@@ -178,6 +192,7 @@ def main() -> None:
         "amsn": {
             "electrical_compartment_count": base.n_compartments,
             "seven_unique_port_node_ids": port_node_ids,
+            "q25_only_swc_node_ids": list(q25_ids),
             "source_node_ids": source_ids,
             "roles_by_node": {str(node): roles_by_node[node] for node in port_node_ids},
             "finite_1khz_passive_response": True,
