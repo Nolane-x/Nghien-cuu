@@ -1,0 +1,19 @@
+pulse_width_ms,frequency_hz,normalized_rectangular_pulse_spectral_amplitude,normalized_rectangular_pulse_spectral_power,interpretation
+2.0,0.1,0.9999999342026386,0.9999998684052814,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,1.0,0.9999934202767204,0.9999868405967337,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,10.0,0.9993421562398412,0.9986847452380953,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,100.0,0.935489283788639,0.8751402000833809,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,300.0,0.5045511524271047,0.2545718654155194,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,1000.0,3.8981718325193755e-17,1.5195743635847466e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,3000.0,3.8981718325193755e-17,1.5195743635847466e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,6000.0,3.8981718325193755e-17,1.5195743635847466e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+2.0,10000.0,3.898171832519376e-17,1.5195743635847472e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,0.1,0.999998355066745,0.9999967101361957,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,1.0,0.9998355147105485,0.9996710564765076,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,10.0,0.983631643083466,0.967531209275079,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,100.0,3.8981718325193755e-17,1.5195743635847466e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,300.0,3.8981718325193755e-17,1.5195743635847466e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,1000.0,3.898171832519376e-17,1.5195743635847472e-33,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,3000.0,1.1437264410803267e-16,1.30811017202627e-32,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,6000.0,1.1437264410803267e-16,1.30811017202627e-32,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
+10.0,10000.0,6.2528371445095934e-18,3.9097972355758887e-35,sampled continuous-time rectangular-pulse spectrum; not a frequency-grid quadrature weight
