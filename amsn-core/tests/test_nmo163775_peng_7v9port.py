@@ -27,7 +27,6 @@ def test_matrix_row_counts_are_exact():
 def test_peng_control_source_hash_and_quantile_nodes_are_pinned():
     assert MODULE.EXPECTED_SWC_RECORDS == 4209
     assert MODULE.EXPECTED_SWC_SHA256 == "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
-    assert True
 
 
 def test_seven_and_nine_port_sets_share_exactly_seven_swc_nodes():
