@@ -36,6 +36,7 @@ SHIFTS_HZ = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
 RELATIVE_TOLERANCE = 1e-12
 EXPECTED_MODEL_ROWS = 2 * 9 * len(LAYOUT_IDS) * len(ORDERS)
 EXPECTED_SEED_ROWS = EXPECTED_MODEL_ROWS * len(SHIFTS_HZ)
+EXPECTED_PORT_ROWS = 2 * 9 * len(ORDERS) * sum((7, 8, 8, 9))
 RESULT_STEM = "prima_q25_cross_morphology_conditioning_2026-11-24"
 
 MORPHOLOGIES = (
@@ -62,7 +63,7 @@ def require(condition: bool, message: str) -> None:
 
 
 def expected_counts() -> dict[str, int]:
-    return {"models": EXPECTED_MODEL_ROWS, "shift_seeds": EXPECTED_SEED_ROWS}
+    return {"models": EXPECTED_MODEL_ROWS, "shift_seeds": EXPECTED_SEED_ROWS, "port_leverage": EXPECTED_PORT_ROWS}
 
 
 def finite_condition(eigenvalues: np.ndarray, label: str) -> float:
@@ -137,7 +138,7 @@ def build_target_tree(module, base_tree, scales: tuple[float, float, float]):
     )
 
 
-def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[dict]]:
+def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[dict], list[dict]]:
     module = morphology_spec["module"]
     baseline = module.baseline
     reference = baseline.reference
@@ -163,7 +164,8 @@ def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[
             f"{morphology_spec['name']}: q25 nodes differ from preflight")
 
     model_rows: list[dict[str, Any]] = []
-    seed_rows: list[dict[str, Any]] = []
+    port_rows: list[dict[str, Any]] = []
+    shift_seed_rows: list[dict[str, Any]] = []
     scenarios = baseline.parameter_cases()
     for scenario_name, scales in scenarios.items():
         target = build_target_tree(module, base_tree, scales)
@@ -197,7 +199,7 @@ def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[
                 role_map = layout["roles"]
                 for node_id, port_index in zip(port_ids, layout["ports"]):
                     row_vector = basis[port_index, :]
-                    seed_rows.append({
+                    port_rows.append({
                         "morphology": morphology_spec["name"],
                         "layout_id": layout_id,
                         "basis_order": order,
@@ -213,7 +215,7 @@ def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[
                     target, layout["ports"], SHIFTS_HZ, order
                 )
                 for row in seed_counts:
-                    seed_rows.append({
+                    shift_seed_rows.append({
                         "morphology": morphology_spec["name"],
                         "layout_id": layout_id,
                         "basis_order": order,
@@ -257,7 +259,7 @@ def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[
 
     require(len(model_rows) == len(scenarios) * len(LAYOUT_IDS) * len(ORDERS),
             f"{morphology_spec['name']}: model audit coverage mismatch")
-    return model_rows, seed_rows
+    return model_rows, port_rows, shift_seed_rows
 
 
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -273,17 +275,20 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 def main() -> None:
     started = time.perf_counter()
     all_models: list[dict[str, Any]] = []
-    all_seeds: list[dict[str, Any]] = []
+    all_port_rows: list[dict[str, Any]] = []
+    all_shift_seed_rows: list[dict[str, Any]] = []
     for morphology_spec in MORPHOLOGIES:
-        models, seeds = audit_morphology(morphology_spec)
+        models, ports, shift_seeds = audit_morphology(morphology_spec)
         all_models.extend(models)
-        all_seeds.extend(seeds)
+        all_port_rows.extend(ports)
+        all_shift_seed_rows.extend(shift_seeds)
 
     require(len(all_models) == EXPECTED_MODEL_ROWS,
             f"model row count {len(all_models)} != {EXPECTED_MODEL_ROWS}")
-    expected_seed_min = EXPECTED_MODEL_ROWS * len(SHIFTS_HZ)
-    require(len(all_seeds) >= expected_seed_min,
-            "seed/port diagnostic output unexpectedly incomplete")
+    require(len(all_port_rows) == EXPECTED_PORT_ROWS,
+            f"port leverage row count {len(all_port_rows)} != {EXPECTED_PORT_ROWS}")
+    require(len(all_shift_seed_rows) == EXPECTED_SEED_ROWS,
+            f"shift seed row count {len(all_shift_seed_rows)} != {EXPECTED_SEED_ROWS}")
 
     # Model-level summary includes only basis- and matrix-conditioning metrics.
     summary: list[dict[str, Any]] = []
@@ -313,7 +318,8 @@ def main() -> None:
 
     results_dir = Path("results")
     write_csv(results_dir / f"{RESULT_STEM}_models.csv", all_models)
-    write_csv(results_dir / f"{RESULT_STEM}_port_leverage_and_shift_seeds.csv", all_seeds)
+    write_csv(results_dir / f"{RESULT_STEM}_port_leverage.csv", all_port_rows)
+    write_csv(results_dir / f"{RESULT_STEM}_shift_seeds.csv", all_shift_seed_rows)
     write_csv(results_dir / f"{RESULT_STEM}_summary.csv", summary)
 
     report = {
@@ -336,9 +342,11 @@ def main() -> None:
         },
         "exact_coverage": {
             "models": len(all_models),
-            "seed_and_port_diagnostic_rows": len(all_seeds),
+            "port_leverage_rows": len(all_port_rows),
+            "shift_seed_rows": len(all_shift_seed_rows),
             "expected_models": EXPECTED_MODEL_ROWS,
-            "minimum_expected_seed_rows": expected_seed_min,
+            "expected_port_leverage_rows": EXPECTED_PORT_ROWS,
+            "expected_shift_seed_rows": EXPECTED_SEED_ROWS,
         },
         "summary": summary,
         "scientific_limits": [
