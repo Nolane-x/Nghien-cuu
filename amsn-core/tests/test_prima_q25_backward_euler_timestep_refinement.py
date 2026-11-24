@@ -104,20 +104,20 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
                 for source in audit.SOURCE_NAMES:
                     for pulse in audit.PULSE_WIDTHS_MS:
                         source_rows.append({
-                        "morphology": morphology,
-                        "dt_ms": dt,
-                        "source_name": source,
-                        "pulse_width_ms": pulse,
-                        "window_ms": window,
-                        "median_nine_over_seven_ratio": 2.5,
-                        "p90_nine_over_seven_ratio": 3.0,
-                        "median_seven_transient_nrmse_pct": 1e-7,
-                        "median_nine_transient_nrmse_pct": 2.5e-7,
-                        "worse_pairs": 63,
-                        "median_absolute_vs_perturbation_delta_pct": 0.01,
-                    })
+                            "morphology": morphology,
+                            "dt_ms": dt,
+                            "source_name": source,
+                            "pulse_width_ms": pulse,
+                            "window_ms": window,
+                            "median_nine_over_seven_ratio": 2.5,
+                            "p90_nine_over_seven_ratio": 3.0,
+                            "median_seven_transient_nrmse_pct": 1e-7,
+                            "median_nine_transient_nrmse_pct": 2.5e-7,
+                            "worse_pairs": 63,
+                            "median_absolute_vs_perturbation_delta_pct": 0.01,
+                        })
     rows = audit.summarize_morphology_windows(source_rows)
-    assert len(rows) == 3 * 4
+    assert len(rows) == 2 * 3 * 4
     assert all(row["source_pulse_groups"] == 6 for row in rows)
     assert all(row["worse_pairs_of_378"] == 378 for row in rows)
 
