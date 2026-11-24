@@ -41,6 +41,12 @@ LAYOUT_EXTRAS = {
     "nine_both_q25": ("basal_q25", "apical_q25"),
 }
 LAYOUT_IDS = tuple(LAYOUT_EXTRAS)
+PORT_COUNTS_BY_LAYOUT = {
+    "seven": 7,
+    "eight_basal_q25": 8,
+    "eight_apical_q25": 8,
+    "nine_both_q25": 9,
+}
 COMMON_PORT_COUNT = 7
 EXPECTED_SCENARIOS = 9
 EXPECTED_MODEL_ROWS = len(LAYOUT_IDS) * len(ORDERS) * EXPECTED_SCENARIOS
@@ -241,7 +247,7 @@ def summarize_pairs(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             require(len(subset) == 378, f"{layout_id} order {order}: expected 378 paired outputs")
             result.append({
                 "layout_id": layout_id,
-                "port_count": next(layout["port_count"] for layout in LAYOUTS_FOR_SUMMARY if layout["layout_id"] == layout_id),
+                "port_count": PORT_COUNTS_BY_LAYOUT[layout_id],
                 "basis_order": order,
                 "matched_shared_output_pairs": len(subset),
                 "candidate_worse_pairs": sum(value > 1e-15 for value in delta),
