@@ -2,37 +2,47 @@
 
 **Date:** 24 November 2026  
 **Branch:** research/prima-q25-pulse-weighted-transfer-bridge-2026-11-24  
-**Parent:** Krylov-prefix transfer audit / PR #24
+**Parent:** Krylov-prefix transfer audit / PR #24  
+**Draft PR:** [#27](https://github.com/Nolane-x/Nghien-cuu/pull/27)  
+**Current workflow:** [45343771112](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45343771112) — full numeric step in progress at handoff update
 
 ## Research question
 
-The completed AC transfer audit found dual-q25 transfer residuals above seven-port on both morphologies, but the time-domain order-168 pulse NRMSE penalty was 14.525× on Peng and only 1.001× on Tamas. This follow-up weights the dense complex transfer residual by the actual 2-ms and 10-ms rectangular pulse spectra and joins each result to the archived pulse NRMSE pair.
+At order 168, dual-q25 AC transfer residuals are above seven-port on both Peng and Tamas, but the time-domain pulse penalty is 14.525× on Peng and only 1.001× on Tamas. This follow-up weights dense transfer residuals by the spectra of the exact 2-ms and 10-ms rectangular inputs and joins each weighted value to the archived transient NRMSE pair.
 
 ## Design
 
-- Two checksum-pinned morphologies.
-- Seven-port baseline and dual-q25 nine-port candidate only.
-- Basis order 168.
-- Nine passive parameter scenarios.
-- Three current sources and seven shared output nodes.
-- Dense 0–5,000 Hz grid, 5-Hz spacing (1,001 frequencies).
-- Rectangular pulse spectrum `|I(f)|² = (I0·T·sinc(fT))²`, with 10 pA amplitude, 2-ms onset and pulse widths 2/10 ms.
-- Four frequency bands: 0–100, 100–500, 500–2,000, 2,000–5,000 Hz.
-- Full Hines complex response computed with a vectorized tree solve; reduced response uses the PRIMA reduced G/C matrices.
-- Compare pulse-weighted spectral error with the exact archived time-domain transient NRMSE row for the same morphology/scenario/source/output/pulse width.
+- NMO_163775 Peng mouse and NMO_107159 Tamas human pyramidal, with pinned source hashes.
+- Seven-port baseline and dual-q25 nine-port only; basis order 168.
+- All nine passive parameter scenarios, three sources and seven shared outputs.
+- Dense 0–5,000 Hz grid at 5-Hz spacing (1,001 frequencies).
+- Rectangular 10-pA pulse spectrum for widths 2 ms and 10 ms; onset 2 ms.
+- Four weighted frequency bands: 0–100, 100–500, 500–2,000 and 2,000–5,000 Hz.
+- Full Hines complex response compared with PRIMA reduced response.
+- Every dual-q25 weighted source/output/scenario/pulse result is joined to its exact time-domain transient row.
 
-The weighted AC metric is a continuous-time Parseval proxy. It is not asserted to exactly reproduce the finite-step backward-Euler transient solver.
+The pulse-weighted error is a continuous-time Parseval proxy, not an exact recreation of finite-step backward-Euler transients.
 
-## Expected coverage
+## Exact expected coverage
 
-- 3,024 per-layout weighted source/output/pulse rows.
-- 12,096 frequency-band energy rows.
-- 1,512 paired dual-q25 vs seven spectral/transient rows.
-- 336 output summaries.
-- 84 paired output summary groups.
-- 48 by-source/layout summaries.
-- 192 aggregated band summaries.
+- 1,512 weighted source/output/pulse rows.
+- 6,048 band-energy rows.
+- 756 dual-q25 vs seven spectral/transient bridge rows.
+- 168 by-output summaries.
+- 84 paired output comparison summaries.
+- 12 by-source summaries.
+- 96 pooled band summaries.
+
+## Validation state
+
+The latest run 45343771112 has passed:
+- 7/7 focused tests.
+- Both SWC SHA-256 checks.
+- Both archived transient input-file checks.
+- Both Import3D preflights.
+
+The dense pulse-weighted numerical calculation is the remaining workflow step. No numeric finding is claimed until it completes and the output CSVs/JSON are read back.
 
 ## Scientific limits
 
-A large spectral ratio can arise from a very small seven-port error denominator. Preserve absolute weighted errors beside ratios. The pulse-weighted spectrum proxy and finite-window backward-Euler NRMSE are not identical measures. Only two individual passive linear-RC reconstructions are compared; no biological or population claim. Full Hines remains canonical and no production code/defaults change.
+Large ratios may come from an extremely small seven-port denominator, so absolute weighted errors stay beside ratios. Pulse-weighted continuous-time transfer error is not identical to the finite-step backward-Euler NRMSE. Only two individual passive linear-RC morphology reconstructions are compared; no biological or population conclusion follows. Full Hines remains canonical; production code and defaults are unchanged.
