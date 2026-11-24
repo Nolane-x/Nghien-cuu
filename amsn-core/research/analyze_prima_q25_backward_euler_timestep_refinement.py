@@ -305,7 +305,7 @@ def summarize_source_windows(
                 for row in paired
             ),
             "median_absolute_vs_perturbation_delta_pct": float(np.median([
-                float(row["nine_absolute_vs_perturbation_delta_pct"])
+                float(row["absolute_vs_perturbation_hines_delta_pct"])
                 for row in subset
             ])),
         })
@@ -541,6 +541,7 @@ def main() -> None:
                                 "source_name": source_name,
                                 "pulse_width_ms": float(pulse_width_ms),
                                 "output_swc_id": int(output_node),
+                                "absolute_vs_perturbation_hines_delta_pct": coordinate_delta,
                             }
                             metric_rows.append({
                                 **common,
