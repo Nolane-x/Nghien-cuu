@@ -101,30 +101,30 @@ The corrected full-Hines replay and finite-record identity were validated by wor
 
 Each value below is the median of six source × pulse-group medians; each group first takes the median over nine passive scenarios × seven shared outputs. Ratios are **nine-port error / seven-port error**, not a ratio of pooled energies.
 
-| Morphology | Window | Continuous AC + ZOH | Discrete BE transfer | Absolute-voltage transient (legacy) | Perturbation-coordinate transient |
-|---|---:|---:|---:|---:|---:|
-| Tamas human pyramidal | 20 ms | 33.17× | 31.76× | 1.001× | **24.54×** |
-| Tamas human pyramidal | 40 ms | 27.19× | 26.64× | 1.029× | **56.18×** |
-| Tamas human pyramidal | 100 ms | 28.62× | 28.28× | 1.023× | **32.22×** |
-| Tamas human pyramidal | 200 ms | 28.96× | 28.63× | 1.011× | **32.08×** |
-| Peng mouse | 20 ms | 38.04× | 38.82× | 31.43× | **162.7×** |
-| Peng mouse | 40 ms | 32.85× | 32.83× | 38.71× | **63.57×** |
-| Peng mouse | 100 ms | 33.80× | 34.01× | 25.52× | **34.11×** |
-| Peng mouse | 200 ms | 33.81× | 34.02× | 24.88× | **34.02×** |
+| Morphology | Window | Continuous AC + ZOH | Discrete BE transfer | Absolute-voltage transient (legacy) | Perturbation-coordinate transient | Boundary norm / finite-error norm | Worse perturbation pairs |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Tamas human pyramidal | 20 ms | 33.71× | 31.53× | 1.001× | **24.55×** | 667.83% | 374/378 |
+| Tamas human pyramidal | 40 ms | 28.35× | 26.77× | 1.028× | **55.28×** | 103.39% | 378/378 |
+| Tamas human pyramidal | 100 ms | 28.95× | 28.70× | 1.023× | **31.94×** | 2.71% | 378/378 |
+| Tamas human pyramidal | 200 ms | 29.65× | 29.70× | 1.011× | **31.64×** | 0.00474% | 378/378 |
+| Peng mouse | 20 ms | 42.11× | 43.23× | 31.52× | **138.34×** | 910.88% | 373/378 |
+| Peng mouse | 40 ms | 31.92× | 31.77× | 37.82× | **69.78×** | 117.33% | 378/378 |
+| Peng mouse | 100 ms | 33.43× | 33.40× | 26.68× | **33.67×** | 1.88% | 378/378 |
+| Peng mouse | 200 ms | 33.45× | 33.43× | 24.92× | **33.43×** | 0.00193% | 378/378 |
 
-The stable perturbation-coordinate nine-port median NRMSE remains very small in absolute terms. For Tamas it is approximately \(2.41\times10^{-9}\%\), \(1.11\times10^{-8}\%\), \(1.72\times10^{-8}\%\), and \(1.72\times10^{-8}\%\) at 20/40/100/200 ms. For Peng the corresponding values are \(9.80\times10^{-9}\%\), \(5.19\times10^{-8}\%\), \(7.15\times10^{-8}\%\), and \(7.16\times10^{-8}\%\). The large ratios therefore do not imply large absolute waveform errors.
+The stable perturbation-coordinate nine-port median NRMSE remains very small in absolute terms. For Tamas it is approximately \(2.41\times10^{-9}\%\), \(1.107\times10^{-8}\%\), \(1.714\times10^{-8}\%\), and \(1.715\times10^{-8}\%\) at 20/40/100/200 ms. For Peng the corresponding values are \(9.745\times10^{-9}\%\), \(4.734\times10^{-8}\%\), \(6.234\times10^{-8}\%\), and \(6.235\times10^{-8}\%\). The large ratios therefore do not imply large absolute waveform errors.
 
 ### Why the Tamas near-parity result is superseded
 
-The earlier transient audit evolved full-Hines voltages near the absolute leak potential and then subtracted that offset to recover a much smaller perturbation. Its Tamas absolute-vs-perturbation replay discrepancy reached **2.6494e-6%** (median of the per-group maximum-output discrepancies: **2.7179e-8%**). The old canonical absolute-voltage metric therefore hit a floating-point floor comparable to or larger than the tiny PRIMA residual, masking the seven/nine difference. The transfer identity itself is now checked using a second algebraically equivalent Hines replay initialized at zero perturbation with zero leak source; the absolute-voltage replay is retained only for historical continuity and its discrepancy is recorded.
+The earlier transient audit evolved full-Hines voltages near the absolute leak potential and then subtracted that offset to recover a much smaller perturbation. Its Tamas absolute-vs-perturbation replay discrepancy reached **2.6494e-6%** (maximum across the 432 Tamas identity groups). The old canonical absolute-voltage metric therefore hit a floating-point floor comparable to or larger than the tiny PRIMA residual, masking the seven/nine difference. The transfer identity itself is now checked using a second algebraically equivalent Hines replay initialized at zero perturbation with zero leak source; the absolute-voltage replay is retained only for historical continuity and its discrepancy is recorded.
 
-The terminal-state correction is also essential for finite windows. In the nine-port traces, the median terminal-boundary component norm is about 655% (Tamas) and 777% (Peng) of the finite-error norm at 20 ms, about 103–110% at 40 ms, about 2.2–2.4% at 100 ms, and about 0.0047–0.0049% at 200 ms. These are **norm ratios**, not energy shares: at short windows, the transfer and terminal components largely cancel. By 100–200 ms, the discrete-BE transfer ratio is much closer to the stable perturbation-coordinate transient ratio.
+The terminal-state correction is also essential for finite windows. In the morphology × window summary, the median nine-port terminal-boundary component norm is 667.83% (Tamas) and 910.88% (Peng) of the finite-error norm at 20 ms, 103.39% and 117.33% at 40 ms, 2.71% and 1.88% at 100 ms, and 0.00474% and 0.00193% at 200 ms. These are **norm ratios**, not energy shares: at short windows, the transfer and terminal components largely cancel. By 100–200 ms, the discrete-BE transfer ratio is much closer to the stable perturbation-coordinate transient ratio.
 
-A deterministic secondary summary is being added to the generator so the morphology × window table, including the perturbation-coordinate ratio, is regenerated and committed with the next passing workflow.
+The deterministic morphology × window summary is now generated and committed as `prima_q25_backward_euler_discrete_transfer_2026-11-24_morphology_window_summary.csv`; the JSON report also embeds all eight rows. Its 10-test CI and exact CSV read-back passed in workflow 45422624509.
 
 ## Updated scientific conclusion and limits
 
-For these two passive reconstructions, the q25 nine-port has a larger relative transient approximation error than seven-port when measured stably in perturbation coordinates. On Tamas, the previously reported ~1.00–1.03× transient ratio was a numerical-coordinate artifact and must not be used as evidence of parity. On both morphologies, the larger relative errors coexist with extremely small absolute NRMSE. The finite-window terminal correction explains why short-window transient ratios can differ greatly from periodic transfer ratios; it becomes negligible on the longer windows.
+For these two passive reconstructions, the q25 nine-port has a larger relative transient approximation error than seven-port when measured stably in perturbation coordinates. On Tamas, the previously reported ~1.00–1.03× transient ratio was a numerical-coordinate artifact and must not be used as evidence of parity. The stable metric is worse in 374/378 paired rows at 20 ms and 378/378 rows at 40–200 ms. Peng is worse in 373/378 rows at 20 ms and 378/378 rows at 40–200 ms. On both morphologies, the larger relative errors coexist with extremely small absolute NRMSE. The finite-window terminal correction explains why short-window transient ratios can differ greatly from periodic transfer ratios; it becomes negligible on the longer windows.
 
 This remains a numerical comparison on two individual passive linear-RC morphologies, not population, active-neuron, synaptic, or biological validation. No production solver or default was changed; full Hines remains canonical.
 
