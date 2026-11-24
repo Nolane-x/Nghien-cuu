@@ -82,4 +82,7 @@ def test_instrumented_orthogonalizer_respects_order_cap():
     )
     assert observed.shape == (4, 1)
     assert len(basis) == 2
-    assert len(events) == 1
+    assert len(events) == 2
+    assert events[0]["accepted"] is False
+    assert events[0]["rejection_reason"] == "relative_tolerance"
+    assert events[1]["accepted"] is True
