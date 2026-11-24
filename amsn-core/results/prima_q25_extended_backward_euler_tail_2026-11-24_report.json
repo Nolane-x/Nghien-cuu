@@ -1,0 +1,124 @@
+{
+  "exact_coverage": {
+    "20ms_parity_rows": 1512,
+    "by_output_summary_rows": 672,
+    "by_source_summary_rows": 48,
+    "comparison_rows": 3024,
+    "comparison_summary_rows": 336,
+    "expected": {
+      "20ms_parity_rows": 1512,
+      "by_output_summary_rows": 672,
+      "by_source_summary_rows": 48,
+      "comparison_rows": 3024,
+      "comparison_summary_rows": 336,
+      "extended_transient_rows": 6048,
+      "layout_window_summary_rows": 32,
+      "window_summary_rows": 16,
+      "windows_ms": 4
+    },
+    "extended_transient_rows": 6048,
+    "layout_window_summary_rows": 32,
+    "max_20ms_archived_absolute_delta_pct_points": 3.0818710679657265e-08,
+    "max_20ms_archived_relative_delta_pct": 21.214578179870866,
+    "window_summary_rows": 16
+  },
+  "parity_gate": {
+    "max_absolute_delta_pct_points": 3.0818710679657265e-08,
+    "max_relative_delta_pct": 21.214578179870866,
+    "rule": "absolute difference in 20-ms NRMSE percentage points",
+    "tolerance_pct_points": 5e-08
+  },
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "scipy": "1.16.3"
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "The recurrence is the same implicit backward-Euler method with dt=0.1 ms and the same pulse sample timing as the archived 20-ms experiment; only the observation window is extended.",
+    "The full cable reference uses the exact-order compiled Hines tree-elimination recurrence; the 20-ms result must reproduce archived Hines/PRIMA NRMSE within the explicit absolute percentage-point parity floor.",
+    "The reduced trace keeps the original per-vector backward-Euler solve and port-voltage projection through 20 ms; factorized solves are used only for the later tail.",
+    "All nine passive parameter scenarios, three sources, seven common outputs and both 2-ms/10-ms pulses are retained.",
+    "Only two individual passive linear-RC morphology reconstructions are compared; they are not populations or biological validation.",
+    "Full Hines remains canonical; no production code or solver defaults are changed."
+  ],
+  "scope": {
+    "basis_order": 168,
+    "dt_ms": 0.1,
+    "layouts": [
+      "seven",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "total_simulated_duration_ms": 200.0,
+    "windows_ms": [
+      20.0,
+      40.0,
+      100.0,
+      200.0
+    ]
+  },
+  "status": "prima_q25_extended_backward_euler_tail_audit_passed"
+}
