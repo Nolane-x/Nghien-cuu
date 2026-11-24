@@ -10,7 +10,7 @@ EXAMPLES = Path(__file__).parents[1] / "examples"
 if str(EXAMPLES) not in sys.path:
     sys.path.insert(0, str(EXAMPLES))
 
-import replay_nmo03524_prima_7v9port as MODULE
+import replay_nmo163775_peng_7v9port as MODULE
 
 
 def test_matrix_row_counts_are_exact():
@@ -60,8 +60,8 @@ def test_invalid_port_set_mappings_fail_closed(seven, nine, roles):
 def test_matched_shared_rows_pair_by_exact_swc_id_and_protocol():
     rows = []
     for port_count, values in (
-        (7, {1:0.1,367:0.2}),
-        (9, {1:0.11,367:0.18,224:0.01}),
+        (7, {1:0.1,54:0.2}),
+        (9, {1:0.11,54:0.18,224:0.01}),
     ):
         for node_id, value in values.items():
             rows.append({
@@ -74,11 +74,11 @@ def test_matched_shared_rows_pair_by_exact_swc_id_and_protocol():
                 "port_roles":"probe",
                 "port_nrmse_pct":value,
             })
-    result = MODULE.build_matched_shared_rows(rows, [1,367], expected_count=2)
+    result = MODULE.build_matched_shared_rows(rows, [1,54], expected_count=2)
     assert len(result) == 2
     assert result[0]["port_swc_id"] == 1
     assert result[0]["error_ratio_nine_over_seven"] == pytest.approx(1.1)
-    assert result[1]["port_swc_id"] == 367
+    assert result[1]["port_swc_id"] == 54
     assert result[1]["error_ratio_nine_over_seven"] == pytest.approx(0.9)
 
 
