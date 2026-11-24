@@ -42,6 +42,7 @@ RESULT_STEM = "prima_q25_cross_morphology_conditioning_2026-11-24"
 MORPHOLOGIES = (
     {
         "name": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
         "module": peng_replay,
         "preflight": Path("results/NMO_163775_PengControl_holdout/preflight.json"),
         "expected_sha256": peng_replay.EXPECTED_SWC_SHA256,
@@ -49,6 +50,7 @@ MORPHOLOGIES = (
     },
     {
         "name": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
         "module": tamas_replay,
         "preflight": Path("results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"),
         "expected_sha256": tamas_replay.EXPECTED_SWC_SHA256,
@@ -242,7 +244,7 @@ def audit_morphology(morphology_spec: dict[str, Any]) -> tuple[list[dict], list[
                     "basis_orthogonality_max_abs": float(np.max(np.abs(gram_error))),
                     "basis_gram_min_eigenvalue": float(gram_eigs[0]),
                     "basis_gram_max_eigenvalue": float(gram_eigs[-1]),
-                    "basis_condition_number": finite_condition(gram_eigs, "basis Gram"),
+                    "basis_gram_condition_number": finite_condition(gram_eigs, "basis Gram"),
                     "conductance_min_eigenvalue_S": float(g_eigs[0]),
                     "conductance_max_eigenvalue_S": float(g_eigs[-1]),
                     "conductance_condition_number": finite_condition(g_eigs, "reduced G"),
@@ -309,7 +311,7 @@ def main() -> None:
                     "model_scenarios": len(subset),
                     "median_basis_orthogonality_max_abs": float(np.median([r["basis_orthogonality_max_abs"] for r in subset])),
                     "max_basis_orthogonality_max_abs": float(max(r["basis_orthogonality_max_abs"] for r in subset)),
-                    "median_basis_condition_number": float(np.median([r["basis_condition_number"] for r in subset])),
+                    "median_basis_gram_condition_number": float(np.median([r["basis_gram_condition_number"] for r in subset])),
                     "median_conductance_condition_number": float(np.median([r["conductance_condition_number"] for r in subset])),
                     "median_capacitance_condition_number": float(np.median([r["capacitance_condition_number"] for r in subset])),
                     "median_rc_rate_dynamic_range": float(np.median([r["rc_rate_dynamic_range"] for r in subset])),
@@ -329,7 +331,7 @@ def main() -> None:
             "morphologies": [
                 {
                     "name": m["name"],
-                    "neuromorpho_id": m["module"].LABEL,
+                    "neuromorpho_id": m["neuromorpho_id"],
                     "swc_sha256": m["expected_sha256"],
                     "swc_records": m["expected_records"],
                 } for m in MORPHOLOGIES
