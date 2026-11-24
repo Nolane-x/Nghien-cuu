@@ -28,7 +28,7 @@ if str(RESEARCH) not in sys.path:
 import audit_prima_q25_basis_conditioning as conditioning
 import audit_prima_q25_extended_backward_euler as tail
 
-DT_GRID_MS = (0.1, 0.05, 0.025)
+DT_GRID_MS = (0.1, 0.05, 0.025, 0.0125)
 WINDOWS_MS = (20.0, 40.0, 100.0, 200.0)
 SOURCE_NAMES = tuple(tail.SOURCE_NAMES)
 PULSE_WIDTHS_MS = tuple(tail.PULSE_WIDTHS_MS)
