@@ -142,6 +142,38 @@ def test_finite_identity_residual_uses_output_scale_not_tiny_error_scale():
     assert relative == pytest.approx(1e-6)
 
 
+def test_full_hines_absolute_and_perturbation_replays_are_equivalent():
+    from types import SimpleNamespace
+
+    tree = SimpleNamespace(
+        n_compartments=3,
+        capacitance_f=np.array([1.0e-12, 1.2e-12, 0.8e-12]),
+        membrane_leak_s=np.array([1.0e-9, 1.2e-9, 0.9e-9]),
+        axial_g_s=np.array([0.0, 2.0e-9, 1.5e-9]),
+        parent_index=np.array([0, 0, 0], dtype=np.int64),
+        parameters=SimpleNamespace(e_leak_v=-0.070),
+    )
+    factor = audit.tail.build_tree_hines_be_factor(tree, audit.DT_S)
+    source_indices = [0, 1, 2]
+    output_indices = [0, 1, 2]
+
+    canonical, _, canonical_protocol = audit.simulate_full_hines_with_terminal_states(
+        tree, factor, source_indices, output_indices
+    )
+    perturbation, _, perturbation_protocol = audit.simulate_full_hines_perturbation_windows(
+        tree, factor, source_indices, output_indices
+    )
+    assert canonical_protocol == perturbation_protocol
+    relative_delta_pct = (
+        100.0 * np.linalg.norm(canonical - perturbation)
+        / max(float(np.linalg.norm(perturbation)), 1e-30)
+    )
+    # The absolute-voltage and zero-origin formulations are algebraically
+    # identical; the tolerance is a numerical parity guard, not a solver-accuracy
+    # claim. Production code continues to use the canonical absolute-voltage path.
+    assert relative_delta_pct <= 1e-5
+
+
 def test_expected_coverage_contract():
     assert audit.expected_counts() == {
         "master_frequency_points": 1001,
