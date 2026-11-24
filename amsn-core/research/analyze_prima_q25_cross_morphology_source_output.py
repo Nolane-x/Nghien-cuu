@@ -126,7 +126,7 @@ def _percentile(values: list[float], percentile: float) -> float:
     return ordered[lower] * (1.0 - weight) + ordered[upper] * weight
 
 
-def summarize_output_groups(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def summarize_output_groups(rows: list[dict[str, Any]], *, enforce_complete: bool = True) -> list[dict[str, Any]]:
     groups: dict[tuple, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         key = (
@@ -163,15 +163,16 @@ def summarize_output_groups(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
             "max_candidate_nrmse_pct": max(candidate_errors),
             "max_absolute_delta_pct_points": max(abs(x) for x in deltas),
         })
-    expected_groups = len(LAYOUTS) * len(ORDERS) * len(SOURCES) * 7
-    require(len(output) == 2 * expected_groups,
-            f"output-group coverage {len(output)} != {2 * expected_groups}")
-    require(all(row["matched_pairs"] == 18 for row in output),
-            "each source/output/layout/order group must contain 9 scenarios × 2 pulses")
+    if enforce_complete:
+        expected_groups = 2 * len(LAYOUTS) * len(ORDERS) * len(SOURCES) * 7
+        require(len(output) == expected_groups,
+                f"output-group coverage {len(output)} != {expected_groups}")
+        require(all(row["matched_pairs"] == 18 for row in output),
+                "each source/output/layout/order group must contain 9 scenarios × 2 pulses")
     return output
 
 
-def summarize_source_groups(output_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def summarize_source_groups(output_rows: list[dict[str, Any]], *, enforce_complete: bool = True) -> list[dict[str, Any]]:
     groups: dict[tuple, list[dict[str, Any]]] = defaultdict(list)
     for row in output_rows:
         key = (row["morphology"], row["layout_id"], row["basis_order"], row["source_name"])
@@ -200,10 +201,12 @@ def summarize_source_groups(output_rows: list[dict[str, Any]]) -> list[dict[str,
             "better_pairs": better,
             "tie_pairs": ties,
         })
-    require(len(summary) == 2 * len(LAYOUTS) * len(ORDERS) * len(SOURCES),
-            "source-group coverage mismatch")
-    require(all(row["matched_pairs"] == 126 for row in summary),
-            "each source summary must aggregate 7 outputs × 9 scenarios × 2 pulses")
+    if enforce_complete:
+        expected_groups = 2 * len(LAYOUTS) * len(ORDERS) * len(SOURCES)
+        require(len(summary) == expected_groups,
+                f"source-group coverage mismatch: {len(summary)} != {expected_groups}")
+        require(all(row["matched_pairs"] == 126 for row in summary),
+                "each source summary must aggregate 7 outputs × 9 scenarios × 2 pulses")
     return summary
 
 
