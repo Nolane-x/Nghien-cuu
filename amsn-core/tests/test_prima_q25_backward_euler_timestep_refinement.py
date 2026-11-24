@@ -94,7 +94,7 @@ def test_source_window_summary_aggregates_all_scenarios_and_outputs():
                                     "nine_over_seven_perturbation_transient_ratio": 2.0,
                                 })
     rows = audit.summarize_source_windows(metrics, comparisons)
-    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 144
+    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 192
     assert all(row["scenario_output_pairs"] == 63 for row in rows)
     assert all(row["median_nine_over_seven_ratio"] == 2.0 for row in rows)
 
@@ -120,7 +120,7 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
                             "median_absolute_vs_perturbation_delta_pct": 0.01,
                         })
     rows = audit.summarize_morphology_windows(source_rows)
-    assert len(rows) == 2 * 3 * 4
+    assert len(rows) == 2 * 4 * 4
     assert all(row["source_pulse_groups"] == 6 for row in rows)
     assert all(row["worse_pairs_of_378"] == 378 for row in rows)
 
