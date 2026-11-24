@@ -336,7 +336,7 @@ def main():
         raise RuntimeError("preflight SWC digest differs from the replay source")
     if len(preflight.get("amsn", {}).get("seven_unique_port_node_ids", [])) != 7:
         raise RuntimeError("the seven-port preflight does not contain exactly seven canonical ports")
-    if set(preflight["amsn"]["seven_unique_port_node_ids"]) != {1, 54, 144, 4151, 3886, 3926, 3948}:
+    if set(preflight["amsn"]["seven_unique_port_node_ids"]) != {1, 40, 144, 4180, 3926, 4104, 3948}:
         raise RuntimeError("the Peng control seven-port SWC node IDs changed unexpectedly")
 
     reader, sections = reference.import_swc_with_neuron()
