@@ -10,7 +10,7 @@ The frequency-localization audit shows that AC and transient errors do not track
 
 ## Design
 
-Two pinned morphologies; seven-port and dual-q25 layouts; order 168; nine passive parameter scenarios; three source locations; seven shared outputs. Full-Hines and reduced PRIMA transfer responses are computed on a nonuniform grid from DC to 5 kHz, with 10 Hz spacing through 500 Hz and 100 Hz spacing above, plus very-low-frequency points. The band limit is Nyquist for dt=0.1 ms.
+Two pinned morphologies; seven-port and dual-q25 layouts; order 168; nine passive parameter scenarios; three source locations; seven shared outputs. Full-Hines and reduced PRIMA transfer responses are computed on a nonuniform grid from DC to 5 kHz, with 10 Hz spacing across 0–5,000 Hz, plus 0.1 and 1 Hz low-frequency samples, plus very-low-frequency points. The band limit is Nyquist for dt=0.1 ms.
 
 For a rectangular pulse width T, the spectral power weighting is `|sinc(fT)|²`. The weighted transfer error is the square root of the frequency integral of squared complex transfer residual times pulse spectral power, divided by the corresponding full-Hines transfer energy. The result is compared with the exact stored 2 ms/10 ms time-domain NRMSE rows for the same scenario, source and output.
 
@@ -23,7 +23,7 @@ This is a band-limited spectral proxy; it is not claimed to equal the finite 20 
 - 168 output summaries and 24 source summaries.
 - 756 paired dual-q25/seven weighted-transfer and transient rows.
 - 12 source/pulse summaries.
-- 196 pulse-spectrum samples (98 frequencies × 2 pulse widths).
+- 1,006 pulse-spectrum samples (503 frequencies × 2 pulse widths).
 
 ## Scientific limits
 
