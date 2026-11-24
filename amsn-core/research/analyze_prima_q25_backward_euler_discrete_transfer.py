@@ -493,7 +493,7 @@ def _summarize_comparisons(
                 row["source_name"], row["output_swc_id"],
                 row["pulse_width_ms"], row["window_ms"],
             )]
-            boundary.append(float(nine["boundary_component_of_error_norm_pct"]))
+            boundary.append(float(nine["boundary_component_over_finite_error_norm_pct"]))
         output.append({
             "morphology": key[0],
             "source_name": key[1],
