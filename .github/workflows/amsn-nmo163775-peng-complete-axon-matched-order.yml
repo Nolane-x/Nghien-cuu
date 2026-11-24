@@ -5,11 +5,11 @@ on:
     branches:
       - research/prima-peng-complete-axon-third-morphology-2026-11-24
     paths:
-      - ".github/workflows/amsn-nmo163775-prima-7v9port-matched-order.yml"
+      - ".github/workflows/amsn-nmo163775-peng-complete-axon-matched-order.yml"
       - "amsn-core/examples/replay_nmo163775_peng_7v9port.py"
-      - "amsn-core/examples/mouse_fine_mesh_passive_dc_audit.py"
-      - "amsn-core/examples/mouse_prima_port_enrichment.py"
-      - "amsn-core/examples/prepare_peng_control_holdout.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/examples/prepare_nmo163775_peng_control_holdout.py"
       - "amsn-core/tests/test_nmo163775_peng_7v9port.py"
   workflow_dispatch:
 
@@ -44,8 +44,8 @@ jobs:
       - name: Verify pinned Peng control SWC in repository
         working-directory: amsn-core
         run: |
-          test -s data/mouse/neuromorpho_jacobs/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc
-          echo "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f  data/mouse/neuromorpho_jacobs/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc" | sha256sum --check -
+          test -s data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc
+          echo "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f  data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc" | sha256sum --check -
       - name: Run complete AMSN regression suite
         working-directory: amsn-core
         run: python -m pytest
@@ -54,11 +54,11 @@ jobs:
         run: python -m pytest -q tests/test_peng_control_holdout.py tests/test_nmo163775_peng_7v9port.py
       - name: Re-run Import3D, seven canonical ports and passive preflight
         working-directory: amsn-core
-        run: python examples/prepare_peng_control_holdout.py
+        run: python examples/prepare_nmo163775_peng_control_holdout.py
       - name: Replay matched order112/order168 with seven and nine ports
         working-directory: amsn-core
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23.time.txt python examples/replay_nmo163775_peng_7v9port.py
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24.time.txt python examples/replay_nmo163775_peng_7v9port.py
       - name: Commit validated matched-port results
         if: success()
         run: |
