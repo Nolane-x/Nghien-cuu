@@ -103,3 +103,23 @@ The first table corrects the previous interpretation of the Tamas near-unity tra
 
 The analysis code now adds an eight-row morphology × observation-window summary and explicit perturbation-coordinate ratios to the 48 source × pulse × window summaries. A unit test checks that the new aggregate keeps the legacy and stable metrics separate. Workflow [45422549114](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422549114) exposed a stale expected-count assertion (8 tests passed, 1 failed because the newly added eight-row table was missing from the expected dictionary). After fixing that test contract, workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) passed **10/10 tests** in 0.93 s, both morphology checksum/preflight checks, the full calculation, identity gate and all six CSV read-backs. It committed result SHA `228e66538a833e613ae6b664353abaae65849244` and uploaded artifact 14936177082 (SHA-256 `4a3872a0606ecb6663c9d3d0aaaca986a8486181466232de4696becf34a379a6`). The eight-row summary contains 63/63 perturbation-worse pairs in the median source × pulse group for every morphology/window; raw pair counts are 374/378 and 373/378 at 20 ms, then 378/378 at 40–200 ms for Tamas and Peng respectively.
 
+
+
+
+## Final generator and result archive verification
+
+Workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) completed successfully:
+- **10/10 focused unit tests passed** in 0.93 s.
+- Both pinned SWC SHA-256 checks and both morphology preflights passed.
+- Full exact backward-Euler transfer and finite-record DFT identity audit passed.
+- Maximum relative identity residual: \(1.42900217\times10^{-11}\), gate \(2\times10^{-8}\); maximum absolute residual \(1.10990395\times10^{-11}\ \mathrm{V\cdot samples}\).
+- CSV read-back: 84,084 frequency rows; 6,048 case metric rows; 3,024 paired comparisons; 48 source/window summaries; 8 morphology/window summaries; 864 identity rows.
+- Commit: \`228e66538a833e613ae6b664353abaae65849244\`; artifact [14936177082](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509/artifacts/14936177082), SHA-256 \`4a3872a0606ecb6663c9d3d0aaaca986a8486181466232de4696becf34a379a6\`.
+- Runtime: 408.06 s wall, 750.77 s user CPU, 360,952 KB maximum RSS. Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2.
+
+The eight-row morphology × window output is now committed and is the source for the final ratio/boundary table in the research report. Its values supersede the earlier hand-calculated draft summary. The PR #29 correction comment was added and the root handoff/README were promoted to this checkpoint. PR #30 remains draft/open; no branch was merged and no production solver/default was changed.
+
+## Next planned experiment
+
+Run a backward-Euler timestep refinement at 0.1/0.05/0.025 ms on the same two checksum-pinned morphologies, seven-port and dual-q25 nine-port order 168. Keep full Hines canonical, run the full-Hines comparison in perturbation coordinates for tiny residuals, retain canonical absolute-voltage traces as a diagnostic, and compare transient errors against the exact \(s_{BE}\) discrete transfer at each timestep. The first goal is to measure whether the morphology-specific q25 ratios converge with timestep, not to change a production default.
+
