@@ -32,7 +32,7 @@ At a 0.1-ms timestep, the backward-Euler map compresses the imaginary frequency 
 
 ## Status and next step
 
-Implementation and tests are authored; numerical execution is pending. Do not claim a result until Actions passes, commits the CSVs and the report is read back. The next possible step is to inspect discrete/continuous ratio changes and quantify how much of the finite-record difference comes from the terminal state, then extend to additional morphology holdouts only if justified.
+The first full replay completed its calculations but failed the DFT identity gate at 5.05389 because the residual was normalized by the much smaller inter-model error norm. This measures a difference-of-differences against the quantity being cancelled, and is numerically ill-conditioned. The gate now uses the corresponding output DFT L2 norm, reports model and finite-error identities separately, adds an explicit scale-normalization test, and persists the diagnostic CSV before gate evaluation. The latest test suite has eight focused cases; the corrected full replay is pending. Do not accept any numerical result until the new identity gate passes, all CSV counts read back and the reports are updated. The next possible step is to inspect discrete/continuous ratio changes and quantify how much of the finite-record difference comes from the terminal state, then extend to additional morphology holdouts only if justified.
 
 ## Scientific limits
 
