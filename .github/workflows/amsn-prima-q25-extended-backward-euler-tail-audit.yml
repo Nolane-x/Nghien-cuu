@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/amsn-prima-q25-extended-backward-euler-tail-audit.yml"
       - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
+      - "amsn-core/research/hines_be_kernel.c"
       - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
       - "amsn-core/tests/test_prima_q25_extended_backward_euler.py"
       - "amsn-core/src/amsn/cable.py"
@@ -25,7 +26,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-extended-backward-euler-tail-audit-hines-triangular
+  group: amsn-prima-q25-extended-backward-euler-tail-audit-hines-c-kernel
   cancel-in-progress: false
 
 jobs:
@@ -57,6 +58,8 @@ jobs:
           echo "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023  data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc" | sha256sum --check -
           test -s results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv
           test -s results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv
+      - name: Verify C compiler for exact-order Hines kernel
+        run: cc --version
       - name: Run extended backward-Euler audit tests
         working-directory: amsn-core
         run: python -m pytest -q tests/test_prima_q25_extended_backward_euler.py
