@@ -91,6 +91,6 @@ def test_matched_shared_requires_complete_pair_coverage():
         MODULE.build_matched_shared_rows(rows, [1], expected_count=2)
 
 
-def test_peng_source_and_complete_axon_holdout_metadata_are_pinned():
+def test_tamas_source_and_measured_diameter_metadata_are_pinned():
     assert MODULE.EXPECTED_SWC_RECORDS == 7228
     assert MODULE.EXPECTED_SWC_SHA256 == "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
