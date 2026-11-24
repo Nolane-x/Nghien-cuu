@@ -15,6 +15,19 @@ from scipy import __version__ as SCIPY_VERSION
 import audit_prima_q25_extended_backward_euler as audit
 
 
+def test_archived_parity_uses_absolute_percentage_point_floor():
+    archived = 1.0e-8
+    within_cross_run_floor = 3.1e-8
+    outside_cross_run_floor = 5.1e-8
+
+    assert within_cross_run_floor <= audit.ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
+    assert outside_cross_run_floor > audit.ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
+    # A tiny archived residual can make the relative delta large even though
+    # the absolute NRMSE percentage-point delta stays inside the validated floor.
+    relative_delta_pct = 100.0 * within_cross_run_floor / archived
+    assert relative_delta_pct > 100.0
+
+
 def test_expected_extended_window_coverage():
     assert audit.expected_counts() == {
         "windows_ms": 4,
