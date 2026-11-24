@@ -1,0 +1,135 @@
+{
+  "exact_coverage": {
+    "band_energy_rows": 6048,
+    "band_summary_rows": 96,
+    "by_output_summary_rows": 168,
+    "by_source_summary_rows": 12,
+    "comparison_summary_rows": 84,
+    "expected": {
+      "band_energy_rows": 6048,
+      "band_summary_rows": 96,
+      "by_output_summary_rows": 168,
+      "by_source_summary_rows": 12,
+      "comparison_summary_rows": 84,
+      "frequency_points": 1001,
+      "model_weighted_rows": 1512,
+      "transient_bridge_rows": 756
+    },
+    "model_weighted_rows": 1512,
+    "transient_bridge_rows": 756
+  },
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 100.22970891900002
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "Pulse-weighted transfer error integrates continuous-time AC transfer residuals against the squared Fourier magnitude of a rectangular input pulse using Parseval weighting.",
+    "This spectral proxy is not an exact reproduction of the finite-duration, finite-dt backward-Euler transient simulator; onset changes phase but not the power weighting.",
+    "Only two individual passive linear-RC morphologies are compared; they are not populations.",
+    "Large ratios can occur when the seven-port denominator is extremely small; absolute weighted errors and transient NRMSE are kept beside ratios.",
+    "No biological, active-neuron or production-default claim is made; full Hines remains canonical."
+  ],
+  "scope": {
+    "basis_order": 168,
+    "frequency_bands_hz": [
+      {
+        "max": 100.0,
+        "min": 0.0,
+        "name": "0_100_Hz"
+      },
+      {
+        "max": 500.0,
+        "min": 100.0,
+        "name": "100_500_Hz"
+      },
+      {
+        "max": 2000.0,
+        "min": 500.0,
+        "name": "500_2000_Hz"
+      },
+      {
+        "max": 5000.0,
+        "min": 2000.0,
+        "name": "2000_5000_Hz"
+      }
+    ],
+    "frequency_grid_hz": {
+      "maximum": 5000.0,
+      "minimum": 0.0,
+      "points": 1001,
+      "step": 5.0
+    },
+    "layouts": [
+      "seven",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_spectral_weight": "|I(f)|^2 = (I0*T*sinc(f*T))^2",
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "time_domain_dt_ms_for_reference": 0.1
+  },
+  "status": "prima_q25_pulse_weighted_transfer_bridge_passed"
+}
