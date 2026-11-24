@@ -1,0 +1,120 @@
+{
+  "dual_q25_order168_by_source": [
+    {
+      "basis_order": 168,
+      "better_pairs": 67,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 1.0005500456390843,
+      "median_output_group_ratio": 0.9987764062556119,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 1.0004441338898085,
+      "source_name": "apical_q75",
+      "tie_pairs": 0,
+      "worse_pairs": 59
+    },
+    {
+      "basis_order": 168,
+      "better_pairs": 58,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 1.0088781910837286,
+      "median_output_group_ratio": 1.0004921181450634,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 1.0060217009392498,
+      "source_name": "basal_q75",
+      "tie_pairs": 0,
+      "worse_pairs": 68
+    },
+    {
+      "basis_order": 168,
+      "better_pairs": 39,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 1.1403157032629263,
+      "median_output_group_ratio": 1.0220585856294737,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 1.1099938050885991,
+      "source_name": "soma",
+      "tie_pairs": 0,
+      "worse_pairs": 87
+    },
+    {
+      "basis_order": 168,
+      "better_pairs": 27,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 3.7264767234018885,
+      "median_output_group_ratio": 1.846760991644182,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 2.831836261584228,
+      "source_name": "apical_q75",
+      "tie_pairs": 0,
+      "worse_pairs": 99
+    },
+    {
+      "basis_order": 168,
+      "better_pairs": 0,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 83.43684718424109,
+      "median_output_group_ratio": 69.370142865509,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 80.3635462458809,
+      "source_name": "basal_q75",
+      "tie_pairs": 0,
+      "worse_pairs": 126
+    },
+    {
+      "basis_order": 168,
+      "better_pairs": 0,
+      "layout_id": "nine_both_q25",
+      "matched_pairs": 126,
+      "max_output_group_ratio": 113.56114869168479,
+      "median_output_group_ratio": 92.50931835056166,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "output_ports": 7,
+      "p90_output_group_ratio": 104.72312376248007,
+      "source_name": "soma",
+      "tie_pairs": 0,
+      "worse_pairs": 126
+    }
+  ],
+  "exact_coverage": {
+    "matched_rows_per_morphology": 2268,
+    "matched_rows_total": 4536,
+    "output_groups": 252,
+    "source_groups": 36,
+    "worst_output_groups": 50
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is a post-processing summary of validated matched passive transient NRMSE pairs; it does not rerun the solver.",
+    "Error ratios use the seven-port NRMSE as denominator; when that baseline is extremely small, ratios may look large while absolute NRMSE remains tiny.",
+    "Only two individual morphology reconstructions are compared; they are not species or cell-class populations.",
+    "The summaries localize input-source/output-port patterns but do not establish a causal biological or numerical mechanism.",
+    "Full Hines remains the reference and no production defaults are changed."
+  ],
+  "sources": [
+    {
+      "input_path": "/home/runner/work/Nghien-cuu/Nghien-cuu/amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv",
+      "matched_rows": 2268,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "neuromorpho_id": "NMO_163775",
+      "species_or_class": "mouse"
+    },
+    {
+      "input_path": "/home/runner/work/Nghien-cuu/Nghien-cuu/amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv",
+      "matched_rows": 2268,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "neuromorpho_id": "NMO_107159",
+      "species_or_class": "human pyramidal comparison cell"
+    }
+  ],
+  "status": "prima_q25_cross_morphology_source_output_map_passed"
+}

@@ -1,0 +1,66 @@
+name: Cross-morphology PRIMA q25 source-output residual map
+
+on:
+  push:
+    branches:
+      - research/prima-q25-source-output-cross-morphology-map-2026-11-24
+    paths:
+      - ".github/workflows/amsn-prima-q25-source-output-map.yml"
+      - "amsn-core/research/analyze_prima_q25_cross_morphology_source_output.py"
+      - "amsn-core/tests/test_prima_q25_cross_morphology_source_output.py"
+      - "amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv"
+      - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-source-output-map
+  cancel-in-progress: false
+
+jobs:
+  source-output-map:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install test dependency
+        run: python -m pip install pytest
+      - name: Verify matched transient inputs
+        run: |
+          test -s amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv
+          test -s amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv
+      - name: Run source-output aggregation tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_prima_q25_cross_morphology_source_output.py
+      - name: Build cross-morphology source-output map
+        working-directory: amsn-core
+        run: python research/analyze_prima_q25_cross_morphology_source_output.py
+      - name: Commit source-output maps
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/prima_q25_source_output_cross_morphology_2026-11-24_*.csv \
+                  amsn-core/results/prima_q25_source_output_cross_morphology_2026-11-24_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive q25 source-output cross-morphology map"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve source-output evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-source-output-cross-morphology
+          path: |
+            amsn-core/results/prima_q25_source_output_cross_morphology_2026-11-24_*.csv
+            amsn-core/results/prima_q25_source_output_cross_morphology_2026-11-24_report.json
+          if-no-files-found: warn
+          retention-days: 90
