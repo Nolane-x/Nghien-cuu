@@ -76,8 +76,8 @@ def test_vectorized_tree_hines_step_matches_canonical_cable_step():
         PassiveParameters(),
     )
     factor = audit.build_tree_hines_be_factor(tree, audit.DT_S)
-    state = np.zeros((tree.n_compartments, 6), dtype=float)
     leak = tree.parameters.e_leak_v
+    state = np.full((tree.n_compartments, 6), leak, dtype=float)
     for step in range(23):
         current = np.zeros_like(state)
         if 2 <= step < 11:
@@ -93,10 +93,10 @@ def test_vectorized_tree_hines_step_matches_canonical_cable_step():
         observed = audit.tree_hines_backward_euler_step(factor, state, current)
         expected = np.column_stack([
             tree.step_passive(
-                leak + state[:, column],
+                state[:, column],
                 audit.DT_S,
                 current[:, column],
-            ) - leak
+            )
             for column in range(state.shape[1])
         ])
         np.testing.assert_allclose(observed, expected, rtol=2e-11, atol=2e-16)
