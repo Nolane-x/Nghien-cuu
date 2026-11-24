@@ -60,4 +60,4 @@ Earlier CI attempts exposed fixture-schema and fixture-coverage mistakes: the te
 
 ## Limits and next step
 
-The 0.025-ms run is a numerical reference, not an analytic solution. Only two passive morphologies. After CI, inspect timestep sensitivity separately for absolute model error and nine/seven ratio; do not change production defaults based on this limited study.
+The 0.025-ms run is a numerical reference, not an analytic solution. Only two passive morphologies. Next, extend the reference to 0.0125 ms and compare 0.05/0.025/0.0125-ms Hines traces at common sample times; recompute q25 ratios at 0.0125 ms. Do not change production defaults based on this limited study.
