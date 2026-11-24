@@ -23,6 +23,19 @@ def test_frequency_grid_covers_dc_through_nyquist_and_known_zeros():
     assert 100.0 in f and 500.0 in f and 1000.0 in f
 
 
+def test_shared_transient_output_node_maps_are_exactly_seven_ports():
+    assert len(pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_163775_Peng_mouse_Control"]) == 7
+    assert pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_163775_Peng_mouse_Control"] == {
+        1, 144, 3926, 3948, 4104, 4180, 40,
+    }
+    assert len(pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_107159_Tamas_human_pyramidal_Control"]) == 7
+    assert pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_107159_Tamas_human_pyramidal_Control"] == {
+        1, 6363, 4735, 5564, 7023, 4301, 4623,
+    }
+    assert 6609 not in pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_107159_Tamas_human_pyramidal_Control"]
+    assert 4404 not in pulse.TRANSIENT_SHARED_OUTPUT_IDS["NMO_107159_Tamas_human_pyramidal_Control"]
+
+
 def test_expected_pulse_weighted_transfer_coverage():
     assert pulse.expected_counts() == {
         "frequency_hz": len(pulse.FREQUENCIES_HZ),
