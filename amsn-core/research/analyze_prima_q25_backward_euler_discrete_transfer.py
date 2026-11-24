@@ -761,9 +761,6 @@ def main() -> None:
                                 model_identity_errors.append(max(
                                     full_identity_rel, reduced_identity_rel
                                 ))
-                                model_identity_absolute_errors.extend((
-                                    full_identity_abs, reduced_identity_abs, error_identity_abs
-                                ))
 
                                 actual_error_fft = reduced_y_fft - full_y_fft
                                 transfer_component = (
@@ -785,6 +782,7 @@ def main() -> None:
                                 max_identity_absolute_error = max(
                                     max_identity_absolute_error, error_identity_abs
                                 )
+                                model_identity_absolute_errors.append(error_identity_abs)
                                 weights = one_sided
                                 actual_error_norm = math.sqrt(float(np.sum(
                                     weights * np.square(np.abs(actual_error_fft))
