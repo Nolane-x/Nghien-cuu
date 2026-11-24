@@ -1,0 +1,158 @@
+{
+  "exact_coverage": {
+    "archived_20ms_parity_rows": 1512,
+    "band_comparison_rows": 12096,
+    "band_energy_rows": 24192,
+    "comparison_band_summary_rows": 192,
+    "csv_read_back": {
+      "archived_20ms_parity_rows": 1512,
+      "band_comparison_rows": 12096,
+      "band_energy_rows": 24192,
+      "comparison_band_summary_rows": 192,
+      "layout_band_summary_rows": 384
+    },
+    "expected": {
+      "archived_20ms_parity_rows": 1512,
+      "band_comparison_rows": 12096,
+      "band_energy_rows": 24192,
+      "comparison_band_summary_rows": 192,
+      "layout_band_summary_rows": 384,
+      "trace_rows": 6048
+    },
+    "layout_band_summary_rows": 384,
+    "trace_rows": 6048
+  },
+  "method": {
+    "band_energy": "sum(weight * abs(rfft(error))**2) / sample_count",
+    "bands_hz": [
+      {
+        "maximum": 100.0,
+        "minimum": 0.0,
+        "name": "0_100_hz",
+        "upper_edge_inclusive": false
+      },
+      {
+        "maximum": 500.0,
+        "minimum": 100.0,
+        "name": "100_500_hz",
+        "upper_edge_inclusive": false
+      },
+      {
+        "maximum": 2000.0,
+        "minimum": 500.0,
+        "name": "500_2000_hz",
+        "upper_edge_inclusive": false
+      },
+      {
+        "maximum": 5000.0,
+        "minimum": 2000.0,
+        "name": "2000_5000_hz",
+        "upper_edge_inclusive": true
+      }
+    ],
+    "not_a_transfer_proxy": "decomposition of simulated finite-window output error, not a continuous-time transfer approximation",
+    "parseval": "one-sided rFFT; DC and Nyquist weight 1, interior bins weight 2",
+    "transform": "real DFT of actual finite-window sampled backward-Euler output-error traces"
+  },
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 87.89901222399999
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "Exact finite-window decomposition of simulated output-error samples, not a frequency-response reconstruction.",
+    "DFT frequency resolution changes with the observation window.",
+    "Only two individual passive linear-RC morphologies are included; they are not populations.",
+    "Large ratios can arise when seven-port band errors are very small; absolute band NRMSE and energy shares are retained.",
+    "Full Hines remains canonical. No production solver code or defaults are changed.",
+    "No active-neuron, synaptic, plasticity or biological validation is claimed."
+  ],
+  "scope": {
+    "basis_order": 168,
+    "dt_ms": 0.1,
+    "layouts": [
+      "seven",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "nyquist_hz": 5000.0,
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0,
+      100.0,
+      200.0
+    ]
+  },
+  "status": "prima_q25_discrete_time_error_spectrum_passed",
+  "validation": {
+    "archived_20ms_absolute_tolerance_pct_points": 5e-08,
+    "max_archived_20ms_absolute_delta_pct_points": 3.0818710679657265e-08,
+    "max_archived_20ms_relative_delta_pct": 21.214578179870866,
+    "max_parseval_absolute_error_v2_samples": 1.8055593228630336e-35,
+    "max_parseval_relative_error": 1.0416081604643047e-15,
+    "parseval_relative_tolerance": 5e-12
+  }
+}
