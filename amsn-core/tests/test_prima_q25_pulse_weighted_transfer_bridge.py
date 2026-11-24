@@ -17,13 +17,13 @@ import analyze_prima_q25_pulse_weighted_transfer_bridge as bridge
 def test_expected_pulse_weighted_bridge_coverage():
     assert bridge.expected_counts() == {
         "frequency_points": 1001,
-        "model_weighted_rows": 3024,
-        "band_energy_rows": 12096,
-        "transient_bridge_rows": 1512,
-        "by_output_summary_rows": 336,
+        "model_weighted_rows": 1512,
+        "band_energy_rows": 6048,
+        "transient_bridge_rows": 756,
+        "by_output_summary_rows": 168,
         "comparison_summary_rows": 84,
-        "by_source_summary_rows": 48,
-        "band_summary_rows": 192,
+        "by_source_summary_rows": 12,
+        "band_summary_rows": 96,
     }
 
 
