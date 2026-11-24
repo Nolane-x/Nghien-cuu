@@ -13,3 +13,5 @@ Seven candidate shared SWC ports: [1,5564,6363,7023,4301,4735,4623]. q25 probes:
 The matched 7/9-port order112/order168 matrix mirrors the prior holdouts and uses 0.5 µm segment cap, same as Peng NMO_163775. Earlier human runs used0.125 µm, so absolute cross-morphology errors require mesh harmonization.
 
 Workflow 45314100588 passed full regression, source/metadata tests, SHA-256 and Import3D preflight. Numerical replay pending when this log was written. No production defaults or canonical Hines behavior changed.
+
+Official NeuroMorpho morphometry (API `/api/morphometry/id/107159`): total length 12,320.7 µm; mean diameter 0.285193 µm; 61 bifurcations; 126 branches; 4 stems; max path distance 1,662.83 µm; max Euclidean distance 1,420.16 µm; width 777.889 µm, height 1,595.1 µm, depth 91.47 µm; surface 9,693.02 µm²; volume 1,624.96 µm³. These are repository morphometry measurements/derived descriptors; passive membrane and axial parameters remain separate model assumptions.
