@@ -26,7 +26,7 @@ The onset phase has unit magnitude and cancels in an energy ratio. The 5 kHz max
 - 168 weighted-output summaries; 24 weighted-source summaries.
 - 756 dual-q25-vs-seven/time-domain paired rows.
 - 12 source/pulse summaries.
-- 1,006 spectrum sample rows (503 frequencies × 2 pulse widths).
+- 1,038 spectrum sample rows (519 frequencies × 2 pulse widths).
 
 ## Files created
 
