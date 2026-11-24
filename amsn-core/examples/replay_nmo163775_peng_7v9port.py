@@ -34,7 +34,6 @@ ORDERS = (112, 168)
 SHIFTS = (0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0)
 STRATEGY = "extended_10khz"
 PORT_COUNTS = (7, 9)
-EXPECTED_Q25_NODE_IDS = (224, 4096)
 FREQUENCIES_HZ = (0.1, 1.0, 10.0, 100.0, 300.0, 1000.0, 3000.0, 6000.0, 10000.0)
 SOURCE_NAMES = ("soma", "basal_q75", "apical_q75")
 PULSE_WIDTHS_MS = (2.0, 10.0)
@@ -345,9 +344,11 @@ def main():
     layouts, common_node_ids, q25_extra_node_ids = build_port_layouts(
         morphology, reader, sections, base
     )
-    if tuple(sorted(q25_extra_node_ids)) != (224, 4096):
+    preflight_q25_ids = tuple(sorted(preflight.get("amsn", {}).get("q25_only_swc_node_ids", [])))
+    if len(preflight_q25_ids) != 2 or tuple(sorted(q25_extra_node_ids)) != preflight_q25_ids:
         raise RuntimeError(
-            f"Peng q25 node IDs changed: observed {sorted(q25_extra_node_ids)}, expected [224, 4096]"
+            f"Peng q25 node IDs differ from preflight: observed {sorted(q25_extra_node_ids)}, "
+            f"preflight={preflight_q25_ids}"
         )
     base_parameters = base.parameters
 
@@ -622,7 +623,7 @@ def main():
             "sex": "Male/Female",
             "brain_region": "somatosensory neocortex, layer 2-3",
             "physical_integrity": "dendrites and axon complete; morphological attributes: No Diameter",
-            "expected_q25_swc_node_ids": list(EXPECTED_Q25_NODE_IDS),
+            "expected_q25_swc_node_ids": q25_extra_node_ids,
         },
         "protocol": {
             "orders": list(ORDERS),
