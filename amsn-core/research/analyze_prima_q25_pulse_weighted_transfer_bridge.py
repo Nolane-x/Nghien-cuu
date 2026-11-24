@@ -92,12 +92,22 @@ def expected_counts() -> dict[str, int]:
     }
 
 
-def validate_frequency_grid(frequencies: np.ndarray) -> None:
+def validate_frequency_grid(
+    frequencies: np.ndarray,
+    *,
+    require_full_grid: bool = False,
+) -> None:
     values = np.asarray(frequencies, dtype=float)
-    require(values.ndim == 1 and values.size == 1001, "expected 1,001 frequency points")
-    require(values[0] == 0.0 and values[-1] == 5000.0, "frequency endpoints mismatch")
+    require(values.ndim == 1 and values.size >= 2, "frequency grid must be a vector")
+    require(np.all(np.isfinite(values)), "frequency grid must be finite")
+    require(values[0] >= 0.0 and np.all(np.diff(values) > 0.0),
+            "frequency grid must be non-negative and strictly increasing")
     require(np.allclose(np.diff(values), 5.0, rtol=0.0, atol=1e-12),
             "frequency grid must use 5-Hz spacing")
+    if require_full_grid:
+        require(values.size == 1001, "expected 1,001 frequency points")
+        require(values[0] == 0.0 and values[-1] == 5000.0,
+                "frequency endpoints mismatch")
 
 
 def batched_hines_frequency_response(
@@ -471,6 +481,7 @@ def summarize_rows(
 
 
 def main() -> None:
+    validate_frequency_grid(FREQUENCIES_HZ, require_full_grid=True)
     started = time.perf_counter()
     results_dir = Path(__file__).parents[1] / "results"
     model_rows: list[dict[str, Any]] = []
