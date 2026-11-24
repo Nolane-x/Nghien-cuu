@@ -38,6 +38,11 @@ MORPHOLOGIES = (
         ),
         "neuromorpho_id": "NMO_163775",
         "species_label": "mouse",
+        "expected_outputs": {
+            1: "soma", 144: "basal_q75", 3926: "apical_q75",
+            4180: "apical_q90", 40: "basal_q90", 4104: "apical_q50",
+            3948: "basal_q50",
+        },
     },
     {
         "name": "NMO_107159_Tamas_human_pyramidal_Control",
@@ -47,6 +52,11 @@ MORPHOLOGIES = (
         ),
         "neuromorpho_id": "NMO_107159",
         "species_label": "human pyramidal comparison cell",
+        "expected_outputs": {
+            1: "soma", 6363: "basal_q75", 4735: "apical_q75",
+            5564: "basal_q50", 7023: "basal_q90", 4301: "apical_q50",
+            4623: "apical_q90",
+        },
     },
 )
 REQUIRED_COLUMNS = {
@@ -72,7 +82,11 @@ def expected_counts() -> dict[str, int]:
     }
 
 
-def load_rows(path: Path, morphology_name: str) -> list[dict[str, Any]]:
+def load_rows(
+    path: Path,
+    morphology_name: str,
+    expected_outputs: dict[int, str],
+) -> list[dict[str, Any]]:
     require(path.is_file(), f"missing matched-pair input: {path}")
     rows: list[dict[str, Any]] = []
     with path.open("r", newline="", encoding="utf-8") as handle:
@@ -110,6 +124,21 @@ def load_rows(path: Path, morphology_name: str) -> list[dict[str, Any]]:
             rows.append(row)
     require(len(rows) == EXPECTED_ROWS_PER_MORPHOLOGY,
             f"{morphology_name}: {len(rows)} matched rows != {EXPECTED_ROWS_PER_MORPHOLOGY}")
+    observed_outputs = {
+        (int(row["port_swc_id"]), row["port_roles"]) for row in rows
+    }
+    expected_output_pairs = set(expected_outputs.items())
+    require(observed_outputs == expected_output_pairs,
+            f"{morphology_name}: shared output node/role set differs from pinned seven-port map")
+    expected_port_counts = {
+        "eight_basal_q25": 8,
+        "eight_apical_q25": 8,
+        "nine_both_q25": 9,
+    }
+    require(
+        all(int(row["port_count"]) == expected_port_counts[row["layout_id"]] for row in rows),
+        f"{morphology_name}: candidate port count does not match layout",
+    )
     return rows
 
 
@@ -234,7 +263,7 @@ def main() -> None:
     all_rows: list[dict[str, Any]] = []
     source_manifest = []
     for spec in MORPHOLOGIES:
-        rows = load_rows(spec["path"], spec["name"])
+        rows = load_rows(spec["path"], spec["name"], spec["expected_outputs"])
         validate_unique_pair_identities(rows)
         all_rows.extend(rows)
         source_manifest.append({
