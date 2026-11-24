@@ -11,11 +11,11 @@ from pathlib import Path
 import numpy as np
 
 ROOT = Path(__file__).parents[1]
-SWC = ROOT / "data" / "mouse" / "neuromorpho_jacobs" / "NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
+SWC = ROOT / "data" / "mouse" / "neuromorpho_peng" / "NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
 EXPECTED_NODE_COUNT = 4209
 EXPECTED_TYPE_COUNTS = {1: 3, 2: 3602, 3: 306, 4: 298}
 LABEL = "NMO_163775_PengControl"
-SOURCE_URL = "https://neuromorpho.org/dableFiles/jacobs/CNG%20version/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
+SOURCE_URL = "https://neuromorpho.org/dableFiles/peng/CNG%20version/18453_5766_x31719_y6139-semi_r.CNG.swc"
 METADATA_URL = "https://neuromorpho.org/neuron_info.jsp?neuron_name=18453_5766_x31719_y6139-semi_r"
 
 
@@ -141,19 +141,19 @@ def main() -> None:
             "cell_name": "18453_5766_x31719_y6139-semi_r",
             "archive": "Peng",
             "species": "mouse",
-            "age_days": 23,
-            "sex": "male/female",
+            "age_days": 56,
+            "sex": "Male/Female",
             "experimental_condition": "Control",
             "primary_region": "neocortex",
             "secondary_region": "somatosensory",
             "tertiary_region": "layer 2-3",
             "cell_class": "principal cell, pyramidal, projection, Intratelencephalic (IT)",
             "structural_domains": ["dendrites", "soma", "axon"],
-            "physical_integrity": "dendrites and axon complete; morphology metadata says No Diameter",
-            "protocol": "in vitro, whole mount",
+            "physical_integrity": "Dendrites & Axon Complete; morphological attributes: No Diameter",
+            "protocol": "in vitro; whole mount",
             "staining": "green fluorescent protein",
-            "slice_thickness_um": null,
-            "reference_article": "Life-span dendritic and spine changes in areas 10 and 18 of mouse cortex: a quantitative Golgi study",
+            "slice_thickness_um": None,
+            "reference_article": "Brain-wide single neuron reconstruction reveals morphological diversity in molecularly defined striatal, thalamic, cortical and claustral neuron types",
             "source_url": SOURCE_URL,
             "metadata_url": METADATA_URL,
             "source_sha256": digest,
