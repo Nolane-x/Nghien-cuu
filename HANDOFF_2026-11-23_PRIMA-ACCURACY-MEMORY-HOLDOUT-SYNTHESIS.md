@@ -22,7 +22,7 @@ This report synthesizes shift/order accuracy, equal-order port-count behavior, t
 
 - Keep full Hines canonical.
 - Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate; extended10kHz is supported on both the NMO_162186 epilepsy and NMO_03524 Control holdouts.
-- Treat port count/order as morphology-dependent and evaluate absolute error as well as ratios. NMO_162186 required order168 to restore nine-port parity; NMO_03524 was already at parity at order112; NMO_163775 showed median 9/7 ratios 78.05× / 14.50× at orders112/168, but absolute nine-port shared NRMSE remained <2.0e−4% / <6.1e−7%. See PRs #13, #15 and #16.
+- Treat port count/order as morphology-dependent and evaluate absolute error as well as ratios. NMO_162186 required order168 to restore nine-port parity; NMO_03524 was near parity at both orders; NMO_163775 had high relative ratios but small absolute errors; NMO_107159 showed 42.72× at order112 and near parity at order168 (1.001×). See PRs #13, #15, #16 and #17.
 - Treat 7-port order84 extended10kHz as a good accuracy/storage compromise on the NMO_03524 Control holdout; order84 remains the lower-memory region in the separate resource matrix.
 - Do not change production defaults.
 
@@ -76,3 +76,12 @@ Coverage: 36 models, 324 AC, 1,728 transient, 756 shared pairs, 216 q25, 378 exa
 At order112, nine-port was worse on all 378 pairs; median 9/7 error ratio 78.051×, but maximum absolute nine-port shared NRMSE was 0.0001933%. At order168, 347 worse / 31 better; median ratio 14.501× and maximum absolute nine-port shared NRMSE 6.0657e−7%. q25 maximum NRMSE was 2.1588e−4% at order112 and 4.2824e−7% at order168.
 
 Important: this Peng morphology uses 0.5 µm mesh and NeuroMorpho marks No Diameter, so it expands the structural-completeness context but does not provide diameter-grounded biology. The two earlier human holdouts used 0.125 µm; absolute cross-morphology error comparisons are not directly comparable. Full Hines remains canonical; no production defaults change.
+
+
+## Fourth matched morphology now complete — NMO_107159 Tamas human pyramidal comparator
+
+PR #17 / [run 45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588) passed. Artifact [#14884183988](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588/artifacts/14884183988), ZIP SHA-256 \`b01bbce48bc62931c10b78f5a97a8e334f26bd0ea186ede6335a92484b8d3808\`.
+
+Coverage:36 models,324 AC,1,728 transient,756 shared pairs,216 q25 observations,378 exact Hines checks. All378 Hines traces were exactly equal. At order112, 9-port was worse on all378 pairs; median ratio42.718×, max absolute nine-port shared NRMSE3.9507e−5%. At order168,214 pairs worse/164 better, median ratio1.00102×, max absolute nine-port shared NRMSE5.4559e−7%. q25 max NRMSE3.5323e−5% at112 and2.3679e−7% at168.
+
+NMO_107159 is a human female Control pyramidal comparison cell with Dendrites & Axon Complete and Diameter/3D/Angles metadata; it is not a rosehip interneuron. The run uses0.5 µm mesh, same as Peng NMO_163775; earlier human NMO_162186/NMO_03524 runs use0.125 µm. Absolute cross-morphology error comparisons need mesh harmonization.
