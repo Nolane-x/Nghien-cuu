@@ -69,6 +69,14 @@ TRANSIENT_STEMS = {
     ),
 }
 
+# The 9-port transient file also contains two q25-only output rows. The
+# spectral bridge compares only the seven exact SWC outputs shared with
+# the canonical 7-port model, so pin and filter these node IDs explicitly.
+TRANSIENT_SHARED_OUTPUT_IDS = {
+    "NMO_163775_Peng_mouse_Control": frozenset((1, 144, 3926, 3948, 4104, 4180, 40)),
+    "NMO_107159_Tamas_human_pyramidal_Control": frozenset((1, 6363, 4735, 5564, 7023, 4301, 4623)),
+}
+
 
 def require(condition: bool, message: str) -> None:
     if not condition:
@@ -144,10 +152,13 @@ def load_transient_reference() -> dict[tuple, float]:
             for line, row in enumerate(reader, start=2):
                 if int(row["basis_order"]) != ORDER or row["layout_id"] not in LAYOUTS:
                     continue
+                output_node_id = int(row["port_swc_id"])
+                if output_node_id not in TRANSIENT_SHARED_OUTPUT_IDS[morphology_name]:
+                    continue
                 key = (
                     morphology_name, row["layout_id"], row["parameter_scenario"],
                     row["source_name"], float(row["pulse_width_ms"]),
-                    int(row["port_swc_id"]),
+                    output_node_id,
                 )
                 value = float(row["port_nrmse_pct"])
                 require(math.isfinite(value) and value >= 0.0,
