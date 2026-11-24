@@ -90,3 +90,22 @@ The high 9/7 ratios are relative to a very small seven-port baseline; use the ab
 The third morphology strengthens the morphology-dependent conclusion. Unlike the two earlier human fixtures it has complete arbors by repository metadata, but No Diameter and a 0.5 µm mesh cap (vs 0.125 µm for the human holdouts). Do not interpret this as diameter-grounded biological validation or pool absolute errors across different meshes. Full Hines remains canonical; no production defaults change.
 
 Source: [PR #16](https://github.com/Nolane-x/Nghien-cuu/pull/16), [run 45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600), [artifact #14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560).
+
+
+## Fourth matched morphology validated — NMO_107159 Tamas human pyramidal comparison
+
+PR #17 / workflow45314100588 passed full tests, checksum, Import3D, matched replay, exact coverage, commit and artifact upload. Artifact#14884183988; ZIP SHA-256 b01bbce48bc62931c10b78f5a97a8e334f26bd0ea186ede6335a92484b8d3808.
+
+NMO_107159: 7,228 SWC records, soma3, axon4,030, basal1,767, apical1,428; one root, no duplicate/missing parents; three-point soma. Metadata says female human, frontal neocortex layers1/2-3, principal pyramidal cell, Control/in vitro biocytin,70 µm slice, Dendrites & Axon Complete and Diameter/3D/Angles. This is the pyramidal comparison in Fig5C of the rosehip-cell study, not the rosehip interneuron.
+
+Preflight:7,222 electrical compartments,127 NEURON sections,24,737 segments, max0.49997753 µm under0.5 µm cap. Shared ports [1,6363,4735,5564,7023,4301,4623]; q25 basal6609/apical4404.
+
+Coverage:36 models,324 AC,1,728 transient,756 shared pairs,216 q25,378 Hines. All shared Hines traces exactly equal.
+
+Order112:9-port worse on all378; median9/7 ratio42.718×; max nine-port shared NRMSE3.9507e−5%. Order168:214 worse/164 better; median1.00102×; max NRMSE5.4559e−7%. q25 max NRMSE3.5323e−5% at112 and2.3679e−7% at168.
+
+Runtime322s wall,408.14s user,144,420 KiB peak RSS. Storage6.3625 MB at order112;9.6874 MB at168. Tamas and Peng both use0.5 µm mesh; two earlier human fixtures use0.125 µm.
+
+The fourth morphology reinforces morphology-dependent port-count cost. It also adds a diameter-recorded complete-axon human pyramidal reconstruction. Cross-morphology absolute errors must be interpreted with mesh differences; full Hines remains canonical and no production defaults change.
+
+Source: [PR #17](https://github.com/Nolane-x/Nghien-cuu/pull/17), [workflow45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588), [artifact#14884183988](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588/artifacts/14884183988).
