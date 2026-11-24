@@ -26,7 +26,7 @@ def test_frequency_grid_covers_dc_through_nyquist_and_known_zeros():
 def test_expected_pulse_weighted_transfer_coverage():
     assert pulse.expected_counts() == {
         "frequency_hz": len(pulse.FREQUENCIES_HZ),
-        "frequency_rows": 74088,
+        "frequency_rows": 380268,
         "weighted_output_rows": 1512,
         "weighted_summary_rows": 168,
         "weighted_source_summary_rows": 24,
