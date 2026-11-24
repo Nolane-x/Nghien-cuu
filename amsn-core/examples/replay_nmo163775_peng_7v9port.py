@@ -19,15 +19,15 @@ from pathlib import Path
 
 import numpy as np
 
-import mouse_fine_mesh_passive_dc_audit as fine_audit
-import mouse_prima_port_enrichment as port_enrichment
+import human_fine_mesh_passive_dc_audit as fine_audit
+import human_prima_port_enrichment as port_enrichment
 import neuron_cross_validation as reference
 from amsn.cable import CableTree, PassiveParameters
 from amsn.morphology import SWCMorphology
 from amsn.prima import prima_reduce_passive_cable_multishift
 
 LABEL = "NMO_163775_PengControl"
-SWC = Path("data/mouse/neuromorpho_jacobs/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc")
+SWC = Path("data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc")
 EXPECTED_SWC_RECORDS = 4209
 EXPECTED_SWC_SHA256 = "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
 ORDERS = (112, 168)
@@ -589,7 +589,7 @@ def main():
             })
 
     results_dir = Path(__file__).parents[1] / "results"
-    stem = "NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23"
+    stem = "NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24"
     outputs = {
         "models": model_rows,
         "frequency": frequency_rows,
@@ -616,12 +616,12 @@ def main():
             "preflight_sha256": preflight["source"]["source_sha256"],
             "electrical_compartments": base.n_compartments,
             "experimental_condition": "Control-condition mouse morphology; dendrites and axon complete; metadata says No Diameter",
-            "axon_complete": False,
-            "experimental_context": "single Peng archive Control-condition mouse Golgi pyramidal cell",
-            "age_days": 23,
-            "sex": "male",
+            "axon_complete": True,
+            "experimental_context": "single Peng archive Control-condition mouse GFP pyramidal IT projection cell",
+            "age_days": 56,
+            "sex": "Male/Female",
             "brain_region": "somatosensory neocortex, layer 2-3",
-            "physical_integrity": "dendrites moderate, axon complete",
+            "physical_integrity": "dendrites and axon complete; morphological attributes: No Diameter",
             "expected_q25_swc_node_ids": list(EXPECTED_Q25_NODE_IDS),
         },
         "protocol": {
@@ -656,7 +656,7 @@ def main():
             "This is a passive linear-RC numerical comparison against full Hines on one independent morphology with complete arbors by repository metadata.",
             "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds basal-q25 node 224 and apical-q25 node 4096 only.",
             "Orders 112 and 168 use identical six-shift extended-10kHz expansion frequencies for both port counts.",
-            "The morphology is one mouse Control-condition Peng specimen in occipital BA18; dendrites are rated moderate and the axon complete, so it is not a representative mouse population.",
+            "The morphology is one mouse Control-condition Peng specimen in somatosensory neocortex layer 2-3; dendrites and axon are marked complete by NeuroMorpho, so it is not a representative mouse population.",
             "The comparison does not establish active-channel, nonlinear-synapse, plasticity or biological validity.",
             "No production order default, canonical Hines reference or runtime behavior is modified. NeuroMorpho lists No Diameter; do not interpret standardized SWC radii as measured biological diameters.",
         ],
