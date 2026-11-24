@@ -75,6 +75,7 @@ def test_metadata_remains_control_and_complete_axon():
     assert "Tamas" in MODULE.SOURCE_URL
     assert MODULE.METADATA_URL.endswith("Fig5c_141009_2og_B")
     assert MODULE.EXPECTED_SEVEN_PORT_IDS == {1, 5564, 6363, 7023, 4301, 4735, 4623}
+    assert MODULE.METADATA_URL.endswith("Fig5c_141009_2og_B")
 
 
 
