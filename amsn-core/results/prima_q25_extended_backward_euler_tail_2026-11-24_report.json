@@ -18,13 +18,13 @@
     },
     "extended_transient_rows": 6048,
     "layout_window_summary_rows": 32,
-    "max_20ms_archived_absolute_delta_pct_points": 1.7048480402787647e-10,
-    "max_20ms_archived_relative_delta_pct": 14.202384882127932,
+    "max_20ms_archived_absolute_delta_pct_points": 3.0818710679657265e-08,
+    "max_20ms_archived_relative_delta_pct": 21.214578179870866,
     "window_summary_rows": 16
   },
   "parity_gate": {
-    "max_absolute_delta_pct_points": 1.7048480402787647e-10,
-    "max_relative_delta_pct": 14.202384882127932,
+    "max_absolute_delta_pct_points": 3.0818710679657265e-08,
+    "max_relative_delta_pct": 21.214578179870866,
     "rule": "absolute difference in 20-ms NRMSE percentage points",
     "tolerance_pct_points": 5e-08
   },
