@@ -14,4 +14,10 @@ The matched seven/nine-port order112/order168 replay is configured for six exten
 
 Critical interpretation guard: because NeuroMorpho marks No Diameter, the SWC radii cannot be called measured biological diameters. This is a passive topology/port-selection test under the repository's standardized geometry representation, not diameter-grounded biological validation.
 
-Checkpoint: 173/173 full-suite tests passed; 19/19 Peng-specific tests passed; checksum and Import3D preflight passed. Numerical replay pending at log creation. No production defaults or canonical Hines behavior changed.
+Validated run 45311916600: 173/173 full-suite tests passed; 19/19 Peng-specific tests passed; checksum and Import3D preflight passed; all 36 model builds and matched replay passed; 378 shared Hines traces were exactly identical; result archive and artifact upload passed. Artifact #14883752560; ZIP SHA-256 9060b04e6e769a1e9b40700197361bf67a59b164965441849e8cd3effb716a58.
+
+At order112, nine-port was worse on all 378 shared pairs, with median 9/7 error ratio 78.051×; maximum absolute nine-port shared NRMSE was 0.0001933%. At order168, nine-port was worse on 347/378 and better on 31, with median ratio 14.501×; maximum absolute nine-port shared NRMSE was 6.0657e−7%. These large ratios reflect a very small seven-port baseline; they must be interpreted alongside absolute errors.
+
+The q25-only nodes were basal 224 and apical 4096. q25 maximum NRMSE was 2.1588e−4% at order112 and 4.2824e−7% at order168. Coverage: 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations and 378 exact shared-Hines checks.
+
+Across the three morphology holdouts, the relative cost of q25 ports differs substantially. The evidence does not support a universal port-count/order rule. The Peng mesh cap is 0.5 µm (earlier human holdouts used 0.125 µm); NeuroMorpho marks No Diameter, so this is not diameter-grounded biological validation. No production defaults or canonical Hines behavior changed.
