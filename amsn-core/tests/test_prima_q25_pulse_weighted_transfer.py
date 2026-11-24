@@ -33,7 +33,7 @@ def test_expected_pulse_weighted_transfer_coverage():
         "vs_seven_paired_rows": 756,
         "vs_seven_source_summary_rows": 12,
         "transient_input_rows": 1512,
-        "pulse_spectrum_sample_rows": 196,
+        "pulse_spectrum_sample_rows": 1006,
     }
 
 
