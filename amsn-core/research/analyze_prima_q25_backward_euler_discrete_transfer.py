@@ -412,7 +412,11 @@ def _finite_identity_error(
     reconstructed = np.asarray(reconstructed_fft, dtype=np.complex128)
     diff_norm = float(np.linalg.norm(reconstructed - actual))
     reference_norm = float(np.linalg.norm(actual))
-    denominator = max(reference_norm, float(scale_norm) * 1e-12, 1e-30)
+    supplied_scale = float(scale_norm)
+    denominator = (
+        supplied_scale if np.isfinite(supplied_scale) and supplied_scale > 0.0
+        else max(reference_norm, 1e-30)
+    )
     return diff_norm / denominator, diff_norm
 
 
@@ -531,6 +535,8 @@ def main() -> None:
     ] = defaultdict(list)
     morphology_manifest = []
     max_identity_relative_error = 0.0
+    max_model_identity_relative_error = 0.0
+    max_finite_error_identity_relative_error = 0.0
     max_identity_absolute_error = 0.0
 
     for morph_spec in conditioning.MORPHOLOGIES:
@@ -728,6 +734,7 @@ def main() -> None:
                             full_y = full_trace[:sample_count, :, column]
                             reduced_y = reduced_trace[:sample_count, :, column]
                             model_identity_errors = []
+                            finite_error_identity_errors = []
                             model_identity_absolute_errors = []
                             for output_index, output_node in enumerate(common_ids):
                                 full_y_fft = np.fft.rfft(full_y[:, output_index])
@@ -749,6 +756,10 @@ def main() -> None:
                                 )
                                 reduced_identity_rel, reduced_identity_abs = _finite_identity_error(
                                     reduced_y_fft, reconstructed_reduced, scale_norm=reduced_y_norm
+                                )
+                                max_model_identity_relative_error = max(
+                                    max_model_identity_relative_error,
+                                    full_identity_rel, reduced_identity_rel,
                                 )
                                 max_identity_relative_error = max(
                                     max_identity_relative_error,
@@ -775,6 +786,11 @@ def main() -> None:
                                         actual_error_fft, reconstructed_error,
                                         scale_norm=max(full_y_norm, reduced_y_norm),
                                     )
+                                )
+                                finite_error_identity_errors.append(error_identity_rel)
+                                max_finite_error_identity_relative_error = max(
+                                    max_finite_error_identity_relative_error,
+                                    error_identity_rel,
                                 )
                                 max_identity_relative_error = max(
                                     max_identity_relative_error, error_identity_rel
@@ -877,7 +893,10 @@ def main() -> None:
                                 "pulse_width_ms": float(pulse_width_ms),
                                 "window_ms": float(window_ms),
                                 "shared_outputs": len(common_ids),
-                                "max_output_identity_relative_error": max(model_identity_errors),
+                                "max_output_model_identity_relative_error": max(model_identity_errors),
+                                "max_output_finite_error_identity_relative_error": max(
+                                    finite_error_identity_errors
+                                ),
                                 "max_output_absolute_identity_error_v_samples": max(
                                     model_identity_absolute_errors
                                 ),
@@ -890,6 +909,18 @@ def main() -> None:
             f"case metrics {len(metric_rows)} != {EXPECTED_CASE_METRIC_ROWS}")
     require(len(identity_rows) == EXPECTED_IDENTITY_ROWS,
             f"finite identity rows {len(identity_rows)} != {EXPECTED_IDENTITY_ROWS}")
+    identity_diagnostic_path = results_dir / f"{RESULT_STEM}_finite_dft_identity.csv"
+    _write_csv(identity_diagnostic_path, identity_rows)
+    identity_diagnostic_readback = _read_csv_rows(identity_diagnostic_path)
+    require(identity_diagnostic_readback == EXPECTED_IDENTITY_ROWS,
+            "finite DFT identity diagnostic read-back count mismatch")
+    print(json.dumps({
+        "finite_dft_identity_diagnostic_rows": identity_diagnostic_readback,
+        "max_model_identity_relative_error": max_model_identity_relative_error,
+        "max_finite_error_identity_relative_error": max_finite_error_identity_relative_error,
+        "max_identity_relative_error": max_identity_relative_error,
+        "identity_relative_tolerance": FINITE_IDENTITY_RELATIVE_TOLERANCE,
+    }, indent=2, allow_nan=False), flush=True)
 
     metric_index = {
         (
@@ -953,7 +984,6 @@ def main() -> None:
     _write_csv(output_paths["case_metrics"], metric_rows)
     _write_csv(output_paths["nine_seven_comparisons"], comparison_rows)
     _write_csv(output_paths["source_window_summary"], source_summary)
-    _write_csv(output_paths["finite_dft_identity"], identity_rows)
     readback = {
         name: _read_csv_rows(path) for name, path in output_paths.items()
     }
@@ -1031,6 +1061,9 @@ def main() -> None:
         },
         "validation": {
             "finite_identity_relative_tolerance": FINITE_IDENTITY_RELATIVE_TOLERANCE,
+            "identity_normalization": "output DFT L2 norm; finite-error identity is not divided by the much smaller inter-model residual norm",
+            "max_model_identity_relative_error": max_model_identity_relative_error,
+            "max_finite_error_identity_relative_error": max_finite_error_identity_relative_error,
             "max_finite_identity_relative_error": max_identity_relative_error,
             "max_finite_identity_absolute_error_v_samples": max_identity_absolute_error,
             "both_morphology_sha256_checked": True,
