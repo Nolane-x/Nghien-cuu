@@ -115,4 +115,87 @@ See [NeuroMorpho terms of use](https://neuromorpho.org/useterm.jsp).
 
 ## Validation checkpoint
 
-The current GitHub Actions run [45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588) has passed the complete AMSN regression suite, the Tamas source/metadata guardrails, source SHA-256 verification and Import3D preflight. The matched numerical replay is still in progress. No numerical 7-port/9-port conclusion is claimed in this preflight report.
+The GitHub Actions run [45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588) passed the complete AMSN regression suite, Tamas source/metadata tests, source SHA-256 verification, Import3D preflight, matched replay, exact coverage, result commit and artifact upload. Validated numerical results are recorded below.
+
+
+## Validated matched-port results
+
+**Successful GitHub Actions run:** [45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588)  
+**Artifact:** [#14884183988](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588/artifacts/14884183988)  
+**Artifact ZIP SHA-256:** \`b01bbce48bc62931c10b78f5a97a8e334f26bd0ea186ede6335a92484b8d3808\`
+
+The full AMSN regression suite, Tamas-specific source/mapping tests, source checksum, Import3D preflight, matched replay, exact coverage, results commit and artifact upload all passed. The workflow completed successfully.
+
+Preflight:
+- 7,222 electrical compartments
+- 127 NEURON sections
+- 24,737 NEURON segments
+- Maximum observed segment length 0.49997753 µm under the 0.5 µm cap
+- Seven common SWC nodes: [1, 6363, 4735, 5564, 7023, 4301, 4623]
+- q25-only nodes: basal 6609, apical 4404
+
+Exact numerical coverage:
+- 36 reduced models
+- 324 AC frequency rows
+- 1,728 transient-port rows
+- 756 matched shared-output pairs
+- 216 q25-only observations
+- 378 shared-Hines checks
+
+All 36 models achieved their requested order and passed Cholesky checks. The 378 shared-Hines reference traces were exactly equal between port layouts: maximum absolute difference 0 V and maximum relative L2 difference 0%.
+
+### Shared-output comparison
+
+| Basis order | 9-port worse / better / tie | Median 9/7 error ratio | Maximum ratio | Maximum absolute 9-port shared NRMSE |
+|---:|---:|---:|---:|---:|
+| 112 | 378 / 0 / 0 | **42.718×** | 140.029× | 3.9507e−5% |
+| 168 | 214 / 164 / 0 | **1.00102×** | 4.373× | 5.4559e−7% |
+
+At order112, adding q25 probes consistently increases error on all seven shared outputs. At order168, the median 9/7 ratio is effectively 1.0, with 164 pairs improved and 214 degraded. Both models are extremely accurate in absolute terms: maximum shared-output NRMSE is below 4.0e−5% at order112 and 5.46e−7% at order168.
+
+### q25-only output accuracy
+
+| Basis order | Observations | Median q25 NRMSE | Maximum q25 NRMSE |
+|---:|---:|---:|---:|
+| 112 | 108 | 3.0201e−6% | 3.5323e−5% |
+| 168 | 108 | 2.4896e−8% | 2.3679e−7% |
+
+Both q25 probes are accurately represented at either order, with substantially lower errors at order168.
+
+### 10 kHz AC residuals and numeric storage
+
+| Port count | Order | Median Z residual | Maximum Z residual | Median Y residual | Maximum Y residual | Numeric storage |
+|---:|---:|---:|---:|---:|---:|---:|
+| 7 | 112 | 7.1967e−7% | 3.2187e−6% | 1.3984e−5% | 1.6948e−5% | 6.3625 MB |
+| 9 | 112 | 1.7339e−5% | 6.0449e−5% | 1.8783e−4% | 2.2165e−4% | 6.3625 MB |
+| 7 | 168 | 6.8793e−12% | 1.9317e−11% | 5.9280e−10% | 8.6152e−10% | 9.6874 MB |
+| 9 | 168 | 2.8131e−9% | 3.2578e−9% | 2.9439e−7% | 3.2752e−7% | 9.6874 MB |
+
+Numeric storage is basis plus reduced G/C matrices; at the same order it is identical for seven and nine ports in this implementation.
+
+### Runtime
+
+- Wall time: 322.00 s
+- User CPU: 408.14 s
+- System CPU: 0.22 s
+- Peak RSS: 144,420 KiB
+- Python 3.12.16, NumPy 2.5.5, NEURON 9.0.2
+
+This is a single hosted-run measurement, not a controlled performance benchmark.
+
+## Interpretation across the four morphology holdouts
+
+| Morphology | Context / structural caveat | Order112 median 9/7 ratio | Order168 median 9/7 ratio | Main observation |
+|---|---|---:|---:|---|
+| NMO_162186 | Human epilepsy surgical specimen; axon incomplete | 8.162× | 0.99999985× | Order168 restored shared-output parity |
+| NMO_03524 | Human Jacobs Control; dendrites moderate, axon incomplete | 1.00000465× | 0.99999991× | Near parity at both orders |
+| NMO_163775 | Mouse Peng Control; dendrites/axon complete by metadata; No Diameter | 78.051× | 14.501× | Relative penalty persists, but absolute errors remain very small |
+| NMO_107159 | Human Tamas Control pyramidal comparison cell; complete arbors and Diameter/3D/Angles | **42.718×** | **1.00102×** | Order168 restores near parity; q25 errors fall to 2.37e−7% maximum |
+
+This fourth holdout adds a diameter-recorded human pyramidal reconstruction with complete arbors. It reinforces the morphology-dependent pattern: order112 can impose a relative penalty when q25 ports are added, while order168 brings the shared outputs near parity on this cell. The absolute nine-port shared error is still very small at order112 (maximum 3.95e−5%).
+
+The Tamas run and Peng run both use a 0.5 µm NEURON segment cap, so those two complete-axon holdouts have a matched reference discretization. The first two human holdouts used 0.125 µm; do not pool their absolute errors or timings with the 0.5 µm runs without mesh harmonization.
+
+This is one human pyramidal comparison reconstruction, not a population sample. The source article concerns rosehip interneurons, but this specific record is the pyramidal comparison cell shown in Fig. 5C, not a rosehip interneuron. The experiment is passive linear-RC validation against full Hines only; it does not establish active-neuron or population-level biology. Full Hines remains canonical and no production defaults change.
+
+Sources: [PR #17](https://github.com/Nolane-x/Nghien-cuu/pull/17), [successful workflow 45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588), [artifact #14884183988](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588/artifacts/14884183988).
