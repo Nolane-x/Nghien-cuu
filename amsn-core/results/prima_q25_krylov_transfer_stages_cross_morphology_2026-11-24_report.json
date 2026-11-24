@@ -1,0 +1,120 @@
+{
+  "exact_coverage": {
+    "by_output_summary_rows": 1176,
+    "by_source_summary_rows": 168,
+    "expected": {
+      "frequency_rows": 95256,
+      "model_output_rows": 10584,
+      "snapshots": 504,
+      "source_summary_rows": 168,
+      "summary_rows": 1176
+    },
+    "frequency_rows": 95256,
+    "max_final_basis_difference_vs_production": 0.0,
+    "model_output_rows": 10584,
+    "snapshots": 504
+  },
+  "interpretation_note": "Transfer errors are evaluated on the same seven shared SWC outputs and three q75/soma source locations at each Krylov prefix snapshot, against full Hines for that morphology/layout/scenario.",
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 220.37866382899995
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is passive linear-RC numerical transfer validation, not active-neuron or biological validation.",
+    "The instrumented final basis is checked against the unmodified production PRIMA builder for each model; intermediate prefixes come from the same verified growth process.",
+    "Transfer residual reduction does not establish biological relevance or by itself prove why a transient output error changes.",
+    "Only two individual morphology reconstructions are compared; they are not populations.",
+    "Full Hines remains canonical and no production code or defaults are changed."
+  ],
+  "scope": {
+    "basis_orders": [
+      112,
+      168
+    ],
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "frequency_grid_hz": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      300.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "common_shared_output_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "common_shared_output_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ]
+  },
+  "status": "prima_q25_krylov_transfer_stage_audit_passed"
+}
