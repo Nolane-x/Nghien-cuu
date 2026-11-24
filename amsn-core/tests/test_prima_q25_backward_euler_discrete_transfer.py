@@ -174,6 +174,45 @@ def test_full_hines_absolute_and_perturbation_replays_are_equivalent():
     assert relative_delta_pct <= 1e-5
 
 
+def test_morphology_window_summary_keeps_perturbation_metric_separate():
+    source_rows = []
+    for morphology in ("morph_a", "morph_b"):
+        for source in audit.SOURCE_NAMES:
+            for pulse_width in audit.PULSE_WIDTHS_MS:
+                for window in audit.WINDOWS_MS:
+                    source_rows.append({
+                        "morphology": morphology,
+                        "source_name": source,
+                        "pulse_width_ms": pulse_width,
+                        "window_ms": window,
+                        "median_nine_over_seven_continuous_ac_ratio": 32.0,
+                        "median_nine_over_seven_discrete_be_ratio": 30.0,
+                        "median_nine_over_seven_transient_nrmse_ratio": 1.02,
+                        "median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": 25.0,
+                        "median_nine_boundary_component_of_error_norm_pct": 4.0,
+                        "continuous_ac_worse_pairs": 63,
+                        "discrete_be_worse_pairs": 63,
+                        "transient_nrmse_worse_pairs": 35,
+                        "perturbation_coordinate_transient_nrmse_worse_pairs": 63,
+                    })
+
+    rows = audit._summarize_morphology_windows(source_rows)
+    assert len(rows) == 2 * len(audit.WINDOWS_MS)
+    assert all(row["source_pulse_groups"] == 6 for row in rows)
+    assert all(
+        row["median_nine_over_seven_absolute_transient_nrmse_ratio"] == 1.02
+        for row in rows
+    )
+    assert all(
+        row["median_nine_over_seven_perturbation_transient_nrmse_ratio"] == 25.0
+        for row in rows
+    )
+    assert all(
+        row["median_perturbation_transient_worse_pairs_of_63"] == 63.0
+        for row in rows
+    )
+
+
 def test_expected_coverage_contract():
     assert audit.expected_counts() == {
         "master_frequency_points": 1001,
@@ -181,5 +220,6 @@ def test_expected_coverage_contract():
         "case_metric_rows": 6048,
         "nine_seven_comparison_rows": 3024,
         "source_window_summary_rows": 48,
+        "morphology_window_summary_rows": 8,
         "finite_dft_identity_rows": 864,
     }
