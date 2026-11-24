@@ -37,7 +37,7 @@ BASIS_ORDER = int(tail.BASIS_ORDER)
 SOURCE_COUNT = len(SOURCE_NAMES)
 PROTOCOL = tail.column_protocol()
 SCENARIO_NAMES = tuple(conditioning.peng_replay.baseline.parameter_cases())
-RESULT_STEM = "prima_q25_backward_euler_timestep_refinement_2026-11-24"
+RESULT_STEM = "prima_q25_backward_euler_fine_step_convergence_2026-11-24"
 FINE_REFERENCE_DT_MS = min(DT_GRID_MS)
 
 EXPECTED_METRIC_ROWS = (
