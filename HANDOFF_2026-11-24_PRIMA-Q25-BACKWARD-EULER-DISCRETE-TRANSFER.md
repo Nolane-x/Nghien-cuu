@@ -63,3 +63,21 @@ The code now adds an eight-row morphology × window CSV and embeds the same summ
 
 Next: use the validated perturbation-coordinate formulation to run a backward-Euler timestep-refinement audit (0.1/0.05/0.025 ms) on these same two morphologies, preserving full Hines as reference. Keep PR #30 draft and do not merge without explicit authorization.
 
+
+
+
+## Final summary-generator validation — 24 November 2026
+
+Workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) passed **10/10 focused tests**, both SWC checksums, both morphology preflights, full backward-Euler discrete-transfer replay, the finite-record DFT identity gate, all CSV read-backs, result commit and artifact upload.
+
+- Maximum model/finite-error identity relative residual: \(1.4290\times10^{-11}\), versus \(2\times10^{-8}\).
+- Absolute finite identity residual maximum: \(1.1099\times10^{-11}\ \mathrm{V\cdot samples}\).
+- Read-back counts: 84,084 frequency rows; 6,048 case metrics; 3,024 seven/nine comparisons; 48 source/pulse/window summaries; **8 morphology/window summaries**; 864 identity rows.
+- Commit: \`228e66538a833e613ae6b664353abaae65849244\`.
+- Artifact: [14936177082](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509/artifacts/14936177082), SHA-256 \`4a3872a0606ecb6663c9d3d0aaaca986a8486181466232de4696becf34a379a6\`.
+- Environment: Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2; 408.06 s wall time, peak RSS 360,952 KB.
+
+The new summary table reports stable perturbation-coordinate transient ratios (nine/seven) of **24.55× / 55.28× / 31.94× / 31.64×** for Tamas and **138.34× / 69.78× / 33.67× / 33.43×** for Peng at 20/40/100/200 ms. Across the 378 paired rows per morphology/window, 374 (Tamas) and 373 (Peng) were worse at 20 ms, and all 378 were worse at 40–200 ms. The absolute NRMSE remains in the \(10^{-9}\%\)–\(10^{-8}\%\) range.
+
+The next concrete experiment is timestep refinement at 0.1/0.05/0.025 ms, keeping the full-Hines model as the reference and retaining the perturbation-coordinate formulation for the tiny-error comparison.
+
