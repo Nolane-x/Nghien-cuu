@@ -5,7 +5,7 @@ on:
     branches:
       - research/prima-tamas-human-pyramidal-fourth-morphology-2026-11-24
     paths:
-      - ".github/workflows/amsn-nmo163775-peng-complete-axon-matched-order.yml"
+      - ".github/workflows/amsn-nmo107159-tamas-human-pyramidal-matched-order.yml"
       - "amsn-core/examples/replay_nmo107159_tamas_7v9port.py"
       - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
       - "amsn-core/examples/human_prima_port_enrichment.py"
