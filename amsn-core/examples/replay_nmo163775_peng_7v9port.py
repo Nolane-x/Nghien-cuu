@@ -655,7 +655,7 @@ def main():
         "model_summary": summary_rows,
         "scientific_limits": [
             "This is a passive linear-RC numerical comparison against full Hines on one independent morphology with complete arbors by repository metadata.",
-            "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds basal-q25 node 224 and apical-q25 node 4096 only.",
+            "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds only the basal-q25 and apical-q25 probes pinned by the independent preflight.",
             "Orders 112 and 168 use identical six-shift extended-10kHz expansion frequencies for both port counts.",
             "The morphology is one mouse Control-condition Peng specimen in somatosensory neocortex layer 2-3; dendrites and axon are marked complete by NeuroMorpho, so it is not a representative mouse population.",
             "The comparison does not establish active-channel, nonlinear-synapse, plasticity or biological validity.",
