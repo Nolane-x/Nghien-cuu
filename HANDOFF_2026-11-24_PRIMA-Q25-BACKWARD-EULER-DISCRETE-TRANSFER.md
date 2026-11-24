@@ -39,3 +39,27 @@ The eight-test validation on the previous absolute-coordinate implementation (ru
 ## Scientific limits
 
 Only two individual passive linear-RC morphologies. No production solver code/defaults changed. Relative error ratios need absolute weighted norms. Full Hines remains canonical.
+
+
+
+## Validated update — 24 November 2026
+
+The perturbation-coordinate implementation passed the exact finite-record DFT identity and the full-morphology workflow:
+
+- Workflow [45419651741](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45419651741): identity max \(1.43235\times10^{-11}\), below \(2\times10^{-8}\), 864 identity rows; result commit \`709385e\`.
+- Workflow [45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698): **9 focused tests passed**; both morphology SHA-256 checks and preflights passed; complete computation, identity gate, result commit and artifact upload passed. Result commit \`1d6f64a83ccc7d1310a19baa50b2bc9b738dd7f5\`; artifact 14934013973, digest \`4233f555deadac71f7109a8928c0a0a015f6f5bd77d54a2d48e0db0907a25e50\`.
+
+### Main corrected finding
+
+The seven/nine transient comparison must use the perturbation-coordinate full-Hines replay for these tiny residuals. Tamas' legacy absolute-voltage metric suggested near parity (1.001–1.029×), but its absolute-vs-perturbation discrepancy reached \(2.6494\times10^{-6}\%\). The stable metric instead gives median nine/seven ratios of 24.54×, 56.18×, 32.22× and 32.08× at 20/40/100/200 ms. Peng's corresponding stable ratios are 162.7×, 63.57×, 34.11× and 34.02×. The exact table and aggregation method are in the research report.
+
+Absolute nine-port perturbation-coordinate NRMSE remains extremely small (about \(10^{-9}\%\) to \(10^{-8}\%\)). These are relative numerical error ratios, not a biological-performance claim.
+
+At 20–40 ms, the terminal-state boundary component can exceed the finite-error norm because it cancels the periodic transfer-error component; by 100–200 ms its norm falls to about 2.2–2.4% and then about 0.005%. Thus the finite-pulse transient cannot be inferred from \(H_{BE}U\) alone.
+
+The code now adds a morphology × window summary containing both legacy absolute-voltage and stable perturbation-coordinate ratios, alongside continuous-AC and discrete-BE transfer ratios. That new summary generator and its regression test are currently being validated by the next CI run.
+
+## Next concrete step
+
+Complete the source-summary generator CI; read back the new eight-row morphology/window CSV and the ten-test suite; then append the final result commit and update PR #30. Keep PR #30 draft and do not merge without explicit authorization.
+
