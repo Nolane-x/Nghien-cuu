@@ -70,7 +70,7 @@ This audit explicitly evaluates the boundary term and compares its reconstructio
 6. Save per-frequency summaries, case-level metrics, paired seven/nine comparisons, source/window summaries and identity checks.
 7. Read back all CSV row counts and preserve the workflow artifact.
 
-**Execution status:** pending. No numerical conclusion is claimed until CI completes and its committed outputs are read back.
+**Execution status:** the first full replay (run [45416403878](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45416403878)) completed the numerical computation but failed the identity gate at 5.05389 because the residual was divided by the tiny inter-model error norm. This denominator is ill-conditioned for a difference-of-differences check. The validator now normalizes the finite-record identity residual by the output DFT L2 norm, reports model-identity and finite-error-identity residuals separately, and writes the 864-row diagnostic CSV before applying the gate. Eight focused tests and a fresh full replay are pending on the latest commit. No result is accepted until the new gate and read-back pass.
 
 Expected coverage:
 - 84,084 frequency-summary rows;
