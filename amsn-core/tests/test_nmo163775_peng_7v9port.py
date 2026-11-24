@@ -38,7 +38,7 @@ def test_seven_and_nine_port_sets_share_exactly_seven_swc_nodes():
         4096: ["apical_q25"],
     }
     common, extra = MODULE.validate_port_node_sets(seven, nine, roles)
-    assert common == seven
+    assert common == sorted(seven)
     assert extra == [224, 4096]
 
 
