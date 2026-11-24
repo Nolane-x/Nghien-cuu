@@ -48,3 +48,20 @@ No test or CI result is claimed at file creation. Append the exact run result, c
 ## Next concrete experiment
 
 Perform a matched four-layout q25 ablation on NMO_163775. Compare the canonical seven ports, basal-q25-only addition, apical-q25-only addition, and both additions with identical passive scenarios and source/pulse protocols. Preserve exact shared-node/Hines checks and compare both relative and absolute NRMSE. This is a controlled experiment, not a post-hoc explanation.
+
+
+## Verified residual-localization workflow closeout
+
+GitHub Actions run [45326438648](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45326438648) completed successfully under Python 3.12.
+
+Actual output:
+- 7/7 focused unittest checks passed.
+- Generated the Markdown report and CSV from four archived matched_shared datasets.
+- Deterministic check passed.
+- Output commit: 4f0408af2db59f83c5ed1041ce5f1c531a3a6220.
+- Report blob SHA: d134dc69693b9f2e8eb2b453466330400bad6317.
+- CSV blob SHA: 481ad73e9948b192e74097c0262be60308a50908.
+
+The NMO_163775 order-168 decomposition shows strongly source/output-dependent paired ratios. Soma→soma median 9/7 ratio is 113.558×, while apical-q75→apical-q75 is 1.00460×. The maximum nine-port shared-output NRMSE remains 6.06567e-7%. The ratio should not be described as a large absolute error.
+
+This is post-hoc analysis of archived passive linear-RC runs, not a new NEURON replay or biological validation. No production solver code/defaults changed.
