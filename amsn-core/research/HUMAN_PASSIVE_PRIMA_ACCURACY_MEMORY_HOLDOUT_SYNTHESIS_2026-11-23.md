@@ -3,7 +3,7 @@
 **Date:** 23 November 2026  
 **Repository:** `Nolane-x/Nghien-cuu`  
 **Scope:** passive linear-RC neuron reduction only  
-**Status:** evidence synthesis across validated PRs #4–#16; no production default changed
+**Status:** evidence synthesis across validated PRs #4–#17; no production default changed
 
 ## Executive conclusion
 
