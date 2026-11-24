@@ -156,11 +156,23 @@ def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, np.ndarray]:
 
     require(np.isfinite(pivot[0]) and pivot[0] > 0.0,
             "non-positive root pivot in canonical Hines factorization")
+
+    # Group the topological tree by depth. Within each level, retain ascending
+    # node order so reverse/forward passes preserve the original Hines ordering.
+    depth = np.zeros(tree.n_compartments, dtype=int)
+    for node in range(1, tree.n_compartments):
+        depth[node] = depth[int(parent[node])] + 1
+    maximum_depth = int(np.max(depth))
+    depth_levels = tuple(
+        np.flatnonzero(depth == level).astype(int)
+        for level in range(1, maximum_depth + 1)
+    )
     return {
         "pivot_diagonal": pivot,
         "multipliers": multipliers,
         "parent_index": parent,
         "axial_g_s": axial,
+        "depth_levels": depth_levels,
         "c_over_dt": c_over_dt,
         "leak_source_a": np.asarray(tree.membrane_leak_s, dtype=float) * float(tree.parameters.e_leak_v),
         "leak_reversal_v": float(tree.parameters.e_leak_v),
@@ -186,16 +198,22 @@ def tree_hines_backward_euler_step(
             "Hines current matrix must match the previous state")
     leak_source = factor["leak_source_a"]
     work = c_over_dt[:, None] * previous + leak_source[:, None] + current
-    for child in range(pivot.size - 1, 0, -1):
-        p = int(parent[child])
-        work[p, :] += multipliers[child] * work[child, :]
+    depth_levels = factor["depth_levels"]
+    # Hines forward elimination, vectorized by depth. np.add.at accumulates
+    # siblings into a common parent in descending child-index order.
+    for level_nodes in reversed(depth_levels):
+        children = level_nodes[::-1]
+        parents = parent[children]
+        contributions = multipliers[children, None] * work[children, :]
+        np.add.at(work, parents, contributions)
     following = np.empty_like(work)
     following[0, :] = work[0, :] / pivot[0]
-    for child in range(1, pivot.size):
-        p = int(parent[child])
-        following[child, :] = (
-            work[child, :] + axial[child] * following[p, :]
-        ) / pivot[child]
+    # Back substitution is independent within each depth level.
+    for level_nodes in depth_levels:
+        parents = parent[level_nodes]
+        following[level_nodes, :] = (
+            work[level_nodes, :] + axial[level_nodes, None] * following[parents, :]
+        ) / pivot[level_nodes, None]
     require(np.all(np.isfinite(following)), "non-finite state in canonical Hines step")
     return following
 
