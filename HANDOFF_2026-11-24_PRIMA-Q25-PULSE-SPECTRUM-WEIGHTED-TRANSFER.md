@@ -23,7 +23,7 @@ This is a band-limited spectral proxy; it is not claimed to equal the finite 20 
 - 168 output summaries and 24 source summaries.
 - 756 paired dual-q25/seven weighted-transfer and transient rows.
 - 12 source/pulse summaries.
-- 1,006 pulse-spectrum samples (503 frequencies × 2 pulse widths).
+- 1,038 pulse-spectrum samples (519 frequencies × 2 pulse widths).
 
 ## Scientific limits
 
