@@ -84,22 +84,22 @@ Ratios are nine-port/seven-port medians. Within each source × pulse group, medi
 
 | Morphology | Window | Legacy absolute-voltage transient | Stable perturbation transient | Discrete BE transfer | Continuous AC + ZOH |
 |---|---:|---:|---:|---:|---:|
-| Tamas | 20 ms | 1.001× | 24.54× | 31.76× | 33.17× |
-| Tamas | 40 ms | 1.029× | 56.18× | 26.64× | 27.19× |
-| Tamas | 100 ms | 1.023× | 32.22× | 28.28× | 28.62× |
-| Tamas | 200 ms | 1.011× | 32.08× | 28.63× | 28.96× |
-| Peng | 20 ms | 31.43× | 162.7× | 38.82× | 38.04× |
-| Peng | 40 ms | 38.71× | 63.57× | 32.83× | 32.85× |
-| Peng | 100 ms | 25.52× | 34.11× | 34.01× | 33.80× |
-| Peng | 200 ms | 24.88× | 34.02× | 34.02× | 33.81× |
+| Tamas | 20 ms | 1.001× | 24.55× | 31.53× | 33.71× |
+| Tamas | 40 ms | 1.028× | 55.28× | 26.77× | 28.35× |
+| Tamas | 100 ms | 1.023× | 31.94× | 28.70× | 28.95× |
+| Tamas | 200 ms | 1.011× | 31.64× | 29.70× | 29.65× |
+| Peng | 20 ms | 31.52× | 138.34× | 43.23× | 42.11× |
+| Peng | 40 ms | 37.82× | 69.78× | 31.77× | 31.92× |
+| Peng | 100 ms | 26.68× | 33.67× | 33.40× | 33.43× |
+| Peng | 200 ms | 24.92× | 33.43× | 33.43× | 33.45× |
 
-The q25 nine-port absolute perturbation-coordinate NRMSE medians are still tiny: Tamas \(2.41e{-9}\%\), \(1.11e{-8}\%\), \(1.72e{-8}\%\), \(1.72e{-8}\%\); Peng \(9.80e{-9}\%\), \(5.19e{-8}\%\), \(7.15e{-8}\%\), \(7.16e{-8}\%\), across 20/40/100/200 ms. Large relative ratios must always be read with these absolute values.
+The q25 nine-port absolute perturbation-coordinate NRMSE medians are still tiny: Tamas \(2.406e{-9}\%\), \(1.107e{-8}\%\), \(1.714e{-8}\%\), \(1.715e{-8}\%\); Peng \(9.745e{-9}\%\), \(4.734e{-8}\%\), \(6.234e{-8}\%\), \(6.235e{-8}\%\), across 20/40/100/200 ms. Large relative ratios must always be read with these absolute values.
 
-The boundary correction explains part of the mismatch: for the nine-port finite-window error, the median boundary-component norm is about 655% (Tamas) / 777% (Peng) at 20 ms; 103% / 110% at 40 ms; 2.4% / 2.2% at 100 ms; and about 0.005% at 200 ms. Norm ratios above 100% are possible because periodic and boundary components cancel; these are not energy shares.
+The boundary correction explains part of the mismatch: in the morphology × window summary, the nine-port median boundary-component norm is 667.83% (Tamas) / 910.88% (Peng) at 20 ms; 103.39% / 117.33% at 40 ms; 2.71% / 1.88% at 100 ms; and 0.00474% / 0.00193% at 200 ms. Norm ratios above 100% are possible because periodic and boundary components cancel; these are not energy shares.
 
 The first table corrects the previous interpretation of the Tamas near-unity transient ratio. The earlier number is preserved as a historical absolute-voltage replay metric but is not accepted as evidence of q25 parity because the arithmetic difference between absolute and perturbation Hines traces is larger than the model-reduction residual in that regime.
 
 ## Secondary summary-generator update
 
-The analysis code now adds an eight-row morphology × observation-window summary and explicit perturbation-coordinate ratios to the 48 source × pulse × window summaries. A unit test checks that the new aggregate keeps the legacy and stable metrics separate. Workflow [45422549114](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422549114) exposed a test-contract mismatch (the expected-count test omitted the new eight-row table; 8 tests passed, that one assertion failed). The expected-count contract has been updated; workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) is validating the corrected test suite and full result generation. No morphology-window summary CSV from that new generator is accepted until the corrected run passes.
+The analysis code now adds an eight-row morphology × observation-window summary and explicit perturbation-coordinate ratios to the 48 source × pulse × window summaries. A unit test checks that the new aggregate keeps the legacy and stable metrics separate. Workflow [45422549114](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422549114) exposed a stale expected-count assertion (8 tests passed, 1 failed because the newly added eight-row table was missing from the expected dictionary). After fixing that test contract, workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) passed **10/10 tests** in 0.93 s, both morphology checksum/preflight checks, the full calculation, identity gate and all six CSV read-backs. It committed result SHA `228e66538a833e613ae6b664353abaae65849244` and uploaded artifact 14936177082 (SHA-256 `4a3872a0606ecb6663c9d3d0aaaca986a8486181466232de4696becf34a379a6`). The eight-row summary contains 63/63 perturbation-worse pairs in the median source × pulse group for every morphology/window; raw pair counts are 374/378 and 373/378 at 20 ms, then 378/378 at 40–200 ms for Tamas and Peng respectively.
 
