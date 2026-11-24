@@ -1,0 +1,391 @@
+{
+  "common_shared_node_ids": [
+    1,
+    144,
+    3926,
+    4180,
+    40,
+    4104,
+    3948
+  ],
+  "exact_coverage": {
+    "frequency": 648,
+    "hines_shared": 1134,
+    "matched_shared_vs_seven": 2268,
+    "models": 72,
+    "q25_only": 432,
+    "transient": 3456
+  },
+  "layout_node_ids": {
+    "eight_apical_q25": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948,
+      4096
+    ],
+    "eight_basal_q25": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948,
+      224
+    ],
+    "nine_both_q25": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948,
+      224,
+      4096
+    ],
+    "seven": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948
+    ]
+  },
+  "layout_summary": [
+    {
+      "basis_order": 112,
+      "frequency_10khz_rows": 9,
+      "layout_id": "seven",
+      "max_transient_nrmse_pct": 5.22141685507372e-06,
+      "median_numeric_storage_mb": 3.7802734375,
+      "median_transient_nrmse_pct": 1.4110488633950116e-07,
+      "median_y_error_10khz_pct": 2.7321121342993447e-06,
+      "median_z_error_10khz_pct": 4.325423443534726e-07,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 168,
+      "frequency_10khz_rows": 9,
+      "layout_id": "seven",
+      "max_transient_nrmse_pct": 1.2900770962742924e-08,
+      "median_numeric_storage_mb": 5.81396484375,
+      "median_transient_nrmse_pct": 5.933033805082582e-10,
+      "median_y_error_10khz_pct": 1.1366183036965866e-10,
+      "median_z_error_10khz_pct": 6.762491056147335e-12,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 112,
+      "frequency_10khz_rows": 9,
+      "layout_id": "eight_basal_q25",
+      "max_transient_nrmse_pct": 3.375646229511005e-05,
+      "median_numeric_storage_mb": 3.7802734375,
+      "median_transient_nrmse_pct": 9.203606447607756e-07,
+      "median_y_error_10khz_pct": 3.0865071579108645e-05,
+      "median_z_error_10khz_pct": 8.26186237887315e-06,
+      "model_scenario_rows": 9,
+      "port_count": 8,
+      "transient_port_rows": 432
+    },
+    {
+      "basis_order": 168,
+      "frequency_10khz_rows": 9,
+      "layout_id": "eight_basal_q25",
+      "max_transient_nrmse_pct": 1.3002767525432667e-08,
+      "median_numeric_storage_mb": 5.81396484375,
+      "median_transient_nrmse_pct": 1.1013319641888112e-09,
+      "median_y_error_10khz_pct": 1.5213374535497742e-08,
+      "median_z_error_10khz_pct": 6.663180486952039e-10,
+      "model_scenario_rows": 9,
+      "port_count": 8,
+      "transient_port_rows": 432
+    },
+    {
+      "basis_order": 112,
+      "frequency_10khz_rows": 9,
+      "layout_id": "eight_apical_q25",
+      "max_transient_nrmse_pct": 3.6859883553297706e-05,
+      "median_numeric_storage_mb": 3.7802734375,
+      "median_transient_nrmse_pct": 9.357705380376426e-07,
+      "median_y_error_10khz_pct": 3.2987102980969416e-05,
+      "median_z_error_10khz_pct": 1.415046483525444e-05,
+      "model_scenario_rows": 9,
+      "port_count": 8,
+      "transient_port_rows": 432
+    },
+    {
+      "basis_order": 168,
+      "frequency_10khz_rows": 9,
+      "layout_id": "eight_apical_q25",
+      "max_transient_nrmse_pct": 1.9421255053864815e-08,
+      "median_numeric_storage_mb": 5.81396484375,
+      "median_transient_nrmse_pct": 9.052099577335729e-10,
+      "median_y_error_10khz_pct": 1.626113473014565e-08,
+      "median_z_error_10khz_pct": 9.985522339634792e-10,
+      "model_scenario_rows": 9,
+      "port_count": 8,
+      "transient_port_rows": 432
+    },
+    {
+      "basis_order": 112,
+      "frequency_10khz_rows": 9,
+      "layout_id": "nine_both_q25",
+      "max_transient_nrmse_pct": 0.0002158817687245696,
+      "median_numeric_storage_mb": 3.7802734375,
+      "median_transient_nrmse_pct": 1.2505522462055566e-05,
+      "median_y_error_10khz_pct": 4.8096124753543055e-05,
+      "median_z_error_10khz_pct": 3.2464427761741806e-05,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    },
+    {
+      "basis_order": 168,
+      "frequency_10khz_rows": 9,
+      "layout_id": "nine_both_q25",
+      "max_transient_nrmse_pct": 6.065669712587138e-07,
+      "median_numeric_storage_mb": 5.81396484375,
+      "median_transient_nrmse_pct": 1.1632022307433869e-08,
+      "median_y_error_10khz_pct": 4.890624777612009e-08,
+      "median_z_error_10khz_pct": 6.8670354888382714e-09,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    }
+  ],
+  "matched_summary": [
+    {
+      "basis_order": 112,
+      "candidate_better_pairs": 0,
+      "candidate_worse_pairs": 378,
+      "layout_id": "eight_basal_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 2.853504544003633e-05,
+      "max_candidate_nrmse_pct": 3.375646229511005e-05,
+      "max_candidate_over_seven_ratio": 69.68383763320257,
+      "max_seven_port_nrmse_pct": 5.22141685507372e-06,
+      "median_candidate_nrmse_pct": 8.226966673016523e-07,
+      "median_candidate_over_seven_ratio": 5.715120029286778,
+      "median_seven_port_nrmse_pct": 1.4110488633950116e-07,
+      "p90_candidate_over_seven_ratio": 13.25651033478504,
+      "port_count": 8,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 168,
+      "candidate_better_pairs": 76,
+      "candidate_worse_pairs": 302,
+      "layout_id": "eight_basal_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 8.105482010906532e-09,
+      "max_candidate_nrmse_pct": 1.3002767525432667e-08,
+      "max_candidate_over_seven_ratio": 8.214193376176038,
+      "max_seven_port_nrmse_pct": 1.2900770962742924e-08,
+      "median_candidate_nrmse_pct": 1.0244078952133597e-09,
+      "median_candidate_over_seven_ratio": 1.0355757078424963,
+      "median_seven_port_nrmse_pct": 5.933033805082582e-10,
+      "p90_candidate_over_seven_ratio": 2.48564570427379,
+      "port_count": 8,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 112,
+      "candidate_better_pairs": 0,
+      "candidate_worse_pairs": 378,
+      "layout_id": "eight_apical_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 3.163846669822398e-05,
+      "max_candidate_nrmse_pct": 3.6859883553297706e-05,
+      "max_candidate_over_seven_ratio": 69.787968314954,
+      "max_seven_port_nrmse_pct": 5.22141685507372e-06,
+      "median_candidate_nrmse_pct": 9.692625659776524e-07,
+      "median_candidate_over_seven_ratio": 6.49481460021431,
+      "median_seven_port_nrmse_pct": 1.4110488633950116e-07,
+      "p90_candidate_over_seven_ratio": 11.256642976051811,
+      "port_count": 8,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 168,
+      "candidate_better_pairs": 75,
+      "candidate_worse_pairs": 303,
+      "layout_id": "eight_apical_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 1.3888726411324938e-08,
+      "max_candidate_nrmse_pct": 1.9421255053864815e-08,
+      "max_candidate_over_seven_ratio": 10.069768739750286,
+      "max_seven_port_nrmse_pct": 1.2900770962742924e-08,
+      "median_candidate_nrmse_pct": 1.0640798020541983e-09,
+      "median_candidate_over_seven_ratio": 1.0455543962071345,
+      "median_seven_port_nrmse_pct": 5.933033805082582e-10,
+      "p90_candidate_over_seven_ratio": 3.2002628609633788,
+      "port_count": 8,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 112,
+      "candidate_better_pairs": 0,
+      "candidate_worse_pairs": 378,
+      "layout_id": "nine_both_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 0.00019053961683069455,
+      "max_candidate_nrmse_pct": 0.0001932922543153022,
+      "max_candidate_over_seven_ratio": 6737.259699088589,
+      "max_seven_port_nrmse_pct": 5.22141685507372e-06,
+      "median_candidate_nrmse_pct": 1.130915246455645e-05,
+      "median_candidate_over_seven_ratio": 78.0512818893005,
+      "median_seven_port_nrmse_pct": 1.4110488633950116e-07,
+      "p90_candidate_over_seven_ratio": 1460.6921865044822,
+      "port_count": 9,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 168,
+      "candidate_better_pairs": 27,
+      "candidate_worse_pairs": 351,
+      "layout_id": "nine_both_q25",
+      "matched_shared_output_pairs": 378,
+      "max_absolute_delta_pct_points": 6.01034442616174e-07,
+      "max_candidate_nrmse_pct": 6.065669712587138e-07,
+      "max_candidate_over_seven_ratio": 298.4063555466675,
+      "max_seven_port_nrmse_pct": 1.2900770962742924e-08,
+      "median_candidate_nrmse_pct": 1.108959061397382e-08,
+      "median_candidate_over_seven_ratio": 14.524877578829312,
+      "median_seven_port_nrmse_pct": 5.933033805082582e-10,
+      "p90_candidate_over_seven_ratio": 111.34321283391884,
+      "port_count": 9,
+      "ties_within_1e_15_pct_points": 0
+    }
+  ],
+  "protocol": {
+    "dt_ms": 0.1,
+    "duration_ms": 20.0,
+    "frequencies_hz": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      300.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "mesh_max_segment_um": 0.5,
+    "orders": [
+      112,
+      168
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ]
+  },
+  "q25_node_ids": {
+    "apical_q25": 4096,
+    "basal_q25": 224
+  },
+  "q25_summary": [
+    {
+      "basis_order": 112,
+      "layout_id": "eight_basal_q25",
+      "max_q25_nrmse_pct": 2.257997618280769e-05,
+      "median_q25_nrmse_pct": 1.6424281166391076e-06,
+      "q25_observations": 54
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_basal_q25",
+      "max_q25_nrmse_pct": 1.2232743565715915e-08,
+      "median_q25_nrmse_pct": 1.8402525634582097e-09,
+      "q25_observations": 54
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "eight_apical_q25",
+      "max_q25_nrmse_pct": 7.048563985402003e-06,
+      "median_q25_nrmse_pct": 6.924501718943989e-07,
+      "q25_observations": 54
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_apical_q25",
+      "max_q25_nrmse_pct": 4.332382523391123e-09,
+      "median_q25_nrmse_pct": 4.5867522072555674e-10,
+      "q25_observations": 54
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "nine_both_q25",
+      "max_q25_nrmse_pct": 0.0002158817687245696,
+      "median_q25_nrmse_pct": 1.848011701197329e-05,
+      "q25_observations": 108
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "nine_both_q25",
+      "max_q25_nrmse_pct": 4.282364731615487e-07,
+      "median_q25_nrmse_pct": 1.5566537123215098e-08,
+      "q25_observations": 108
+    }
+  ],
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 317.060923248
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is one mouse morphology, not a population.",
+    "The experiment is passive linear-RC numerical comparison against full Hines only.",
+    "NeuroMorpho lists No Diameter; standardized SWC radii are not measured biological diameters.",
+    "No active-channel, nonlinear-synapse, plasticity or biological validity is established.",
+    "The analysis isolates single-probe versus dual-probe enrichment under the selected protocol; it does not establish a universal layout rule.",
+    "Full Hines remains canonical; no production default or solver behavior changes."
+  ],
+  "source": {
+    "metadata_note": "Control-condition mouse; dendrites and axon complete; NeuroMorpho marks No Diameter",
+    "neuromorpho_id": "NMO_163775",
+    "swc_record_count": 4209,
+    "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+  },
+  "status": "peng_q25_four_layout_ablation_passed"
+}
