@@ -46,3 +46,5 @@ This branch uses a 0.5 µm NEURON mesh cap to align with Peng NMO_163775. The fi
 Workflow run [45314100588](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45314100588) has passed full suite, Tamas-specific tests, source checksum and Import3D preflight. The matched numerical replay remains in progress. Consult PR17 and the latest Actions run before claiming metrics.
 
 Full Hines remains canonical. No production defaults change.
+
+Official NeuroMorpho morphometry (API `/api/morphometry/id/107159`): total length 12,320.7 µm; mean diameter 0.285193 µm; 61 bifurcations; 126 branches; 4 stems; max path distance 1,662.83 µm; max Euclidean distance 1,420.16 µm; width 777.889 µm, height 1,595.1 µm, depth 91.47 µm; surface 9,693.02 µm²; volume 1,624.96 µm³. These are repository morphometry measurements/derived descriptors; passive membrane and axial parameters remain separate model assumptions.
