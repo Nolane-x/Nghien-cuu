@@ -341,6 +341,50 @@ def simulate_full_hines_with_terminal_states(
     return trace, terminal_states, protocol
 
 
+def simulate_full_hines_perturbation_windows(
+    tree,
+    factor: dict[str, Any],
+    source_tree_indices: list[int],
+    output_tree_indices: list[int],
+) -> tuple[np.ndarray, dict[float, np.ndarray], list[tuple[str, float]]]:
+    """Replay the same Hines BE map in voltage-perturbation coordinates.
+
+    The canonical replay above keeps absolute membrane voltages to preserve
+    legacy transient parity. The transfer equations are written for
+    y=V-E_leak. Starting at y=0 and using a zero leak source avoids subtracting
+    two O(0.1-V) values after every timestep to recover a much smaller y.
+    """
+    sample_count = int(round(max(WINDOWS_MS) / DT_MS))
+    protocol = tail.column_protocol()
+    linear_factor = dict(factor)
+    linear_factor["leak_source_a"] = np.zeros_like(factor["leak_source_a"])
+    voltage = np.zeros((tree.n_compartments, len(protocol)), dtype=np.float64)
+    trace = np.empty(
+        (sample_count, len(output_tree_indices), len(protocol)), dtype=np.float64
+    )
+    boundary_steps = {
+        int(round(window_ms / DT_MS)): float(window_ms)
+        for window_ms in WINDOWS_MS
+    }
+    terminal_states: dict[float, np.ndarray] = {}
+    for step in range(sample_count):
+        current = tail._make_current_matrix(
+            tree.n_compartments, source_tree_indices, protocol, step
+        )
+        voltage = tail.tree_hines_backward_euler_step(
+            linear_factor, voltage, current
+        )
+        trace[step, :, :] = voltage[np.asarray(output_tree_indices, dtype=int), :]
+        completed = step + 1
+        if completed in boundary_steps:
+            terminal_states[boundary_steps[completed]] = voltage.copy()
+    require(set(terminal_states) == set(WINDOWS_MS),
+            "full-Hines perturbation terminal-state coverage mismatch")
+    require(np.all(np.isfinite(trace)),
+            "non-finite full-Hines perturbation trace")
+    return trace, terminal_states, protocol
+
+
 def simulate_reduced_with_terminal_states(
     model,
     layout: dict[str, Any],
@@ -603,8 +647,13 @@ def main() -> None:
                     target, hines_factor, source_tree_indices, output_tree_indices
                 )
             )
-            require(returned_protocol == protocol,
-                    "Hines and protocol column orders differ")
+            full_identity_trace, full_identity_terminal, identity_protocol = (
+                simulate_full_hines_perturbation_windows(
+                    target, hines_factor, source_tree_indices, output_tree_indices
+                )
+            )
+            require(returned_protocol == protocol == identity_protocol,
+                    "Hines canonical/perturbation protocol column orders differ")
             full_cont = solve_full_hines_s_response(
                 target, master_s_cont, full_rhs, output_tree_indices, chunk_size=50
             )
@@ -701,7 +750,9 @@ def main() -> None:
                         "finite-window input protocol order mismatch")
                 input_dft = np.fft.rfft(input_samples, axis=0)
                 one_sided = one_sided_dft_weights(sample_count)
-                full_state = full_terminal[float(window_ms)]
+                # The transfer identity is formulated for y=V-E_leak.
+                # Use the numerically stable zero-origin replay for its terminal state.
+                full_state = full_identity_terminal[float(window_ms)]
                 full_boundary_rhs = hines_factor["c_over_dt"][:, None] * full_state
                 full_boundary = solve_full_hines_s_response(
                     target, selected_s_be, full_boundary_rhs,
@@ -731,11 +782,16 @@ def main() -> None:
                         for pulse_index, pulse_width_ms in enumerate(PULSE_WIDTHS_MS):
                             column = source_index * len(PULSE_WIDTHS_MS) + pulse_index
                             current_spectrum = input_dft[:, column]
-                            full_y = full_trace[:sample_count, :, column]
+                            full_y_canonical = full_trace[:sample_count, :, column]
+                            full_y = full_identity_trace[:sample_count, :, column]
                             reduced_y = reduced_trace[:sample_count, :, column]
                             model_identity_errors = []
+                            full_model_identity_errors = []
+                            reduced_model_identity_errors = []
                             finite_error_identity_errors = []
                             model_identity_absolute_errors = []
+                            coordinate_delta_pct = []
+                            coordinate_delta_v_samples = []
                             for output_index, output_node in enumerate(common_ids):
                                 full_y_fft = np.fft.rfft(full_y[:, output_index])
                                 reduced_y_fft = np.fft.rfft(reduced_y[:, output_index])
@@ -772,6 +828,19 @@ def main() -> None:
                                 model_identity_errors.append(max(
                                     full_identity_rel, reduced_identity_rel
                                 ))
+                                full_model_identity_errors.append(full_identity_rel)
+                                reduced_model_identity_errors.append(reduced_identity_rel)
+                                canonical_fft = np.fft.rfft(
+                                    full_y_canonical[:, output_index]
+                                )
+                                coordinate_delta_rel, coordinate_delta_abs = (
+                                    _finite_identity_error(
+                                        canonical_fft, full_y_fft,
+                                        scale_norm=float(np.linalg.norm(canonical_fft)),
+                                    )
+                                )
+                                coordinate_delta_pct.append(100.0 * coordinate_delta_rel)
+                                coordinate_delta_v_samples.append(coordinate_delta_abs)
 
                                 actual_error_fft = reduced_y_fft - full_y_fft
                                 transfer_component = (
@@ -848,7 +917,10 @@ def main() -> None:
                                         ))
                                     )), 1e-300)
                                 )
-                                transient_nrmse = tail.relative_l2_percent(
+                                canonical_transient_nrmse = tail.relative_l2_percent(
+                                    full_y_canonical[:, output_index], reduced_y[:, output_index]
+                                )
+                                perturbation_transient_nrmse = tail.relative_l2_percent(
                                     full_y[:, output_index], reduced_y[:, output_index]
                                 )
                                 metric_rows.append({
@@ -873,7 +945,9 @@ def main() -> None:
                                     "discrete_be_error_norm_v": be_error_norm,
                                     "discrete_be_reference_norm_v": be_ref_norm,
                                     "full_hines_be_vs_continuous_ac_pct": mapping_metric,
-                                    "finite_transient_nrmse_pct": transient_nrmse,
+                                    "finite_transient_nrmse_pct": canonical_transient_nrmse,
+                                    "perturbation_coordinate_transient_nrmse_pct": perturbation_transient_nrmse,
+                                    "absolute_vs_perturbation_hines_trace_delta_pct": coordinate_delta_pct[-1],
                                     "periodic_transfer_component_norm_v_samples": transfer_norm,
                                     "terminal_boundary_component_norm_v_samples": boundary_norm,
                                     "finite_error_dft_norm_v_samples": actual_error_norm,
@@ -894,11 +968,23 @@ def main() -> None:
                                 "window_ms": float(window_ms),
                                 "shared_outputs": len(common_ids),
                                 "max_output_model_identity_relative_error": max(model_identity_errors),
+                                "max_output_full_model_identity_relative_error": max(
+                                    full_model_identity_errors
+                                ),
+                                "max_output_reduced_model_identity_relative_error": max(
+                                    reduced_model_identity_errors
+                                ),
                                 "max_output_finite_error_identity_relative_error": max(
                                     finite_error_identity_errors
                                 ),
                                 "max_output_absolute_identity_error_v_samples": max(
                                     model_identity_absolute_errors
+                                ),
+                                "max_absolute_vs_perturbation_hines_trace_delta_pct": max(
+                                    coordinate_delta_pct
+                                ),
+                                "max_absolute_vs_perturbation_hines_trace_delta_v_samples": max(
+                                    coordinate_delta_v_samples
                                 ),
                             })
 
@@ -1062,6 +1148,12 @@ def main() -> None:
         "validation": {
             "finite_identity_relative_tolerance": FINITE_IDENTITY_RELATIVE_TOLERANCE,
             "identity_normalization": "output DFT L2 norm; finite-error identity is not divided by the much smaller inter-model residual norm",
+            "full_hines_identity_coordinates": (
+                "The DFT identity uses a second mathematically equivalent full-Hines replay "
+                "in perturbation coordinates (zero initial perturbation, zero leak source). "
+                "The canonical absolute-voltage replay is retained for transient NRMSE, and "
+                "its difference from perturbation coordinates is recorded separately."
+            ),
             "max_model_identity_relative_error": max_model_identity_relative_error,
             "max_finite_error_identity_relative_error": max_finite_error_identity_relative_error,
             "max_finite_identity_relative_error": max_identity_relative_error,
