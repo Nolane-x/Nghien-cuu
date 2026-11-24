@@ -103,7 +103,7 @@ def test_vectorized_tree_hines_step_matches_canonical_cable_step():
         state = observed
 
 
-def test_reduced_transition_operators_match_step_backward_euler():
+def test_factorized_reduced_be_step_matches_original_np_solve_order():
     from amsn.prima import PassiveReducedModel
 
     model = PassiveReducedModel(
@@ -113,12 +113,16 @@ def test_reduced_transition_operators_match_step_backward_euler():
         capacitance_matrix_f=np.array([[2.0, 0.0], [0.0, 1.0]]),
         input_matrix=np.eye(2),
     )
-    transition, input_map = audit.reduced_backward_euler_operators(model, 0.25)
+    factor = audit.factor_reduced_backward_euler(model, 0.25)
     state = np.array([0.2, -0.1])
-    current = np.array([1.0, 0.5])
-    expected = model.step_backward_euler(state, 0.25, current)
-    observed = transition @ state + input_map @ current
-    np.testing.assert_allclose(observed, expected, rtol=1e-14, atol=1e-14)
+    for step in range(17):
+        current = np.array([1.0, 0.5]) if 3 <= step < 10 else np.zeros(2)
+        expected = model.step_backward_euler(state, 0.25, current)
+        observed = audit.reduced_backward_euler_step_factorized(
+            model, factor, state, current, 0.25
+        )
+        np.testing.assert_allclose(observed, expected, rtol=1e-14, atol=1e-14)
+        state = observed
 
 
 def test_protocol_has_correct_inclusive_and_exclusive_edges():
