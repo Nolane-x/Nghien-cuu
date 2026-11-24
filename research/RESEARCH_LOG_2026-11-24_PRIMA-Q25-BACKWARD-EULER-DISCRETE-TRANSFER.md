@@ -31,6 +31,10 @@ It is the continuous resolvent evaluated at \(s_{BE}=(1-e^{-j\Omega})/\Delta t\)
 \]
 The last term is retained as the terminal-state boundary correction.
 
+## Frequency-map implication (analytic, not a simulation result)
+
+At dt=0.1 ms, Im(s_BE)/omega is 0.999342 at 100 Hz, 0.983632 at 500 Hz, 0.935489 at 1 kHz, 0.756827 at 2 kHz and approximately zero at the 5-kHz Nyquist frequency. Re(s_BE) rises from 19.73 s^-1 at 100 Hz to 20,000 s^-1 at Nyquist. This demonstrates that the backward-Euler transfer samples the continuous resolvent at a frequency-warped, damped complex shift; comparison with the continuous AC proxy must not use j*omega in place of s_BE. These values follow directly from the formula and timestep and are not morphology-derived measurements.
+
 ## Implementation authored
 
 - Added exact complex-shift Hines and reduced solves for both \(s=j\omega\) and \(s=s_{BE}\).
