@@ -10,9 +10,14 @@ archived 20-ms transient NRMSE rows for all 756 matched comparisons.
 from __future__ import annotations
 
 import csv
+import ctypes
+import hashlib
 import json
 import math
+import shutil
+import subprocess
 import sys
+import tempfile
 import time
 from collections import defaultdict
 from pathlib import Path
@@ -20,9 +25,9 @@ from typing import Any
 
 import numpy as np
 from scipy import __version__ as SCIPY_VERSION
-from scipy.sparse import csc_matrix, coo_matrix
+from scipy.sparse import coo_matrix
 from scipy.linalg import lu_factor, lu_solve
-from scipy.sparse.linalg import spsolve_triangular, splu
+from scipy.sparse.linalg import splu
 
 RESEARCH = Path(__file__).resolve().parent
 if str(RESEARCH) not in sys.path:
@@ -122,95 +127,126 @@ def build_sparse_hines_factor(tree, dt_s: float):
     factor = splu(matrix)
     return factor, np.asarray(tree.capacitance_f, dtype=float) / dt
 
-def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, np.ndarray]:
-    """Pre-factor the backward-Euler tree operator using canonical Hines elimination.
+_HINES_C_KERNEL = None
 
-    The diagonal/pivot and child multipliers are computed once per scenario.
-    Every time step then applies the same forward elimination/back substitution
-    as CableTree.step_linear, but vectorized over all source/pulse columns. This
-    avoids sparse-LU rounding noise on very small distal-port residuals.
-    """
+
+def load_compiled_hines_kernel():
+    """Compile/load the exact-order C wrapper for the original Hines traversal."""
+    global _HINES_C_KERNEL
+    if _HINES_C_KERNEL is not None:
+        return _HINES_C_KERNEL
+    source = Path(__file__).with_name("hines_be_kernel.c")
+    require(source.is_file(), f"missing compiled Hines kernel source: {source}")
+    digest = hashlib.sha256(source.read_bytes()).hexdigest()[:16]
+    library_path = Path(tempfile.gettempdir()) / f"amsn_hines_be_{digest}.so"
+    if not library_path.exists():
+        compiler = shutil.which("cc")
+        require(compiler is not None, "a C compiler (cc) is required for the exact Hines kernel")
+        subprocess.run(
+            [
+                compiler, "-O3", "-std=c11", "-fno-fast-math",
+                "-ffp-contract=off", "-fPIC", "-shared",
+                str(source), "-o", str(library_path),
+            ],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+    library = ctypes.CDLL(str(library_path))
+    double_ptr = ctypes.POINTER(ctypes.c_double)
+    int64_ptr = ctypes.POINTER(ctypes.c_int64)
+    library.amsn_hines_be_step.argtypes = [
+        ctypes.c_int64, ctypes.c_int64,
+        double_ptr, double_ptr, int64_ptr, double_ptr,
+        double_ptr, double_ptr, double_ptr, double_ptr,
+        double_ptr, double_ptr,
+    ]
+    library.amsn_hines_be_step.restype = None
+    _HINES_C_KERNEL = library
+    return library
+
+
+def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, Any]:
+    """Pre-factor the full tree with the same pivot order as CableTree.step_linear."""
     dt = float(dt_s)
     require(np.isfinite(dt) and dt > 0.0, "dt_s must be finite and positive")
-    capacitance = np.asarray(tree.capacitance_f, dtype=float)
+    capacitance = np.ascontiguousarray(tree.capacitance_f, dtype=np.float64)
     c_over_dt = capacitance / dt
-    parent = np.asarray(tree.parent_index, dtype=int).copy()
-    axial = np.asarray(tree.axial_g_s, dtype=float).copy()
-    pivot = np.asarray(tree.membrane_leak_s, dtype=float) + c_over_dt
-    pivot = np.array(pivot, dtype=float, copy=True)
+    parent = np.ascontiguousarray(tree.parent_index, dtype=np.int64)
+    axial = np.ascontiguousarray(tree.axial_g_s, dtype=np.float64)
+    pivot = np.ascontiguousarray(
+        np.asarray(tree.membrane_leak_s, dtype=np.float64) + c_over_dt,
+        dtype=np.float64,
+    )
     for child in range(1, tree.n_compartments):
         conductance = float(axial[child])
         p = int(parent[child])
         pivot[child] += conductance
         pivot[p] += conductance
 
-    multipliers = np.zeros(tree.n_compartments, dtype=float)
+    multipliers = np.zeros(tree.n_compartments, dtype=np.float64)
+    # Preserve the exact reverse traversal and pivot update used by
+    # CableTree.step_linear: diagonal[parent] -= (g*g)/diagonal[child].
     for child in range(tree.n_compartments - 1, 0, -1):
         p = int(parent[child])
         conductance = float(axial[child])
         denominator = float(pivot[child])
         require(np.isfinite(denominator) and denominator > 0.0,
                 "non-positive child pivot in canonical Hines factorization")
-        multiplier = conductance / denominator
-        multipliers[child] = multiplier
+        multipliers[child] = conductance / denominator
         pivot[p] -= (conductance * conductance) / denominator
 
     require(np.isfinite(pivot[0]) and pivot[0] > 0.0,
             "non-positive root pivot in canonical Hines factorization")
-
-    # The Hines factors are unit triangular: L[child,parent] = -g/d_child
-    # and U=L.T. Solving these sparse triangular systems is the same tree
-    # elimination/back-substitution as CableTree.step_linear, but executes in
-    # SciPy's compiled sparse kernels instead of Python loops over each node.
-    child = np.arange(1, tree.n_compartments, dtype=int)
-    lower_rows = np.concatenate((np.arange(tree.n_compartments, dtype=int), child))
-    lower_cols = np.concatenate((np.arange(tree.n_compartments, dtype=int), parent[1:]))
-    lower_values = np.concatenate((np.ones(tree.n_compartments, dtype=float), -multipliers[1:]))
-    lower = csc_matrix(
-        (lower_values, (lower_rows, lower_cols)),
-        shape=(tree.n_compartments, tree.n_compartments),
-    )
-    upper = lower.T.tocsc()
     return {
         "pivot_diagonal": pivot,
-        "multipliers": multipliers,
+        "multipliers": np.ascontiguousarray(multipliers),
         "parent_index": parent,
         "axial_g_s": axial,
-        "hines_lower": lower,
-        "hines_upper": upper,
-        "c_over_dt": c_over_dt,
-        "leak_source_a": np.asarray(tree.membrane_leak_s, dtype=float) * float(tree.parameters.e_leak_v),
+        "c_over_dt": np.ascontiguousarray(c_over_dt),
+        "leak_source_a": np.ascontiguousarray(
+            np.asarray(tree.membrane_leak_s, dtype=np.float64)
+            * float(tree.parameters.e_leak_v)
+        ),
         "leak_reversal_v": float(tree.parameters.e_leak_v),
+        "kernel": load_compiled_hines_kernel(),
     }
 
 
 def tree_hines_backward_euler_step(
-    factor: dict[str, np.ndarray],
-    voltage_perturbation: np.ndarray,
+    factor: dict[str, Any],
+    voltage: np.ndarray,
     current_a: np.ndarray,
 ) -> np.ndarray:
-    """Advance multiple perturbation traces using the canonical Hines recurrence."""
-    pivot = factor["pivot_diagonal"]
-    multipliers = factor["multipliers"]
-    parent = factor["parent_index"]
-    axial = factor["axial_g_s"]
-    c_over_dt = factor["c_over_dt"]
-    previous = np.asarray(voltage_perturbation, dtype=float)
-    current = np.asarray(current_a, dtype=float)
-    require(previous.ndim == 2 and previous.shape[0] == pivot.size,
+    """Apply the exact CableTree Hines recurrence to multiple RHS columns."""
+    previous = np.ascontiguousarray(voltage, dtype=np.float64)
+    current = np.ascontiguousarray(current_a, dtype=np.float64)
+    require(previous.ndim == 2 and previous.shape[0] == factor["pivot_diagonal"].size,
             "Hines previous state must have shape (compartments, columns)")
     require(current.shape == previous.shape,
             "Hines current matrix must match the previous state")
-    leak_source = factor["leak_source_a"]
-    work = c_over_dt[:, None] * previous + leak_source[:, None] + current
-    # U*y = rhs performs Hines leaf-to-root elimination; D*z = y scales
-    # the pivots; L*v = z performs root-to-leaf back substitution.
-    forward = spsolve_triangular(
-        factor["hines_upper"], work, lower=False, unit_diagonal=True
-    )
-    scaled = forward / pivot[:, None]
-    following = spsolve_triangular(
-        factor["hines_lower"], scaled, lower=True, unit_diagonal=True
+    following = np.empty_like(previous)
+    work = np.empty_like(previous)
+    double_ptr = ctypes.POINTER(ctypes.c_double)
+    int64_ptr = ctypes.POINTER(ctypes.c_int64)
+
+    def dptr(array: np.ndarray):
+        return array.ctypes.data_as(double_ptr)
+
+    kernel = factor["kernel"]
+    kernel.amsn_hines_be_step(
+        ctypes.c_int64(previous.shape[0]),
+        ctypes.c_int64(previous.shape[1]),
+        dptr(factor["pivot_diagonal"]),
+        dptr(factor["multipliers"]),
+        factor["parent_index"].ctypes.data_as(int64_ptr),
+        dptr(factor["axial_g_s"]),
+        dptr(factor["c_over_dt"]),
+        dptr(factor["leak_source_a"]),
+        dptr(previous),
+        dptr(current),
+        dptr(following),
+        dptr(work),
     )
     require(np.all(np.isfinite(following)), "non-finite state in canonical Hines step")
     return following
