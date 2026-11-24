@@ -558,8 +558,9 @@ def main() -> None:
                     shared_slots = shared_by_layout[probe_layout_id]
                     legacy_full_shared = legacy_full[:, shared_slots]
                     legacy_reduced_shared = legacy_reduced[:, shared_slots]
-                    new_full_shared = full_trace[:, :, probe_column]
-                    new_reduced_shared = reduced_traces[probe_layout_id][:, :, probe_column]
+                    probe_steps = int(round(20.0 / DT_MS))
+                    new_full_shared = full_trace[:probe_steps, :, probe_column]
+                    new_reduced_shared = reduced_traces[probe_layout_id][:probe_steps, :, probe_column]
                     probe_row = {
                         "morphology": morph_spec["name"],
                         "parameter_scenario": scenario_name,
