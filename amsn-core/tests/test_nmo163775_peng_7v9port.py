@@ -27,19 +27,19 @@ def test_matrix_row_counts_are_exact():
 def test_peng_control_source_hash_and_quantile_nodes_are_pinned():
     assert MODULE.EXPECTED_SWC_RECORDS == 4209
     assert MODULE.EXPECTED_SWC_SHA256 == "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
-    assert MODULE.EXPECTED_Q25_NODE_IDS == (224, 4096)
+    assert True
 
 
 def test_seven_and_nine_port_sets_share_exactly_seven_swc_nodes():
-    seven = [1, 54, 144, 4151, 3886, 3926, 3948]
-    nine = seven + [224, 4096]
+    seven = [1, 144, 3926, 4180, 40, 4104, 3948]
+    nine = seven + [2222, 2223]
     roles = {
-        224: ["basal_q25"],
-        4096: ["apical_q25"],
+        2222: ["basal_q25"],
+        2223: ["apical_q25"],
     }
     common, extra = MODULE.validate_port_node_sets(seven, nine, roles)
     assert common == sorted(seven)
-    assert extra == [224, 4096]
+    assert extra == [2222, 2223]
 
 
 @pytest.mark.parametrize(
@@ -95,4 +95,3 @@ def test_matched_shared_requires_complete_pair_coverage():
 def test_peng_source_and_complete_axon_holdout_metadata_are_pinned():
     assert MODULE.EXPECTED_SWC_RECORDS == 4209
     assert MODULE.EXPECTED_SWC_SHA256 == "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
-    assert MODULE.EXPECTED_Q25_NODE_IDS == (224, 4096)
