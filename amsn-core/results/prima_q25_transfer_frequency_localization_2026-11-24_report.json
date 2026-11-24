@@ -1,0 +1,42 @@
+{
+  "exact_coverage": {
+    "expected": {
+      "input_frequency_rows": 95256,
+      "output_frequency_rows": 10584,
+      "pulse_spectrum_weight_rows": 18,
+      "source_frequency_rows": 1512,
+      "vs_seven_output_frequency_rows": 7938,
+      "vs_seven_source_frequency_rows": 1134
+    },
+    "input_frequency_rows": 95256,
+    "output_frequency_rows": 10584,
+    "pulse_spectrum_weight_rows": 18,
+    "source_frequency_rows": 1512,
+    "vs_seven_output_frequency_rows": 7938,
+    "vs_seven_source_frequency_rows": 1134,
+    "worst_output_frequency_groups": 100
+  },
+  "frequency_grid_hz": [
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    300.0,
+    1000.0,
+    3000.0,
+    6000.0,
+    10000.0
+  ],
+  "rectangular_pulse_spectrum_note": "The normalized sinc amplitude/power values describe the continuous-time rectangular pulse spectrum only at sampled frequencies. The nine-point grid is sparse/log-spaced and is not integrated as a continuous spectrum.",
+  "schema_version": 1,
+  "scientific_limits": [
+    "This post-processes an already validated passive linear-RC AC transfer matrix; it does not rerun PRIMA.",
+    "Complex transfer residuals are AC metrics and are not identical to time-domain pulse NRMSE.",
+    "Relative error ratios use seven-port error as denominator and may amplify small denominators; absolute transfer error remains in the output-level table.",
+    "Pulse spectral samples are descriptive only and are not a quadrature or a predicted pulse error.",
+    "Only two individual morphologies are compared; no biological or population-level inference is made.",
+    "Full Hines remains canonical; production code and defaults are unchanged."
+  ],
+  "source_input": "/home/runner/work/Nghien-cuu/Nghien-cuu/amsn-core/results/prima_q25_krylov_transfer_stages_cross_morphology_2026-11-24_frequency.csv",
+  "status": "prima_q25_transfer_frequency_localization_passed"
+}
