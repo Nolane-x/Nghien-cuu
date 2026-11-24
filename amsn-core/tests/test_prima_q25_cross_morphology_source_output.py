@@ -61,7 +61,7 @@ def test_source_summary_aggregates_seven_outputs():
             row(output_id=output_id, ratio=1.0, delta=0.0, pulse=2.0),
             row(output_id=output_id, ratio=2.0, delta=1.0, pulse=10.0),
         ])
-    output = analysis.summarize_output_groups(rows)
+    output = analysis.summarize_output_groups(rows, enforce_complete=False)
     summary = analysis.summarize_source_groups(output, enforce_complete=False)
     assert len(summary) == 1
     assert summary[0]["output_ports"] == 7
@@ -75,10 +75,8 @@ def test_duplicate_pair_identity_is_rejected():
         analysis.validate_unique_pair_identities([item, dict(item)])
 
 
-def test_source_output_summary_requires_seven_outputs_with_exact_pulse_pairs():
+def test_incomplete_source_summary_is_rejected_by_production_guard():
     rows = [row(ratio=1.0, delta=0.0, pulse=2.0)]
-    with pytest.raises(ValueError, match="matched_pairs"):
-        # The grouped output summary is intentionally allowed to summarize a
-        # small fixture; the source aggregator enforces the fixed seven-output
-        # structure at production matrix load time.
-        analysis.summarize_source_groups(analysis.summarize_output_groups(rows))
+    output = analysis.summarize_output_groups(rows, enforce_complete=False)
+    with pytest.raises(ValueError, match="source-group coverage mismatch"):
+        analysis.summarize_source_groups(output)
