@@ -1,0 +1,279 @@
+{
+  "exact_coverage": {
+    "expected_models": 144,
+    "expected_port_leverage_rows": 1152,
+    "expected_shift_seed_rows": 864,
+    "models": 144,
+    "port_leverage_rows": 1152,
+    "shift_seed_rows": 864
+  },
+  "runtime": {
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 123.27225049200001
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "The audit measures numerical basis orthogonality, projected matrix spectra and initial shift-seed allocation; it does not establish a causal mechanism for transient error differences.",
+    "Only two individual passive morphology reconstructions are compared; they do not represent species or cell-class populations.",
+    "The basis and matrices are passive linear-RC only; no active channels, nonlinear synapses, plasticity or biological validity are assessed.",
+    "Full Hines remains canonical; no production solver defaults or behavior are changed."
+  ],
+  "scope": {
+    "basis_orders": [
+      112,
+      168
+    ],
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "name": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "name": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "relative_tolerance": 1e-12,
+    "scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ]
+  },
+  "status": "prima_q25_cross_morphology_conditioning_audit_passed",
+  "summary": [
+    {
+      "basis_order": 112,
+      "layout_id": "seven",
+      "max_basis_orthogonality_max_abs": 1.6653345369377348e-15,
+      "median_basis_build_seconds": 0.4013934599999942,
+      "median_basis_gram_condition_number": 1.000000000000005,
+      "median_basis_orthogonality_max_abs": 1.3322676295501878e-15,
+      "median_capacitance_condition_number": 107.25915397715035,
+      "median_conductance_condition_number": 371069.22005977714,
+      "median_rc_rate_dynamic_range": 51417.199651398645,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "seven",
+      "max_basis_orthogonality_max_abs": 1.9984014443252818e-15,
+      "median_basis_build_seconds": 0.6329396589999874,
+      "median_basis_gram_condition_number": 1.0000000000000053,
+      "median_basis_orthogonality_max_abs": 1.5543122344752192e-15,
+      "median_capacitance_condition_number": 125.27515167677183,
+      "median_conductance_condition_number": 521167.78752834065,
+      "median_rc_rate_dynamic_range": 54299.22049550632,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "eight_basal_q25",
+      "max_basis_orthogonality_max_abs": 1.887379141862766e-15,
+      "median_basis_build_seconds": 0.37318777200002273,
+      "median_basis_gram_condition_number": 1.0000000000000049,
+      "median_basis_orthogonality_max_abs": 1.3322676295501878e-15,
+      "median_capacitance_condition_number": 84.26170467967374,
+      "median_conductance_condition_number": 223426.86334598652,
+      "median_rc_rate_dynamic_range": 46399.245648678785,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_basal_q25",
+      "max_basis_orthogonality_max_abs": 1.887379141862766e-15,
+      "median_basis_build_seconds": 0.5773473539999969,
+      "median_basis_gram_condition_number": 1.0000000000000049,
+      "median_basis_orthogonality_max_abs": 1.4432899320127035e-15,
+      "median_capacitance_condition_number": 124.16748927703478,
+      "median_conductance_condition_number": 512608.04259443865,
+      "median_rc_rate_dynamic_range": 53940.789764253415,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "eight_apical_q25",
+      "max_basis_orthogonality_max_abs": 1.7763568394002505e-15,
+      "median_basis_build_seconds": 0.3719147729999861,
+      "median_basis_gram_condition_number": 1.0000000000000049,
+      "median_basis_orthogonality_max_abs": 1.3322676295501878e-15,
+      "median_capacitance_condition_number": 83.66131840984201,
+      "median_conductance_condition_number": 219170.90678073754,
+      "median_rc_rate_dynamic_range": 46183.91511390899,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_apical_q25",
+      "max_basis_orthogonality_max_abs": 2.220446049250313e-15,
+      "median_basis_build_seconds": 0.5748374959999865,
+      "median_basis_gram_condition_number": 1.0000000000000049,
+      "median_basis_orthogonality_max_abs": 1.5543122344752192e-15,
+      "median_capacitance_condition_number": 124.1502016988692,
+      "median_conductance_condition_number": 513437.2561864067,
+      "median_rc_rate_dynamic_range": 54059.50123836617,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "nine_both_q25",
+      "max_basis_orthogonality_max_abs": 1.9984014443252818e-15,
+      "median_basis_build_seconds": 0.3552876330000174,
+      "median_basis_gram_condition_number": 1.0000000000000049,
+      "median_basis_orthogonality_max_abs": 1.5543122344752192e-15,
+      "median_capacitance_condition_number": 79.92652081247313,
+      "median_conductance_condition_number": 192762.7579327628,
+      "median_rc_rate_dynamic_range": 44279.122821752375,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "nine_both_q25",
+      "max_basis_orthogonality_max_abs": 1.9984014443252818e-15,
+      "median_basis_build_seconds": 0.5401311509999971,
+      "median_basis_gram_condition_number": 1.0000000000000056,
+      "median_basis_orthogonality_max_abs": 1.5543122344752192e-15,
+      "median_capacitance_condition_number": 123.47321190492416,
+      "median_conductance_condition_number": 506010.65760221914,
+      "median_rc_rate_dynamic_range": 53823.702078873095,
+      "model_scenarios": 9,
+      "morphology": "NMO_163775_Peng_mouse_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "seven",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 0.648852517000023,
+      "median_basis_gram_condition_number": 1.000000000000005,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 118.21150362104586,
+      "median_conductance_condition_number": 441256.3360346262,
+      "median_rc_rate_dynamic_range": 159436.6913366965,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "seven",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 1.0299836910000124,
+      "median_basis_gram_condition_number": 1.0000000000000056,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 195.8999529422021,
+      "median_conductance_condition_number": 1502475.0295627825,
+      "median_rc_rate_dynamic_range": 249128.45688798334,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "eight_basal_q25",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 0.5980405219999909,
+      "median_basis_gram_condition_number": 1.0000000000000047,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 105.86381930130344,
+      "median_conductance_condition_number": 306611.1427760704,
+      "median_rc_rate_dynamic_range": 88900.1199652037,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_basal_q25",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 0.9317953460000012,
+      "median_basis_gram_condition_number": 1.000000000000005,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 163.1295926797605,
+      "median_conductance_condition_number": 902628.0294633261,
+      "median_rc_rate_dynamic_range": 212266.46254084664,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "eight_apical_q25",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 0.5981559290000007,
+      "median_basis_gram_condition_number": 1.0000000000000047,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 103.7932992826142,
+      "median_conductance_condition_number": 314329.059165661,
+      "median_rc_rate_dynamic_range": 149113.72114745053,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "eight_apical_q25",
+      "max_basis_orthogonality_max_abs": 1.1102230246251565e-15,
+      "median_basis_build_seconds": 0.9302397639999924,
+      "median_basis_gram_condition_number": 1.000000000000005,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 165.1053819472699,
+      "median_conductance_condition_number": 897136.0730475517,
+      "median_rc_rate_dynamic_range": 257762.33127961124,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 112,
+      "layout_id": "nine_both_q25",
+      "max_basis_orthogonality_max_abs": 1.2212453270876722e-15,
+      "median_basis_build_seconds": 0.5708007949999967,
+      "median_basis_gram_condition_number": 1.0000000000000044,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 102.31926106258136,
+      "median_conductance_condition_number": 281353.760303725,
+      "median_rc_rate_dynamic_range": 110034.62810401162,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    },
+    {
+      "basis_order": 168,
+      "layout_id": "nine_both_q25",
+      "max_basis_orthogonality_max_abs": 1.2212453270876722e-15,
+      "median_basis_build_seconds": 0.8742705250000142,
+      "median_basis_gram_condition_number": 1.0000000000000053,
+      "median_basis_orthogonality_max_abs": 8.881784197001252e-16,
+      "median_capacitance_condition_number": 148.8587139084078,
+      "median_conductance_condition_number": 800980.7683953476,
+      "median_rc_rate_dynamic_range": 230369.38073794285,
+      "model_scenarios": 9,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control"
+    }
+  ]
+}
