@@ -1,0 +1,104 @@
+name: Cross-morphology PRIMA q25 finite-window error spectrum
+
+on:
+  push:
+    branches:
+      - research/prima-q25-discrete-time-error-spectrum-2026-11-24
+    paths:
+      - ".github/workflows/amsn-prima-q25-discrete-time-error-spectrum.yml"
+      - "amsn-core/research/analyze_prima_q25_discrete_time_error_spectrum.py"
+      - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
+      - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
+      - "amsn-core/research/hines_be_kernel.c"
+      - "amsn-core/tests/test_prima_q25_discrete_time_error_spectrum.py"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/prima.py"
+      - "amsn-core/examples/replay_nmo163775_four_layout_ablation.py"
+      - "amsn-core/examples/replay_nmo107159_four_layout_replication.py"
+      - "amsn-core/examples/prepare_nmo163775_peng_control_holdout.py"
+      - "amsn-core/examples/prepare_nmo107159_tamas_holdout.py"
+      - "amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
+      - "amsn-core/data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc"
+      - "amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv"
+      - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-discrete-time-error-spectrum
+  cancel-in-progress: false
+
+jobs:
+  finite-window-error-spectrum:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN, pinned NEURON and sparse solver
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+      - name: Verify source morphologies and archived transient matrices
+        working-directory: amsn-core
+        run: |
+          echo "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f  data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc" | sha256sum --check -
+          echo "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023  data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc" | sha256sum --check -
+          test -s results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_matched_shared_vs_seven.csv
+          test -s results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_matched_shared_vs_seven.csv
+      - name: Run finite-window spectrum unit tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_prima_q25_discrete_time_error_spectrum.py
+      - name: Verify both morphology preflights
+        working-directory: amsn-core
+        run: |
+          python examples/prepare_nmo163775_peng_control_holdout.py
+          python examples/prepare_nmo107159_tamas_holdout.py
+      - name: Run exact finite-window DFT error decomposition
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/prima_q25_discrete_time_error_spectrum_2026-11-24.time.txt python research/analyze_prima_q25_discrete_time_error_spectrum.py
+      - name: Commit finite-window spectral evidence
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$GITHUB_REF_NAME"
+          UPSTREAM_REF="origin/$GITHUB_REF_NAME"
+          git reset --mixed "$UPSTREAM_REF"
+          git add amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_*.csv \
+                  amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_report.json
+          if ! git diff --cached --quiet "$UPSTREAM_REF" -- \
+              amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_*.csv \
+              amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_report.json; then
+            git commit -m "results: archive q25 finite-window error spectrum"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          else
+            echo "Identical finite-window spectral outputs are already archived; skipping duplicate commit."
+          fi
+      - name: Preserve finite-window spectral evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-discrete-time-error-spectrum
+          path: |
+            amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_*.csv
+            amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24_report.json
+            amsn-core/results/prima_q25_discrete_time_error_spectrum_2026-11-24.time.txt
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
+          if-no-files-found: warn
+          retention-days: 90
