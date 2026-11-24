@@ -171,10 +171,11 @@ def simulate_full_hines_windows(
             "duration must be an exact multiple of dt")
     protocol = column_protocol()
     voltage = np.zeros((tree.n_compartments, len(protocol)), dtype=float)
-    current_indices = [
-        int(source_indices[SOURCE_NAMES.index(source)])
-        for source, _ in protocol
-    ]
+    # _make_current_matrix indexes this map by source name, not protocol column.
+    # Keep exactly one tree-compartment index per source.
+    current_indices = [int(x) for x in source_indices]
+    require(len(current_indices) == len(SOURCE_NAMES),
+            "full-Hines source index map must contain exactly three source ports")
     trace = np.empty(
         (steps, len(output_indices), len(protocol)),
         dtype=float,
