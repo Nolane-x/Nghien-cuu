@@ -21,6 +21,7 @@ from typing import Any
 import numpy as np
 from scipy import __version__ as SCIPY_VERSION
 from scipy.sparse import csc_matrix, coo_matrix
+from scipy.linalg import lu_factor, lu_solve
 from scipy.sparse.linalg import spsolve_triangular, splu
 
 RESEARCH = Path(__file__).resolve().parent
@@ -216,15 +217,31 @@ def tree_hines_backward_euler_step(
 
 
 
-def reduced_backward_euler_operators(model, dt_s: float) -> tuple[np.ndarray, np.ndarray]:
-    """Precompute x[n] = P*x[n-1] + Q*i[n] for the exact model BE step."""
+def factor_reduced_backward_euler(model, dt_s: float):
+    """Factor the reduced BE left-hand side once, preserving the original solve."""
     dt = float(dt_s)
     require(np.isfinite(dt) and dt > 0.0, "dt_s must be finite and positive")
-    c_over_dt = model.capacitance_matrix_f / dt
-    lhs = model.conductance_matrix_s + c_over_dt
-    transition = np.linalg.solve(lhs, c_over_dt)
-    input_map = np.linalg.solve(lhs, model.input_matrix)
-    return transition, input_map
+    lhs = model.conductance_matrix_s + model.capacitance_matrix_f / dt
+    return lu_factor(lhs, check_finite=False)
+
+
+def reduced_backward_euler_step_factorized(
+    model,
+    factor,
+    previous_state: np.ndarray,
+    port_current_a: np.ndarray,
+    dt_s: float,
+) -> np.ndarray:
+    """One-column solve with the same RHS operation order as model.step_backward_euler."""
+    previous = np.asarray(previous_state, dtype=float)
+    current = np.asarray(port_current_a, dtype=float)
+    rhs = (
+        (model.capacitance_matrix_f @ previous) / float(dt_s)
+        + model.input_matrix @ current
+    )
+    following = lu_solve(factor, rhs, check_finite=False)
+    require(np.all(np.isfinite(following)), "non-finite reduced state in factorized BE step")
+    return following
 
 
 def column_protocol() -> list[tuple[str, float]]:
@@ -306,7 +323,7 @@ def simulate_reduced_windows(
 ) -> np.ndarray:
     """Simulate all sources/pulse widths together with the exact reduced BE map."""
     steps = int(round(float(duration_ms) / DT_MS))
-    transition, input_map = reduced_backward_euler_operators(model, DT_S)
+    factor = factor_reduced_backward_euler(model, DT_S)
     state = np.zeros((model.order, len(protocol)), dtype=float)
     port_current = np.zeros((layout["port_count"], len(protocol)), dtype=float)
     source_slots = {
@@ -330,7 +347,10 @@ def simulate_reduced_windows(
             pulse_end_s = PULSE_ONSET_MS / 1000.0 + pulse_width_ms / 1000.0
             if PULSE_ONSET_MS / 1000.0 <= now_s < pulse_end_s:
                 port_current[source_slots[source_name], column] = CURRENT_A
-        state = transition @ state + input_map @ port_current
+        for column in range(len(protocol)):
+            state[:, column] = reduced_backward_euler_step_factorized(
+                model, factor, state[:, column], port_current[:, column], DT_S
+            )
         trace[step, :, :] = output_basis @ state
 
     require(np.all(np.isfinite(trace)), "non-finite reduced extended trace")
