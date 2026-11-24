@@ -582,38 +582,60 @@ def main() -> None:
                     legacy_rel_deltas = []
                     new_abs_deltas = []
                     new_rel_deltas = []
+                    per_output_diagnostics = []
                     for output_index, output_node in enumerate(common_ids):
                         archive_key = (
                             scenario_name, probe_source, probe_width_ms, int(output_node)
                         )
                         archived_row = archived[archive_key]
+                        legacy_full_output = legacy_full_shared[:, output_index]
+                        new_full_output = new_full_shared[:, output_index]
+                        legacy_reduced_output = legacy_reduced_shared[:, output_index]
+                        new_reduced_output = new_reduced_shared[:, output_index]
                         legacy_nrmse = relative_l2_percent(
-                            legacy_full_shared[:, output_index],
-                            legacy_reduced_shared[:, output_index],
+                            legacy_full_output, legacy_reduced_output
                         )
                         new_nrmse = relative_l2_percent(
-                            new_full_shared[:, output_index],
-                            new_reduced_shared[:, output_index],
+                            new_full_output, new_reduced_output
                         )
                         archived_nrmse = (
                             float(archived_row["seven_port_nrmse_pct"])
                             if probe_layout_id == "seven"
                             else float(archived_row["candidate_nrmse_pct"])
                         )
-                        for value, abs_deltas, rel_deltas in (
-                            (legacy_nrmse, legacy_abs_deltas, legacy_rel_deltas),
-                            (new_nrmse, new_abs_deltas, new_rel_deltas),
-                        ):
-                            abs_delta = abs(value - archived_nrmse)
-                            abs_deltas.append(abs_delta)
-                            rel_deltas.append(
-                                100.0 * abs_delta / max(abs(archived_nrmse), 1e-30)
-                            )
+                        legacy_abs_delta = abs(legacy_nrmse - archived_nrmse)
+                        new_abs_delta = abs(new_nrmse - archived_nrmse)
+                        legacy_rel_delta = (
+                            100.0 * legacy_abs_delta / max(abs(archived_nrmse), 1e-30)
+                        )
+                        new_rel_delta = (
+                            100.0 * new_abs_delta / max(abs(archived_nrmse), 1e-30)
+                        )
+                        legacy_abs_deltas.append(legacy_abs_delta)
+                        legacy_rel_deltas.append(legacy_rel_delta)
+                        new_abs_deltas.append(new_abs_delta)
+                        new_rel_deltas.append(new_rel_delta)
+                        per_output_diagnostics.append({
+                            "output_swc_id": int(output_node),
+                            "output_role": ";".join(probe_layout["roles"][int(output_node)]),
+                            "legacy_full_vs_new_full_relative_l2_pct": relative_l2_percent(
+                                legacy_full_output, new_full_output
+                            ),
+                            "legacy_reduced_vs_new_reduced_relative_l2_pct": relative_l2_percent(
+                                legacy_reduced_output, new_reduced_output
+                            ),
+                            "legacy_computed_nrmse_pct": legacy_nrmse,
+                            "new_computed_nrmse_pct": new_nrmse,
+                            "archived_nrmse_pct": archived_nrmse,
+                            "legacy_vs_archived_relative_delta_pct": legacy_rel_delta,
+                            "new_vs_archived_relative_delta_pct": new_rel_delta,
+                        })
                     probe_row.update({
                         "legacy_vs_archived_max_absolute_delta_pct_points": max(legacy_abs_deltas),
                         "legacy_vs_archived_max_relative_delta_pct": max(legacy_rel_deltas),
                         "new_vs_archived_max_absolute_delta_pct_points": max(new_abs_deltas),
                         "new_vs_archived_max_relative_delta_pct": max(new_rel_deltas),
+                        "per_output_diagnostics": per_output_diagnostics,
                     })
                     parity_probe_rows.append(probe_row)
 
