@@ -244,6 +244,8 @@ def main() -> None:
         "neuron_sections": len(sections),
         "neuron_segments": neuron_segments,
         "unique_ports": len(port_node_ids),
+        "seven_port_node_ids": port_node_ids,
+        "q25_only_swc_node_ids": list(q25_ids),
         "max_segment_um": max_segment_um,
         "preflight_json": str(output / "preflight.json"),
     }, indent=2))
