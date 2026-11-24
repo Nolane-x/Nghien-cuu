@@ -74,6 +74,14 @@ EXPECTED_LAYOUT_WINDOW_ROWS = (
     2 * len(LAYOUT_IDS) * len(PULSE_WIDTHS_MS) * len(WINDOWS_MS)
 )
 
+# Archived 20-ms NRMSEs were produced on an earlier CI image. Replaying the
+# unchanged legacy simulator in the current image matches the extended solver
+# exactly, but tiny NRMSE values show cross-run absolute variation up to
+# 3.1e-8 percentage points. Keep a small, explicit absolute floor and report
+# relative deltas separately rather than letting a near-zero denominator
+# dominate the parity decision.
+ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS = 5e-8
+
 TRANSIENT_FILES = {
     "NMO_163775": Path(
         "results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_"
@@ -922,6 +930,8 @@ def main() -> None:
             "rows": len(parity_rows),
             "max_absolute_delta_pct_points": max_parity_absolute,
             "max_relative_delta_pct": max_parity_relative,
+        "absolute_tolerance_pct_points": ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS,
+        "parity_gate": "absolute_nrmse_percentage_point_tolerance",
             "by_morphology_layout": group_diagnostics,
             "worst_absolute_pairs": worst_absolute,
             "worst_relative_pairs": worst_relative,
@@ -930,13 +940,16 @@ def main() -> None:
 
     require(
         all(
-            float(r["absolute_delta_pct_points"]) <= max(
-                1e-12,
-                1e-3 * abs(float(r["archived_20ms_nrmse_pct"])),
-            )
+            float(r["absolute_delta_pct_points"])
+            <= ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
             for r in parity_rows
         ),
-        f"extended solver failed the archived 20-ms transient parity guard: max rel delta={max_parity_relative}%",
+        (
+            "extended solver exceeded archived 20-ms absolute NRMSE parity "
+            f"floor {ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS} percentage points: "
+            f"max absolute delta={max_parity_absolute} pp, "
+            f"max relative delta={max_parity_relative}%"
+        ),
     )
 
     by_output, comparison_rows, comparison_summary, source_summary, window_summary, layout_window_summary = (
