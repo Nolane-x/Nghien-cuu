@@ -476,6 +476,7 @@ def main() -> None:
     model_rows: list[dict[str, Any]] = []
     band_rows: list[dict[str, Any]] = []
     comparison_rows: list[dict[str, Any]] = []
+    transient_by_morphology: dict[str, dict[tuple, dict[str, Any]]] = {}
     morphology_manifest = []
 
     for morph_spec in MORPHOLOGIES:
@@ -512,25 +513,14 @@ def main() -> None:
             "q25_node_ids": q25_ids,
         })
 
-        source_nodes_by_name = {}
-        for source in SOURCES:
-            slot = int(layouts["seven"]["source_indices"][source])
-            source_nodes_by_name[source] = int(layouts["seven"]["node_ids"][slot])
         transient = load_transient_rows(
             TRANSIENT_FILES[morph_spec["neuromorpho_id"]],
             morph_spec["name"],
         )
+        transient_by_morphology[morph_spec["name"]] = transient
 
         for scenario_name, scales in baseline.parameter_cases().items():
             target = conditioning.build_target_tree(module, base_tree, scales)
-            source_tree_indices = [
-                target.index[target.by_name[name].name]
-                for name in (
-                    morphology.nodes[0].name,
-                    morphology.nodes[0].name,
-                    morphology.nodes[0].name,
-                )
-            ]
             # Resolve physical source ports from the validated seven-port layout.
             source_tree_indices = [
                 int(layouts["seven"]["ports"][
@@ -639,54 +629,56 @@ def main() -> None:
                                         **band,
                                     })
 
-                                if layout_id == "nine_both_q25":
-                                    key = (
-                                        scenario_name, source, float(pulse_width_ms), int(output_node)
-                                    )
-                                    transient_row = transient.get(key)
-                                    require(transient_row is not None,
-                                            f"missing transient row for {morph_spec['neuromorpho_id']} {key}")
-                                    comparison_rows.append({
-                                        "morphology": morph_spec["name"],
-                                        "basis_order": ORDER,
-                                        "parameter_scenario": scenario_name,
-                                        "source_name": source,
-                                        "output_swc_id": int(output_node),
-                                        "output_role": output_role,
-                                        "pulse_width_ms": pulse_width_ms,
-                                        "seven_port_pulse_weighted_error_pct": float(
-                                            next(
-                                                r["pulse_weighted_relative_l2_pct"]
-                                                for r in model_rows
-                                                if r["morphology"] == morph_spec["name"]
-                                                and r["layout_id"] == "seven"
-                                                and r["parameter_scenario"] == scenario_name
-                                                and r["source_name"] == source
-                                                and int(r["output_swc_id"]) == int(output_node)
-                                                and float(r["pulse_width_ms"]) == float(pulse_width_ms)
-                                            )
-                                        ),
-                                        "nine_port_pulse_weighted_error_pct": metric["pulse_weighted_relative_l2_pct"],
-                                        "pulse_weighted_error_ratio_nine_over_seven": (
-                                            metric["pulse_weighted_relative_l2_pct"]
-                                            / max(
-                                                next(
-                                                    r["pulse_weighted_relative_l2_pct"]
-                                                    for r in model_rows
-                                                    if r["morphology"] == morph_spec["name"]
-                                                    and r["layout_id"] == "seven"
-                                                    and r["parameter_scenario"] == scenario_name
-                                                    and r["source_name"] == source
-                                                    and int(r["output_swc_id"]) == int(output_node)
-                                                    and float(r["pulse_width_ms"]) == float(pulse_width_ms)
-                                                ),
-                                                1e-300,
-                                            )
-                                        ),
-                                        "transient_seven_port_nrmse_pct": transient_row["seven_port_nrmse_pct"],
-                                        "transient_nine_port_nrmse_pct": transient_row["candidate_nrmse_pct"],
-                                        "transient_nrmse_ratio_nine_over_seven": transient_row["candidate_over_seven_error_ratio"],
-                                    })
+
+
+    require(len(model_rows) == EXPECTED_MODEL_ROWS,
+            f"weighted model rows {len(model_rows)} != {EXPECTED_MODEL_ROWS}")
+    require(len(band_rows) == EXPECTED_BAND_ROWS,
+            f"band-energy rows {len(band_rows)} != {EXPECTED_BAND_ROWS}")
+    # Join the completed pulse-weighted transfer matrix to the exact archived
+    # transient rows only after both seven- and nine-port weighted rows exist.
+    model_lookup = {
+        (
+            r["morphology"], r["layout_id"], r["parameter_scenario"],
+            r["source_name"], int(r["output_swc_id"]), float(r["pulse_width_ms"]),
+        ): r
+        for r in model_rows
+    }
+    for candidate in model_rows:
+        if candidate["layout_id"] != "nine_both_q25":
+            continue
+        key = (
+            candidate["parameter_scenario"], candidate["source_name"],
+            float(candidate["pulse_width_ms"]), int(candidate["output_swc_id"]),
+        )
+        transient_row = transient_by_morphology[candidate["morphology"]].get(key)
+        require(transient_row is not None,
+                f"missing archived transient pair {candidate['morphology']} {key}")
+        baseline_key = (
+            candidate["morphology"], "seven", candidate["parameter_scenario"],
+            candidate["source_name"], int(candidate["output_swc_id"]),
+            float(candidate["pulse_width_ms"]),
+        )
+        baseline = model_lookup.get(baseline_key)
+        require(baseline is not None, f"missing seven-port weighted baseline {baseline_key}")
+        comparison_rows.append({
+            "morphology": candidate["morphology"],
+            "basis_order": ORDER,
+            "parameter_scenario": candidate["parameter_scenario"],
+            "source_name": candidate["source_name"],
+            "output_swc_id": int(candidate["output_swc_id"]),
+            "output_role": candidate["output_role"],
+            "pulse_width_ms": float(candidate["pulse_width_ms"]),
+            "seven_port_pulse_weighted_error_pct": float(baseline["pulse_weighted_relative_l2_pct"]),
+            "nine_port_pulse_weighted_error_pct": float(candidate["pulse_weighted_relative_l2_pct"]),
+            "pulse_weighted_error_ratio_nine_over_seven": (
+                float(candidate["pulse_weighted_relative_l2_pct"])
+                / max(float(baseline["pulse_weighted_relative_l2_pct"]), 1e-300)
+            ),
+            "transient_seven_port_nrmse_pct": transient_row["seven_port_nrmse_pct"],
+            "transient_nine_port_nrmse_pct": transient_row["candidate_nrmse_pct"],
+            "transient_nrmse_ratio_nine_over_seven": transient_row["candidate_over_seven_error_ratio"],
+        })
 
     require(len(model_rows) == EXPECTED_MODEL_ROWS,
             f"weighted model rows {len(model_rows)} != {EXPECTED_MODEL_ROWS}")
@@ -698,30 +690,6 @@ def main() -> None:
     output_summary, band_summary, comparison_summary, source_summary = summarize_rows(
         model_rows, band_rows, comparison_rows
     )
-
-    # Replace the repeated linear lookup with a direct parity guard over all bridge rows.
-    model_lookup = {
-        (
-            r["morphology"], r["layout_id"], r["parameter_scenario"],
-            r["source_name"], int(r["output_swc_id"]), float(r["pulse_width_ms"]),
-        ): float(r["pulse_weighted_relative_l2_pct"])
-        for r in model_rows
-    }
-    for row in comparison_rows:
-        key7 = (
-            row["morphology"], "seven", row["parameter_scenario"],
-            row["source_name"], int(row["output_swc_id"]), float(row["pulse_width_ms"]),
-        )
-        key9 = (
-            row["morphology"], "nine_both_q25", row["parameter_scenario"],
-            row["source_name"], int(row["output_swc_id"]), float(row["pulse_width_ms"]),
-        )
-        require(key7 in model_lookup and key9 in model_lookup, "bridge model lookup missing")
-        row["seven_port_pulse_weighted_error_pct"] = model_lookup[key7]
-        row["nine_port_pulse_weighted_error_pct"] = model_lookup[key9]
-        row["pulse_weighted_error_ratio_nine_over_seven"] = (
-            model_lookup[key9] / max(model_lookup[key7], 1e-300)
-        )
 
     results_dir = Path(__file__).parents[1] / "results"
     write_csv(results_dir / f"{RESULT_STEM}_model_weighted.csv", model_rows)
