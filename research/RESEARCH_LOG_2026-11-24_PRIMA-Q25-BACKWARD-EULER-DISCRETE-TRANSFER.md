@@ -46,7 +46,7 @@ At dt=0.1 ms, Im(s_BE)/omega is 0.999342 at 100 Hz, 0.983632 at 500 Hz, 0.935489
 
 ## Execution record
 
-Pending CI. No tests, preflights or numerical results are claimed before the workflow completes. The workflow pins Python 3.12, NumPy (environment-resolved), NEURON 9.0.2 and SciPy 1.16.3, verifies both SWC hashes, runs both preflights and records raw CSV read-back counts.
+Workflow 45416403878 ran Python 3.12 / NumPy 2.5.5 / NEURON 9.0.2 / SciPy 1.16.3. The 7 focused tests passed, both SWC checksums passed, both morphology preflights passed, and the complete numerical replay finished. The run then failed the finite-record identity gate at 5.05389. Inspection showed that the residual for the difference between reduced and full traces was normalized by the small inter-model residual norm; because it subtracts two independently reconstructed transfer terms, that denominator can magnify ordinary floating-point cancellation. It is now normalized against the corresponding output DFT L2 norm, while the individual full/reduced model identities remain measured against their own output norms. The validator also separates these two residual classes, writes the 864-row diagnostic CSV before gate evaluation, and adds a regression test for scale normalization. The corrected eight-test run and full replay are pending; no simulation result is accepted yet.
 
 ## Expected outputs
 
