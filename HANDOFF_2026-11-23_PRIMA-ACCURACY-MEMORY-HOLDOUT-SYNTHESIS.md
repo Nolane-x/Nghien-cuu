@@ -22,7 +22,7 @@ This report synthesizes shift/order accuracy, equal-order port-count behavior, t
 
 - Keep full Hines canonical.
 - Treat 7-port order112 extended10kHz as the current high-frequency passive research candidate; extended10kHz is supported on both the NMO_162186 epilepsy and NMO_03524 Control holdouts.
-- Treat port count/order as morphology-dependent: NMO_162186 required order168 to restore nine-port shared-output parity, while NMO_03524 was already at parity at order112 with both q25 outputs accurate. See matched PRs #13 and #15.
+- Treat port count/order as morphology-dependent and evaluate absolute error as well as ratios. NMO_162186 required order168 to restore nine-port parity; NMO_03524 was already at parity at order112; NMO_163775 showed median 9/7 ratios 78.05× / 14.50× at orders112/168, but absolute nine-port shared NRMSE remained <2.0e−4% / <6.1e−7%. See PRs #13, #15 and #16.
 - Treat 7-port order84 extended10kHz as a good accuracy/storage compromise on the NMO_03524 Control holdout; order84 remains the lower-memory region in the separate resource matrix.
 - Do not change production defaults.
 
@@ -65,3 +65,14 @@ Together with PR #13 on NMO_162186, this shows morphology-dependent incremental 
 
 
 PR #15 / workflow 45198630080 adds the second matched 7/9-port morphology. Its results support morphology-dependent incremental port cost: NMO_03524 achieved shared-output parity at order112, whereas NMO_162186 did not.
+
+
+## Third matched morphology completed — NMO_163775 Peng
+
+PR #16 / [run 45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600) passed. Artifact [#14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560), ZIP SHA-256 \`9060b04e6e769a1e9b40700197361bf67a59b164965441849e8cd3effb716a58\`.
+
+Coverage: 36 models, 324 AC, 1,728 transient, 756 shared pairs, 216 q25, 378 exact Hines comparisons. q25 SWC IDs basal 224, apical 4096. Hines references are exactly equal across layouts.
+
+At order112, nine-port was worse on all 378 pairs; median 9/7 error ratio 78.051×, but maximum absolute nine-port shared NRMSE was 0.0001933%. At order168, 347 worse / 31 better; median ratio 14.501× and maximum absolute nine-port shared NRMSE 6.0657e−7%. q25 maximum NRMSE was 2.1588e−4% at order112 and 4.2824e−7% at order168.
+
+Important: this Peng morphology uses 0.5 µm mesh and NeuroMorpho marks No Diameter, so it expands the structural-completeness context but does not provide diameter-grounded biology. The two earlier human holdouts used 0.125 µm; absolute cross-morphology error comparisons are not directly comparable. Full Hines remains canonical; no production defaults change.
