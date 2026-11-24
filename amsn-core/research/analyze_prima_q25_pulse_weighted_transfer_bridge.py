@@ -53,7 +53,7 @@ EXPECTED_BAND_ROWS = EXPECTED_MODEL_ROWS * len(BANDS_HZ)
 EXPECTED_COMPARISON_ROWS = 2 * len(SCENARIO_NAMES) * len(SOURCES) * 7 * len(PULSE_WIDTHS_MS)
 EXPECTED_OUTPUT_SUMMARY_ROWS = 2 * len(LAYOUTS) * len(SOURCES) * 7 * len(PULSE_WIDTHS_MS)
 EXPECTED_COMPARISON_SUMMARY_ROWS = 2 * len(SOURCES) * 7 * len(PULSE_WIDTHS_MS)
-EXPECTED_SOURCE_SUMMARY_ROWS = 2 * len(LAYOUTS) * len(SOURCES) * len(PULSE_WIDTHS_MS)
+EXPECTED_SOURCE_SUMMARY_ROWS = 2 * len(SOURCES) * len(PULSE_WIDTHS_MS)
 EXPECTED_BAND_SUMMARY_ROWS = 2 * len(LAYOUTS) * len(SOURCES) * len(PULSE_WIDTHS_MS) * len(BANDS_HZ)
 
 TRANSIENT_FILES = {
@@ -654,6 +654,8 @@ def main() -> None:
         transient_row = transient_by_morphology[candidate["morphology"]].get(key)
         require(transient_row is not None,
                 f"missing archived transient pair {candidate['morphology']} {key}")
+        require(transient_row["port_roles"] == candidate["output_role"],
+                f"transient output role mismatch for {candidate['morphology']} {key}")
         baseline_key = (
             candidate["morphology"], "seven", candidate["parameter_scenario"],
             candidate["source_name"], int(candidate["output_swc_id"]),
