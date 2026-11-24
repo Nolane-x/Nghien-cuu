@@ -35,7 +35,7 @@
     "numpy": "2.5.5",
     "python": "3.12.16",
     "scipy": "1.16.3",
-    "wall_seconds": 278.269314313
+    "wall_seconds": 313.09542679599997
   },
   "schema_version": 1,
   "scientific_limits": [
@@ -137,9 +137,9 @@
     "finite_identity_relative_tolerance": 2e-08,
     "full_hines_identity_coordinates": "The DFT identity uses a second mathematically equivalent full-Hines replay in perturbation coordinates (zero initial perturbation, zero leak source). The canonical absolute-voltage replay is retained for transient NRMSE, and its difference from perturbation coordinates is recorded separately.",
     "identity_normalization": "output DFT L2 norm; finite-error identity is not divided by the much smaller inter-model residual norm",
-    "max_finite_error_identity_relative_error": 1.4323466884989092e-11,
-    "max_finite_identity_absolute_error_v_samples": 1.1098343294155498e-11,
-    "max_finite_identity_relative_error": 1.4323466884989092e-11,
+    "max_finite_error_identity_relative_error": 1.4256887485702515e-11,
+    "max_finite_identity_absolute_error_v_samples": 1.1098056821321025e-11,
+    "max_finite_identity_relative_error": 1.4290021698158527e-11,
     "max_model_identity_relative_error": 1.4290021698158527e-11
   }
 }
