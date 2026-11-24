@@ -11,6 +11,8 @@ Derive the exact discrete-time transfer of the backward-Euler state recurrence a
 
 ## Method
 
+At a 0.1-ms timestep, the backward-Euler map compresses the imaginary frequency by 6.45% at 1 kHz and 24.32% at 2 kHz; at Nyquist 5 kHz the mapped shift is purely real. Keep this numerical damping/frequency warping separate from PRIMA approximation error.
+
 - Use \(s_{BE}=(1-e^{-j2\pi f\Delta t})/\Delta t\), giving \(H_{BE}=L(G+s_{BE}C)^{-1}B\).
 - Keep \(u[n]\) held over \([n\Delta t,(n+1)\Delta t)\); \(x[n]\) is the state at the interval end.
 - Use the exact zero-order-hold Fourier factor for the continuous-AC comparator.
