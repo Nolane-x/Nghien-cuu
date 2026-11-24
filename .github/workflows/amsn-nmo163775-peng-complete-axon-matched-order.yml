@@ -11,6 +11,8 @@ on:
       - "amsn-core/examples/human_prima_port_enrichment.py"
       - "amsn-core/examples/prepare_nmo163775_peng_control_holdout.py"
       - "amsn-core/tests/test_nmo163775_peng_7v9port.py"
+      - "amsn-core/tests/test_peng_complete_axon_holdout.py"
+      - "amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
   workflow_dispatch:
 
 permissions:
@@ -51,7 +53,7 @@ jobs:
         run: python -m pytest
       - name: Verify Peng control source parser and metadata
         working-directory: amsn-core
-        run: python -m pytest -q tests/test_peng_control_holdout.py tests/test_nmo163775_peng_7v9port.py
+        run: python -m pytest -q tests/test_peng_complete_axon_holdout.py tests/test_nmo163775_peng_7v9port.py
       - name: Re-run Import3D, seven canonical ports and passive preflight
         working-directory: amsn-core
         run: python examples/prepare_nmo163775_peng_control_holdout.py
@@ -65,17 +67,17 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin "$GITHUB_REF_NAME"
-          REPORT="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_report.json"
-          SUMMARY="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_matched_summary.csv"
-          Q25="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_q25_summary.csv"
+          REPORT="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_report.json"
+          SUMMARY="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_matched_summary.csv"
+          Q25="amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_q25_summary.csv"
           if git cat-file -e "origin/$GITHUB_REF_NAME:$REPORT" \
              && git cat-file -e "origin/$GITHUB_REF_NAME:$SUMMARY" \
              && git cat-file -e "origin/$GITHUB_REF_NAME:$Q25"; then
             echo "A validated matched-port result set is already archived on the remote branch; keeping that commit and preserving this run as a separate artifact."
           else
-            git add amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_*.csv \
-                    amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_report.json \
-                    amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23.time.txt
+            git add amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_*.csv \
+                    amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_report.json \
+                    amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24.time.txt
             if ! git diff --cached --quiet; then
               git commit -m "results: archive Peng control matched 7-port 9-port comparison"
               git fetch origin "$GITHUB_REF_NAME"
@@ -89,8 +91,8 @@ jobs:
         with:
           name: nmo163775-peng-control-prima-7v9port-matched-order
           path: |
-            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_*.csv
-            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23_report.json
-            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-23.time.txt
+            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_*.csv
+            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24_report.json
+            amsn-core/results/NMO_163775_PengControl_prima_7v9port_matched_order_2026-11-24.time.txt
           if-no-files-found: warn
           retention-days: 90
