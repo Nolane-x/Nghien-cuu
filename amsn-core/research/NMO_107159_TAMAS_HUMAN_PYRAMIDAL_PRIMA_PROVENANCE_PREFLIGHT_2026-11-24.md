@@ -44,6 +44,9 @@ Official sources:
 
 The source article is about a specialized human cortical GABAergic rosehip cell type. Its Figure 5C nevertheless explicitly shows a pyramidal comparison cell in connection with a rosehip cell. The NeuroMorpho cell name `Fig5c_141009_2og_B` and record class `principal cell, pyramidal` identify this reconstruction as the **pyramidal comparison cell**, not as a rosehip interneuron. Preserve this distinction in all reports and citations.
 
+
+Official NeuroMorpho morphometry (API `/api/morphometry/id/107159`): total length 12,320.7 µm; mean diameter 0.285193 µm; 61 bifurcations; 126 branches; 4 stems; max path distance 1,662.83 µm; max Euclidean distance 1,420.16 µm; width 777.889 µm, height 1,595.1 µm, depth 91.47 µm; surface 9,693.02 µm²; volume 1,624.96 µm³. These are repository morphometry measurements/derived descriptors; passive membrane and axial parameters remain separate model assumptions.
+
 ## Pinned repository source
 
 Repository path:
