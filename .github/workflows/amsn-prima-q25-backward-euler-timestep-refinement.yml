@@ -3,7 +3,7 @@ name: PRIMA q25 backward-Euler timestep refinement
 on:
   push:
     branches:
-      - research/prima-q25-backward-euler-timestep-refinement-2026-11-24
+      - research/prima-q25-backward-euler-fine-step-convergence-2026-11-24
     paths:
       - ".github/workflows/amsn-prima-q25-backward-euler-timestep-refinement.yml"
       - "amsn-core/research/analyze_prima_q25_backward_euler_timestep_refinement.py"
