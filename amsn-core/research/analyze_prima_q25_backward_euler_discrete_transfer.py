@@ -403,13 +403,17 @@ def simulate_reduced_with_terminal_states(
 
 
 def _finite_identity_error(
-    actual_fft: np.ndarray, reconstructed_fft: np.ndarray,
+    actual_fft: np.ndarray,
+    reconstructed_fft: np.ndarray,
+    *,
+    scale_norm: float = 0.0,
 ) -> tuple[float, float]:
     actual = np.asarray(actual_fft, dtype=np.complex128)
     reconstructed = np.asarray(reconstructed_fft, dtype=np.complex128)
     diff_norm = float(np.linalg.norm(reconstructed - actual))
     reference_norm = float(np.linalg.norm(actual))
-    return diff_norm / max(reference_norm, 1e-30), diff_norm
+    denominator = max(reference_norm, float(scale_norm) * 1e-12, 1e-30)
+    return diff_norm / denominator, diff_norm
 
 
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
@@ -724,6 +728,7 @@ def main() -> None:
                             full_y = full_trace[:sample_count, :, column]
                             reduced_y = reduced_trace[:sample_count, :, column]
                             model_identity_errors = []
+                            model_identity_absolute_errors = []
                             for output_index, output_node in enumerate(common_ids):
                                 full_y_fft = np.fft.rfft(full_y[:, output_index])
                                 reduced_y_fft = np.fft.rfft(reduced_y[:, output_index])
@@ -737,11 +742,13 @@ def main() -> None:
                                 reconstructed_reduced = (
                                     reduced_h_be * current_spectrum - reduced_q
                                 )
+                                full_y_norm = float(np.linalg.norm(full_y_fft))
+                                reduced_y_norm = float(np.linalg.norm(reduced_y_fft))
                                 full_identity_rel, full_identity_abs = _finite_identity_error(
-                                    full_y_fft, reconstructed_full
+                                    full_y_fft, reconstructed_full, scale_norm=full_y_norm
                                 )
                                 reduced_identity_rel, reduced_identity_abs = _finite_identity_error(
-                                    reduced_y_fft, reconstructed_reduced
+                                    reduced_y_fft, reconstructed_reduced, scale_norm=reduced_y_norm
                                 )
                                 max_identity_relative_error = max(
                                     max_identity_relative_error,
@@ -754,6 +761,9 @@ def main() -> None:
                                 model_identity_errors.append(max(
                                     full_identity_rel, reduced_identity_rel
                                 ))
+                                model_identity_absolute_errors.extend((
+                                    full_identity_abs, reduced_identity_abs, error_identity_abs
+                                ))
 
                                 actual_error_fft = reduced_y_fft - full_y_fft
                                 transfer_component = (
@@ -765,7 +775,8 @@ def main() -> None:
                                 )
                                 error_identity_rel, error_identity_abs = (
                                     _finite_identity_error(
-                                        actual_error_fft, reconstructed_error
+                                        actual_error_fft, reconstructed_error,
+                                        scale_norm=max(full_y_norm, reduced_y_norm),
                                     )
                                 )
                                 max_identity_relative_error = max(
@@ -808,30 +819,6 @@ def main() -> None:
                                 be_metric, be_error_norm, be_ref_norm = weighted_transfer_error(
                                     full_h_be, reduced_h_be, current_spectrum,
                                     frequencies, continuous_zoh_input=False,
-                                ) if False else (0.0, 0.0, 0.0)
-                                # The discrete error is per-output; select it after
-                                # constructing the correctly shaped one-output response.
-                                be_metric, be_error_norm, be_ref_norm = weighted_transfer_error(
-                                    np.asarray([full_h_be[0]]),
-                                    np.asarray([reduced_h_be[0]]),
-                                    np.asarray([current_spectrum[0]]),
-                                    np.asarray([frequencies[0]]),
-                                    continuous_zoh_input=False,
-                                ) if frequencies.size == 1 else (
-                                    100.0 * math.sqrt(
-                                        float(np.sum(weights * np.square(np.abs(
-                                            (reduced_h_be - full_h_be) * current_spectrum
-                                        ))))
-                                        / max(float(np.sum(weights * np.square(np.abs(
-                                            full_h_be * current_spectrum
-                                        )))), 1e-300)
-                                    ),
-                                    math.sqrt(float(np.sum(weights * np.square(np.abs(
-                                        (reduced_h_be - full_h_be) * current_spectrum
-                                    ))))),
-                                    math.sqrt(float(np.sum(weights * np.square(np.abs(
-                                        full_h_be * current_spectrum
-                                    ))))),
                                 )
                                 mapping_metric = 100.0 * math.sqrt(
                                     float(np.sum(
@@ -894,34 +881,9 @@ def main() -> None:
                                 "shared_outputs": len(common_ids),
                                 "max_output_identity_relative_error": max(model_identity_errors),
                                 "max_output_absolute_identity_error_v_samples": max(
-                                    max(
-                                        _finite_identity_error(
-                                            np.fft.rfft(full_y[:, idx]),
-                                            full_transfer_be[:, idx, source_index]
-                                            * current_spectrum
-                                            - full_boundary[:, idx, column],
-                                        )[1],
-                                        _finite_identity_error(
-                                            np.fft.rfft(reduced_y[:, idx]),
-                                            reduced_transfer_be[:, idx, source_index]
-                                            * current_spectrum
-                                            - reduced_boundary[:, idx, column],
-                                        )[1],
-                                    )
-                                    for idx in range(len(common_ids))
+                                    model_identity_absolute_errors
                                 ),
                             })
-
-                # Comparison rows join seven- and nine-port metrics on exact
-                # morphology/scenario/source/output/pulse/window identity.
-                local_rows = {
-                    row["layout_id"]: row
-                    for row in metric_rows[-(len(LAYOUT_IDS) * len(SOURCE_NAMES) * 0 + 0):]
-                }
-                # Build exact lookup for this protocol/window from the append
-                # block; no positional assumption is used for node matching.
-                last_block = metric_rows[-(len(LAYOUT_IDS) * len(SOURCE_NAMES) * 0 + 0):]
-                del local_rows, last_block
 
             # The paired table is materialized after all scenario rows exist,
             # keyed by exact identifiers rather than append order.
