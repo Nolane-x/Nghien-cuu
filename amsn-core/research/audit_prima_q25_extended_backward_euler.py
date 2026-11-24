@@ -716,8 +716,12 @@ def main() -> None:
             # 20-ms simulator beside both extended implementations on the same
             # exact tree/model/input. This distinguishes full-Hines factor issues
             # from reduced-state/output mapping issues before accepting later windows.
-            if scenario_name == "Rm_minus20":
-                probe_source = "basal_q75"
+            if scenario_name in ("Rm_minus20", "Rm_plus20"):
+                # Keep one historical probe and add the exact current worst pair
+                # from the parity diagnostic: Tamas dual-q25, Rm_plus20, soma,
+                # 2-ms pulse. This compares the original archived simulator path
+                # directly with the extended audit on the failing source/output.
+                probe_source = "basal_q75" if scenario_name == "Rm_minus20" else "soma"
                 probe_width_ms = 2.0
                 probe_column = SOURCE_NAMES.index(probe_source) * len(PULSE_WIDTHS_MS)
                 for probe_layout_id in LAYOUT_IDS:
