@@ -1,0 +1,71 @@
+{
+  "exact_coverage": {
+    "candidate_event_rows": 20160,
+    "expected_models": 144,
+    "expected_seed_block_rows": 864,
+    "max_basis_difference_vs_production": 0.0,
+    "models": 144,
+    "seed_block_rows": 864,
+    "shift_round_rows": 3024
+  },
+  "runtime": {
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "wall_seconds": 305.747524914
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "Instrumented modified Gram-Schmidt mirrors the current private production routine; final bases are compared against the unmodified production builder for every model.",
+    "Per-shift event rows distinguish initial seed blocks from later round-robin Krylov growth.",
+    "The audit measures numerical subspace growth only; it does not by itself explain transfer or transient error differences.",
+    "Only two individual passive morphology reconstructions are compared; they are not population samples.",
+    "Full Hines remains canonical; no production solver code or defaults are changed."
+  ],
+  "scope": {
+    "basis_orders": [
+      112,
+      168
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "name": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "name": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "relative_tolerance": 1e-12,
+    "shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ]
+  },
+  "status": "prima_q25_krylov_growth_audit_passed"
+}
