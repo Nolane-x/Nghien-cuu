@@ -4,7 +4,7 @@
 **Branch:** research/prima-q25-krylov-transfer-stage-cross-morphology-2026-11-24  
 **Parent:** source/output map branch / PR #23  
 **Successful workflow:** [45337038089](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45337038089)  
-**Result commit:** `a0d6e8e2c9a8f203d53a0c0c04c2691f9cc8702f`  
+**Result commit:** `83ccc27d21d87e1a50a2ad48414958fe62a4c63e`  
 **Detailed report:** [PRIMA_Q25_KRYLOV_TRANSFER_STAGE_AUDIT_2026-11-24.md](amsn-core/research/PRIMA_Q25_KRYLOV_TRANSFER_STAGE_AUDIT_2026-11-24.md)
 
 ## Research question
@@ -22,11 +22,11 @@ Exact read-back:
 - 1,176 output summaries aggregated across nine passive scenarios.
 - 168 source summaries aggregated across seven shared outputs.
 - Maximum final instrumented basis difference versus production: exactly 0.0.
-- Maximum orthogonality error: 1.78e-15.
+- Maximum orthogonality error: 2.22e-15.
 
 Runtime: 220.51 s wall time, 308.03 s user CPU, 300,248 KB maximum RSS. Python 3.12.16, NumPy 2.5.5 and NEURON 9.0.2.
 
-Artifact: [prima-q25-krylov-transfer-stages-cross-morphology](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45337038089/artifacts/14893398287), SHA-256 `a274bcd3ff1ce31bc2659bd6d3f12b0bd93b7d2853f8d6f62bdf82f7e0a1e9d`.
+Artifact: [prima-q25-krylov-transfer-stages-cross-morphology](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45337038089/artifacts/14894466250), SHA-256 `6f11321129aa05bc6208e67723fd211f7d4723c85138ea80e879eb25c7313026`.
 
 ## Main finding — transfer error falls sharply at every prefix
 
@@ -34,31 +34,54 @@ For the dual-q25 layout at order 168, the median across the three source summari
 
 | Prefix | Peng mouse | Tamas human pyramidal |
 |---|---:|---:|
-| Seed | 7.788e-2% | 1.848e-2% |
-| After Krylov round 1 | 4.427e-5% | 6.521e-6% |
-| After Krylov round 2 | 7.466e-8% | 1.065e-8% |
+| Seed (54 basis vectors) | 7.788e-2% | 1.848e-2% |
+| After Krylov round 1 (108) | 4.427e-5% | 6.521e-6% |
+| After Krylov round 2 (162) | 7.466e-8% | 1.065e-8% |
 | After Krylov round 3 / order 168 | 2.140e-8% | 2.638e-9% |
 
-Each round therefore improves the transfer approximation substantially on both morphologies. However, at the final order-168 prefix the dual-q25 transfer error remains larger than the seven-port baseline on all seven output groups for every source in both morphologies.
+Each round therefore improves the median transfer approximation substantially on both morphologies.
 
-Median of the seven output-specific dual-q25/seven transfer-error ratios:
+However, at the final order-168 prefix the dual-q25 transfer error remains larger than the seven-port baseline on all seven output groups for every source in both morphologies.
+
+Median of the seven paired output-specific dual-q25/seven transfer-error ratios:
 
 | Morphology | Source | Median ratio | Output groups worse than seven-port |
 |---|---|---:|---:|
 | Peng | Soma | 53.32× | 7 / 7 |
-| Peng | Basal-q75 | 50.48× | 7 / 7 |
-| Peng | Apical-q75 | 45.29× | 7 / 7 |
-| Tamas | Soma | 23.15× | 7 / 7 |
-| Tamas | Basal-q75 | 9.56× | 7 / 7 |
-| Tamas | Apical-q75 | 6.16× | 7 / 7 |
+| Peng | Basal-q75 | 52.01× | 7 / 7 |
+| Peng | Apical-q75 | 43.07× | 7 / 7 |
+| Tamas | Soma | 23.06× | 7 / 7 |
+| Tamas | Basal-q75 | 8.60× | 7 / 7 |
+| Tamas | Apical-q75 | 6.70× | 7 / 7 |
 
-Absolute transfer L2 errors remain very small: final dual-q25 source-level medians range from 8.79e-9% to 7.28e-8% on Peng and 2.30e-9% to 7.90e-9% on Tamas. These ratios use the seven-port transfer error as the denominator.
+Source-level absolute relative-L2 transfer errors remain very small: Peng 8.79e-9% to 7.28e-8%; Tamas 2.30e-9% to 7.90e-9%. The ratios use the seven-port error as the denominator, which is itself extremely small.
+
+## 8-port comparison at final order 168
+
+Median source-level complex transfer L2 error (%) across the seven outputs:
+
+| Morphology | Source | Seven | Basal-q25 8 | Apical-q25 8 | Dual-q25 9 |
+|---|---|---:|---:|---:|---:|
+| Peng | Soma | 1.366e-9 | 1.757e-9 | 3.795e-9 | 7.281e-8 |
+| Peng | Basal-q75 | 4.115e-10 | 5.628e-10 | 1.120e-9 | 2.140e-8 |
+| Peng | Apical-q75 | 2.041e-10 | 2.647e-10 | 5.005e-10 | 8.792e-9 |
+| Tamas | Soma | 3.427e-10 | 5.387e-10 | 5.195e-10 | 7.902e-9 |
+| Tamas | Basal-q75 | 3.069e-10 | 4.455e-10 | 4.238e-10 | 2.638e-9 |
+| Tamas | Apical-q75 | 3.431e-10 | 3.873e-10 | 3.858e-10 | 2.298e-9 |
+
+The dual-q25 configuration has the largest AC transfer residual in every source/morphology row in this table. Nevertheless, all reported absolute relative-L2 transfer errors remain extremely small.
 
 ## Relation to the earlier transient results
 
-The earlier order-168 matched pulse results showed a 14.525× median shared-output NRMSE ratio for dual-q25 on Peng, but 1.001× on Tamas. The transfer-stage audit now shows dual-q25 AC transfer error above seven-port on both morphologies, with a larger relative gap on Peng.
+The earlier order-168 matched pulse results showed a 14.525× median shared-output transient NRMSE ratio for dual-q25 on Peng, but 1.001× on Tamas. This AC transfer-stage audit finds dual-q25 transfer error above seven-port on both morphologies, with a larger relative gap on Peng.
 
-These metrics are not interchangeable: the transfer audit aggregates complex frequency responses over nine AC frequencies, while the earlier transient NRMSE measures time-domain pulse traces. A residual in a frequency response does not automatically create an equal-sized pulse-trace error. The Tamas AC/transient difference is therefore a useful finding, not a contradiction to smooth over.
+These metrics are not interchangeable: the transfer audit aggregates complex frequency responses over nine discrete frequencies (0.1–10,000 Hz), while the earlier transient NRMSE measures time-domain pulse traces. A frequency-response residual does not automatically create an equal-sized pulse-trace error. The Tamas AC/transient difference is a real unresolved finding, not a contradiction to smooth over.
+
+At order 112, final dual-q25/seven transfer-error ratios are also elevated on both samples: Peng 40.21× / 40.21× / 37.75× and Tamas 39.79× / 40.19× / 35.33× for soma / basal-q75 / apical-q75.
+
+## Next step
+
+Measure a denser, pulse-weighted frequency response for the seven- and nine-port models and compare it with the exact 2-ms and 10-ms transient protocols. This should identify whether the AC residual is concentrated in frequency bands that contribute little to the sampled pulse response, especially on Tamas.
 
 ## Scientific constraints
 
