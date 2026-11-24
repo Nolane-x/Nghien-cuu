@@ -16,7 +16,7 @@
 
 The passive PRIMA project had accumulated separate validated branches for shift/order accuracy, seven-vs-nine-port accuracy, high-order nine-port capacity, held-out morphology and resource benchmarking. Their conclusions were not yet joined into one conditional engineering decision.
 
-This report synthesizes shift/order accuracy, equal-order port-count behavior, two independent morphology holdouts, high-order capacity and resource evidence while preserving the distinct configurations and comparison baselines.
+This report synthesizes shift/order accuracy, equal-order port-count behavior, four independent morphology holdouts, high-order capacity and resource evidence while preserving the distinct configurations and comparison baselines.
 
 ## Validated conclusion
 
