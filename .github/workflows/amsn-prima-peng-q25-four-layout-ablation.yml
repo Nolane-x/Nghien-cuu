@@ -1,0 +1,90 @@
+name: NMO_163775 Peng q25 four-layout PRIMA ablation
+
+on:
+  push:
+    branches:
+      - research/prima-peng-q25-four-layout-ablation-2026-11-24
+    paths:
+      - ".github/workflows/amsn-prima-peng-q25-four-layout-ablation.yml"
+      - "amsn-core/examples/replay_nmo163775_four_layout_ablation.py"
+      - "amsn-core/examples/replay_nmo163775_peng_7v9port.py"
+      - "amsn-core/examples/prepare_nmo163775_peng_control_holdout.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/tests/test_nmo163775_four_layout_ablation.py"
+      - "amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-peng-q25-four-layout-ablation
+  cancel-in-progress: false
+
+jobs:
+  four-layout-q25-ablation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+      - name: Verify pinned Peng SWC SHA-256
+        working-directory: amsn-core
+        run: |
+          test -s data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc
+          echo "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f  data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc" | sha256sum --check -
+      - name: Run q25 four-layout regression tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_nmo163775_four_layout_ablation.py
+      - name: Run existing Peng source and PRIMA regression tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_peng_complete_axon_holdout.py tests/test_nmo163775_peng_7v9port.py
+      - name: Re-run Import3D preflight and pin q25 nodes
+        working-directory: amsn-core
+        run: python examples/prepare_nmo163775_peng_control_holdout.py
+      - name: Replay four matched layouts against full Hines
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24.time.txt python examples/replay_nmo163775_four_layout_ablation.py
+      - name: Commit four-layout results
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_*.csv \
+                  amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_report.json \
+                  amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24.time.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive Peng q25 four-layout PRIMA ablation"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve complete four-layout outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmo163775-peng-q25-four-layout-prima-ablation
+          path: |
+            amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_*.csv
+            amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24_report.json
+            amsn-core/results/NMO_163775_PengControl_prima_q25_four_layout_ablation_2026-11-24.time.txt
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/NMO_163775_PengControl_holdout/port_mapping.csv
+          if-no-files-found: warn
+          retention-days: 90
