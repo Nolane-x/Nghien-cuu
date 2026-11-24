@@ -71,14 +71,20 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$GITHUB_REF_NAME"
+          UPSTREAM_REF="origin/$GITHUB_REF_NAME"
+          # Reset the index to the newest branch tip before staging generated files.
+          # This makes reruns idempotent when identical result files were already
+          # committed by an earlier concurrent/manual workflow run.
+          git reset --mixed "$UPSTREAM_REF"
           git add amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24_*.csv \
                   amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24_report.json \
                   amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24.time.txt
-          if ! git diff --cached --quiet; then
+          if ! git diff --cached --quiet "$UPSTREAM_REF" -- amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24_*.csv amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24_report.json amsn-core/results/prima_q25_pulse_spectrum_weighted_transfer_2026-11-24.time.txt; then
             git commit -m "results: archive pulse-spectrum-weighted q25 transfer audit"
-            git fetch origin "$GITHUB_REF_NAME"
-            git rebase "origin/$GITHUB_REF_NAME"
             git push origin "HEAD:$GITHUB_REF_NAME"
+          else
+            echo "Identical pulse-weighted results are already archived on the branch."
           fi
       - name: Preserve pulse-weighted transfer evidence
         if: always()
