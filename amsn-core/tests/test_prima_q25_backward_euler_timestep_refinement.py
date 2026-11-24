@@ -152,6 +152,59 @@ def test_absolute_current_charge_is_preserved_by_sampled_pulse_convention():
             assert charge == pytest.approx(amplitude * width / 1000.0, rel=0.0, abs=1e-27)
 
 
+
+def test_factorized_reduced_step_supports_multiple_protocol_rhs():
+    from types import SimpleNamespace
+
+    rng = np.random.default_rng(20261124)
+    raw_g = rng.normal(size=(5, 5))
+    raw_c = rng.normal(size=(5, 5))
+    conductance = raw_g.T @ raw_g + np.eye(5) * 3.0
+    capacitance = raw_c.T @ raw_c + np.eye(5) * 0.5
+    input_matrix = rng.normal(size=(5, 3))
+    model = SimpleNamespace(
+        conductance_matrix_s=conductance,
+        capacitance_matrix_f=capacitance,
+        input_matrix=input_matrix,
+    )
+    dt_s = 2.5e-5
+    factor = audit.tail.factor_reduced_backward_euler(model, dt_s)
+    previous = rng.normal(size=(5, 6))
+    current = rng.normal(size=(3, 6))
+
+    multi = audit.tail.reduced_backward_euler_step_factorized(
+        model, factor, previous, current, dt_s
+    )
+    individual = np.column_stack([
+        audit.tail.reduced_backward_euler_step_factorized(
+            model, factor, previous[:, column], current[:, column], dt_s
+        )
+        for column in range(previous.shape[1])
+    ])
+    np.testing.assert_allclose(multi, individual, rtol=2e-13, atol=2e-13)
+
+
+def test_sampled_current_matrix_preserves_charge_and_source_routing():
+    source_indices = [3, 7, 11]
+    protocol = audit.PROTOCOL
+    dt_ms = 0.025
+    dt_s = dt_ms / 1000.0
+    steps = int(round(20.0 / dt_ms))
+    observed_charge = np.zeros(len(protocol), dtype=float)
+    for step in range(steps):
+        current = audit.make_current_matrix(
+            16, source_indices, protocol, step, dt_s
+        )
+        observed_charge += np.sum(current, axis=0) * dt_s
+
+    for column, (source, width_ms) in enumerate(protocol):
+        expected_charge = audit.tail.CURRENT_A * width_ms / 1000.0
+        assert observed_charge[column] == pytest.approx(
+            expected_charge, rel=0.0, abs=1e-27
+        )
+        source_row = source_indices[audit.SOURCE_NAMES.index(source)]
+        assert source_row < 16
+
 def test_expected_dt_order_and_fine_reference():
     assert audit.DT_GRID_MS == (0.1, 0.05, 0.025)
     assert audit.FINE_REFERENCE_DT_MS == 0.025
