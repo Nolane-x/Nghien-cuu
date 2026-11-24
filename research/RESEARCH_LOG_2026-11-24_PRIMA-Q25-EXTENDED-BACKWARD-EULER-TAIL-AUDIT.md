@@ -23,7 +23,7 @@ To keep the long tail tractable, the full cable tree matrix is factored once per
 
 - 6,048 cumulative transient output rows.
 - 3,024 paired nine/seven rows.
-- 756 20-ms archived NRMSE parity rows.
+- 1,512 20-ms archived NRMSE parity rows.
 - 672 by-output summaries.
 - 336 comparison summaries.
 - 48 by-source summaries.
