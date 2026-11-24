@@ -31,7 +31,17 @@ Thus backward-Euler evaluates the continuous resolvent at the complex frequency
 s_{BE}(f)=\frac{1-e^{-j2\pi f\Delta t}}{\Delta t},
 \]
 
-not at \(j2\pi f\). The real part of \(s_{BE}\) introduces numerical damping and the imaginary part warps frequency. For the finite record beginning at rest, the terminal state cannot be discarded:
+not at \(j2\pi f\). In components, \(\Re(s_{BE})=(1-\cos\Omega)/\Delta t\) is a positive numerical-damping term and \(\Im(s_{BE})=\sin\Omega/\Delta t\) is the warped angular frequency. For \(\Delta t=0.1\) ms:
+
+| Frequency | Re(s_BE) (s⁻¹) | Im(s_BE) (s⁻¹) | Continuous ω (s⁻¹) | Imaginary-frequency compression |
+|---:|---:|---:|---:|---:|
+| 100 Hz | 19.73 | 627.91 | 628.32 | 0.066% |
+| 500 Hz | 489.43 | 3,090.17 | 3,141.59 | 1.637% |
+| 1,000 Hz | 1,909.83 | 5,877.85 | 6,283.19 | 6.451% |
+| 2,000 Hz | 6,909.83 | 9,510.57 | 12,566.37 | 24.317% |
+| 5,000 Hz (Nyquist) | 20,000.00 | 0.00 | 31,415.93 | 100% |
+
+The BE transfer therefore differs materially from the continuous AC transfer near the upper part of this sampled band even before model reduction is considered. This is a mathematically expected discretization effect, not evidence of a morphology-specific defect. For the finite record beginning at rest, the terminal state cannot be discarded:
 
 \[
 \left(G+\frac{1-e^{-j\Omega}}{\Delta t}C\right)X
