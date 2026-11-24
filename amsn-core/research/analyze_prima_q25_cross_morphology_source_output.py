@@ -40,8 +40,8 @@ MORPHOLOGIES = (
         "species_label": "mouse",
         "expected_outputs": {
             1: "soma", 144: "basal_q75", 3926: "apical_q75",
-            4180: "apical_q90", 40: "basal_q90", 4104: "apical_q50",
-            3948: "basal_q50",
+            4180: "basal_q50", 40: "basal_q90", 4104: "apical_q50",
+            3948: "apical_q90",
         },
     },
     {
