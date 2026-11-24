@@ -84,6 +84,7 @@ def expected_counts() -> dict[str, int]:
         "vs_seven_paired_rows": EXPECTED_PAIRED_ROWS,
         "vs_seven_source_summary_rows": EXPECTED_PAIRED_SOURCE_ROWS,
         "transient_input_rows": EXPECTED_TRANSIENT_INPUT_ROWS,
+        "pulse_spectrum_sample_rows": EXPECTED_PULSE_WEIGHT_ROWS,
     }
 
 
