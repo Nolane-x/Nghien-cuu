@@ -128,7 +128,7 @@
     "neuron": "9.0.2",
     "numpy": "2.5.5",
     "python": "3.12.16",
-    "wall_seconds": 92.09228289700002
+    "wall_seconds": 92.16429296000001
   },
   "schema_version": 1,
   "scientific_limits": [
