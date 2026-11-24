@@ -21,9 +21,9 @@ def test_generalized_rate_spectrum_is_positive_for_spd_pair():
     g = np.diag([4.0, 9.0, 16.0])
     c = np.diag([2.0, 3.0, 4.0])
     minimum, maximum, ratio = audit.generalized_rate_spectrum(g, c)
-    assert minimum == 2.0
-    assert maximum == 4.0
-    assert ratio == 2.0
+    assert np.isclose(minimum, 2.0, rtol=1e-14, atol=0.0)
+    assert np.isclose(maximum, 4.0, rtol=1e-14, atol=0.0)
+    assert np.isclose(ratio, 2.0, rtol=1e-14, atol=0.0)
 
 
 def test_generalized_rate_spectrum_rejects_non_positive_capacitance():
