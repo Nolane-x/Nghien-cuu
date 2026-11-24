@@ -5,7 +5,7 @@
 
 ## Work performed
 
-Read and cross-checked validated reports and CSVs from PRs #4–#8, then incorporated shift/order, matched port-count and two distinct morphology holdouts:
+Read and cross-checked validated reports and CSVs from PRs #4–#8, then incorporated shift/order, matched port-count and four distinct morphology holdouts:
 - PR #4 high-order nine-port matrix
 - PR #5 resource/RSS benchmark
 - PR #6 equal-order seven-port versus nine-port
@@ -41,7 +41,7 @@ Order112 nine-port regressed on 377/378 shared pairs; median 9/7 transient-error
 
 Updated conditional choice: use a matched seven/nine-port test on the target morphology. NMO_162186 needed order168 for shared-output parity; NMO_03524 did not. Extended10kHz remains the high-frequency shift family, with order84 a good accuracy/storage compromise on NMO_03524. Full Hines remains canonical.
 
-Outstanding work: add a third independent morphology with a more complete axon and distinct source study; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
+Outstanding work: harmonize the 0.125 and 0.5 µm reference meshes across the four holdouts; add a fifth independent morphology; controlled fixed-machine performance benchmark; separate active/nonlinear validation.
 
 
 ## Second independent morphology completed — NMO_03524 Jacobs Control
@@ -54,7 +54,7 @@ The sweep covered 81 models, 729 frequency rows and 3,402 transient-port rows, a
 
 Conclusion: extended10kHz shift family is independently supported on a second human morphology in a Control metadata context. It is not a matched factorial comparison with NMO_162186. PR #14 is seven-port only and does not replicate q25/9-port transfer there.
 
-Next gate: add a third independent morphology, preferably with a more complete axon; fixed-hardware timing and active/nonlinear validation remain separate.
+Next gate: harmonize mesh resolution across the four morphologies and add a fifth independent morphology; fixed-hardware timing and active/nonlinear validation remain separate.
 
 
 ## Second matched port-count morphology completed — NMO_03524
