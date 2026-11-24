@@ -447,6 +447,7 @@ def main() -> None:
     step_count = int(round(max_window_ms / DT_MS))
     output_rows: list[dict[str, Any]] = []
     parity_rows: list[dict[str, Any]] = []
+    parity_probe_rows: list[dict[str, Any]] = []
     morphology_manifest = []
     protocol = column_protocol()
 
@@ -535,6 +536,85 @@ def main() -> None:
                     protocol,
                     duration_ms=max_window_ms,
                 )
+
+            # One controlled parity probe per layout: run the original legacy
+            # 20-ms simulator beside both extended implementations on the same
+            # exact tree/model/input. This distinguishes full-Hines factor issues
+            # from reduced-state/output mapping issues before accepting later windows.
+            if scenario_name == "Rm_minus20":
+                probe_source = "basal_q75"
+                probe_width_ms = 2.0
+                probe_column = SOURCE_NAMES.index(probe_source) * len(PULSE_WIDTHS_MS)
+                for probe_layout_id in LAYOUT_IDS:
+                    probe_layout = layouts[probe_layout_id]
+                    probe_source_slot = int(probe_layout["source_indices"][probe_source])
+                    legacy_full, _ = baseline.run_full_hines_transient(
+                        target, probe_layout["ports"], probe_source_slot, probe_width_ms
+                    )
+                    legacy_reduced, _ = baseline.run_reduced_transient(
+                        models[probe_layout_id], probe_layout["port_count"],
+                        probe_source_slot, probe_width_ms
+                    )
+                    shared_slots = shared_by_layout[probe_layout_id]
+                    legacy_full_shared = legacy_full[:, shared_slots]
+                    legacy_reduced_shared = legacy_reduced[:, shared_slots]
+                    new_full_shared = full_trace[:, :, probe_column]
+                    new_reduced_shared = reduced_traces[probe_layout_id][:, :, probe_column]
+                    probe_row = {
+                        "morphology": morph_spec["name"],
+                        "parameter_scenario": scenario_name,
+                        "layout_id": probe_layout_id,
+                        "source_name": probe_source,
+                        "pulse_width_ms": probe_width_ms,
+                        "legacy_full_vs_sparse_full_relative_l2_pct": relative_l2_percent(
+                            legacy_full_shared, new_full_shared
+                        ),
+                        "legacy_reduced_vs_precomputed_reduced_relative_l2_pct": relative_l2_percent(
+                            legacy_reduced_shared, new_reduced_shared
+                        ),
+                        "legacy_vs_archived_max_absolute_delta_pct_points": 0.0,
+                        "legacy_vs_archived_max_relative_delta_pct": 0.0,
+                        "new_vs_archived_max_absolute_delta_pct_points": 0.0,
+                        "new_vs_archived_max_relative_delta_pct": 0.0,
+                    }
+                    legacy_abs_deltas = []
+                    legacy_rel_deltas = []
+                    new_abs_deltas = []
+                    new_rel_deltas = []
+                    for output_index, output_node in enumerate(common_ids):
+                        archive_key = (
+                            scenario_name, probe_source, probe_width_ms, int(output_node)
+                        )
+                        archived_row = archived[archive_key]
+                        legacy_nrmse = relative_l2_percent(
+                            legacy_full_shared[:, output_index],
+                            legacy_reduced_shared[:, output_index],
+                        )
+                        new_nrmse = relative_l2_percent(
+                            new_full_shared[:, output_index],
+                            new_reduced_shared[:, output_index],
+                        )
+                        archived_nrmse = (
+                            float(archived_row["seven_port_nrmse_pct"])
+                            if probe_layout_id == "seven"
+                            else float(archived_row["candidate_nrmse_pct"])
+                        )
+                        for value, abs_deltas, rel_deltas in (
+                            (legacy_nrmse, legacy_abs_deltas, legacy_rel_deltas),
+                            (new_nrmse, new_abs_deltas, new_rel_deltas),
+                        ):
+                            abs_delta = abs(value - archived_nrmse)
+                            abs_deltas.append(abs_delta)
+                            rel_deltas.append(
+                                100.0 * abs_delta / max(abs(archived_nrmse), 1e-30)
+                            )
+                    probe_row.update({
+                        "legacy_vs_archived_max_absolute_delta_pct_points": max(legacy_abs_deltas),
+                        "legacy_vs_archived_max_relative_delta_pct": max(legacy_rel_deltas),
+                        "new_vs_archived_max_absolute_delta_pct_points": max(new_abs_deltas),
+                        "new_vs_archived_max_relative_delta_pct": max(new_rel_deltas),
+                    })
+                    parity_probe_rows.append(probe_row)
 
             for layout_id in LAYOUT_IDS:
                 layout = layouts[layout_id]
@@ -635,6 +715,7 @@ def main() -> None:
         reverse=True,
     )[:20]
     print(json.dumps({
+        "legacy_parity_probes": parity_probe_rows,
         "parity_diagnostics": {
             "rows": len(parity_rows),
             "max_absolute_delta_pct_points": max_parity_absolute,
