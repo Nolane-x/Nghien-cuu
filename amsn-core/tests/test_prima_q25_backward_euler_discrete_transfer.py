@@ -84,18 +84,38 @@ def test_finite_record_dft_identity_includes_terminal_state():
     np.testing.assert_allclose(reconstructed, observed, rtol=2e-11, atol=2e-12)
 
 
-def test_discrete_response_equals_continuous_resolvent_at_s_be():
-    g = np.array([[2.0, -0.5], [-0.5, 1.5]])
-    c = np.array([[0.2, 0.0], [0.0, 0.1]])
-    b = np.array([[1.0], [0.0]])
-    output = np.array([[0.0, 1.0]])
+def test_discrete_response_matches_z_domain_recurrence():
+    conductance = 2.0
+    capacitance = 3e-4
+    current_gain = 1.0
+    output_gain = 1.0
     dt = 1e-4
     frequencies = np.array([0.0, 50.0, 500.0, 2500.0, 5000.0])
+    omega_dt = 2.0 * np.pi * frequencies * dt
+    z_inverse = np.exp(-1j * omega_dt)
+
+    d_over_dt = capacitance / dt
+    lhs = conductance + d_over_dt
+    state_pole = d_over_dt / lhs
+    input_gain = current_gain / lhs
+    recurrence_response = (
+        output_gain * input_gain / (1.0 - state_pole * z_inverse)
+    )
+
     s_be = audit.backward_euler_s_values(frequencies, dt)
-    for s in s_be:
-        observed = output @ np.linalg.solve(g + s * c, b)
-        expected = output @ np.linalg.solve(g + s * c, b)
-        np.testing.assert_allclose(observed, expected, rtol=0.0, atol=0.0)
+    resolvent_response = (
+        output_gain * current_gain / (conductance + s_be * capacitance)
+    )
+    np.testing.assert_allclose(
+        recurrence_response, resolvent_response, rtol=2e-14, atol=1e-14
+    )
+
+    continuous_response = (
+        output_gain * current_gain
+        / (conductance + 1j * 2.0 * np.pi * frequencies * capacitance)
+    )
+    assert recurrence_response[0] == pytest.approx(continuous_response[0])
+    assert abs(recurrence_response[-1] - continuous_response[-1]) > 1e-3
 
 
 def test_weighted_error_is_scale_invariant_for_common_input_gain():
