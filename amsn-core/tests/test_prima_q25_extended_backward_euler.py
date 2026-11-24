@@ -64,6 +64,45 @@ def test_sparse_full_cable_factor_matches_tree_backward_euler_step():
         voltage_perturbation = observed
 
 
+def test_vectorized_tree_hines_step_matches_canonical_cable_step():
+    from amsn.cable import CableCompartment, CableTree, PassiveParameters
+
+    tree = CableTree(
+        [
+            CableCompartment("soma", 10e-6, 10e-6),
+            CableCompartment("branch_a", 8e-6, 4e-6, "soma"),
+            CableCompartment("branch_b", 6e-6, 3e-6, "branch_a"),
+        ],
+        PassiveParameters(),
+    )
+    factor = audit.build_tree_hines_be_factor(tree, audit.DT_S)
+    state = np.zeros((tree.n_compartments, 6), dtype=float)
+    leak = tree.parameters.e_leak_v
+    for step in range(23):
+        current = np.zeros_like(state)
+        if 2 <= step < 11:
+            current[0, 0] = audit.CURRENT_A
+            current[1, 2] = audit.CURRENT_A
+        if 7 <= step < 18:
+            current[2, 1] = audit.CURRENT_A
+            current[0, 5] = audit.CURRENT_A
+        if 4 <= step < 9:
+            current[1, 3] = audit.CURRENT_A
+            current[2, 4] = audit.CURRENT_A
+
+        observed = audit.tree_hines_backward_euler_step(factor, state, current)
+        expected = np.column_stack([
+            tree.step_passive(
+                leak + state[:, column],
+                audit.DT_S,
+                current[:, column],
+            ) - leak
+            for column in range(state.shape[1])
+        ])
+        np.testing.assert_allclose(observed, expected, rtol=2e-11, atol=2e-16)
+        state = observed
+
+
 def test_reduced_transition_operators_match_step_backward_euler():
     from amsn.prima import PassiveReducedModel
 
