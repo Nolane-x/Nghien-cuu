@@ -77,14 +77,21 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin "$GITHUB_REF_NAME"
+          UPSTREAM_REF="origin/$GITHUB_REF_NAME"
+          # Reset only the index to the latest branch tip while preserving the
+          # freshly generated working-tree results. Concurrent/repeated runs
+          # then compare against outputs already committed by an earlier run.
+          git reset --mixed "$UPSTREAM_REF"
           git add amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24_*.csv \
-                  amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24_report.json \
-                  amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24.time.txt
-          if ! git diff --cached --quiet; then
+                  amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24_report.json
+          if ! git diff --cached --quiet "$UPSTREAM_REF" -- \
+              amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24_*.csv \
+              amsn-core/results/prima_q25_extended_backward_euler_tail_2026-11-24_report.json; then
             git commit -m "results: archive q25 extended backward-Euler tail audit"
-            git fetch origin "$GITHUB_REF_NAME"
-            git rebase "origin/$GITHUB_REF_NAME"
             git push origin "HEAD:$GITHUB_REF_NAME"
+          else
+            echo "Identical numerical outputs are already archived; skipping duplicate commit."
           fi
       - name: Preserve extended backward-Euler evidence
         if: always()
