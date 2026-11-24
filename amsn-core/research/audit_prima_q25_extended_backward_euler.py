@@ -2,10 +2,10 @@
 """Extended exact-backward-Euler tail audit for q25 PRIMA holdouts.
 
 Re-runs the original 0.1-ms implicit Euler recurrence and measures cumulative
-NRMSE over 20, 40, 100 and 200-ms windows. Full cable references use a sparse
-factorization of the exact tree conductance/capacitance matrix; this is checked
-against CableTree.step_passive on a deterministic fixture and against the
-archived 20-ms transient NRMSE rows for all 756 matched comparisons.
+NRMSE over 20, 40, 100 and 200-ms windows. Full cable references use an exact-
+order compiled implementation of the original Hines tree elimination and are
+checked against CableTree.step_passive. The reduced path preserves the original
+per-vector solve/projection order through the archived 20-ms parity window.
 """
 from __future__ import annotations
 
@@ -18,7 +18,6 @@ import shutil
 import subprocess
 import sys
 import tempfile
-import time
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -97,6 +96,18 @@ TRANSIENT_FILES = {
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
+
+def archived_parity_within_absolute_tolerance(
+    computed_nrmse_pct: float,
+    archived_nrmse_pct: float,
+) -> bool:
+    """Compare tiny archived NRMSE values using an absolute percentage-point floor."""
+    computed = float(computed_nrmse_pct)
+    archived = float(archived_nrmse_pct)
+    require(np.isfinite(computed) and np.isfinite(archived),
+            "computed and archived NRMSE values must be finite")
+    return abs(computed - archived) <= ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
 
 
 def expected_counts() -> dict[str, int]:
@@ -623,7 +634,6 @@ def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
 
 
 def main() -> None:
-    started = time.perf_counter()
     dt_s = DT_S
     max_window_ms = max(WINDOWS_MS)
     step_count = int(round(max_window_ms / DT_MS))
@@ -940,8 +950,10 @@ def main() -> None:
 
     require(
         all(
-            float(r["absolute_delta_pct_points"])
-            <= ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
+            archived_parity_within_absolute_tolerance(
+                float(r["computed_20ms_nrmse_pct"]),
+                float(r["archived_20ms_nrmse_pct"]),
+            )
             for r in parity_rows
         ),
         (
@@ -995,9 +1007,16 @@ def main() -> None:
             "max_20ms_archived_absolute_delta_pct_points": max_parity_absolute,
             "max_20ms_archived_relative_delta_pct": max_parity_relative,
         },
+        "parity_gate": {
+            "rule": "absolute difference in 20-ms NRMSE percentage points",
+            "tolerance_pct_points": ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS,
+            "max_absolute_delta_pct_points": max_parity_absolute,
+            "max_relative_delta_pct": max_parity_relative,
+        },
         "scientific_limits": [
-            "The recurrence is the same implicit backward-Euler method with dt=0.1 ms and the same pulse sample timing as the archived 20-ms experiment; the observation window alone is extended.",
-            "The full cable BE matrix is assembled from the original passive tree G and C, factored sparsely once per scenario, and its 20-ms NRMSE is required to reproduce the archived Hines/PRIMA result within a strict parity guard.",
+            "The recurrence is the same implicit backward-Euler method with dt=0.1 ms and the same pulse sample timing as the archived 20-ms experiment; only the observation window is extended.",
+            "The full cable reference uses the exact-order compiled Hines tree-elimination recurrence; the 20-ms result must reproduce archived Hines/PRIMA NRMSE within the explicit absolute percentage-point parity floor.",
+            "The reduced trace keeps the original per-vector backward-Euler solve and port-voltage projection through 20 ms; factorized solves are used only for the later tail.",
             "All nine passive parameter scenarios, three sources, seven common outputs and both 2-ms/10-ms pulses are retained.",
             "Only two individual passive linear-RC morphology reconstructions are compared; they are not populations or biological validation.",
             "Full Hines remains canonical; no production code or solver defaults are changed.",
@@ -1007,7 +1026,6 @@ def main() -> None:
             "numpy": np.__version__,
             "scipy": SCIPY_VERSION,
             "neuron": __import__("neuron").__version__,
-            "wall_seconds": time.perf_counter() - started,
         },
     }
     (results_dir / f"{RESULT_STEM}_report.json").write_text(
