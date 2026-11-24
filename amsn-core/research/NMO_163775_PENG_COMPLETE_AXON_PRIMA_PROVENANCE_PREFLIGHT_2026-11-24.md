@@ -3,7 +3,7 @@
 **Date:** 24 November 2026  
 **NeuroMorpho ID:** NMO_163775  
 **PR:** [#16](https://github.com/Nolane-x/Nghien-cuu/pull/16)  
-**Branch:** `research/prima-peng-complete-axon-third-morphology-2026-11-24)
+**Branch:** `research/prima-peng-complete-axon-third-morphology-2026-11-24`
 
 ## Purpose
 
@@ -116,4 +116,78 @@ See [NeuroMorpho terms of use](https://neuromorpho.org/useterm.jsp).
 
 ## Validation state
 
-At the latest preflight checkpoint, the full AMSN suite passed 173/173; Peng-specific source/mapping tests passed 19/19; source checksum and Import3D preflight passed. The matched numerical replay is still running. No numerical matched-port conclusions are asserted in this provenance/preflight report.
+At successful run 45311916600, the full AMSN suite passed 173/173; Peng-specific source/mapping tests passed 19/19; source checksum, Import3D preflight, matched replay, exact coverage, result commit and artifact upload passed. See the validated numerical results below.
+
+
+## Validated matched-port numerical results
+
+**Successful GitHub Actions run:** [45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600)  
+**Artifact:** [#14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560)  
+**Artifact ZIP SHA-256:** \`9060b04e6e769a1e9b40700197361bf67a59b164965441849e8cd3effb716a58\`
+
+The full AMSN test suite passed **173/173**; Peng-specific tests passed **19/19**; source checksum, Import3D preflight, matched replay, exact coverage, result commit and artifact upload all passed.
+
+Exact output coverage:
+- 36 reduced models (7/9 ports × 112/168 × nine parameter scenarios).
+- 324 AC rows.
+- 1,728 transient-port rows.
+- 756 matched shared-output pairs.
+- 216 q25-only observations.
+- 378 shared-Hines checks.
+
+All 36 reduced models achieved their requested order and passed the conductance/capacitance Cholesky checks. The 378 common Hines reference traces were **exactly equal** between seven-port and nine-port layouts: maximum absolute voltage difference 0 V and relative L2 difference 0%.
+
+### Shared-output comparison
+
+| Basis order | 9-port worse / better / tie | Median 9/7 error ratio | Maximum ratio | Maximum absolute 9-port shared NRMSE |
+|---:|---:|---:|---:|---:|
+| 112 | 378 / 0 / 0 | **78.051×** | 6,739.21× | 0.0001933% |
+| 168 | 347 / 31 / 0 | **14.501×** | 300.22× | 6.0657e−7% |
+
+The ratios show a consistent relative loss on shared outputs when the two q25 ports are included, particularly at order112. However, the seven-port baseline errors are themselves extremely small. Therefore the large ratios must be read alongside the absolute errors: even the maximum nine-port shared-output NRMSE is 1.933e−4% at order112 and 6.066e−7% at order168. No universal application tolerance was assumed.
+
+### q25-only output accuracy
+
+| Basis order | Observations | Median q25 NRMSE | Maximum q25 NRMSE |
+|---:|---:|---:|---:|
+| 112 | 108 | 1.8480e−5% | 2.1588e−4% |
+| 168 | 108 | 1.5567e−8% | 4.2824e−7% |
+
+The actual q25-only SWC IDs derived and confirmed by the AMSN/Import3D mapper are basal **224** and apical **4096**. Both are distinct from the shared seven.
+
+### 10 kHz AC residuals and numeric storage
+
+| Port count | Order | Median Z residual | Maximum Z residual | Median Y residual | Maximum Y residual | Numeric storage |
+|---:|---:|---:|---:|---:|---:|---:|
+| 7 | 112 | 4.3254e−7% | 5.7369e−7% | 2.7321e−6% | 4.3868e−6% | 3.7803 MB |
+| 9 | 112 | 3.2464e−5% | 3.8892e−5% | 4.8096e−5% | 6.9852e−5% | 3.7803 MB |
+| 7 | 168 | 6.7621e−12% | 9.8598e−12% | 1.1370e−10% | 3.8025e−10% | 5.8140 MB |
+| 9 | 168 | 6.8670e−9% | 1.0472e−8% | 4.8906e−8% | 7.7469e−8% | 5.8140 MB |
+
+Numeric storage is basis plus reduced G/C matrices; at the same order it is equal for seven and nine ports in this implementation.
+
+### Runtime
+
+- Wall time: 187.50 s
+- User CPU: 273.21 s
+- System CPU: 0.26 s
+- Peak RSS: 160,272 KiB
+- Runtime: Python 3.12.16, NumPy 2.5.5, NEURON 9.0.2
+
+This is one run on a hosted runner, not a controlled repeated performance benchmark.
+
+## Interpretation across the three morphology holdouts
+
+The matched 7/9-port results now cover three morphologies:
+
+| Morphology | Context / reconstruction boundary | Order112 median 9/7 ratio | Order168 median 9/7 ratio |
+|---|---|---:|---:|
+| NMO_162186 | Human epilepsy surgical specimen; axon incomplete | 8.162× | 0.99999985× |
+| NMO_03524 | Human Jacobs Control; dendrites moderate, axon incomplete | 1.00000465× | 0.99999991× |
+| NMO_163775 | Mouse Peng Control; dendrites and axon complete by metadata, but No Diameter | 78.051× | 14.501× |
+
+This further confirms that the **relative incremental cost of q25 ports is morphology-dependent**. On NMO_163775 the shared-output ratios favor seven ports, but the absolute nine-port errors remain small in this passive experiment, and order168 gives q25 maximum NRMSE below 4.3e−7%. The appropriate choice depends on the application's absolute error tolerance and required outputs; do not choose solely from the relative 9/7 ratio.
+
+The Peng run uses a 0.5 µm NEURON segment cap, whereas the two human runs used 0.125 µm. Do not pool absolute errors or runtimes across those morphologies as if their reference discretizations were identical.
+
+**Scientific boundary:** the Peng record explicitly says No Diameter. Its standardized SWC radius values are not measured biological diameters. The results therefore test topology/port-count behavior for the standardized geometry representation under the selected passive parameters; they are not diameter-grounded biological validation, do not represent a mouse population, and do not validate active channels or nonlinear physiology. Full Hines remains canonical; no production defaults are changed.
