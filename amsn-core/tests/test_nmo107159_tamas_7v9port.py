@@ -24,7 +24,7 @@ def test_matrix_row_counts_are_exact():
     }
 
 
-def test_peng_control_source_hash_and_quantile_nodes_are_pinned():
+def test_tamas_human_pyramidal_source_hash_is_pinned():
     assert MODULE.EXPECTED_SWC_RECORDS == 7228
     assert MODULE.EXPECTED_SWC_SHA256 == "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
 
@@ -38,7 +38,7 @@ def test_seven_and_nine_port_sets_share_exactly_seven_swc_nodes():
     }
     common, extra = MODULE.validate_port_node_sets(seven, nine, roles)
     assert common == sorted(seven)
-    assert extra == [6609, 4404]
+    assert extra == [4404, 6609]
 
 
 @pytest.mark.parametrize(
