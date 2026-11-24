@@ -66,7 +66,7 @@ jobs:
       - name: Run full-Hines vs PRIMA timestep refinement
         working-directory: amsn-core
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/prima_q25_backward_euler_timestep_refinement_2026-11-24.time.txt python research/analyze_prima_q25_backward_euler_timestep_refinement.py
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/prima_q25_backward_euler_fine_step_convergence_2026-11-24.time.txt python research/analyze_prima_q25_backward_euler_timestep_refinement.py
       - name: Commit timestep-refinement evidence
         if: success()
         run: |
@@ -75,11 +75,11 @@ jobs:
           git fetch origin "$GITHUB_REF_NAME"
           UPSTREAM_REF="origin/$GITHUB_REF_NAME"
           git reset --mixed "$UPSTREAM_REF"
-          git add amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_*.csv \
-                  amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_report.json
+          git add amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv \
+                  amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json
           if ! git diff --cached --quiet "$UPSTREAM_REF" -- \
-              amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_*.csv \
-              amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_report.json; then
+              amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv \
+              amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json; then
             git commit -m "results: archive q25 backward-Euler timestep refinement"
             git push origin "HEAD:$GITHUB_REF_NAME"
           else
@@ -91,9 +91,9 @@ jobs:
         with:
           name: prima-q25-backward-euler-timestep-refinement
           path: |
-            amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_*.csv
-            amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24_report.json
-            amsn-core/results/prima_q25_backward_euler_timestep_refinement_2026-11-24.time.txt
+            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv
+            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json
+            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24.time.txt
             amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
             amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
           if-no-files-found: warn
