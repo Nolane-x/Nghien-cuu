@@ -78,7 +78,7 @@ def test_source_window_summary_aggregates_all_scenarios_and_outputs():
                         "pulse_width_ms": key[3],
                         "window_ms": key[4],
                         "layout_id": "nine_both_q25",
-                        "median_absolute_vs_perturbation_delta_pct": 0.01,
+                        "absolute_vs_perturbation_hines_delta_pct": 0.01,
                     })
                     comparisons.append({
                         "morphology": key[0],
@@ -98,12 +98,13 @@ def test_source_window_summary_aggregates_all_scenarios_and_outputs():
 
 def test_morphology_window_summary_keeps_all_dt_and_windows():
     source_rows = []
-    for dt in audit.DT_GRID_MS:
-        for window in audit.WINDOWS_MS:
-            for source in audit.SOURCE_NAMES:
-                for pulse in audit.PULSE_WIDTHS_MS:
-                    source_rows.append({
-                        "morphology": "morph",
+    for morphology in ("morph_a", "morph_b"):
+        for dt in audit.DT_GRID_MS:
+            for window in audit.WINDOWS_MS:
+                for source in audit.SOURCE_NAMES:
+                    for pulse in audit.PULSE_WIDTHS_MS:
+                        source_rows.append({
+                        "morphology": morphology,
                         "dt_ms": dt,
                         "source_name": source,
                         "pulse_width_ms": pulse,
