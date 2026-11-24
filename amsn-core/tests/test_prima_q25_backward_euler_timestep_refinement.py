@@ -66,32 +66,35 @@ def test_relative_l2_is_scale_invariant():
 def test_source_window_summary_aggregates_all_scenarios_and_outputs():
     metrics = []
     comparisons = []
-    for source in audit.SOURCE_NAMES:
-        for pulse in audit.PULSE_WIDTHS_MS:
-            key = ("morph", 0.1, source, pulse, 20.0)
-            for scenario in audit.SCENARIO_NAMES:
-                for output in range(7):
-                    metrics.append({
-                        "morphology": key[0],
-                        "dt_ms": key[1],
-                        "source_name": key[2],
-                        "pulse_width_ms": key[3],
-                        "window_ms": key[4],
-                        "layout_id": "nine_both_q25",
-                        "absolute_vs_perturbation_hines_delta_pct": 0.01,
-                    })
-                    comparisons.append({
-                        "morphology": key[0],
-                        "dt_ms": key[1],
-                        "source_name": key[2],
-                        "pulse_width_ms": key[3],
-                        "window_ms": key[4],
-                        "seven_perturbation_transient_nrmse_pct": 1.0,
-                        "nine_perturbation_transient_nrmse_pct": 2.0,
-                        "nine_over_seven_perturbation_transient_ratio": 2.0,
-                    })
+    for morphology in ("morph_a", "morph_b"):
+        for dt in audit.DT_GRID_MS:
+            for window in audit.WINDOWS_MS:
+                for source in audit.SOURCE_NAMES:
+                    for pulse in audit.PULSE_WIDTHS_MS:
+                        key = (morphology, dt, source, pulse, window)
+                        for scenario in audit.SCENARIO_NAMES:
+                            for output in range(7):
+                                metrics.append({
+                                    "morphology": key[0],
+                                    "dt_ms": key[1],
+                                    "source_name": key[2],
+                                    "pulse_width_ms": key[3],
+                                    "window_ms": key[4],
+                                    "layout_id": "nine_both_q25",
+                                    "absolute_vs_perturbation_hines_delta_pct": 0.01,
+                                })
+                                comparisons.append({
+                                    "morphology": key[0],
+                                    "dt_ms": key[1],
+                                    "source_name": key[2],
+                                    "pulse_width_ms": key[3],
+                                    "window_ms": key[4],
+                                    "seven_perturbation_transient_nrmse_pct": 1.0,
+                                    "nine_perturbation_transient_nrmse_pct": 2.0,
+                                    "nine_over_seven_perturbation_transient_ratio": 2.0,
+                                })
     rows = audit.summarize_source_windows(metrics, comparisons)
-    assert len(rows) == 6
+    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 144
     assert all(row["scenario_output_pairs"] == 63 for row in rows)
     assert all(row["median_nine_over_seven_ratio"] == 2.0 for row in rows)
 
