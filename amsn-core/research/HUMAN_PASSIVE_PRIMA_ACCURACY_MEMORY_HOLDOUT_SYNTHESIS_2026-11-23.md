@@ -3,17 +3,17 @@
 **Date:** 23 November 2026  
 **Repository:** `Nolane-x/Nghien-cuu`  
 **Scope:** passive linear-RC neuron reduction only  
-**Status:** evidence synthesis across validated PRs #4–#15; no production default changed
+**Status:** evidence synthesis across validated PRs #4–#16; no production default changed
 
 ## Executive conclusion
 
 There is no single PRIMA configuration that is best for every port set, output location, frequency band, transient protocol and resource budget. The current evidence supports three *conditional* choices:
 
-1. **Seven-port, order 112, extended 10 kHz shifts** is the strongest high-frequency passive candidate in the seven-output shift/order sweep. It retains very low transient error and reproduced its high-frequency advantage on both NMO_162186 and NMO_03524, two individual human holdouts with different source contexts.
-2. **Nine-port order must be selected per morphology** when basal-q25 and apical-q25 outputs are required. NMO_162186 needed order168 to restore shared-output parity; NMO_03524 was already at parity at order112, with accurate q25 outputs at both orders.
+1. **Seven-port, order 112, extended 10 kHz shifts** is the strongest high-frequency passive candidate in the seven-output shift/order sweep. It retains very low transient error and is supported by three independent morphology holdouts across different source contexts, although the third holdout uses a different mesh and has No Diameter metadata.
+2. **Nine-port order must be selected per morphology** when basal-q25 and apical-q25 outputs are required. NMO_162186 needed order168 to restore shared-output parity; NMO_03524 was already at parity at order112; NMO_163775 showed high relative 9/7 ratios at both orders, but very small absolute errors and more accurate q25 outputs at order168.
 3. **Seven-port order84 with extended10kHz shifts** is a useful accuracy/storage compromise on NMO_03524; order56 remains the lowest-footprint option on that morphology. The separate process-RSS benchmark still shows increasing peak RSS with order, but its absolute values come from a different nine-port audit.
 
-**Full Hines remains the canonical reference.** Existing production order defaults remain unchanged. Matched 7-port/9-port tests on NMO_162186 and NMO_03524 show that the incremental numerical cost of adding q25 ports is morphology-dependent; there is no universal order threshold for nine-port models.
+**Full Hines remains the canonical reference.** Existing production order defaults remain unchanged. Matched 7-port/9-port tests on NMO_162186, NMO_03524 and NMO_163775 show that the incremental numerical cost of adding q25 ports is morphology-dependent; there is no universal order threshold for nine-port models.
 
 ## Evidence map
 
@@ -25,6 +25,7 @@ There is no single PRIMA configuration that is best for every port set, output l
 | Matched port-count × independent holdout | PR #13, run 45184621520 | NMO_162186; 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations | Confirms order-dependent result: nine-port order112 regresses shared outputs; order168 restores parity |
 | Independent Control-condition morphology holdout | PR #14, run 45196546471 | NMO_03524 Jacobs; 81 models, 729 AC rows, 3,402 transient rows | Independently supports extended10kHz shift family; order84 extended10kHz is strong accuracy/storage compromise |
 | Matched 7/9-port Control holdout | PR #15, run 45198630080 | NMO_03524; 36 models, 756 shared pairs, 216 q25 observations, 378 Hines checks | Nine-port order112 and168 both preserve shared-output parity on this morphology; q25 errors <3.1e−8% |
+| Matched 7/9-port complete-axon holdout | PR #16, run 45311916600 | NMO_163775 Peng mouse Control; 36 models, 756 shared pairs, 216 q25 observations, 378 exact Hines checks | High relative 9/7 ratios (78.05× at order112; 14.50× at order168), but absolute nine-port shared NRMSE <2.0e−4% and <6.1e−7%; NeuroMorpho says No Diameter |
 | Nine-port high-order capacity | merged PR #4, run 44979673244 | 3 morphologies × 2 mesh caps; orders 28/56/84/112/168; 2,520 rows | Higher capacity sharply reduces apical-q90 transient error |
 | Runtime and peak RSS | PR #5, run 44989658844 | 36 measurements: 3 morphologies × 2 mesh caps × orders 84/112/168 × 2 repetitions; 37/37 jobs pass | Peak RSS increases consistently with order; timing is confounded by heterogeneous GitHub CPUs |
 
@@ -136,17 +137,18 @@ This is a separate nine-port resource experiment. Its RSS measurements should be
 | High-frequency accuracy on the seven retained outputs | **7-port, order112, extended10kHz** | Best 3–10 kHz residuals in PR #7; extended10kHz also leads on both NMO_162186 and NMO_03524 | Passive RC only; holdout morphologies are individual specimens |
 | Lower-memory passive compromise | **7-port, order84, extended10kHz** | On NMO_03524, median 10 kHz Z/Y residuals 5.58e−7% / 2.88e−7% at 0.660 MB numeric storage | Validated on the smaller Jacobs Control morphology; re-evaluate on additional morphologies |
 | Lowest footprint | **Order56** (choose shift set by frequency/transient needs) | 0.416 MB numeric storage on NMO_03524; narrow3kHz preserves very small transient errors | Accept higher high-frequency AC residuals |
-| Need basal-q25 and apical-q25 outputs | **9-port, morphology-tested order112 or168** | NMO_162186 required order168 for parity; NMO_03524 was already at parity at order112, with q25 max NRMSE 3.06e−8% | Do not impose a universal order168 threshold; only two individual morphologies tested |
+| Need basal-q25 and apical-q25 outputs | **9-port, morphology-tested order112 or168; select by absolute tolerance** | NMO_162186 needed order168 for shared parity; NMO_03524 was already at parity at order112; NMO_163775 has high relative ratios but absolute nine-port errors <2.2e−4% at112 and <6.1e−7% at168 | No universal threshold; three individual morphologies, one with No Diameter and a different mesh |
 | Canonical reference | **Full Hines** | Remains the unreduced reference against which all passive candidates are measured | More states and resource cost; not being replaced |
 
 This table is a research selection guide, not a production-default change. All passive models remain candidates for specific protocols and output sets.
 
 ## 6. Unresolved validation gates
 
-1. **Add a third independent morphology.** Matched 7-port/9-port order112/order168 comparisons are now complete on NMO_162186 (epilepsy surgical specimen) and NMO_03524 (Jacobs Control-condition specimen). Both have incomplete axons or other reconstruction limits. Add a further independently sourced morphology, preferably with a more complete axon and distinct experimental context, before proposing a general port/order rule.
-2. **Control performance timing.** Re-run order84/112/168 and the exact seven-port order112-extended candidate on one fixed machine or a controlled self-hosted runner with repeated isolated kernel timings. GitHub hosted CPU heterogeneity prevents a clean wall-time ranking.
-3. **Test active/nonlinear biology separately.** These results validate passive linear-RC reduction only. They do not validate action potentials, active dendritic ion channels, nonlinear synapses, calcium, plasticity, metabolism or cognition.
-4. **Retain uncertainty and negative results.** The ±20% Rm/Cm/Ra scenarios are deterministic stress tests, not fitted biological distributions. A hierarchical or subject-level uncertainty treatment is not applicable to these numerical morphology fixtures but should be applied when biological measurements are introduced.
+1. **Add a fourth independent morphology with diameter-grounded geometry.** Matched 7-port/9-port order112/order168 comparisons are now complete on NMO_162186, NMO_03524 and NMO_163775. The third record has No Diameter and uses a 0.5 µm mesh, so add a further independently sourced morphology with explicit measured diameter metadata, preferably with a complete axon and distinct experimental context.
+2. **Harmonize reference resolution for cross-morphology comparisons.** The two human runs used 0.125 µm and NMO_163775 used 0.5 µm. Repeat a subset of the matched matrix at a common mesh cap or report mesh-convergence curves before comparing absolute errors across morphologies.
+3. **Control performance timing.** Re-run order84/112/168 and the exact seven-port order112-extended candidate on one fixed machine or a controlled self-hosted runner with repeated isolated kernel timings. Hosted runner CPU heterogeneity prevents a clean wall-time ranking.
+4. **Test active/nonlinear biology separately.** These results validate passive linear-RC reduction only. They do not validate action potentials, active dendritic ion channels, nonlinear synapses, calcium, plasticity, metabolism or cognition.
+5. **Retain uncertainty and negative results.** The ±20% Rm/Cm/Ra scenarios are deterministic stress tests, not fitted biological distributions. A hierarchical or subject-level uncertainty treatment is needed when biological measurements are introduced.
 
 ## Source experiments and audit links
 
@@ -257,3 +259,59 @@ The two q25 output probes are accurate at both tested orders.
 The incremental cost of adding q25 ports is therefore **morphology-dependent**. On NMO_162186, nine-port order112 caused a strong regression; on NMO_03524, order112 was effectively at parity. A new morphology should receive a matched seven-port/nine-port order comparison before fixing its order. The two tested morphologies are individual cells with incomplete axons or other structural limits; they do not support a population-wide rule.
 
 Source: [PR #15](https://github.com/Nolane-x/Nghien-cuu/pull/15), [validated workflow](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080), [artifact #14829912332](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45198630080/artifacts/14829912332).
+
+
+## 10. Third matched port-count morphology: NMO_163775 Peng complete-axon record
+
+PR #16 / [successful workflow run 45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600) adds the third independent matched 7-port/9-port morphology. The specimen is NeuroMorpho NMO_163775 from the Peng archive: mouse, Cux2-CreERT2;Ai166, 56 days, Control condition, somatosensory neocortex layer 2–3, pyramidal IT projection. NeuroMorpho marks dendrites and axon complete. **Its morphological attributes are No Diameter**; standardized SWC radii are not documented measured biological diameters.
+
+The repository source contains 4,209 records (3 soma, 3,602 axon, 306 basal, 298 apical), with one root, all nodes connected and no duplicate IDs/missing parents. SHA-256: \`94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f\`.
+
+### Preflight and exact port identities
+
+Import3D/AMSN preflight passed with 4,200 electrical compartments, 251 NEURON sections and 82,587 NEURON segments. Maximum observed segment length was 0.49999436 µm under a 0.5 µm cap. Seven shared SWC IDs:
+\`1, 40, 144, 3926, 3948, 4104, 4180\`.
+
+The nine-port layout adds only:
+- basal-q25: SWC node 224
+- apical-q25: SWC node 4096
+
+The 7/9-port matched experiment generated 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations and 378 shared-Hines checks. All 36 models achieved their requested order and passed Cholesky checks. The 378 common Hines reference traces were exactly equal: 0 V difference and 0% relative L2 error.
+
+### Shared-output parity and absolute errors
+
+| Basis order | 9-port worse / better / tie | Median 9/7 transient-error ratio | Maximum ratio | Maximum absolute 9-port shared NRMSE |
+|---:|---:|---:|---:|---:|
+| 112 | 378 / 0 / 0 | **78.051×** | 6,739.21× | 0.0001933% |
+| 168 | 347 / 31 / 0 | **14.501×** | 300.22× | 6.0657e−7% |
+
+The 9/7 ratios are very large, but the seven-port baseline itself has extremely small error. For this reason, the ratio must not be interpreted alone: the maximum absolute nine-port shared-output NRMSE is still below 2.0e−4% at order112 and 6.1e−7% at order168. No application tolerance was assumed.
+
+### q25-only accuracy
+
+| Basis order | Observations | Median q25 NRMSE | Maximum q25 NRMSE |
+|---:|---:|---:|---:|
+| 112 | 108 | 1.8480e−5% | 2.1588e−4% |
+| 168 | 108 | 1.5567e−8% | 4.2824e−7% |
+
+Both added q25 outputs are numerically close to their full-Hines references, especially at order168.
+
+### High-frequency residuals and storage
+
+At 10 kHz, nine-port median Z/Y residuals are 3.2464e−5% / 4.8096e−5% at order112, and 6.8670e−9% / 4.8906e−8% at order168. Numeric basis+G/C storage is 3.7803 MB at order112 and 5.8140 MB at order168, identical for seven and nine ports at the same order.
+
+Runtime on the hosted runner: 187.50 s wall, 273.21 s user CPU, peak RSS 160,272 KiB (Python 3.12.16, NumPy 2.5.5, NEURON 9.0.2). This is a single hosted-run measurement, not a controlled performance benchmark.
+
+### Updated cross-morphology conclusion
+
+| Morphology | Context / structural caveat | Order112 median 9/7 ratio | Order168 median 9/7 ratio | Interpretation |
+|---|---|---:|---:|---|
+| NMO_162186 | Human epilepsy specimen; axon incomplete | 8.162× | 0.99999985× | Order168 restored shared-output parity |
+| NMO_03524 | Human Jacobs Control; dendrites moderate, axon incomplete | 1.00000465× | 0.99999991× | Already at parity at order112 |
+| NMO_163775 | Mouse Peng Control; arbors complete by metadata; No Diameter | 78.051× | 14.501× | Relative 9-port penalty persists, although absolute errors remain small |
+
+The third holdout strengthens the conclusion that q25 port cost is **morphology-dependent**, not a universal order rule. The choice between seven and nine ports should use both absolute error against a stated application tolerance and the relative change on matched shared outputs. On NMO_163775, the 9/7 ratio is high, but the absolute nine-port errors are still small in this passive protocol.
+
+The Peng experiment uses a 0.5 µm NEURON mesh cap, while both human matched holdouts used 0.125 µm. Do not pool absolute error or timing values across these runs as if mesh and radius metadata were identical. NeuroMorpho explicitly lists No Diameter for NMO_163775, so its standardized SWC radii must not be treated as biological diameter measurements. This is one mouse specimen and passive linear-RC numerical validation only.
+
+Sources: [PR #16](https://github.com/Nolane-x/Nghien-cuu/pull/16), [validated run 45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600), [artifact #14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560).
