@@ -657,7 +657,7 @@ def main():
             "This is a passive linear-RC numerical comparison against full Hines on one independent morphology with complete arbors by repository metadata.",
             "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds only the basal-q25 and apical-q25 probes pinned by the independent preflight.",
             "Orders 112 and 168 use identical six-shift extended-10kHz expansion frequencies for both port counts.",
-            "The morphology is one human Control-condition Tamas specimen in somatosensory neocortex layer 2-3; dendrites and axon are marked complete by NeuroMorpho, so it is not a representative human population.",
+            "The morphology is one female human Control-condition pyramidal comparison cell in frontal neocortex, with layers 1 and 2-3 in metadata; dendrites and axon are marked complete by NeuroMorpho. Age is not reported. The record is shown as the pyramidal comparison cell in Fig. 5C of the linked rosehip-cell paper; it is not a rosehip interneuron.",
             "The comparison does not establish active-channel, nonlinear-synapse, plasticity or biological validity.",
             "No production order default, canonical Hines reference or runtime behavior is modified. NeuroMorpho lists Diameter, 3D, Angles. The standardized radii can support diameter-aware geometry, but passive parameters remain model assumptions.",
         ],
