@@ -25,7 +25,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-extended-backward-euler-tail-audit-depth-batched
+  group: amsn-prima-q25-extended-backward-euler-tail-audit-hines-triangular
   cancel-in-progress: false
 
 jobs:
