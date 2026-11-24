@@ -42,6 +42,17 @@ def test_expected_extended_window_coverage():
     }
 
 
+def test_archived_20ms_parity_uses_explicit_absolute_percentage_point_floor():
+    tolerance = audit.ARCHIVED_PARITY_ABSOLUTE_TOLERANCE_PCT_POINTS
+    assert tolerance == 5e-8
+    # Large relative drift is acceptable only when the absolute percentage-point
+    # difference stays inside the predeclared cross-CI reproducibility floor.
+    assert audit.archived_parity_within_absolute_tolerance(1.0e-9, 2.0e-8)
+    assert not audit.archived_parity_within_absolute_tolerance(
+        0.0, tolerance + 1.0e-15
+    )
+
+
 def test_sparse_full_cable_factor_matches_tree_backward_euler_step():
     from amsn.cable import CableCompartment, CableTree, PassiveParameters
 
