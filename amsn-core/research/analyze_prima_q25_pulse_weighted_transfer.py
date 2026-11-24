@@ -217,13 +217,14 @@ def _average_ranks(values: list[float]) -> np.ndarray:
     return ranks
 
 
-def safe_corr(x: list[float], y: list[float], *, spearman: bool = False) -> float:
+def safe_corr(x: list[float], y: list[float], *, spearman: bool = False) -> float | None:
     xa, ya = np.asarray(x, dtype=float), np.asarray(y, dtype=float)
     if spearman:
         xa, ya = _average_ranks(xa.tolist()), _average_ranks(ya.tolist())
     if len(xa) < 2 or np.std(xa) == 0.0 or np.std(ya) == 0.0:
-        return float("nan")
-    return float(np.corrcoef(xa, ya)[0, 1])
+        return None
+    value = float(np.corrcoef(xa, ya)[0, 1])
+    return value if math.isfinite(value) else None
 
 
 def pair_with_seven(
