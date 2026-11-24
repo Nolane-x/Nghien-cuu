@@ -2,40 +2,67 @@
 
 **Date:** 24 November 2026  
 **Branch:** research/prima-q25-pulse-spectrum-weighted-transfer-audit-2026-11-24  
-**Status at creation:** implementation prepared; no weighted result claimed.
+**Successful workflow:** [45381680741](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45381680741)  
+**Result archive commit:** `6274a6dd4106d421aeda48ab4bbb7c5d76da5e60`
 
 ## Motivation
 
-The previous transfer-stage audit found AC transfer residuals improving strongly as the basis grows, but dual-q25 remained above seven-port at every shared output on both morphologies. The order-168 transient results were substantially closer for Tamas than the AC metric suggested. This analysis weights complex transfer residuals by the measured input-pulse spectrum and compares them with the exact archived transient errors.
+The preceding transfer-stage audit found AC transfer residuals improving strongly as the basis grows, but dual-q25 remained above seven-port at every shared output on both morphologies. The order-168 finite-window transient result was much closer for Tamas than the AC metric suggested. This analysis weights complex transfer residuals by the ideal rectangular input-pulse spectrum and compares them against exact archived 20-ms transient NRMSE.
 
 ## Method
 
-- Keep only the canonical seven-port and dual-q25 nine-port layouts, basis order168 and nine passive parameter scenarios.
-- Calculate full-Hines source-to-shared-output transfer responses and reduced PRIMA responses from DC to 5 kHz.
-- Use a dense 10 Hz grid from 10 to 5,000 Hz, plus DC, 0.1 and 1 Hz samples.
-- For the 2 ms and 10 ms ideal rectangular current pulses, weight squared complex transfer residual by `|sinc(fT)|²` and integrate with the trapezoidal rule.
-- Join weighted transfer rows to existing per-port transient NRMSE by morphology, scenario, source, output and pulse width.
-- Compare candidate/seven ratios and compute Pearson/Spearman correlation in log-ratio space by morphology, source and pulse width.
+- Keep only canonical seven-port and dual-q25 nine-port layouts at basis order 168.
+- Use nine passive parameter scenarios, three sources and seven exact shared output SWC node IDs.
+- Evaluate full-Hines and reduced PRIMA transfer responses on 98 nonuniform frequencies from DC to 5 kHz.
+- For 2 ms and 10 ms ideal rectangular current pulses, weight squared complex transfer residual by (|\mathrm{sinc}(fT)|^2) and integrate with the trapezoidal rule.
+- Join each weighted output with the saved transient NRMSE for the exact morphology, scenario, source, output node and pulse width.
+- Correlate weighted-transfer and transient candidate/seven log ratios.
 
-The onset phase has unit magnitude and cancels in an energy ratio. The 5 kHz maximum is Nyquist for dt=0.1 ms. This does not model finite observation-window leakage or discrete-time solver effects exactly.
+The transient loader now explicitly pins the seven shared output IDs per morphology and filters out the two q25-only rows in the nine-port CSV. This makes both the paired data matrix and exact coverage contract consistent.
 
-## Expected coverage
+## Execution and read-back
 
-- 74,088 frequency rows.
-- 1,512 pulse-weighted output rows.
-- 168 weighted-output summaries; 24 weighted-source summaries.
-- 756 dual-q25-vs-seven/time-domain paired rows.
-- 12 source/pulse summaries.
-- 1,038 spectrum sample rows (519 frequencies × 2 pulse widths).
+- Workflow [45381680741](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45381680741): **success**.
+- Tests: 6 passed.
+- Both SWC checksums and both Import3D preflights passed.
+- Runtime: 92.23 s wall, 109.95 s user CPU, 228,764 KB maximum RSS.
+- Result commit: `6274a6dd4106d421aeda48ab4bbb7c5d76da5e60`.
+- Artifact: [prima-q25-pulse-spectrum-weighted-transfer](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45381680741/artifacts/14914850862), SHA-256 `a572b412e7c2515862097585ae38c744243803ed70deece1b970bfd01bf36cfc`.
 
-## Files created
+| Dataset | Expected | Verified |
+|---|---:|---:|
+| Frequency rows | 74,088 | 74,088 |
+| Weighted shared-output rows | 1,512 | 1,512 |
+| Weighted output summaries | 168 | 168 |
+| Weighted source summaries | 24 | 24 |
+| Spectral/transient paired rows | 756 | 756 |
+| Source/pulse paired summaries | 12 | 12 |
+| Pulse-spectrum samples | 196 | 196 |
+| Shared transient input rows | 1,512 | 1,512 |
 
-- `amsn-core/research/analyze_prima_q25_pulse_weighted_transfer.py`
-- `amsn-core/tests/test_prima_q25_pulse_weighted_transfer.py`
-- `.github/workflows/amsn-prima-q25-pulse-spectrum-weighted-transfer.yml`
-- `HANDOFF_2026-11-24_PRIMA-Q25-PULSE-SPECTRUM-WEIGHTED-TRANSFER.md`
-- This research log.
+## Source-level comparison
+
+Median candidate/seven ratios by input source:
+
+| Morphology | Source | Pulse | Weighted spectral ratio | Transient ratio |
+|---|---|---:|---:|---:|
+| Peng | Soma | 2 ms | 41.01× | 58.84× |
+| Peng | Soma | 10 ms | 34.05× | 60.23× |
+| Peng | Basal-q75 | 2 ms | 39.59× | 33.20× |
+| Peng | Basal-q75 | 10 ms | 33.55× | 29.66× |
+| Peng | Apical-q75 | 2 ms | 29.87× | 1.431× |
+| Peng | Apical-q75 | 10 ms | 25.75× | 1.366× |
+| Tamas | Soma | 2 ms | 41.29× | 1.032× |
+| Tamas | Soma | 10 ms | 30.13× | 1.031× |
+| Tamas | Basal-q75 | 2 ms | 33.13× | 1.0007× |
+| Tamas | Basal-q75 | 10 ms | 26.74× | 1.0007× |
+| Tamas | Apical-q75 | 2 ms | 28.34× | 0.9995× |
+| Tamas | Apical-q75 | 10 ms | 24.34× | 0.9993× |
+
+For Tamas, the weighted spectral ratio stays around 24–41× while transient ratios remain essentially one (or about 1.03 for soma). For Peng, the soma and basal transient penalties are reflected in both metrics, but the apical source has a much smaller transient penalty than its spectral ratio suggests.
+
+Paired log-ratio correlations by source/pulse are weak overall. The continuous-time spectral weighted error is therefore not a sufficient predictor of the discrete finite-window transient NRMSE.
 
 ## Interpretation limits
 
-The spectral weighted metric is a band-limited surrogate for pulse response energy. It is not equal by definition to the finite 20 ms transient NRMSE. Keep those metrics separate and assess their empirical correlation. No biological or population-level conclusions; full Hines remains canonical and production defaults unchanged.
+The frequency grid is band-limited to 5 kHz (Nyquist for dt=0.1 ms), and the ideal rectangular pulse spectrum uses (|\mathrm{sinc}(fT)|^2). This does not model the exact finite-step backward-Euler recurrence or finite observation window. Ratios can be large because the seven-port denominator is very small; absolute errors are preserved in the CSVs. The analysis is passive linear-RC only, based on two individual reconstructions, not biology or populations. Full Hines remains canonical; no production defaults changed.
