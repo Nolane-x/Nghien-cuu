@@ -12,17 +12,18 @@ The Peng mouse q25 ablation found a large dual-q25 order-168 penalty (14.525× m
 
 For both morphologies, all four q25 layouts, both basis orders and all nine passive parameter scenarios:
 - rebuild the PRIMA multi-shift basis using the original production function without changing its implementation;
-- quantify (V^T V-I), its spectrum and condition number;
+- quantify (V^T V-I), the eigenvalues and condition number of the basis Gram matrix;
 - quantify eigenvalue ranges and condition numbers for projected conductance and capacitance matrices;
 - quantify the generalized passive RC decay-rate range from the symmetric whitened pair (C_r^{-1/2}G_rC_r^{-1/2});
 - measure each retained port's basis-row leverage;
-- reproduce and count the independent initial seed columns accepted from each of the six expansion shifts using the existing private shifted-Hines solve and orthogonalization primitives.
+- reproduce and count the independent initial seed columns accepted from each of the six expansion shifts using the existing shifted-Hines solve and orthogonalization primitives.
 
 The seed count is explicitly only the initial seeding contribution, not the later round-robin Krylov growth.
 
-## Expected coverage
+## Expected exact coverage
 
 - 144 reduced-model structural metric rows.
+- 1,152 per-port leverage rows.
 - 864 initial shift-seed rows.
 - 8 morphology/layout/order groups in the summary (2 × 4 × 2).
 
@@ -36,4 +37,4 @@ The seed count is explicitly only the initial seeding contribution, not the late
 
 ## Interpretation limits
 
-The audit is descriptive and structural. Orthogonality and positive definiteness do not guarantee transient approximation quality; matrix condition numbers do not prove causality. Keep mouse and human morphologies separate. No active conductances, biological validity, solver-default promotion or production-code changes are part of this task.
+The audit is descriptive and structural. Orthogonality and positive definiteness do not guarantee transient approximation quality; matrix condition numbers and initial seed counts do not prove causality. Keep mouse and human morphologies separate. No active conductances, biological validity, solver-default promotion or production-code changes are part of this task.
