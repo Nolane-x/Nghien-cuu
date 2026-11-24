@@ -1,0 +1,51 @@
+name: PRIMA four-morphology synthesis
+
+on:
+  push:
+    branches:
+      - research/prima-cross-morphology-synthesis-2026-11-24
+    paths:
+      - ".github/workflows/amsn-prima-cross-morphology-synthesis.yml"
+      - "amsn-core/research/synthesize_prima_cross_morphology.py"
+      - "amsn-core/tests/test_prima_cross_morphology_synthesis.py"
+      - "HANDOFF_2026-11-24_PRIMA-CROSS-MORPHOLOGY-SYNTHESIS.md"
+      - "research/RESEARCH_LOG_2026-11-24_PRIMA-CROSS-MORPHOLOGY-SYNTHESIS.md"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-cross-morphology-synthesis
+  cancel-in-progress: false
+
+jobs:
+  validate-and-archive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run focused synthesis regression tests
+        run: python -m unittest discover -s amsn-core/tests -p "test_prima_cross_morphology_synthesis.py" -v
+      - name: Generate cross-morphology summary from archived evidence
+        run: python amsn-core/research/synthesize_prima_cross_morphology.py --write
+      - name: Verify generated report and CSV are reproducible
+        run: python amsn-core/research/synthesize_prima_cross_morphology.py --check
+      - name: Commit generated synthesis outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/research/PRIMA_CROSS_MORPHOLOGY_SYNTHESIS_2026-11-24.md \
+                  amsn-core/results/prima_cross_morphology_synthesis_2026-11-24.csv
+          if ! git diff --cached --quiet; then
+            git commit -m "research: record PRIMA four-morphology synthesis"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          else
+            echo "Synthesis outputs are already current."
+          fi
