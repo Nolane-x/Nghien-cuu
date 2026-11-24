@@ -1,5 +1,17 @@
 # HANDOFF — Nolane-x Research
 
+## Latest validated research checkpoint — exact PRIMA q25 backward-Euler transfer (24/11/2026)
+
+Continue from [HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md). Active branch: \`research/prima-q25-backward-euler-discrete-transfer-2026-11-24\`; PR [#30](https://github.com/Nolane-x/Nghien-cuu/pull/30) is draft/open and must not be merged without explicit authorization.
+
+- Exact backward-Euler transfer and finite-window terminal-state correction are implemented; discrete mapping \(s_{BE}=(1-e^{-j2\pi f\Delta t})/\Delta t\), with the \(x[N-1]\) boundary term retained.
+- [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698): 9/9 focused tests, both morphology checksums and preflights, full calculation, DFT identity gate, result commit and artifact upload passed. Maximum identity residual \(1.4290\times10^{-11}\) vs \(2\times10^{-8}\). Result commit \`1d6f64a83ccc7d1310a19baa50b2bc9b738dd7f5\`; artifact 14934013973.
+- Important correction: Tamas' earlier ~1.00–1.03× nine/seven transient ratio was affected by cancellation in the absolute-voltage Hines replay. The stable perturbation-coordinate replay gives ~24.5× / 56.2× / 32.2× / 32.1× for 20/40/100/200 ms; Peng gives ~162.7× / 63.6× / 34.1× / 34.0×. Absolute NRMSE remains very small; see the full report and its explicit aggregation method.
+- A morphology × window summary and its regression test are being validated by the current workflow; do not treat that secondary output as validated until CI passes.
+- No production solver or default changed. Full Hines remains canonical; only two passive morphology instances are studied.
+
+---
+
 
 ---
 

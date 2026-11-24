@@ -5,6 +5,13 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 
+## Checkpoint mới nhất — PRIMA q25 exact backward-Euler transfer (24/11/2026)
+
+- [Báo cáo nghiên cứu](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_DISCRETE_TRANSFER_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md).
+- [PR #30](https://github.com/Nolane-x/Nghien-cuu/pull/30) đang draft. [Workflow 45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) pass **10/10 tests**, full simulation and DFT identity gate; maximum relative residual \(1.4290e-11\) (gate \(2e-8\)). All six CSV read-backs exact, including morphology × window summary 8 rows.
+- Perturbation-coordinate transient ratio 9/7 at 20/40/100/200 ms: **Tamas 24.55× / 55.28× / 31.94× / 31.64×; Peng 138.34× / 69.78× / 33.67× / 33.43×**. The previous Tamas ~1.00× ratio from absolute-voltage replay was dominated by round-off cancellation; absolute NRMSE is still tiny.
+- Full Hines remains canonical; no production defaults changed. Next experiment: timestep refinement 0.1/0.05/0.025 ms on the same two pinned morphologies.
+
 ## Checkpoint mới nhất — profiler tách pha PRIMA (22/11/2026)
 
 - [Handoff phase profiler](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md) và [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-PHASE-PROFILER-IMPLEMENTATION.md).
