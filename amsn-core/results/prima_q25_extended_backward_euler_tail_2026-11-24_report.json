@@ -18,21 +18,27 @@
     },
     "extended_transient_rows": 6048,
     "layout_window_summary_rows": 32,
-    "max_20ms_archived_absolute_delta_pct_points": 3.0818710679657265e-08,
-    "max_20ms_archived_relative_delta_pct": 21.214578179870866,
+    "max_20ms_archived_absolute_delta_pct_points": 1.7048480402787647e-10,
+    "max_20ms_archived_relative_delta_pct": 14.202384882127932,
     "window_summary_rows": 16
+  },
+  "parity_gate": {
+    "max_absolute_delta_pct_points": 1.7048480402787647e-10,
+    "max_relative_delta_pct": 14.202384882127932,
+    "rule": "absolute difference in 20-ms NRMSE percentage points",
+    "tolerance_pct_points": 5e-08
   },
   "runtime": {
     "neuron": "9.0.2",
     "numpy": "2.5.5",
     "python": "3.12.16",
-    "scipy": "1.16.3",
-    "wall_seconds": 99.19593854899999
+    "scipy": "1.16.3"
   },
   "schema_version": 1,
   "scientific_limits": [
-    "The recurrence is the same implicit backward-Euler method with dt=0.1 ms and the same pulse sample timing as the archived 20-ms experiment; the observation window alone is extended.",
-    "The full cable BE matrix is assembled from the original passive tree G and C, factored sparsely once per scenario, and its 20-ms NRMSE is required to reproduce the archived Hines/PRIMA result within a strict parity guard.",
+    "The recurrence is the same implicit backward-Euler method with dt=0.1 ms and the same pulse sample timing as the archived 20-ms experiment; only the observation window is extended.",
+    "The full cable reference uses the exact-order compiled Hines tree-elimination recurrence; the 20-ms result must reproduce archived Hines/PRIMA NRMSE within the explicit absolute percentage-point parity floor.",
+    "The reduced trace keeps the original per-vector backward-Euler solve and port-voltage projection through 20 ms; factorized solves are used only for the later tail.",
     "All nine passive parameter scenarios, three sources, seven common outputs and both 2-ms/10-ms pulses are retained.",
     "Only two individual passive linear-RC morphology reconstructions are compared; they are not populations or biological validation.",
     "Full Hines remains canonical; no production code or solver defaults are changed."
