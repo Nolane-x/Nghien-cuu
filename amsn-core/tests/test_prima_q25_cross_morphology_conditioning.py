@@ -12,7 +12,7 @@ import audit_prima_q25_basis_conditioning as audit
 
 
 def test_expected_cross_morphology_model_matrix_is_exact():
-    assert audit.expected_counts() == {"models": 144, "shift_seeds": 864}
+    assert audit.expected_counts() == {"models": 144, "shift_seeds": 864, "port_leverage": 1152}
 
 
 def test_generalized_rate_spectrum_is_positive_for_spd_pair():
