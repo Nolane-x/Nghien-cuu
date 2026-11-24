@@ -1,0 +1,93 @@
+name: NMO_107159 Tamas q25 four-layout PRIMA replication
+
+on:
+  push:
+    branches:
+      - research/prima-tamas-q25-four-layout-replication-2026-11-24
+    paths:
+      - ".github/workflows/amsn-prima-tamas-q25-four-layout-replication.yml"
+      - "amsn-core/examples/replay_nmo107159_four_layout_replication.py"
+      - "amsn-core/examples/replay_nmo107159_tamas_7v9port.py"
+      - "amsn-core/examples/prepare_nmo107159_tamas_holdout.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/tests/test_nmo107159_four_layout_replication.py"
+      - "amsn-core/tests/test_nmo107159_tamas_7v9port.py"
+      - "amsn-core/tests/test_tamas_pyramidal_holdout.py"
+      - "amsn-core/data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-tamas-q25-four-layout-replication
+  cancel-in-progress: false
+
+jobs:
+  four-layout-q25-replication:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned NEURON
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+      - name: Verify pinned Tamas human pyramidal SWC SHA-256
+        working-directory: amsn-core
+        run: |
+          test -s data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc
+          echo "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023  data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc" | sha256sum --check -
+      - name: Run four-layout, matched-port and morphology regression tests
+        working-directory: amsn-core
+        run: |
+          python -m pytest -q \
+            tests/test_nmo107159_four_layout_replication.py \
+            tests/test_nmo107159_tamas_7v9port.py \
+            tests/test_tamas_pyramidal_holdout.py
+      - name: Re-run Import3D preflight and pin Tamas q25 nodes
+        working-directory: amsn-core
+        run: python examples/prepare_nmo107159_tamas_holdout.py
+      - name: Replay four matched layouts against full Hines
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\\nuser_cpu_seconds=%U\\nsystem_cpu_seconds=%S\\nmax_rss_kb=%M\\nexit_status=%x' -o results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24.time.txt python examples/replay_nmo107159_four_layout_replication.py
+      - name: Commit four-layout replication results
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+users.noreply.github.com"
+          git add amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_*.csv \\
+                  amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_report.json \\
+                  amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24.time.txt
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive Tamas q25 four-layout PRIMA replication"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve complete replication outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmo107159-tamas-q25-four-layout-prima-replication
+          path: |
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_*.csv
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24_report.json
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_prima_q25_four_layout_replication_2026-11-24.time.txt
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/port_mapping.csv
+          if-no-files-found: warn
+          retention-days: 90
