@@ -545,7 +545,7 @@ def main() -> None:
                             for window_ms in WINDOWS_MS:
                                 samples = int(round(window_ms / DT_MS))
                                 full_values = full_trace[:samples, output_index, column]
-                                reduced_values = reduced_trace[layout_id][:samples, output_index, column]
+                                reduced_values = reduced_trace[:samples, output_index, column]
                                 nrmse = relative_l2_percent(full_values, reduced_values)
                                 output_rows.append({
                                     "morphology": morph_spec["name"],
