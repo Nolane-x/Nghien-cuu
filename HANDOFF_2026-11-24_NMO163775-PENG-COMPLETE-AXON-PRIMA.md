@@ -36,6 +36,17 @@
 
 No Diameter means standardized SWC radii are not measured diameters. Do not infer diameter-grounded biological parameters or biological accuracy from the passive model. The holdout tests topology/port-count behavior under the standardized geometry representation. This is a single mouse cell and passive linear-RC comparison only; full Hines remains canonical and no production defaults change.
 
-## Current status
+## Validated numerical result
 
-The source checksum, full AMSN suite (173/173), specific Peng tests (19/19), Import3D preflight and seven-port mapping have passed. The matched numerical replay is in progress; consult the latest Actions run and PR #16 before claiming any matched 7/9-port result. The final workflow also archives preflight JSON and port mapping with result CSVs/report/time.
+Successful run [45311916600](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600) passed the full test suite (173/173), Peng-specific tests (19/19), checksum, Import3D preflight, replay, exact coverage, archive commit and artifact upload. Artifact [#14883752560](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600/artifacts/14883752560); ZIP SHA-256 `9060b04e6e769a1e9b40700197361bf67a59b164965441849e8cd3effb716a58`.
+
+| Order | 9-port worse / better / tie | Median 9/7 shared error ratio | Maximum absolute 9-port shared NRMSE |
+|---:|---:|---:|---:|
+| 112 | 378 / 0 / 0 | 78.051× | 0.0001933% |
+| 168 | 347 / 31 / 0 | 14.501× | 6.0657e−7% |
+
+q25 nodes are basal 224 and apical 4096. q25 maximum NRMSE is 2.1588e−4% at order112 and 4.2824e−7% at order168. All 378 shared-Hines traces were exactly equal (0 V difference). Coverage: 36 models, 324 AC rows, 1,728 transient rows, 756 shared pairs, 216 q25 observations, 378 Hines checks.
+
+Interpret ratios with absolute error: the 9/7 ratios are large because the seven-port baseline error is extremely small; the absolute nine-port errors remain small under this passive protocol. No universal tolerance is assumed.
+
+This adds a third morphology and again supports morphology-dependent port-count cost. The Peng mesh cap is 0.5 µm (vs 0.125 µm in the two human holdouts), and NeuroMorpho lists No Diameter; do not pool cross-morphology absolute errors or interpret the standardized SWC radii as biological measurements. Full Hines remains canonical; no production defaults changed.
