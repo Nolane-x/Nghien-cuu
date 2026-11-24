@@ -5,6 +5,13 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 
+## Checkpoint mới nhất — PRIMA q25 exact backward-Euler transfer (24/11/2026)
+
+- [Báo cáo nghiên cứu](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_DISCRETE_TRANSFER_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md).
+- [PR #30](https://github.com/Nolane-x/Nghien-cuu/pull/30) đang draft: exact discrete transfer \(H_{BE}\), ZOH pulse spectrum và terminal-state correction cho DFT hữu hạn. [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698) pass 9/9 tests; maximum finite DFT identity residual \(1.4290e-11\) (gate \(2e-8\)).
+- Kết quả sửa cách diễn giải Tamas: replay perturbation-coordinate cho transient ratio 9/7 khoảng 24.5×, 56.2×, 32.2×, 32.1× ở 20/40/100/200 ms; metric absolute-voltage cũ bị ảnh hưởng bởi triệt tiêu số học. Sai số tuyệt đối vẫn rất nhỏ; không phải biological validation.
+- Full Hines vẫn là solver tham chiếu; không thay đổi production defaults. Bảng tổng hợp morphology × window đang được bổ sung và chờ CI xác thực.
+
 ## Checkpoint mới nhất — profiler tách pha PRIMA (22/11/2026)
 
 - [Handoff phase profiler](HANDOFF_2026-11-22_PRIMA-PHASE-PROFILER.md) và [research log](research/RESEARCH_LOG_2026-11-22_PRIMA-PHASE-PROFILER-IMPLEMENTATION.md).
@@ -430,13 +437,3 @@ The core now exposes a frequency-dependent Schur/Kron reduction that eliminates 
 - [Model summary](amsn-core/results/human_passive_prima_nine_port_high_order_model_summary_2026-11-22.csv), [candidate/config summary](amsn-core/results/human_passive_prima_nine_port_high_order_config_candidate_summary_2026-11-22.csv), [q90 paired summary](amsn-core/results/human_passive_prima_nine_port_high_order_apical_q90_pair_summary_2026-11-22.csv), and [shared-output summary](amsn-core/results/human_passive_prima_nine_port_high_order_shared_port_by_probe_2026-11-22.csv).
 - Default remains 28/56/84; 112/168 stay opt-in pending runtime/peak-memory and held-out morphology validation. Full Hines remains canonical.
 - Reproducible analyzer: [analyze_human_prima_nine_port_high_order_artifacts.py](amsn-core/research/analyze_human_prima_nine_port_high_order_artifacts.py). Handoff: [dated checkpoint](HANDOFF_2026-11-22_PRIMA-NINE-PORT-HIGH-ORDER.md).
-
-
-
-## Checkpoint mới nhất — PRIMA q25 exact backward-Euler transfer (24/11/2026)
-
-- [Báo cáo nghiên cứu](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_DISCRETE_TRANSFER_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md).
-- [PR #30](https://github.com/Nolane-x/Nghien-cuu/pull/30) đang draft: exact discrete transfer \(H_{BE}\), ZOH pulse spectrum và terminal-state correction cho DFT hữu hạn. [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698) pass 9/9 tests; maximum finite DFT identity residual \(1.4290e-11\) (gate \(2e-8\)).
-- Kết quả sửa cách diễn giải Tamas: replay perturbation-coordinate cho transient ratio 9/7 khoảng 24.5×, 56.2×, 32.2×, 32.1× ở 20/40/100/200 ms; metric absolute-voltage cũ bị ảnh hưởng bởi triệt tiêu số học. Sai số tuyệt đối vẫn rất nhỏ; không phải biological validation.
-- Full Hines vẫn là solver tham chiếu; không thay đổi production defaults. Bảng tổng hợp morphology × window đang được bổ sung và chờ CI xác thực.
-
