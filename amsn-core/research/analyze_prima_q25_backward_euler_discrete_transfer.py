@@ -67,6 +67,7 @@ EXPECTED_COMPARISON_ROWS = (
 EXPECTED_SOURCE_SUMMARY_ROWS = (
     2 * len(SOURCE_NAMES) * len(PULSE_WIDTHS_MS) * len(WINDOWS_MS)
 )
+EXPECTED_MORPH_WINDOW_SUMMARY_ROWS = 2 * len(WINDOWS_MS)
 EXPECTED_IDENTITY_ROWS = (
     2 * len(SCENARIO_NAMES) * len(LAYOUT_IDS) * len(WINDOWS_MS)
     * len(SOURCE_NAMES) * len(PULSE_WIDTHS_MS)
@@ -85,6 +86,7 @@ def expected_counts() -> dict[str, int]:
         "case_metric_rows": EXPECTED_CASE_METRIC_ROWS,
         "nine_seven_comparison_rows": EXPECTED_COMPARISON_ROWS,
         "source_window_summary_rows": EXPECTED_SOURCE_SUMMARY_ROWS,
+        "morphology_window_summary_rows": EXPECTED_MORPH_WINDOW_SUMMARY_ROWS,
         "finite_dft_identity_rows": EXPECTED_IDENTITY_ROWS,
     }
 
@@ -534,6 +536,10 @@ def _summarize_comparisons(
         cont_ratios = [float(x["nine_over_seven_continuous_ac_ratio"]) for x in subset]
         be_ratios = [float(x["nine_over_seven_discrete_be_ratio"]) for x in subset]
         transient_ratios = [float(x["nine_over_seven_transient_nrmse_ratio"]) for x in subset]
+        perturbation_transient_ratios = [
+            float(x["nine_over_seven_perturbation_coordinate_transient_nrmse_ratio"])
+            for x in subset
+        ]
         boundary = []
         for row in subset:
             nine = metric_index[(
@@ -554,14 +560,82 @@ def _summarize_comparisons(
             "p90_nine_over_seven_discrete_be_ratio": float(np.percentile(be_ratios, 90)),
             "median_nine_over_seven_transient_nrmse_ratio": float(np.median(transient_ratios)),
             "p90_nine_over_seven_transient_nrmse_ratio": float(np.percentile(transient_ratios, 90)),
+            "median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": float(
+                np.median(perturbation_transient_ratios)
+            ),
+            "p90_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": float(
+                np.percentile(perturbation_transient_ratios, 90)
+            ),
             "median_nine_boundary_component_of_error_norm_pct": float(np.median(boundary)),
             "continuous_ac_worse_pairs": sum(x > 1.0 for x in cont_ratios),
             "discrete_be_worse_pairs": sum(x > 1.0 for x in be_ratios),
             "transient_nrmse_worse_pairs": sum(x > 1.0 for x in transient_ratios),
+            "perturbation_coordinate_transient_nrmse_worse_pairs": sum(
+                x > 1.0 for x in perturbation_transient_ratios
+            ),
         })
     require(len(output) == EXPECTED_SOURCE_SUMMARY_ROWS,
             f"source/window summary rows {len(output)} != {EXPECTED_SOURCE_SUMMARY_ROWS}")
     return output
+
+
+def _summarize_morphology_windows(
+    source_summary: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    """Aggregate six source × pulse summaries into one morphology/window row."""
+    groups: dict[tuple[str, float], list[dict[str, Any]]] = defaultdict(list)
+    for row in source_summary:
+        groups[(row["morphology"], float(row["window_ms"]))].append(row)
+
+    metric_columns = (
+        "median_nine_over_seven_continuous_ac_ratio",
+        "median_nine_over_seven_discrete_be_ratio",
+        "median_nine_over_seven_transient_nrmse_ratio",
+        "median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio",
+        "median_nine_boundary_component_of_error_norm_pct",
+    )
+    rows: list[dict[str, Any]] = []
+    expected_groups_per_window = len(SOURCE_NAMES) * len(PULSE_WIDTHS_MS)
+    for key, subset in sorted(groups.items()):
+        require(
+            len(subset) == expected_groups_per_window,
+            f"morphology/window group lacks source × pulse coverage: {key}",
+        )
+        local = {
+            column: [float(item[column]) for item in subset]
+            for column in metric_columns
+        }
+        rows.append({
+            "morphology": key[0],
+            "window_ms": key[1],
+            "source_pulse_groups": len(subset),
+            "median_nine_over_seven_continuous_ac_ratio": float(
+                np.median(local["median_nine_over_seven_continuous_ac_ratio"])
+            ),
+            "median_nine_over_seven_discrete_be_ratio": float(
+                np.median(local["median_nine_over_seven_discrete_be_ratio"])
+            ),
+            "median_nine_over_seven_absolute_transient_nrmse_ratio": float(
+                np.median(local["median_nine_over_seven_transient_nrmse_ratio"])
+            ),
+            "median_nine_over_seven_perturbation_transient_nrmse_ratio": float(
+                np.median(
+                    local["median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio"]
+                )
+            ),
+            "median_nine_boundary_component_of_error_norm_pct": float(
+                np.median(local["median_nine_boundary_component_of_error_norm_pct"])
+            ),
+            "median_perturbation_transient_worse_pairs_of_63": float(np.median([
+                item["perturbation_coordinate_transient_nrmse_worse_pairs"]
+                for item in subset
+            ])),
+        })
+    require(
+        len(rows) == EXPECTED_MORPH_WINDOW_SUMMARY_ROWS,
+        f"morphology/window summary rows {len(rows)} != {EXPECTED_MORPH_WINDOW_SUMMARY_ROWS}",
+    )
+    return rows
 
 
 def main() -> None:
@@ -1052,24 +1126,37 @@ def main() -> None:
                 float(row["finite_transient_nrmse_pct"])
                 / max(float(base["finite_transient_nrmse_pct"]), 1e-300)
             ),
+            "seven_perturbation_coordinate_transient_nrmse_pct": (
+                base["perturbation_coordinate_transient_nrmse_pct"]
+            ),
+            "nine_perturbation_coordinate_transient_nrmse_pct": (
+                row["perturbation_coordinate_transient_nrmse_pct"]
+            ),
+            "nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": (
+                float(row["perturbation_coordinate_transient_nrmse_pct"])
+                / max(float(base["perturbation_coordinate_transient_nrmse_pct"]), 1e-300)
+            ),
         })
     require(len(comparison_rows) == EXPECTED_COMPARISON_ROWS,
             f"nine/seven comparison rows {len(comparison_rows)} != {EXPECTED_COMPARISON_ROWS}")
 
     frequency_summary = _summarize_frequency(frequency_accumulator)
     source_summary = _summarize_comparisons(comparison_rows, metric_rows)
+    morphology_window_summary = _summarize_morphology_windows(source_summary)
     stem = RESULT_STEM
     output_paths = {
         "frequency_summary": results_dir / f"{stem}_frequency_summary.csv",
         "case_metrics": results_dir / f"{stem}_case_metrics.csv",
         "nine_seven_comparisons": results_dir / f"{stem}_nine_seven_comparisons.csv",
         "source_window_summary": results_dir / f"{stem}_source_window_summary.csv",
+        "morphology_window_summary": results_dir / f"{stem}_morphology_window_summary.csv",
         "finite_dft_identity": results_dir / f"{stem}_finite_dft_identity.csv",
     }
     _write_csv(output_paths["frequency_summary"], frequency_summary)
     _write_csv(output_paths["case_metrics"], metric_rows)
     _write_csv(output_paths["nine_seven_comparisons"], comparison_rows)
     _write_csv(output_paths["source_window_summary"], source_summary)
+    _write_csv(output_paths["morphology_window_summary"], morphology_window_summary)
     readback = {
         name: _read_csv_rows(path) for name, path in output_paths.items()
     }
@@ -1078,6 +1165,7 @@ def main() -> None:
         "case_metrics": EXPECTED_CASE_METRIC_ROWS,
         "nine_seven_comparisons": EXPECTED_COMPARISON_ROWS,
         "source_window_summary": EXPECTED_SOURCE_SUMMARY_ROWS,
+        "morphology_window_summary": EXPECTED_MORPH_WINDOW_SUMMARY_ROWS,
         "finite_dft_identity": EXPECTED_IDENTITY_ROWS,
     }
     for name, count in expected.items():
@@ -1141,6 +1229,7 @@ def main() -> None:
             "case_metric_rows": len(metric_rows),
             "nine_seven_comparison_rows": len(comparison_rows),
             "source_window_summary_rows": len(source_summary),
+            "morphology_window_summary_rows": len(morphology_window_summary),
             "finite_dft_identity_rows": len(identity_rows),
             "csv_read_back": readback,
             "expected": expected_counts(),
@@ -1160,7 +1249,14 @@ def main() -> None:
             "max_finite_identity_absolute_error_v_samples": max_identity_absolute_error,
             "both_morphology_sha256_checked": True,
             "all_morphology_preflights_passed": True,
+            "transient_metric_note": (
+                "The canonical absolute-voltage transient NRMSE is retained for historical "
+                "continuity. The perturbation-coordinate transient NRMSE is also reported "
+                "and is the numerically stable comparison for these small passive residuals; "
+                "the absolute-vs-perturbation trace delta is recorded per case."
+            ),
         },
+        "morphology_window_interpretation_summary": morphology_window_summary,
         "runtime": {
             "python": sys.version.split()[0],
             "numpy": np.__version__,
