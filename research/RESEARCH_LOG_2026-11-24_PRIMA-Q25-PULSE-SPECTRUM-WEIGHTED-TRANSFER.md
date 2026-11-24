@@ -12,7 +12,7 @@ The previous transfer-stage audit found AC transfer residuals improving strongly
 
 - Keep only the canonical seven-port and dual-q25 nine-port layouts, basis order168 and nine passive parameter scenarios.
 - Calculate full-Hines source-to-shared-output transfer responses and reduced PRIMA responses from DC to 5 kHz.
-- Use a dense nonuniform band grid: 10 Hz spacing up to 500 Hz, then 100 Hz spacing to 5,000 Hz, plus 0.1 and 1 Hz samples.
+- Use a dense 10 Hz grid from 10 to 5,000 Hz, plus DC, 0.1 and 1 Hz samples.
 - For the 2 ms and 10 ms ideal rectangular current pulses, weight squared complex transfer residual by `|sinc(fT)|²` and integrate with the trapezoidal rule.
 - Join weighted transfer rows to existing per-port transient NRMSE by morphology, scenario, source, output and pulse width.
 - Compare candidate/seven ratios and compute Pearson/Spearman correlation in log-ratio space by morphology, source and pulse width.
@@ -26,7 +26,7 @@ The onset phase has unit magnitude and cancels in an energy ratio. The 5 kHz max
 - 168 weighted-output summaries; 24 weighted-source summaries.
 - 756 dual-q25-vs-seven/time-domain paired rows.
 - 12 source/pulse summaries.
-- 196 spectrum sample rows (98 frequencies × 2 pulse widths).
+- 1,006 spectrum sample rows (503 frequencies × 2 pulse widths).
 
 ## Files created
 
