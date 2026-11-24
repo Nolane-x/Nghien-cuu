@@ -5,6 +5,7 @@
       "case_metrics": 6048,
       "finite_dft_identity": 864,
       "frequency_summary": 84084,
+      "morphology_window_summary": 8,
       "nine_seven_comparisons": 3024,
       "source_window_summary": 48
     },
@@ -13,11 +14,13 @@
       "finite_dft_identity_rows": 864,
       "frequency_summary_rows": 84084,
       "master_frequency_points": 1001,
+      "morphology_window_summary_rows": 8,
       "nine_seven_comparison_rows": 3024,
       "source_window_summary_rows": 48
     },
     "finite_dft_identity_rows": 864,
     "frequency_summary_rows": 84084,
+    "morphology_window_summary_rows": 8,
     "nine_seven_comparison_rows": 3024,
     "source_window_summary_rows": 48
   },
@@ -30,12 +33,102 @@
     "finite_record_identity": "(G+(1-exp(-j*Omega))*C/dt) X = B U - (C/dt)*x[N-1]; the terminal state is included explicitly, not discarded",
     "sample_and_hold": "u[n] is held constant on [n*dt,(n+1)*dt); x[n] is the state at the end of that interval; continuous comparator uses the exact zero-order-hold Fourier factor dt*sinc(f*dt)*exp(-j*pi*f*dt)"
   },
+  "morphology_window_interpretation_summary": [
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 667.8263144303965,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 1.0006956874228985,
+      "median_nine_over_seven_continuous_ac_ratio": 33.70741084564888,
+      "median_nine_over_seven_discrete_be_ratio": 31.534860604060402,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 24.54627485179847,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 103.3854342519965,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 1.0278523680183378,
+      "median_nine_over_seven_continuous_ac_ratio": 28.353662516538677,
+      "median_nine_over_seven_discrete_be_ratio": 26.77446992337171,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 55.28374627287509,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 2.705539336512338,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 1.02343534071093,
+      "median_nine_over_seven_continuous_ac_ratio": 28.950277819344194,
+      "median_nine_over_seven_discrete_be_ratio": 28.69943413760616,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 31.9415577962044,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 100.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 0.004742244158453465,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 1.0108064632794485,
+      "median_nine_over_seven_continuous_ac_ratio": 29.650162348299375,
+      "median_nine_over_seven_discrete_be_ratio": 29.698568643831905,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 31.64383681100354,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 200.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 910.8794277146591,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 31.517765106552037,
+      "median_nine_over_seven_continuous_ac_ratio": 42.10579010608126,
+      "median_nine_over_seven_discrete_be_ratio": 43.22980914121533,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 138.34338559191028,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 117.32592884491223,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 37.82441694727393,
+      "median_nine_over_seven_continuous_ac_ratio": 31.9192554108476,
+      "median_nine_over_seven_discrete_be_ratio": 31.772638812539043,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 69.77949707848717,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 1.8756398915053287,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 26.68270576714239,
+      "median_nine_over_seven_continuous_ac_ratio": 33.429061044586014,
+      "median_nine_over_seven_discrete_be_ratio": 33.39990506305702,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 33.670271001092125,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 100.0
+    },
+    {
+      "median_nine_boundary_component_of_error_norm_pct": 0.001929460256277538,
+      "median_nine_over_seven_absolute_transient_nrmse_ratio": 24.924685513889912,
+      "median_nine_over_seven_continuous_ac_ratio": 33.44973672062784,
+      "median_nine_over_seven_discrete_be_ratio": 33.42842367860509,
+      "median_nine_over_seven_perturbation_transient_nrmse_ratio": 33.431754489970146,
+      "median_perturbation_transient_worse_pairs_of_63": 63.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 200.0
+    }
+  ],
   "runtime": {
     "neuron": "9.0.2",
     "numpy": "2.5.5",
     "python": "3.12.16",
     "scipy": "1.16.3",
-    "wall_seconds": 313.09542679599997
+    "wall_seconds": 407.669074343
   },
   "schema_version": 1,
   "scientific_limits": [
@@ -137,9 +230,10 @@
     "finite_identity_relative_tolerance": 2e-08,
     "full_hines_identity_coordinates": "The DFT identity uses a second mathematically equivalent full-Hines replay in perturbation coordinates (zero initial perturbation, zero leak source). The canonical absolute-voltage replay is retained for transient NRMSE, and its difference from perturbation coordinates is recorded separately.",
     "identity_normalization": "output DFT L2 norm; finite-error identity is not divided by the much smaller inter-model residual norm",
-    "max_finite_error_identity_relative_error": 1.4256887485702515e-11,
-    "max_finite_identity_absolute_error_v_samples": 1.1098056821321025e-11,
+    "max_finite_error_identity_relative_error": 1.4235434818124869e-11,
+    "max_finite_identity_absolute_error_v_samples": 1.1099039530407367e-11,
     "max_finite_identity_relative_error": 1.4290021698158527e-11,
-    "max_model_identity_relative_error": 1.4290021698158527e-11
+    "max_model_identity_relative_error": 1.4290021698158527e-11,
+    "transient_metric_note": "The canonical absolute-voltage transient NRMSE is retained for historical continuity. The perturbation-coordinate transient NRMSE is also reported and is the numerically stable comparison for these small passive residuals; the absolute-vs-perturbation trace delta is recorded per case."
   }
 }
