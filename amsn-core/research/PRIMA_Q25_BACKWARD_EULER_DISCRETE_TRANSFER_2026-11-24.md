@@ -128,3 +128,28 @@ For these two passive reconstructions, the q25 nine-port has a larger relative t
 
 This remains a numerical comparison on two individual passive linear-RC morphologies, not population, active-neuron, synaptic, or biological validation. No production solver or default was changed; full Hines remains canonical.
 
+
+
+
+## Final generated-summary CI — workflow 45422624509
+
+The secondary morphology × window summary and its regression test are now validated by the complete workflow [45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509):
+
+- **10 focused tests passed** in 0.93 s.
+- Both morphology SHA-256 checks and both NEURON preflights passed.
+- Full calculation, discrete identity, result commit and artifact upload passed.
+- Maximum model identity relative error: \(1.42900217\times10^{-11}\).
+- Maximum finite-error identity relative error: \(1.42354348\times10^{-11}\).
+- Identity gate: \(2\times10^{-8}\).
+- Maximum absolute identity residual: \(1.10990395\times10^{-11}\ \mathrm{V\cdot samples}\).
+- All six CSV datasets read back at exact expected counts: 84,084 frequency summaries; 6,048 case metrics; 3,024 paired comparisons; 48 source/window summaries; 8 morphology/window summaries; and 864 finite-record identity rows.
+- Result commit: \`228e66538a833e613ae6b664353abaae65849244\`.
+- Artifact [14936177082](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509/artifacts/14936177082), ZIP SHA-256 \`4a3872a0606ecb6663c9d3d0aaaca986a8486181466232de4696becf34a379a6\`.
+- Environment: Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2; 408.06 s wall time, 750.77 s user CPU, 360,952 KB peak RSS.
+
+The authoritative eight-row summary is committed at \`amsn-core/results/prima_q25_backward_euler_discrete_transfer_2026-11-24_morphology_window_summary.csv\`; its rows and aggregation are shown in the comparison table above. These final table values supersede the earlier interim figures in the first version of this report.
+
+## Next experiment
+
+A useful next numerical study is a backward-Euler timestep refinement (0.1/0.05/0.025 ms) for the same two pinned morphologies and seven/nine-port order-168 models. It should retain full Hines as the reference, use perturbation coordinates for the tiny-error comparison, preserve the absolute-voltage trace as a roundoff diagnostic, and compare finite transients with the exact \(s_{BE}\) transfer at each timestep. This tests whether the measured q25 penalty converges with timestep; it does not justify changing production defaults.
+
