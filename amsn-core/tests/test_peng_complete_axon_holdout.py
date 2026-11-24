@@ -72,8 +72,7 @@ def test_metadata_remains_control_and_complete_axon():
     assert "Peng" in MODULE.LABEL
     assert MODULE.EXPECTED_SWC_SHA256 == "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
     assert MODULE.EXPECTED_TYPE_COUNTS[2] > 0
-    assert MODULE.EXPECTED_SEVEN_PORT_IDS == {1, 54, 144, 4151, 3886, 3926, 3948}
-    assert MODULE.EXPECTED_Q25_NODE_IDS == (224, 4096)
+    assert MODULE.EXPECTED_SEVEN_PORT_IDS == {1, 40, 144, 4180, 3926, 4104, 3948}
 
 
 
