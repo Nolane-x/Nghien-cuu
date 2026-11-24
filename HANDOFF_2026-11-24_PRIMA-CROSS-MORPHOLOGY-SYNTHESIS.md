@@ -49,3 +49,18 @@ The workflow is expected to run focused standard-library tests, generate both ou
 ## Session integrity
 
 No new NEURON simulation was run in this synthesis step. Only archived workflow outputs are read. Record the synthesis workflow run ID, resulting commit SHA and generated file hashes after CI completes.
+
+
+## Validated synthesis checkpoint — GitHub Actions run 45317943578
+
+The synthesis workflow completed successfully on 24 November 2026.
+
+- Focused regression tests: **7/7 passed** under CPython 3.12.16.
+- The generator wrote the cross-morphology Markdown report and CSV from the archived four-morphology reports/CSVs.
+- The deterministic `--check` pass confirmed both generated files match the source datasets.
+- The workflow committed the generated files in commit `fde2876cc6b2c808c306e93629de2a18510178ca`.
+- Run: https://github.com/Nolane-x/Nghien-cuu/actions/runs/45317943578
+- Generated report blob SHA: `916dfc523faa5e356dfc5626a6278634eb60b789`.
+- Generated CSV blob SHA: `0e605ed5849f59f996007e68f68f06d60727189`.
+
+The resulting synthesis covers 144 model configurations, 1,296 AC matrices, 6,912 transient rows, 3,024 shared-output pairs, 864 q25 observations and 1,512 exact shared-Hines checks. This consolidates previously successful single-morphology runs; it does not constitute a new NEURON simulation or biological validation.
