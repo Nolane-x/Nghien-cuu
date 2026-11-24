@@ -8,9 +8,9 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 ## Checkpoint mới nhất — PRIMA q25 exact backward-Euler transfer (24/11/2026)
 
 - [Báo cáo nghiên cứu](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_DISCRETE_TRANSFER_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md).
-- [PR #30](https://github.com/Nolane-x/Nghien-cuu/pull/30) đang draft: exact discrete transfer \(H_{BE}\), ZOH pulse spectrum và terminal-state correction cho DFT hữu hạn. [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698) pass 9/9 tests; maximum finite DFT identity residual \(1.4290e-11\) (gate \(2e-8\)).
-- Kết quả sửa cách diễn giải Tamas: replay perturbation-coordinate cho transient ratio 9/7 khoảng 24.5×, 56.2×, 32.2×, 32.1× ở 20/40/100/200 ms; metric absolute-voltage cũ bị ảnh hưởng bởi triệt tiêu số học. Sai số tuyệt đối vẫn rất nhỏ; không phải biological validation.
-- Full Hines vẫn là solver tham chiếu; không thay đổi production defaults. Bảng tổng hợp morphology × window đang được bổ sung và chờ CI xác thực.
+- [PR #30](https://github.com/Nolane-x/Nghien-cuu/pull/30) đang draft. [Workflow 45422624509](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45422624509) pass **10/10 tests**, full simulation and DFT identity gate; maximum relative residual \(1.4290e-11\) (gate \(2e-8\)). All six CSV read-backs exact, including morphology × window summary 8 rows.
+- Perturbation-coordinate transient ratio 9/7 at 20/40/100/200 ms: **Tamas 24.55× / 55.28× / 31.94× / 31.64×; Peng 138.34× / 69.78× / 33.67× / 33.43×**. The previous Tamas ~1.00× ratio from absolute-voltage replay was dominated by round-off cancellation; absolute NRMSE is still tiny.
+- Full Hines remains canonical; no production defaults changed. Next experiment: timestep refinement 0.1/0.05/0.025 ms on the same two pinned morphologies.
 
 ## Checkpoint mới nhất — profiler tách pha PRIMA (22/11/2026)
 
