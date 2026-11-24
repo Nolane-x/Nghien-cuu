@@ -1,0 +1,190 @@
+{
+  "amsn": {
+    "electrical_compartment_count": 7222,
+    "finite_1khz_passive_response": true,
+    "port_mapping_rows": [
+      {
+        "geometry_offset_um": 0.0,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.46296296296296297,
+        "interpolation_upper_weight": 1.0,
+        "interpolation_upper_x": 0.5,
+        "nearest_centre_offset_um": 0.0,
+        "normalized_x": 0.5,
+        "section_name": "soma[0]",
+        "swc_node_id": 1
+      },
+      {
+        "geometry_offset_um": 9.312862768447928e-07,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.9775086505190311,
+        "interpolation_upper_weight": 0.9997150746425223,
+        "interpolation_upper_x": 0.9809688581314879,
+        "nearest_centre_offset_um": 0.00014234323418804706,
+        "normalized_x": 0.980967872230597,
+        "section_name": "apic[4]",
+        "swc_node_id": 4301
+      },
+      {
+        "geometry_offset_um": 6.823937900550195e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.7720763723150358,
+        "interpolation_upper_weight": 0.12208424135140385,
+        "interpolation_upper_x": 0.7744630071599046,
+        "nearest_centre_offset_um": 0.060934510384129226,
+        "normalized_x": 0.7723677428194544,
+        "section_name": "apic[11]",
+        "swc_node_id": 4623
+      },
+      {
+        "geometry_offset_um": 6.173684157549436e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.020146520146520148,
+        "interpolation_upper_weight": 0.7508706661265379,
+        "interpolation_upper_x": 0.023809523809523808,
+        "nearest_centre_offset_um": 0.1238705044507733,
+        "normalized_x": 0.022896962146983654,
+        "section_name": "apic[14]",
+        "swc_node_id": 4735
+      },
+      {
+        "geometry_offset_um": 3.4862242626434565e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.6180811808118081,
+        "interpolation_upper_weight": 0.8531237276803293,
+        "interpolation_upper_x": 0.6217712177121771,
+        "nearest_centre_offset_um": 0.07325233764906613,
+        "normalized_x": 0.6212292388475289,
+        "section_name": "dend[2]",
+        "swc_node_id": 5564
+      },
+      {
+        "geometry_offset_um": 8.633781567854921e-07,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.3791208791208791,
+        "interpolation_upper_weight": 0.9990828740250576,
+        "interpolation_upper_x": 0.3813186813186813,
+        "nearest_centre_offset_um": 0.0004567060749849361,
+        "normalized_x": 0.3813166656571979,
+        "section_name": "dend[16]",
+        "swc_node_id": 6363
+      },
+      {
+        "geometry_offset_um": 6.974222300235352e-06,
+        "interpolation_endpoint_fallback": null,
+        "interpolation_lower_x": 0.22127139364303178,
+        "interpolation_upper_weight": 0.9642992526173545,
+        "interpolation_upper_x": 0.2237163814180929,
+        "nearest_centre_offset_um": 0.017845175205337682,
+        "normalized_x": 0.2236290935271818,
+        "section_name": "dend[30]",
+        "swc_node_id": 7023
+      }
+    ],
+    "q25_only_swc_node_ids": [
+      4404,
+      6609
+    ],
+    "roles_by_node": {
+      "1": [
+        "soma"
+      ],
+      "4301": [
+        "apical_q50"
+      ],
+      "4623": [
+        "apical_q90"
+      ],
+      "4735": [
+        "apical_q75"
+      ],
+      "5564": [
+        "basal_q50"
+      ],
+      "6363": [
+        "basal_q75"
+      ],
+      "7023": [
+        "basal_q90"
+      ]
+    },
+    "seven_unique_port_node_ids": [
+      1,
+      6363,
+      4735,
+      5564,
+      7023,
+      4301,
+      4623
+    ],
+    "source_node_ids": {
+      "apical_q75": 4735,
+      "basal_q75": 6363,
+      "soma": 1
+    }
+  },
+  "label": "NMO_107159_TamasHumanPyramidalControl",
+  "neuron": {
+    "maximum_segment_length_cap_um": 0.5,
+    "maximum_segment_length_um": 0.49997753345665835,
+    "section_count": 127,
+    "segment_count": 24737,
+    "version": "9.0.2"
+  },
+  "scientific_limits": [
+    "The specimen is a female human Control-condition pyramidal comparison cell from the Tamas archive; it is a single reconstruction and does not constitute a population. Age is not reported.",
+    "NeuroMorpho metadata marks dendrites and axon complete and Morphological Attributes as Diameter, 3D, Angles.",
+    "This is a passive linear-RC numerical morphology holdout, not active-neuron or biological validation. NeuroMorpho records Diameter, 3D and Angles. The reconstruction is suitable for diameter-aware passive geometry, but passive membrane parameters remain model assumptions.",
+    "No active-channel mechanism, conductance fit or production default is changed."
+  ],
+  "source": {
+    "age_classification": "not reported",
+    "age_years": null,
+    "archive": "Tamas",
+    "cell_class": "principal cell, pyramidal",
+    "cell_name": "Fig5c_141009_2og_B",
+    "experimental_condition": "Control",
+    "magnification": 100,
+    "metadata_url": "https://neuromorpho.org/neuron_info.jsp?neuron_name=Fig5c_141009_2og_B",
+    "neuromorpho_id": "NMO_107159",
+    "objective_type": "oil",
+    "physical_integrity": "Dendrites & Axon Complete; morphological attributes: Diameter, 3D, Angles",
+    "primary_region": "neocortex",
+    "protocol": "in vitro",
+    "reference_article": "Transcriptomic and morphophysiological evidence for a specialized human cortical GABAergic cell type (Fig. 5C pyramidal comparison cell)",
+    "reference_doi": "10.1038/s41593-018-0205-2",
+    "reference_pmid": "30150662",
+    "secondary_region": "frontal",
+    "sex": "female",
+    "slice_thickness_um": 70,
+    "slicing_direction": "perpendicular to cortical layers",
+    "source_bytes": 258789,
+    "source_context_note": "The record name Fig5c_141009_2og_B and Fig. 5C source legend identify a pyramidal comparison cell; it is not a rosehip interneuron.",
+    "source_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+    "source_url": "https://neuromorpho.org/dableFiles/tamas/CNG%20version/Fig5c_141009_2og_B.CNG.swc",
+    "species": "human",
+    "staining": "biocytin",
+    "strain": "Not applicable",
+    "structural_domains": [
+      "dendrites",
+      "soma",
+      "axon"
+    ],
+    "tertiary_region": "layer 1 and layer 2-3"
+  },
+  "status": "PASS",
+  "swc": {
+    "branch_point_count": 61,
+    "missing_parent_references": 0,
+    "record_count": 7228,
+    "root_count": 1,
+    "three_point_soma_detected": true,
+    "total_path_length_um": 12333.650616683373,
+    "type_counts": {
+      "1": 3,
+      "2": 4030,
+      "3": 1767,
+      "4": 1428
+    }
+  }
+}

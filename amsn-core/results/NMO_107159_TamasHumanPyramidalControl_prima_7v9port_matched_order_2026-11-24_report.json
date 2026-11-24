@@ -1,0 +1,297 @@
+{
+  "exact_coverage": {
+    "frequency": 324,
+    "hines_shared": 378,
+    "matched_shared": 756,
+    "models": 36,
+    "q25_only": 216,
+    "transient": 1728
+  },
+  "matched_shared_summary": [
+    {
+      "basis_order": 112,
+      "matched_shared_output_pairs": 378,
+      "max_error_ratio_nine_over_seven": 140.02910357293948,
+      "max_nine_port_nrmse_pct": 3.950655651229636e-05,
+      "max_seven_port_nrmse_pct": 7.667127570041268e-07,
+      "median_error_ratio_nine_over_seven": 42.71807805000821,
+      "nine_port_better_pairs": 0,
+      "nine_port_worse_pairs": 378,
+      "ties_within_1e_15_pct_points": 0
+    },
+    {
+      "basis_order": 168,
+      "matched_shared_output_pairs": 378,
+      "max_error_ratio_nine_over_seven": 4.37298193183125,
+      "max_nine_port_nrmse_pct": 5.455892576025842e-07,
+      "max_seven_port_nrmse_pct": 5.451146441822332e-07,
+      "median_error_ratio_nine_over_seven": 1.0010214503128352,
+      "nine_port_better_pairs": 164,
+      "nine_port_worse_pairs": 214,
+      "ties_within_1e_15_pct_points": 0
+    }
+  ],
+  "model_summary": [
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 7.667127570041268e-07,
+      "max_y_error_10khz_pct": 1.6947501268835894e-05,
+      "max_z_error_10khz_pct": 3.2186791598528924e-06,
+      "median_basis_build_seconds": 0.8495089449999966,
+      "median_numeric_storage_mb": 6.362548828125,
+      "median_transient_port_nrmse_pct": 5.0351131286326965e-08,
+      "median_y_error_10khz_pct": 1.3984143769474424e-05,
+      "median_z_error_10khz_pct": 7.196744892913625e-07,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 168,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 5.451146441822332e-07,
+      "max_y_error_10khz_pct": 8.615233839972306e-10,
+      "max_z_error_10khz_pct": 1.9317121870953676e-11,
+      "median_basis_build_seconds": 1.3541095920000004,
+      "median_numeric_storage_mb": 9.6873779296875,
+      "median_transient_port_nrmse_pct": 2.8332195961528913e-08,
+      "median_y_error_10khz_pct": 5.927988373947714e-10,
+      "median_z_error_10khz_pct": 6.879343690141055e-12,
+      "model_scenario_rows": 9,
+      "port_count": 7,
+      "transient_port_rows": 378
+    },
+    {
+      "basis_order": 112,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 3.950655651229636e-05,
+      "max_y_error_10khz_pct": 0.00022165124140855724,
+      "max_z_error_10khz_pct": 6.0448948162106285e-05,
+      "median_basis_build_seconds": 0.7493148860000076,
+      "median_numeric_storage_mb": 6.362548828125,
+      "median_transient_port_nrmse_pct": 2.28721335456456e-06,
+      "median_y_error_10khz_pct": 0.00018783123975680928,
+      "median_z_error_10khz_pct": 1.7338749152713506e-05,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    },
+    {
+      "basis_order": 168,
+      "frequency_rows": 81,
+      "max_transient_port_nrmse_pct": 5.455892576025842e-07,
+      "max_y_error_10khz_pct": 3.275247228192037e-07,
+      "max_z_error_10khz_pct": 3.257791456839367e-09,
+      "median_basis_build_seconds": 1.1307544199999882,
+      "median_numeric_storage_mb": 9.6873779296875,
+      "median_transient_port_nrmse_pct": 2.8118310349427687e-08,
+      "median_y_error_10khz_pct": 2.9439404852122035e-07,
+      "median_z_error_10khz_pct": 2.8130932486821053e-09,
+      "model_scenario_rows": 9,
+      "port_count": 9,
+      "transient_port_rows": 486
+    }
+  ],
+  "morphology": {
+    "age_years": null,
+    "axon_complete": true,
+    "brain_region": "frontal neocortex, layers 1 and 2-3",
+    "electrical_compartments": 7222,
+    "expected_q25_swc_node_ids": [
+      4404,
+      6609
+    ],
+    "experimental_condition": "Control-condition human pyramidal comparison morphology; dendrites and axon complete; Diameter, 3D, Angles",
+    "experimental_context": "single Tamas archive Control-condition human pyramidal comparison cell shown in Fig. 5C of the rosehip-cell paper; not a rosehip interneuron",
+    "label": "NMO_107159_TamasHumanPyramidalControl",
+    "physical_integrity": "dendrites and axon complete; Diameter, 3D, Angles",
+    "preflight_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+    "sex": "female",
+    "swc_path": "data/human/neuromorpho_tamas/NMO_107159_Fig5c_141009_2og_B.CNG.swc",
+    "swc_record_count": 7228,
+    "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+  },
+  "port_layouts": {
+    "7": {
+      "node_ids": [
+        1,
+        6363,
+        4735,
+        5564,
+        7023,
+        4301,
+        4623
+      ],
+      "roles_by_node": {
+        "1": [
+          "soma"
+        ],
+        "4301": [
+          "apical_q50"
+        ],
+        "4623": [
+          "apical_q90"
+        ],
+        "4735": [
+          "apical_q75"
+        ],
+        "5564": [
+          "basal_q50"
+        ],
+        "6363": [
+          "basal_q75"
+        ],
+        "7023": [
+          "basal_q90"
+        ]
+      },
+      "source_ids": {
+        "apical_q75": 4735,
+        "basal_q75": 6363,
+        "soma": 1
+      }
+    },
+    "9": {
+      "node_ids": [
+        1,
+        6363,
+        4735,
+        5564,
+        7023,
+        4301,
+        4623,
+        6609,
+        4404
+      ],
+      "roles_by_node": {
+        "1": [
+          "soma"
+        ],
+        "4301": [
+          "apical_q50"
+        ],
+        "4404": [
+          "apical_q25"
+        ],
+        "4623": [
+          "apical_q90"
+        ],
+        "4735": [
+          "apical_q75"
+        ],
+        "5564": [
+          "basal_q50"
+        ],
+        "6363": [
+          "basal_q75"
+        ],
+        "6609": [
+          "basal_q25"
+        ],
+        "7023": [
+          "basal_q90"
+        ]
+      },
+      "source_ids": {
+        "apical_q75": 4735,
+        "basal_q75": 6363,
+        "soma": 1
+      }
+    }
+  },
+  "protocol": {
+    "dt_ms": 0.1,
+    "duration_ms": 20.0,
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "frequencies_hz": [
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      300.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "mesh_max_segment_um": 0.5,
+    "orders": [
+      112,
+      168
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "shift_strategy": "extended_10khz",
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ]
+  },
+  "q25_only_swc_node_ids": [
+    4404,
+    6609
+  ],
+  "q25_summary": [
+    {
+      "basis_order": 112,
+      "max_q25_nrmse_pct": 3.532346728271715e-05,
+      "median_q25_nrmse_pct": 3.020065451366104e-06,
+      "q25_observations": 108
+    },
+    {
+      "basis_order": 168,
+      "max_q25_nrmse_pct": 2.3679007569443101e-07,
+      "median_q25_nrmse_pct": 2.4896043912655274e-08,
+      "q25_observations": 108
+    }
+  ],
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16"
+  },
+  "runtime_promotion": false,
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is a passive linear-RC numerical comparison against full Hines on one independent morphology with complete arbors by repository metadata.",
+    "The two port layouts share exactly seven SWC node IDs; the nine-port layout adds only the basal-q25 and apical-q25 probes pinned by the independent preflight.",
+    "Orders 112 and 168 use identical six-shift extended-10kHz expansion frequencies for both port counts.",
+    "The morphology is one female human Control-condition pyramidal comparison cell in frontal neocortex, with layers 1 and 2-3 in metadata; dendrites and axon are marked complete by NeuroMorpho. Age is not reported. The record is shown as the pyramidal comparison cell in Fig. 5C of the linked rosehip-cell paper; it is not a rosehip interneuron.",
+    "The comparison does not establish active-channel, nonlinear-synapse, plasticity or biological validity.",
+    "No production order default, canonical Hines reference or runtime behavior is modified. NeuroMorpho lists Diameter, 3D, Angles. The standardized radii can support diameter-aware geometry, but passive parameters remain model assumptions."
+  ],
+  "shared_swc_node_ids": [
+    1,
+    4301,
+    4623,
+    4735,
+    5564,
+    6363,
+    7023
+  ],
+  "status": "matched_7port_9port_prima_holdout_replay_passed"
+}
