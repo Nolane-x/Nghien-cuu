@@ -50,6 +50,8 @@ Workflow 45416403878 ran Python 3.12 / NumPy 2.5.5 / NEURON 9.0.2 / SciPy 1.16.3
 
 The leading numerical hypothesis is loss of precision in the canonical full-Hines absolute-voltage recurrence: it evolves voltages around E_leak and the audit subtracts that offset to recover the small perturbation, while the frequency-domain linear model is defined directly in perturbation coordinates. To test rather than assume this, commit 71de870b adds a second full-Hines replay initialized at zero perturbation with leak source zero, records its difference from the canonical absolute-voltage trace, uses the perturbation replay only for the transfer/DFT identity, and retains the canonical trace for the historical transient NRMSE. The new run 45419651741 is queued; run 45417470042 was still running the older eight-test version at the last check. Artifact 14932942667 (SHA-256 4cf890875ee023588491f59a9cd482a6cba8c951be422aecb4db182bc24567d7) contains the prior diagnostic CSVs. No numerical transfer/boundary interpretation is accepted yet.
 
+Run 45417470042 subsequently passed the eight focused tests but reproduced the same absolute-coordinate identity maximum of 2.737742435e-8 against 2e-8; artifact 14934170131 was uploaded with ZIP SHA-256 a1f6b09189c9c703c336cab1d61d10feeea196802265470a2f407d82191e67ea. This repeat confirms the old failure is deterministic; it does not validate the perturbation-coordinate correction.
+
 ## Expected outputs
 
 - \`frequency_summary.csv\`
