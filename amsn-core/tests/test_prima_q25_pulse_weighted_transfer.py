@@ -72,7 +72,7 @@ def test_average_rank_handles_ties_and_safe_correlations():
     ranks=pulse._average_ranks([1.0,2.0,2.0,4.0])
     np.testing.assert_allclose(ranks,[1.0,2.5,2.5,4.0])
     assert pulse.safe_corr([1,2,3],[1,2,3]) > 0.999
-    assert math.isnan(pulse.safe_corr([1,1,1],[1,2,3]))
+    assert pulse.safe_corr([1,1,1],[1,2,3]) is None
 
 
 import math
