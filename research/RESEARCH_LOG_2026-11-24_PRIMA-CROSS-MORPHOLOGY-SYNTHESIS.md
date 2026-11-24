@@ -60,3 +60,20 @@ Four individual morphology holdouts do not represent a human or mouse population
 ## Next concrete experiment
 
 Run a mesh-harmonization factorial on at least one holdout from each mesh stratum, using both 0.125 and 0.5 µm caps with identical ports, orders, shifts and passive scenarios. In parallel, localize the NMO_163775 order-168 residual by port/source/pulse/scenario before considering any order recommendation.
+
+
+## Verified synthesis workflow closeout
+
+GitHub Actions run [45317943578](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45317943578) completed successfully on CPython 3.12.16.
+
+Actual workflow output:
+- 7/7 focused `unittest` checks passed.
+- `python amsn-core/research/synthesize_prima_cross_morphology.py --write` generated the Markdown report and CSV.
+- `python amsn-core/research/synthesize_prima_cross_morphology.py --check` returned: `OK: 2 generated files match all four validated source datasets`.
+- The output commit is `fde2876cc6b2c808c306e93629de2a18510178ca`.
+- Markdown report blob SHA: `916dfc523faa5e356dfc5626a6278634eb60b789`.
+- CSV blob SHA: `0e605ed5849f59f996007e68f68f06d60727189`.
+
+Aggregated verified coverage across the four archived holdouts: 144 model configurations, 1,296 frequency matrices, 6,912 transient rows, 3,024 paired shared-output comparisons, 864 q25-only observations and 1,512 shared-Hines checks. Every recorded Hines check is exactly zero absolute trace difference and zero relative L2 difference.
+
+This closeout supersedes the earlier note in this log stating that the synthesis workflow had not yet completed. No additional NEURON replay was run during this synthesis step. The synthesis branch remains separate from `main` and stacked on the NMO_107159/PR #17 branch.
