@@ -14,7 +14,7 @@ import prepare_nmo107159_tamas_holdout as MODULE
 def test_pinned_neuromorpho_record_identity():
     assert MODULE.EXPECTED_NODE_COUNT == 7228
     assert MODULE.EXPECTED_TYPE_COUNTS == {1: 3, 2: 4030, 3: 1767, 4: 1428}
-    assert MODULE.LABEL == "NMO_107159_TamasControl"
+    assert MODULE.LABEL == "NMO_107159_TamasHumanPyramidalControl"
 
 
 def test_parser_accepts_valid_swc_with_three_point_soma_and_all_domains():
@@ -72,7 +72,8 @@ def test_metadata_remains_control_and_complete_axon():
     assert "Tamas" in MODULE.LABEL
     assert MODULE.EXPECTED_SWC_SHA256 == "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
     assert MODULE.EXPECTED_TYPE_COUNTS[2] == 4030
-    assert "Diameter" in MODULE.SOURCE_URL or "Tamas" in MODULE.LABEL
+    assert "Tamas" in MODULE.SOURCE_URL
+    assert MODULE.METADATA_URL.endswith("Fig5c_141009_2og_B")
     assert MODULE.EXPECTED_SEVEN_PORT_IDS == {1, 5564, 6363, 7023, 4301, 4735, 4623}
 
 
