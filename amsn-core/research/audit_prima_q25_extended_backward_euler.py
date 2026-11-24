@@ -162,6 +162,8 @@ def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, np.ndarray]:
         "parent_index": parent,
         "axial_g_s": axial,
         "c_over_dt": c_over_dt,
+        "leak_source_a": np.asarray(tree.membrane_leak_s, dtype=float) * float(tree.parameters.e_leak_v),
+        "leak_reversal_v": float(tree.parameters.e_leak_v),
     }
 
 
@@ -182,7 +184,8 @@ def tree_hines_backward_euler_step(
             "Hines previous state must have shape (compartments, columns)")
     require(current.shape == previous.shape,
             "Hines current matrix must match the previous state")
-    work = c_over_dt[:, None] * previous + current
+    leak_source = factor["leak_source_a"]
+    work = c_over_dt[:, None] * previous + leak_source[:, None] + current
     for child in range(pivot.size - 1, 0, -1):
         p = int(parent[child])
         work[p, :] += multipliers[child] * work[child, :]
@@ -246,7 +249,13 @@ def simulate_full_hines_windows(
     require(steps > 0 and steps * DT_MS == float(duration_ms),
             "duration must be an exact multiple of dt")
     protocol = column_protocol()
-    voltage = np.zeros((tree.n_compartments, len(protocol)), dtype=float)
+    # Match the original transient solver exactly: keep absolute voltages at
+    # the leak reversal potential, then subtract E_leak only when recording.
+    voltage = np.full(
+        (tree.n_compartments, len(protocol)),
+        float(factor["leak_reversal_v"]),
+        dtype=float,
+    )
     # _make_current_matrix indexes this map by source name, not protocol column.
     # Keep exactly one tree-compartment index per source.
     current_indices = [int(x) for x in source_indices]
@@ -264,7 +273,10 @@ def simulate_full_hines_windows(
             step,
         )
         voltage = tree_hines_backward_euler_step(factor, voltage, current)
-        trace[step, :, :] = voltage[np.asarray(output_indices, dtype=int), :]
+        trace[step, :, :] = (
+            voltage[np.asarray(output_indices, dtype=int), :]
+            - float(factor["leak_reversal_v"])
+        )
     require(np.all(np.isfinite(trace)), "non-finite full-Hines extended trace")
     return trace, protocol
 
