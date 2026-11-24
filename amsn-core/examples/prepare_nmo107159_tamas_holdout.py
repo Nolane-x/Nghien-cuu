@@ -211,9 +211,9 @@ def main() -> None:
             ],
         },
         "scientific_limits": [
-            "The specimen is a mouse control morphology from the Peng archive, but it is a single cell and does not constitute a population.",
+            "The specimen is a female human Control-condition pyramidal comparison cell from the Tamas archive; it is a single reconstruction and does not constitute a population. Age is not reported.",
             "NeuroMorpho metadata marks dendrites and axon complete and Morphological Attributes as Diameter, 3D, Angles.",
-            "This is a passive linear-RC numerical morphology holdout, not active-neuron or biological validation. The repository records a diameter field, but model geometry and passive parameters still require explicit assumptions.",
+            "This is a passive linear-RC numerical morphology holdout, not active-neuron or biological validation. NeuroMorpho records Diameter, 3D and Angles. The reconstruction is suitable for diameter-aware passive geometry, but passive membrane parameters remain model assumptions.",
             "No active-channel mechanism, conductance fit or production default is changed.",
         ],
     }
