@@ -20,8 +20,8 @@ from typing import Any
 
 import numpy as np
 from scipy import __version__ as SCIPY_VERSION
-from scipy.sparse import coo_matrix
-from scipy.sparse.linalg import splu
+from scipy.sparse import csc_matrix, coo_matrix
+from scipy.sparse.linalg import spsolve_triangular, splu
 
 RESEARCH = Path(__file__).resolve().parent
 if str(RESEARCH) not in sys.path:
@@ -152,27 +152,31 @@ def build_tree_hines_be_factor(tree, dt_s: float) -> dict[str, np.ndarray]:
                 "non-positive child pivot in canonical Hines factorization")
         multiplier = conductance / denominator
         multipliers[child] = multiplier
-        pivot[p] -= conductance * multiplier
+        pivot[p] -= (conductance * conductance) / denominator
 
     require(np.isfinite(pivot[0]) and pivot[0] > 0.0,
             "non-positive root pivot in canonical Hines factorization")
 
-    # Group the topological tree by depth. Within each level, retain ascending
-    # node order so reverse/forward passes preserve the original Hines ordering.
-    depth = np.zeros(tree.n_compartments, dtype=int)
-    for node in range(1, tree.n_compartments):
-        depth[node] = depth[int(parent[node])] + 1
-    maximum_depth = int(np.max(depth))
-    depth_levels = tuple(
-        np.flatnonzero(depth == level).astype(int)
-        for level in range(1, maximum_depth + 1)
+    # The Hines factors are unit triangular: L[child,parent] = -g/d_child
+    # and U=L.T. Solving these sparse triangular systems is the same tree
+    # elimination/back-substitution as CableTree.step_linear, but executes in
+    # SciPy's compiled sparse kernels instead of Python loops over each node.
+    child = np.arange(1, tree.n_compartments, dtype=int)
+    lower_rows = np.concatenate((np.arange(tree.n_compartments, dtype=int), child))
+    lower_cols = np.concatenate((np.arange(tree.n_compartments, dtype=int), parent[1:]))
+    lower_values = np.concatenate((np.ones(tree.n_compartments, dtype=float), -multipliers[1:]))
+    lower = csc_matrix(
+        (lower_values, (lower_rows, lower_cols)),
+        shape=(tree.n_compartments, tree.n_compartments),
     )
+    upper = lower.T.tocsc()
     return {
         "pivot_diagonal": pivot,
         "multipliers": multipliers,
         "parent_index": parent,
         "axial_g_s": axial,
-        "depth_levels": depth_levels,
+        "hines_lower": lower,
+        "hines_upper": upper,
         "c_over_dt": c_over_dt,
         "leak_source_a": np.asarray(tree.membrane_leak_s, dtype=float) * float(tree.parameters.e_leak_v),
         "leak_reversal_v": float(tree.parameters.e_leak_v),
@@ -198,22 +202,15 @@ def tree_hines_backward_euler_step(
             "Hines current matrix must match the previous state")
     leak_source = factor["leak_source_a"]
     work = c_over_dt[:, None] * previous + leak_source[:, None] + current
-    depth_levels = factor["depth_levels"]
-    # Hines forward elimination, vectorized by depth. np.add.at accumulates
-    # siblings into a common parent in descending child-index order.
-    for level_nodes in reversed(depth_levels):
-        children = level_nodes[::-1]
-        parents = parent[children]
-        contributions = multipliers[children, None] * work[children, :]
-        np.add.at(work, parents, contributions)
-    following = np.empty_like(work)
-    following[0, :] = work[0, :] / pivot[0]
-    # Back substitution is independent within each depth level.
-    for level_nodes in depth_levels:
-        parents = parent[level_nodes]
-        following[level_nodes, :] = (
-            work[level_nodes, :] + axial[level_nodes, None] * following[parents, :]
-        ) / pivot[level_nodes, None]
+    # U*y = rhs performs Hines leaf-to-root elimination; D*z = y scales
+    # the pivots; L*v = z performs root-to-leaf back substitution.
+    forward = spsolve_triangular(
+        factor["hines_upper"], work, lower=False, unit_diagonal=True
+    )
+    scaled = forward / pivot[:, None]
+    following = spsolve_triangular(
+        factor["hines_lower"], scaled, lower=True, unit_diagonal=True
+    )
     require(np.all(np.isfinite(following)), "non-finite state in canonical Hines step")
     return following
 
