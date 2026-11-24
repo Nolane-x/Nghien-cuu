@@ -1,0 +1,769 @@
+{
+  "exact_coverage": {
+    "csv_read_back": {
+      "comparisons": 12096,
+      "hines_temporal_convergence": 9072,
+      "hines_temporal_convergence_summary": 24,
+      "metrics": 24192,
+      "morphology_window_summary": 32,
+      "source_summary": 192
+    },
+    "expected": {
+      "hines_temporal_convergence_rows": 9072,
+      "hines_temporal_convergence_summary_rows": 24,
+      "metric_rows": 24192,
+      "morphology_window_summary_rows": 32,
+      "seven_nine_comparison_rows": 12096,
+      "source_window_summary_rows": 192
+    },
+    "hines_temporal_convergence_rows": 9072,
+    "hines_temporal_convergence_summary_rows": 24,
+    "metric_rows": 24192,
+    "morphology_window_summary_rows": 32,
+    "seven_nine_comparison_rows": 12096,
+    "source_window_summary_rows": 192
+  },
+  "hines_temporal_convergence_summary": [
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.2668894542149966,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09983193341685725,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.16184845673307513,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.26689269628217216,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09383702692848313,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.1614135832720723,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.2668927243293805,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09413073324110473,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.16143004983322043,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.2668927243293822,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09413073340790923,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.16143005102098343,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.7461766009562686,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.295988493516708,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.48192010387139483,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.7463430501715684,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.2754244685816114,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.480187349769748,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.7463443943344304,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.27682634945237833,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.4803567358138411,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.746344394334511,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.27682636211905365,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.48035673975039883,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.7018972794571723,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6820496348116085,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.108083884613036,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.7023283180841875,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6320889433615862,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1045964482836996,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.7023315903028295,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6359813509568221,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.105002539306307,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.702331590303031,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6359844449878531,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1050025487730766,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.3866336971237816,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09905764955027743,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.1804723580189746,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.38663309447893573,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.08858728972615151,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.18042112877869368,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.38663309683529123,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.09030996005447475,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.1804420786004953,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.025,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.38663309683529123,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.0903099614497696,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.1804420791712658,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.1218612940930026,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.2959563141220354,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5367668216611081,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.1218597715880914,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.2645590385011807,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5357009909155291,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.1218597793044447,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.26802669664540774,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5357657244277223,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.05,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.1218597793044451,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.26802678118941087,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5357657261741378,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.510871878864589,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.684988860587852,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1845036142921743,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 20.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.5108691708331263,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6126496083442052,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.187158371207559,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 40.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.5108691908257206,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6206373940979922,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1872450703998811,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 100.0
+    },
+    {
+      "coarse_dt_ms": 0.1,
+      "fine_reference_dt_ms": 0.0125,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.5108691908257215,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.6206377970940438,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1872450705100352,
+      "paired_scenario_protocol_output_rows": 378,
+      "window_ms": 200.0
+    }
+  ],
+  "method": {
+    "canonical_roundoff_diagnostic": "The absolute-voltage Hines replay is retained and compared with the perturbation replay at every timestep; it is not used as the primary denominator for tiny PRIMA errors.",
+    "primary_metric": "100*||v_reduced-v_full_Hines_perturbation||_2/||v_full_Hines_perturbation||_2",
+    "pulse_sampling": "The exact same 10-pA rectangular current protocol is sampled at each timestep using the end-of-step backward-Euler convention.",
+    "reduced_solver": "Order-168 seven-port and dual-q25 nine-port PRIMA models, same fixed continuous-time projection for all timesteps; reduced backward-Euler systems are refactorized for each dt.",
+    "reference": "Full Hines implicit backward-Euler cable solve; the stable reduction comparison uses a second equivalent Hines replay in perturbation coordinates (zero initial perturbation, zero leak source).",
+    "temporal_convergence": "Full-Hines perturbation traces at 0.1 and 0.05 ms are compared with the 0.025-ms full-Hines trace sampled at identical end times."
+  },
+  "morphology_window_summary": [
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 5.339329842955648e-08,
+      "median_nine_over_seven_transient_ratio": 26.547137111312743,
+      "median_nine_transient_nrmse_pct": 4.1278645085446314e-09,
+      "median_seven_transient_nrmse_pct": 1.6058215076557074e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 101.78414274141494,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 370
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 9.099249014916535e-08,
+      "median_nine_over_seven_transient_ratio": 49.90622823285206,
+      "median_nine_transient_nrmse_pct": 1.2126042726170222e-08,
+      "median_seven_transient_nrmse_pct": 3.119949608929849e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 74.79572670225551,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 1.7115302592806876e-07,
+      "median_nine_over_seven_transient_ratio": 32.04561324641353,
+      "median_nine_transient_nrmse_pct": 1.8607846997124963e-08,
+      "median_seven_transient_nrmse_pct": 5.600529507973906e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 44.08259242027249,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 2.5389223486686496e-07,
+      "median_nine_over_seven_transient_ratio": 31.835161957768296,
+      "median_nine_transient_nrmse_pct": 1.8618366581383013e-08,
+      "median_seven_transient_nrmse_pct": 5.613069108960013e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 44.06934871160117,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 3.6870448852384835e-08,
+      "median_nine_over_seven_transient_ratio": 27.054817483203486,
+      "median_nine_transient_nrmse_pct": 3.874372703808095e-09,
+      "median_seven_transient_nrmse_pct": 1.31617659929476e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 125.93069531770416,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 370
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 5.686852854023371e-08,
+      "median_nine_over_seven_transient_ratio": 54.851849415408026,
+      "median_nine_transient_nrmse_pct": 1.1814446100873775e-08,
+      "median_seven_transient_nrmse_pct": 3.1595475833782247e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 74.60744654164628,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 1.0191144941636163e-07,
+      "median_nine_over_seven_transient_ratio": 31.715594653319954,
+      "median_nine_transient_nrmse_pct": 1.8310173295878e-08,
+      "median_seven_transient_nrmse_pct": 5.908653689716386e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 40.01803284513388,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 1.495465521868883e-07,
+      "median_nine_over_seven_transient_ratio": 31.592951869820396,
+      "median_nine_transient_nrmse_pct": 1.8320739936932288e-08,
+      "median_seven_transient_nrmse_pct": 5.918989222259947e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 39.996075433753234,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 5.350359215225706e-08,
+      "median_nine_over_seven_transient_ratio": 26.588103112421543,
+      "median_nine_transient_nrmse_pct": 3.4735033803754087e-09,
+      "median_seven_transient_nrmse_pct": 1.3432644409996977e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 105.80218728454398,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 370
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 8.556680311249199e-08,
+      "median_nine_over_seven_transient_ratio": 57.036456605691285,
+      "median_nine_transient_nrmse_pct": 1.1173720763637542e-08,
+      "median_seven_transient_nrmse_pct": 2.868327693417153e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 72.99949385477586,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 1.575974780794436e-07,
+      "median_nine_over_seven_transient_ratio": 31.728105202412628,
+      "median_nine_transient_nrmse_pct": 1.7737751744781042e-08,
+      "median_seven_transient_nrmse_pct": 5.016698889722442e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 47.101211476542595,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 2.2969075974224726e-07,
+      "median_nine_over_seven_transient_ratio": 31.58936296714257,
+      "median_nine_transient_nrmse_pct": 1.7748404478998178e-08,
+      "median_seven_transient_nrmse_pct": 5.029766574577206e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 47.07924153100322,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 4.126131786060624e-08,
+      "median_nine_over_seven_transient_ratio": 24.439960145522868,
+      "median_nine_transient_nrmse_pct": 2.8509386150110307e-09,
+      "median_seven_transient_nrmse_pct": 1.2140660976777886e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 88.34247482384528,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 374
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 6.344103055067046e-08,
+      "median_nine_over_seven_transient_ratio": 55.24486965008195,
+      "median_nine_transient_nrmse_pct": 1.0126821987241238e-08,
+      "median_seven_transient_nrmse_pct": 2.7680735348718344e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 79.42631572481108,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 1.1998570956287058e-07,
+      "median_nine_over_seven_transient_ratio": 31.86762682935193,
+      "median_nine_transient_nrmse_pct": 1.6612407869954477e-08,
+      "median_seven_transient_nrmse_pct": 4.985920984503198e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 43.14412009752914,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 1.7953453637244024e-07,
+      "median_nine_over_seven_transient_ratio": 31.643144670109635,
+      "median_nine_transient_nrmse_pct": 1.6622982385941103e-08,
+      "median_seven_transient_nrmse_pct": 4.9976838556541e-10,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "p90_nine_over_seven_transient_ratio": 43.1150812396007,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 5.249352438031524e-10,
+      "median_nine_over_seven_transient_ratio": 118.81406929340207,
+      "median_nine_transient_nrmse_pct": 1.2490726290974807e-08,
+      "median_seven_transient_nrmse_pct": 7.732679698418136e-11,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 225.54301720318878,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 374
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 8.513421851121824e-10,
+      "median_nine_over_seven_transient_ratio": 64.98160450273993,
+      "median_nine_transient_nrmse_pct": 6.333190156448179e-08,
+      "median_seven_transient_nrmse_pct": 8.909348465141734e-10,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 102.54803130240691,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 1.573201672780275e-09,
+      "median_nine_over_seven_transient_ratio": 33.62256073364317,
+      "median_nine_transient_nrmse_pct": 8.396669340202079e-08,
+      "median_seven_transient_nrmse_pct": 3.2824047683903935e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.781727444128165,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.0125,
+      "median_absolute_vs_perturbation_delta_pct": 2.659609777827275e-09,
+      "median_nine_over_seven_transient_ratio": 33.4527473796592,
+      "median_nine_transient_nrmse_pct": 8.397208031875322e-08,
+      "median_seven_transient_nrmse_pct": 3.2940569970824417e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.78103504229677,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 9.21773348630409e-10,
+      "median_nine_over_seven_transient_ratio": 123.6771951152478,
+      "median_nine_transient_nrmse_pct": 1.1866698326223517e-08,
+      "median_seven_transient_nrmse_pct": 7.10763988370384e-11,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 230.65232155822764,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 374
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 1.3445201684834925e-09,
+      "median_nine_over_seven_transient_ratio": 63.89276059513926,
+      "median_nine_transient_nrmse_pct": 6.193738893886005e-08,
+      "median_seven_transient_nrmse_pct": 8.633928948190255e-10,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 103.07820636302513,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 2.509246963938962e-09,
+      "median_nine_over_seven_transient_ratio": 33.63616204135563,
+      "median_nine_transient_nrmse_pct": 8.219211772203206e-08,
+      "median_seven_transient_nrmse_pct": 3.224619240787737e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.93195862180709,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.025,
+      "median_absolute_vs_perturbation_delta_pct": 3.8769305831989095e-09,
+      "median_nine_over_seven_transient_ratio": 33.45614407741503,
+      "median_nine_transient_nrmse_pct": 8.219596701858564e-08,
+      "median_seven_transient_nrmse_pct": 3.236371161797026e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.93122409540292,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 6.864217874601423e-10,
+      "median_nine_over_seven_transient_ratio": 130.10690594962244,
+      "median_nine_transient_nrmse_pct": 1.0682320039137848e-08,
+      "median_seven_transient_nrmse_pct": 6.193133466152193e-11,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 245.89173086725714,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 375
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 1.0910231925583466e-09,
+      "median_nine_over_seven_transient_ratio": 67.68052635842355,
+      "median_nine_transient_nrmse_pct": 5.928968420069194e-08,
+      "median_seven_transient_nrmse_pct": 8.206494583962216e-10,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 104.50957388269578,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 1.9392728756978875e-09,
+      "median_nine_over_seven_transient_ratio": 33.61686206181578,
+      "median_nine_transient_nrmse_pct": 7.863526791876685e-08,
+      "median_seven_transient_nrmse_pct": 3.1136857718497034e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 62.00418956302836,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.05,
+      "median_absolute_vs_perturbation_delta_pct": 2.8463136889303558e-09,
+      "median_nine_over_seven_transient_ratio": 33.418103697214036,
+      "median_nine_transient_nrmse_pct": 7.864094403318715e-08,
+      "median_seven_transient_nrmse_pct": 3.125626081564061e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 62.003377580695684,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 6.540789402333308e-10,
+      "median_nine_over_seven_transient_ratio": 138.2398894449047,
+      "median_nine_transient_nrmse_pct": 8.55098923942456e-09,
+      "median_seven_transient_nrmse_pct": 4.532443769263143e-11,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 274.062829145652,
+      "source_pulse_groups": 6,
+      "window_ms": 20.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 1.0244913978880957e-09,
+      "median_nine_over_seven_transient_ratio": 70.09219390710363,
+      "median_nine_transient_nrmse_pct": 5.449699358051001e-08,
+      "median_seven_transient_nrmse_pct": 7.488870537856562e-10,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 107.18480843942811,
+      "source_pulse_groups": 6,
+      "window_ms": 40.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 1.7974092107643665e-09,
+      "median_nine_over_seven_transient_ratio": 33.67024254433532,
+      "median_nine_transient_nrmse_pct": 7.246415637697867e-08,
+      "median_seven_transient_nrmse_pct": 2.907554364979204e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.97287350874315,
+      "source_pulse_groups": 6,
+      "window_ms": 100.0,
+      "worse_pairs_of_378": 378
+    },
+    {
+      "dt_ms": 0.1,
+      "median_absolute_vs_perturbation_delta_pct": 2.65109591174823e-09,
+      "median_nine_over_seven_transient_ratio": 33.43162014574755,
+      "median_nine_transient_nrmse_pct": 7.24900359802647e-08,
+      "median_seven_transient_nrmse_pct": 2.9198678359340546e-09,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "p90_nine_over_seven_transient_ratio": 61.971914047954186,
+      "source_pulse_groups": 6,
+      "window_ms": 200.0,
+      "worse_pairs_of_378": 378
+    }
+  ],
+  "research_question": "Does the seven-port versus dual-q25 nine-port transient error ratio converge as the backward-Euler timestep is refined from 0.1 to 0.025 ms?",
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "scipy": "1.16.3",
+    "wall_seconds": 388.43756384799997
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "Only two checksum-pinned individual passive linear-RC morphology reconstructions; not a population.",
+    "The 0.025-ms Hines solution is a temporal reference, not an exact continuous-time solution.",
+    "The PRIMA projection basis and order are held fixed across timestep values; this isolates transient integration sensitivity, not basis optimality.",
+    "Large relative nine/seven ratios are reported with absolute NRMSE and error norms.",
+    "No active conductances, synapses, plasticity or biological validation are included.",
+    "Full Hines remains canonical. No production solver code or defaults are changed."
+  ],
+  "scope": {
+    "basis_order": 168,
+    "dt_grid_ms": [
+      0.1,
+      0.05,
+      0.025,
+      0.0125
+    ],
+    "fine_hines_reference_dt_ms": 0.0125,
+    "layouts": [
+      "seven",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      }
+    ],
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "shared_output_count": 7,
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0,
+      100.0,
+      200.0
+    ]
+  },
+  "status": "prima_q25_backward_euler_timestep_refinement_passed",
+  "validation": {
+    "all_morphology_preflights_passed": true,
+    "all_morphology_sha256_checked": true,
+    "fine_hines_reference_dt_ms": 0.0125,
+    "maximum_absolute_vs_perturbation_hines_trace_delta_pct": 7.632837153876457e-08
+  }
+}
