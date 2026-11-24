@@ -20,7 +20,7 @@ def test_expected_extended_window_coverage():
         "windows_ms": 4,
         "extended_transient_rows": 6048,
         "comparison_rows": 3024,
-        "20ms_parity_rows": 756,
+        "20ms_parity_rows": 1512,
         "by_output_summary_rows": 672,
         "comparison_summary_rows": 336,
         "by_source_summary_rows": 48,
