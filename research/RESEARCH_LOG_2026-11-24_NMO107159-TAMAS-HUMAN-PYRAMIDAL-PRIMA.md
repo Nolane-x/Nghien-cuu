@@ -15,3 +15,18 @@ The matched 7/9-port order112/order168 matrix mirrors the prior holdouts and use
 Workflow 45314100588 passed full regression, source/metadata tests, SHA-256 and Import3D preflight. Numerical replay pending when this log was written. No production defaults or canonical Hines behavior changed.
 
 Official NeuroMorpho morphometry (API `/api/morphometry/id/107159`): total length 12,320.7 µm; mean diameter 0.285193 µm; 61 bifurcations; 126 branches; 4 stems; max path distance 1,662.83 µm; max Euclidean distance 1,420.16 µm; width 777.889 µm, height 1,595.1 µm, depth 91.47 µm; surface 9,693.02 µm²; volume 1,624.96 µm³. These are repository morphometry measurements/derived descriptors; passive membrane and axial parameters remain separate model assumptions.
+
+
+## Matched 7-port/9-port numerical replay completed
+
+Successful GitHub Actions run 45314100588 passed the full AMSN suite, Tamas metadata/source tests, source hash, Import3D preflight, matched numerical replay, exact coverage, results commit and artifact upload. Artifact #14884183988; ZIP SHA-256 b01bbce48bc62931c10b78f5a97a8e334f26bd0ea186ede6335a92484b8d3808.
+
+Preflight: 7,222 electrical compartments, 127 NEURON sections, 24,737 segments, maximum segment0.49997753 µm under0.5 µm cap. Seven shared ports [1,6363,4735,5564,7023,4301,4623]; q25 basal6609, apical4404.
+
+Exact coverage:36 models,324 AC rows,1,728 transient rows,756 shared pairs,216 q25 observations,378 shared-Hines checks. All 378 shared Hines references were exactly equal (0 V difference).
+
+Order112: 9-port worse on all 378 pairs; median 9/7 error ratio42.718×; maximum nine-port shared NRMSE3.9507e−5%. Order168:214 worse/164 better; median ratio1.00102×; maximum nine-port shared NRMSE5.4559e−7%. q25 maximum NRMSE3.5323e−5% at order112 and2.3679e−7% at order168.
+
+At 10kHz, nine-port median Z/Y residuals 1.7339e−5%/1.8783e−4% at order112 and2.8131e−9%/2.9439e−7% at order168. Numeric storage6.3625MB at order112 and9.6874MB at order168. Runtime322s wall,408.14s user,144,420KiB peak RSS.
+
+This is a diameter-recorded human pyramidal comparison cell (not rosehip interneuron) with complete arbors per metadata. It uses a0.5 µm mesh, same as Peng NMO_163775; earlier human holdouts use0.125 µm. The fourth holdout supports morphology-dependent port cost and shows order168 near parity for this cell. No production defaults changed.
