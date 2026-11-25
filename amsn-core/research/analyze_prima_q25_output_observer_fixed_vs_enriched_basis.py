@@ -372,10 +372,12 @@ def build_summaries(comparison_rows: list[dict[str, Any]]) -> tuple[list[dict[st
 
 
 def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
+    print("OBSERVER_STAGE: loading shared four-layout runner", flush=True)
     runner = load_module(
         "q25_output_observer_primary_runner",
         RESEARCH / "analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py",
     )
+    print("OBSERVER_STAGE: shared runner imported", flush=True)
     primary_report_path = primary_results_dir / f"{PRIMARY_STEM}_report.json"
     primary_case_path = primary_results_dir / f"{PRIMARY_STEM}_case_metrics.csv"
     primary_report = json.loads(primary_report_path.read_text(encoding="utf-8"))
@@ -386,7 +388,9 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
     if version("numpy") != "2.5.5" or version("scipy") != "1.16.3" or version("neuron") != "9.0.2":
         raise RuntimeError("output observer requires the pinned numerical package versions")
     primary_dispatch = verify_pinned_runtime(primary_report)
+    print("OBSERVER_STAGE: primary runtime/report gate accepted", flush=True)
     runtime = runner.numerical_runtime_diagnostics()
+    print("OBSERVER_STAGE: observer runtime diagnostics captured", flush=True)
     if runtime["verified_openblas_coretype"] != "Haswell":
         raise RuntimeError("output observer did not run with pinned Haswell OpenBLAS")
     assert_matching_numpy_dispatch(primary_dispatch, runtime)
@@ -409,6 +413,7 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
     started = time.perf_counter()
 
     for morph_spec in runner.MORPHOLOGIES:
+        print(f"OBSERVER_STAGE: begin morphology {morph_spec['name']}", flush=True)
         module = morph_spec["module"]
         baseline = module.baseline
         reference = baseline.reference
@@ -422,6 +427,7 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
         if preflight.get("status") != "PASS" or preflight.get("source", {}).get("source_sha256") != source_sha:
             raise ValueError(f"{morph_spec['name']}: preflight did not match source SWC")
         reader, sections = reference.import_swc_with_neuron()
+        print(f"OBSERVER_STAGE: {morph_spec['name']} SWC imported", flush=True)
         base_tree = morphology.to_cable_tree()
         layouts, common_ids, q25_ids = module.build_four_layouts(
             morphology, reader, sections, base_tree
@@ -456,14 +462,19 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
         full_rhs[np.asarray(source_tree_indices), np.arange(len(runner.SOURCE_NAMES))] = 1.0
 
         for scenario_name, scales in baseline.parameter_cases().items():
+            print(f"OBSERVER_STAGE: {morph_spec['name']} scenario {scenario_name} begin", flush=True)
             target = runner.conditioning.build_target_tree(module, base_tree, scales)
             hines_factor = runner.tail.build_tree_hines_be_factor(target, runner.DT_S)
+            print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} Hines factor built", flush=True)
+            print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} canonical Hines begin", flush=True)
             full_trace, full_terminal, p0 = runner.simulate_full_hines_with_terminal_states(
                 target, hines_factor, source_tree_indices, output_tree_indices
             )
+            print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} canonical Hines done", flush=True)
             full_identity_trace, full_identity_terminal, p1 = runner.simulate_full_hines_perturbation_windows(
                 target, hines_factor, source_tree_indices, output_tree_indices
             )
+            print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} perturbation Hines done", flush=True)
             if p0 != protocol or p1 != protocol:
                 raise ValueError("Hines replay protocol mismatch")
             full_cont = runner.solve_full_hines_s_response(
@@ -472,7 +483,9 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
             full_be = runner.solve_full_hines_s_response(
                 target, master_s_be, full_rhs, output_tree_indices, chunk_size=50
             )
+            print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} full Hines frequency solved", flush=True)
             for layout_id in runner.LAYOUT_IDS:
+                print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} layout {layout_id} begin", flush=True)
                 layout = layouts[layout_id]
                 source_slots = [int(layout["source_indices"][s]) for s in runner.SOURCE_NAMES]
                 source_nodes = [int(layout["ports"][slot]) for slot in source_slots]
@@ -480,11 +493,13 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                     raise ValueError(f"{morph_spec['name']}/{layout_id}: source nodes changed")
                 common_slot_by_node = {int(node): i for i, node in enumerate(layout["node_ids"])}
                 common_output_slots = [common_slot_by_node[int(node)] for node in common_ids]
+                print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} {layout_id} PRIMA build begin", flush=True)
                 model = baseline.prima_reduce_passive_cable_multishift(
                     target, layout["ports"], runner.BASIS_ORDER,
                     runner.conditioning.SHIFTS_HZ,
                     relative_tolerance=runner.conditioning.RELATIVE_TOLERANCE,
                 )
+                print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} {layout_id} PRIMA build done", flush=True)
                 if model.order != runner.BASIS_ORDER:
                     raise ValueError(f"{morph_spec['name']}/{layout_id}: basis order mismatch")
                 basis_key = (morph_spec["name"], scenario_name, layout_id)
@@ -523,9 +538,11 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                 output_basis = np.vstack((shared_output_basis, q25_output_basis))
                 if output_basis.shape != (9, model.order):
                     raise ValueError("observer output basis must expose seven shared and two q25 outputs")
+                print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} {layout_id} reduced simulation begin", flush=True)
                 reduced_trace, reduced_terminal = simulate_reduced_with_output_basis(
                     model, layout, output_basis, protocol, runner
                 )
+                print(f"OBSERVER_STAGE: {morph_spec['name']} {scenario_name} {layout_id} reduced simulation done", flush=True)
                 reduced_rhs = model.input_matrix[:, np.asarray(source_slots, dtype=np.int64)]
                 reduced_cont = solve_reduced_with_output_basis(
                     model, master_s_cont, reduced_rhs, output_basis, chunk_size=50
