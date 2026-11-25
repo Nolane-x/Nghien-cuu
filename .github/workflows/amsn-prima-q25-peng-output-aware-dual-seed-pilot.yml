@@ -1,0 +1,143 @@
+name: Research-only Peng q25 output-aware dual-seed pilot
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-peng-output-aware-dual-seed-pilot.yml"
+      - "amsn-core/src/amsn/cable.py"
+      - "amsn-core/src/amsn/prima.py"
+      - "amsn-core/research/analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py"
+      - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
+      - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
+      - "amsn-core/research/experimental_prima_output_aware_basis.py"
+      - "amsn-core/research/run_prima_q25_peng_output_aware_dual_seed_pilot.py"
+      - "amsn-core/tests/test_prima_q25_output_aware_dual_seed_basis.py"
+      - "amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc"
+      - "amsn-core/results/NMO_163775_PengControl_holdout/preflight.json"
+      - "amsn-core/pyproject.toml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-peng-output-aware-dual-seed-pilot
+  cancel-in-progress: false
+
+jobs:
+  peng-dual-seed-pilot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.16"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned AMSN numerical runtime
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=numpy numpy==2.5.5
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install threadpoolctl==3.6.0
+      - name: Verify pinned NumPy/OpenBLAS dispatch and morphology preflight
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import hashlib, json, os
+          import numpy, scipy, neuron
+          from threadpoolctl import threadpool_info
+          from pathlib import Path
+
+          assert numpy.__version__ == "2.5.5", numpy.__version__
+          assert scipy.__version__ == "1.16.3", scipy.__version__
+          assert neuron.__version__ == "9.0.2", neuron.__version__
+          assert os.environ["OPENBLAS_CORETYPE"] == "Haswell"
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL,AVX512_SPR"
+          pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
+          assert pools and {p.get("architecture") for p in pools} == {"Haswell"}, pools
+          assert all(p.get("num_threads") == 1 for p in pools), pools
+          swc = Path("data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc")
+          digest = hashlib.sha256(swc.read_bytes()).hexdigest()
+          assert digest == "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+          preflight = json.loads(Path("results/NMO_163775_PengControl_holdout/preflight.json").read_text())
+          assert preflight["status"] == "PASS"
+          assert preflight["source"]["source_sha256"] == digest
+          print(json.dumps({"numpy":numpy.__version__,"scipy":scipy.__version__,
+            "neuron":neuron.__version__,"threadpools":pools,"swc_sha256":digest,
+            "preflight":preflight["status"]},indent=2))
+          PY
+      - name: Compile research-only pilot and tests
+        working-directory: amsn-core
+        run: |
+          python -m compileall -q research/experimental_prima_output_aware_basis.py
+          python -m compileall -q research/run_prima_q25_peng_output_aware_dual_seed_pilot.py
+          python -m compileall -q tests/test_prima_q25_output_aware_dual_seed_basis.py
+      - name: Run focused output-aware dual-seed tests
+        working-directory: amsn-core
+        run: python -m pytest -q tests/test_prima_q25_output_aware_dual_seed_basis.py
+      - name: Run Peng NMO_163775 order-224 dual-seed pilot
+        working-directory: amsn-core
+        run: python research/run_prima_q25_peng_output_aware_dual_seed_pilot.py
+      - name: Verify pilot report and exact CSV coverage
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          stem = "prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25"
+          results = Path("results")
+          report = json.loads((results / f"{stem}_report.json").read_text())
+          assert report["status"] == "passed"
+          assert report["coverage"]["case_metrics_expected"] == 540
+          assert report["coverage"]["case_metrics_read_back"] == 540
+          assert report["coverage"]["summary_expected"] == 90
+          assert report["coverage"]["summary_read_back"] == 90
+          assert all(x["passed"] for x in report["finite_dft_identity"])
+          with (results / f"{stem}_case_metrics.csv").open() as f:
+              assert len(list(csv.DictReader(f))) == 540
+          with (results / f"{stem}_summary.csv").open() as f:
+              assert len(list(csv.DictReader(f))) == 90
+          print(json.dumps({"status":report["status"],"coverage":report["coverage"],
+            "identity":report["finite_dft_identity"]},indent=2))
+          PY
+      - name: Commit verified pilot matrices and diagnostics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_case_metrics.csv             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_summary.csv             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_report.json             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25.time.txt
+          git commit -m "results: archive Peng q25 output-aware dual-seed pilot"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Preserve full pilot evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-peng-output-aware-dual-seed-pilot
+          path: |
+            amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_x31719_y6139_semi_r.CNG.swc
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_*.csv
+            amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_report.json
+            amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25.time.txt
+          if-no-files-found: error
+          retention-days: 90
