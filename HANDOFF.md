@@ -78,6 +78,17 @@ An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/action
 - Overlapping run [45636849975](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636849975) also passed calculation/coverage but failed only during duplicate Git add/add rebase conflicts on report/time after the canonical result had committed those paths. It uploaded no artifact; 45636631081 is canonical.
 - This remains a single-morphology, nominal-scenario proof of concept. No production solver/default change and no biological inference.
 
+### Four-morphology, nine-scenario output-aware dual-seed sweep — active run
+
+- Runner: `amsn-core/research/run_prima_q25_four_morphology_output_aware_dual_seed_sweep.py`.
+- Protocol: [PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_PROTOCOL_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_PROTOCOL_2026-11-25.md).
+- Workflow: [45639939767](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767), currently **in progress** at the 36-worker numerical sweep.
+- First attempt [45639701286](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639701286) stopped at the initial source preflight because the standardized Allen SWC was not in the checkout. The workflow now downloads it from the same NeuroMorpho endpoint used by the accepted four-layout workflow and checks SHA-256 `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`.
+- The corrected run passed runtime installation, all four morphology SWC/preflight checks, active NumPy dispatch export, compileall and the five dual-seed unit tests. It is currently running the isolated morphology/scenario workers. No global result is accepted yet.
+- Expected global coverage: 36 workers; 19,440 case rows; 3,240 worker-group summaries; 360 per-morphology summaries; 810 per-scenario summaries; 90 pooled summaries; 72 finite-DFT identity rows; 180 basis metadata records.
+- The five schedules remain D0, D1-low (0 Hz), D1-mid (1 kHz), D1-high (10 kHz), D2 (1/10 kHz), all at order224 and with exactly seven input ports/nine output rows.
+- Wait for exact read-back, all DFT identities, Git archival and artifact upload before writing a cross-morphology conclusion. Preserve the Peng nominal pilot only as an initial single-stratum result.
+
 ### Output-observer CI archival correction
 
 - Original observer run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) passed runtime/dispatch, source checksum, regression tests, primary-reference gate and the numerical observer calculation (report status passed; reported run time 2,512.57 s). Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) uploaded successfully.
