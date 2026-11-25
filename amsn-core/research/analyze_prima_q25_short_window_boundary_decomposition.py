@@ -346,7 +346,7 @@ def simulate_full_hines_with_terminal_states(
     source_tree_indices: list[int],
     output_tree_indices: list[int],
 ) -> tuple[np.ndarray, dict[float, np.ndarray], list[tuple[str, float]]]:
-    """Replay exact Hines BE once to 200 ms and retain each window's x[N-1]."""
+    """Replay exact Hines BE through the longest requested window and retain each x[N-1]."""
     sample_count = int(round(max(WINDOWS_MS) / DT_MS))
     protocol = tail.column_protocol()
     leak = float(factor["leak_reversal_v"])
@@ -1296,7 +1296,7 @@ def main() -> None:
                 "Y=H_BE*U - L*(G+(1-exp(-j*Omega))*C/dt)^-1*(C/dt)*x[N-1]"
             ),
             "discrete_input": (
-                "10-pA rectangular sequence; sample interval 0.1 ms; onset 2 ms; "
+                f"10-pA rectangular sequence; sample interval {DT_MS:g} ms; onset 2 ms; "
                 "widths 2 and 10 ms; DFT is taken over each exact observation window"
             ),
         },
