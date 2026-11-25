@@ -1,0 +1,199 @@
+{
+  "schema_version": 1,
+  "purpose": "canonical archive manifest for the accepted four-morphology order-112/168/224 PRIMA q25 basis-order convergence sweep",
+  "date": "2026-11-25",
+  "repository": "Nolane-x/Nghien-cuu",
+  "branch": "research/prima-q25-cross-morphology-boundary-replication-2026-11-25",
+  "workflow": {
+    "run_id": 45616046400,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400",
+    "conclusion": "success",
+    "calculation_head_sha": "62214bb20652723ae486843016225c319c3379a7",
+    "results_archive_commit": "09d65210d081ad3acecb6bcb0ff8bf34ffa8b04a"
+  },
+  "artifact": {
+    "id": 15031057886,
+    "name": "prima-q25-four-layout-basis-order-convergence",
+    "size_bytes": 134290729,
+    "zip_sha256": "3eb04bf772ef93f90facac5cf4ea7b4f126f37bfbab12dd4acf81b377b79e65e",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400/artifacts/15031057886",
+    "retention_days": 90,
+    "file_count": 32,
+    "uncompressed_bytes": 421152623
+  },
+  "calculation": {
+    "status": "passed",
+    "requested_orders": [
+      112,
+      168,
+      224
+    ],
+    "passed_orders": [
+      112,
+      168,
+      224
+    ],
+    "failed_orders": [],
+    "reference_order": 168,
+    "freshly_recomputed_orders": [
+      112,
+      224
+    ],
+    "order_168_source_run": 45616046681,
+    "fixed_protocol": {
+      "morphology_count": 4,
+      "layouts": [
+        "seven",
+        "eight_basal_q25",
+        "eight_apical_q25",
+        "nine_both_q25"
+      ],
+      "dt_ms": 0.00625,
+      "expansion_shifts_hz": [
+        0,
+        100,
+        1000,
+        3000,
+        6000,
+        10000
+      ],
+      "passive_parameter_scenarios": 9,
+      "sources": [
+        "soma",
+        "basal_q75",
+        "apical_q75"
+      ],
+      "pulse_amplitude_pA": 10,
+      "pulse_onset_ms": 2,
+      "pulse_widths_ms": [
+        2,
+        10
+      ],
+      "windows_ms": [
+        20,
+        40
+      ],
+      "neuron_segment_cap_um": 0.5
+    },
+    "runtime": {
+      "python": "3.12.16",
+      "numpy": "2.5.5",
+      "scipy": "1.16.3",
+      "neuron": "9.0.2",
+      "openblas_coretype": "Haswell",
+      "blas_threads": 1,
+      "numpy_disabled_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+      "numpy_active_dispatch_targets": [
+        "X86_V3",
+        "baseline(X86_V2)"
+      ],
+      "total_wall_seconds": 5652.497692244,
+      "max_rss_kib": 1255776
+    },
+    "acceptance": {
+      "expected_and_readback_coverage_per_order": {
+        "master_frequency_points": 3201,
+        "frequency_summary_rows": 1075536,
+        "case_metrics_rows": 12096,
+        "candidate_vs_seven_comparisons": 9072,
+        "source_layout_window_summary_rows": 144,
+        "morphology_layout_window_summary_rows": 24,
+        "finite_dft_identity_rows": 1728,
+        "posthoc_interaction_rows": 336,
+        "posthoc_morphology_rows": 168,
+        "posthoc_source_rows": 1008
+      },
+      "max_finite_identity_relative_error_by_order": {
+        "112": 8.743810650683813e-12,
+        "168": 8.781488969255743e-12,
+        "224": 8.757358898155067e-12
+      },
+      "finite_identity_relative_tolerance": 2e-8,
+      "max_basis_orthogonality_error": 1.7763568394002505e-15,
+      "unique_basis_hashes_per_order": 144,
+      "all_four_morphology_sha256_and_preflight_checks": true,
+      "both_posthoc_reports_passed": true
+    },
+    "per_order": {
+      "112": {
+        "report_blob_sha1": "315a8a740bff8763aa20c66a72fd6252e04255ac",
+        "posthoc_report_blob_sha1": "99ad93f506e22b99251e108a85be90ca642fa1ee",
+        "runtime_seconds": 1856.979192027,
+        "case_metrics_sha256": "0ceaf76ac9e948185909fe6608c0f4b67704bc74015d0146f3b9c03364369151",
+        "comparisons_sha256": "1768f64f6e51f20213073f82a904a5b840f8572f84f1b836a600129c03fddb98",
+        "finite_dft_identity_sha256": "9ba24b772b81d323d6da96fd925352824a2a57422dac282978049f189c7e0955",
+        "frequency_summary_sha256": "0d6c14d6c216f98ea14a06bec5749e29e08b56daa186eb86a8d9e4d85fcc5664"
+      },
+      "168": {
+        "source": "previously accepted strict-dispatch four-layout matrix",
+        "source_run": 45616046681,
+        "case_metrics_sha256": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+        "comparisons_sha256": "29af1a3897c44d0aa946768a23ee815299e4fa982e7223e4b9130aa359fd2e6e",
+        "runtime_seconds": 2369.840006516
+      },
+      "224": {
+        "report_blob_sha1": "263a201b462891382dd240e5c790e64f7b512349",
+        "posthoc_report_blob_sha1": "ebda79b1649ab682adf0ecdccb98ca31be8c2c39",
+        "runtime_seconds": 3793.092219217,
+        "case_metrics_sha256": "cd5bd9fc64e3f25489eac7b04f7190ba94a143efa5aa64cde03c2d8930d3f336",
+        "comparisons_sha256": "87fec166e197ef2722256e38071dbd73f79ec1cfe917fda2e8c52db9a5049062",
+        "finite_dft_identity_sha256": "f2b766c33f8dfb71ecdc4978f92be282b2e265ed0f850ab36f211f2688c60128",
+        "frequency_summary_sha256": "f846dc3a1824ed60a5585ac2606bb94044d3cbab9662ea87dd9b356d6e54ecd4"
+      }
+    }
+  },
+  "repository_files": {
+    "combined_report": {
+      "path": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json",
+      "git_blob_sha1": "59242d05b21a24d9a5ac2595bf8b261592bc2726",
+      "status": "passed"
+    },
+    "order_112_report": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_112_report.json",
+    "order_224_report": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_224_report.json",
+    "morphology_summary": {
+      "path": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_morphology_summary.csv",
+      "git_blob_sha1": "24c531c6b39a65d78f8b3130e2bf739e3d27c567",
+      "rows": 504,
+      "artifact_sha256": "c26150e6b75b942aca01655dae10a41ef214212f98e820a1e1e094dcf627034a"
+    },
+    "interaction_summary": {
+      "path": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_interaction_summary.csv",
+      "git_blob_sha1": "41bdff7b9e6cb7c19dd19ed58041c8e1d2b4de37",
+      "rows": 1008,
+      "artifact_sha256": "4d0ed251f69669247fb6fae3b6a51d6e1cc0c96c8422b37195b0dbf5fe4ce8d8"
+    },
+    "source_summary": {
+      "path": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_source_summary.csv",
+      "git_blob_sha1": "cc9124ea2f2dbd1da27fffff07dd4531bdcaf839",
+      "rows": 3024,
+      "artifact_sha256": "05d39fbf2f711a108f996035bdc86357f27e2eb472a4d1d2bc405d97cd55448b"
+    },
+    "timing_path": "amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt"
+  },
+  "independent_replay": {
+    "run_id": 45616919005,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005",
+    "conclusion": "failure_only_at_duplicate_git_archive_rebase",
+    "artifact_id": 15031521434,
+    "artifact_zip_sha256": "1d0ecd61e40612dba6e72636e89ccef3e6fbb3facacd2687ef29cecb0231578c",
+    "comparison": {
+      "results_files_compared": 27,
+      "identical_result_data_and_CSV_files": 25,
+      "differing_metadata_files": [
+        "combined report JSON",
+        "timing text"
+      ],
+      "reason_for_run_failure": "Git add/add conflicts on four report/time files after the successful 45616046400 run had already archived those paths",
+      "interpretation": "Numerical CSV matrices, posthoc CSVs, source preflights and source data were bit-identical across both artifacts. The successful 45616046400 artifact and result commit are canonical; conflict-marked report/time files from the failed duplicate rebase are excluded."
+    }
+  },
+  "interpretation_limits": [
+    "Four individual reconstructions are not a biological population sample.",
+    "Allen NMO_162186 is an epilepsy-surgery specimen, not a healthy control.",
+    "Peng NMO_163775 metadata says No Diameter.",
+    "The experiment is passive linear-RC numerical reduction only.",
+    "Candidate/seven ratios are shown with absolute changes because near-zero baseline residuals can inflate ratios.",
+    "No production solver or default changed; full Hines remains canonical."
+  ],
+  "report_path": "amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_BASIS_ORDER_SWEEP_RESULTS_2026-11-25.md"
+}
