@@ -9,10 +9,13 @@ production solver or default is changed.
 """
 from __future__ import annotations
 
+import contextlib
 import csv
 import hashlib
+import io
 import json
 import math
+import os
 import sys
 import time
 from collections import defaultdict
@@ -67,6 +70,37 @@ EXPECTED_HINES_CONVERGENCE_SUMMARY_ROWS = (
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise ValueError(message)
+
+
+def array_sha256(values: np.ndarray) -> str:
+    """Hash an array after canonical float64 little-endian normalization."""
+    array = np.ascontiguousarray(np.asarray(values, dtype="<f8"))
+    digest = hashlib.sha256()
+    digest.update(json.dumps({"shape": array.shape, "dtype": "<f8"}).encode("utf-8"))
+    digest.update(array.tobytes(order="C"))
+    return digest.hexdigest()
+
+
+def numerical_runtime_diagnostics() -> dict[str, Any]:
+    """Capture BLAS/threadpool configuration that can affect tiny PRIMA residuals."""
+    output = io.StringIO()
+    with contextlib.redirect_stdout(output):
+        np.show_config()
+    try:
+        from threadpoolctl import threadpool_info
+        pools = threadpool_info()
+    except Exception as exc:  # pragma: no cover - optional environment probe
+        pools = [{"diagnostic_error": f"{type(exc).__name__}: {exc}"}]
+    names = (
+        "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
+        "BLIS_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS",
+        "PYTHONHASHSEED",
+    )
+    return {
+        "thread_environment": {name: os.environ.get(name) for name in names},
+        "threadpools": pools,
+        "numpy_build_configuration": output.getvalue(),
+    }
 
 
 def validate_timestep_grid(
@@ -391,6 +425,9 @@ def main() -> None:
     comparison_rows: list[dict[str, Any]] = []
     hines_convergence_rows: list[dict[str, Any]] = []
     morphology_manifest = []
+    basis_diagnostics: list[dict[str, Any]] = []
+    trace_diagnostics: list[dict[str, Any]] = []
+    numerical_runtime = numerical_runtime_diagnostics()
     max_full_hines_absolute_coordinate_delta_pct = 0.0
 
     for morph_spec in conditioning.MORPHOLOGIES:
@@ -482,6 +519,20 @@ def main() -> None:
                     ),
                     f"{morph_spec['name']}/{layout_id}: input basis mapping mismatch",
                 )
+                basis_gram_error = model.basis.T @ model.basis - np.eye(model.order)
+                basis_diagnostics.append({
+                    "morphology": morph_spec["name"],
+                    "parameter_scenario": scenario_name,
+                    "layout_id": layout_id,
+                    "basis_order": model.order,
+                    "retained_swc_node_ids": [int(x) for x in layout["node_ids"]],
+                    "basis_sha256": array_sha256(model.basis),
+                    "conductance_sha256": array_sha256(model.conductance_matrix_s),
+                    "capacitance_sha256": array_sha256(model.capacitance_matrix_f),
+                    "input_sha256": array_sha256(model.input_matrix),
+                    "layout_port_indices_sha256": array_sha256(np.asarray(layout["ports"], dtype=float)),
+                    "basis_orthogonality_max_abs": float(np.max(np.abs(basis_gram_error))),
+                })
                 models[layout_id] = {
                     "model": model,
                     "layout": layout,
@@ -500,6 +551,22 @@ def main() -> None:
                 )
                 full_canonical_by_dt[float(dt_ms)] = full_canonical
                 full_perturbation_by_dt[float(dt_ms)] = full_perturbation
+                trace_diagnostics.extend([
+                    {
+                        "morphology": morph_spec["name"],
+                        "parameter_scenario": scenario_name,
+                        "dt_ms": float(dt_ms),
+                        "trace_kind": "full_hines_canonical_absolute",
+                        "trace_sha256": array_sha256(full_canonical),
+                    },
+                    {
+                        "morphology": morph_spec["name"],
+                        "parameter_scenario": scenario_name,
+                        "dt_ms": float(dt_ms),
+                        "trace_kind": "full_hines_perturbation",
+                        "trace_sha256": array_sha256(full_perturbation),
+                    },
+                ])
                 coordinate_delta = (
                     100.0 * np.linalg.norm(full_canonical - full_perturbation)
                     / max(float(np.linalg.norm(full_perturbation)), 1e-30)
@@ -515,6 +582,13 @@ def main() -> None:
                         payload["model"], payload["layout"], common_ids,
                         PROTOCOL, dt_ms,
                     )
+                    trace_diagnostics.append({
+                        "morphology": morph_spec["name"],
+                        "parameter_scenario": scenario_name,
+                        "dt_ms": float(dt_ms),
+                        "trace_kind": f"reduced_{layout_id}",
+                        "trace_sha256": array_sha256(reduced_by_layout[layout_id]),
+                    })
 
                 for window_ms in WINDOWS_MS:
                     n = int(round(float(window_ms) / float(dt_ms)))
@@ -728,6 +802,11 @@ def main() -> None:
         },
         "morphology_window_summary": morphology_window_summary,
         "hines_temporal_convergence_summary": hines_convergence_summary,
+        "reproducibility_diagnostics": {
+            "basis_models": basis_diagnostics,
+            "trace_outputs": trace_diagnostics,
+            "numerical_runtime": numerical_runtime,
+        },
         "runtime": {
             "python": sys.version.split()[0],
             "numpy": np.__version__,
@@ -753,6 +832,15 @@ def main() -> None:
         "status": report["status"],
         "exact_coverage": report["exact_coverage"],
         "validation": report["validation"],
+        "reproducibility_diagnostics": {
+            "basis_model_count": len(basis_diagnostics),
+            "trace_output_count": len(trace_diagnostics),
+            "unique_basis_hashes": len({
+                row["basis_sha256"] for row in basis_diagnostics
+            }),
+            "threadpools": numerical_runtime["threadpools"],
+            "thread_environment": numerical_runtime["thread_environment"],
+        },
         "morphology_window_summary": morphology_window_summary,
         "hines_temporal_convergence_summary": hines_convergence_summary,
         "runtime": report["runtime"],
