@@ -140,7 +140,7 @@ class TestQ25OutputObserver(unittest.TestCase):
             "capacitance_sha256": "c",
             "input_sha256": "d",
         }
-        with self.assertRaisesRegex(ValueError, "not 144"):
+        with self.assertRaisesRegex(ValueError, "!= 144"):
             observer._basis_report_index({"reproducibility_diagnostics": {"basis_models": [row]}})
 
 
