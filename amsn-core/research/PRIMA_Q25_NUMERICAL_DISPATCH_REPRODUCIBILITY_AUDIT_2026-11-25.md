@@ -73,7 +73,22 @@ Before an expensive calculation, the Actions job asserts that threadpoolctl sees
 
 This is a controlled numerical-dispatch environment, not a claim of universal bitwise reproducibility across every operating system, compiler or BLAS build. The newly pinned order-168 replay is the acceptance test. Only after it passes will the 112/168/224 convergence sweep be allowed to consume that reference.
 
-## 5. Current status and interpretation hold
+## 5. Stricter AVX-512 exclusion and current rerun queue
+
+The first successful Haswell order-168 replay is [run 45597945977](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45597945977). It passed all four morphology preflights, the 12,096-row case matrix, 9,072 matched comparisons, 1,728 finite-DFT identity rows and the 2 × 10⁻⁸ identity gate. It used Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3 and NEURON 9.0.2; both bundled OpenBLAS libraries reported Haswell with one thread. However, NumPy's hardware feature map still reported AVX512_SPR as found, although X86_V4 and AVX512_ICL were not found. It therefore establishes the Haswell OpenBLAS pin, but not the stricter no-AVX512 environment now required for the final reference.
+
+The dispatch contract has been tightened to:
+
+- OPENBLAS_CORETYPE=Haswell and OPENBLAS_NUM_THREADS=1;
+- NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR;
+- exact packages: Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0;
+- numpy.lib.introspect.opt_func_info checks that current implementations for the selected float64/complex128 kernels do not use X86_V4 or AVX512 paths.
+
+The observer workflow's three-feature preflight passed on run 45603415289, but skipped its numerical analysis because the committed primary report was still the earlier two-feature result. The latest three-feature primary replay is queued as [run 45604285118](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45604285118), and its corresponding basis-order workflow is queued as [run 45604298291](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45604298291). An older main/basis run is still occupying the concurrency groups; its output is not to be mixed into the final three-feature sweep.
+
+No result from run 45597945977 is discarded: it remains a valid Haswell/one-thread intermediate replay with complete internal DFT identity, but the 112/168/224 convergence study will only use the stricter three-feature order-168 reference.
+
+## 6. Current interpretation hold
 
 - The original two validated artifacts remain immutable and preserved.
 - The first run's compact raw matrix and paired post-analysis remain in Git with SHA-256 values recorded in the archive manifest.
