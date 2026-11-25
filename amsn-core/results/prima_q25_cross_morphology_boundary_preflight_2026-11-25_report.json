@@ -1,0 +1,203 @@
+{
+  "common_mesh_cap_um": 0.5,
+  "exact_coverage": {
+    "finite_passive_ac_checks": 6,
+    "mapping_csv_rows": 32,
+    "morphologies": 2,
+    "q25_probe_mappings": 4,
+    "shared_output_nodes": 14,
+    "source_sites": 6
+  },
+  "morphologies": [
+    {
+      "amsn_electrical_compartments": 862,
+      "axon_complete": false,
+      "cell_class": "principal cell, pyramidal",
+      "dendrites_complete": false,
+      "experimental_condition": "Control",
+      "finite_passive_ac_checks": [
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "soma",
+          "source_swc_id": 1
+        },
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "basal_q75",
+          "source_swc_id": 583
+        },
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "apical_q75",
+          "source_swc_id": 867
+        }
+      ],
+      "integrity_note": "NeuroMorpho rates dendrites moderate and axon incomplete.",
+      "maximum_segment_length_um": 0.49973827292439127,
+      "metadata_url": "https://neuromorpho.org/neuron_info.jsp?neuron_name=1-5-3",
+      "morphology": "NMO_03524_JacobsControl",
+      "neuromorpho_id": "NMO_03524",
+      "neuron_sections": 68,
+      "neuron_segments": 8868,
+      "neuron_version": "9.0.2",
+      "nine_port_roles_by_swc_node_id": {
+        "1": [
+          "soma"
+        ],
+        "272": [
+          "basal_q25"
+        ],
+        "367": [
+          "basal_q50"
+        ],
+        "583": [
+          "basal_q75"
+        ],
+        "751": [
+          "basal_q90"
+        ],
+        "864": [
+          "apical_q25"
+        ],
+        "866": [
+          "apical_q50"
+        ],
+        "867": [
+          "apical_q75"
+        ],
+        "868": [
+          "apical_q90"
+        ]
+      },
+      "q25_only_swc_node_ids": {
+        "apical_q25": 864,
+        "basal_q25": 272
+      },
+      "region": "occipital neocortex, Brodmann area 18",
+      "segment_cap_um": 0.5,
+      "shared_output_swc_node_ids": [
+        1,
+        367,
+        583,
+        751,
+        866,
+        867,
+        868
+      ],
+      "source_swc_node_ids": {
+        "apical_q75": 867,
+        "basal_q75": 583,
+        "soma": 1
+      },
+      "source_url": "https://neuromorpho.org/dableFiles/jacobs/CNG%20version/1-5-3.CNG.swc",
+      "species": "human",
+      "status": "PASS",
+      "swc_path": "data/human/neuromorpho_jacobs/1-5-3.CNG.swc",
+      "swc_records": 869,
+      "swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748"
+    },
+    {
+      "amsn_electrical_compartments": 7278,
+      "axon_complete": false,
+      "cell_class": "principal / pyramidal, excitatory intratelencephalic (IT)",
+      "dendrites_complete": true,
+      "experimental_condition": "epilepsy surgical specimen",
+      "finite_passive_ac_checks": [
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "soma",
+          "source_swc_id": 1
+        },
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "basal_q75",
+          "source_swc_id": 2304
+        },
+        {
+          "finite_response": true,
+          "frequency_hz": 1000.0,
+          "source": "apical_q75",
+          "source_swc_id": 4262
+        }
+      ],
+      "integrity_note": "NeuroMorpho marks dendrites complete and axon incomplete; do not label this a healthy-control cell.",
+      "maximum_segment_length_um": 0.4999836697050189,
+      "metadata_url": "https://neuromorpho.org/neuron_info.jsp?neuron_name=770307286_transformed",
+      "morphology": "NMO_162186_AllenL23",
+      "neuromorpho_id": "NMO_162186",
+      "neuron_sections": 104,
+      "neuron_segments": 20902,
+      "neuron_version": "9.0.2",
+      "nine_port_roles_by_swc_node_id": {
+        "1": [
+          "soma"
+        ],
+        "2261": [
+          "basal_q50"
+        ],
+        "2304": [
+          "basal_q75"
+        ],
+        "2713": [
+          "basal_q25"
+        ],
+        "4180": [
+          "apical_q90"
+        ],
+        "4262": [
+          "apical_q75"
+        ],
+        "4488": [
+          "apical_q25"
+        ],
+        "515": [
+          "basal_q90"
+        ],
+        "6608": [
+          "apical_q50"
+        ]
+      },
+      "q25_only_swc_node_ids": {
+        "apical_q25": 4488,
+        "basal_q25": 2713
+      },
+      "region": "right middle temporal gyrus, neocortex, layer 2\u20133",
+      "segment_cap_um": 0.5,
+      "shared_output_swc_node_ids": [
+        1,
+        515,
+        2261,
+        2304,
+        4180,
+        4262,
+        6608
+      ],
+      "source_swc_node_ids": {
+        "apical_q75": 4262,
+        "basal_q75": 2304,
+        "soma": 1
+      },
+      "source_url": "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc",
+      "species": "human",
+      "status": "PASS",
+      "swc_path": "data/human/allen_cell_types/770307286_transformed.CNG.swc",
+      "swc_records": 7287,
+      "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+    }
+  ],
+  "schema_version": 1,
+  "scientific_limits": [
+    "This is a source, morphology, port-identity and Import3D mapping preflight; it does not run the finite-window decomposition.",
+    "NMO_03524 is one human Control morphology with moderate dendritic integrity and incomplete axon.",
+    "NMO_162186 is one human epilepsy surgical-specimen morphology with complete dendrites and incomplete axon; it is not a healthy-control cell.",
+    "The two specimens are independent individual reconstructions, not a representative population.",
+    "A common 0.5-um NEURON segment cap harmonizes this preflight's discretization setting only; it does not make the biological source conditions or morphologies interchangeable.",
+    "No active-neuron or biological validation is claimed; full Hines remains canonical and no production defaults are changed."
+  ],
+  "status": "prima_q25_cross_morphology_boundary_preflight_passed"
+}
