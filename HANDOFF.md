@@ -1,5 +1,53 @@
 # HANDOFF — Nolane-x Research
 
+## Session continuation update — 25 November 2026
+
+This update supersedes older status statements below when they refer to the same workflow or result. Earlier checkpoint sections are retained as historical records.
+
+### Newly verified four-morphology finite-window decomposition
+
+- Accepted run: [45571400424](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45571400424); results commit: [14fd51e6ade9d9cae359c9077f55174e3d0347f7](https://github.com/Nolane-x/Nghien-cuu/commit/14fd51e6ade9d9cae359c9077f55174e3d0347f7).
+- Report: [PRIMA_Q25_FOUR_MORPHOLOGY_BOUNDARY_RESULTS_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_BOUNDARY_RESULTS_2026-11-25.md).
+- All source checksums, four morphology preflights, focused tests, exact CSV read-back counts, and finite-record DFT identity passed. Coverage: 537,768 frequency rows, 6,048 case metrics, 3,024 paired 9/7 comparisons, 48 source/window summaries, 8 morphology/window summaries and 864 finite-DFT identity rows. Maximum relative identity residual was 8.9204e-12 against the 2e-8 gate.
+- Median 9-port/7-port error ratios (six source × pulse groups per morphology/window) show the effect is morphology-dependent:
+
+| Morphology | Window | Continuous AC | Discrete BE | Absolute-voltage transient | Perturbation transient |
+|---|---:|---:|---:|---:|---:|
+| Jacobs human Control | 20 ms | 4.073 | 1.002 | 0.9999 | 0.9657 |
+| Jacobs human Control | 40 ms | 4.094 | 1.004 | 0.9999 | 0.9819 |
+| Tamas human Control | 20 ms | 13.263 | 32.169 | 0.9963 | 25.692 |
+| Tamas human Control | 40 ms | 13.499 | 27.824 | 1.0001 | 49.921 |
+| Allen human epilepsy specimen | 20 ms | 2.577 | 2.560 | 1.0002 | 4.502 |
+| Allen human epilepsy specimen | 40 ms | 2.577 | 2.191 | 1.0001 | 3.409 |
+| Peng mouse Control | 20 ms | 37.212 | 38.668 | 17.432 | 135.135 |
+| Peng mouse Control | 40 ms | 31.153 | 32.866 | 27.046 | 59.814 |
+
+Both transient coordinate conventions must remain in reports. The ratio is not absolute biological error and can be inflated by a very small seven-port denominator. Keep the four reconstructions as separate strata; Allen is an epilepsy-surgery specimen, and Peng metadata says No Diameter. The result is limited to passive linear-RC numerical reduction, not active-neuron or biological-population validation. Full Hines remains canonical.
+
+### Output-observer CI archival correction
+
+- Original observer run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) passed runtime/dispatch, source checksum, regression tests, primary-reference gate and the numerical observer calculation (report status passed; reported run time 2,512.57 s). Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) uploaded successfully.
+- Its overall Actions failure occurred only at Git archival: job-level working directory amsn-core was active, but git add incorrectly used amsn-core/results/..., resolving to a nonexistent nested path.
+- Fixed only .github/workflows/amsn-prima-q25-output-observer.yml: archival paths are now relative results/.... Fix commit: 707acd4fcb0ba8daf10a42930e60f5f3bbd16bf3; the changed workflow was fetched back and its new blob SHA verified as 52d1c4ab8e10069431f92882a46e70515287ac5a.
+- Dated diagnosis: [research/RESEARCH_LOG_2026-11-25_AI-CI-PATH-AUDIT.md](research/RESEARCH_LOG_2026-11-25_AI-CI-PATH-AUDIT.md).
+- Corrected push-triggered run [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) passed environment, checksum, regression and primary-reference gates. It was still running the long numerical observer analysis at the last inspection; the fixed archival step has therefore not yet been verified. Do not mark observer outputs as branch-archived until this run completes successfully or artifact recovery is separately verified.
+
+### Other downstream runs — last inspected status
+
+- [Basis-order convergence 45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005): runtime/dispatch, source checksum, tests, q25 preflights and strict order-168 reference gate passed; order 112/224 sweep still running.
+- [Four-morphology four-layout ablation 45616046681](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681): runtime/dispatch, tests and all four q25 preflight contracts passed; numerical calculation still running.
+- These are independent workflows. Do not infer completion from preflight gates; require full coverage, identity checks, report/CSV read-back, archival and artifact evidence.
+
+### Current guardrails and next sequence
+
+1. Inspect corrected observer run 45625185575; confirm numerical status, row counts, corrected git add, rebase/push and artifact upload.
+2. Finish and validate the 112/168/224 order sweep. Compare absolute errors and both transient coordinate metrics; report rank, conditioning, orthogonality, hashes, runtime and peak RSS.
+3. Finish and validate the 7/8/8/9-port ablation. Preserve interaction contrasts separately by morphology, q25 role and source/window.
+4. Reconcile all accepted matrices and update dated report/logs. Keep failed and cancelled attempts as history, never as accepted results.
+5. Do not merge PR #33/#34 or alter production solver/defaults without explicit authorization.
+
+---
+
 ## Latest active checkpoint — PRIMA q25 four-morphology, seed-budget and isolated downstream replay (25/11/2026)
 
 Continue from [the four-morphology handoff](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md), [the primary four-layout result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md) and [the seed-budget result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md). Active branch: `research/prima-q25-cross-morphology-boundary-replication-2026-11-25`. Do not merge or change production defaults.
