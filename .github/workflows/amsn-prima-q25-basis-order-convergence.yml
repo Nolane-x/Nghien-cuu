@@ -167,11 +167,70 @@ jobs:
               assert cap == 0.5, (key, cap)
           print("PASS: all four q25 node sets and common mesh cap are pinned")
           PY
-      - name: Run order sweep when validated order-168 matrix is committed
-        if: hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv', 'amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv', 'amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json') != ''
+      - name: Gate sweep on strict pinned order-168 reference
+        id: reference
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
-            -o results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt \
+          python - <<'PY'
+          import csv
+          import json
+          import os
+          from pathlib import Path
+          stem = "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+          report_path = Path(f"results/{stem}_report.json")
+          metrics_path = Path(f"results/{stem}_case_metrics.csv")
+          comparisons_path = Path(f"results/{stem}_layout_vs_seven_comparisons.csv")
+          ready = False
+          reason = "primary order-168 report or matrices are not committed yet"
+          if report_path.is_file() and metrics_path.is_file() and comparisons_path.is_file():
+              report = json.loads(report_path.read_text(encoding="utf-8"))
+              runtime = report.get("reproducibility_diagnostics", {}).get("numerical_runtime", {})
+              env = runtime.get("thread_environment", {})
+              pools = [p for p in runtime.get("threadpools", []) if p.get("internal_api") == "openblas"]
+              targets = runtime.get("numpy_current_dispatch_targets", [])
+              unsupported = [
+                  x for x in targets
+                  if "X86_V4" in str(x).upper() or "AVX512" in str(x).upper()
+              ]
+              versions = report.get("runtime", {})
+              expected_versions = {
+                  "python": "3.12.16", "numpy": "2.5.5",
+                  "scipy": "1.16.3", "neuron": "9.0.2",
+              }
+              with metrics_path.open(newline="", encoding="utf-8") as handle:
+                  metric_count = sum(1 for _ in csv.DictReader(handle))
+              with comparisons_path.open(newline="", encoding="utf-8") as handle:
+                  comparison_count = sum(1 for _ in csv.DictReader(handle))
+              checks = {
+                  "passed_report": report.get("status") == "prima_q25_four_morphology_four_layout_boundary_ablation_passed",
+                  "basis_order_168": report.get("scope", {}).get("basis_order") == 168,
+                  "exact_runtime": all(versions.get(k) == v for k, v in expected_versions.items()),
+                  "Haswell_environment": env.get("OPENBLAS_CORETYPE") == "Haswell",
+                  "three_feature_disable": env.get("NPY_DISABLE_CPU_FEATURES") == "X86_V4,AVX512_ICL,AVX512_SPR",
+                  "Haswell_pools": bool(pools) and {p.get("architecture") for p in pools} == {"Haswell"},
+                  "active_kernel_evidence": bool(targets),
+                  "no_active_AVX512": not unsupported,
+                  "case_rows": metric_count == 12096,
+                  "comparison_rows": comparison_count == 9072,
+                  "basis_hash_rows": len(report.get("reproducibility_diagnostics", {}).get("basis_models", [])) == 144,
+              }
+              ready = all(checks.values())
+              reason = "strict order-168 reference accepted" if ready else "strict order-168 reference failed one or more dispatch/coverage gates"
+              print(json.dumps({
+                  "ready": ready, "reason": reason, "checks": checks,
+                  "active_numpy_dispatch_targets": targets, "unsupported_targets": unsupported,
+                  "thread_environment": env, "openblas_architectures": [p.get("architecture") for p in pools],
+                  "case_metric_rows": metric_count, "comparison_rows": comparison_count,
+              }, indent=2, sort_keys=True))
+          else:
+              print(reason)
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"ready={'true' if ready else 'false'}\\n")
+          PY
+      - name: Run 112/168/224 order sweep
+        if: steps.reference.outputs.ready == 'true'
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\\nuser_cpu_seconds=%U\\nsystem_cpu_seconds=%S\\nmax_rss_kb=%M\\nexit_status=%x' \\
+            -o results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt \\
             python research/run_prima_q25_four_layout_basis_order_convergence.py
       - name: Commit compact order-sweep tables and diagnostics
         if: always() && hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json') != ''
