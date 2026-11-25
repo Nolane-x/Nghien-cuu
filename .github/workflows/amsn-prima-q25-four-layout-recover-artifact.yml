@@ -125,10 +125,10 @@ jobs:
             morphology_layout_window_summary.csv \
             finite_dft_identity.csv \
             report.json \
-            artifact_archive_manifest.json \
-            time.txt; do
+            artifact_archive_manifest.json; do
             cp "recovered/results/${stem}_${suffix}" "amsn-core/results/${stem}_${suffix}"
           done
+          cp "recovered/results/${stem}.time.txt" "amsn-core/results/${stem}.time.txt"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add \
@@ -139,7 +139,7 @@ jobs:
             "amsn-core/results/${stem}_finite_dft_identity.csv" \
             "amsn-core/results/${stem}_report.json" \
             "amsn-core/results/${stem}_artifact_archive_manifest.json" \
-            "amsn-core/results/${stem}_time.txt"
+            "amsn-core/results/${stem}.time.txt"
           if ! git diff --cached --quiet; then
             git commit -m "results: recover validated four-layout q25 matrices from Actions artifact"
             git fetch origin "${GITHUB_REF_NAME}"
