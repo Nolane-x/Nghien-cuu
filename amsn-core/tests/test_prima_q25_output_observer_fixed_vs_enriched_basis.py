@@ -130,6 +130,31 @@ class TestQ25OutputObserver(unittest.TestCase):
         expected = np.asarray([[[1.0], [1.0]], [[2.0 / 3.0], [2.0 / 3.0]]])
         np.testing.assert_allclose(response, expected, rtol=1e-14, atol=1e-14)
 
+    def test_basis_index_accepts_complete_primary_four_layout_matrix(self):
+        rows = []
+        for morphology in (
+            "NMO_03524_JacobsControl",
+            "NMO_107159_Tamas_human_pyramidal_Control",
+            "NMO_162186_AllenL23",
+            "NMO_163775_Peng_mouse_Control",
+        ):
+            for scenario in range(9):
+                for layout in ("seven", "eight_basal_q25", "eight_apical_q25", "nine_both_q25"):
+                    rows.append({
+                        "morphology": morphology,
+                        "parameter_scenario": f"scenario_{scenario}",
+                        "layout_id": layout,
+                        "basis_sha256": f"basis-{len(rows)}",
+                        "conductance_sha256": f"g-{len(rows)}",
+                        "capacitance_sha256": f"c-{len(rows)}",
+                        "input_sha256": f"b-{len(rows)}",
+                    })
+        index = observer._basis_report_index({
+            "reproducibility_diagnostics": {"basis_models": rows}
+        })
+        self.assertEqual(len(index), 144)
+        self.assertIn(("NMO_163775_Peng_mouse_Control", "scenario_8", "nine_both_q25"), index)
+
     def test_basis_index_requires_exact_144_primary_models(self):
         row = {
             "morphology": "m",
