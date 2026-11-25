@@ -21,6 +21,7 @@ import csv
 import hashlib
 import json
 import math
+import os
 import sys
 import time
 from collections import defaultdict
@@ -212,7 +213,8 @@ DT_S = DT_MS / 1000.0
 # Keep helper-module pulse sampling on the exact same dt.
 tail.DT_MS = DT_MS
 tail.DT_S = DT_S
-BASIS_ORDER = tail.BASIS_ORDER
+BASIS_ORDER = int(os.environ.get("AMSN_PRIMA_BASIS_ORDER", str(tail.BASIS_ORDER)))
+tail.BASIS_ORDER = BASIS_ORDER
 SCENARIO_NAMES = tuple(conditioning.peng_replay.baseline.parameter_cases())
 MAX_FREQUENCY_HZ = 1.0 / (2.0 * DT_S)
 MASTER_FREQUENCY_STEP_HZ = 25.0
@@ -220,7 +222,10 @@ MASTER_FREQUENCIES_HZ = np.arange(
     0.0, MAX_FREQUENCY_HZ + 0.5 * MASTER_FREQUENCY_STEP_HZ,
     MASTER_FREQUENCY_STEP_HZ, dtype=np.float64,
 )
-RESULT_STEM = "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+RESULT_STEM = os.environ.get(
+    "AMSN_PRIMA_RESULT_STEM",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25",
+)
 FINITE_IDENTITY_RELATIVE_TOLERANCE = 2e-8
 
 EXPECTED_FREQUENCY_ROWS = (
