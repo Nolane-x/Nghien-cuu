@@ -59,7 +59,7 @@ The fresh full-dispatch strict run is [45613803039](https://github.com/Nolane-x/
 - the long 7/8/8/9-port calculation is running;
 - coverage/finite-DFT identity, result commit and artifact upload have not yet run.
 
-The older [run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight/tests but remains stuck in the long calculation in the former concurrency group. Do not treat it as complete. The workflow concurrency group was changed so run 45613803039 can execute independently; the older pending [run 45610056257](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610056257) is still queued in the former group.
+The older [run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight/tests and remains in the long calculation step in the former concurrency group without a terminal conclusion. Do not treat it as complete. The workflow concurrency group was changed so run 45613803039 can execute independently; the older pending [run 45610056257](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610056257) is still queued in the former group.
 
 ### Downstream convergence and output observer
 
