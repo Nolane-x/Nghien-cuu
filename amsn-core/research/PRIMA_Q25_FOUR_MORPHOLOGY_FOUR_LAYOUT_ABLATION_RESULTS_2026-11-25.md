@@ -10,7 +10,7 @@
 
 ## 1. Execution and acceptance
 
-The first four-layout numerical computation completed successfully. The runner exited with status 0 after **2,546.82 seconds** (about 42.45 minutes). The independent coverage/identity gate also passed. The overall Actions run is marked failed only because its subsequent Git commit step attempted to push the 190.12-MB frequency-summary CSV, which exceeds GitHub's 100-MB per-file limit. The always-run artifact step then uploaded the complete matrix successfully.
+The first four-layout numerical computation completed successfully. The runner exited with status 0 after **2,546.82 seconds** (about 42.45 minutes; measured shell wall time 2,547.42 seconds), using 2,528.91 CPU seconds and a peak resident set of 1,233,432 KiB (about 1.18 GiB). The independent coverage/identity gate also passed. The overall Actions run is marked failed only because its subsequent Git commit step attempted to push the 190.12-MB frequency-summary CSV, which exceeds GitHub's 100-MB per-file limit. The always-run artifact step then uploaded the complete matrix successfully.
 
 The corrected workflow now deliberately excludes that one large CSV from Git commits while retaining it in the Actions artifact. The archival rerun is tracked separately above; do not confuse its eventual job conclusion with the already validated numerical run.
 
