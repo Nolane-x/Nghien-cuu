@@ -1,0 +1,166 @@
+name: PRIMA q25 four-morphology initial shift seed-budget audit
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-initial-seed-budget.yml"
+      - "amsn-core/research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py"
+      - "amsn-core/tests/test_prima_q25_four_morphology_initial_shift_seed_budget.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-morphology-initial-seed-budget
+  cancel-in-progress: false
+
+jobs:
+  initial-seed-budget:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    defaults:
+      run:
+        working-directory: amsn-core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned AMSN numerical runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install --only-binary=numpy numpy==2.5.5
+          python -m pip install threadpoolctl==3.6.0
+      - name: Verify strict Haswell and complete NumPy SIMD dispatch
+        run: |
+          python - <<'PY'
+          import importlib.metadata as metadata
+          import json
+          import numpy as np
+          import os
+          from threadpoolctl import threadpool_info
+          expected = {
+              "numpy": "2.5.5",
+              "scipy": "1.16.3",
+              "neuron": "9.0.2",
+              "threadpoolctl": "3.6.0",
+          }
+          observed = {name: metadata.version(name) for name in expected}
+          assert observed == expected, observed
+          assert os.environ["OPENBLAS_CORETYPE"] == "Haswell"
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL,AVX512_SPR"
+          pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
+          assert pools and {p.get("architecture") for p in pools} == {"Haswell"}, pools
+          assert all(p.get("num_threads") == 1 for p in pools), pools
+          dispatch = np.lib.introspect.opt_func_info()
+          current_targets = []
+          stack = [dispatch]
+          while stack:
+              item = stack.pop()
+              if isinstance(item, dict):
+                  if isinstance(item.get("current"), str):
+                      current_targets.append(item["current"])
+                  stack.extend(item.values())
+              elif isinstance(item, list):
+                  stack.extend(item)
+          current_targets = sorted(set(current_targets))
+          assert current_targets, "NumPy returned no active dispatch targets"
+          unsupported = [
+              target for target in current_targets
+              if "X86_V4" in target.upper() or "AVX512" in target.upper()
+          ]
+          assert not unsupported, unsupported
+          print("PASS: exact numerical runtime", observed)
+          print("PASS: Haswell OpenBLAS pools", pools)
+          print("PASS: all active NumPy targets", current_targets)
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as handle:
+              handle.write(
+                  "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON="
+                  + json.dumps(current_targets, separators=(",", ":"))
+                  + "\n"
+              )
+          PY
+      - name: Download and verify Allen standardized SWC
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Q25-SeedBudget/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Verify the four pinned q25 preflight manifests exist
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          paths = [
+              Path("results/NMO_163775_PengControl_holdout/preflight.json"),
+              Path("results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"),
+              Path("results/NMO_03524_JacobsControl_holdout/preflight.json"),
+              Path("results/NMO_162186_AllenL23_holdout/preflight.json"),
+          ]
+          for path in paths:
+              assert path.is_file(), f"missing preflight: {path}"
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              assert payload.get("status") == "PASS", (path, payload.get("status"))
+              assert payload.get("source", {}).get("source_sha256"), path
+          print("PASS: all four morphology preflight manifests are present")
+          PY
+      - name: Run seed-budget regression tests
+        run: |
+          python -m pytest -q tests/test_prima_q25_four_morphology_initial_shift_seed_budget.py
+          python -m py_compile research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py
+      - name: Compute four-morphology initial seed budget
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt \
+            python research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py \
+              --output-dir results
+      - name: Commit seed-budget tables and report
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_raw.csv \
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_model_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_morphology_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json \
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt
+          git commit -m "results: archive four-morphology q25 initial seed budget"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Preserve machine-readable seed budget and environment
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-four-morphology-initial-seed-budget
+          path: |
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*.csv
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt
+          if-no-files-found: warn
+          retention-days: 90
