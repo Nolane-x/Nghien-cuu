@@ -130,6 +130,30 @@ class TestQ25OutputObserver(unittest.TestCase):
         expected = np.asarray([[[1.0], [1.0]], [[2.0 / 3.0], [2.0 / 3.0]]])
         np.testing.assert_allclose(response, expected, rtol=1e-14, atol=1e-14)
 
+    def test_observer_requires_exact_primary_numpy_dispatch_match(self):
+        primary = {
+            "numpy_current_dispatch_targets": ["X86_V3", "baseline(X86_V2)"],
+        }
+        observer_runtime = {
+            "numpy_current_dispatch_targets": ["X86_V3", "baseline(X86_V2)"],
+        }
+        observer.assert_matching_numpy_dispatch(primary, observer_runtime)
+
+    def test_observer_rejects_dispatch_mismatch_and_missing_primary_targets(self):
+        primary = {
+            "numpy_current_dispatch_targets": ["X86_V3", "baseline(X86_V2)"],
+        }
+        with self.assertRaisesRegex(RuntimeError, "differs from primary"):
+            observer.assert_matching_numpy_dispatch(
+                primary,
+                {"numpy_current_dispatch_targets": ["baseline(X86_V2)"]},
+            )
+        with self.assertRaisesRegex(RuntimeError, "no active NumPy dispatch"):
+            observer.assert_matching_numpy_dispatch(
+                {"numpy_current_dispatch_targets": []},
+                {"numpy_current_dispatch_targets": ["X86_V3"]},
+            )
+
     def test_basis_index_accepts_complete_primary_four_layout_matrix(self):
         rows = []
         for morphology in (
