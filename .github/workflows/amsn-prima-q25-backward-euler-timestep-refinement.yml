@@ -1,11 +1,11 @@
-name: PRIMA q25 backward-Euler timestep refinement
+name: PRIMA q25 short-window refinement at dt 0.00625 ms
 
 on:
   push:
     branches:
-      - research/prima-q25-backward-euler-fine-step-convergence-2026-11-24
+      - research/prima-q25-short-window-dt00625-2026-11-25
     paths:
-      - ".github/workflows/amsn-prima-q25-backward-euler-timestep-refinement.yml"
+      - ".github/workflows/amsn-prima-q25-short-window-dt00625.yml"
       - "amsn-core/research/analyze_prima_q25_backward_euler_timestep_refinement.py"
       - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
       - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
@@ -25,7 +25,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-backward-euler-timestep-refinement
+  group: amsn-prima-q25-short-window-dt00625
   cancel-in-progress: false
 
 jobs:
@@ -35,6 +35,14 @@ jobs:
     env:
       NEURON_NOGUI: "1"
       AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      # Pin BLAS/OpenMP reductions to one thread so tiny PRIMA residuals are reproducible.
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.12
@@ -66,7 +74,7 @@ jobs:
       - name: Run full-Hines vs PRIMA timestep refinement
         working-directory: amsn-core
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/prima_q25_backward_euler_fine_step_convergence_2026-11-24.time.txt python research/analyze_prima_q25_backward_euler_timestep_refinement.py
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' -o results/prima_q25_backward_euler_short_window_dt00625_2026-11-25.time.txt python research/analyze_prima_q25_backward_euler_timestep_refinement.py
       - name: Commit timestep-refinement evidence
         if: success()
         run: |
@@ -75,11 +83,11 @@ jobs:
           git fetch origin "$GITHUB_REF_NAME"
           UPSTREAM_REF="origin/$GITHUB_REF_NAME"
           git reset --mixed "$UPSTREAM_REF"
-          git add amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv \
-                  amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json
+          git add amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_*.csv \
+                  amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_report.json
           if ! git diff --cached --quiet "$UPSTREAM_REF" -- \
-              amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv \
-              amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json; then
+              amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_*.csv \
+              amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_report.json; then
             git commit -m "results: archive q25 backward-Euler timestep refinement"
             git push origin "HEAD:$GITHUB_REF_NAME"
           else
@@ -89,11 +97,11 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: prima-q25-backward-euler-timestep-refinement
+          name: prima-q25-short-window-dt00625
           path: |
-            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_*.csv
-            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24_report.json
-            amsn-core/results/prima_q25_backward_euler_fine_step_convergence_2026-11-24.time.txt
+            amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_*.csv
+            amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25_report.json
+            amsn-core/results/prima_q25_backward_euler_short_window_dt00625_2026-11-25.time.txt
             amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
             amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
           if-no-files-found: warn

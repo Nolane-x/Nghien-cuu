@@ -5,6 +5,16 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 
+## Checkpoint mới nhất — PRIMA q25 short-window đã tái lập (25/11/2026)
+
+- [Báo cáo](amsn-core/research/PRIMA_Q25_SHORT_WINDOW_DT00625_2026-11-25.md), [handoff](HANDOFF_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md), [research log](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md), [PR #33](https://github.com/Nolane-x/Nghien-cuu/pull/33) (draft).
+- [Workflow 45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) pass 20/20 tests ở cả hai lần chạy cùng commit. 36/36 basis hash, 360/360 trace hash và sáu CSV giống hệt từng byte.
+- Tỷ lệ NRMSE 9/7 ở dt 0,1/0,05/0,025/0,0125/0,00625 ms:
+  - Tamas, 20 ms: 24,47/26,80/27,19/26,39/24,64×; 40 ms: 55,21/57,13/54,88/49,79/49,14×.
+  - Peng, 20 ms: 138,26/128,38/123,56/119,50/114,77×; 40 ms: 70,09/67,67/64,52/65,31/65,06×.
+- Đã tái lập nhưng các cửa sổ ngắn vẫn phụ thuộc timestep; sai số tuyệt đối của 9-port vẫn rất nhỏ. Bước tiếp là tách thành phần periodic-transfer và terminal-boundary ở 20–40 ms.
+- Full Hines vẫn là solver tham chiếu; không thay đổi production defaults.
+
 ## Checkpoint mới nhất — PRIMA q25 fine-step convergence (24/11/2026)
 
 - [Báo cáo](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md), [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) (draft).

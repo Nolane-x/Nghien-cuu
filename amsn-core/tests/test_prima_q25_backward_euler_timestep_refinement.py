@@ -29,18 +29,18 @@ def test_invalid_timestep_that_misses_pulse_edge_is_rejected():
 
 def test_expected_coverage_contract():
     assert audit.expected_counts() == {
-        "metric_rows": 24192,
-        "seven_nine_comparison_rows": 12096,
-        "source_window_summary_rows": 192,
-        "morphology_window_summary_rows": 32,
-        "hines_temporal_convergence_rows": 9072,
-        "hines_temporal_convergence_summary_rows": 24,
+        "metric_rows": 15120,
+        "seven_nine_comparison_rows": 7560,
+        "source_window_summary_rows": 120,
+        "morphology_window_summary_rows": 20,
+        "hines_temporal_convergence_rows": 6048,
+        "hines_temporal_convergence_summary_rows": 16,
     }
 
 
 @pytest.mark.parametrize(
     ("coarse_dt", "fine_dt", "stride"),
-    [(0.1, 0.0125, 8), (0.05, 0.0125, 4), (0.025, 0.0125, 2), (0.0125, 0.0125, 1)],
+    [(0.1, 0.00625, 16), (0.05, 0.00625, 8), (0.025, 0.00625, 4), (0.0125, 0.00625, 2), (0.00625, 0.00625, 1)],
 )
 def test_fine_trace_alignment_uses_end_of_step_samples(coarse_dt, fine_dt, stride):
     fine = np.arange(40, dtype=float).reshape(20, 2)
@@ -94,7 +94,7 @@ def test_source_window_summary_aggregates_all_scenarios_and_outputs():
                                     "nine_over_seven_perturbation_transient_ratio": 2.0,
                                 })
     rows = audit.summarize_source_windows(metrics, comparisons)
-    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 192
+    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 120
     assert all(row["scenario_output_pairs"] == 63 for row in rows)
     assert all(row["median_nine_over_seven_ratio"] == 2.0 for row in rows)
 
@@ -120,7 +120,7 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
                             "median_absolute_vs_perturbation_delta_pct": 0.01,
                         })
     rows = audit.summarize_morphology_windows(source_rows)
-    assert len(rows) == 2 * 4 * 4
+    assert len(rows) == 2 * 5 * 2
     assert all(row["source_pulse_groups"] == 6 for row in rows)
     assert all(row["worse_pairs_of_378"] == 378 for row in rows)
 
@@ -128,7 +128,7 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
 def test_hines_convergence_summary_uses_full_scenario_protocol_output_coverage():
     rows = []
     for morphology in ("m1", "m2"):
-        for coarse_dt in (0.1, 0.05, 0.025):
+        for coarse_dt in (0.1, 0.05, 0.025, 0.0125):
             for window in audit.WINDOWS_MS:
                 for scenario in audit.SCENARIO_NAMES:
                     for source, pulse in audit.PROTOCOL:
@@ -140,7 +140,7 @@ def test_hines_convergence_summary_uses_full_scenario_protocol_output_coverage()
                                 "full_hines_coarse_vs_fine_nrmse_pct": 0.2,
                             })
     summary = audit.summarize_hines_convergence(rows)
-    assert len(summary) == 2 * 3 * 4
+    assert len(summary) == 2 * 4 * 2
     assert all(row["paired_scenario_protocol_output_rows"] == 378 for row in summary)
 
 
@@ -191,9 +191,9 @@ def test_factorized_reduced_step_supports_multiple_protocol_rhs():
 def test_sampled_current_matrix_preserves_charge_and_source_routing():
     source_indices = [3, 7, 11]
     protocol = audit.PROTOCOL
-    dt_ms = 0.025
+    dt_ms = 0.00625
     dt_s = dt_ms / 1000.0
-    steps = int(round(20.0 / dt_ms))
+    steps = int(round(40.0 / dt_ms))
     observed_charge = np.zeros(len(protocol), dtype=float)
     for step in range(steps):
         current = audit.make_current_matrix(
@@ -204,11 +204,32 @@ def test_sampled_current_matrix_preserves_charge_and_source_routing():
     for column, (source, width_ms) in enumerate(protocol):
         expected_charge = audit.tail.CURRENT_A * width_ms / 1000.0
         assert observed_charge[column] == pytest.approx(
-            expected_charge, rel=0.0, abs=1e-27
+            expected_charge, rel=0.0, abs=1e-26
         )
         source_row = source_indices[audit.SOURCE_NAMES.index(source)]
         assert source_row < 16
 
+def test_array_sha256_is_layout_independent_and_shape_sensitive():
+    values = np.arange(24, dtype=np.float64).reshape(4, 6)
+    strided = values[:, ::2]
+    copied = np.ascontiguousarray(strided)
+    assert audit.array_sha256(strided) == audit.array_sha256(copied)
+    assert audit.array_sha256(values) != audit.array_sha256(values.reshape(6, 4))
+
+
+def test_numerical_runtime_diagnostics_records_thread_environment():
+    diagnostics = audit.numerical_runtime_diagnostics()
+    assert "OPENBLAS_NUM_THREADS" in diagnostics["thread_environment"]
+    assert "numpy_build_configuration" in diagnostics
+    assert isinstance(diagnostics["threadpools"], list)
+
+
+def test_short_window_audit_excludes_already_stable_long_windows():
+    assert audit.WINDOWS_MS == (20.0, 40.0)
+    assert 0.00625 == audit.FINE_REFERENCE_DT_MS
+    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125, 0.00625)
+
+
 def test_expected_dt_order_and_fine_reference():
-    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125)
-    assert audit.FINE_REFERENCE_DT_MS == 0.0125
+    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125, 0.00625)
+    assert audit.FINE_REFERENCE_DT_MS == 0.00625

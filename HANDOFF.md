@@ -1,5 +1,20 @@
 # HANDOFF — Nolane-x Research
 
+## Latest validated checkpoint — PRIMA q25 short-window reproducibility (25/11/2026)
+
+Continue from [short-window handoff](HANDOFF_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md) and [research report](amsn-core/research/PRIMA_Q25_SHORT_WINDOW_DT00625_2026-11-25.md). Active branch: `research/prima-q25-short-window-dt00625-2026-11-25`; [PR #33](https://github.com/Nolane-x/Nghien-cuu/pull/33) is draft/open and must not be merged without explicit authorization.
+
+- [Workflow 45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) passed in two attempts: 20/20 tests, both morphology checksums/preflights, full short-window matrix, six exact CSV read-backs, commit and artifact upload.
+- Same-commit reproducibility confirmed: **36/36 basis/model hashes**, **360/360 trace hashes**, and all six numerical CSVs are byte-identical. BLAS/OpenMP variables were pinned to one thread and `PYTHONHASHSEED=0`. Only runtime wall time/report metadata differs.
+- Result commit `455b304a9f79c118196c6669c61fb4206a24375b`; artifacts 14994563122 and 14994278136.
+- Median 9/7 ratios for dt 0.1/0.05/0.025/0.0125/0.00625 ms:
+  - Tamas, 20 ms: 24.47/26.80/27.19/26.39/24.64×; 40 ms: 55.21/57.13/54.88/49.79/49.14×.
+  - Peng, 20 ms: 138.26/128.38/123.56/119.50/114.77×; 40 ms: 70.09/67.67/64.52/65.31/65.06×.
+- The short-window ratios are reproducible but still dt-dependent. Absolute nine-port NRMSE remains around (10^{-9}%)–(10^{-8}%). Full-Hines coarse-vs-0.00625-ms median errors fall from about 0.66–0.73% at dt 0.1 to 0.045–0.050% at dt 0.0125.
+- Next: explain 20–40-ms residual variation by separating periodic-transfer and terminal-boundary components. Do not repeat a generic all-window timestep sweep. No production solver/default changed.
+
+---
+
 ## Latest validated checkpoint — PRIMA q25 fine-step convergence (24/11/2026)
 
 Continue from [fine-step handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md) and [research report](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md). Active branch: \`research/prima-q25-backward-euler-fine-step-convergence-2026-11-24\`; [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) is draft/open and must not be merged without explicit authorization.
