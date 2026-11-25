@@ -28,7 +28,7 @@ jobs:
       AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
       OPENBLAS_NUM_THREADS: "1"
       OPENBLAS_CORETYPE: "Haswell"
-      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
       OMP_NUM_THREADS: "1"
       MKL_NUM_THREADS: "1"
       BLIS_NUM_THREADS: "1"
@@ -71,7 +71,7 @@ jobs:
           assert observed == expected, observed
           pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
           assert pools and {p.get("architecture") for p in pools} == {"Haswell"}, pools
-          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL,AVX512_SPR"
           dispatch = np.lib.introspect.opt_func_info(
               func_name="add|absolute|multiply|sqrt",
               signature="float64|complex128",
@@ -132,7 +132,7 @@ jobs:
                   report.get("status") == "prima_q25_four_morphology_four_layout_boundary_ablation_passed"
                   and report.get("scope", {}).get("basis_order") == 168
                   and env.get("OPENBLAS_CORETYPE") == "Haswell"
-                  and env.get("NPY_DISABLE_CPU_FEATURES") == "X86_V4,AVX512_ICL"
+                  and env.get("NPY_DISABLE_CPU_FEATURES") == "X86_V4,AVX512_ICL,AVX512_SPR"
                   and bool(pools)
                   and {p.get("architecture") for p in pools} == {"Haswell"}
                   and count == 12096
