@@ -72,8 +72,29 @@ jobs:
           pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
           assert pools and {p.get("architecture") for p in pools} == {"Haswell"}, pools
           assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
+          dispatch = np.lib.introspect.opt_func_info(
+              func_name="add|absolute|multiply|sqrt",
+              signature="float64|complex128",
+          )
+          current_targets = []
+          stack = [dispatch]
+          while stack:
+              item = stack.pop()
+              if isinstance(item, dict):
+                  if isinstance(item.get("current"), str):
+                      current_targets.append(item["current"])
+                  stack.extend(item.values())
+              elif isinstance(item, list):
+                  stack.extend(item)
+          current_targets = sorted(set(current_targets))
+          assert current_targets, "NumPy did not report dispatched loop implementations"
+          assert not any(
+              "X86_V4" in target.upper() or "AVX512" in target.upper()
+              for target in current_targets
+          ), current_targets
           print("PASS: pinned numerical runtime", observed)
           print("OpenBLAS pools:", pools)
+          print("NumPy current SIMD dispatch targets:", current_targets)
           print("NumPy detected CPU feature map:", np._core._multiarray_umath.__cpu_features__)
           PY
       - name: Download and verify Allen standardized SWC
