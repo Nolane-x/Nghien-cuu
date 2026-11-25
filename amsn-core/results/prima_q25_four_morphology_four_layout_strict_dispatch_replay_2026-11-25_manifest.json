@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "purpose": "run-specific strict-dispatch replay manifest; distinct from the earlier source-artifact recovery manifest",
+  "created_for_workflow_run": 45616046681,
+  "workflow_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681",
+  "status": "success",
+  "branch": "research/prima-q25-cross-morphology-boundary-replication-2026-11-25",
+  "calculation_head_sha": "62214bb20652723ae486843016225c319c3379a7",
+  "results_commit_sha": "2326ea077c3c6821ba427aef9b009b655e052cfe",
+  "artifact": {
+    "id": 15027292605,
+    "name": "prima-q25-four-morphology-four-layout-boundary-ablation",
+    "size_bytes": 70254593,
+    "zip_sha256": "4171ef306c4e53a4f5ec0637883c33243d0f36294c80ff093753ec070ca0c8ab",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681/artifacts/15027292605",
+    "retention_days": 90
+  },
+  "report": {
+    "path": "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json",
+    "git_blob_sha": "94fcf2eb9b77d1f698b01d4228e073fa35bc4b74",
+    "status": "prima_q25_four_morphology_four_layout_boundary_ablation_passed"
+  },
+  "runtime": {
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "scipy": "1.16.3",
+    "neuron": "9.0.2",
+    "openblas_coretype": "Haswell",
+    "blas_threads": 1,
+    "numpy_active_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "wall_seconds": 2510.292058969,
+    "max_rss_kib": 1233904
+  },
+  "coverage": {
+    "master_frequency_points": 3201,
+    "frequency_summary_rows": 1075536,
+    "case_metric_rows": 12096,
+    "layout_vs_seven_comparison_rows": 9072,
+    "source_layout_window_summary_rows": 144,
+    "morphology_layout_window_summary_rows": 24,
+    "finite_dft_identity_rows": 1728
+  },
+  "numerical_gates": {
+    "max_finite_identity_relative_error": 8.781488969255743e-12,
+    "finite_identity_relative_tolerance": 2e-8,
+    "max_finite_identity_absolute_error_v_samples": 4.809833427024806e-11,
+    "max_model_identity_relative_error": 8.743810650683813e-12,
+    "exact_csv_readback": true,
+    "four_morphology_sha256_preflights": true
+  },
+  "result_csv_sha256": {
+    "case_metrics": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "finite_dft_identity": "eced64a36c73a8ef1d963f08a5f716dc4bd317101360d14d9f1eebe2adc9e902",
+    "frequency_summary": "dabb47d4c5c06bd26ebd90165b50584ecb8448b8e2fe3bc76cdfff7a9b3bcdce",
+    "layout_vs_seven_comparisons": "29af1a3897c44d0aa946768a23ee815299e4fa982e7223e4b9130aa359fd2e6e",
+    "morphology_layout_window_summary": "192a2b24400ffec4174f3b81ef8e25874ae3b4b29d818a649b8d1e040ee0327d",
+    "source_layout_window_summary": "a2164e1fdc67350e75bf9efb39834537691a328838b739da907a8ec6d269e84a"
+  },
+  "posthoc": {
+    "status": "passed",
+    "matched_case_keys": 3024,
+    "interaction_summary_rows": 336,
+    "morphology_summary_rows": 168,
+    "source_summary_rows": 1008,
+    "inputs_match_archived_matrix_hashes": true,
+    "report_path": "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json",
+    "report_blob_sha": "256fbdeeb2d863ef901db26e28548c2538e3d599"
+  },
+  "reproducibility_comparison": {
+    "reference_repository_commit": "27c3e6668a34c4ea97de4cde5412602d896fb0dc",
+    "same_basis_and_projected_matrix_hash_records": 144,
+    "total_basis_records": 144,
+    "unique_basis_hashes": 144,
+    "identical_tracked_csv_git_blobs": [
+      "case_metrics",
+      "layout_vs_seven_comparisons",
+      "morphology_layout_window_summary",
+      "source_layout_window_summary",
+      "finite_dft_identity"
+    ]
+  },
+  "note": "The pre-existing artifact_archive_manifest.json refers to the earlier source run 45585262246 and artifact 15010408589. This run-specific sidecar records the separate strict-dispatch replay artifact 15027292605."
+}
