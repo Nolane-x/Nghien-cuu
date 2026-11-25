@@ -38,6 +38,8 @@ All other settings are held constant across the three orders:
 
 The runner is the same numerical implementation used by the order-168 matrix. Only its basis-order parameter and output file stem vary.
 
+A prior independent order-168 rerun demonstrated that host CPU-feature detection can change the constructed PRIMA basis and the reduced errors even when the source revision and declared software versions match. All sweep orders therefore use the pinned numerical-dispatch environment: OPENBLAS_CORETYPE=Haswell, OPENBLAS_NUM_THREADS=1 and NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL, together with the existing one-thread OMP/MKL/BLIS/VECLIB/NumExpr settings. threadpoolctl==3.6.0 verifies the actual OpenBLAS architecture before computation. The order-168 reference is rejected unless its archived report contains the same dispatch settings and identifies the Haswell OpenBLAS core. See the [numerical-dispatch reproducibility audit](PRIMA_Q25_NUMERICAL_DISPATCH_REPRODUCIBILITY_AUDIT_2026-11-25.md).
+
 ## 4. Coverage contract
 
 Every successful order must produce exactly:
