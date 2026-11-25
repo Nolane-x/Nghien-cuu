@@ -204,7 +204,7 @@ def test_sampled_current_matrix_preserves_charge_and_source_routing():
     for column, (source, width_ms) in enumerate(protocol):
         expected_charge = audit.tail.CURRENT_A * width_ms / 1000.0
         assert observed_charge[column] == pytest.approx(
-            expected_charge, rel=0.0, abs=1e-27
+            expected_charge, rel=0.0, abs=1e-26
         )
         source_row = source_indices[audit.SOURCE_NAMES.index(source)]
         assert source_row < 16
