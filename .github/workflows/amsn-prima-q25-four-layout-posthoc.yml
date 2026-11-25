@@ -1,0 +1,30 @@
+name: PRIMA q25 four-layout post-analysis tests
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - "amsn-core/research/summarize_prima_q25_four_layout_interactions.py"
+      - "amsn-core/tests/test_prima_q25_four_layout_posthoc.py"
+      - ".github/workflows/amsn-prima-q25-four-layout-posthoc.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  post-analysis-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: amsn-core
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run standard-library post-analysis regression tests
+        run: python -m unittest discover -s tests -p "test_prima_q25_four_layout_posthoc.py" -v
+      - name: Compile the post-analysis module and tests
+        run: python -m py_compile research/summarize_prima_q25_four_layout_interactions.py tests/test_prima_q25_four_layout_posthoc.py
