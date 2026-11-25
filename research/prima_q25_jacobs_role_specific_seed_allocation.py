@@ -84,6 +84,16 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def sha256_array(values: np.ndarray) -> str:
+    """Hash array shape, dtype and exact bytes without importing NEURON helpers."""
+    array = np.ascontiguousarray(values)
+    digest = hashlib.sha256()
+    digest.update(str(array.shape).encode("ascii"))
+    digest.update(array.dtype.str.encode("ascii"))
+    digest.update(array.tobytes())
+    return digest.hexdigest()
+
+
 def write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     require(bool(rows), f"refusing to write empty CSV: {path}")
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -215,7 +225,7 @@ def worker(scenario_name: str, output_dir: Path) -> None:
     import audit_prima_q25_extended_backward_euler as tail
     from experimental_prima_output_aware_basis import build_output_aware_passive_basis
     from run_prima_q25_peng_output_aware_dual_seed_pilot import (
-        finite_record_identity, nrmse_percent, sha256_array, simulate_reduced_outputs
+        finite_record_identity, nrmse_percent, simulate_reduced_outputs
     )
     print(json.dumps({"stage":"worker_imports_ready","scenario":scenario_name}), flush=True)
     worker_started = time.perf_counter()
