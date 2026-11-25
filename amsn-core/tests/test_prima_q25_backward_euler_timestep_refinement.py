@@ -209,6 +209,21 @@ def test_sampled_current_matrix_preserves_charge_and_source_routing():
         source_row = source_indices[audit.SOURCE_NAMES.index(source)]
         assert source_row < 16
 
+def test_array_sha256_is_layout_independent_and_shape_sensitive():
+    values = np.arange(24, dtype=np.float64).reshape(4, 6)
+    strided = values[:, ::2]
+    copied = np.ascontiguousarray(strided)
+    assert audit.array_sha256(strided) == audit.array_sha256(copied)
+    assert audit.array_sha256(values) != audit.array_sha256(values.reshape(6, 4))
+
+
+def test_numerical_runtime_diagnostics_records_thread_environment():
+    diagnostics = audit.numerical_runtime_diagnostics()
+    assert "OPENBLAS_NUM_THREADS" in diagnostics["thread_environment"]
+    assert "numpy_build_configuration" in diagnostics
+    assert isinstance(diagnostics["threadpools"], list)
+
+
 def test_short_window_audit_excludes_already_stable_long_windows():
     assert audit.WINDOWS_MS == (20.0, 40.0)
     assert 0.00625 == audit.FINE_REFERENCE_DT_MS
