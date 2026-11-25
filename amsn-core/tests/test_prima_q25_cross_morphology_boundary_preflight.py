@@ -79,9 +79,9 @@ def test_duplicate_shared_port_fails(valid_case):
         call(valid_case)
 
 
-def test_q25_port_overlap_fails(valid_case):
-    valid_case["nine_ids"] = [1, 2, 3, 4, 5, 6, 7, 8, 8]
-    with pytest.raises(ValueError, match="exactly two q25-only IDs"):
+def test_q25_probe_with_unknown_role_is_rejected(valid_case):
+    valid_case["roles"][9] = ["unclassified_probe"]
+    with pytest.raises(ValueError, match="q25 node identities differ"):
         call(valid_case)
 
 
