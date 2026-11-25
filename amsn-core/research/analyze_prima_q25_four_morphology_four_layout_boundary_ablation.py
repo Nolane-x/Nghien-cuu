@@ -270,15 +270,17 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
     with contextlib.redirect_stdout(runtime_output):
         np.show_runtime()
 
+    expected_core = os.environ.get("OPENBLAS_CORETYPE")
     try:
         from threadpoolctl import threadpool_info
         pools = threadpool_info()
     except Exception as exc:
-        raise RuntimeError(
-            "threadpoolctl is required to verify the pinned BLAS architecture"
-        ) from exc
+        if expected_core:
+            raise RuntimeError(
+                "threadpoolctl is required to verify the pinned BLAS architecture"
+            ) from exc
+        pools = [{"diagnostic_error": f"{type(exc).__name__}: {exc}"}]
 
-    expected_core = os.environ.get("OPENBLAS_CORETYPE")
     openblas_pools = [
         pool for pool in pools
         if pool.get("internal_api") == "openblas"
