@@ -234,6 +234,8 @@ def run(reference_dir: Path, rerun_dir: Path, output_dir: Path) -> dict[str, Any
 
     output_dir.mkdir(parents=True, exist_ok=True)
     _write_csv(output_dir / f"{stem}_rerun_455858_case_metrics.csv", read_csv(rerun_case))
+    rerun_report_copy = output_dir / f"{stem}_rerun_455858_report.json"
+    rerun_report_copy.write_bytes(rerun_report_path.read_bytes())
     for suffix in (
         "layout_vs_seven_comparisons.csv",
         "source_layout_window_summary.csv",
@@ -279,6 +281,7 @@ def run(reference_dir: Path, rerun_dir: Path, output_dir: Path) -> dict[str, Any
         "outputs": {
             "rerun_case_metrics": f"{stem}_rerun_455858_case_metrics.csv",
             "rerun_comparisons": f"{stem}_rerun_455858_layout_vs_seven_comparisons.csv",
+            "rerun_report": rerun_report_copy.name,
             "metric_differences": metric_path.name,
             "morphology_sensitivity": morphology_path.name,
         },
