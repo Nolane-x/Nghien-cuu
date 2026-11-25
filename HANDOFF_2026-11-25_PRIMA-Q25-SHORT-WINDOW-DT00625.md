@@ -22,17 +22,35 @@ Do the 20/40-ms q25 nine/seven transient ratios stabilize when dt is reduced to 
 
 ## Execution status
 
-Implementation and focused tests are authored. Full computation is pending Actions; no numerical conclusion is accepted before tests, checksums, preflights, full calculation, CSV read-backs, commit and artifact upload pass.
+Both attempts of workflow [45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) passed **20/20 focused tests**, both SWC checksum/preflight gates, the full calculation, six exact CSV read-backs, result commit and artifact upload.
+
+- Result commit: `455b304a9f79c118196c6669c61fb4206a24375b`.
+- Attempt 1 artifact: [14994563122](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117/artifacts/14994563122).
+- Attempt 2 artifact: [14994278136](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117/artifacts/14994278136).
+- Same-commit repeatability confirmed: 36/36 basis/model hashes, 360/360 trace hashes and all six numerical CSVs match byte-for-byte. Only runtime metadata differs (wall time 162.52 vs 164.51 s).
+
 
 ## Limits
 
 Only two passive morphology instances. The finest timestep is a numerical reference, not exact continuum truth. No production solver/default is changed.
 
-## Current blocker — repeated short-window metrics differ
 
-The original workflow [45551126065](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45551126065) passed all 18 tests and the full calculation. A same-commit rerun also passed, but its Hines temporal CSV was byte-identical while the reduced-model metric and ratio CSVs changed. This means the CI pass alone is not enough to accept the PRIMA short-window ratios as reproducible.
+## Validated findings and current interpretation
 
-The observed maximum absolute change in perturbation NRMSE was about \(1.65\times10^{-10}\) percentage points, a small absolute change but material relative to the very small residuals. Do not claim a converged 20/40-ms 9/7 ratio from the first artifact alone.
+Median nine/seven perturbation-coordinate transient ratios, ordered by dt 0.1/0.05/0.025/0.0125/0.00625 ms:
 
-The latest commit pins BLAS-related thread counts to one and adds reproducibility metadata: basis, reduced \(G/C\), input and trace digests plus NumPy/BLAS/threadpool configuration. Workflow runs [45552270328](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552270328) and [45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) validate the changes. Next: compare the saved basis hashes and trace hashes across a repeated run of the final commit. Accept the ratios only if repeated hashes and CSV outputs match; otherwise isolate the first differing stage and keep the results provisional.
+- Tamas 20 ms: **24.47 / 26.80 / 27.19 / 26.39 / 24.64×**.
+- Tamas 40 ms: **55.21 / 57.13 / 54.88 / 49.79 / 49.14×**.
+- Peng 20 ms: **138.26 / 128.38 / 123.56 / 119.50 / 114.77×**.
+- Peng 40 ms: **70.09 / 67.67 / 64.52 / 65.31 / 65.06×**.
+
+Absolute nine-port NRMSE at dt 0.00625 ms is about 4.22e-9%, 1.23e-8%, 1.28e-8%, and 6.40e-8% for Tamas 20/40 and Peng 20/40 respectively. These are relative reduction-error ratios with very small absolute residuals.
+
+Full-Hines coarse-vs-0.00625-ms median NRMSE is about 0.68–0.73% at dt 0.1, 0.309–0.346% at 0.05, 0.133–0.150% at 0.025 and 0.0449–0.0503% at 0.0125. The 0.00625-ms Hines trace remains a finer reference, not a continuous-time exact solution.
+
+## Reproducibility lesson
+
+The original unpinned same-commit rerun differed in PRIMA residual CSVs even though Hines reference traces matched. Pinning BLAS/OpenMP and Python hash-seed environment resolved the observed issue in this Actions environment: the two thread-pinned attempts produced identical 36 basis/model digests, 360 trace digests and all six CSV hashes. The report JSON differs only in runtime wall time. The diagnostic could not query live threadpool counts because `threadpoolctl` was absent, but the job logs confirm each relevant thread-control environment variable was set to `1`.
+
+Keep the branch single-thread settings and digest checks in future numerical workflows. This evidence supports repeatability on the GitHub Actions environment tested; it does not guarantee identical results across other BLAS vendors or hardware.
 
