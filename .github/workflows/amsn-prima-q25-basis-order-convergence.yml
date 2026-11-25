@@ -127,23 +127,25 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Keep the per-order 190-MB frequency summaries in the Actions artifact.
           for order in 112 224; do
-            prefix="results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_\${order}"
-            git add "\${prefix}_case_metrics.csv" \
-                    "\${prefix}_finite_dft_identity.csv" \
-                    "\${prefix}_layout_vs_seven_comparisons.csv" \
-                    "\${prefix}_morphology_layout_window_summary.csv" \
-                    "\${prefix}_source_layout_window_summary.csv" \
-                    "\${prefix}_report.json" \
-                    "\${prefix}_posthoc_source_summary.csv" \
-                    "\${prefix}_posthoc_morphology_summary.csv" \
-                    "\${prefix}_posthoc_interaction_summary.csv" \
-                    "\${prefix}_posthoc_report.json" 2>/dev/null || true
+            prefix="results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_${order}"
+            if [ -f "${prefix}_report.json" ]; then
+              git add "${prefix}_case_metrics.csv" \
+                      "${prefix}_finite_dft_identity.csv" \
+                      "${prefix}_layout_vs_seven_comparisons.csv" \
+                      "${prefix}_morphology_layout_window_summary.csv" \
+                      "${prefix}_source_layout_window_summary.csv" \
+                      "${prefix}_report.json" \
+                      "${prefix}_posthoc_source_summary.csv" \
+                      "${prefix}_posthoc_morphology_summary.csv" \
+                      "${prefix}_posthoc_interaction_summary.csv" \
+                      "${prefix}_posthoc_report.json" 2>/dev/null || true
+            fi
           done
           base="results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
-          git add "\${base}_posthoc_source_summary.csv" \
-                  "\${base}_posthoc_morphology_summary.csv" \
-                  "\${base}_posthoc_interaction_summary.csv" \
-                  "\${base}_posthoc_report.json" \
+          git add "${base}_posthoc_source_summary.csv" \
+                  "${base}_posthoc_morphology_summary.csv" \
+                  "${base}_posthoc_interaction_summary.csv" \
+                  "${base}_posthoc_report.json" \
                   results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_source_summary.csv \
                   results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_morphology_summary.csv \
                   results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_interaction_summary.csv \
