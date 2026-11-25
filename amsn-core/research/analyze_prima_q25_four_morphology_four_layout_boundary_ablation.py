@@ -256,6 +256,26 @@ def array_sha256(values: np.ndarray) -> str:
     return digest.hexdigest()
 
 
+def numpy_current_dispatch_targets() -> list[str]:
+    """Return the active NumPy SIMD loop targets for representative hot operations."""
+    dispatch = np.lib.introspect.opt_func_info(
+        func_name="add|absolute|multiply|sqrt",
+        signature="float64|complex128",
+    )
+    targets: list[str] = []
+    stack: list[Any] = [dispatch]
+    while stack:
+        item = stack.pop()
+        if isinstance(item, dict):
+            current = item.get("current")
+            if isinstance(current, str):
+                targets.append(current)
+            stack.extend(item.values())
+        elif isinstance(item, list):
+            stack.extend(item)
+    return sorted(set(targets))
+
+
 def numerical_runtime_diagnostics() -> dict[str, Any]:
     """Capture and enforce the pinned NumPy/OpenBLAS numerical dispatch."""
     import contextlib
@@ -298,6 +318,20 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
                 f"expected {expected_core!r}, observed {sorted(observed_cores)!r}"
             )
 
+    current_targets = numpy_current_dispatch_targets()
+    if expected_core == "Haswell":
+        if not current_targets:
+            raise RuntimeError("NumPy did not report active SIMD loop implementations")
+        unsupported = [
+            target for target in current_targets
+            if "X86_V4" in target.upper() or "AVX512" in target.upper()
+        ]
+        if unsupported:
+            raise RuntimeError(
+                "active NumPy SIMD dispatch exceeded the pinned baseline: "
+                f"{unsupported!r}"
+            )
+
     names = (
         "OPENBLAS_NUM_THREADS", "OPENBLAS_CORETYPE",
         "NPY_DISABLE_CPU_FEATURES", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
@@ -309,6 +343,7 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
         "threadpools": pools,
         "numpy_build_configuration": output.getvalue(),
         "numpy_cpu_features_detected": numpy_cpu_features,
+        "numpy_current_dispatch_targets": current_targets,
         "verified_openblas_coretype": expected_core,
     }
 
