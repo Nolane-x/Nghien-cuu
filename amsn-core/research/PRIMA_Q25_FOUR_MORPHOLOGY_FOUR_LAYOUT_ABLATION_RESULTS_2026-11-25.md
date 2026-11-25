@@ -92,6 +92,19 @@ This metric compares transient responses in y = V − E_leak coordinates and avo
 | Peng mouse Control | 20 ms | 2.549 (360) | 3.452 (363) | 106.945 (373) | 1.386 × 10⁻⁸ |
 | Peng mouse Control | 40 ms | 1.901 (371) | 2.454 (372) | 66.254 (378) | 5.747 × 10⁻⁸ |
 
+### Dependence on current-source location
+
+The combined 9-port perturbation-transient ratio also depends on where current is injected. Each value below is the median candidate/seven ratio over 126 paired cases (9 scenarios × 2 pulse widths × 7 shared outputs) for that source and window.
+
+| Morphology | 20 ms: apical-q75 / basal-q75 / soma | 40 ms: apical-q75 / basal-q75 / soma |
+|---|---:|---:|
+| Jacobs | 1.500 / 1.242 / 1.299 | 1.624 / 1.364 / 1.419 |
+| Tamas | 11.256 / 19.794 / 63.187 | 38.518 / 50.268 / 59.191 |
+| Allen | 4.454 / 1.036 / 5.141 | 4.328 / 1.030 / 4.983 |
+| Peng | 77.876 / 131.621 / 119.510 | 61.794 / 70.212 / 68.339 |
+
+The Allen result is particularly source-dependent: basal-q75 remains close to the seven-port baseline, whereas apical-q75 and soma are several times higher. The Tamas and Peng penalties are not confined to one source position. These are per-morphology/source summaries, not population estimates.
+
 The canonical absolute-voltage transient metric is retained in the raw case matrix. Its median candidate/seven ratios remain close to 1 for Jacobs, Tamas and Allen; Peng's combined layout is about 10.36 at 20 ms and 21.39 at 40 ms. The canonical and perturbation-coordinate metrics are algebraically equivalent but can differ numerically when the reduction residual is extremely small. The perturbation-coordinate metric is the more stable comparison for this residual scale; neither metric is silently substituted for the other.
 
 ## 5. Basal/apical interaction diagnostic
