@@ -463,15 +463,9 @@ def simulate_reduced_with_terminal_states(
             pulse_end = (tail.PULSE_ONSET_MS + pulse_width_ms) / 1000.0
             if tail.PULSE_ONSET_MS / 1000.0 <= now_s < pulse_end:
                 port_current[source_slots[source_name], column] = tail.CURRENT_A
-        for column in range(len(protocol)):
-            if step < int(round(20.0 / DT_MS)):
-                state[:, column] = model.step_backward_euler(
-                    state[:, column], DT_S, port_current[:, column]
-                )
-            else:
-                state[:, column] = tail.reduced_backward_euler_step_factorized(
-                    model, factor, state[:, column], port_current[:, column], DT_S
-                )
+        state = tail.reduced_backward_euler_step_factorized(
+            model, factor, state, port_current, DT_S
+        )
         for column in range(len(protocol)):
             port_values[:, column] = model.port_voltages(state[:, column])
         trace[step, :, :] = port_values[output_slots, :]
@@ -483,6 +477,55 @@ def simulate_reduced_with_terminal_states(
             "reduced terminal-state coverage mismatch")
     require(np.all(np.isfinite(trace)), "non-finite reduced trace")
     return trace, terminal_states
+
+
+def decompose_periodic_boundary_error(
+    actual_error_fft: np.ndarray,
+    periodic_transfer_component: np.ndarray,
+    terminal_boundary_component: np.ndarray,
+    one_sided_weights: np.ndarray,
+) -> dict[str, float]:
+    """Decompose finite-record error into periodic and terminal components."""
+    actual = np.asarray(actual_error_fft, dtype=np.complex128)
+    periodic = np.asarray(periodic_transfer_component, dtype=np.complex128)
+    boundary = np.asarray(terminal_boundary_component, dtype=np.complex128)
+    weights = np.asarray(one_sided_weights, dtype=np.float64)
+    require(actual.shape == periodic.shape == boundary.shape == weights.shape,
+            "finite-window component arrays and weights must align")
+    require(
+        np.all(np.isfinite(actual.real)) and np.all(np.isfinite(actual.imag))
+        and np.all(np.isfinite(periodic.real)) and np.all(np.isfinite(periodic.imag))
+        and np.all(np.isfinite(boundary.real)) and np.all(np.isfinite(boundary.imag))
+        and np.all(np.isfinite(weights)) and np.all(weights > 0.0),
+        "finite-window component decomposition contains non-finite values",
+    )
+    reconstructed = periodic + boundary
+    scale = max(float(np.linalg.norm(actual)), 1e-30)
+    identity_relative, identity_absolute = _finite_identity_error(
+        actual, reconstructed, scale_norm=scale
+    )
+    actual_norm = math.sqrt(float(np.sum(weights * np.square(np.abs(actual)))))
+    periodic_norm = math.sqrt(float(np.sum(weights * np.square(np.abs(periodic)))))
+    boundary_norm = math.sqrt(float(np.sum(weights * np.square(np.abs(boundary)))))
+    energy = actual_norm ** 2
+    cross_term_pct = (
+        100.0 * (energy - periodic_norm ** 2 - boundary_norm ** 2) / energy
+        if energy > 0.0 else 0.0
+    )
+    return {
+        "finite_error_norm": actual_norm,
+        "periodic_transfer_norm": periodic_norm,
+        "terminal_boundary_norm": boundary_norm,
+        "periodic_over_finite_error_norm_pct": (
+            100.0 * periodic_norm / actual_norm if actual_norm > 0.0 else 0.0
+        ),
+        "boundary_over_finite_error_norm_pct": (
+            100.0 * boundary_norm / actual_norm if actual_norm > 0.0 else 0.0
+        ),
+        "periodic_boundary_cross_term_pct": cross_term_pct,
+        "identity_relative_error": identity_relative,
+        "identity_absolute_error": identity_absolute,
+    }
 
 
 def _finite_identity_error(
@@ -993,15 +1036,12 @@ def main() -> None:
                                     reduced_h_be - full_h_be
                                 ) * current_spectrum
                                 boundary_component = -(reduced_q - full_q)
-                                reconstructed_error = (
-                                    transfer_component + boundary_component
+                                decomposition = decompose_periodic_boundary_error(
+                                    actual_error_fft, transfer_component,
+                                    boundary_component, one_sided,
                                 )
-                                error_identity_rel, error_identity_abs = (
-                                    _finite_identity_error(
-                                        actual_error_fft, reconstructed_error,
-                                        scale_norm=max(full_y_norm, reduced_y_norm),
-                                    )
-                                )
+                                error_identity_rel = decomposition["identity_relative_error"]
+                                error_identity_abs = decomposition["identity_absolute_error"]
                                 finite_error_identity_errors.append(error_identity_rel)
                                 max_finite_error_identity_relative_error = max(
                                     max_finite_error_identity_relative_error,
@@ -1014,29 +1054,12 @@ def main() -> None:
                                     max_identity_absolute_error, error_identity_abs
                                 )
                                 model_identity_absolute_errors.append(error_identity_abs)
-                                weights = one_sided
-                                actual_error_norm = math.sqrt(float(np.sum(
-                                    weights * np.square(np.abs(actual_error_fft))
-                                )))
-                                transfer_norm = math.sqrt(float(np.sum(
-                                    weights * np.square(np.abs(transfer_component))
-                                )))
-                                boundary_norm = math.sqrt(float(np.sum(
-                                    weights * np.square(np.abs(boundary_component))
-                                )))
-                                total_energy = actual_error_norm ** 2
-                                cross_pct = (
-                                    100.0 * (total_energy - transfer_norm ** 2 - boundary_norm ** 2)
-                                    / total_energy if total_energy > 0.0 else 0.0
-                                )
-                                transfer_fraction = (
-                                    100.0 * transfer_norm / actual_error_norm
-                                    if actual_error_norm > 0.0 else 0.0
-                                )
-                                boundary_fraction = (
-                                    100.0 * boundary_norm / actual_error_norm
-                                    if actual_error_norm > 0.0 else 0.0
-                                )
+                                actual_error_norm = decomposition["finite_error_norm"]
+                                transfer_norm = decomposition["periodic_transfer_norm"]
+                                boundary_norm = decomposition["terminal_boundary_norm"]
+                                cross_pct = decomposition["periodic_boundary_cross_term_pct"]
+                                transfer_fraction = decomposition["periodic_over_finite_error_norm_pct"]
+                                boundary_fraction = decomposition["boundary_over_finite_error_norm_pct"]
 
                                 cont_metric, cont_error_norm, cont_ref_norm = weighted_transfer_error(
                                     full_transfer_cont[:, output_index, source_index],
