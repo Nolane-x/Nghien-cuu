@@ -48,7 +48,7 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
                 "numerical_runtime": {
                     "thread_environment": {
                         "OPENBLAS_CORETYPE": "Haswell",
-                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
                     },
                     "threadpools": [
                         {"internal_api": "openblas", "architecture": "Haswell"}
@@ -84,7 +84,7 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
                 "numerical_runtime": {
                     "thread_environment": {
                         "OPENBLAS_CORETYPE": "Haswell",
-                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
                     },
                     "threadpools": [
                         {"internal_api": "openblas", "architecture": "Cooperlake"}
