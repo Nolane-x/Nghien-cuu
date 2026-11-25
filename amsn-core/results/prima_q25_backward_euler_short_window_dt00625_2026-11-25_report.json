@@ -27,8 +27,8 @@
     {
       "coarse_dt_ms": 0.0125,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.14674764762486048,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.0503297915601493,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.1467476476248605,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.050329791560149294,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.0814779767391666,
       "paired_scenario_protocol_output_rows": 378,
@@ -38,9 +38,9 @@
       "coarse_dt_ms": 0.0125,
       "fine_reference_dt_ms": 0.00625,
       "max_full_hines_coarse_vs_fine_nrmse_pct": 0.14674852005539668,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.047176584262783997,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.04717658426278401,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.08142711187394408,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.0814271118739441,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 40.0
     },
@@ -50,17 +50,17 @@
       "max_full_hines_coarse_vs_fine_nrmse_pct": 0.40584953389768424,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.1499240231839881,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.24311881327575166,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.24311881327575163,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 20.0
     },
     {
       "coarse_dt_ms": 0.025,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.4058540803224903,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.4058540803224904,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.14085094873133808,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.24277143621998992,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.24277143621998995,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 40.0
     },
@@ -77,17 +77,17 @@
     {
       "coarse_dt_ms": 0.05,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.8726869870361642,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.8726869870361644,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.32221048030670507,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5610101531472576,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.5610101531472574,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 40.0
     },
     {
       "coarse_dt_ms": 0.1,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.827498815977977,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.8274988159779768,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.7315452660279376,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.1888948250221498,
@@ -107,20 +107,20 @@
     {
       "coarse_dt_ms": 0.0125,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.20041349329254357,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.049843825652184426,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.20041349329254365,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.04984382565218443,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.09078320512443638,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.09078320512443637,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 20.0
     },
     {
       "coarse_dt_ms": 0.0125,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.20041314442766847,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.04489659960808811,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.2004131444276685,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.04489659960808812,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.09085084217862231,
+      "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.0908508421786223,
       "paired_scenario_protocol_output_rows": 378,
       "window_ms": 40.0
     },
@@ -128,7 +128,7 @@
       "coarse_dt_ms": 0.025,
       "fine_reference_dt_ms": 0.00625,
       "max_full_hines_coarse_vs_fine_nrmse_pct": 0.5818736266242961,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.14868015484296287,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.1486801548429629,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.271161929075507,
       "paired_scenario_protocol_output_rows": 378,
@@ -137,7 +137,7 @@
     {
       "coarse_dt_ms": 0.025,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.5818727175944511,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 0.5818727175944512,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.1329732678751838,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.2712229285944491,
@@ -147,8 +147,8 @@
     {
       "coarse_dt_ms": 0.05,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.3119141770621812,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.345499014004332,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 1.311914177062181,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.3454990140043319,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.6272698019564072,
       "paired_scenario_protocol_output_rows": 378,
@@ -158,7 +158,7 @@
       "coarse_dt_ms": 0.05,
       "fine_reference_dt_ms": 0.00625,
       "max_full_hines_coarse_vs_fine_nrmse_pct": 1.3119123973428308,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.30886992825888016,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.3088699282588801,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 0.6263370149724763,
       "paired_scenario_protocol_output_rows": 378,
@@ -168,7 +168,7 @@
       "coarse_dt_ms": 0.1,
       "fine_reference_dt_ms": 0.00625,
       "max_full_hines_coarse_vs_fine_nrmse_pct": 2.6976240863871044,
-      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.7343729332203645,
+      "median_full_hines_coarse_vs_fine_nrmse_pct": 0.7343729332203643,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.2711597104854075,
       "paired_scenario_protocol_output_rows": 378,
@@ -177,7 +177,7 @@
     {
       "coarse_dt_ms": 0.1,
       "fine_reference_dt_ms": 0.00625,
-      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.6976211674443955,
+      "max_full_hines_coarse_vs_fine_nrmse_pct": 2.697621167444396,
       "median_full_hines_coarse_vs_fine_nrmse_pct": 0.656839179184279,
       "morphology": "NMO_163775_Peng_mouse_Control",
       "p90_full_hines_coarse_vs_fine_nrmse_pct": 1.2739907795726693,
@@ -196,12 +196,12 @@
   "morphology_window_summary": [
     {
       "dt_ms": 0.00625,
-      "median_absolute_vs_perturbation_delta_pct": 4.749088493030394e-08,
-      "median_nine_over_seven_transient_ratio": 25.051830613630834,
-      "median_nine_transient_nrmse_pct": 4.2206993521450046e-09,
-      "median_seven_transient_nrmse_pct": 1.3506072099534046e-10,
+      "median_absolute_vs_perturbation_delta_pct": 4.749088493030391e-08,
+      "median_nine_over_seven_transient_ratio": 24.891661473562372,
+      "median_nine_transient_nrmse_pct": 4.217516192600609e-09,
+      "median_seven_transient_nrmse_pct": 1.4404701872630126e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 119.14357180712793,
+      "p90_nine_over_seven_transient_ratio": 116.94240314122574,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 374
@@ -209,35 +209,35 @@
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 7.772419486752535e-08,
-      "median_nine_over_seven_transient_ratio": 50.57204010673641,
-      "median_nine_transient_nrmse_pct": 1.2335472466147214e-08,
-      "median_seven_transient_nrmse_pct": 3.174749029510457e-10,
+      "median_nine_over_seven_transient_ratio": 50.027965809901396,
+      "median_nine_transient_nrmse_pct": 1.2298595075753903e-08,
+      "median_seven_transient_nrmse_pct": 3.293147437489855e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 75.67842127336664,
+      "p90_nine_over_seven_transient_ratio": 74.8815558614156,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
     },
     {
       "dt_ms": 0.0125,
-      "median_absolute_vs_perturbation_delta_pct": 5.3393298429556496e-08,
-      "median_nine_over_seven_transient_ratio": 26.77713654986955,
-      "median_nine_transient_nrmse_pct": 4.142800903828427e-09,
-      "median_seven_transient_nrmse_pct": 1.4816039795838467e-10,
+      "median_absolute_vs_perturbation_delta_pct": 5.339329842955648e-08,
+      "median_nine_over_seven_transient_ratio": 26.547137111312743,
+      "median_nine_transient_nrmse_pct": 4.1278645085446314e-09,
+      "median_seven_transient_nrmse_pct": 1.6058215076557074e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 92.67110610480637,
+      "p90_nine_over_seven_transient_ratio": 101.78414274141494,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 371
+      "worse_pairs_of_378": 370
     },
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 9.099249014916535e-08,
-      "median_nine_over_seven_transient_ratio": 50.30237421566915,
-      "median_nine_transient_nrmse_pct": 1.2176696439352684e-08,
-      "median_seven_transient_nrmse_pct": 3.0198377098588914e-10,
+      "median_nine_over_seven_transient_ratio": 49.90622823285206,
+      "median_nine_transient_nrmse_pct": 1.2126042726170222e-08,
+      "median_seven_transient_nrmse_pct": 3.119949608929849e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 78.03363431052202,
+      "p90_nine_over_seven_transient_ratio": 74.79572670225551,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -245,23 +245,23 @@
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 3.6870448852384835e-08,
-      "median_nine_over_seven_transient_ratio": 27.36341183165424,
-      "median_nine_transient_nrmse_pct": 3.888580951779509e-09,
-      "median_seven_transient_nrmse_pct": 1.3042405614755117e-10,
+      "median_nine_over_seven_transient_ratio": 27.054817483203486,
+      "median_nine_transient_nrmse_pct": 3.874372703808095e-09,
+      "median_seven_transient_nrmse_pct": 1.31617659929476e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 125.1892839301766,
+      "p90_nine_over_seven_transient_ratio": 125.93069531770416,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 371
+      "worse_pairs_of_378": 370
     },
     {
       "dt_ms": 0.025,
-      "median_absolute_vs_perturbation_delta_pct": 5.68685285402337e-08,
-      "median_nine_over_seven_transient_ratio": 54.35202918119242,
-      "median_nine_transient_nrmse_pct": 1.1839333796232184e-08,
-      "median_seven_transient_nrmse_pct": 3.19403021302833e-10,
+      "median_absolute_vs_perturbation_delta_pct": 5.686852854023371e-08,
+      "median_nine_over_seven_transient_ratio": 54.851849415408026,
+      "median_nine_transient_nrmse_pct": 1.1814446100873775e-08,
+      "median_seven_transient_nrmse_pct": 3.1595475833782247e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 73.04698922750279,
+      "p90_nine_over_seven_transient_ratio": 74.60744654164628,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -269,23 +269,23 @@
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 5.350359215225706e-08,
-      "median_nine_over_seven_transient_ratio": 26.75090628558755,
-      "median_nine_transient_nrmse_pct": 3.486817352359682e-09,
-      "median_seven_transient_nrmse_pct": 1.3216925764111272e-10,
+      "median_nine_over_seven_transient_ratio": 26.588103112421543,
+      "median_nine_transient_nrmse_pct": 3.4735033803754087e-09,
+      "median_seven_transient_nrmse_pct": 1.3432644409996977e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 103.50065573372247,
+      "p90_nine_over_seven_transient_ratio": 105.80218728454398,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 371
+      "worse_pairs_of_378": 370
     },
     {
       "dt_ms": 0.05,
-      "median_absolute_vs_perturbation_delta_pct": 8.5566803112492e-08,
-      "median_nine_over_seven_transient_ratio": 56.39334526738814,
-      "median_nine_transient_nrmse_pct": 1.1198852884776817e-08,
-      "median_seven_transient_nrmse_pct": 2.7888236571711473e-10,
+      "median_absolute_vs_perturbation_delta_pct": 8.556680311249199e-08,
+      "median_nine_over_seven_transient_ratio": 57.036456605691285,
+      "median_nine_transient_nrmse_pct": 1.1173720763637542e-08,
+      "median_seven_transient_nrmse_pct": 2.868327693417153e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 72.7455733851721,
+      "p90_nine_over_seven_transient_ratio": 72.99949385477586,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -293,11 +293,11 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 4.126131786060624e-08,
-      "median_nine_over_seven_transient_ratio": 24.771191738158606,
-      "median_nine_transient_nrmse_pct": 2.8619222066075777e-09,
-      "median_seven_transient_nrmse_pct": 1.2031258588251983e-10,
+      "median_nine_over_seven_transient_ratio": 24.439960145522868,
+      "median_nine_transient_nrmse_pct": 2.8509386150110307e-09,
+      "median_seven_transient_nrmse_pct": 1.2140660976777886e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 88.63840317199708,
+      "p90_nine_over_seven_transient_ratio": 88.34247482384528,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 374
@@ -305,11 +305,11 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 6.344103055067046e-08,
-      "median_nine_over_seven_transient_ratio": 56.04858116608693,
-      "median_nine_transient_nrmse_pct": 1.0132705536097245e-08,
-      "median_seven_transient_nrmse_pct": 2.7956408384674067e-10,
+      "median_nine_over_seven_transient_ratio": 55.24486965008195,
+      "median_nine_transient_nrmse_pct": 1.0126821987241238e-08,
+      "median_seven_transient_nrmse_pct": 2.7680735348718344e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 76.35312570135034,
+      "p90_nine_over_seven_transient_ratio": 79.42631572481108,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -317,23 +317,23 @@
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 1.3359669195820891e-09,
-      "median_nine_over_seven_transient_ratio": 136.6133440310926,
-      "median_nine_transient_nrmse_pct": 1.3303446376469928e-08,
-      "median_seven_transient_nrmse_pct": 8.474618968786567e-11,
+      "median_nine_over_seven_transient_ratio": 112.67658359813464,
+      "median_nine_transient_nrmse_pct": 1.2822418970258193e-08,
+      "median_seven_transient_nrmse_pct": 8.332155465296093e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 203.67157513674323,
+      "p90_nine_over_seven_transient_ratio": 220.13782811630318,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 375
+      "worse_pairs_of_378": 373
     },
     {
       "dt_ms": 0.00625,
-      "median_absolute_vs_perturbation_delta_pct": 2.0005238886028454e-09,
-      "median_nine_over_seven_transient_ratio": 58.93386210682441,
-      "median_nine_transient_nrmse_pct": 6.827946219622467e-08,
-      "median_seven_transient_nrmse_pct": 9.67456466625576e-10,
+      "median_absolute_vs_perturbation_delta_pct": 2.000523888602845e-09,
+      "median_nine_over_seven_transient_ratio": 65.33747873935543,
+      "median_nine_transient_nrmse_pct": 6.404928113884529e-08,
+      "median_seven_transient_nrmse_pct": 8.934148679227618e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 108.79688333253563,
+      "p90_nine_over_seven_transient_ratio": 102.5993748503836,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -341,47 +341,47 @@
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 5.249352438031524e-10,
-      "median_nine_over_seven_transient_ratio": 138.1697918594307,
-      "median_nine_transient_nrmse_pct": 1.292183267141226e-08,
-      "median_seven_transient_nrmse_pct": 7.865544933632121e-11,
+      "median_nine_over_seven_transient_ratio": 118.81406929340207,
+      "median_nine_transient_nrmse_pct": 1.2490726290974807e-08,
+      "median_seven_transient_nrmse_pct": 7.732679698418136e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 216.98652315793043,
+      "p90_nine_over_seven_transient_ratio": 225.54301720318878,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 374
     },
     {
       "dt_ms": 0.0125,
-      "median_absolute_vs_perturbation_delta_pct": 8.513421851121822e-10,
-      "median_nine_over_seven_transient_ratio": 60.27870555876334,
-      "median_nine_transient_nrmse_pct": 6.753934076206162e-08,
-      "median_seven_transient_nrmse_pct": 9.544326571402388e-10,
+      "median_absolute_vs_perturbation_delta_pct": 8.513421851121824e-10,
+      "median_nine_over_seven_transient_ratio": 64.98160450273993,
+      "median_nine_transient_nrmse_pct": 6.333190156448179e-08,
+      "median_seven_transient_nrmse_pct": 8.909348465141734e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 113.03891166155339,
+      "p90_nine_over_seven_transient_ratio": 102.54803130240691,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
     },
     {
       "dt_ms": 0.025,
-      "median_absolute_vs_perturbation_delta_pct": 9.217733486304092e-10,
-      "median_nine_over_seven_transient_ratio": 140.7886713450386,
-      "median_nine_transient_nrmse_pct": 1.219180777244302e-08,
-      "median_seven_transient_nrmse_pct": 7.210029307279307e-11,
+      "median_absolute_vs_perturbation_delta_pct": 9.21773348630409e-10,
+      "median_nine_over_seven_transient_ratio": 123.6771951152478,
+      "median_nine_transient_nrmse_pct": 1.1866698326223517e-08,
+      "median_seven_transient_nrmse_pct": 7.10763988370384e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 225.90039887334348,
+      "p90_nine_over_seven_transient_ratio": 230.65232155822764,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 377
+      "worse_pairs_of_378": 374
     },
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 1.3445201684834925e-09,
-      "median_nine_over_seven_transient_ratio": 62.156704310073636,
-      "median_nine_transient_nrmse_pct": 6.607193088806203e-08,
-      "median_seven_transient_nrmse_pct": 9.275803832119315e-10,
+      "median_nine_over_seven_transient_ratio": 63.89276059513926,
+      "median_nine_transient_nrmse_pct": 6.193738893886005e-08,
+      "median_seven_transient_nrmse_pct": 8.633928948190255e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 113.27915573260641,
+      "p90_nine_over_seven_transient_ratio": 103.07820636302513,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -389,23 +389,23 @@
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 6.864217874601423e-10,
-      "median_nine_over_seven_transient_ratio": 146.9857935526652,
-      "median_nine_transient_nrmse_pct": 1.0884156978770996e-08,
-      "median_seven_transient_nrmse_pct": 5.98068691323044e-11,
+      "median_nine_over_seven_transient_ratio": 130.10690594962244,
+      "median_nine_transient_nrmse_pct": 1.0682320039137848e-08,
+      "median_seven_transient_nrmse_pct": 6.193133466152193e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 237.04303398063217,
+      "p90_nine_over_seven_transient_ratio": 245.89173086725714,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 376
+      "worse_pairs_of_378": 375
     },
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 1.0910231925583466e-09,
-      "median_nine_over_seven_transient_ratio": 61.79618269291829,
-      "median_nine_transient_nrmse_pct": 6.328566589562502e-08,
-      "median_seven_transient_nrmse_pct": 8.807059859543828e-10,
+      "median_nine_over_seven_transient_ratio": 67.68052635842355,
+      "median_nine_transient_nrmse_pct": 5.928968420069194e-08,
+      "median_seven_transient_nrmse_pct": 8.206494583962216e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 114.60930975259791,
+      "p90_nine_over_seven_transient_ratio": 104.50957388269578,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -413,35 +413,3370 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 6.540789402333308e-10,
-      "median_nine_over_seven_transient_ratio": 163.2838196748798,
-      "median_nine_transient_nrmse_pct": 8.722954788415954e-09,
-      "median_seven_transient_nrmse_pct": 4.6946392843716594e-11,
+      "median_nine_over_seven_transient_ratio": 138.2398894449047,
+      "median_nine_transient_nrmse_pct": 8.55098923942456e-09,
+      "median_seven_transient_nrmse_pct": 4.532443769263143e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 273.5535306992415,
+      "p90_nine_over_seven_transient_ratio": 274.062829145652,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 377
+      "worse_pairs_of_378": 378
     },
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 1.0244913978880957e-09,
-      "median_nine_over_seven_transient_ratio": 63.605219955166824,
-      "median_nine_transient_nrmse_pct": 5.8234335724416274e-08,
-      "median_seven_transient_nrmse_pct": 7.928845809134199e-10,
+      "median_nine_over_seven_transient_ratio": 70.09219390710363,
+      "median_nine_transient_nrmse_pct": 5.449699358051001e-08,
+      "median_seven_transient_nrmse_pct": 7.488870537856562e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 115.29627275566854,
+      "p90_nine_over_seven_transient_ratio": 107.18480843942811,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
     }
   ],
+  "reproducibility_diagnostics": {
+    "basis_models": [
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "7fdadadbc6af5fd6259ccb36cd63ec56f044921328893d9818bcb230d0cac133",
+        "capacitance_sha256": "5d3e8577b1d360eb002bae2197c837f0f975ffa3074a6ceb9934e09d6c51ca33",
+        "conductance_sha256": "0cb3848b1b9788994eadd51d172d5b121b8d610de1be1a9cec04254234f963cc",
+        "input_sha256": "5740c016e1e19b48aebb5d3333befde9e310b5b3a461d1dcb6e0652c0b409d34",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "24e3652a23efd274831163f0fd10809ff494970446b3b940443167a3bdcb7db1",
+        "capacitance_sha256": "082b46f38d61dee2f7b09192146b14b8310a590a0840f67d55f1c961b38949c4",
+        "conductance_sha256": "999d1d1aa8c8d4647c4a02538947b5821a8552b76acbb4e9fc7b28276ca31894",
+        "input_sha256": "f7cabee075dfa563a3a9df2abcb89b72877fe990845760270ce16714b989139b",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "47fa77c1242fe7de75b04bc81c76e3496251660e36513544e27d12273fe83e40",
+        "capacitance_sha256": "a8349c708bd48ae3d59c3a3161205309dd3a7f605a61eeadc0af9aa7722ed71f",
+        "conductance_sha256": "78c991d9d54b42daa225f700a4ec2491a6dec4c2392877d8d8003912b97a3e64",
+        "input_sha256": "1f5159db9ba571b9b5e6810b11a258ea77ccf83829a7cc9ec4ec5132417df9f0",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "0c4d6e4900d7b888bbfbdcefefd22390f55943a07116c6fa29e5d8f1f156a867",
+        "capacitance_sha256": "ebdabbc7d21e145ec1b4fde7d49a9eced73187a2a2c5019a31bf951f6c6e83ec",
+        "conductance_sha256": "df547521d22ed9f90f1a63e0878b88a05ddc67a813d357b93bedcc276cfd6295",
+        "input_sha256": "97d2b93fb90cb5ab9a4dee59375c73683014cfc852aee9915f25aca6e3d1dbb2",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "8489dd44b0a7aa130bca87eeb20b451811a5c34d6f28051f1c97b2c73c224365",
+        "capacitance_sha256": "58c0097cfd7c09805e11982f614a9a7d2255b16d0cefc2182dfe0cb71add1953",
+        "conductance_sha256": "e40212eebe01683d76ec5f0e7cf90a6f2b156cf853c9ecfa8bf95d3b60312138",
+        "input_sha256": "50ac0e8337fbc190a88f9d23ba019ab8aa0a918227b33d0787dba716854ca1fc",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "756c23ee24d88bdb74143f6cb829df95a5ed440547b7c2284e59750f0a0fb468",
+        "capacitance_sha256": "504fbbc41ed8ed889776be6ffd0316327547c192999235c7e2f60938eb4e1910",
+        "conductance_sha256": "e066661a471703f96b529a4edd3ac82784dfaa04b5e84f149b3ada4d9a56bd8a",
+        "input_sha256": "dcca36a1d27b70a17a8046f29c7e3a7c241d27c405c992a600112f22334678fa",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "feb61c50164afd64f9779149908b833b4fd0eeda4e5b3a98e63c6cbf56dfd1da",
+        "capacitance_sha256": "44177ee083a7407e25d74dbb172bc37c5a914411c10b4cf15d5d6c6a6c6dda58",
+        "conductance_sha256": "9474c25cc1b2fa7faf0ae2f38f8a14c1259a54eff408768514c89a71d1e39270",
+        "input_sha256": "8c8a6eec9f26cbf9a37d98898c2f6619031ca689c00d0cb5dc2a2fd3e84fdd28",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "935981039487c5b57654893ce9b6287374d3a25ff84ea0a82dae86dc1e5b646e",
+        "capacitance_sha256": "a941dd6eb80651755845b42ce85c473ba622345ac59ff326397b93c0a50afde3",
+        "conductance_sha256": "e85cd2c51d462f72db100d82e7412ffacefd60173f22f3f628617532380af850",
+        "input_sha256": "ef48accfc621d3d656644c32ce5eaee4f4d43637f8a6cc6bbb68adaa63bb79bc",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.5543122344752192e-15,
+        "basis_sha256": "b2eadf9a40b35b270ac5659704893bb7222b1673669e746c0966084ce89cb90f",
+        "capacitance_sha256": "5d3f61e78379528edd982f0b7afa1b243c62889b34c5b9ce7e892060dd9d849a",
+        "conductance_sha256": "5fd90ff828b43a3c82e49e9af6dda0991e82fd8530776d82922836de9cdb1a33",
+        "input_sha256": "689ddcb50802cffe60a0c39c50318592aa471cff52bf2943f8949d91dbcce097",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.5543122344752192e-15,
+        "basis_sha256": "fe35723850e1d6b5fcaef743bfd1e2e531076f62d8f418668ff74d7472de4ed7",
+        "capacitance_sha256": "3fd4806611fd677d0e95d9e0677eae043d8a2ce2f20c8d801af10aeae4640c22",
+        "conductance_sha256": "967598e0924901fc336dbaf839e431e8ed6669800bc5409e44b2b3b59c57faf1",
+        "input_sha256": "6be01dbfe01ab8ab3192e2feafecf1eff0300d6dad091a4abb1d0616fe9f8d00",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "080d9bf7d3397a4ffa3ec356bf6b7267b7d5f847d7e6151fce80c6d459115e6b",
+        "capacitance_sha256": "94117041b559b474a529d9a5169f284e9087544775622048c4a1919a00e8b463",
+        "conductance_sha256": "20cb490257f2dd8e176f24aacdb863fa2e23939060885409bffc13af68b79bb0",
+        "input_sha256": "750e9e56a3c0e3fce258ccbfffce41bc0a44e2d6eb27620232d04876612571af",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "4512ab494df8cae3d396ab4517848a8fea9c5d01c7dbb38efc62cb2335393ffa",
+        "capacitance_sha256": "883c1f659d621dbcc0dba25d663f6b2110b831c387f43461a10c63a9f3111f2e",
+        "conductance_sha256": "54e602549c9672f7920146b5414a2047af73d8aa2b090d3f4bdbc4464dd5b6ec",
+        "input_sha256": "03992e8b9c4f4d512c22430f70c613237fd04d53d5f93f62827916a78356b556",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "9fc7cddbbbfae7ba62b8d72709b10f9f4736295505c5b12d67bab6bac4ef6792",
+        "capacitance_sha256": "720bf52c076c3d5f0497342e2a21db6052d5bc47b2d6a8e88cb6476fdae125ad",
+        "conductance_sha256": "94e1e6d824eb0f3feaa5d58980e04d1887ffb2ef33ea0dce9149d60a405ba382",
+        "input_sha256": "7aa9fc8627e6d8680e357ce1e7ad830dda29472f3bf1d6b40567d3e76431039d",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "7324cf457f2628d7d7a19d9f1e87cf36a06863c71ace6fa49a7a354f9ee00d19",
+        "capacitance_sha256": "56486023c8baca5ef64db5e95518442c4c82b444f6a3866764779a28f17aac22",
+        "conductance_sha256": "b2db20d90b6b5734e76a9efea91f774215dd77b222dc6ff212a8d1f6c30b16b3",
+        "input_sha256": "d79551009aad8d152f6f17f903c59180d6d94f37f6da5c18d1adfba7a01a50d4",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "d9bf124f9b17af0d04c48154801fa56a956076e41809674d6faa573668de2dcc",
+        "capacitance_sha256": "c7dba8770ce4255e380e5de571479832c56fcce9dac608d725fd802aed005c67",
+        "conductance_sha256": "4ae5e251be890373231205f4a705675d42b0c26e3d689c9eb7d6d6bbe408858e",
+        "input_sha256": "ff0efd17d95f47edda8267a22c43afa705fcda9acb37d1450a81aad7c9fbfeb4",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "43a0341d64963d22c4ec90a8090c4134678bfbb0c6e371db62240be054ae2a96",
+        "capacitance_sha256": "edaffe80807d33dcfee5a491991f79195e23cf0315383af32a91939dda79de64",
+        "conductance_sha256": "c6631036adde32be2dbdd7065712338bd64ba468f0ec2883d7560359ab4aee0b",
+        "input_sha256": "8993d57afa87dd6194179c24c9aaf994038a56147b214b7c7fc1947c611acbf9",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "99ad7209155c5da0d0ba8b44ffbccfeafcbbe9171e8189793862fbf966e420ce",
+        "capacitance_sha256": "e51a9063bf5b9fdae457eff12386bb56087459e286fb37a60b0630adfa5e9db4",
+        "conductance_sha256": "ae8834cd6ead7f732bd198acde5fd4824093ab5400844d70c9726ae6e5e4cc7c",
+        "input_sha256": "a246dff603fff375e1527172e07339e51d2759faf4beedc4494ae11b84752626",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "0c0265df63f0b67c780599c897e4c26815148ea762f5242f2bafb6429f27992b",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "9a24b4af20e47452b469dba18a3640e422f59e016b7b92abf804734e80b2c9c7",
+        "capacitance_sha256": "d770817cae696cf9c110439c09c334cc84849309d1c4e136937a7c2a00779931",
+        "conductance_sha256": "6e4922053334d3d1eefc7ff30d75fbc056b6cec505e1f9aecd821f5420942247",
+        "input_sha256": "abea987874c72e1398dd18236b5ef9b92a7319da0a847504978607215ec56964",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "ab2b7e41cc12d3c6eb3e26da51827f3be9f598c3c5668938fa4e1f7b7128c9c1",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "retained_swc_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948,
+          224,
+          4096
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 7.771561172376096e-16,
+        "basis_sha256": "3cbdd082b8c1ca0b812fae3517b8cd84003a8e316b1aff229a1f8849579680ba",
+        "capacitance_sha256": "4f8cbcd1ba786f3205a4297521197b208c39264d3ab062b298c9ce823417518f",
+        "conductance_sha256": "4efaa39088d6b46a0c6a2c90b0e30348947c94c9c451a3a7d626f43cefba7b4c",
+        "input_sha256": "d9eac50fc01b2325230414c8f89c2f01183acf33a8699a60dbc65bda8892e90b",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "f650c1b13a266f2de7b5582ac8bb44e01c6ce1960f166cad41d324c28c3b6763",
+        "capacitance_sha256": "3a93b8ac0822cb5ae7f0ebd3eb8e7f165bec71be5d02b6db09578e735999afcc",
+        "conductance_sha256": "c3830e6eb78c9f516537ed3528eb181c295ca0bfca633e4897f149f18c4154dc",
+        "input_sha256": "aad3ab598d05750d3e7264c3196f9aa607400374be49336f4f306ac441ec938b",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "645ac74af5bc4fd58093eeb41cfc810413253eb59a3a90dd2aed80053af0384b",
+        "capacitance_sha256": "e721ae953854197391d7d9cb55f7dc86d53dfb66d5241cd1995120c4b948905d",
+        "conductance_sha256": "298815400e521fabc108bb8a61ca42454f875b61d002e437fc113b151052147a",
+        "input_sha256": "4774a1a09cb684ff6de6ac5f7f97ad6ce778457841e996155ecb78c1ceedf137",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "7d74f5383fff62b9b1f9517ee6ef988c1fcf80ae6c95254e22c7af0a28d28f09",
+        "capacitance_sha256": "c316a97af61fad4a8754353406028af239828eec00d9c9a5cda943b871f29719",
+        "conductance_sha256": "6dac1a5a595a9372ab64a108807cb760b721af138a6e78897e527aa6ad7928c7",
+        "input_sha256": "8b957bfb3243f46b19dd5ba100ae0666b31671b019b06b5a4178dca783acc8fd",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "d237fc61820a578e1526df81448d1ea1fb625eddedbf8eaad92f58b85591ee18",
+        "capacitance_sha256": "f4fcb94e205f46620e3935b68fd7aeb9ca6f04801606d17c91c431359d46d7e6",
+        "conductance_sha256": "8e2db2b14b522c6510ff6190a7d80a074a1a8cb05d6a2a7df5458b6c69e31150",
+        "input_sha256": "7b5412f2bea989953357ddf969a99b3252f948b4ff09badc036cf165c66f815e",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "ea3c132977e6b1926b0706a8bc110b9ad7257d44afba891cd6377f396b5b8a3b",
+        "capacitance_sha256": "c9fb6fe49d38907979f4ac41c5040fdea2e7e8ccd4b5903c6ab9553cab49bbf5",
+        "conductance_sha256": "7cb76c83bdf796f74648d601154463b1e3081bf60ba215e1b1c6aa42f7dea04a",
+        "input_sha256": "51d5805b7959a6c549c27784d86ef4cd6fe434c3a4a331110a901835f177a90a",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 6.661338147750939e-16,
+        "basis_sha256": "dc4208f69705e6b604a07b6daf4081696bc14332c7090703a6d1b141236813a2",
+        "capacitance_sha256": "3e893d821122b42368c626e99451652bef810a69297bfa07596bf3ecd777cc8f",
+        "conductance_sha256": "c9b1d583b71586652bda8bae4cca8182305944c75053043edc883aae73cf03ed",
+        "input_sha256": "44f1edece57befed83fd74c485d2ad8f618e4a028d948b1618a6875afd172c03",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "ca3f26e46eb39ffdb2379959b0b56c5c7ddd1cd914eb225d15a47ccc916ad4dc",
+        "capacitance_sha256": "926f4315a8720f239ef1ea5f06b55849636c22d614674ecc5adee40d3d25637f",
+        "conductance_sha256": "b9f88163c5346008c9592cbdf4ff0a518d1ceb568a0bf3db1c9fa1fc8fe0a220",
+        "input_sha256": "e9f723c72f3e04e9e4189338c7ba6fa18d369ccefbab58d9043e61d00fd99975",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "6d2e4b8665bee2c20a36dbf84e3c77383c8196d31dfc04fb180c99b845ac1dc9",
+        "capacitance_sha256": "92ca4ad1011c7d23fc0029cd6c1c87fca6a0ef85b7f1659eaa8104bf2bc81b2d",
+        "conductance_sha256": "4a36c6428f238c56784444062e95bcd1053bbc04263a1c143e7a28ac1018a763",
+        "input_sha256": "2f23b627e99d8d90c6abc201f1691b844877e8fc8c75decddf5f434c267a62a4",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "4a03e0e9c943164baa4f35e259daa161efd95545bda3b28ab20d65eda83a3340",
+        "capacitance_sha256": "a5f393b7de8cb05118f688d1994b9dbce22701a9b4e57420db023d385820a2d5",
+        "conductance_sha256": "07662f6c92fc4c8ea6f7ba5f7ed762cc4ef7185899aa7f4cb5a2563075d56901",
+        "input_sha256": "495225d0798adbcae09f8b1fa3a89aff1a913d5a17b9bca1a0d3587128690217",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "a7ec579007b873f79ed65249cf5c4ce57b5b75c8c1cbca2b97bbff53e5416fb5",
+        "capacitance_sha256": "8b2a533102672fe10a0e69b588b2b34f456844585494da75d7ea5f6897ec19b2",
+        "conductance_sha256": "bc155433b5c756b915979dbcb7ac26daa190d810f962106a5219f38dab3b7f04",
+        "input_sha256": "006d00bb7b6c11e4afc5807febb71f60b2fa57d47485e5d812dca0bfaafd74ca",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "72e8bff9963a7caf35905d11f14b2da8c8f7ad6ed35b7bdb9a942ae765d1767c",
+        "capacitance_sha256": "ccb5d5e8b6bce282586ef0a6c456bfdb514c301b44505d63030d18c3c6531233",
+        "conductance_sha256": "220da156f9acb8cf1c053fb786acea2034b644dee4d89697c0e7ef8ae5384148",
+        "input_sha256": "4186d7ff9d84bf86527a6b96dfd88aba0646a378de98e6750555b28ed6399f19",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "0030ddb74d48435757decafa9a5606bdbf6cc3be42a9a279acd2fe50b6144134",
+        "capacitance_sha256": "29f1959d555e96b9240cb31007f708bad45355840f5cf6747f829a8767faa443",
+        "conductance_sha256": "6664cd8cd9419af5b64d61cc9f92fd1f88c58ef6d31f2118cad0905da7b57311",
+        "input_sha256": "68bef0eba77fcc7ad5f53da15f53dbe10080f40476a16efae6a067ad4978da05",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "28aa04d93b5445bfc892c371427c6e8a909c4ebe8c49aa9571e05a05023c0ae1",
+        "capacitance_sha256": "07df20ba62e7ffcca1fa52481213cdac1dd604b737c4c7a98840e11d32e2088a",
+        "conductance_sha256": "cdfd8984f9c185275de83507808445b0f7ef95e6a50416d7953cdce2ecd7c7a1",
+        "input_sha256": "7ac33cb8baed6ea6d0c5b7f2934f57151a30f8c1ee172de5645aeb491bf18faf",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "934ecef843433347b16e12166b83e7cf23c9010cad3577fec5da58ddf66a12b7",
+        "capacitance_sha256": "c2d8f82db3c9ac26b69e1598c8279b768d5aea29fc45b2240040ee66e79f97dd",
+        "conductance_sha256": "7c6dcd3a7034e22589e65fc7d5e034604dc380cde9c51c24a0d587f255de8b0b",
+        "input_sha256": "01618e330106167e4b4594e3c84b7fb27f1c6940cd567eab2d561d4f88a7ec9e",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "42d7e09c45b250c3dab40691c024a8ce2f674013c7a5d988def296757fb5cfde",
+        "capacitance_sha256": "c7e3e5130778b3b2700d97af76478ab448c96e0ff15e4d1bbf6083ee93a954cc",
+        "conductance_sha256": "b3b400e37b983a05032110ee71a5c396a88962fcc3a62c7c7940248a3a9735ca",
+        "input_sha256": "37183b2773a4a5e197939710ebce6d662c3351e3162fc02f0d105c359062d775",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "e940d63b6d1640613c5e700cebeaabdbbb1b52e2e9b941bfea14010c39e45fd9",
+        "capacitance_sha256": "a237c75a23cb9d30dd589f667481f4946703d92cbcd72b305e7e6f3f167528ab",
+        "conductance_sha256": "cccfb449d7404ec0180fba9c381ddf11ec2926da7021fc3fb5896c46ba45c6ce",
+        "input_sha256": "2c475f9eaf0591ee2a8fd48e5d626ad5292da081ca70b63c83fecaa38fb3951f",
+        "layout_id": "seven",
+        "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ]
+      },
+      {
+        "basis_order": 168,
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "78fab162d476374835a78a3bd0edd8435cf6fab2d1940e9249da988b7d7c96bc",
+        "capacitance_sha256": "cbe6aa41a85ec85125f98eedfd17857c5aea12ddf8d09502c3ff5da431f9ffeb",
+        "conductance_sha256": "87891fe092867f07d3c4c17c515e5f2938ecafe858fb582a22d5dcb628ecc529",
+        "input_sha256": "ac25b3767adad0664dc7650744cd3a4d816494938d0ea00a824c5edefdf60b50",
+        "layout_id": "nine_both_q25",
+        "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "retained_swc_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623,
+          6609,
+          4404
+        ]
+      }
+    ],
+    "numerical_runtime": {
+      "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+      "thread_environment": {
+        "BLIS_NUM_THREADS": null,
+        "MKL_NUM_THREADS": null,
+        "NUMEXPR_NUM_THREADS": null,
+        "OMP_NUM_THREADS": null,
+        "OPENBLAS_NUM_THREADS": null,
+        "PYTHONHASHSEED": null,
+        "VECLIB_MAXIMUM_THREADS": null
+      },
+      "threadpools": [
+        {
+          "diagnostic_error": "ModuleNotFoundError: No module named 'threadpoolctl'"
+        }
+      ]
+    },
+    "trace_outputs": [
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "61b5e08b314c7199edd60d5857b65160d6ebc428a9792726a6d3db6b1b38dfcd"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2fcfabdc9a65178ab8b5bad9e9f23187a6de4f7f0782ed2f46833e4ae8ea55c7"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "743fcc353477908dbcee93aa470238c95872ee8edb634cb329e733efb89aa7d1"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "05d960791025cc95c10370884959d5962297f78b528a13ed4a088c7976cdcaff"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2520de043f86b858a103370db0e44a759c258d958f2ebcb1ff3b2fb527eae21d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "66d375950d94d1c3df1544e4f787d495935932c6eb4bf977f50455fce7f291d6"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "5e9ba3c740855d4d8fda361b582bfcdb607d048774f6930cf2469d56bbfc08ef"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "0d91b6b27e053172cd71fd8124af7e94fcffb3f10fee8452ffe3c202bacc6f2e"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9ed2801f3839f9bd32ca8d484817eab9c7c4af26ba2b7e1756da5950d8f44901"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "738644f71f274bda452610d24888a529874853121878ee71da18f63f0c0ce4bd"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "99f6fbc9e4a2feaef3689879c092544a6c9221b6d529e7f10670473a29e3c9d9"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "0c85e1272836ed2a7c2af4f980bf0926ea87475d8dda7557734b34de6cba6965"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "e9a32e7423cc22f545cc63994911fa3053608bd1f14311092634982fb78e2d25"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a54a4f17a0d155ec3d5d38adae48812bd73eb4622e184d7714f80f70b4592947"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a4ee7d7502cfc04be683fc213a3dd6f7df1e7ede57f511c17ed2ae5a23f9713e"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "bfd04966249d540dd8786de1d401464b508f4925c2bfbbc7e63dc80a0a1a722b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "21f5cd454d9ffbd7b906970a1f0034853162c6dc4773cf7ab417a37eb51e5111"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7b3d18d7c8672a04125790f9cfacbebc94733e14f45890ebbdd6699d462280e1"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "f10ebf83046d457ca27fe9aba237396f2317a69a23adadedcb96f57168632ea5"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "94cab57ffd7567d694052d1edad206fbbc2c2f12b0267f81bdde7c5ba81e9e12"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "70307a361ca9c619c1ed11d593d3d36d8806814b0092aad32ff29e0277fac96b"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "710b3f4c4a731d76356cd3e639a2bc5134d2941f22a53029476dbbcf3c54129f"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "12632429d42f3b65fd9d964b044ed7043320aa3e90e102d676fd1fe3f5ff1d43"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "15334dd437720340ac4626955a73ba3c8148b446a755f520bca37b72b4dd3115"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "909184547c8ef3b752871c3eedb1cb22932436dd9c5589ab1e6d41d4fcbbf91a"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "209727b160d6cc4cd65459b0047975e32d71cd456ddd8cdb23f2885b4ea1ba25"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "601e12bd4ab6eaab94800a595e218e244f41c1622cc13a2e79c14963f34f0c1e"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "97b77a60cac92539c49600819833958ca3f8697243745b7dba91b9d02c60852e"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "8286741ec476672fb54bf4908f3a794fbedf5f1fdbae6ee9225dd0a690aaf0a8"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "d2d51b758ec883b2feaa4118d4e489154233baf5ec4e5ce96792481b24a10f37"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "772014f23f3bb0b0de312d721421fc63c929acee79a1e62f590f2b91b999038c"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "32f1558d5d6998b0b8af9d0af3586aa27d35e7f223c01c7a03d803575067cbd9"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "78ffb216a0a8533f9c1e80b57b920425b97326006b4d541a2124d079b1f26054"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0c928b547502e37180220b1fa0d9e22c59677faaac1672ae6fe5a1375d33566c"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "4a0858a7475dc293d159b5af69d41d2e4fb463b6b8dc8b8df02aec122e617e8a"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "3501d602c0bfeb7e81ac90d46163dea1ff806c18745678696618a2464704416f"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "09678ac50462463ff1a9ba25d765e9ff9859f02c9fac9ef618567ad6340472fd"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e116e818c55c464ea44835008111c209931c2f5673d45c15097fef6d9dc3697d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d6abf3e655ed510d056621adb56d711734703d51a1188659a4528d583c66f7c1"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b96c85f86cce33889bd0711569c6db9237ba22f6e13536d4829a2369698bc265"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "000ae8bfd4d3c564c63056cf9e3c7a6c67fc5f7395e820c77d241739f9ad52f1"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "3d5d3c9f56bdd123922b8c2fa9ec606a627e749641d941a761677ef4de878913"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "3c6561b9cb7bf8bddc27aabadb942ab3fb137da74572642c939361ee618937bf"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "d24c953c4331098ca743d5bdc4cd22e0672c989d77e68bef9eef1ca00b2bfe80"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "843607f02d6e6f6234e036fa818950507ce0bd7c9108a47f9f619d422537acfc"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "c4c65825a654fa74f39d2f690c9ce6532bcbd53c56785c2b33f2eb9c8a193af1"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1bc9e8b7732492f96996754838c7469835309c9899b048c2dd19747a15e08d24"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f915c0aa684df30a4da0d573583ad8149a5a159a5e1aaf2295602d245bd59731"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "24c4e68edc5f27d093cf7422b7bd6773ef53e65815fdbd651e889d2574865113"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a925c73451a5c5a99b91270f20faebaad9d29053b0cc86ed05d5a6101067699d"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "7da3651c426b40eedefb9d545a24681414ae742f4bfd39178ca4941289f6893c"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f1e74b0fdcad265e84b1ccae12d42b80ad637e14f453d4504ce44dfd3c2d5e77"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "11bcbe9b6f7013283b321e3e2ef419dae1cf5fe0293d43f7d8d637772c15b3f7"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "280b21bc689fb425394d7f9ae8f650ed754f5c57f844e32e2250f8db6bd29221"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e3ca08847aa95701d43adf6de1c4e316db5e0b7231b34e311fdc69235ff6b673"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ae69557755564f6defdac4ae6cd99d824b884b43fc124b97f7286da1667b731d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5459a4dd6682a87a4d6bf90d186856c55cc98ff331748982767fce8e016a3d9b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a760c02e4393eecaaa962ab168186763724ec60f8aedfb0d9bf285352d28d746"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "7a91fb9699354747f5a98639f32bfbe58dd2179a24b74f675baa819b16afa100"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "102c0ebaa74f026000892804922033f288faefebe1156dd7cb73cf0ecd8f55ac"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2e9d0b507eaba4d0ad3db29992f146cbdfaf2733238837a396eb15570bcf2117"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "314197e8eba5e781853b88f99fa3eba6405b3b6fb099b934a6fb66d3bf6a4ad0"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "f1ec9eb615117afe3b090334883b16e979aee9fc54266f698336021554030f07"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "774028baebefbc94be2cb2d75260136474a8d60062b68117bdc2ecf9e6fb102f"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9ec5db88137c16c4b1bcbe34673381a18aa388efb25099e78441d0935fcad34d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "45840a9cec8623b0fdcfdaba31731236e808024ffc4281090280dc0982002cba"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "aa96e2a7924ff53c936c15dc83769fe28dfb506a7e38116147c72576b1ed2b32"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b3ed2a6386b73488782bca596cc61707fcebf977a8985268a8842f3a5314fbe1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "14d8812c4abb08ab6b630f8bc76519340fb7ba28af18c84332cbabeb51575a53"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ee686e2a5c090a1993da64b740d630043c3d8b2f4d0593483d92c7b1060fd7a6"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c548810a15b62dc85c583151c3c79ad71f7c54b1d4f3c9f7569bd640e2c83449"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "0e5dfc0d156f9cd3c2455503ecedd693d870b479426d0251e440c1c10272d8b7"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "119fb77fb6c34ab6916e5b5f9e267e8ac7239c92564df767ffbd5ad4922a6c7d"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "9272efb196cbdf2b91eb559982b5d3ece0da485788bbab4242716a6daeacfcf8"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "7c559881b859a6f42f4fc6d41e8cc9eb26c7539a7b555f082bb6c47bc98ae040"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "8d9060c5b5556c9f62f117f97c715ab4e3301b0dbe4b45e5c4a47e8d55b5fb48"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5c507b85b551fd8ff9de75a3c5dbc641554a135735df8156e62dbadcad5c6d35"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "9181652cc1999354f96096b935f7256d834424419f6e1373330219bbd7d91e6d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "12cce6b2488fb5ceefcd163f85aae5b64a39153cd29b48e3ef7802f4ff918d18"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "2d63212ef74ed3f1495f59830e4fdc7467c42c8c02d405084e1dbc6133b6ee44"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "4a52f48eb05c788401a53a943335d662184b4646b23701dcac26d4c2fc54b6ca"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0f3f705d222e0c37e38043934db9e72611ac3f5188428c74f005090ace915950"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "ebf7e26600f977d6ee9700b2c040f952c9ad27a5ace19282b39a5d83c8441549"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ecfe4391fd0c7420efd06f444a1cdd556e7c1440ba41399b932a0be146271243"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "781e61ca68146dd88d8c69e8d4e9d3a437062dff866589dda0a0fb5483b45682"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "8cfa913f028ebe53d1e54a4121f4da20cec71c2028b73e54a26fb5e055cfae1d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1f9d9880b61a56d4e38242465c50ff6a15ed332a1bdc49ab9de5485a8b59be25"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "eef401e7182578714f72ab326ce06651f78f15efd658131ddedce296490bd15e"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5353602924acf670b19b02aad0c18e9f438326dc642ed613017f3b74a8d05fad"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "afc2f21a3699320f3e7c15a7e25a96279119f79e862c65acb1c4b3f88af73634"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "cc13f9c207c918c30d3c7157627b63e9f2ce81be977309d22e2058650838fbe2"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "6ee4f76502291a1f5846130610c2a45e57eb546e9843e2c3b71d0a0b27931141"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f6890d3b967281376338da8f3ae062fd697cd7c43a9859567d14826b5b39495c"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7c2564e86f67c98a416f663792bee0c66177bc23a3c733a6ed547d8cd13e6ca6"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c2b7291a3a7fc240111844b1c167bfba620fc5feed75c5203d4a6d3a9cebb747"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b6d68536a90b56361fe17604813d53f3d66edf98bb72f04089321f83ca9979ce"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f2b040180346021b4d4ef4d6ac1294e0a60220cc6d4d15c26f63d3eeeb06432d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0a6a503354fd444eeb6a61487cfb1e53cd6f982dd6c9cf1075a50b792029454c"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e1dcf9b70c1be1e30ef002470e0c08bc77aa66b98cb572873d310f093f8378db"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "d871134e4407bf2b46f6e89d97a9778ea57b96c2ae6e0d76b6bdf73e43daa951"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5fab7a55bd6651dc6db92d62b0bbf6725c68580d1457704775ee3ffcb0135453"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "761401e9ff55d20c8a23e4e634bfbce2096cc5cd7cc54221925cde482582977c"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c0829498b0dd25ac31d87533a2a7bda3c5d32b96346f31ae68941d76729be4fa"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a3a189696e022e4cc6a17a54be92bdf05568a2a2f5faf47e11505042e6c50d2b"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "b8d87053fd6d01752fbf45bcb2a4f165b47bf426bf73a5073935a0ab16c64575"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "94d4c812c8cd2d1982475fceb84f82d6f24d3c696b5a616f5acd041699449d9d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e5bca8750ff2bf569c2c5f97648a2f3192f652e8790b06b42f223d5c1618d02b"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "9d7f58042c4a51ce7a3d6922470705f861a903c0aa9e8edd95a2878de58d9e8b"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5e65388fbfa222f3a1094e2df965aa2415277890101fcf3c373576899c42c13a"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "df67a1f138845ebe09245cba7f564cd117acc7c909dc174693f0b5bb021609a1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "18633d7d63d7142533be0ea58974661a6193e2ed68f1bcdaf55852fbcc2cd0c1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a16acdbe0d6d260985fd699f2aed85bd824bc94e5d1cfcdd06b083c1fa419350"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "065b375ff3a0f462c8754de15baf9e6e20815f7e783d9012bc6f3ec75bbf4e59"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ab0e3e2459454b703c9de67816fee29d83ffc3bed61b67aa9835aeffa7e75a05"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "365d0d246aa658eb4dade61cd1017e2817bbe8f445126bbb0e7d1d703cd89a78"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "bc6904e3005c9881ee08ee1c68588e93b3cb13f24dc333c0f7ba321fb1f15136"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "4a0588b477d7bcc177cbe6fd17a892f99d142086df22cd319148eafaba8b8b1b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ac073f79d83a48a2d34d9b81b1b7d664ca2708f5a46a19dfc0dc113ac31c5cf9"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d1447254a63982c96266eeebf88ea8127d66db7b64d015c2677a97efd99f839d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "84719a51af82f529d6024bd26ba033bd26aff3fdb6e25eda4fb3f8ed82d0422e"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "be2f0f93d0918e6be3655fa8fddbbfb9b7e1a9d23b651876d926ac369b66c4ac"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7857e8da5bc6b1e8f170c2553b7cae5068d0b6af2c95cae653aad65691a7cdf0"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "64ceb2a91a4c4d4dbfa466cf12494785810b4803554199f9dc4d742fd27c1afa"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "427040640ac63bb72e035be593889e566eb08993a4417d3f0d3bc722dd3c4f02"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9d04dafbd01ea28895fa866977e2d9e1c16a8e1c21ee5a2b0f759bc14a89777a"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2685bab67806747456d4ac6171c09990de59008818a37addea0e88b875a1da12"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "2b3609df626edd0b32b02ffb13db4037d5557f193ea9754d8a42dac16f21311e"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "66839766efa838ac7d57bed774d88d5ae8418fe2b20073d71326ef2b56bc4dc3"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "b0883c1a7b4c2778348ac1e27c1bc2f757109dfb77bc464297f6b89b689b4d3a"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "fa5cb25378895af2443902c11f80409e7349cc2b13509cda69c604e613bb9796"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "769b2ef42ffa87c0d46091ef4fcd9816009ba4c4131db1735c04e8414c3d2341"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "06803f6308667508b450bed82430c7ba3b3d7aee82f9aee77f99523d058a5988"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "076da3452540b3c76d9f0a833b502a8aa94a97e60c8432cb71b2cfd571cbdb15"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "364256a8c20c9749d6439431a378a910d35e290e6d10e34a08610d1e764e99bc"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d51b80c436c2d7d70a2ff23505de026ee162aaa20065ff3a39e2e8c7696b8550"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "61306ec932a5a5129718b6a24f9fc177097e509c77310f0764cd89b119c2f838"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "ef19c011fdfd0c3d64828c99a39757cb89e4265e8d1732af22ffc28ab5326ec9"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0e8ec9485fcb30131a7e2be7f6a11706d32bfcdac84123a94c5c41140f852f8b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "6164ae21ef5f89a3d19e3573403c16c58197fe8ca4ced09f12f088375b9b2a51"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f21ef03a29d6bda0cc0f0b9d169c7b8b640be34b1bc566c851cd39225d5dee8e"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "547deaef8a54c2d164269f1eb4e6619bd7490308f1482f10f1056042a836a23b"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "208e9ee39d83cb4d20dd495b7f0d0c1f0c37b43050164f11b628aaf1c7416844"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "4784b61ee5fb072292269c6c49c507e4e07d5144524277a83ea4cd1a2453bff2"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "e4759c445a3f1c6dbc9ddc78d7e4c169c09d0ab347593eddf7ce49c6394f5dd8"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2e82f9eacd9a4ad928574d04869f419283ae1e97773a74c826ba9731980b4f2c"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e66f0af8df7f3593dd7a69bad75b90bfb6727bba470a002a3e7f47f525daef34"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "b332c8e849cbaa5699194e569a005f11390b61bc9aa0efbac526121ea3860974"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "45f67e0e93831c3976bef1050573948497e5e154966a0317f7d00c736099d22f"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2c0d726e65acf9d2fd80cf742ade739ec2fb3a4342ae1ff82c6bd54fd0d7402e"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "5cf2ff897dc1df570a31cd9d7ebbc0e748e1f9048c8e842679544e2fcfe223ae"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "dc9934137cfc9d78278ac6e5eed5fd752269aeb821b943196a9c9cdc94982c5c"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "04ede4d8098e2292bfe744971662ee7be9db0c8d33e60d25d6affcc56b6e664b"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "7f20aa8850dd49e9412214db4c673600caec328aa02a9a77eaa303db12f8e326"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "1f7a2743f1891f06be84c07e25eddfd16c1867ec532099eede85dd11eba09d2c"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "25811080536234ce5f92f4bc6218dc41c960055dc00726a6060b2ae940aca7d3"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "338efcbc5ceed97f6ca3dda0593067669ab8dcef519b083031f11da1f4abaa46"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "e2fa01b277cdcd215d3c317a1b13e6c8fd5726b6a0d6d3d02127420e710cc1a0"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "57d42cf755aa9bcc1342223167f1ba7f1b17b26ba108dafb0399ff600af34751"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "01f8e943a4905f1a41a4c70181c0bd71333c599fc67aa3b177c612d30f248b1b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "60dc6c9a8da86521e81dc9d1e68f1d2efce6bd86d1f6e71e90a01c63977fdb9a"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "cc3594020e6bd506720ae46251287813d6782c082ea5a823a81eeba384f4ed2b"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "71be229fc968f5f7aeee39f1b46f8fd29d73c6ecb66bdcfa859eafaaa8916cce"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1e9f5e107836785d25deebdf4c1d92c49eee5d0929be5662c02a8dc759468779"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "9f859b5d2f094e5bb10b49e557279a14b4cd4b499b0872c22a57a9b1435a0929"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "a8c5fb7ea6fe3bb05f9b00b53b6c6f3ee8eae95009ae06bd7e4d387e55744621"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a420fb2bf19969b23abff32b79234adad4a4c6baefa5c052b3db86c3f381a7df"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "625ac7fc9ee4cadb1fc107e6e908c17d41ba32a60b491d4b668c6ad3cbaa5eb7"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c063852a5d654f8c94f99480d7e918f069856ceec812ba002d582f70b6aa41a5"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f4ac975dc64bda39248f636c8715f06492855c4b2dbe070190b1c13681076986"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "fef4d4d096df443fd636af0f311672b5be47c92c7a5847a1a122b42df4cd23f3"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "aa8e0500d7a2215e239b6d838a5204714e9d19f40020c912029b4ccc29b0c726"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "82edbd8ed54fe855fe934b6314b061c86aa78ae1c2477ba64dea463e7f83f39b"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9b80de0b72f062060dcb1d67476df1d7f23805b395e5dd994f3de6992b750e8c"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0065fa09dc0bc734ae0bd434fa621280bf165fe20b0937fa83e2bda8ac677294"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "cacaefdebb3b555bcf00d24fe44346574cca1044552b89150bde53f5d103e62f"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "cb36edc92d3f04f79c540ce92c43b66e7628bcf5e6f1dd8aa332d0c678043474"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "80a3fa19765b2c9c5fbb921b7891c5dac1998d746a2c887bd3b8ef7e91c47778"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ab69c8edc8af32ca80aa20c7960197e702092615b2edaab32eebc423a11b8323"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "89fc553d580ac385ec550e265c1dc81d8c6a87787208b323b2d930f478f1f4af"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c2949dfc44f40933f1452dd34c36d6fb588ea2360b651b5b5b9bb9ad322ebad7"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "161eaff038848e07f0e9c883d9d650d2f9b438142b9ad11315a95502cabd42d3"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "10ac9b705cfb7d8def0d82853cfa9202ce5a1a3bb17d67d79d4f6e843e99eeb4"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c23312346ef75ae45b1cdb95a2ced4450766e04ab9bbcc6edc054e2f189000c0"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "17e2496298df6585c83fb395ad44d87b19acf547ab43adeb68c51abb052165c6"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "3d576b10cf22d9ab7f83287abf7b1116e4d1af580eed9d0037f4026a1019898d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "1539a86c40a79ec7e31b1a770986d1bd192c3e145894160a90ed47efa5c44272"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "df2a624a45347cc9bd3646ee2ca2c44e6681ac52b250b0319cb53ca9ecb8b98c"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "8701014fb8b1feadd5468a9df11e87573d82520fa27124a81d330051cd3c612a"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "ca76835e9bd323521cb4a6bd98e949983a64bb636b14fc00b943c5e3f17e6f36"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ae08e6fbc24ee7ea8da00be7d24b8080b59a0ff07b9de451a0d52e19dbe01276"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "dbea10a917ef022ec18d918c52c8c20ab5d994ea9043a98cda1a63c342aeaaa8"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "bcf31efc27fa6f9056e8e28b2b9e3dcb253d1faaf1736de06a26cd95c36e2610"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "c730798ec4ee89857011853f93baeac301651b414cb77b81f42c6bea008c0130"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "439eb6b10cc6b26124efb0970d6f43726809b5a95a49c66ad1037267018a3c3c"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d52acede7d8ed7f8a402469dda889704336113a176385baa5e4318076eb6e26b"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "67ed73dd335947ca8478d9dfbed6c6d13396e89a73986b4c786cf161dac863aa"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2ec82df2026ed468761309dfbe7d028d7dbcb7160603560ce29cc2419ea49e19"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "8e269d964cdfc00b8bada5a2de66caa36419793f3f798e16c9c4ca49cd2290ac"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "64c1d1750b2f7ab21326bc9bc5a7c879378ffeb69a6477c422887aef0580062a"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a0f47513f86827945842fb6b68eba526a0ff779ed37a0d3c5bc49375494ea647"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5dc687d79eafb0bb93a33e42063eee1fd011e9902b824776f2783268b5376359"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7085380d7ea05a9400ad5b8478df3dffb8321f4f584c6de767716ee1d47150a7"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c19e8f28235d30c942ec932416e3cf9f120a2ab819031bd9a2ef62be52068206"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "8c307ae63c6c45599c49ee52fac32304d224200335bc0dfc0393014ce7662715"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "480593751f6bb8139b458ec74b3debc81a3e0d30ccd4a65348b09ca85d850649"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e818c1383b454c899739511fc5d7db2fecb3a7632e5c61989e3a5ff7358682b4"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "f3d4104417fa1b1fcee7373741a1fcb30847cf1c7222cc93b97d75be25cdff42"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a4e63835d65d96dae9b3be20c66b798ba3a7e9ed00b315d63c8ba0bca93592ce"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "a236048d9f20d58c0636fd172cf6c286e3ba27c516916b9b6dd125346e89ddcc"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "c0f8ffd9501dda0f824a0c290fd8f41a38739490d9b1728e80a4f8172efdbcb1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "dd6b4f60b827d590e3954b429ee2a1077507a2433908e4c7fe543ac11b11aee6"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a70dfdf5683f2a9a7dc53dd1895e6200553bd81323184ee3c15d8e5dcd86682a"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "6045aa6c4b2451625c8572d75203c5fddd04d2fab088a46bba2e95ba0e23ee7d"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "df89a79814dba8bbd51fdd69dc2fc05426eb39c934dc6334c1230ec18c86c3b0"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "7244396c1a6cd300970d5176929879902f3b144191070a4b82239442714d9d65"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "3daf42c212ba5a2b12da5205bf72fbf5a1e0475801bb77bd5c30e58199fe1aae"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "cf9fe66a2693b02276bd3f8051592a58c91aff1cc478bbaffc2398ebd8171aad"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a0505328204560260d6219fbd8b8403133ffab8a52b7280f56d59cdc46adfee4"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "f785f7e908a2b33565c056a962c18fae216de152303d8784dbd499d8da3e1bcf"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "2530bcea71f6460559c14dd4e5bd24b36f2547c8d5626d023fc6bbb16bf740be"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5c092738751f1b060c3205fd225ee574fe1b7741fa1fe8d03c45d81c7219942c"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7721d2e26cccc0d46517d15e96ade4a114ade9bbefb1641b44e89aa8e06970ea"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "cc4a7de1d4dc3227685ca8b95460422a86ef62d21facd90826cbc4d962b77345"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "4953cf61a6cb77a6bf8bc1437e2fdb4e6b5b69428d5e04d0ee97352ecf1d234a"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "380984cd32abec06ae08f6c1739954ba9aa3e1de39590782f090876c4ad7e811"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "9ea93a0b937347af54db70ce4b09bc0629bf9ee0cb82ef04a944230ad4df2220"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d9acbb1f67247bdad86136f983408be71c3213d8225ed1bda00e77009945055d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "2286097c24775a96bd9e8354b8e10c264230b70006fc2546504fd688d0f28ad6"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "b19b334dd98f3fbb9a82f9f61df67b07214939708efffb0399c131c4581dc5c9"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "fbf85d026b123b6903c609cd653d5794707fec6000c5d1ffa0a2637fc9a932c7"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "51fbeadd281281a4acddc6445e9dd36e1f42740a684f32b41ebfdca66d3f5545"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "4c174527b777ae10fc0d1d22e7c3264c2e39c9b4ae70502989a6f38d5dc32205"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "84a6ce41b68f2136d1410cac858408c25adf7a9f22d53d6a90d02bdf8ad1a8cf"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "4fc98431eaa7650b764f397a163bc501aaa4fab59fb98def44eb82ec04107b12"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "8c3235641c30e3d08ddc9eb39cb14218f7ff84c1bf68baa5e63c3197516d125d"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "1abb6ec739e5bc39d5ee7a54055127cd1b78804c38bb49de0a28c1415c0c3f88"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f0f5db414d908f26427808f19c77d332d908ee0b0980bcffc2fad6bfd5f418ed"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "47ca3d693da7ed36cbefc0116fb3d86381493eb2075fd737b24adcff83cf4f68"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "aba2874fd6fb43e9f4b36d94b3f3c2d997a499c3b8909890190df904e98d1a86"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "31166145ad0eb440f213633adbf72472d2d35ce307bec3abac0162c6d44d0668"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "d3928e53328a839a66dbddd1f2e7cf5289be67d83e5fd8830b513cba28203609"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "33c2332baf1ff44b5015713938157e63ce2ceb3001897079b9ae9f9feb50be19"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "11fbc577149a2b7ef480d106ffbc9de2f021a06d0e15eaf1a8e0f322b21e9da4"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "52b784498154d0d6315756a15068649c455ac2f02bb311fc18f67c72f7bc55ab"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "c3dcb7d64a5e63a8920636f85080f48ecffd66fea56f9a58c433682bf2a1cdeb"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a23afb5be4d66bc497e1eb598a9d8d4a897e4fe63d62e728c81188334e0ce05c"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a95e2f11b3fd54e16502a42f25db8b5e9b67ebe9251b2b977544edfe06139736"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "323673afaff2a2bc7265cfb224060b4031615b329b6212959a471b16cc1ffd6d"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "0d5498904f11ff4ff7ac8743a43c8ce4bbc2d88c0f439593cfc5efc1ab5b280f"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2ef70b78972ffd93cfec51172eeda39de9866ef8e864e2d5e5d1a6877ca59793"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "8bf95e402bfcf56af344b8f1868cf17c862542f8fb9d26aeeea442be82eb58b1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "6955de14c6fde7a08c5ace8cbdda3fbd4e7db15b39401b27e499bf514df90a4a"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "935c7264e6813bcd5763faa0beb928d5e47dfb0bf326d2ac5c264644a9d89a53"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "f7db07100180accc0acf93358bb139fe4432b657a04254562de02b3c367c176e"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "2bf78ec7d1912ffd8f3605124a636735e9aa1c78d7e5a5c89ca55429f320aa97"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c03e8c7d240c4d6b518021fd241fcfa6acc72617336048ba66862d7f8ac0ef10"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9d90ab30c0c54599833e1745c8cf34df87c0d56ab9645a496315a0afcbe14ae5"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2f6e9743805af324d4c2f8f8a4b2e41640bc5fbce05c7209c9e67c43855bb1ee"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "585b87f5566b487e082f3c96fed0a93cb887783b3a6db3ef87ce1dd97e17b77f"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "09df69dd1f813353880ec86ee83e3883943db6b30462a185c11e8b3e4b2f7cf4"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2a7e490f849ff25ee39a98ca1e657454946aa2fb49bf26c65414ba545a75a811"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "63ddbaf8a20eb88b136bd57e5d39da7e16152d53a666d2a2df001d83d4291059"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "9be41e9b714a2c279539791575e35f0ffe8227d893ca2009a9b2ea92ed4e571b"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c2f1ae467fc7f654e33299e2661558e52ca49c6890e92461f79ad9c056c150ef"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f0db38606355c459e5ed14cc86f35f58a063951bdbe75fd6ad7660c45873a5f5"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "b3596681ec31484b3a6ade845d45672768220410e82489211d42046a6908befa"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "be5cd40f003b167783f57f6e3e4f84751efcdd9d7ea581981faf23f2a18a11ec"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "31946403aae35b39c007735a1dbfcd459b94abf553d74da871b258b20d90bd9a"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f3615a29d971b30d388b7c2acca4c45ad3506e261322288bcf988c82df37a9a9"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e0f97515537bc37e9a3584e48d10d2ea2189df9548d211dea5bf9ee18ac45eae"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "5ea96962f6020770487aa48a52b38fa95c8267c7654248edf96e61d48d2155d2"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f8f5696e7ea693653209ac419f28a767449024c8f0129ae6d93f59a9afcc4fab"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "7aea7f1cc307945d6314e9da31cf923f3d4742d18fcb035c8cd009abf73f0713"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0d16917576e7fd7631344a3c60a0e09ddde432b5969ee1377c1afeec0e1f7cca"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e0f5e865de533d2d4eebee362f1a5a031d478441e8086c766d729d5bb3a28b96"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "4143a354d72fe1733d85948a00a217f448834764bc9659814d6babf4f6cc1c1d"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "d84579601ced453a4e68ea5c7c0d6b683eb48a08351b5a8f66e05a0d3892b669"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "174c9159acfef6c66916d3ce960a28ee5ebd606b16b362d26d4d4f1f7e30a192"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "7defd42b0a36ece101a436ff0b601b28b7730aff505da33c0f7aca5a14511481"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "9974454919ae93cd5f91d0fc7f9a2a897fe731af5e1d3b72509b597ccbb33b03"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "440346b85dc0b632a67ee479adbefffa8650f1d905fbde0465dc6d48f90d3ba4"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "427ac3dc7656af41390aae32f1543ceeefd323c118f725645e604dff438a8650"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "348506d9c3bc4ade7f469618fd8fffe4016f27ecd92d937750c1888a90f21a91"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "3ac7d801670dae2cbe4743e11963a8cd026678335b4b187943081c49c35df36a"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "3a9af4f49025fc48d8c8c9ddb3ce648e5f6707d7ad0f9baa7695fed88f4423d1"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e220869b37708b418a36b2ab014c432de8bb7b710ad279530992526514c1b290"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "24783c99dcfa60165824420666c81b8edc69f225d86bac9b8b966ae0ed40469e"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "225f1b4ea17b7a81734e0c177e3dceeb307560182f7e82fdc6ea181f5f46e3fc"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "ae3f443435538574334466d2ef1e834f9ee7f7aba944654ab1afe8011d400719"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "49053f54d9e75c1e7e1d3348780a9f78aa058026e700e2625d41cb065b5de3dc"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d11a1be99f81076443972a79f182148ae35e0fdfb89365df8db95bd3ec346076"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "66adc474a06ee46e03cf50daf83fb2ac9f050084bba921a718025e68aeb1c881"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "76e6329b14e674cafee4fffa86d57dc687bf5defc54515d3f2dab6ffef22cd03"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "6ee1fd2a9cce3bfa5858a821fa98b4e4a43b31ac294ff4cc8faa55d11728d548"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "4188cb62cbc21c2a36ee9b8f5d983c2022de19f19c111964ba881a06af9c5aa7"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "90f83f0c0e691b3c7eebf9bafd44150aa1747510fe5cfeca72f395abfac5a79c"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "a687b92d23999758f386d0b5530c690802800a153eb45aa77cc3f0c656ad9b5b"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "4d98beb8277f9eca232d1836fd4593f655f47c060ff8f1d238a0b2174dd57701"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "77ddc16868c9ad46b305fe2eb1125d19be2bd5cfddebc2e46de85feec8f671ea"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "6bc66630258db0ad9e3927bbc697b9009fbc38475bf6e5e20612042abaaa59e4"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "cb4b09778922a79b1ae450581a7a71e612c16ad4cdb3d381babeaff46fc0868b"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "bb96321b82c54d848c0f7beab76e5ff9f314005d0cf2317c4377a5679001bdc3"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "83dbadcb69f056bebd1a743e5b04996cf81a3882738865b457c196f0e1fce0a2"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f7ef10eaba50c4157b3a5e37e3f394961c57ad1d102852998cd5caeeb464aca8"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "bbd1e10a1365684e5c2e684a79eb029ca4b2c631c6d84ca39db04fb59a39635e"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "4680b2e8df63e383fa35480c021e8e4ce34ea1081f0a159a8ed6dc849d9410f9"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "5b0a9b1d2be631699dc3272210c6a064f87c73981ff03d704808be8a4ce48c8d"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "940fa8f8620ed5fda53b9e49a5f1c99cb1ae4e798272b9332dcbf65dac5c85ae"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9ac5c2cb1ca1c1cf7a1cd7177331953505a79ebf73f603061c5b20d430ac0a30"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e47b4ec9aa5edacb47274bc2d56ef6750650825bad9c3a956254a02b72b6760a"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "16ff9a901a4ea2d57fd8702c0d169f810d2963718ac51c597756608bca460af7"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "3c7fd9e35e4fab87dfba59ee4de56da66ac6d230e8d38ddbb1cbe1b83778e709"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2ace042a6b2ece542c4c3d0555fac076a5f320e3d941ecc27f2998bae6c3b935"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "4debe5ec9297c3c8d5b503fd000b5c0e2c5df4c6bf629333607191684f16d505"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e48b97effa2513d740233a1b00e50c1836ba393b88f604c640dd17c5732226ba"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "51b78039d1331d2d30612e3aceae5396e2c70ec099cc447c216f22ef8c39dbe8"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "49447100c7cc6791d50fae7f206088f6a86ad6830dc1800b6855ce7297e371a9"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "59d3d0171fdc8e75d00960a59338f944876ca7b7b026f1a79cdef8948018e1d9"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "b9e58a43465e87ec52c8fc455c77dbf3c7814b9bd61323d307b8536d138e1de0"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "886ddb277107514b98ae2ffe9a30d99f2e2d4235e8898630cb6bf2738476e461"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "ec143cf0118ece5c8ee3789d1dfcd7ca169f493a2b8e316a16117adb23b9367f"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2a02329f73d7e83b7699835a1a675f5fbf387a77c26f54acd05c4bf0bba5f849"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "2f6c899b047db592a9f569dd27ea699bcef9607b757f3f58824224d27f6de1e6"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "e400493ff19fef2f36496ccaf34423ce96f9440e7998e7eb45b3731b45b2c52b"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "c6441cd11acd199818562cb70f9d55754f8e163ce7f47fc363fb3f6b95e1c12a"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "564d43baa66957091a0c57cb77aa2b42cbdddea683cc4caa732cd76e5e25be26"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "cfb87c6885be892c0057db706774b483ece03f4c7ce150acedea89bbce622822"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "62439f232729f28deac33c0c3cbbf081887eb5c0049bd02c7fdd46cda2f8a4e1"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "b76a056c8cb4b8c6f7203f17e421d6b5fb34e5fbda9332b88419a39cac137737"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "69c192d353301f31013d17a5bfac22fc28b13173c81a83bd751e81816367d42d"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "3422a7991db9974ad8512025aed6b17f1979af50714e583c6815bcfabb7da11c"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "92ee148366e939eb76ac91e194a27c54018696419dd297b11af2a65b286afe05"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "e85aa4fe97cd6fc59acb703116126bd4f3d93195e66871af1e11955aff09543d"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e90584ea8511187742adc0ffbcdc96d535f6976205b00e3fa4edb469f228a132"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "77a5d565fdd0876cefdb8925a5c5eb14e1e9eeb88503375ba6971fd6d0ba9e7e"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "bbd49ee8c41175525b86b01940851cd5418056da536fa7a6ae51f673dce28d64"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "04e639885e4eec5a33fbd29c5196bc4df67dbe4500df97f91a28f8a9c7cb4a03"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "adb35d000ca29f709ce789ca2d3a5eb08808f711390eb93a74c9fe9a768ee670"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c9e73d097a1b04c6bddc24620e675ca3ddcc36b31f6ca1f62ec5ffc34e2f0632"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "79bcd0c756310c665c0bfe4c10111d1041a8e99c0134c55691a703f532effe2f"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "0d4ae7063347c493cefa6aea561f83ae19e9b0d994d20cf06f769a7e19682e44"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "96ea1be3bff606fdcf7be1cb9f52d3389e27e2d742b0cb69cc312289b96dafb5"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1d4d4593a8f78ebbd45149b9d743445f3994672167a2dac876a1b4d3ae1c623f"
+      },
+      {
+        "dt_ms": 0.1,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ff9bd24f3f798692b5cf986ed555997a39f2faf260bfb2b524301bfaa6df4c7c"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "83417e9845f5493e33bd5b2d1646efa2307f955fabbe8fb7320c494d2fef35fb"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "446951dfa645e218c94c77adc5e490ee626b6da3158f30c95013e253c9aae921"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "f12d7c5a167aeb7604f9ab2bf7664facd4a9845c622d787296036cc1fbac5966"
+      },
+      {
+        "dt_ms": 0.05,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b910abe810dcadc64b403d63b96cc1d0d3914f771fe9c2e7bccb3c4b4b3348f6"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2921d2442e36b1dbebf2edb901b75c37b7e98c29182a367da5b3d2920733aef3"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a388f89eea1f225e3b40619dd612a7163cc431bdc69cb65dda66893e0b33d165"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "3ab2d8cd8c8f9fdd7383d340f3c68ea1607e4ab0f9d7a4d687ae16c7d38ef974"
+      },
+      {
+        "dt_ms": 0.025,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "d8b6f80cd121c308c0261ba222f8d5a0050eefde9e3c5e4a317cb87c20001941"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "4122677db8c59eec52a569c6c0087ae96ec45c6bb92fe8800a7a50a540703c71"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "922dcc04693bb4f9fde4e27b1bea91bbaa96a5f7c09da8c0da662b075001daec"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "221114c1dadc5c8984e580c00216caae4ca4c3d84631f348548b14c8a0668c2a"
+      },
+      {
+        "dt_ms": 0.0125,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "938f1741fabea3687611ed1720d523787abef001c82594c934e37ad577a1a586"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "41191e050582b82e2aaaa7aac122dce141b036a93aa9f08df16ec23d5a04b676"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "6b45874a9277cc45e388cc3bf80cfdc5ea6d03fa2577adc349ac7088afccf3a0"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1510fb5849b2c3cb410da8d0dd6b229f6579d194cbdf446ae651e0c2345ae2ff"
+      },
+      {
+        "dt_ms": 0.00625,
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "e9baea20c053d6cc30f83f94e08b08c362997c2b9f7ab361f80ebce2abc97f95"
+      }
+    ]
+  },
   "research_question": "Does the seven-port versus dual-q25 nine-port transient error ratio converge as the backward-Euler timestep is refined from 0.1 to 0.025 ms?",
   "runtime": {
     "neuron": "9.0.2",
     "numpy": "2.5.5",
     "python": "3.12.16",
     "scipy": "1.16.3",
-    "wall_seconds": 138.88829163399998
+    "wall_seconds": 205.91958452
   },
   "schema_version": 1,
   "scientific_limits": [
@@ -539,6 +3874,6 @@
     "all_morphology_preflights_passed": true,
     "all_morphology_sha256_checked": true,
     "fine_hines_reference_dt_ms": 0.00625,
-    "maximum_absolute_vs_perturbation_hines_trace_delta_pct": 2.7010354556430245e-08
+    "maximum_absolute_vs_perturbation_hines_trace_delta_pct": 2.7010354556430252e-08
   }
 }
