@@ -1,6 +1,13 @@
 """Tests for the research-only passive output-aware dual-seed PRIMA prototype."""
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+RESEARCH = Path(__file__).parents[1] / "research"
+if str(RESEARCH) not in sys.path:
+    sys.path.insert(0, str(RESEARCH))
+
 import numpy as np
 import pytest
 
