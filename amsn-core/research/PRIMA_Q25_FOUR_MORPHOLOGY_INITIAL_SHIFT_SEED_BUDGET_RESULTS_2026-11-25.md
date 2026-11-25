@@ -99,6 +99,19 @@ The audit establishes that adding q25 ports changes the initial independent Kryl
 
 This is a concrete implementation-level pathway by which a fixed-order multishift reduction can allocate a different portion of its finite state budget to initial port-driven blocks. It makes seed-budget competition a plausible contributor to the non-monotonic error changes already seen in the fixed-order ablation.
 
+### Important counterexample: equal seed ranks, different response errors
+
+Allen, Tamas and Peng have **identical initial seed ranks for every layout** (42/48/48/54), yet the combined-nine-port perturbation-transient median ratios in the accepted earlier order-168 matrix differ substantially:
+
+| Morphology | 20-ms combined/seven ratio | 40-ms combined/seven ratio |
+|---|---:|---:|
+| Tamas | 25.27× | 49.84× |
+| Allen | 1.43× | 1.35× |
+| Peng | 106.95× | 66.25× |
+
+This is direct evidence that the scalar initial-seed count is not sufficient to predict response error. Allen and Tamas/Peng consume the same number of independent initial columns, but the resulting approximation errors are very different. The seed-budget effect can describe one part of fixed-order allocation; the morphology-specific directions of the added basis vectors, projected dynamics and source/output weighting must also matter. This is why the diagnostic must not be presented as a single-cause explanation.
+
+
 It is not proof that this is the only cause. The diagnostic does not measure later Krylov growth, final basis overlap, approximation error or convergence. It also does not establish a biological interaction. The four inputs are individual passive reconstructions, not a population sample. The 112/168/224 response-error sweep and output-observer analysis are still needed before deciding whether the error penalty shrinks with order or persists after the initial seed-budget difference is accounted for.
 
 No production solver setting or retained-port default is changed.
