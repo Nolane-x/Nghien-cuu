@@ -177,3 +177,9 @@ The repository now also contains the reusable paired post-analysis:
 - .github/workflows/amsn-prima-q25-four-layout-posthoc.yml
 
 Its eight unit tests pass and the script compiles under Python 3.12. The workflow is configured to execute and commit the post-analysis summaries once the primary case-metric and comparison CSVs are committed. The archival rerun excludes the oversized frequency CSV from Git but retains it in the artifact.
+
+### Follow-up mechanism audits
+
+A separate [initial multishift seed-budget protocol](PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_PROTOCOL_2026-11-25.md) and reusable script now quantify how many independent columns each of the six expansion shifts contributes before later round-robin Krylov growth. It covers all four morphology holdouts, all nine passive scenarios and all four port layouts, then reports the remaining state budget at orders 112, 168 and 224. The current Actions run is [45612162015](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612162015); its runtime, preflight and eight regression tests passed, and the 864-row seed calculation is in progress.
+
+This diagnostic can quantify the initial subspace-budget difference but cannot by itself establish that it causes the response-error penalty. That question remains tied to the strict order-convergence sweep and the q25 output-observer study.
