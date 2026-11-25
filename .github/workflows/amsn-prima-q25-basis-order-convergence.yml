@@ -1,3 +1,4 @@
+# Re-trigger after the primary GITHUB_TOKEN archival commit; bot pushes do not fan out downstream workflows.
 name: PRIMA q25 four-layout basis-order convergence
 
 on:
