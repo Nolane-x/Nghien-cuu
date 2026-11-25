@@ -291,9 +291,9 @@ def expected_counts() -> dict[str, int]:
         "master_frequency_points": int(MASTER_FREQUENCIES_HZ.size),
         "frequency_summary_rows": EXPECTED_FREQUENCY_ROWS,
         "case_metric_rows": EXPECTED_CASE_METRIC_ROWS,
-        "nine_seven_comparison_rows": EXPECTED_COMPARISON_ROWS,
-        "source_window_summary_rows": EXPECTED_SOURCE_SUMMARY_ROWS,
-        "morphology_window_summary_rows": EXPECTED_MORPH_WINDOW_SUMMARY_ROWS,
+        "layout_vs_seven_comparison_rows": EXPECTED_COMPARISON_ROWS,
+        "source_layout_window_summary_rows": EXPECTED_SOURCE_SUMMARY_ROWS,
+        "morphology_layout_window_summary_rows": EXPECTED_MORPH_WINDOW_SUMMARY_ROWS,
         "finite_dft_identity_rows": EXPECTED_IDENTITY_ROWS,
     }
 
@@ -1465,9 +1465,9 @@ def main() -> None:
     }
     _write_csv(output_paths["frequency_summary"], frequency_summary)
     _write_csv(output_paths["case_metrics"], metric_rows)
-    _write_csv(output_paths["nine_seven_comparisons"], comparison_rows)
-    _write_csv(output_paths["source_window_summary"], source_summary)
-    _write_csv(output_paths["morphology_window_summary"], morphology_window_summary)
+    _write_csv(output_paths["layout_vs_seven_comparisons"], comparison_rows)
+    _write_csv(output_paths["source_layout_window_summary"], source_summary)
+    _write_csv(output_paths["morphology_layout_window_summary"], morphology_window_summary)
     readback = {
         name: _read_csv_rows(path) for name, path in output_paths.items()
     }
@@ -1568,7 +1568,7 @@ def main() -> None:
                 "the absolute-vs-perturbation trace delta is recorded per case."
             ),
         },
-        "morphology_window_interpretation_summary": morphology_window_summary,
+        "morphology_layout_window_interpretation_summary": morphology_window_summary,
         "reproducibility_diagnostics": {
             "basis_models": basis_diagnostics,
             "trace_outputs": trace_diagnostics,
