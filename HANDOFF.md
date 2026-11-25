@@ -2,15 +2,15 @@
 
 ## Latest active checkpoint — PRIMA q25 four-morphology, seed-budget and isolated downstream replay (25/11/2026)
 
-Continue from [the four-morphology handoff](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md), [the primary four-layout result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md) and [the seed-budget result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md). Active branch: \`research/prima-q25-cross-morphology-boundary-replication-2026-11-25\`. Do not merge or change production defaults.
+Continue from [the four-morphology handoff](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md), [the primary four-layout result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md) and [the seed-budget result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md). Active branch: `research/prima-q25-cross-morphology-boundary-replication-2026-11-25`. Do not merge or change production defaults.
 
 ### Accepted numerical results
 
-- [Four-layout primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) completed **success** after about 39.5 minutes; result commit \`1ccac2315a3580505474dbbd188dfc89ef884543\`; artifact 15021668387. It passed the long calculation, coverage, DFT identity, commit and upload steps.
+- [Four-layout primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) completed **success** after about 39.5 minutes; result commit `1ccac2315a3580505474dbbd188dfc89ef884543`; artifact 15021668387. It passed the long calculation, coverage, DFT identity, commit and upload steps.
 - Coverage: 3,201 master frequencies; 1,075,536 frequency rows; 12,096 case metrics; 9,072 candidate/seven comparisons; 144 source/layout/window summaries; 24 morphology/layout/window summaries; 1,728 finite-DFT identity rows. Maximum finite identity relative error \(8.78149\times10^{-12}\) against \(2\times10^{-8}\); maximum absolute residual \(4.80983\times10^{-11}\) V-samples. There are 144 distinct basis, projected-G and projected-C hashes.
-- This 456085 matrix used the strict three-feature environment and verified Haswell OpenBLAS (one thread) plus active selected NumPy targets \`X86_V3\` and \`baseline(X86_V2)\`. It predates the unfiltered all-functions NumPy SIMD inventory, so keep it labelled as selected-kernel validated; the separate seed-budget run and fresh primary run below prove the all-functions preflight.
-- [Initial six-shift seed-budget audit 45612672472](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472) completed **success**; result commit \`f06e277165d6cd8929c152c2ddb2b6e537e4ccb1\`; artifact 15021770119. It passed 8 tests and strict full-function NumPy dispatch. Coverage is 864 per-shift rows, 144 morphology/scenario/layout groups and 16 morphology/layout summaries in 31.62 seconds.
-- Independent initial seed ranks for layouts \`seven / eight_basal_q25 / eight_apical_q25 / nine_both_q25\`: Jacobs 33/39/34/40; Tamas, Allen and Peng each 42/48/48/54. The count is after cross-shift orthogonalization and before later round-robin Krylov growth. Equal ranks but divergent response errors in Allen vs Tamas/Peng show this scalar seed count is not a complete explanation.
+- This 456085 matrix used the strict three-feature environment and verified Haswell OpenBLAS (one thread) plus active selected NumPy targets `X86_V3` and `baseline(X86_V2)`. It predates the unfiltered all-functions NumPy SIMD inventory, so keep it labelled as selected-kernel validated; the separate seed-budget run and fresh primary run below prove the all-functions preflight.
+- [Initial six-shift seed-budget audit 45612672472](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472) completed **success**; result commit `f06e277165d6cd8929c152c2ddb2b6e537e4ccb1`; artifact 15021770119. It passed 8 tests and strict full-function NumPy dispatch. Coverage is 864 per-shift rows, 144 morphology/scenario/layout groups and 16 morphology/layout summaries in 31.62 seconds.
+- Independent initial seed ranks for layouts `seven / eight_basal_q25 / eight_apical_q25 / nine_both_q25`: Jacobs 33/39/34/40; Tamas, Allen and Peng each 42/48/48/54. The count is after cross-shift orthogonalization and before later round-robin Krylov growth. Equal ranks but divergent response errors in Allen vs Tamas/Peng show this scalar seed count is not a complete explanation.
 
 ### Current unfinished runs
 
@@ -21,14 +21,14 @@ Continue from [the four-morphology handoff](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MO
 
 ### Strict runtime
 
-Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2, threadpoolctl 3.6.0; \`OPENBLAS_CORETYPE=Haswell\`, one BLAS thread; \`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR\`; active full-function NumPy targets are \`X86_V3\` and \`baseline(X86_V2)\`. The full-function check is executed in an isolated preflight process and its JSON target list is handed to the numerical process through \`GITHUB_ENV\`.
+Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2, threadpoolctl 3.6.0; `OPENBLAS_CORETYPE=Haswell`, one BLAS thread; `NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR`; active full-function NumPy targets are `X86_V3` and `baseline(X86_V2)`. The full-function check is executed in an isolated preflight process and its JSON target list is handed to the numerical process through `GITHUB_ENV`.
 
 ### Main files to read next
 
-1. \`research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md\`
-2. \`amsn-core/research/PRIMA_Q25_NUMERICAL_DISPATCH_REPRODUCIBILITY_AUDIT_2026-11-25.md\`
-3. \`amsn-core/research/PRIMA_Q25_BASIS_ORDER_CONVERGENCE_PROTOCOL_2026-11-25.md\`
-4. \`amsn-core/research/PRIMA_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_PROTOCOL_2026-11-25.md\`
+1. `research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md`
+2. `amsn-core/research/PRIMA_Q25_NUMERICAL_DISPATCH_REPRODUCIBILITY_AUDIT_2026-11-25.md`
+3. `amsn-core/research/PRIMA_Q25_BASIS_ORDER_CONVERGENCE_PROTOCOL_2026-11-25.md`
+4. `amsn-core/research/PRIMA_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_PROTOCOL_2026-11-25.md`
 
 No active-neuron, synapse, plasticity, action-potential or biological-population claim is established. The four inputs are individual reconstructions; Allen NMO_162186 is an epilepsy-surgery specimen, and Peng NMO_163775 metadata says No Diameter. Full Hines remains canonical, and no production solver/default has changed.
 
@@ -51,9 +51,9 @@ Continue from [short-window handoff](HANDOFF_2026-11-25_PRIMA-Q25-SHORT-WINDOW-D
 
 ## Latest validated checkpoint — PRIMA q25 fine-step convergence (24/11/2026)
 
-Continue from [fine-step handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md) and [research report](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md). Active branch: \`research/prima-q25-backward-euler-fine-step-convergence-2026-11-24\`; [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) is draft/open and must not be merged without explicit authorization.
+Continue from [fine-step handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md) and [research report](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md). Active branch: `research/prima-q25-backward-euler-fine-step-convergence-2026-11-24`; [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) is draft/open and must not be merged without explicit authorization.
 
-- [Workflow 45428685906](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45428685906) passed 15/15 tests, both morphology checksums/preflights, full matrix, six exact CSV read-backs, result commit and artifact upload. Result commit \`d79ca743cbb662bf4536b28c527bfa5234058c15\`; artifact 14937828066.
+- [Workflow 45428685906](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45428685906) passed 15/15 tests, both morphology checksums/preflights, full matrix, six exact CSV read-backs, result commit and artifact upload. Result commit `d79ca743cbb662bf4536b28c527bfa5234058c15`; artifact 14937828066.
 - Coverage: 24,192 layout metrics; 12,096 paired 7/9 comparisons; 192 source summaries; 32 morphology × dt × window summaries; 9,072 Hines temporal rows; 24 Hines summary rows.
 - Median 9/7 transient ratios at dt 0.1/0.05/0.025/0.0125 ms (20/40/100/200-ms windows):
   - Tamas: 24.44/55.24/31.87/31.64; 26.59/57.04/31.73/31.59; 27.05/54.85/31.72/31.59; 26.55/49.91/32.05/31.84×.
@@ -69,10 +69,10 @@ Continue from [fine-step handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FI
 
 ## Latest validated research checkpoint — exact PRIMA q25 backward-Euler transfer (24/11/2026)
 
-Continue from [HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md). Active branch: \`research/prima-q25-backward-euler-discrete-transfer-2026-11-24\`; PR [#30](https://github.com/Nolane-x/Nghien-cuu/pull/30) is draft/open and must not be merged without explicit authorization.
+Continue from [HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-DISCRETE-TRANSFER.md). Active branch: `research/prima-q25-backward-euler-discrete-transfer-2026-11-24`; PR [#30](https://github.com/Nolane-x/Nghien-cuu/pull/30) is draft/open and must not be merged without explicit authorization.
 
 - Exact backward-Euler transfer and finite-window terminal-state correction are implemented; discrete mapping \(s_{BE}=(1-e^{-j2\pi f\Delta t})/\Delta t\), with the \(x[N-1]\) boundary term retained.
-- [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698): 9/9 focused tests, both morphology checksums and preflights, full calculation, DFT identity gate, result commit and artifact upload passed. Maximum identity residual \(1.4290\times10^{-11}\) vs \(2\times10^{-8}\). Result commit \`1d6f64a83ccc7d1310a19baa50b2bc9b738dd7f5\`; artifact 14934013973.
+- [Workflow 45420670698](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45420670698): 9/9 focused tests, both morphology checksums and preflights, full calculation, DFT identity gate, result commit and artifact upload passed. Maximum identity residual \(1.4290\times10^{-11}\) vs \(2\times10^{-8}\). Result commit `1d6f64a83ccc7d1310a19baa50b2bc9b738dd7f5`; artifact 14934013973.
 - Important correction: Tamas' earlier ~1.00–1.03× nine/seven transient ratio was affected by cancellation in the absolute-voltage Hines replay. The stable perturbation-coordinate replay gives ~24.5× / 56.2× / 32.2× / 32.1× for 20/40/100/200 ms; Peng gives ~162.7× / 63.6× / 34.1× / 34.0×. Absolute NRMSE remains very small; see the full report and its explicit aggregation method.
 - The eight-row morphology × window summary and regression test were validated in workflow 45422624509; exact result CSVs and the corrected Tamas interpretation are in the q25 discrete-transfer report.
 - No production solver or default changed. Full Hines remains canonical; only two passive morphology instances are studied.
