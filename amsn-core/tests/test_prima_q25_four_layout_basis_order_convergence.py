@@ -41,6 +41,60 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "must not be recomputed"):
             driver.validate_order_grid((112, 168, 224))
 
+
+    def test_reference_dispatch_requires_pinned_haswell_and_numpy_v3(self):
+        report = {
+            "reproducibility_diagnostics": {
+                "numerical_runtime": {
+                    "thread_environment": {
+                        "OPENBLAS_CORETYPE": "Haswell",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL",
+                    },
+                    "threadpools": [
+                        {"internal_api": "openblas", "architecture": "Haswell"}
+                    ],
+                }
+            }
+        }
+        self.assertEqual(
+            driver.validate_reference_dispatch(report)["openblas_coretype"],
+            "Haswell",
+        )
+
+    def test_reference_dispatch_rejects_unpinned_cpu_feature_matrix(self):
+        report = {
+            "reproducibility_diagnostics": {
+                "numerical_runtime": {
+                    "thread_environment": {
+                        "OPENBLAS_CORETYPE": "Haswell",
+                        "NPY_DISABLE_CPU_FEATURES": "",
+                    },
+                    "threadpools": [
+                        {"internal_api": "openblas", "architecture": "Haswell"}
+                    ],
+                }
+            }
+        }
+        with self.assertRaisesRegex(ValueError, "NumPy SIMD dispatch"):
+            driver.validate_reference_dispatch(report)
+
+    def test_reference_dispatch_rejects_different_blas_architecture(self):
+        report = {
+            "reproducibility_diagnostics": {
+                "numerical_runtime": {
+                    "thread_environment": {
+                        "OPENBLAS_CORETYPE": "Haswell",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL",
+                    },
+                    "threadpools": [
+                        {"internal_api": "openblas", "architecture": "Cooperlake"}
+                    ],
+                }
+            }
+        }
+        with self.assertRaisesRegex(ValueError, "OpenBLAS architecture"):
+            driver.validate_reference_dispatch(report)
+
     def test_coverage_constants_match_four_layout_case_design(self):
         self.assertEqual(driver.EXPECTED_CASE_ROWS, 4 * 9 * 4 * 3 * 2 * 7 * 2)
         self.assertEqual(driver.EXPECTED_COMPARISON_ROWS, 4 * 9 * 3 * 3 * 2 * 7 * 2)
