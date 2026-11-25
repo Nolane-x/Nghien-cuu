@@ -50,20 +50,27 @@ The strict environment in this audit used Python 3.12.16, NumPy 2.5.5, SciPy 1.1
 
 ### Strict order-168 primary response matrix
 
-The fresh full-dispatch strict run is [45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039). At the latest checkpoint:
+The accepted selected-kernel strict matrix is [run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071), completed success with 12,096 case rows, 9,072 matched comparisons, 1,728 finite-DFT identity rows and maximum identity relative error \(8.78149\times10^{-12}\) against \(2\times10^{-8}\). Result commit is \`1ccac2315a3580505474dbbd188dfc89ef884543\`; artifact 15021668387.
 
-- pinned runtime installation and full NumPy dispatch preflight passed;
-- source download/checksum passed;
-- four-layout/finite-window regression tests passed;
-- all four q25 morphology preflights passed;
-- the long 7/8/8/9-port calculation is running;
-- coverage/finite-DFT identity, result commit and artifact upload have not yet run.
+A fresh full-functions-dispatch primary replay is [run 45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039). It passed runtime install, the unfiltered NumPy dispatch check, four-layout/finite-window tests and all four q25 morphology preflights; its long 7/8/8/9-port calculation remains in progress. Its coverage/identity gate, report commit and artifact upload have not yet executed. Use 456085 as the currently accepted primary matrix; only replace it with 456138 if that fresh run passes every gate.
 
-The older [run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight/tests and remains in the long calculation step in the former concurrency group without a terminal conclusion. Do not treat it as complete. The workflow concurrency group was changed so run 45613803039 can execute independently; the older pending [run 45610056257](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610056257) is still queued in the former group.
+### Downstream convergence
 
-### Downstream convergence and output observer
+The earlier in-process sweep failed with native exit code 139 after passing runtime, reference gate, tests and q25 preflights. The failure occurred when the driver imported the full NEURON runner module and called its main function in the same interpreter. The driver is now changed to launch each order in a fresh child process; the runner accepts order and result-stem overrides from the child environment.
 
-The basis-order workflow [45610065386](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610065386) and observer workflow [45610073270](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610073270) passed their own tests/runtime gates but correctly deferred numerical analysis because the committed order-168 report still refers to an older dispatch environment. Once the strict primary report and compact matrices are committed, the push trigger should launch the 112/168/224 sweep and observer workflow. Both must consume the new strict primary report; do not mix old two-feature/Haswell-intermediate matrices with the accepted no-AVX512 full-dispatch reference.
+Latest isolated-process sweep: [run 45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005). It passed runtime/dispatch verification, source checksum, basis-order regression tests, all morphology preflights and the strict order-168 reference gate; its 112/224 sweep step is in progress. It must still pass both fresh matrices, exact coverage/identity, paired posthoc checks and combined summary validation before being accepted. The previous in-process [run 45616046400](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400) is still running under the old concurrency group; do not treat it as the current implementation.
+
+### q25 output observer
+
+The observer has two separate acceptance layers: exact primary/observer NumPy dispatch equality, and reproduction of all 144 primary basis/G/C/input hashes. The primary dispatch is now assigned and verified before comparison; q25 retained/observer-only role mapping is now computed before checking the output projection. Regression tests cover both cases.
+
+The most recent instrumented run is [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599). It passed runtime, all-function dispatch, source checksum, observer regression tests and the primary report gate. Its numerical analysis is still running. Flushed \`OBSERVER_STAGE\` markers identify morphology import, Hines replays, PRIMA basis build and reduced simulation so the next failed native stage can be pinpointed if exit 139 recurs.
+
+An additional observer run [45616562335](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616562335) is running an earlier fixed-code revision under the previous concurrency group; the latest instrumented run 45616908599 is the one to inspect for stage evidence. Earlier failures are retained in Actions history: 45615543451/45616181315 had Python variable-order errors; 45616497506 passed Python gates but ended with native exit 139. These failures are not accepted results.
+
+### GitHub Actions trigger note
+
+The primary result archive was committed by a workflow using \`GITHUB_TOKEN\`, so that bot push did not automatically fan out to downstream \`push\` workflows. Separate connector-authored workflow commits were used to trigger the basis and observer jobs. Keep this distinction in the research log; do not infer that a downstream job ran merely because the primary artifact was committed.
 
 ## Scientific constraints
 
