@@ -134,7 +134,7 @@ jobs:
         with:
           name: prima-q25-peng-output-aware-dual-seed-pilot
           path: |
-            amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_x31719_y6139_semi_r.CNG.swc
+            amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc
             amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_*.csv
             amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_report.json
