@@ -60,9 +60,21 @@ def validate_reference_dispatch(reference_report: dict[str, Any]) -> dict[str, A
             f"order-168 OpenBLAS architecture is {sorted(observed)!r}, "
             f"expected {EXPECTED_OPENBLAS_CORETYPE!r}"
         )
+    current_targets = runtime.get("numpy_current_dispatch_targets", [])
+    if not current_targets:
+        raise ValueError("order-168 reference lacks active NumPy SIMD dispatch diagnostics")
+    unsupported = [
+        target for target in current_targets
+        if "X86_V4" in str(target).upper() or "AVX512" in str(target).upper()
+    ]
+    if unsupported:
+        raise ValueError(
+            f"order-168 reference uses unsupported NumPy SIMD targets: {unsupported!r}"
+        )
     return {
         "openblas_coretype": EXPECTED_OPENBLAS_CORETYPE,
         "numpy_disabled_cpu_features": EXPECTED_NUMPY_DISABLED_FEATURES,
+        "numpy_current_dispatch_targets": current_targets,
         "threadpools": pools,
     }
 
