@@ -56,6 +56,18 @@ class TestQ25DispatchAudit(unittest.TestCase):
         self.assertEqual(len(indexed), 12096)
         self.assertEqual(len({k[:6] for k in indexed}), 3024)
 
+    def test_baseline_case_keys_retain_each_morphology_and_window(self):
+        indexed = audit.index_rows(synthetic_case_rows(), "synthetic")
+        baseline = audit.baseline_case_keys(indexed)
+        self.assertEqual(len(baseline), 3024)
+        for morphology in audit.MORPHOLOGY_NAMES:
+            for window in ("20.0", "40.0"):
+                group = [
+                    key for key in baseline
+                    if key[0] == morphology and key[5] == window
+                ]
+                self.assertEqual(len(group), 378)
+
     def test_duplicate_or_missing_layout_is_rejected(self):
         rows = synthetic_case_rows()
         rows[-1] = dict(rows[0])
