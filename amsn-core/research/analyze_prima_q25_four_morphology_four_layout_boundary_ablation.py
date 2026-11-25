@@ -257,20 +257,46 @@ def array_sha256(values: np.ndarray) -> str:
 
 
 def numerical_runtime_diagnostics() -> dict[str, Any]:
-    """Capture BLAS/thread settings used by this finite-window decomposition."""
+    """Capture and enforce the pinned NumPy/OpenBLAS numerical dispatch."""
     import contextlib
     import io
     import os
+
     output = io.StringIO()
     with contextlib.redirect_stdout(output):
         np.show_config()
+
+    runtime_output = io.StringIO()
+    with contextlib.redirect_stdout(runtime_output):
+        np.show_runtime()
+
     try:
         from threadpoolctl import threadpool_info
         pools = threadpool_info()
     except Exception as exc:
-        pools = [{"diagnostic_error": f"{type(exc).__name__}: {exc}"}]
+        raise RuntimeError(
+            "threadpoolctl is required to verify the pinned BLAS architecture"
+        ) from exc
+
+    expected_core = os.environ.get("OPENBLAS_CORETYPE")
+    openblas_pools = [
+        pool for pool in pools
+        if pool.get("internal_api") == "openblas"
+    ]
+    if expected_core:
+        observed_cores = {
+            str(pool.get("architecture", "")).casefold()
+            for pool in openblas_pools
+        }
+        if not openblas_pools or observed_cores != {expected_core.casefold()}:
+            raise RuntimeError(
+                "OpenBLAS CPU dispatch mismatch: "
+                f"expected {expected_core!r}, observed {sorted(observed_cores)!r}"
+            )
+
     names = (
-        "OPENBLAS_NUM_THREADS", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
+        "OPENBLAS_NUM_THREADS", "OPENBLAS_CORETYPE",
+        "NPY_DISABLE_CPU_FEATURES", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
         "BLIS_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS",
         "PYTHONHASHSEED",
     )
@@ -278,6 +304,8 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
         "thread_environment": {name: os.environ.get(name) for name in names},
         "threadpools": pools,
         "numpy_build_configuration": output.getvalue(),
+        "numpy_runtime_configuration": runtime_output.getvalue(),
+        "verified_openblas_coretype": expected_core,
     }
 
 
