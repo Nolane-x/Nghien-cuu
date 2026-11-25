@@ -1,0 +1,57 @@
+{
+  "actual_rows": {
+    "case_metrics": 12096,
+    "finite_dft_identity": 1728,
+    "frequency_summary": 1075536,
+    "layout_vs_seven_comparisons": 9072,
+    "morphology_layout_window_summary": 24,
+    "source_layout_window_summary": 144
+  },
+  "allen_swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+  "basis_order": 168,
+  "expected_rows": {
+    "case_metrics": 12096,
+    "finite_dft_identity": 1728,
+    "frequency_summary": 1075536,
+    "layout_vs_seven_comparisons": 9072,
+    "morphology_layout_window_summary": 24,
+    "source_layout_window_summary": 144
+  },
+  "finite_identity_relative_tolerance": 2e-08,
+  "frequency_summary_policy": "Retain the 1,075,536-row frequency CSV in the source Actions artifact; do not commit the 190-MB file to Git.",
+  "layouts": [
+    "seven",
+    "eight_basal_q25",
+    "eight_apical_q25",
+    "nine_both_q25"
+  ],
+  "max_finite_identity_relative_error": 8.781488969255743e-12,
+  "morphologies": [
+    "NMO_163775",
+    "NMO_107159",
+    "NMO_03524",
+    "NMO_162186"
+  ],
+  "result_file_sha256": {
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_finite_dft_identity.csv": "eced64a36c73a8ef1d963f08a5f716dc4bd317101360d14d9f1eebe2adc9e902",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_frequency_summary.csv": "dabb47d4c5c06bd26ebd90165b50584ecb8448b8e2fe3bc76cdfff7a9b3bcdce",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv": "29af1a3897c44d0aa946768a23ee815299e4fa982e7223e4b9130aa359fd2e6e",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_morphology_layout_window_summary.csv": "192a2b24400ffec4174f3b81ef8e25874ae3b4b29d818a649b8d1e040ee0327d",
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_source_layout_window_summary.csv": "a2164e1fdc67350e75bf9efb39834537691a328838b739da907a8ec6d269e84a"
+  },
+  "result_file_sizes_bytes": {
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv": 6435664,
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_finite_dft_identity.csv": 397962,
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_frequency_summary.csv": 199352753,
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv": 3117502,
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_morphology_layout_window_summary.csv": 5069,
+    "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_source_layout_window_summary.csv": 41949
+  },
+  "schema_version": 1,
+  "source_artifact_id": 15010408589,
+  "source_artifact_name": "prima-q25-four-morphology-four-layout-boundary-ablation",
+  "source_artifact_sha256": "3004c7686aae9e4c3f674396740f4ce191e72063b2a6552641c5c082a0f9766b",
+  "source_workflow_run_id": 45585262246,
+  "status": "verified"
+}
