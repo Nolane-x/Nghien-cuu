@@ -5,7 +5,7 @@
 **Numerical analysis step:** completed successfully; machine-readable report status `passed`  
 **Recovered artifact:** [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308)  
 **Artifact ZIP:** 1,441,656 bytes; SHA-256 `2391661263ef1c959d550e8a336c8fed89e1f1dfcc626ddab16b3db60bed8aa3`  
-**Corrected archival replay:** [run 45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575), still running at the time this recovery report was written.
+**Corrected official archive:** [run 45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575), completed success through numerical analysis, Git commit and artifact upload.
 
 ## 0. Corrected archival replay — now official
 
