@@ -174,6 +174,50 @@ def test_full_hines_absolute_and_perturbation_replays_are_equivalent():
     assert relative_delta_pct <= 1e-5
 
 
+def test_comparison_summary_aggregates_periodic_boundary_and_cross_terms():
+    comparisons = []
+    metrics = []
+    for morphology in ("morph_a", "morph_b"):
+        for source in audit.SOURCE_NAMES:
+            for pulse in audit.PULSE_WIDTHS_MS:
+                for window in audit.WINDOWS_MS:
+                    for scenario in audit.SCENARIO_NAMES:
+                        for output in range(7):
+                            comparisons.append({
+                                "morphology": morphology,
+                                "source_name": source,
+                                "pulse_width_ms": pulse,
+                                "window_ms": window,
+                                "parameter_scenario": scenario,
+                                "output_swc_id": output,
+                                "nine_over_seven_continuous_ac_ratio": 30.0,
+                                "nine_over_seven_discrete_be_ratio": 28.0,
+                                "nine_over_seven_transient_nrmse_ratio": 25.0,
+                                "nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": 24.0,
+                            })
+                            metrics.append({
+                                "morphology": morphology,
+                                "layout_id": "nine_both_q25",
+                                "parameter_scenario": scenario,
+                                "source_name": source,
+                                "output_swc_id": output,
+                                "pulse_width_ms": pulse,
+                                "window_ms": window,
+                                "transfer_component_over_finite_error_norm_pct": 145.0,
+                                "boundary_component_over_finite_error_norm_pct": 132.0,
+                                "transfer_boundary_cross_term_pct": -276.0,
+                            })
+    rows = audit._summarize_comparisons(comparisons, metrics)
+    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 24
+    assert all(row["scenario_output_pairs"] == 63 for row in rows)
+    assert all(
+        row["median_nine_periodic_transfer_component_over_finite_error_norm_pct"] == 145.0
+        for row in rows
+    )
+    assert all(row["median_nine_boundary_component_of_error_norm_pct"] == 132.0 for row in rows)
+    assert all(row["median_nine_transfer_boundary_cross_term_pct"] == -276.0 for row in rows)
+
+
 def test_morphology_window_summary_keeps_perturbation_metric_separate():
     source_rows = []
     for morphology in ("morph_a", "morph_b"):
