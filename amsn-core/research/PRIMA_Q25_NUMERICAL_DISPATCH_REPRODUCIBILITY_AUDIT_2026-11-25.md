@@ -89,12 +89,14 @@ The introspection call was deliberately moved out of the long NEURON simulation 
 
 Current run states:
 
-- [Primary strict order-168 run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed runtime pin verification, all four q25 preflights, finite-window regression tests and source checksum checks; its four-morphology calculation is still in progress.
-- [Basis-order workflow 45608837531](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608837531) passed its test and preflight stages, then correctly deferred the 112/168/224 sweep because the strict primary report is not committed yet.
-- [Basis-order workflow 45608970513](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608970513) also passed its validation stages and deferred safely.
-- The current observer runs passed their runtime/test stages but skipped the numerical observer until the strict primary matrix is present.
+- [Latest full-dispatch strict primary run 45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039) is the fresh order-168 replay. It was started after the full-dispatch concurrency group was separated from the stale run; at the last check it was installing the pinned numerical runtime. Its required next steps are the full unfiltered dispatch check, four morphology regression/preflight gates, the 7/8/8/9-port calculation, finite-DFT identity validation and report commit.
+- [Older strict primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight, tests and source checks but remains stuck in the long calculation step in the former concurrency group. Do not treat it as a completed result.
+- [Previously queued strict primary run 45610056257](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610056257) remains pending in the former concurrency group. The new full-dispatch run is intended to supersede that wait.
+- [Basis-order workflow 45610065386](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610065386) and [observer workflow 45610073270](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610073270) passed their own runtime/test gates and deferred their numerical calculations because the committed order-168 report was still the older dispatch run. Their workflows are configured to trigger again when the accepted strict primary report and matrices are committed.
 
-The primary workflow commit of the report and case matrix is configured to trigger both downstream workflows. The basis workflow now performs an explicit strict-reference gate; missing or older two-feature reports produce a successful defer, not a false sweep failure.
+A separate independent seed-budget audit has now completed as [run 45612672472](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472). It verified the exact pinned runtime and all-function NumPy dispatch, recorded active targets \`X86_V3\` and \`baseline(X86_V2)\`, and produced 864 per-shift rows, 144 morphology/scenario/layout groups and 16 morphology/layout summaries. See [the seed-budget results](PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md). This confirms that the all-function preflight and JSON handoff work in a short independent numerical process.
+
+The primary workflow commits the report and compact matrices only after the identity and coverage gates pass. The basis workflow performs an explicit strict-reference gate; missing or older dispatch reports produce a successful defer rather than a false sweep failure. The 112/168/224 sweep and q25 observer remain blocked from mixing dispatch environments.
 
 ## 6. Current interpretation hold
 
