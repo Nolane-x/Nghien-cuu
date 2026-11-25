@@ -36,3 +36,21 @@ The workflow checks both SWC hashes and morphology preflights, runs focused test
 ## Interpretation limits
 
 The 0.00625-ms full-Hines trace is a finer numerical reference, not an exact continuous-time solution. Only two passive linear-RC morphologies are included. The PRIMA projection basis/order stay fixed to isolate temporal discretization sensitivity. Full Hines remains canonical; no production solver/default is changed.
+
+## Reproducibility caveat — 25 November 2026
+
+The first full run [45551126065 attempt 1](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45551126065) passed its 18 tests, morphology checks, full simulation and six CSV read-backs. A rerun of the **same commit** (attempt 2) also passed all gates, but its reduced-model metrics and summary ratios were not byte-identical. The full-Hines temporal-comparison CSV was byte-identical between attempts, while the PRIMA metric, 7/9 comparison, source-summary and morphology-summary CSVs changed.
+
+This discrepancy is material for interpretation because the residuals are extremely small: the largest absolute change in perturbation-coordinate NRMSE across the repeated metrics was \(1.6515\times10^{-10}\) percentage points, while the NRMSE itself is usually around \(10^{-11}\%\)–\(10^{-8}\%\). Relative nine/seven ratios can therefore shift noticeably from small changes in the reduction residual.
+
+No causal conclusion is accepted from one attempt. The working hypothesis is floating-point reduction-order sensitivity in the PRIMA basis/projection or reduced solve, but this is **not yet established**. The source SWC hashes, morphology preflights, Hines kernel, PRIMA source files, input/solver support files and script logic were identical between attempts.
+
+### Reproducibility controls now added
+
+- Pin BLAS/OpenMP thread pools to one thread (\`OPENBLAS_NUM_THREADS\`, \`OMP_NUM_THREADS\`, \`MKL_NUM_THREADS\`, \`BLIS_NUM_THREADS\`, \`VECLIB_MAXIMUM_THREADS\`, \`NUMEXPR_NUM_THREADS\`) and set \`PYTHONHASHSEED=0\`.
+- Record numerical-library threadpool/build configuration in report JSON.
+- Record canonical SHA-256 hashes of each order-168 basis, projected \(G_r\), projected \(C_r\), input matrix, retained-port index vector and each full/reduced trace.
+- Add unit tests for the diagnostic hash helper and runtime environment capture.
+
+The follow-up workflow must pass, then a same-commit rerun must reproduce the basis hashes, reduced trace hashes and CSV bytes before the short-window ratios are treated as stable. Until then, the numerical ratios are provisional and are preserved for provenance only.
+
