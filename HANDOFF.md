@@ -1,5 +1,39 @@
 # HANDOFF — Nolane-x Research
 
+## Latest active checkpoint — PRIMA q25 four-morphology, seed-budget and isolated downstream replay (25/11/2026)
+
+Continue from [the four-morphology handoff](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md), [the primary four-layout result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md) and [the seed-budget result](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md). Active branch: \`research/prima-q25-cross-morphology-boundary-replication-2026-11-25\`. Do not merge or change production defaults.
+
+### Accepted numerical results
+
+- [Four-layout primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) completed **success** after about 39.5 minutes; result commit \`1ccac2315a3580505474dbbd188dfc89ef884543\`; artifact 15021668387. It passed the long calculation, coverage, DFT identity, commit and upload steps.
+- Coverage: 3,201 master frequencies; 1,075,536 frequency rows; 12,096 case metrics; 9,072 candidate/seven comparisons; 144 source/layout/window summaries; 24 morphology/layout/window summaries; 1,728 finite-DFT identity rows. Maximum finite identity relative error \(8.78149\times10^{-12}\) against \(2\times10^{-8}\); maximum absolute residual \(4.80983\times10^{-11}\) V-samples. There are 144 distinct basis, projected-G and projected-C hashes.
+- This 456085 matrix used the strict three-feature environment and verified Haswell OpenBLAS (one thread) plus active selected NumPy targets \`X86_V3\` and \`baseline(X86_V2)\`. It predates the unfiltered all-functions NumPy SIMD inventory, so keep it labelled as selected-kernel validated; the separate seed-budget run and fresh primary run below prove the all-functions preflight.
+- [Initial six-shift seed-budget audit 45612672472](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472) completed **success**; result commit \`f06e277165d6cd8929c152c2ddb2b6e537e4ccb1\`; artifact 15021770119. It passed 8 tests and strict full-function NumPy dispatch. Coverage is 864 per-shift rows, 144 morphology/scenario/layout groups and 16 morphology/layout summaries in 31.62 seconds.
+- Independent initial seed ranks for layouts \`seven / eight_basal_q25 / eight_apical_q25 / nine_both_q25\`: Jacobs 33/39/34/40; Tamas, Allen and Peng each 42/48/48/54. The count is after cross-shift orthogonalization and before later round-robin Krylov growth. Equal ranks but divergent response errors in Allen vs Tamas/Peng show this scalar seed count is not a complete explanation.
+
+### Current unfinished runs
+
+- [Fresh all-functions strict order-168 primary 45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039) passed pinned runtime, unfiltered SIMD check, four-layout regression tests and all four q25 source/preflight checks; the long matrix calculation remains in progress. It must still pass exact coverage and finite-DFT identity before it can replace the earlier primary reference.
+- [Latest isolated basis-order sweep 45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005) is running after the driver was changed to launch order 112 and 224 in separate Python/NEURON subprocesses. This isolates native HOC state from the orchestration process. It must pass both order matrices, paired post-analysis, and combined summary coverage before the sweep can be called complete.
+- [Latest instrumented observer run 45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) is running after flushed stage markers were added around morphology import, Hines replay, PRIMA basis build and reduced simulation. This is intended to locate the source of the previous native exit-139, not to relax the 144-basis-hash, exact dispatch-match or finite-DFT identity gates.
+- Older basis/observer runs with failure or pending status are retained in Actions history. Do not interpret them as current final results. In particular, the previous in-process basis sweep exited 139; the first observer attempts hit variable-order errors and then a native exit 139. These are recorded in the dated research log.
+
+### Strict runtime
+
+Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2, threadpoolctl 3.6.0; \`OPENBLAS_CORETYPE=Haswell\`, one BLAS thread; \`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR\`; active full-function NumPy targets are \`X86_V3\` and \`baseline(X86_V2)\`. The full-function check is executed in an isolated preflight process and its JSON target list is handed to the numerical process through \`GITHUB_ENV\`.
+
+### Main files to read next
+
+1. \`research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md\`
+2. \`amsn-core/research/PRIMA_Q25_NUMERICAL_DISPATCH_REPRODUCIBILITY_AUDIT_2026-11-25.md\`
+3. \`amsn-core/research/PRIMA_Q25_BASIS_ORDER_CONVERGENCE_PROTOCOL_2026-11-25.md\`
+4. \`amsn-core/research/PRIMA_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_PROTOCOL_2026-11-25.md\`
+
+No active-neuron, synapse, plasticity, action-potential or biological-population claim is established. The four inputs are individual reconstructions; Allen NMO_162186 is an epilepsy-surgery specimen, and Peng NMO_163775 metadata says No Diameter. Full Hines remains canonical, and no production solver/default has changed.
+
+---
+
 ## Latest validated checkpoint — PRIMA q25 short-window reproducibility (25/11/2026)
 
 Continue from [short-window handoff](HANDOFF_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md) and [research report](amsn-core/research/PRIMA_Q25_SHORT_WINDOW_DT00625_2026-11-25.md). Active branch: `research/prima-q25-short-window-dt00625-2026-11-25`; [PR #33](https://github.com/Nolane-x/Nghien-cuu/pull/33) is draft/open and must not be merged without explicit authorization.
