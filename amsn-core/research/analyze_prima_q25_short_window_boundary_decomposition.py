@@ -1099,13 +1099,13 @@ def main() -> None:
                                 )
                                 mapping_metric = 100.0 * math.sqrt(
                                     float(np.sum(
-                                        weights * np.square(np.abs(
+                                        one_sided * np.square(np.abs(
                                             (full_h_be - full_transfer_cont[:, output_index, source_index])
                                             * current_spectrum
                                         ))
                                     ))
                                     / max(float(np.sum(
-                                        weights * np.square(np.abs(
+                                        one_sided * np.square(np.abs(
                                             full_transfer_cont[:, output_index, source_index]
                                             * current_spectrum
                                         ))
