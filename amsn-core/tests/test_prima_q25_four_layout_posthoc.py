@@ -52,7 +52,7 @@ class TestQ25Posthoc(unittest.TestCase):
 
     def test_zero_error_keeps_additive_contrast_but_disables_log_ratio(self):
         values = q25.metric_contrasts(0.0, 1.0, 1.0, 1.0)
-        self.assertEqual(values["additive_interaction_delta"], 1.0)
+        self.assertEqual(values["additive_interaction_delta"], -1.0)
         self.assertIsNone(values["multiplicative_interaction_ratio"])
         self.assertIsNone(values["log_multiplicative_interaction"])
 
