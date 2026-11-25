@@ -31,16 +31,6 @@ for _path in (AMSN_CORE, AMSN_RESEARCH):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
 
-import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
-import audit_prima_q25_basis_conditioning as conditioning
-import audit_prima_q25_extended_backward_euler as tail
-from experimental_prima_output_aware_basis import build_output_aware_passive_basis
-from run_prima_q25_peng_output_aware_dual_seed_pilot import (
-    finite_record_identity,
-    nrmse_percent,
-    sha256_array,
-    simulate_reduced_outputs,
-)
 
 ORDER = 224
 DT_MS = 0.00625
@@ -218,6 +208,16 @@ def _validate_old_metric_replay(case_rows: list[dict[str, Any]], scenario_name: 
 
 
 def worker(scenario_name: str, output_dir: Path) -> None:
+    # Import NEURON-dependent research helpers only inside the isolated child.
+    # Keeping the parent free of NEURON state avoids unsafe fork/exec interactions.
+    import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
+    import audit_prima_q25_basis_conditioning as conditioning
+    import audit_prima_q25_extended_backward_euler as tail
+    from experimental_prima_output_aware_basis import build_output_aware_passive_basis
+    from run_prima_q25_peng_output_aware_dual_seed_pilot import (
+        finite_record_identity, nrmse_percent, sha256_array, simulate_reduced_outputs
+    )
+    print(json.dumps({"stage":"worker_imports_ready","scenario":scenario_name}), flush=True)
     worker_started = time.perf_counter()
     specs = [x for x in core.MORPHOLOGIES if x["neuromorpho_id"] == MORPHOLOGY_ID]
     require(len(specs) == 1, "Jacobs NMO_03524 must resolve exactly once")
@@ -240,7 +240,9 @@ def worker(scenario_name: str, output_dir: Path) -> None:
     require(preflight.get("source", {}).get("source_sha256") == source_sha,
             "Jacobs preflight checksum mismatch")
 
+    print(json.dumps({"stage":"before_neuron_swc_import","scenario":scenario_name}), flush=True)
     reader, sections = reference.import_swc_with_neuron()
+    print(json.dumps({"stage":"after_neuron_swc_import","scenario":scenario_name}), flush=True)
     base_tree = morphology.to_cable_tree()
     layouts, shared_node_ids, q25_node_ids = module.build_four_layouts(
         morphology, reader, sections, base_tree
@@ -268,22 +270,27 @@ def worker(scenario_name: str, output_dir: Path) -> None:
 
     target = conditioning.build_target_tree(module, base_tree, scenarios[scenario_name])
     hines_factor = tail.build_tree_hines_be_factor(target, DT_S)
+    print(json.dumps({"stage":"before_full_hines","scenario":scenario_name}), flush=True)
     full_trace, full_terminal_states, protocol = core.simulate_full_hines_perturbation_windows(
         target, hines_factor, source_tree_indices, list(output_tree_indices)
     )
+    print(json.dumps({"stage":"after_full_hines","scenario":scenario_name}), flush=True)
     source_slots = {
         source: int(seven_layout["source_indices"][source]) for source in source_names
     }
+    print(json.dumps({"stage":"before_production_d0","scenario":scenario_name}), flush=True)
     production_d0 = baseline.prima_reduce_passive_cable_multishift(
         target, list(retained_indices), ORDER, conditioning.SHIFTS_HZ,
         relative_tolerance=conditioning.RELATIVE_TOLERANCE,
     )
 
+    print(json.dumps({"stage":"after_production_d0","scenario":scenario_name}), flush=True)
     case_rows: list[dict[str, Any]] = []
     metadata_rows: list[dict[str, Any]] = []
     models: dict[str, Any] = {}
     traces: dict[str, Any] = {}
     for schedule_name, (seed_role, dual_frequencies) in SCHEDULES.items():
+        print(json.dumps({"stage":"before_schedule","scenario":scenario_name,"schedule":schedule_name}), flush=True)
         schedule_started = time.perf_counter()
         if seed_role == "apical":
             seed_indices = (q25_tree_indices["apical_q25"],)
@@ -333,6 +340,7 @@ def worker(scenario_name: str, output_dir: Path) -> None:
             np.testing.assert_array_equal(model.input_matrix, production_d0.input_matrix)
 
         matrix_hashes = _validate_schedule_hashes(schedule_name, model, scenario_name)
+        print(json.dumps({"stage":"after_basis_checks","scenario":scenario_name,"schedule":schedule_name}), flush=True)
         reduced_trace, reduced_terminal = simulate_reduced_outputs(
             model, seven_layout, output_rows, protocol
         )
@@ -407,6 +415,7 @@ def worker(scenario_name: str, output_dir: Path) -> None:
     require(len(summary_rows) == len(SCHEDULES) * 2 * 9,
             f"scenario summary row count mismatch: {len(summary_rows)}")
 
+    print(json.dumps({"stage":"after_all_schedules","scenario":scenario_name}), flush=True)
     identity_rows: list[dict[str, Any]] = []
     for schedule_name in IDENTITY_SCHEDULES:
         model = models[schedule_name]
@@ -470,6 +479,10 @@ def _file_manifest(paths: list[Path]) -> list[dict[str, Any]]:
 
 
 def main() -> None:
+    # This module is intentionally the only morphology registry imported by the
+    # parent; NEURON simulation objects are initialized in isolated child workers.
+    import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
+
     started = time.perf_counter()
     specs = [x for x in core.MORPHOLOGIES if x["neuromorpho_id"] == MORPHOLOGY_ID]
     require(len(specs) == 1, "Jacobs NMO_03524 must resolve exactly once")
@@ -626,7 +639,7 @@ def main() -> None:
                 },
                 "input_ports": 7,
                 "output_rows": 9,
-                "input_expansion_shifts_hz": list(conditioning.SHIFTS_HZ),
+                "input_expansion_shifts_hz": list(core.conditioning.SHIFTS_HZ),
                 "sources": list(core.SOURCE_NAMES),
                 "pulse_widths_ms": list(core.PULSE_WIDTHS_MS),
                 "pulse_onset_ms": 2.0,
