@@ -14,12 +14,12 @@ SPEC.loader.exec_module(observer)
 
 def synthetic_case_rows():
     rows = []
-    morphologies = tuple(observer.runner_name for observer.runner_name in (
+    morphologies = (
         "NMO_03524_JacobsControl",
         "NMO_107159_Tamas_human_pyramidal_Control",
         "NMO_162186_AllenL23",
         "NMO_163775_Peng_mouse_Control",
-    ))
+    )
     layouts = ("seven", "eight_basal_q25", "eight_apical_q25", "nine_both_q25")
     for morphology in morphologies:
         for scenario in range(9):
