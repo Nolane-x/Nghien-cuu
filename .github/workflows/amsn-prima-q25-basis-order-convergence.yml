@@ -224,13 +224,13 @@ jobs:
           else:
               print(reason)
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
-              handle.write(f"ready={'true' if ready else 'false'}\\n")
+              handle.write(f"ready={'true' if ready else 'false'}\n")
           PY
       - name: Run 112/168/224 order sweep
         if: steps.reference.outputs.ready == 'true'
         run: |
-          /usr/bin/time -f 'elapsed_wall_seconds=%e\\nuser_cpu_seconds=%U\\nsystem_cpu_seconds=%S\\nmax_rss_kb=%M\\nexit_status=%x' \\
-            -o results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt \\
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt \
             python research/run_prima_q25_four_layout_basis_order_convergence.py
       - name: Commit compact order-sweep tables and diagnostics
         if: always() && hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json') != ''
