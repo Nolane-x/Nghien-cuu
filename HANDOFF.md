@@ -51,7 +51,7 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 
 1. Inspect corrected observer run 45625185575; confirm numerical status, row counts, corrected git add, rebase/push and artifact upload.
 2. Finish and validate the 112/168/224 order sweep. Compare absolute errors and both transient coordinate metrics; report rank, conditioning, orthogonality, hashes, runtime and peak RSS.
-3. Finish and validate the 7/8/8/9-port ablation. Preserve interaction contrasts separately by morphology, q25 role and source/window.
+3. Treat the accepted strict-dispatch 7/8/8/9-port matrix as the order-168 anchor; compare fresh order-112/224 results against it and revisit source/weighting only if the q25 penalty persists.
 4. Reconcile all accepted matrices and update dated report/logs. Keep failed and cancelled attempts as history, never as accepted results.
 5. Do not merge PR #33/#34 or alter production solver/defaults without explicit authorization.
 
