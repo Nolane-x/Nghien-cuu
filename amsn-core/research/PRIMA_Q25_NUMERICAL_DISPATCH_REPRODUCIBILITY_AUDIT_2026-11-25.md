@@ -73,27 +73,35 @@ Before an expensive calculation, the Actions job asserts that threadpoolctl sees
 
 This is a controlled numerical-dispatch environment, not a claim of universal bitwise reproducibility across every operating system, compiler or BLAS build. The newly pinned order-168 replay is the acceptance test. Only after it passes will the 112/168/224 convergence sweep be allowed to consume that reference.
 
-## 5. Stricter AVX-512 exclusion and current rerun queue
+## 5. Strict no-AVX512 execution and active-kernel evidence handoff
 
-The first successful Haswell order-168 replay is [run 45597945977](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45597945977). It passed all four morphology preflights, the 12,096-row case matrix, 9,072 matched comparisons, 1,728 finite-DFT identity rows and the 2 × 10⁻⁸ identity gate. It used Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3 and NEURON 9.0.2; both bundled OpenBLAS libraries reported Haswell with one thread. However, NumPy's hardware feature map still reported AVX512_SPR as found, although X86_V4 and AVX512_ICL were not found. It therefore establishes the Haswell OpenBLAS pin, but not the stricter no-AVX512 environment now required for the final reference.
+The first Haswell order-168 replay is [run 45597945977](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45597945977). It passed all four morphology preflights, 12,096 case rows, 9,072 matched comparisons, 1,728 finite-DFT identity rows and the 2 × 10⁻⁸ identity gate. It used Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3 and NEURON 9.0.2; both bundled OpenBLAS libraries reported Haswell with one thread. However, NumPy's CPU feature map still reported AVX512_SPR as found. This remains a valid Haswell/one-thread intermediate replay, but not the final strict no-AVX512 reference.
 
-The dispatch contract has been tightened to:
+The strict dispatch contract is now:
 
 - OPENBLAS_CORETYPE=Haswell and OPENBLAS_NUM_THREADS=1;
 - NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR;
 - exact packages: Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0;
-- numpy.lib.introspect.opt_func_info checks that current implementations for the selected float64/complex128 kernels do not use X86_V4 or AVX512 paths.
+- an isolated preflight process calls numpy.lib.introspect.opt_func_info on representative float64/complex128 loops and rejects active X86_V4 or AVX512 implementations;
+- that verified target list is handed to later steps through GITHUB_ENV and stored in the numerical report.
 
-The observer workflow's three-feature preflight passed on run 45603415289, but skipped its numerical analysis because the committed primary report was still the earlier two-feature result. The latest three-feature primary replay is queued as [run 45604285118](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45604285118), and its corresponding basis-order workflow is queued as [run 45604298291](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45604298291). An older main/basis run is still occupying the concurrency groups; its output is not to be mixed into the final three-feature sweep.
+The introspection call was deliberately moved out of the long NEURON simulation process. A first attempt to call it inside the runner caused native exit-139 failures on the hosted runner; the separate preflight has passed and the main analysis now only parses its verified JSON handoff. The long simulation records the exact target list without repeating the unstable introspection call.
 
-No result from run 45597945977 is discarded: it remains a valid Haswell/one-thread intermediate replay with complete internal DFT identity, but the 112/168/224 convergence study will only use the stricter three-feature order-168 reference.
+Current run states:
+
+- [Primary strict order-168 run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed runtime pin verification, all four q25 preflights, finite-window regression tests and source checksum checks; its four-morphology calculation is still in progress.
+- [Basis-order workflow 45608837531](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608837531) passed its test and preflight stages, then correctly deferred the 112/168/224 sweep because the strict primary report is not committed yet.
+- [Basis-order workflow 45608970513](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608970513) also passed its validation stages and deferred safely.
+- The current observer runs passed their runtime/test stages but skipped the numerical observer until the strict primary matrix is present.
+
+The primary workflow commit of the report and case matrix is configured to trigger both downstream workflows. The basis workflow now performs an explicit strict-reference gate; missing or older two-feature reports produce a successful defer, not a false sweep failure.
 
 ## 6. Current interpretation hold
 
-- The original two validated artifacts remain immutable and preserved.
-- The first run's compact raw matrix and paired post-analysis remain in Git with SHA-256 values recorded in the archive manifest.
-- A pinned Haswell order-168 replay has been launched; the run will commit the replacement matrix and updated runtime diagnostics only after the complete identity and coverage gate passes.
-- The order sweep has been gated so it cannot silently mix the old, unpinned reference with new pinned order-112 or order-224 calculations.
+- The original two validated artifacts and the first Haswell intermediate replay remain immutable.
+- The paired run-to-run audit is archived with its raw 12,096-row rerun case matrix, absolute metric differences, per-morphology sensitivities and checksums.
+- The strict no-AVX512 primary result has not yet passed its full calculation/DFT-identity/commit stages; do not treat it as complete until those steps finish.
+- The 112/168/224 convergence sweep is blocked from mixing old and new dispatch environments.
 - No PRIMA order, port layout, solver default or production behavior has been changed by this audit.
 
-Until the pinned replay and convergence sweep finish, treat the Tamas/Peng large-error pattern as a robust preliminary numerical finding, the exact effect sizes as dispatch-sensitive, and the Jacobs/Allen transient conclusions as provisional.
+Until the strict primary replay and basis-order sweep finish, treat the Tamas/Peng large-error pattern as a robust preliminary numerical finding, exact effect sizes as dispatch-sensitive, and Jacobs/Allen transient conclusions as provisional.
