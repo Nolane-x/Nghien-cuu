@@ -63,8 +63,21 @@ def _build_external_four_layouts(module, morphology, reader, sections, base_tree
 
 
 def _external_module_adapter(replay_module):
+    # Match the interface expected by the two-morphology conditioning runner.
+    # The held-out replay modules expose these objects directly rather than
+    # through a nested "baseline" module, so construct a narrow adapter.
+    baseline = SimpleNamespace(
+        reference=replay_module.reference,
+        SWCMorphology=replay_module.SWCMorphology,
+        parameter_cases=replay_module.parameter_cases,
+        PassiveParameters=replay_module.PassiveParameters,
+        CableTree=replay_module.CableTree,
+        prima_reduce_passive_cable_multishift=(
+            replay_module.prima_reduce_passive_cable_multishift
+        ),
+    )
     return SimpleNamespace(
-        baseline=replay_module,
+        baseline=baseline,
         SWC=replay_module.SWC,
         build_four_layouts=lambda morphology, reader, sections, base_tree:
             _build_external_four_layouts(
