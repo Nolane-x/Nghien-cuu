@@ -102,7 +102,7 @@ jobs:
           ]
           assert not unsupported, unsupported
           with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as handle:
-              handle.write("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON=" + json.dumps(targets) + "\\n")
+              handle.write("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON=" + json.dumps(targets) + "\n")
           print(json.dumps({"active_numpy_dispatch_targets": targets}, indent=2))
           PY
       - name: Compile research-only pilot and tests
