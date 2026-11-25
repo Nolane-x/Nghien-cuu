@@ -126,15 +126,28 @@ jobs:
               runtime = report.get("reproducibility_diagnostics", {}).get("numerical_runtime", {})
               env = runtime.get("thread_environment", {})
               pools = [p for p in runtime.get("threadpools", []) if p.get("internal_api") == "openblas"]
+              dispatch_targets = runtime.get("numpy_current_dispatch_targets", [])
+              unsupported_targets = [
+                  target for target in dispatch_targets
+                  if "X86_V4" in str(target).upper() or "AVX512" in str(target).upper()
+              ]
+              versions = report.get("runtime", {})
+              expected_versions = {
+                  "python": "3.12.16", "numpy": "2.5.5",
+                  "scipy": "1.16.3", "neuron": "9.0.2",
+              }
               with metrics_path.open(newline="", encoding="utf-8") as handle:
                   count = sum(1 for _ in csv.DictReader(handle))
               ready = (
                   report.get("status") == "prima_q25_four_morphology_four_layout_boundary_ablation_passed"
                   and report.get("scope", {}).get("basis_order") == 168
+                  and all(versions.get(key) == value for key, value in expected_versions.items())
                   and env.get("OPENBLAS_CORETYPE") == "Haswell"
                   and env.get("NPY_DISABLE_CPU_FEATURES") == "X86_V4,AVX512_ICL,AVX512_SPR"
                   and bool(pools)
                   and {p.get("architecture") for p in pools} == {"Haswell"}
+                  and bool(dispatch_targets)
+                  and not unsupported_targets
                   and count == 12096
                   and len(report.get("reproducibility_diagnostics", {}).get("basis_models", [])) == 144
               )
@@ -143,6 +156,9 @@ jobs:
                   "case_metric_rows": count,
                   "openblas_core": [p.get("architecture") for p in pools],
                   "thread_environment": env,
+                  "numpy_current_dispatch_targets": dispatch_targets,
+                  "unsupported_numpy_targets": unsupported_targets,
+                  "runtime_versions": versions,
                   "basis_model_count": len(report.get("reproducibility_diagnostics", {}).get("basis_models", [])),
               }, indent=2, sort_keys=True))
           with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
