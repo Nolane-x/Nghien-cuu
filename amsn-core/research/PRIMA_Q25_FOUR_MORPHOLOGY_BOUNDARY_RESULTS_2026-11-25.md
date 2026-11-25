@@ -78,12 +78,12 @@ The following values are medians aggregated over the six source/pulse groups (th
 
 ## 4. Source strata and limits
 
-| NeuroMorpho ID | Stratum | Important source limitation |
-|---|---|---|
-| NMO_163775 | Mouse, Peng archive, Control; somatosensory neocortex L2–3 | Dendrites and axon marked complete; NeuroMorpho metadata says **No Diameter**, so the standardized radii must not be described as measured biological diameters. |
-| NMO_107159 | Human, Tamas archive, female pyramidal Control comparison cell | Dendrites and axon marked complete; diameter metadata available. It is one reconstruction, not a population. |
-| NMO_03524 | Human, Jacobs archive, pyramidal Control; occipital neocortex BA18 | Dendritic integrity is moderate and axon is incomplete. |
-| NMO_162186 | Human, Allen Cell Types L2–3; epilepsy surgical specimen | Dendrites marked complete and axon incomplete. It is **not** a healthy-control specimen. |
+| NeuroMorpho ID | Stratum | SWC SHA-256 | Important source limitation |
+|---|---|---|---|
+| [NMO_163775](https://neuromorpho.org/neuron_info.jsp?neuron_name=18453_5766_x31719_y6139-semi_r) | Mouse, Peng archive, Control; somatosensory neocortex L2–3 | `94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f` | Dendrites and axon marked complete; NeuroMorpho metadata says **No Diameter**, so the standardized radii must not be described as measured biological diameters. |
+| [NMO_107159](https://neuromorpho.org/neuron_info.jsp?neuron_name=Fig5c_141009_2og_B) | Human, Tamas archive, female pyramidal Control comparison cell | `6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023` | Dendrites and axon marked complete; diameter metadata available. It is one reconstruction, not a population. |
+| [NMO_03524](https://neuromorpho.org/neuron_info.jsp?neuron_name=1-5-3) | Human, Jacobs archive, pyramidal Control; occipital neocortex BA18 | `6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748` | Dendritic integrity is moderate and axon is incomplete. |
+| [NMO_162186](https://neuromorpho.org/neuron_info.jsp?neuron_name=770307286_transformed) | Human, Allen Cell Types L2–3; epilepsy surgical specimen | `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc` | Dendrites marked complete and axon incomplete. It is **not** a healthy-control specimen. |
 
 These are four individual reconstructions, not four biological populations. The common 0.5-µm mesh cap aligns one discretization limit; it does not make their tissue conditions, species, sources, or reconstructions interchangeable. The study remains a passive linear-RC numerical reduction experiment. It does not validate active ion channels, action potentials, synapses, plasticity, calcium signaling, or biological physiology. Full Hines remains the canonical reference, and no production solver or default was changed.
 
