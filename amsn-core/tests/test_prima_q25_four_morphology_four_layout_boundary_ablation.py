@@ -334,12 +334,18 @@ def test_array_sha256_is_stable_for_identical_layouts():
     assert audit.array_sha256(values) != audit.array_sha256(values.reshape(6, 4))
 
 
-def test_runtime_diagnostics_records_single_thread_environment():
+def test_runtime_diagnostics_records_single_thread_environment(monkeypatch):
+    monkeypatch.setenv(
+        "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON",
+        '["baseline(X86_V2)", "X86_V3"]',
+    )
     diagnostics = audit.numerical_runtime_diagnostics()
     assert "OPENBLAS_NUM_THREADS" in diagnostics["thread_environment"]
     assert "PYTHONHASHSEED" in diagnostics["thread_environment"]
     assert isinstance(diagnostics["threadpools"], list)
-    assert isinstance(diagnostics["numpy_current_dispatch_targets"], list)
+    assert diagnostics["numpy_current_dispatch_targets"] == [
+        "baseline(X86_V2)", "X86_V3"
+    ]
 
 
 def test_expected_coverage_contract():
