@@ -178,7 +178,7 @@ def run(reference_dir: Path, rerun_dir: Path, output_dir: Path) -> dict[str, Any
     morphology_rows = []
     base_keys = {
         k[:6] for k in ref_index
-        if k[2] == "seven"
+        if k[6] == "seven"
     }
     for morphology in sorted(MORPHOLOGY_NAMES):
         for window in ("20.0", "40.0"):
