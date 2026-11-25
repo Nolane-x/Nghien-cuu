@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "purpose": "Recovered q25 output-observer numerical evidence from a successful analysis step whose original workflow failed only during Git archival.",
+  "date": "2026-11-25",
+  "repository": "Nolane-x/Nghien-cuu",
+  "branch": "research/prima-q25-cross-morphology-boundary-replication-2026-11-25",
+  "original_workflow": {
+    "run_id": 45616908599,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599",
+    "conclusion": "failure",
+    "job_id": 139214543062,
+    "numerical_analysis_step": "success",
+    "commit_archival_step": "failure",
+    "artifact_preservation_step": "success",
+    "corrected_replay_run_id": 45625185575,
+    "corrected_replay_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575",
+    "corrected_replay_status_at_recovery": "in_progress",
+    "caveat": "Do not mark the corrected archival replay as passed until its workflow completes successfully."
+  },
+  "artifact": {
+    "id": 15027601308,
+    "name": "prima-q25-output-observer-fixed-vs-enriched-basis",
+    "size_bytes": 1441656,
+    "zip_sha256": "2391661263ef1c959d550e8a336c8fed89e1f1dfcc626ddab16b3db60bed8aa3",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308",
+    "expired": false,
+    "retention_days": 90
+  },
+  "result": {
+    "status": "passed",
+    "study": "q25 observer-only readouts with fixed versus q25-enriched PRIMA input bases",
+    "primary_basis_hash_rows_expected": 144,
+    "primary_basis_hash_rows_matched": 144,
+    "primary_case_metrics_sha256": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "primary_report_sha256": "aa1a09f1034ac820f3c63b663b57d08114d22556e71004888c7d6869d728d5c4",
+    "max_finite_dft_identity_relative_error": 5.386622461553216e-12,
+    "finite_dft_identity_tolerance": 2e-8,
+    "coverage": {
+      "basis_hash_rows": 144,
+      "case_metrics_rows": 3456,
+      "candidate_vs_seven_comparisons": 2592,
+      "source_summary_rows": 2016,
+      "morphology_summary_rows": 336,
+      "finite_dft_identity_rows": 3456
+    }
+  },
+  "runtime": {
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "scipy": "1.16.3",
+    "neuron": "9.0.2",
+    "openblas": "Haswell",
+    "blas_threads": 1,
+    "active_numpy_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "wall_seconds": 2513.23,
+    "user_cpu_seconds": 2449.01,
+    "system_cpu_seconds": 61.26,
+    "max_rss_kib": 368548
+  },
+  "observer_method": {
+    "output_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "explanation": "Both q25 outputs are read from full-compartment basis rows. A q25 output that is not a retained port remains observation-only and is not added to the input selector B.",
+    "metric_focus": "perturbation_coordinate_transient_nrmse_pct",
+    "cases_per_morphology_role_window": 54
+  },
+  "files": {
+    "report": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_report.json",
+      "sha256": "b5a4f3de26815e3424ecf73c436c8d89aa0e7cd206672f13c0d0428f73753833"
+    },
+    "basis_hashes": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_basis_hashes.csv",
+      "rows": 144,
+      "sha256": "9a9bc6e654ba23b155c5dda00eb4d825965b9d5cb752aba0d5fcac979eb2edb8"
+    },
+    "case_metrics": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_case_metrics.csv",
+      "rows": 3456,
+      "sha256": "3d3481ebb9d2877ecef50773ec2750e01ebb89b0fa218d0df34e08d8468c9501"
+    },
+    "comparisons": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_layout_vs_seven_comparisons.csv",
+      "rows": 2592,
+      "sha256": "7d058bb48e40db7276e432c8d788b8752fa79ea995a4cd7a3b94eadfbd0bcb28"
+    },
+    "source_summary": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_source_summary.csv",
+      "rows": 2016,
+      "sha256": "7f26c91db909a20a3183c112598a3832ed7e435ed937cd998909e4b1901f6d35"
+    },
+    "morphology_summary": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_morphology_summary.csv",
+      "rows": 336,
+      "sha256": "20e494f0e414fc60b7a44b2d16571c080bf4323ace2a48904a4dd371a4fa061b"
+    },
+    "finite_dft_identity": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_finite_dft_identity.csv",
+      "rows": 3456,
+      "sha256": "22fd92ad8d93532fcdcc66a5351fb0afa286c4fbca9c430f930954c9ef0ba129"
+    },
+    "timing": {
+      "name": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25.time.txt",
+      "sha256": "369d51b444dc01c03a2ffc5aa82b0f31e00f5222ffa6252a15e2dac051e0ac73"
+    }
+  },
+  "interpretation_limits": [
+    "Four individual passive morphology reconstructions are not a biological population sample.",
+    "Ratios are reported with absolute error deltas because seven-port observer residuals can be small.",
+    "The perturbation-coordinate transient metric is the stable transient comparison at this residual scale; canonical absolute-voltage results remain separately recorded.",
+    "No active channels, action potentials, synapses, plasticity, calcium signalling or biological validity are established.",
+    "Full Hines remains canonical; no production solver or default changed."
+  ],
+  "report_path": "amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md"
+}
