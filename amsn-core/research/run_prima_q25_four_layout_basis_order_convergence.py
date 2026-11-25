@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """Run a four-layout PRIMA basis-order convergence sweep around order 168.
 
-The already completed order-168 matrix is the reference point. This driver
-replays orders 112, 224 and 280 under the identical morphology, port, source,
-passive-scenario, timestep and finite-window protocol, then runs the paired
-basal/apical post-analysis for every order. Large frequency CSVs are retained
-for Actions artifacts and are intentionally not intended for Git commits.
+The already completed, CPU-dispatch-pinned order-168 matrix is the reference
+point. This driver replays orders 112 and 224 under the identical morphology,
+port, source, passive-scenario, timestep, finite-window and numerical-dispatch
+protocol, then runs the paired basal/apical post-analysis for every order.
+Large frequency CSVs are retained for Actions artifacts and are intentionally
+not intended for Git commits.
 """
 from __future__ import annotations
 
@@ -34,6 +35,36 @@ EXPECTED_COMPARISON_ROWS = 9072
 EXPECTED_SOURCE_POSTHOC_ROWS = 1008
 EXPECTED_MORPHOLOGY_POSTHOC_ROWS = 168
 EXPECTED_INTERACTION_POSTHOC_ROWS = 336
+EXPECTED_OPENBLAS_CORETYPE = "Haswell"
+EXPECTED_NUMPY_DISABLED_FEATURES = "X86_V4,AVX512_ICL"
+
+
+def validate_reference_dispatch(reference_report: dict[str, Any]) -> dict[str, Any]:
+    """Refuse to mix order-168 data computed with a different CPU dispatch."""
+    runtime = (
+        reference_report.get("reproducibility_diagnostics", {})
+        .get("numerical_runtime", {})
+    )
+    environment = runtime.get("thread_environment", {})
+    if environment.get("OPENBLAS_CORETYPE") != EXPECTED_OPENBLAS_CORETYPE:
+        raise ValueError("order-168 reference does not use the pinned OpenBLAS core type")
+    if environment.get("NPY_DISABLE_CPU_FEATURES") != EXPECTED_NUMPY_DISABLED_FEATURES:
+        raise ValueError("order-168 reference does not use the pinned NumPy SIMD dispatch")
+    pools = [
+        pool for pool in runtime.get("threadpools", [])
+        if pool.get("internal_api") == "openblas"
+    ]
+    observed = {str(pool.get("architecture", "")) for pool in pools}
+    if observed != {EXPECTED_OPENBLAS_CORETYPE}:
+        raise ValueError(
+            f"order-168 OpenBLAS architecture is {sorted(observed)!r}, "
+            f"expected {EXPECTED_OPENBLAS_CORETYPE!r}"
+        )
+    return {
+        "openblas_coretype": EXPECTED_OPENBLAS_CORETYPE,
+        "numpy_disabled_cpu_features": EXPECTED_NUMPY_DISABLED_FEATURES,
+        "threadpools": pools,
+    }
 
 
 def result_stem_for_order(order: int) -> str:
@@ -138,6 +169,7 @@ def run() -> dict[str, Any]:
         raise ValueError("order-168 reference case-metric coverage is incomplete")
     if int(reference_report.get("exact_coverage", {}).get("layout_vs_seven_comparison_rows", -1)) != EXPECTED_COMPARISON_ROWS:
         raise ValueError("order-168 reference matched-comparison coverage is incomplete")
+    reference_dispatch = validate_reference_dispatch(reference_report)
 
     started = time.perf_counter()
     results: list[dict[str, Any]] = []
@@ -179,6 +211,7 @@ def run() -> dict[str, Any]:
             item["basis_sha256"]
             for item in reference_report["reproducibility_diagnostics"]["basis_models"]
         }),
+        "numerical_dispatch": reference_dispatch,
     })
 
     for order in ORDERS_TO_RUN:
@@ -242,6 +275,7 @@ def run() -> dict[str, Any]:
                     float(item["basis_orthogonality_max_abs"]) for item in basis_models
                 ),
                 "unique_basis_hashes": len({item["basis_sha256"] for item in basis_models}),
+                "numerical_dispatch": validate_reference_dispatch(report),
                 "elapsed_driver_seconds": time.perf_counter() - order_started,
             })
         except Exception as exc:
@@ -316,6 +350,8 @@ def run() -> dict[str, Any]:
             "windows_ms": [20.0, 40.0],
             "expansion_shifts_hz": [0.0, 100.0, 1000.0, 3000.0, 6000.0, 10000.0],
             "neuron_segment_cap_um": 0.5,
+            "openblas_coretype": EXPECTED_OPENBLAS_CORETYPE,
+            "numpy_disabled_cpu_features": EXPECTED_NUMPY_DISABLED_FEATURES,
         },
         "coverage_per_order": {
             "case_metrics_rows": EXPECTED_CASE_ROWS,
@@ -330,7 +366,7 @@ def run() -> dict[str, Any]:
         "wall_seconds": time.perf_counter() - started,
         "interpretation_limits": [
             "The sweep evaluates numerical stability of the four-layout passive PRIMA approximation across basis orders; it is not a biological validation.",
-            "The order-168 matrix is the already completed and validated reference, while orders 112 and 224 are recomputed with the same runner.",
+            "The order-168 matrix must pass the pinned Haswell OpenBLAS and NumPy SIMD dispatch contract; orders 112 and 224 are recomputed under that same contract.",
             "Ratios are accompanied by absolute errors in per-order post-analysis CSVs because very small baseline residuals can inflate ratios.",
             "The four morphologies are individual reconstructions and must remain separate strata.",
             "No production solver or default is modified.",
