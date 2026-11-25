@@ -111,7 +111,7 @@ The requested decomposition of the combined q25 change is now complete. The 7 / 
 
 The completed matrix contains 12,096 case-metric rows, 9,072 matched candidate-vs-seven pairs, 1,728 finite-DFT identity diagnostics and 1,075,536 frequency-summary rows. The maximum finite-DFT identity relative error is 8.78149 × 10⁻¹², below the 2 × 10⁻⁸ tolerance. The full 190.12-MB frequency matrix is preserved in the Actions artifact because GitHub rejects individual Git blobs above 100 MB.
 
-The most important descriptive result is morphology dependence: the combined q25 layout has a much larger transient-error ratio in Tamas and Peng than either one-probe layout alone, while Jacobs remains close to neutral and Allen is moderate. Paired multiplicative interaction diagnostics show strong non-additivity for Tamas and Peng. This is a numerical reduced-model observation, not a biological interaction claim. The [post-analysis module](analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py) companion script is in the research directory and its eight focused regression tests pass.
+The most important descriptive result is morphology dependence: the combined q25 layout has a much larger transient-error ratio in Tamas and Peng than either one-probe layout alone, while Jacobs remains close to neutral and Allen is moderate. Paired multiplicative interaction diagnostics show strong non-additivity for Tamas and Peng. This is a numerical reduced-model observation, not a biological interaction claim. The [post-analysis module](summarize_prima_q25_four_layout_interactions.py) companion script is in the research directory and its eight focused regression tests pass.
 
 ## 7. Next discriminating experiment
 
