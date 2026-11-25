@@ -24,8 +24,8 @@ AMSN_ROOT = RESEARCH.parent
 RESULTS_DIR = AMSN_ROOT / "results"
 
 REFERENCE_ORDER = 168
-ORDERS_TO_RUN = (112, 224, 280)
-ALL_ORDERS = (112, 168, 224, 280)
+ORDERS_TO_RUN = (112, 224)
+ALL_ORDERS = (112, 168, 224)
 BASE_RESULT_STEM = "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
 ORDER_SWEEP_STEM = "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25"
 
