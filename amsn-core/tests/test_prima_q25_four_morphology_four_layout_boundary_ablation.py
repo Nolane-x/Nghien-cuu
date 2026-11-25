@@ -334,6 +334,38 @@ def test_array_sha256_is_stable_for_identical_layouts():
     assert audit.array_sha256(values) != audit.array_sha256(values.reshape(6, 4))
 
 
+def test_verified_numpy_dispatch_targets_accepts_only_pinned_targets():
+    valid_environment = {
+        "OPENBLAS_CORETYPE": "Haswell",
+        "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '["baseline(X86_V2)", "X86_V3"]',
+    }
+    assert audit.verified_numpy_dispatch_targets(valid_environment) == [
+        "baseline(X86_V2)", "X86_V3"
+    ]
+
+
+def test_verified_numpy_dispatch_targets_rejects_missing_or_invalid_evidence():
+    import pytest
+
+    with pytest.raises(RuntimeError, match="did not provide"):
+        audit.verified_numpy_dispatch_targets({"OPENBLAS_CORETYPE": "Haswell"})
+    with pytest.raises(RuntimeError, match="JSON string list"):
+        audit.verified_numpy_dispatch_targets({
+            "OPENBLAS_CORETYPE": "Haswell",
+            "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '{"target":"X86_V3"}',
+        })
+
+
+def test_verified_numpy_dispatch_targets_rejects_avx512_targets():
+    import pytest
+
+    with pytest.raises(RuntimeError, match="exceeded the pinned baseline"):
+        audit.verified_numpy_dispatch_targets({
+            "OPENBLAS_CORETYPE": "Haswell",
+            "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '["X86_V3", "AVX512_SKX"]',
+        })
+
+
 def test_runtime_diagnostics_records_single_thread_environment(monkeypatch):
     monkeypatch.setenv(
         "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON",
