@@ -40,8 +40,8 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add amsn-core/results/prima_q25_four_morphology_four_layout_ablation_2026-11-25_posthoc_*.csv \
-                  amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json
+          git add results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_*.csv \
+                  results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json
           if ! git diff --cached --quiet; then
             git commit -m "results: archive paired q25 basal apical interaction summaries"
             git fetch origin "$GITHUB_REF_NAME"
