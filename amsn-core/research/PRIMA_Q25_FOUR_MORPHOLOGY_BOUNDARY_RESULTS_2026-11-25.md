@@ -101,13 +101,27 @@ The report and machine-readable outputs are committed under:
 
 The frequency-summary CSV is about 97.9 MB and the case-metrics CSV about 3.2 MB; retrieve the full matrix from the artifact linked in the Actions run rather than relying on the GitHub file preview.
 
-## 6. Next experiment
+## 6. Four-layout follow-up — completed
 
-The next discriminating experiment should split the nine-port change into its two components:
+The requested decomposition of the combined q25 change is now complete. The 7 / 8-basal / 8-apical / 9-both experiment and its paired interaction analysis are documented in:
 
-- Seven shared ports.
-- Eight ports with basal-q25 only.
-- Eight ports with apical-q25 only.
-- Nine ports with both q25 probes.
+- [Four-morphology four-layout results](PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md)
+- [Pinned four-layout protocol and node identities](PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_PROTOCOL_2026-11-25.md)
+- [Primary Actions calculation and full artifact](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45585262246)
 
-Run the four-layout ablation on the same four morphologies, same sources, scenarios, timestep and windows. This isolates whether the observed differences are driven mainly by basal-q25, apical-q25, or their interaction. Keep the perturbation-coordinate and canonical transient metrics side by side, retain absolute error norms, and compare the boundary and periodic terms per matched output before making a port-layout recommendation.
+The completed matrix contains 12,096 case-metric rows, 9,072 matched candidate-vs-seven pairs, 1,728 finite-DFT identity diagnostics and 1,075,536 frequency-summary rows. The maximum finite-DFT identity relative error is 8.78149 × 10⁻¹², below the 2 × 10⁻⁸ tolerance. The full 190.12-MB frequency matrix is preserved in the Actions artifact because GitHub rejects individual Git blobs above 100 MB.
+
+The most important descriptive result is morphology dependence: the combined q25 layout has a much larger transient-error ratio in Tamas and Peng than either one-probe layout alone, while Jacobs remains close to neutral and Allen is moderate. Paired multiplicative interaction diagnostics show strong non-additivity for Tamas and Peng. This is a numerical reduced-model observation, not a biological interaction claim. The [post-analysis module](analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py) companion script is in the research directory and its eight focused regression tests pass.
+
+## 7. Next discriminating experiment
+
+Before recommending a port layout, test whether the observed q25 interaction is stable across PRIMA basis order. The present four-layout experiment fixes order 168; because the basis is regenerated for each retained-port set, a strong effect could be sensitive to approximation order as well as probe placement.
+
+The next study should therefore run a **basis-order convergence sweep** for all four layouts on the same four pinned morphologies, at least at orders 84, 120, 168, 224 and 280, retaining the existing expansion shifts, sources, passive scenarios and finite-window decomposition. Report:
+- convergence of absolute discrete-BE and perturbation-coordinate transient errors against the full-Hines reference;
+- whether basal-only, apical-only and combined interaction contrasts persist or collapse as order increases;
+- basis rank, orthogonality, conditioning and unique subspace hashes by morphology/layout/order;
+- periodic-transfer and terminal-boundary terms separately, including their cross-term;
+- runtime and peak memory, so the highest useful order is selected empirically.
+
+Keep the four morphologies as separate strata and preserve the current caveats about individual reconstructions and passive linear-RC scope.
