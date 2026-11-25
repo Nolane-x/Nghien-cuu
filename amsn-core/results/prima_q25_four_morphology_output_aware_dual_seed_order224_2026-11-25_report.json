@@ -1,0 +1,257 @@
+{
+  "coverage": {
+    "basis_metadata_rows": 180,
+    "case_metrics_expected": 19440,
+    "case_metrics_read_back": 19440,
+    "finite_dft_identity_expected": 72,
+    "finite_dft_identity_read_back": 72,
+    "group_summary_expected": 3240,
+    "group_summary_read_back": 3240,
+    "morphology_summary_expected": 360,
+    "morphology_summary_read_back": 360,
+    "pooled_summary_expected": 90,
+    "pooled_summary_read_back": 90,
+    "scenario_summary_expected": 810,
+    "scenario_summary_read_back": 810,
+    "worker_groups_expected": 36,
+    "worker_groups_passed": 36
+  },
+  "dft_identity": {
+    "all_rows_passed": true,
+    "max_full_hines_relative_error": 3.2862696036373863e-12,
+    "max_reduced_relative_error": 3.261169162441114e-13,
+    "scope": "20-ms soma/2-ms record for D0 and D2 in each morphology/scenario group",
+    "tolerance": 2e-08
+  },
+  "files": {
+    "case_metrics": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_case_metrics.csv",
+    "finite_dft_identity": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_finite_dft_identity.csv",
+    "group_summary": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_group_summary.csv",
+    "morphology_summary": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_morphology_summary.csv",
+    "pooled_summary": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_pooled_summary.csv",
+    "scenario_summary": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_scenario_summary.csv"
+  },
+  "fixed_protocol": {
+    "basis_order": 224,
+    "dt_ms": 0.00625,
+    "input_expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "input_ports": 7,
+    "mesh_cap_um": 0.5,
+    "morphologies": [
+      {
+        "expected_records": 4209,
+        "expected_swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+        "name": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "preflight_source_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+        "preflight_status": "PASS"
+      },
+      {
+        "expected_records": 7228,
+        "expected_swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+        "name": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "preflight_source_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+        "preflight_status": "PASS"
+      },
+      {
+        "expected_records": 869,
+        "expected_swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+        "name": "NMO_03524_JacobsControl",
+        "neuromorpho_id": "NMO_03524",
+        "preflight_source_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+        "preflight_status": "PASS"
+      },
+      {
+        "expected_records": 7287,
+        "expected_swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+        "name": "NMO_162186_AllenL23",
+        "neuromorpho_id": "NMO_162186",
+        "preflight_source_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+        "preflight_status": "PASS"
+      }
+    ],
+    "morphology_count": 4,
+    "output_rows": 9,
+    "passive_scenario_count": 9,
+    "passive_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "schedules": {
+      "D0_none": [],
+      "D1_high_10000hz": [
+        10000.0
+      ],
+      "D1_low_0hz": [
+        0.0
+      ],
+      "D1_mid_1000hz": [
+        1000.0
+      ],
+      "D2_mid_high": [
+        1000.0,
+        10000.0
+      ]
+    },
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0
+    ]
+  },
+  "runtime": {
+    "max_worker_seconds": 36.69235129699996,
+    "numerical_runtime": {
+      "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+      "numpy_cpu_features_detected": {
+        "ASIMD": false,
+        "ASIMDDP": false,
+        "ASIMDFHM": false,
+        "ASIMDHP": false,
+        "AVX": true,
+        "AVX2": true,
+        "AVX5124FMAPS": false,
+        "AVX5124VNNIW": false,
+        "AVX512BF16": true,
+        "AVX512BITALG": true,
+        "AVX512BW": true,
+        "AVX512CD": true,
+        "AVX512DQ": true,
+        "AVX512ER": false,
+        "AVX512F": true,
+        "AVX512FP16": true,
+        "AVX512IFMA": true,
+        "AVX512PF": false,
+        "AVX512VBMI": true,
+        "AVX512VBMI2": true,
+        "AVX512VL": true,
+        "AVX512VNNI": true,
+        "AVX512VPOPCNTDQ": true,
+        "AVX512_CLX": true,
+        "AVX512_CNL": true,
+        "AVX512_ICL": false,
+        "AVX512_KNL": false,
+        "AVX512_KNM": false,
+        "AVX512_SKX": false,
+        "AVX512_SPR": false,
+        "BMI": true,
+        "BMI2": true,
+        "CX16": true,
+        "F16C": true,
+        "FMA3": true,
+        "FMA4": false,
+        "FPHP": false,
+        "GFNI": true,
+        "LAHF": true,
+        "LSX": false,
+        "LZCNT": true,
+        "MMX": true,
+        "MOVBE": true,
+        "NEON": false,
+        "NEON_FP16": false,
+        "NEON_VFPV4": false,
+        "POPCNT": true,
+        "RVV": false,
+        "SSE": true,
+        "SSE2": true,
+        "SSE3": true,
+        "SSE41": true,
+        "SSE42": true,
+        "SSSE3": true,
+        "SVE": false,
+        "VAES": true,
+        "VPCLMULQDQ": true,
+        "VSX": false,
+        "VSX2": false,
+        "VSX3": false,
+        "VSX4": false,
+        "VX": false,
+        "VXE": false,
+        "VXE2": false,
+        "X86_V2": true,
+        "X86_V3": true,
+        "X86_V4": false,
+        "XOP": false
+      },
+      "numpy_current_dispatch_targets": [
+        "X86_V3",
+        "baseline(X86_V2)"
+      ],
+      "thread_environment": {
+        "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": "[\"X86_V3\", \"baseline(X86_V2)\"]",
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_CORETYPE": "Haswell",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "threadpools": [
+        {
+          "architecture": "Haswell",
+          "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "threading_layer": "pthreads",
+          "user_api": "blas",
+          "version": "0.3.34.237.2"
+        },
+        {
+          "architecture": "Haswell",
+          "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "threading_layer": "pthreads",
+          "user_api": "blas",
+          "version": "0.3.29.dev"
+        }
+      ],
+      "verified_openblas_coretype": "Haswell"
+    },
+    "wall_seconds": 1085.854270547,
+    "worker_processes": 36,
+    "worker_total_seconds": 1007.7144076500006
+  },
+  "schedule_metadata": "prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_basis_metadata.json",
+  "schema_version": 1,
+  "scientific_limits": [
+    "Four individual morphology reconstructions, not a biological population.",
+    "One passive linear-RC model family; no active channels, action potentials, synapses, plasticity or calcium signalling.",
+    "Output-dual seeds alter the state basis but the input selector remains exactly seven ports.",
+    "Relative ratios must be interpreted with absolute percentage-point deltas because several baseline output errors are near zero.",
+    "Finite-record DFT identity is checked only on the declared soma/2-ms/20-ms record for D0 and D2 in each morphology/scenario group.",
+    "This study does not change production solver behavior or defaults; full Hines remains canonical."
+  ],
+  "status": "passed",
+  "study": "Four-morphology nine-scenario PRIMA q25 output-aware dual-seed order-224 sweep"
+}
