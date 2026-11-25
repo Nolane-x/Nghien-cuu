@@ -620,14 +620,18 @@ def _summarize_comparisons(
             float(x["nine_over_seven_perturbation_coordinate_transient_nrmse_ratio"])
             for x in subset
         ]
+        periodic = []
         boundary = []
+        cross = []
         for row in subset:
             nine = metric_index[(
                 row["morphology"], "nine_both_q25", row["parameter_scenario"],
                 row["source_name"], row["output_swc_id"],
                 row["pulse_width_ms"], row["window_ms"],
             )]
+            periodic.append(float(nine["transfer_component_over_finite_error_norm_pct"]))
             boundary.append(float(nine["boundary_component_over_finite_error_norm_pct"]))
+            cross.append(float(nine["transfer_boundary_cross_term_pct"]))
         output.append({
             "morphology": key[0],
             "source_name": key[1],
@@ -646,7 +650,11 @@ def _summarize_comparisons(
             "p90_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio": float(
                 np.percentile(perturbation_transient_ratios, 90)
             ),
+            "median_nine_periodic_transfer_component_over_finite_error_norm_pct": float(
+                np.median(periodic)
+            ),
             "median_nine_boundary_component_of_error_norm_pct": float(np.median(boundary)),
+            "median_nine_transfer_boundary_cross_term_pct": float(np.median(cross)),
             "continuous_ac_worse_pairs": sum(x > 1.0 for x in cont_ratios),
             "discrete_be_worse_pairs": sum(x > 1.0 for x in be_ratios),
             "transient_nrmse_worse_pairs": sum(x > 1.0 for x in transient_ratios),
@@ -672,7 +680,9 @@ def _summarize_morphology_windows(
         "median_nine_over_seven_discrete_be_ratio",
         "median_nine_over_seven_transient_nrmse_ratio",
         "median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio",
+        "median_nine_periodic_transfer_component_over_finite_error_norm_pct",
         "median_nine_boundary_component_of_error_norm_pct",
+        "median_nine_transfer_boundary_cross_term_pct",
     )
     rows: list[dict[str, Any]] = []
     expected_groups_per_window = len(SOURCE_NAMES) * len(PULSE_WIDTHS_MS)
@@ -703,8 +713,14 @@ def _summarize_morphology_windows(
                     local["median_nine_over_seven_perturbation_coordinate_transient_nrmse_ratio"]
                 )
             ),
+            "median_nine_periodic_transfer_component_over_finite_error_norm_pct": float(
+                np.median(local["median_nine_periodic_transfer_component_over_finite_error_norm_pct"])
+            ),
             "median_nine_boundary_component_of_error_norm_pct": float(
                 np.median(local["median_nine_boundary_component_of_error_norm_pct"])
+            ),
+            "median_nine_transfer_boundary_cross_term_pct": float(
+                np.median(local["median_nine_transfer_boundary_cross_term_pct"])
             ),
             "median_perturbation_transient_worse_pairs_of_63": float(np.median([
                 item["perturbation_coordinate_transient_nrmse_worse_pairs"]
