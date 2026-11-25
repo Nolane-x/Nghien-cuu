@@ -17,7 +17,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-output-observer
+  group: amsn-prima-q25-output-observer-instrumented-native-stage-trace
   cancel-in-progress: false
 
 jobs:
