@@ -484,6 +484,8 @@ def decompose_periodic_boundary_error(
     periodic_transfer_component: np.ndarray,
     terminal_boundary_component: np.ndarray,
     one_sided_weights: np.ndarray,
+    *,
+    identity_scale_norm: float = 0.0,
 ) -> dict[str, float]:
     """Decompose finite-record error into periodic and terminal components."""
     actual = np.asarray(actual_error_fft, dtype=np.complex128)
@@ -500,7 +502,13 @@ def decompose_periodic_boundary_error(
         "finite-window component decomposition contains non-finite values",
     )
     reconstructed = periodic + boundary
-    scale = max(float(np.linalg.norm(actual)), 1e-30)
+    # Normalize identity round-off to the output-waveform scale, not the
+    # much smaller residual obtained after periodic/boundary cancellation.
+    scale = (
+        float(identity_scale_norm)
+        if np.isfinite(identity_scale_norm) and identity_scale_norm > 0.0
+        else max(float(np.linalg.norm(actual)), 1e-30)
+    )
     identity_relative, identity_absolute = _finite_identity_error(
         actual, reconstructed, scale_norm=scale
     )
@@ -1055,6 +1063,7 @@ def main() -> None:
                                 decomposition = decompose_periodic_boundary_error(
                                     actual_error_fft, transfer_component,
                                     boundary_component, one_sided,
+                                    identity_scale_norm=max(full_y_norm, reduced_y_norm),
                                 )
                                 error_identity_rel = decomposition["identity_relative_error"]
                                 error_identity_abs = decomposition["identity_absolute_error"]
