@@ -90,7 +90,7 @@ The introspection call was deliberately moved out of the long NEURON simulation 
 Current run states:
 
 - [Latest full-dispatch strict primary run 45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039) is the fresh order-168 replay. It passed runtime installation, the unfiltered NumPy dispatch check, four-morphology regression tests and all q25 preflights; its 7/8/8/9-port calculation is still running, with identity validation and report commit pending.
-- [Older strict primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight, tests and source checks but remains stuck in the long calculation step in the former concurrency group. Do not treat it as a completed result.
+- [Older strict primary run 45608561071](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45608561071) passed its preflight, tests and source checks but remains in the long calculation step in the former concurrency group without a terminal conclusion. Do not treat it as a completed result.
 - [Previously queued strict primary run 45610056257](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610056257) remains pending in the former concurrency group. The new full-dispatch run is intended to supersede that wait.
 - [Basis-order workflow 45610065386](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610065386) and [observer workflow 45610073270](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45610073270) passed their own runtime/test gates and deferred their numerical calculations because the committed order-168 report was still the older dispatch run. Their workflows are configured to trigger again when the accepted strict primary report and matrices are committed.
 
