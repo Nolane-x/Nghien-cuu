@@ -266,9 +266,11 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
     with contextlib.redirect_stdout(output):
         np.show_config()
 
-    runtime_output = io.StringIO()
-    with contextlib.redirect_stdout(runtime_output):
-        np.show_runtime()
+    # Record NumPy's detected CPU features without calling show_runtime(),
+    # which can segfault in some NumPy 2.5 / OpenBLAS hosted-runner builds.
+    numpy_cpu_features = dict(
+        getattr(np._core._multiarray_umath, "__cpu_features__", {})
+    )
 
     expected_core = os.environ.get("OPENBLAS_CORETYPE")
     try:
@@ -306,7 +308,7 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
         "thread_environment": {name: os.environ.get(name) for name in names},
         "threadpools": pools,
         "numpy_build_configuration": output.getvalue(),
-        "numpy_runtime_configuration": runtime_output.getvalue(),
+        "numpy_cpu_features_detected": numpy_cpu_features,
         "verified_openblas_coretype": expected_core,
     }
 
