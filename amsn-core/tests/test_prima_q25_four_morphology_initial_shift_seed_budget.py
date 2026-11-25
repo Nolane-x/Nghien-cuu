@@ -97,11 +97,18 @@ class TestQ25InitialShiftSeedBudget(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cumulative seed rank"):
             audit.summarize_seed_rows(rows, shifts_hz=SHIFTS)
 
-    def test_seed_rank_exceeding_an_order_is_rejected(self):
+    def test_seed_rank_exceeding_a_requested_basis_order_is_rejected(self):
         rows = synthetic_seed_rows()
-        rows[0]["independent_seed_columns"] = 300
-        rows[0]["cumulative_seed_columns"] = 300
-        with self.assertRaisesRegex(ValueError, "exceeds max order"):
+        with self.assertRaisesRegex(ValueError, "exceeds basis order 32"):
+            audit.summarize_seed_rows(
+                rows, shifts_hz=SHIFTS, orders=(32, 168, 224)
+            )
+
+    def test_per_shift_seed_rank_cannot_exceed_retained_port_count(self):
+        rows = synthetic_seed_rows()
+        rows[0]["independent_seed_columns"] = 8
+        rows[0]["cumulative_seed_columns"] = 8
+        with self.assertRaisesRegex(ValueError, "exceeds retained port count"):
             audit.summarize_seed_rows(rows, shifts_hz=SHIFTS)
 
     def test_unsorted_or_duplicate_orders_are_rejected(self):
