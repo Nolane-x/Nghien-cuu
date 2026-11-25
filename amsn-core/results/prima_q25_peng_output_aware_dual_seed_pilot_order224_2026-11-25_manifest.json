@@ -1,0 +1,302 @@
+{
+  "schema_version": 1,
+  "study": "Peng NMO_163775 nominal-scenario PRIMA q25 output-aware dual-seed pilot",
+  "date": "2026-11-25",
+  "repository": "Nolane-x/Nghien-cuu",
+  "branch": "research/prima-q25-cross-morphology-boundary-replication-2026-11-25",
+  "workflow": {
+    "run_id": 45636631081,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636631081",
+    "conclusion": "success",
+    "source_head_sha": "581375b2036e047cf74d8dd5b86200e7d427c0af",
+    "result_commit": "22ba7b6994c871d3784f5abf15a2fe9311abe60d"
+  },
+  "artifact": {
+    "id": 15033336785,
+    "name": "prima-q25-peng-output-aware-dual-seed-pilot",
+    "size_bytes": 77205,
+    "file_count": 6,
+    "zip_sha256": "a19c928f99eb361300a6f5c8e793550e3cc1854dd177ed4739271ba459d5a95b",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636631081/artifacts/15033336785",
+    "retention_days": 90
+  },
+  "source": {
+    "morphology": "NMO_163775_Peng_mouse_Control",
+    "neuromorpho_id": "NMO_163775",
+    "swc_path": "amsn-core/data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc",
+    "swc_records": 4209,
+    "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+    "preflight_path": "amsn-core/results/NMO_163775_PengControl_holdout/preflight.json",
+    "preflight_status": "PASS",
+    "preflight_sha256": "1041fcf82ed05f30a2dc6cd62df67d35d78fd7b9566f5ff8ae59ea65bcebc46c",
+    "q25_node_ids": {
+      "basal_q25": 224,
+      "apical_q25": 4096
+    },
+    "shared_output_node_ids": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948
+    ]
+  },
+  "protocol": {
+    "order": 224,
+    "original_input_port_count": 7,
+    "observed_output_count": 9,
+    "primal_expansion_shifts_hz": [
+      0,
+      100,
+      1000,
+      3000,
+      6000,
+      10000
+    ],
+    "passive_parameter_scenario": "nominal",
+    "current_sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "pulse_amplitude_pA": 10,
+    "pulse_onset_ms": 2,
+    "pulse_widths_ms": [
+      2,
+      10
+    ],
+    "timestep_ms": 0.00625,
+    "windows_ms": [
+      20,
+      40
+    ],
+    "mesh_cap_um": 0.5,
+    "schedules": {
+      "D0_none": {
+        "dual_output_frequencies_hz": [],
+        "initial_dual_seed_columns": 0
+      },
+      "D1_low_0hz": {
+        "dual_output_frequencies_hz": [
+          0
+        ],
+        "initial_dual_seed_columns": 2
+      },
+      "D1_mid_1000hz": {
+        "dual_output_frequencies_hz": [
+          1000
+        ],
+        "initial_dual_seed_columns": 2
+      },
+      "D1_high_10000hz": {
+        "dual_output_frequencies_hz": [
+          10000
+        ],
+        "initial_dual_seed_columns": 2
+      },
+      "D2_mid_high": {
+        "dual_output_frequencies_hz": [
+          1000,
+          10000
+        ],
+        "initial_dual_seed_columns": 4
+      }
+    }
+  },
+  "numerical_acceptance": {
+    "status": "passed",
+    "exact_d0_parity_asserted_against_production_multishift_prima": true,
+    "input_selector_unchanged": true,
+    "actual_order_by_schedule": {
+      "D0_none": 224,
+      "D1_low_0hz": 224,
+      "D1_mid_1000hz": 224,
+      "D1_high_10000hz": 224,
+      "D2_mid_high": 224
+    },
+    "input_seed_columns_per_shift": [
+      7,
+      7,
+      7,
+      7,
+      7,
+      7
+    ],
+    "initial_primal_seed_columns": 42,
+    "maximum_basis_orthogonality_error": 1.5543122344752192e-15,
+    "reduced_G_condition_number_range": [
+      525133.1050692834,
+      525824.4170571236
+    ],
+    "reduced_C_condition_number_range": [
+      125.46800329185211,
+      125.54384447304548
+    ],
+    "cholesky_reduced_G_and_C_all_schedules": true,
+    "coverage": {
+      "schedules": 5,
+      "windows": 2,
+      "sources": 3,
+      "pulse_widths": 2,
+      "output_rows": 9,
+      "case_metrics_expected": 540,
+      "case_metrics_read_back": 540,
+      "summary_rows_expected": 90,
+      "summary_rows_read_back": 90
+    },
+    "finite_record_dft_identity": {
+      "bins": 1601,
+      "window_ms": 20,
+      "source": "soma",
+      "pulse_width_ms": 2,
+      "tolerance": 2e-8,
+      "full_hines_max_relative_error": 3.361476419436784e-13,
+      "full_hines_max_absolute_error": 5.539490571571805e-13,
+      "D0_reduced_max_relative_error": 1.096864967872715e-13,
+      "D0_reduced_max_absolute_error": 1.8075608419088973e-13,
+      "D2_reduced_max_relative_error": 2.2533554739206566e-13,
+      "D2_reduced_max_absolute_error": 3.713380623468919e-13,
+      "passed": true,
+      "scope_limit": "Only the predeclared soma/2-ms/20-ms record, for D0 and D2. The identity is not computed for all schedules or source/pulse/window combinations."
+    }
+  },
+  "pooled_metrics": {
+    "q25_output_cases_per_schedule": 24,
+    "shared_output_cases_per_schedule": 84,
+    "D0_q25_median_nrmse_pct": 5.16176971864255e-7,
+    "schedule_summary": {
+      "D1_low_0hz": {
+        "q25_median_nrmse_pct": 1.8402798247203607e-11,
+        "q25_median_ratio_to_D0": 0.000019239206795074215,
+        "q25_p90_ratio_to_D0": 0.0008975001274599643,
+        "q25_worst_ratio_to_D0": 0.0028587025297622643,
+        "q25_improved_cases": 24,
+        "shared_median_ratio_to_D0": 1.102740656306696,
+        "shared_median_delta_percentage_points": 5.511122020535303e-13,
+        "shared_max_abs_delta_percentage_points": 3.395232969479275e-11
+      },
+      "D1_mid_1000hz": {
+        "q25_median_nrmse_pct": 2.0790074522807888e-11,
+        "q25_median_ratio_to_D0": 0.00004114587287721872,
+        "q25_p90_ratio_to_D0": 0.0006422694631481928,
+        "q25_worst_ratio_to_D0": 0.0018264173429411007,
+        "q25_improved_cases": 24,
+        "shared_median_ratio_to_D0": 1.2803219484435533,
+        "shared_median_delta_percentage_points": 3.170339168099724e-12,
+        "shared_max_abs_delta_percentage_points": 2.452618360408808e-11
+      },
+      "D1_high_10000hz": {
+        "q25_median_nrmse_pct": 9.923531624971837e-12,
+        "q25_median_ratio_to_D0": 0.000016593128298362608,
+        "q25_p90_ratio_to_D0": 0.0010425186350410851,
+        "q25_worst_ratio_to_D0": 0.005169460351972976,
+        "q25_improved_cases": 24,
+        "shared_median_ratio_to_D0": 1.7583591567199415,
+        "shared_median_delta_percentage_points": 7.647436199830865e-12,
+        "shared_max_abs_delta_percentage_points": 2.6118038069709283e-11
+      },
+      "D2_mid_high": {
+        "q25_median_nrmse_pct": 1.1382697936540297e-11,
+        "q25_median_ratio_to_D0": 0.0000159587802691604,
+        "q25_p90_ratio_to_D0": 0.0010578479586495129,
+        "q25_worst_ratio_to_D0": 0.0037144357976802546,
+        "q25_improved_cases": 24,
+        "shared_median_ratio_to_D0": 1.3978559717935144,
+        "shared_median_delta_percentage_points": 3.1807461805129964e-12,
+        "shared_max_abs_delta_percentage_points": 6.781724324408273e-11
+      }
+    }
+  },
+  "runtime": {
+    "wall_seconds": 28.816854551000006,
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "scipy": "1.16.3",
+    "neuron": "9.0.2",
+    "openblas_coretype": "Haswell",
+    "blas_threads": 1,
+    "numpy_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "numpy_disabled_cpu_features": [
+      "X86_V4",
+      "AVX512_ICL",
+      "AVX512_SPR"
+    ],
+    "openblas_libraries": [
+      {
+        "architecture": "Haswell",
+        "version": "0.3.34.237.2",
+        "threads": 1
+      },
+      {
+        "architecture": "Haswell",
+        "version": "0.3.29.dev",
+        "threads": 1
+      }
+    ]
+  },
+  "files": {
+    "swc": {
+      "path": "data/mouse/neuromorpho_peng/NMO_163775_18453_5766_x31719_y6139_semi_r.CNG.swc",
+      "sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+    },
+    "preflight": {
+      "path": "results/NMO_163775_PengControl_holdout/preflight.json",
+      "sha256": "1041fcf82ed05f30a2dc6cd62df67d35d78fd7b9566f5ff8ae59ea65bcebc46c",
+      "git_blob_sha1": "57608661a3da712dce430ca774b407a0b69c447f"
+    },
+    "case_metrics": {
+      "path": "results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_case_metrics.csv",
+      "rows": 540,
+      "sha256": "19612f2163fea4752b3d86a0236fa4e60b6d3c52629b144a12522043c200f9b0",
+      "git_blob_sha1": "9c1e92f2e210c54b30b769ff44aa073fef25cf53"
+    },
+    "summary": {
+      "path": "results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_summary.csv",
+      "rows": 90,
+      "sha256": "650244516deb28d1b3a73ca527ba5aa22022573070dcc45d770c231036eb6210",
+      "git_blob_sha1": "63d6d71763d7fe1b7b5c050f430c3ea84d3d25ca"
+    },
+    "report": {
+      "path": "results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_report.json",
+      "sha256": "45231630594023b8575fdb2fc5c250c4dc7a6b6f6967425b7061245992744cee",
+      "git_blob_sha1": "69660ee5a3666e8a20edf2c3b3ce0a4e31b690a9"
+    },
+    "timing": {
+      "path": "results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25.time.txt",
+      "sha256": "d9b88349ffb5d94fade156a6e73d7c00ae7cea0355a7e24ec0940617c82bd57c",
+      "git_blob_sha1": "5722917060e12fad44ae8e3912ca2b3477aac0fa"
+    }
+  },
+  "source_code": {
+    "prototype": "amsn-core/research/experimental_prima_output_aware_basis.py",
+    "pilot_runner": "amsn-core/research/run_prima_q25_peng_output_aware_dual_seed_pilot.py",
+    "focused_tests": "amsn-core/tests/test_prima_q25_output_aware_dual_seed_basis.py",
+    "workflow": ".github/workflows/amsn-prima-q25-peng-output-aware-dual-seed-pilot.yml"
+  },
+  "duplicate_run": {
+    "id": 45636849975,
+    "conclusion": "failure_only_at_duplicate_git_add_add_rebase",
+    "numerical_calculation_passed": true,
+    "exact_coverage_verification_passed": true,
+    "conflicts": [
+      "report.json",
+      "time.txt"
+    ],
+    "artifact_uploaded": false,
+    "resolution": "Use successful run45636631081 as canonical. Duplicate run was triggered before the canonical run's result commit had reached the branch."
+  },
+  "limits": [
+    "One morphology (Peng NMO_163775) and one nominal passive parameter scenario only.",
+    "Absolute q25 transient residuals under D0 were already extremely small; large relative reductions do not prove a material physical gain.",
+    "Shared-output relative ratios are sensitive to near-zero D0 denominators; report absolute deltas alongside ratios.",
+    "DFT identity is checked only for the predeclared soma/2-ms/20-ms record on D0 and D2.",
+    "Passive linear-RC numerical reduction only; no active-channel or biological validity.",
+    "No production solver, retained-port default or PRIMA order default changed."
+  ],
+  "report_path": "amsn-core/research/PRIMA_Q25_PENG_OUTPUT_AWARE_DUAL_SEED_PILOT_RESULTS_2026-11-25.md"
+}
