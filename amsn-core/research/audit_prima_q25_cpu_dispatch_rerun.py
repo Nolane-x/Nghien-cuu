@@ -12,8 +12,8 @@ from pathlib import Path
 from typing import Any
 
 KEY_FIELDS = (
-    "morphology", "parameter_scenario", "layout_id", "source_name",
-    "output_swc_id", "pulse_width_ms", "window_ms",
+    "morphology", "parameter_scenario", "source_name", "output_swc_id",
+    "pulse_width_ms", "window_ms", "layout_id",
 )
 METRIC_FIELDS = (
     "continuous_ac_zoh_weighted_error_pct",
