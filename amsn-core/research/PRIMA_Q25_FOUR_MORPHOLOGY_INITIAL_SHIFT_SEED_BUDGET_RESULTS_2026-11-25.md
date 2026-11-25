@@ -3,7 +3,7 @@
 **Date:** 25 November 2026  
 **Protocol:** [initial shift seed-budget audit](PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_PROTOCOL_2026-11-25.md)  
 **Workflow run:** [45612672472 — success](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472)  
-**Result commit:** \`f06e277165d6cd8929c152c2ddb2b6e537e4ccb1\`  
+**Result commit:** `f06e277165d6cd8929c152c2ddb2b6e537e4ccb1`  
 **Artifact:** [15021770119 — 9,371 bytes](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472/artifacts/15021770119)
 
 ## 1. Execution and coverage
@@ -20,9 +20,9 @@ The independent diagnostic completed and committed successfully. Every CI step p
 | Morphology × scenario × layout groups | 144 | 144 |
 | Morphology × layout summaries | 16 | 16 |
 
-Wall time was **31.62 seconds**. The raw-seed CSV SHA-256 is \`4aa61b37b5923e4383114afc005e4793b8ed629450d82d801b2f732c352ccda4\`.
+Wall time was **31.62 seconds**. The raw-seed CSV SHA-256 is `4aa61b37b5923e4383114afc005e4793b8ed629450d82d801b2f732c352ccda4`.
 
-The run pinned Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0. Both observed OpenBLAS pools reported Haswell and one thread. \`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR\` was applied. Unfiltered \`numpy.lib.introspect.opt_func_info()\` reported only \`X86_V3\` and \`baseline(X86_V2)\` as active targets; there was no active X86_V4 or AVX-512 implementation.
+The run pinned Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0. Both observed OpenBLAS pools reported Haswell and one thread. `NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR` was applied. Unfiltered `numpy.lib.introspect.opt_func_info()` reported only `X86_V3` and `baseline(X86_V2)` as active targets; there was no active X86_V4 or AVX-512 implementation.
 
 ## 2. Main result: actual independent initial seed rank
 
@@ -118,9 +118,9 @@ No production solver setting or retained-port default is changed.
 
 ## 5. Machine-readable files
 
-Committed under \`amsn-core/results/\`:
+Committed under `amsn-core/results/`:
 
-- \`prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_raw.csv\` — all 864 per-shift rows;
-- \`prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_model_summary.csv\` — 144 morphology/scenario/layout groups;
-- \`prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_morphology_summary.csv\` — 16 morphology/layout aggregates;
-- \`prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json\` — coverage, runtime, active SIMD targets, input checksums and limits.
+- `prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_raw.csv` — all 864 per-shift rows;
+- `prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_model_summary.csv` — 144 morphology/scenario/layout groups;
+- `prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_morphology_summary.csv` — 16 morphology/layout aggregates;
+- `prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json` — coverage, runtime, active SIMD targets, input checksums and limits.
