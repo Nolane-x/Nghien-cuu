@@ -32,7 +32,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-four-layout-basis-order-convergence-no-avx512
+  group: amsn-prima-q25-four-layout-basis-order-convergence-isolated-order-process
   cancel-in-progress: false
 
 jobs:
