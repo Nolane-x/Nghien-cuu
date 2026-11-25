@@ -95,3 +95,15 @@ The repaired archival replay [45625185575](https://github.com/Nolane-x/Nghien-cu
 
 The recovery manifest and detailed report now identify 45625185575 as the canonical committed archive. The original artifact is retained as independent recovery evidence, not substituted or deleted.
 
+## 8. Independent numerical replay reconciled
+
+A second independent observer replay [45616883949](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616883949) completed its numerical analysis with report status `passed` and uploaded artifact [15032804913](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616883949/artifacts/15032804913).
+
+- ZIP size: 1,441,658 bytes; SHA-256 `dad77d25825a7ca9ba3c0de7cdbb987f7d05e5674f74d81a8b353d14ebcf1a23`.
+- It matched 144/144 primary basis hashes and the same maximum finite-DFT identity relative residual, 5.386622461553216e-12.
+- All six numerical CSVs (basis hashes, case metrics, finite-DFT identities, candidate-vs-seven comparisons, morphology summaries and source summaries) are byte-identical to the official corrected run 45625185575.
+- Only report JSON and timing differ. Runtime was 3,777.69 s.
+- The replay failed only during duplicate Git add/add rebase conflicts on report/time paths already committed by the official run. It uploaded its own artifact; it did not replace or overwrite the canonical branch archive.
+
+This provides an additional independent numerical replay of the observer matrix. The corrected run 45625185575 remains the canonical commit/archive; run 45616883949 is a separate reproducing artifact.
+
