@@ -1,16 +1,20 @@
 # HANDOFF — Nolane-x Research
 
-## Latest validated checkpoint — PRIMA q25 timestep refinement (24/11/2026)
+## Latest validated checkpoint — PRIMA q25 fine-step convergence (24/11/2026)
 
-Continue from [timestep-refinement handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-TIMESTEP-REFINEMENT.md) and [research report](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_TIMESTEP_REFINEMENT_2026-11-24.md). Active branch: \`research/prima-q25-backward-euler-timestep-refinement-2026-11-24\`; [PR #31](https://github.com/Nolane-x/Nghien-cuu/pull/31) is draft/open and must not be merged without explicit authorization.
+Continue from [fine-step handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md) and [research report](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md). Active branch: \`research/prima-q25-backward-euler-fine-step-convergence-2026-11-24\`; [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) is draft/open and must not be merged without explicit authorization.
 
-- [Workflow 45426480184](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45426480184) passed 15/15 tests, both morphology checksums/preflights, full matrix, all six CSV read-backs, result commit and artifact upload. Result commit \`8161b30e7a9ac3f62dcfb8754e08850a703f5ad3\`; artifact 14934844995.
-- Median nine/seven perturbation-coordinate ratios for 20/40/100/200-ms windows:
-  - Tamas: dt 0.1 = 24.44/55.24/31.87/31.64×; dt 0.05 = 26.59/57.04/31.73/31.59×; dt 0.025 = 27.05/54.85/31.72/31.59×.
-  - Peng: dt 0.1 = 138.24/70.09/33.67/33.43×; dt 0.05 = 130.11/67.68/33.62/33.42×; dt 0.025 = 123.68/63.89/33.64/33.46×.
-- At 100–200 ms the ratios are stable within about 0.5% across this timestep grid; at 20–40 ms they are more timestep-sensitive. Absolute nine-port NRMSE remains around \(10^{-9}\%\)–\(10^{-8}\%\).
-- Full-Hines comparison against dt 0.025 ms: median NRMSE about 0.52–0.59% at dt 0.1 and 0.176–0.197% at dt 0.05; halving dt reduces the discrepancy about 2.9–3.0×, consistent with first-order backward Euler. This temporal error is many orders larger than the PRIMA reduction error in this benchmark.
-- Next: add dt 0.0125 ms as a finer reference to test whether the apparent first-order convergence and short-window q25 ratios persist. Keep full Hines canonical and do not change production defaults.
+- [Workflow 45428685906](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45428685906) passed 15/15 tests, both morphology checksums/preflights, full matrix, six exact CSV read-backs, result commit and artifact upload. Result commit \`d79ca743cbb662bf4536b28c527bfa5234058c15\`; artifact 14937828066.
+- Coverage: 24,192 layout metrics; 12,096 paired 7/9 comparisons; 192 source summaries; 32 morphology × dt × window summaries; 9,072 Hines temporal rows; 24 Hines summary rows.
+- Median 9/7 transient ratios at dt 0.1/0.05/0.025/0.0125 ms (20/40/100/200-ms windows):
+  - Tamas: 24.44/55.24/31.87/31.64; 26.59/57.04/31.73/31.59; 27.05/54.85/31.72/31.59; 26.55/49.91/32.05/31.84×.
+  - Peng: 138.24/70.09/33.67/33.43; 130.11/67.68/33.62/33.42; 123.68/63.89/33.64/33.46; 118.81/64.98/33.62/33.45×.
+- At 100–200 ms, 9/7 ratios are stable within about 0.6% (Tamas) and 0.2% (Peng) across the full timestep grid. At 20–40 ms, variation remains, particularly Peng and Tamas at 40 ms.
+- Against dt 0.0125 ms, full-Hines median NRMSE is ~0.63–0.68% at dt 0.1, ~0.265–0.296% at dt 0.05, and ~0.089–0.100% at dt 0.025. Adjacent error ratios 2.30–2.32 and 2.94–2.96 support first-order BE convergence.
+- Next: target 20–40-ms windows at dt 0.00625 ms and separate periodic-transfer and terminal-boundary contributions. Long-window full-grid refinement has diminishing value. No production solver/default changed.
+
+---
+
 
 ---
 
