@@ -63,20 +63,26 @@ jobs:
           python -m pip install -e ".[test]"
           python -m pip install --only-binary=neuron neuron==9.0.2
           python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install --only-binary=numpy numpy==2.5.5
           python -m pip install threadpoolctl==3.6.0
       - name: Verify pinned NumPy and OpenBLAS CPU dispatch
         working-directory: amsn-core
         run: |
           python - <<'PY'
+          import importlib.metadata as metadata
           import numpy as np
           import os
           from threadpoolctl import threadpool_info
+          assert metadata.version("numpy") == "2.5.5"
+          assert metadata.version("scipy") == "1.16.3"
+          assert metadata.version("neuron") == "9.0.2"
+          assert metadata.version("threadpoolctl") == "3.6.0"
           pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
           assert pools, "OpenBLAS runtime was not detected"
           assert {p.get("architecture") for p in pools} == {"Haswell"}, pools
           assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
-          print("PASS: pinned OpenBLAS architecture", pools)
-          np.show_runtime()
+          print("PASS: pinned packages and OpenBLAS architecture", pools)
+          print("NumPy runtime CPU feature map:", np._core._multiarray_umath.__cpu_features__)
           PY
       - name: Download and verify Allen standardized SWC
         working-directory: amsn-core
