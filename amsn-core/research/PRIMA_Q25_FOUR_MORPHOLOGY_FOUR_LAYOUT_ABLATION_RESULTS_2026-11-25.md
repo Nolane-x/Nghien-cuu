@@ -39,6 +39,14 @@ Each candidate is paired against the seven-port result at exactly the same morph
 
 The numerical protocol is unchanged: PRIMA order 168; nine passive scenarios; soma, basal-q75 and apical-q75 sources; 10-pA pulses of 2 and 10 ms beginning at 2 ms; timestep 0.00625 ms; windows 20 and 40 ms; 0.5-µm NEURON segment cap. The finite-record analysis includes the terminal-state boundary term. It does not equate the periodic transfer term alone with the complete finite response.
 
+### Why adding a port can worsen an existing output
+
+This is not a contradiction of Schur/Kron reduction exactness. The comparison here is between **fixed-order PRIMA approximations**, not exact Schur complements. In the implementation, the selected retained ports form the input selector (B): the starting block at every expansion shift is ((G+\sigma C)^{-1}B), and the output map is (B^T V). The multishift routine seeds all supplied shifts before round-robin Krylov growth. With six shifts, the nominal starting-block column counts are therefore 42, 48, 48 and 54 for the 7-, 8-basal-, 8-apical- and 9-port layouts, respectively, before orthogonalization and rank loss. All layouts are capped at the same 168 reduced states.
+
+Consequently, adding q25 ports changes the subspace used to approximate **all** ports and can consume more of the fixed state budget in the initial block, leaving a different Krylov expansion trajectory. It does not simply append two exact output traces to an otherwise unchanged seven-port model. This is a concrete implementation-level mechanism for non-monotonic error at fixed order, not yet proof that basis-budget competition is the only cause. See [the multishift PRIMA implementation](../src/amsn/prima.py), especially the seed-all-shifts and round-robin block growth.
+
+The basis-order sweep is designed to distinguish a fixed-order budget effect from a persistent geometry/port-placement effect: if the q25 penalty shrinks materially from order 112 through 168 to 224, that supports a truncation-budget explanation; if it persists with stable absolute-error differences and basis diagnostics, the port geometry and frequency/window weighting need closer examination.
+
 ## 3. Discrete backward-Euler periodic-transfer error
 
 Each cell below is **median candidate/seven error ratio (number of worse pairs / 378)**. A ratio above 1 means the candidate's periodic-transfer error is larger.
