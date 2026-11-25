@@ -279,14 +279,19 @@ def build_summaries(comparison_rows: list[dict[str, Any]]) -> tuple[list[dict[st
         if len(rows) != 9:
             raise ValueError(f"q25 observer source group {key} has {len(rows)} scenarios")
         for metric_name in METRICS:
-            ratios = [float(x[f"candidate_over_seven_{metric_name}_ratio"]) for x in rows]
+            ratios = [
+                float(x[f"candidate_over_seven_{metric_name}_ratio"])
+                for x in rows
+                if x[f"candidate_over_seven_{metric_name}_ratio"] != ""
+            ]
             deltas = [float(x[f"candidate_minus_seven_{metric_name}"]) for x in rows]
             source_rows.append({
                 "morphology": key[0], "candidate_layout": key[1], "q25_role": key[2],
                 "source_name": key[3], "pulse_width_ms": float(key[4]), "window_ms": float(key[5]),
                 "metric": metric_name, "scenario_count": len(rows),
-                "median_candidate_over_seven_ratio": median(ratios),
-                "p90_candidate_over_seven_ratio": percentile(ratios, 0.90),
+                "valid_ratio_scenarios": len(ratios),
+                "median_candidate_over_seven_ratio": median(ratios) if ratios else "",
+                "p90_candidate_over_seven_ratio": percentile(ratios, 0.90) if ratios else "",
                 "median_absolute_error_delta": median(deltas),
                 "p90_absolute_error_delta": percentile(deltas, 0.90),
                 "candidate_worse_scenarios": sum(x > 0.0 for x in deltas),
@@ -297,14 +302,19 @@ def build_summaries(comparison_rows: list[dict[str, Any]]) -> tuple[list[dict[st
         if len(rows) != 54:
             raise ValueError(f"q25 observer morphology group {key} has {len(rows)} pairs")
         for metric_name in METRICS:
-            ratios = [float(x[f"candidate_over_seven_{metric_name}_ratio"]) for x in rows]
+            ratios = [
+                float(x[f"candidate_over_seven_{metric_name}_ratio"])
+                for x in rows
+                if x[f"candidate_over_seven_{metric_name}_ratio"] != ""
+            ]
             deltas = [float(x[f"candidate_minus_seven_{metric_name}"]) for x in rows]
             morphology_rows.append({
                 "morphology": key[0], "candidate_layout": key[1],
                 "q25_role": key[2], "window_ms": float(key[3]),
                 "metric": metric_name, "paired_source_pulse_scenario_count": len(rows),
-                "median_candidate_over_seven_ratio": median(ratios),
-                "p90_candidate_over_seven_ratio": percentile(ratios, 0.90),
+                "valid_ratio_pairs": len(ratios),
+                "median_candidate_over_seven_ratio": median(ratios) if ratios else "",
+                "p90_candidate_over_seven_ratio": percentile(ratios, 0.90) if ratios else "",
                 "median_absolute_error_delta": median(deltas),
                 "p90_absolute_error_delta": percentile(deltas, 0.90),
                 "candidate_worse_pairs": sum(x > 0.0 for x in deltas),
@@ -424,7 +434,6 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                     raise ValueError(f"{morph_spec['name']}/{layout_id}: source nodes changed")
                 common_slot_by_node = {int(node): i for i, node in enumerate(layout["node_ids"])}
                 common_output_slots = [common_slot_by_node[int(node)] for node in common_ids]
-                shared_output_basis = model_output_basis = None
                 model = baseline.prima_reduce_passive_cable_multishift(
                     target, layout["ports"], runner.BASIS_ORDER,
                     runner.conditioning.SHIFTS_HZ,
@@ -451,6 +460,17 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                 })
                 shared_output_basis = model.input_matrix[:, common_output_slots].T.copy()
                 q25_output_basis = model.basis[np.asarray(observer_tree_indices, dtype=np.int64), :].copy()
+                for q_index, role in enumerate(role_order):
+                    if q25_retained[role]:
+                        q25_slot = int(layout["node_ids"].index(observer_node_ids[q_index]))
+                        if not np.allclose(
+                            q25_output_basis[q_index],
+                            model.input_matrix[:, q25_slot],
+                            rtol=0.0, atol=2e-15,
+                        ):
+                            raise ValueError(
+                                f"{basis_key}: retained q25 input/output projection differs"
+                            )
                 output_basis = np.vstack((shared_output_basis, q25_output_basis))
                 if output_basis.shape != (9, model.order):
                     raise ValueError("observer output basis must expose seven shared and two q25 outputs")
