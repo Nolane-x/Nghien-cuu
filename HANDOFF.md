@@ -4,6 +4,21 @@
 
 This update supersedes older status statements below when they refer to the same workflow or result. Earlier checkpoint sections are retained as historical records.
 
+
+### Jacobs q25 role-specific output-dual seed allocation — accepted
+
+- Canonical workflow [45650388401](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45650388401) completed **success** through calculation, full verification, Git archival and artifact upload.
+- Result archive commit: [bc0fa11dc136107d0cfee17ab14771f919dea81c](https://github.com/Nolane-x/Nghien-cuu/commit/bc0fa11dc136107d0cfee17ab14771f919dea81c).
+- Artifact [15041330718](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45650388401/artifacts/15041330718), 254,430 bytes; ZIP SHA-256 \`a510ff14720304c498ff0c5cc474a974fb7dcf483449af0afad37c864a37161a\`.
+- Scope: Jacobs NMO_03524 only; nine passive scenarios; ten predeclared role-specific dual-seed schedules; order224; seven fixed input ports and nine output rows.
+- Exact coverage: 9/9 workers; 9,720 case metrics; 1,620 scenario summaries; 180 pooled summaries; 45/45 finite-DFT identities; 90 basis metadata; no duplicate case keys.
+- D0 matched production multishift PRIMA in all scenarios. Nominal D0 and BOTH_10K matrices and case metrics replayed bit-exactly against the prior accepted study. All G/C Cholesky checks passed, maximum basis orthogonality error 1.77636e-15, maximum full-Hines DFT residual 4.70924e-13 and reduced residual 3.61286e-13.
+- Main result: APICAL-only seeds at 0/1k/10k do not fix apical q25; their scenario-median error ratios remain above 1 and all seven shared-output medians worsen. Apical D0 NRMSE is already near \(10^{-11}\%\), so relative ratios are numerically fragile.
+- Basal q25 improves with BASAL_0 and BASAL_10K. BOTH_10K is the best current Jacobs-specific research compromise: pooled basal ratios 0.449/0.464 (20/40 ms), apical scenario-median ratios 1.035/1.049 (near-neutral), and the strongest shared-output profile.
+- Detailed report: [PRIMA_Q25_JACOBS_ROLE_SPECIFIC_SEED_ALLOCATION_RESULTS_2026-11-25.md](research/PRIMA_Q25_JACOBS_ROLE_SPECIFIC_SEED_ALLOCATION_RESULTS_2026-11-25.md). Research log: [RESEARCH_LOG_2026-11-25_PRIMA-Q25-JACOBS-ROLE-SEED-ALLOCATION.md](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-JACOBS-ROLE-SEED-ALLOCATION.md).
+- Limits: one human control reconstruction, passive linear-RC only; no biological-population inference. Full Hines remains canonical; no production solver/default changed.
+
+
 ### Newly verified four-morphology finite-window decomposition
 
 - Accepted run: [45571400424](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45571400424); results commit: [14fd51e6ade9d9cae359c9077f55174e3d0347f7](https://github.com/Nolane-x/Nghien-cuu/commit/14fd51e6ade9d9cae359c9077f55174e3d0347f7).
