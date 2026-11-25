@@ -248,6 +248,21 @@ def test_boundary_decomposition_uses_only_requested_windows_and_fine_dt():
     assert audit.MASTER_FREQUENCY_STEP_HZ == pytest.approx(25.0)
     assert audit.MASTER_FREQUENCIES_HZ.size == 3201
 
+
+
+def test_array_sha256_is_stable_for_identical_layouts():
+    values = np.arange(24, dtype=np.float64).reshape(4, 6)
+    assert audit.array_sha256(values) == audit.array_sha256(values.copy())
+    assert audit.array_sha256(values) != audit.array_sha256(values.reshape(6, 4))
+
+
+def test_runtime_diagnostics_records_single_thread_environment():
+    diagnostics = audit.numerical_runtime_diagnostics()
+    assert "OPENBLAS_NUM_THREADS" in diagnostics["thread_environment"]
+    assert "PYTHONHASHSEED" in diagnostics["thread_environment"]
+    assert isinstance(diagnostics["threadpools"], list)
+
+
 def test_expected_coverage_contract():
     assert audit.expected_counts() == {
         "master_frequency_points": 3201,
