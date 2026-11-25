@@ -154,5 +154,45 @@
     "interpretation": "The numerical data CSVs and basis hashes are bit-identical to the recovered original artifact. Only run-specific report/runtime metadata and timing differ. The corrected run is the canonical committed archive."
   },
   "recovery_status": "numerical_analysis_recovered_and_officially_archived",
-  "note": "The original failed run's artifact remains preserved as recovery evidence. Corrected run 45625185575 completed successfully, committed the observer matrices, and uploaded a fresh artifact. Use corrected run 45625185575 as the official source for branch-archived outputs."
+  "note": "The original failed run's artifact remains preserved as recovery evidence. Corrected run 45625185575 completed successfully, committed the observer matrices, and uploaded a fresh artifact. Use corrected run 45625185575 as the official source for branch-archived outputs.",
+  "independent_replay": {
+    "run_id": 45616883949,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616883949",
+    "conclusion": "failure_only_at_duplicate_git_add_add_rebase",
+    "artifact_id": 15032804913,
+    "artifact_size_bytes": 1441658,
+    "artifact_zip_sha256": "dad77d25825a7ca9ba3c0de7cdbb987f7d05e5674f74d81a8b353d14ebcf1a23",
+    "report_status": "passed",
+    "primary_basis_hash_rows_matched": 144,
+    "max_finite_dft_identity_relative_error": 5.386622461553216e-12,
+    "runtime_wall_seconds": 3777.6909104799997,
+    "result_csvs_identical_to_corrected_official_archive": true,
+    "numerical_csvs_identical": [
+      "basis_hashes",
+      "case_metrics",
+      "finite_dft_identity",
+      "layout_vs_seven_comparisons",
+      "morphology_summary",
+      "source_summary"
+    ],
+    "differing_metadata_files": [
+      "report.json",
+      "time.txt"
+    ],
+    "conflict_paths": [
+      "report.json",
+      "time.txt"
+    ],
+    "interpretation": "This is an independent successful numerical replay with bit-identical numerical matrices/summary CSVs. It did not become a second Git archive because another run had already committed the same result paths. The corrected official archive 45625185575 remains the canonical branch commit; this artifact is additional independent reproducibility evidence."
+  },
+  "reproducibility_summary": {
+    "independent_successful_numerical_replays": 3,
+    "successful_or_recovered_runs": [
+      45616908599,
+      45625185575,
+      45616883949
+    ],
+    "numerical_csv_hashes_identical_across_runs": true,
+    "note": "Run 45616908599 numerical results were recovered from artifact; run45625185575 is the official archived result; run45616883949 independently repeated the numerical result and uploaded an artifact but its duplicate Git archive rebase conflicted."
+  }
 }
