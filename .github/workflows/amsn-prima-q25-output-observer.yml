@@ -58,6 +58,7 @@ jobs:
         run: |
           python - <<'PY'
           import importlib.metadata as metadata
+          import json
           import os
           import numpy as np
           from threadpoolctl import threadpool_info
@@ -96,6 +97,12 @@ jobs:
           print("OpenBLAS pools:", pools)
           print("NumPy current SIMD dispatch targets:", current_targets)
           print("NumPy detected CPU feature map:", np._core._multiarray_umath.__cpu_features__)
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as handle:
+              handle.write(
+                  "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON="
+                  + json.dumps(current_targets, separators=(",", ":"))
+                  + "\\n"
+              )
           PY
       - name: Download and verify Allen standardized SWC
         run: |
