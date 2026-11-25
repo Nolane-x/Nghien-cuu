@@ -1,4 +1,5 @@
 name: PRIMA q25 four-layout post-analysis tests and summaries
+# Re-run after the validated order-168 result matrix was recovered from its immutable Actions artifact.
 
 on:
   push:
