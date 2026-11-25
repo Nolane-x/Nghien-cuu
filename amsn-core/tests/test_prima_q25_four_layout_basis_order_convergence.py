@@ -53,6 +53,7 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
                     "threadpools": [
                         {"internal_api": "openblas", "architecture": "Haswell"}
                     ],
+                    "numpy_current_dispatch_targets": ["AVX2", "SSE41"],
                 }
             }
         }
@@ -93,6 +94,41 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
             }
         }
         with self.assertRaisesRegex(ValueError, "OpenBLAS architecture"):
+            driver.validate_reference_dispatch(report)
+
+    def test_reference_dispatch_rejects_missing_active_numpy_dispatch_evidence(self):
+        report = {
+            "reproducibility_diagnostics": {
+                "numerical_runtime": {
+                    "thread_environment": {
+                        "OPENBLAS_CORETYPE": "Haswell",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+                    },
+                    "threadpools": [
+                        {"internal_api": "openblas", "architecture": "Haswell"}
+                    ],
+                }
+            }
+        }
+        with self.assertRaisesRegex(ValueError, "lacks active NumPy SIMD"):
+            driver.validate_reference_dispatch(report)
+
+    def test_reference_dispatch_rejects_active_avx512_kernel(self):
+        report = {
+            "reproducibility_diagnostics": {
+                "numerical_runtime": {
+                    "thread_environment": {
+                        "OPENBLAS_CORETYPE": "Haswell",
+                        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+                    },
+                    "threadpools": [
+                        {"internal_api": "openblas", "architecture": "Haswell"}
+                    ],
+                    "numpy_current_dispatch_targets": ["AVX2", "AVX512_SKX"],
+                }
+            }
+        }
+        with self.assertRaisesRegex(ValueError, "unsupported NumPy SIMD targets"):
             driver.validate_reference_dispatch(report)
 
     def test_coverage_constants_match_four_layout_case_design(self):
