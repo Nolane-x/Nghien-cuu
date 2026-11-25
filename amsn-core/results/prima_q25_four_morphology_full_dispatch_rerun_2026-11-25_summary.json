@@ -1,0 +1,114 @@
+{
+  "schema_version": 1,
+  "status": "validated_numerical_run_artifact_archival_commit_conflict",
+  "research": "PRIMA q25 four-morphology 7/8/8/9-port finite-window boundary ablation, full-functions NumPy dispatch replay",
+  "workflow_run": {
+    "id": 45613803039,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039",
+    "head_sha": "716de47a9e8728eaaeb89f669dc3e6e83c1baac4",
+    "result_commit_attempt": "94e05a7",
+    "overall_conclusion": "failure_at_commit_rebase_only"
+  },
+  "artifact": {
+    "id": 15023602612,
+    "name": "prima-q25-four-morphology-four-layout-boundary-ablation",
+    "size_bytes": 70254874,
+    "sha256": "0869385fec44572fcfe77327043bf2d2e88f312f926a99617d5801a55ee3afc6",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039/artifacts/15023602612",
+    "file_count": 23
+  },
+  "result": {
+    "status": "prima_q25_four_morphology_four_layout_boundary_ablation_passed",
+    "runtime": {
+      "python": "3.12.16",
+      "numpy": "2.5.5",
+      "scipy": "1.16.3",
+      "neuron": "9.0.2",
+      "wall_seconds": 1827.463238295,
+      "shell_wall_seconds": 1827.88,
+      "user_cpu_seconds": 1798.04,
+      "system_cpu_seconds": 29.56,
+      "max_rss_kb": 1233884
+    },
+    "coverage": {
+      "master_frequency_points": 3201,
+      "frequency_summary_rows": 1075536,
+      "case_metric_rows": 12096,
+      "layout_vs_seven_comparison_rows": 9072,
+      "source_layout_window_summary_rows": 144,
+      "morphology_layout_window_summary_rows": 24,
+      "finite_dft_identity_rows": 1728
+    },
+    "finite_dft_identity": {
+      "relative_tolerance": 2e-8,
+      "max_relative_error": 8.781488969255743e-12,
+      "max_absolute_error_v_samples": 4.809833427024806e-11,
+      "max_model_identity_relative_error": 8.743810650683813e-12
+    },
+    "basis_hashes": {
+      "model_count": 144,
+      "unique_basis_sha256": 144,
+      "unique_projected_G_sha256": 144,
+      "unique_projected_C_sha256": 144,
+      "unique_input_sha256": 144
+    },
+    "runtime_dispatch": {
+      "openblas_coretype": "Haswell",
+      "openblas_threads": 1,
+      "numpy_disable_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+      "active_numpy_dispatch_targets": [
+        "X86_V3",
+        "baseline(X86_V2)"
+      ],
+      "threadpools": [
+        {
+          "internal_api": "openblas",
+          "architecture": "Haswell",
+          "num_threads": 1,
+          "version": "0.3.34.237.2"
+        },
+        {
+          "internal_api": "openblas",
+          "architecture": "Haswell",
+          "num_threads": 1,
+          "version": "0.3.29.dev"
+        }
+      ],
+      "active_AVX512_targets": []
+    },
+    "source_validation": {
+      "all_four_morphology_preflights_passed": true,
+      "all_morphology_source_sha256_checked": true,
+      "allen_source_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+    },
+    "full_functions_simd_preflight": true
+  },
+  "result_csv_sha256": {
+    "case_metrics": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "finite_dft_identity": "eced64a36c73a8ef1d963f08a5f716dc4bd317101360d14d9f1eebe2adc9e902",
+    "frequency_summary": "dabb47d4c5c06bd26ebd90165b50584ecb8448b8e2fe3bc76cdfff7a9b3bcdce",
+    "layout_vs_seven_comparisons": "29af1a3897c44d0aa946768a23ee815299e4fa982e7223e4b9130aa359fd2e6e",
+    "source_layout_window_summary": "a2164e1fdc67350e75bf9efb39834537691a328838b739da907a8ec6d269e84a",
+    "morphology_layout_window_summary": "192a2b2440918b5de7dc5e2d6b09eae0d3a"
+  },
+  "report_recovery": {
+    "artifact_member": "results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json",
+    "raw_member_sha256": "1aa7e47e41134e0e3e3cb013c6800c6df695962813ceb534020e37931e6737b0",
+    "reconstructed_clean_report_sha256": "f3f3a75926fe88d0c9963365875f59fc0b990ae7541f20e5566c0aa214e558d7",
+    "method": "The uploaded report contained three Git rebase conflict blocks introduced during the later commit step. The incoming side from run 45613803039 was selected for the two numpy_cpu_features_detected boolean fields and runtime.wall_seconds; all other bytes were retained. The reconstructed report parsed successfully and its status, coverage, validation, dispatch, basis hashes and timing were inspected."
+  },
+  "commit_failure": {
+    "stage": "Commit four-layout ablation results",
+    "reason": "Git rebase conflicted in the shared time.txt and report.json because another result commit updated those same metadata files concurrently.",
+    "calculation_passed": true,
+    "coverage_and_finite_dft_identity_gate_passed": true,
+    "artifact_upload_passed": true,
+    "remedy": "Preserve run 45613803039 as a validated artifact and commit this strict-run summary separately; do not discard or overwrite the earlier accepted report."
+  },
+  "caveats": [
+    "The accepted numerical output is still passive linear-RC and four individual morphology reconstructions, not a biological population validation.",
+    "The full 199-MB frequency-summary CSV is retained in the Actions artifact and is not committed as a Git blob.",
+    "The prior selected-kernel matrix 45608561071 remains the committed baseline report; this file records the newer full-functions-dispatch replay without overwriting that file.",
+    "Full Hines remains canonical; no production solver/default changed."
+  ]
+}
