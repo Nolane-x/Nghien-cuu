@@ -1,0 +1,175 @@
+name: PRIMA q25 four-layout basis-order convergence
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-basis-order-convergence.yml"
+      - "amsn-core/research/run_prima_q25_four_layout_basis_order_convergence.py"
+      - "amsn-core/research/analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py"
+      - "amsn-core/research/summarize_prima_q25_four_layout_interactions.py"
+      - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
+      - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
+      - "amsn-core/examples/replay_nmo03524_prima_7v9port.py"
+      - "amsn-core/examples/replay_nmo162186_prima_7v9port.py"
+      - "amsn-core/examples/replay_nmo163775_four_layout_ablation.py"
+      - "amsn-core/examples/replay_nmo107159_four_layout_replication.py"
+      - "amsn-core/tests/test_prima_q25_four_layout_basis_order_convergence.py"
+      - "amsn-core/tests/test_prima_q25_four_layout_posthoc.py"
+      - "amsn-core/tests/test_prima_q25_four_morphology_four_layout_boundary_ablation.py"
+      - "amsn-core/tests/test_prima_q25_cross_morphology_boundary_preflight.py"
+      - "amsn-core/results/NMO_163775_PengControl_holdout/preflight.json"
+      - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"
+      - "amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-layout-basis-order-convergence
+  cancel-in-progress: false
+
+jobs:
+  basis-order-convergence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    defaults:
+      run:
+        working-directory: amsn-core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned numerical runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+      - name: Download and verify Allen standardized SWC
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Q25-BasisOrder/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Run basis-order and paired-analysis regression tests
+        run: |
+          python -m pytest -q \
+            tests/test_prima_q25_four_layout_basis_order_convergence.py \
+            tests/test_prima_q25_four_layout_posthoc.py \
+            tests/test_prima_q25_four_morphology_four_layout_boundary_ablation.py \
+            tests/test_prima_q25_cross_morphology_boundary_preflight.py
+          python -m py_compile \
+            research/run_prima_q25_four_layout_basis_order_convergence.py \
+            research/analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py \
+            research/summarize_prima_q25_four_layout_interactions.py
+      - name: Verify pinned morphology q25 contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          files = {
+              "NMO_163775": Path("results/NMO_163775_PengControl_holdout/preflight.json"),
+              "NMO_107159": Path("results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"),
+              "NMO_03524": Path("results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_03524_JacobsControl.json"),
+              "NMO_162186": Path("results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_162186_AllenL23.json"),
+          }
+          expected = {
+              "NMO_163775": {"basal_q25": 224, "apical_q25": 4096},
+              "NMO_107159": {"basal_q25": 6609, "apical_q25": 4404},
+              "NMO_03524": {"basal_q25": 272, "apical_q25": 864},
+              "NMO_162186": {"basal_q25": 2713, "apical_q25": 4488},
+          }
+          for key, path in files.items():
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              assert payload["status"] == "PASS", key
+              observed = set(payload["amsn"]["q25_only_swc_node_ids"])
+              assert observed == set(expected[key].values()), (key, observed)
+              shared = payload["amsn"]["seven_unique_port_node_ids"]
+              assert len(shared) == 7 and len(set(shared)) == 7, key
+              cap = payload["neuron"].get(
+                  "segment_cap_um",
+                  payload["neuron"].get("maximum_segment_length_cap_um"),
+              )
+              assert cap == 0.5, (key, cap)
+          print("PASS: all four q25 node sets and common mesh cap are pinned")
+          PY
+      - name: Run order sweep when validated order-168 matrix is committed
+        if: hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv', 'amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv', 'amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json') != ''
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt \
+            python research/run_prima_q25_four_layout_basis_order_convergence.py
+      - name: Commit compact order-sweep tables and diagnostics
+        if: always() && hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json') != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Keep the per-order 190-MB frequency summaries in the Actions artifact.
+          for order in 112 224 280; do
+            prefix="results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_\${order}"
+            git add "\${prefix}_case_metrics.csv" \
+                    "\${prefix}_finite_dft_identity.csv" \
+                    "\${prefix}_layout_vs_seven_comparisons.csv" \
+                    "\${prefix}_morphology_layout_window_summary.csv" \
+                    "\${prefix}_source_layout_window_summary.csv" \
+                    "\${prefix}_report.json" \
+                    "\${prefix}_posthoc_source_summary.csv" \
+                    "\${prefix}_posthoc_morphology_summary.csv" \
+                    "\${prefix}_posthoc_interaction_summary.csv" \
+                    "\${prefix}_posthoc_report.json" 2>/dev/null || true
+          done
+          base="results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+          git add "\${base}_posthoc_source_summary.csv" \
+                  "\${base}_posthoc_morphology_summary.csv" \
+                  "\${base}_posthoc_interaction_summary.csv" \
+                  "\${base}_posthoc_report.json" \
+                  results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_source_summary.csv \
+                  results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_morphology_summary.csv \
+                  results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_interaction_summary.csv \
+                  results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json \
+                  results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive q25 basis-order convergence sweep"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve all per-order matrices and runtime evidence
+        if: always() && hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-four-layout-basis-order-convergence
+          path: |
+            amsn-core/data/human/allen_cell_types/770307286_transformed.CNG.swc
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json
+            amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_*.csv
+            amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_report.json
+            amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25.time.txt
+            amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_*.csv
+            amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json
+          if-no-files-found: error
+          retention-days: 90
+          compression-level: 6
