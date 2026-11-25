@@ -129,7 +129,7 @@ def verify_pinned_runtime(primary_report: dict[str, Any]) -> dict[str, Any]:
     environment = runtime["thread_environment"]
     if environment.get("OPENBLAS_CORETYPE") != "Haswell":
         raise RuntimeError("primary report is not pinned to OPENBLAS_CORETYPE=Haswell")
-    if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL":
+    if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL,AVX512_SPR":
         raise RuntimeError("primary report has an unexpected NumPy SIMD restriction")
     pools = [x for x in runtime.get("threadpools", []) if x.get("internal_api") == "openblas"]
     if not pools or {x.get("architecture") for x in pools} != {"Haswell"}:
@@ -345,7 +345,7 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
     if runtime["verified_openblas_coretype"] != "Haswell":
         raise RuntimeError("output observer did not run with pinned Haswell OpenBLAS")
     environment = runtime["thread_environment"]
-    if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL":
+    if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL,AVX512_SPR":
         raise RuntimeError("output observer NumPy SIMD restrictions differ from primary")
     primary_basis = _basis_report_index(primary_report)
     primary_case_rows = read_csv(primary_case_path)
