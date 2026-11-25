@@ -57,6 +57,15 @@ jobs:
           python -m pip install --only-binary=neuron neuron==9.0.2
           python -m pip install --only-binary=scipy scipy==1.16.3
           python -m pip install threadpoolctl==3.6.0
+      - name: Download and verify Allen standardized SWC
+        working-directory: amsn-core
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --user-agent "AMSN-NeuroMorpho-Q25-FourLayout/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
       - name: Verify all four morphology checksums and preflights
         working-directory: amsn-core
         run: |
