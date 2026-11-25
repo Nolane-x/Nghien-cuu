@@ -22,6 +22,9 @@ on:
       - "amsn-core/results/NMO_163775_PengControl_holdout/preflight.json"
       - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"
       - "amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json"
   workflow_dispatch:
 
 permissions:
@@ -39,6 +42,8 @@ jobs:
       NEURON_NOGUI: "1"
       AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
       OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL"
       OMP_NUM_THREADS: "1"
       MKL_NUM_THREADS: "1"
       BLIS_NUM_THREADS: "1"
@@ -62,6 +67,20 @@ jobs:
           python -m pip install -e ".[test]"
           python -m pip install --only-binary=neuron neuron==9.0.2
           python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install threadpoolctl==3.6.0
+      - name: Verify pinned NumPy and OpenBLAS CPU dispatch
+        run: |
+          python - <<'PY'
+          import numpy as np
+          import os
+          from threadpoolctl import threadpool_info
+          pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
+          assert pools, "OpenBLAS runtime was not detected"
+          assert {p.get("architecture") for p in pools} == {"Haswell"}, pools
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
+          print("PASS: pinned OpenBLAS architecture", pools)
+          np.show_runtime()
+          PY
       - name: Download and verify Allen standardized SWC
         run: |
           mkdir -p data/human/allen_cell_types
