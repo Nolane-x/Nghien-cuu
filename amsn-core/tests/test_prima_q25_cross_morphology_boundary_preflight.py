@@ -57,6 +57,7 @@ def test_changed_shared_node_identity_fails(valid_case):
 
 def test_missing_or_swapped_q25_role_fails(valid_case):
     valid_case["roles"][8] = ["apical_q25"]
+    valid_case["roles"][9] = ["basal_q25"]
     with pytest.raises(ValueError, match="q25 node identities"):
         call(valid_case)
 
@@ -79,7 +80,7 @@ def test_duplicate_shared_port_fails(valid_case):
 
 
 def test_q25_port_overlap_fails(valid_case):
-    valid_case["nine_ids"] = [1, 2, 3, 4, 5, 6, 7, 7, 9]
+    valid_case["nine_ids"] = [1, 2, 3, 4, 5, 6, 7, 8, 8]
     with pytest.raises(ValueError, match="exactly two q25-only IDs"):
         call(valid_case)
 
