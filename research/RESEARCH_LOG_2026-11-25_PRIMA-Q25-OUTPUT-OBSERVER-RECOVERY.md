@@ -82,3 +82,16 @@ The four inputs are individual reconstructions, not a biological population. All
 - Recovery manifest with original ZIP digest and extracted file hashes: `amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json`.
 - Handoff updated: `HANDOFF.md`.
 - Corrected archival replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) was still performing the full calculation at the last check. It must complete the corrected commit/rebase/push and artifact steps before raw observer outputs are called branch-archived.
+
+## 7. Corrected workflow now archives the outputs officially
+
+The repaired archival replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) completed **success** through Git commit and artifact upload:
+- Result commit: `8f971b74807ec715cff2f4db39ebc9db7398cf32`.
+- Artifact 15032389094, 1,441,661 bytes; SHA-256 `8c82e3a4c43eabe98e95e482749ccf3f7af7a1c7145ba2ecf39f6f1e9a00f4d1`.
+- Corrected report Git blob: `09c03edbce0cbb0661c2507cef3abcfdd308ce74`.
+- Report still declares `passed`; 144/144 primary basis hashes match; max finite-DFT identity relative residual remains `5.386622461553216e-12` against `2e-8`.
+- Corrected wall time: 3,617.80 s; peak RSS 365,204 KiB. Verified dispatch list is X86_V3 and baseline(X86_V2); Haswell OpenBLAS one thread.
+- SHA-256 for all six numerical CSVs matches the recovered artifact byte-for-byte. Report JSON and timing text differ only as run-specific metadata.
+
+The recovery manifest and detailed report now identify 45625185575 as the canonical committed archive. The original artifact is retained as independent recovery evidence, not substituted or deleted.
+
