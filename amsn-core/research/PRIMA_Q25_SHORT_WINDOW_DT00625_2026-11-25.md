@@ -3,7 +3,7 @@
 **Date:** 25 November 2026  
 **Branch:** \`research/prima-q25-short-window-dt00625-2026-11-25\`  
 **Parent:** PR #32, four-step convergence through 0.0125 ms  
-**Execution:** pending GitHub Actions
+**Execution:** passed — [workflow 45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117), attempts 1 and 2
 
 ## Research question
 
@@ -31,26 +31,65 @@ The 0.1/0.05/0.025/0.0125-ms sweep showed stable 100–200-ms nine/seven ratios 
 
 The workflow checks both SWC hashes and morphology preflights, runs focused tests for timestep alignment and pulse charge, executes the complete matrix, and requires exact row-count read-back from all six CSV files.
 
-**Execution status:** pending. No 0.00625-ms conclusion is claimed before the complete workflow passes.
+**Execution status:** passed in both attempts of workflow [45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117). Each attempt passed **20/20 tests**, both SWC SHA-256 checks, both morphology preflights, the full computation, six exact CSV read-backs, result commit and artifact upload.
 
-## Interpretation limits
+- Result commit: `455b304a9f79c118196c6669c61fb4206a24375b`.
+- Attempt 1 artifact: [14994563122](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117/artifacts/14994563122), ZIP SHA-256 `ccb011d55ed4bd12527157be6f4af473d4a13e339ff5e01ca689bc62085e455e`.
+- Attempt 2 artifact: [14994278136](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117/artifacts/14994278136), ZIP SHA-256 `c66dd098f47af338559a2a0b5d59f78b69ea2bf7464c786eba5c4fc196ba1b8e`.
+- Runtime: 162.52 s and 164.51 s respectively; Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2.
 
-The 0.00625-ms full-Hines trace is a finer numerical reference, not an exact continuous-time solution. Only two passive linear-RC morphologies are included. The PRIMA projection basis/order stay fixed to isolate temporal discretization sensitivity. Full Hines remains canonical; no production solver/default is changed.
+## Results
 
-## Reproducibility caveat — 25 November 2026
+### Median dual-q25 nine-port / seven-port transient NRMSE ratio
 
-The first full run [45551126065 attempt 1](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45551126065) passed its 18 tests, morphology checks, full simulation and six CSV read-backs. A rerun of the **same commit** (attempt 2) also passed all gates, but its reduced-model metrics and summary ratios were not byte-identical. The full-Hines temporal-comparison CSV was byte-identical between attempts, while the PRIMA metric, 7/9 comparison, source-summary and morphology-summary CSVs changed.
+Each cell is the median over six source × pulse groups; each group first aggregates nine parameter scenarios × seven shared outputs. Ratios compare relative reduction errors and are not pooled-energy ratios.
 
-This discrepancy is material for interpretation because the residuals are extremely small: the largest absolute change in perturbation-coordinate NRMSE across the repeated metrics was \(1.6515\times10^{-10}\) percentage points, while the NRMSE itself is usually around \(10^{-11}\%\)–\(10^{-8}\%\). Relative nine/seven ratios can therefore shift noticeably from small changes in the reduction residual.
+| Morphology | Window | dt 0.1 ms | dt 0.05 ms | dt 0.025 ms | dt 0.0125 ms | dt 0.00625 ms |
+|---|---:|---:|---:|---:|---:|---:|
+| Tamas human pyramidal | 20 ms | 24.47× | 26.80× | 27.19× | 26.39× | **24.64×** |
+| Tamas human pyramidal | 40 ms | 55.21× | 57.13× | 54.88× | 49.79× | **49.14×** |
+| Peng mouse | 20 ms | 138.26× | 128.38× | 123.56× | 119.50× | **114.77×** |
+| Peng mouse | 40 ms | 70.09× | 67.67× | 64.52× | 65.31× | **65.06×** |
 
-No causal conclusion is accepted from one attempt. The working hypothesis is floating-point reduction-order sensitivity in the PRIMA basis/projection or reduced solve, but this is **not yet established**. The source SWC hashes, morphology preflights, Hines kernel, PRIMA source files, input/solver support files and script logic were identical between attempts.
+The short-window ratios are reproducible under the pinned single-thread numerical environment, but they are **not fully timestep-invariant**. Peng 20 ms decreases monotonically from 138.26× to 114.77×. Tamas 40 ms changes from about 57× to 49×, with most of the drop between 0.025 and 0.0125 ms. Peng 40 ms is flatter below 0.025 ms (64.52–65.31×). Tamas 20 ms is non-monotonic, peaking near 0.025 ms and returning to 24.64× at 0.00625 ms.
 
-### Reproducibility controls now added
+The absolute nine-port perturbation-coordinate NRMSE at 0.00625 ms remains very small: approximately 4.22e-9% (Tamas, 20 ms), 1.23e-8% (Tamas, 40 ms), 1.28e-8% (Peng, 20 ms), and 6.40e-8% (Peng, 40 ms). Large relative ratios coexist with small absolute waveform residuals.
 
-- Pin BLAS/OpenMP thread pools to one thread (\`OPENBLAS_NUM_THREADS\`, \`OMP_NUM_THREADS\`, \`MKL_NUM_THREADS\`, \`BLIS_NUM_THREADS\`, \`VECLIB_MAXIMUM_THREADS\`, \`NUMEXPR_NUM_THREADS\`) and set \`PYTHONHASHSEED=0\`.
-- Record numerical-library threadpool/build configuration in report JSON.
-- Record canonical SHA-256 hashes of each order-168 basis, projected \(G_r\), projected \(C_r\), input matrix, retained-port index vector and each full/reduced trace.
-- Add unit tests for the diagnostic hash helper and runtime environment capture.
+### Full-Hines temporal convergence against dt = 0.00625 ms
 
-The follow-up workflow must pass, then a same-commit rerun must reproduce the basis hashes, reduced trace hashes and CSV bytes before the short-window ratios are treated as stable. Until then, the numerical ratios are provisional and are preserved for provenance only.
+Each summary row covers 378 parameter-scenario × protocol × output traces. Median NRMSE percentages against the 0.00625-ms Hines trace:
+
+| Morphology | Coarse dt | 20 ms median | 40 ms median | Maximum across both windows |
+|---|---:|---:|---:|---:|
+| Tamas | 0.1 ms | 0.732% | 0.678% | 1.828% |
+| Tamas | 0.05 ms | 0.346% | 0.322% | 0.873% |
+| Tamas | 0.025 ms | 0.150% | 0.141% | 0.406% |
+| Tamas | 0.0125 ms | 0.0503% | 0.0472% | 0.147% |
+| Peng | 0.1 ms | 0.734% | 0.657% | 2.698% |
+| Peng | 0.05 ms | 0.345% | 0.309% | 1.312% |
+| Peng | 0.025 ms | 0.149% | 0.133% | 0.582% |
+| Peng | 0.0125 ms | 0.0498% | 0.0449% | 0.200% |
+
+The coarse-vs-fine error decreases consistently as dt is reduced, supporting first-order backward-Euler convergence. The 0.00625-ms waveform remains a finer numerical reference, not an exact continuous-time solution.
+
+### Reproducibility verification
+
+The two attempts of the **same commit** `586175367fb5d71d16b3244dcf059e6fa6f4793e`, with identical single-thread environment settings, were compared directly from their artifacts:
+
+- **36/36** basis/model digests matched: basis, reduced G, reduced C, input matrix and retained-port index vector.
+- **360/360** full/reduced trace digests matched.
+- All six numerical CSVs were byte-identical between attempts. Their SHA-256 digests are:
+
+| Output | SHA-256 |
+|---|---|
+| `..._metrics.csv` | `0748ccec72e475b766141a84ad9692c3e48ff2cb37e2657e6bafbb4aeddcea5a` |
+| `..._seven_nine_comparisons.csv` | `c7f28a2200e3e7dab6c8d3b1735e834c8ecbc9068ac7734973f6f7a7b4892bd2` |
+| `..._source_window_summary.csv` | `93ce68fd812ed52c7cc6347354fd3340de9bcb7ed3f7f6a4ec17f66b53f374f6` |
+| `..._morphology_window_summary.csv` | `55315b452df1722bdce1d4ef5be5f1bc6e6c2551a801bc33209452fb0e0bc664` |
+| `..._hines_temporal_convergence.csv` | `2fbfe7fea87564f78c9a2748ca97e4d6d4d960cd43665dd8153ee1f2288d136f` |
+| `..._hines_temporal_convergence_summary.csv` | `5aeae14d15bc9fe5d0c4b0561198b227164a0bd9bc14ce60920ff6635fe6c2a4` |
+
+The report JSON differs only in measured runtime wall time (162.52 vs 164.51 s); coverage, validation, basis/trace diagnostics and scientific summaries are identical. The timing files also differ as expected. Both attempts recorded all BLAS/OpenMP thread-control variables as `1` and `PYTHONHASHSEED=0`. The optional `threadpoolctl` package was not installed, so no active threadpool count was queried; the environment variables themselves were confirmed in the Actions logs.
+
+This establishes repeatability for two same-commit runs under the pinned GitHub Actions environment. It does not prove bitwise reproducibility on other hardware, BLAS implementations or environments.
 
