@@ -9,6 +9,8 @@ on:
       - "amsn-core/research/summarize_prima_q25_four_layout_interactions.py"
       - "amsn-core/tests/test_prima_q25_four_layout_posthoc.py"
       - ".github/workflows/amsn-prima-q25-four-layout-posthoc.yml"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv"
   workflow_dispatch:
 
 permissions:
