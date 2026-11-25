@@ -330,7 +330,7 @@ def run() -> dict[str, Any]:
         "wall_seconds": time.perf_counter() - started,
         "interpretation_limits": [
             "The sweep evaluates numerical stability of the four-layout passive PRIMA approximation across basis orders; it is not a biological validation.",
-            "The order-168 matrix is the already completed and validated reference, while 112, 224 and 280 are recomputed with the same runner.",
+            "The order-168 matrix is the already completed and validated reference, while orders 112 and 224 are recomputed with the same runner.",
             "Ratios are accompanied by absolute errors in per-order post-analysis CSVs because very small baseline residuals can inflate ratios.",
             "The four morphologies are individual reconstructions and must remain separate strata.",
             "No production solver or default is modified.",
