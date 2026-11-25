@@ -318,10 +318,22 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
                 f"expected {expected_core!r}, observed {sorted(observed_cores)!r}"
             )
 
-    current_targets = numpy_current_dispatch_targets()
+    # Active dispatch is measured in the workflow's isolated preflight
+    # process and passed forward via GITHUB_ENV. Avoid calling opt_func_info()
+    # inside the long NEURON simulation process: the NumPy 2.5 introspection
+    # path has caused native exit-139 failures on hosted runners.
+    current_targets_json = os.environ.get("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON", "[]")
+    try:
+        current_targets = json.loads(current_targets_json)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError("invalid active NumPy dispatch evidence in environment") from exc
+    if not isinstance(current_targets, list) or not all(
+        isinstance(item, str) for item in current_targets
+    ):
+        raise RuntimeError("active NumPy dispatch evidence must be a JSON string list")
     if expected_core == "Haswell":
         if not current_targets:
-            raise RuntimeError("NumPy did not report active SIMD loop implementations")
+            raise RuntimeError("workflow did not provide active NumPy SIMD dispatch evidence")
         unsupported = [
             target for target in current_targets
             if "X86_V4" in target.upper() or "AVX512" in target.upper()
@@ -334,7 +346,8 @@ def numerical_runtime_diagnostics() -> dict[str, Any]:
 
     names = (
         "OPENBLAS_NUM_THREADS", "OPENBLAS_CORETYPE",
-        "NPY_DISABLE_CPU_FEATURES", "OMP_NUM_THREADS", "MKL_NUM_THREADS",
+        "NPY_DISABLE_CPU_FEATURES", "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON",
+        "OMP_NUM_THREADS", "MKL_NUM_THREADS",
         "BLIS_NUM_THREADS", "VECLIB_MAXIMUM_THREADS", "NUMEXPR_NUM_THREADS",
         "PYTHONHASHSEED",
     )
