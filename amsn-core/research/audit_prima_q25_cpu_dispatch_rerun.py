@@ -59,6 +59,13 @@ def key(row: dict[str, str]) -> tuple[str, ...]:
     return tuple(row[field] for field in KEY_FIELDS)
 
 
+def baseline_case_keys(
+    indexed: dict[tuple[str, ...], dict[str, str]],
+) -> set[tuple[str, ...]]:
+    """Return morphology/scenario/source/output/pulse/window keys for seven-port cases."""
+    return {case_key[:6] for case_key in indexed if case_key[6] == "seven"}
+
+
 def median(values: list[float]) -> float:
     if not values:
         raise ValueError("cannot take median of empty values")
@@ -176,10 +183,7 @@ def run(reference_dir: Path, rerun_dir: Path, output_dir: Path) -> dict[str, Any
         })
 
     morphology_rows = []
-    base_keys = {
-        k[:6] for k in ref_index
-        if k[6] == "seven"
-    }
+    base_keys = baseline_case_keys(ref_index)
     for morphology in sorted(MORPHOLOGY_NAMES):
         for window in ("20.0", "40.0"):
             selected = [
