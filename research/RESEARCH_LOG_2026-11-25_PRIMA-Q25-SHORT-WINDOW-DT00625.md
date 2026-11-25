@@ -23,3 +23,17 @@ Pending GitHub Actions. Expected-count gates and sample-alignment tests are upda
 ## Limits and next step
 
 The 0.00625-ms trace is a finer reference, not exact continuous time. This is a targeted passive numerical comparison on two morphologies only. After CI, compare successive 20/40-ms nine/seven ratios and full-Hines discrepancy ratios; determine whether remaining variation is integration error or the finite-window boundary component. No production defaults are changed.
+
+## Reproducibility investigation — same-commit rerun
+
+The first complete run [45551126065 attempt 1] and its same-commit rerun (attempt 2) both passed all 18 tests, SWC checksum/preflight checks, full simulation, six CSV read-backs and artifact upload. However, their numerical outputs differed:
+
+- Hines temporal-convergence CSV: identical SHA-256 across attempts.
+- PRIMA metrics, paired comparisons, source summaries and morphology/window summaries: different SHA-256.
+- Maximum absolute change in perturbation transient NRMSE: approximately \(1.6515\times10^{-10}\) percentage points; relative differences can be much larger because the residual itself is tiny.
+- Maximum absolute-vs-perturbation Hines trace delta remained in the same \(10^{-8}\%\) range.
+
+This localizes the source to the reduction/basis or reduced-solve path rather than the Hines temporal reference. The current hypothesis is floating-point reduction-order sensitivity; it remains unproven.
+
+On 25 November, the PR #33 branch was updated to pin BLAS/OpenMP libraries to one thread, set \`PYTHONHASHSEED=0\`, record NumPy/BLAS/threadpool runtime details, and hash each basis, projected \(G_r/C_r\), input matrix, port index vector and full/reduced traces. The new workflow runs [45552270328](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552270328) and [45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) must be followed by a same-final-commit rerun. Reproducibility is accepted only if diagnostic hashes and full CSV hashes are identical; otherwise isolate the earliest differing stage. Do not promote short-window ratios into scientific conclusions yet.
+
