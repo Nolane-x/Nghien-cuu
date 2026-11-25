@@ -65,7 +65,7 @@ The four-layout primary workflow and basis-order workflow now request:
 
 - OPENBLAS_CORETYPE=Haswell
 - OPENBLAS_NUM_THREADS=1
-- NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL
+- NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR
 - The existing one-thread settings for OMP, MKL, BLIS, VECLIB and NumExpr
 - threadpoolctl==3.6.0 for runtime verification.
 
