@@ -279,20 +279,24 @@ def worker(scenario_name: str, output_dir: Path) -> None:
     require(len(set(output_tree_indices)) == 9, "all nine output observation nodes must be unique")
 
     target = conditioning.build_target_tree(module, base_tree, scenarios[scenario_name])
+    source_slots = {
+        source: int(seven_layout["source_indices"][source]) for source in source_names
+    }
+
+    # Build canonical D0 before the native full-Hines replay.
+    print(json.dumps({"stage":"before_production_d0","scenario":scenario_name}), flush=True)
+    production_d0 = baseline.prima_reduce_passive_cable_multishift(
+        target, list(retained_indices), ORDER, conditioning.SHIFTS_HZ,
+        relative_tolerance=conditioning.RELATIVE_TOLERANCE,
+    )
+    print(json.dumps({"stage":"after_production_d0","scenario":scenario_name}), flush=True)
+
     hines_factor = tail.build_tree_hines_be_factor(target, DT_S)
     print(json.dumps({"stage":"before_full_hines","scenario":scenario_name}), flush=True)
     full_trace, full_terminal_states, protocol = core.simulate_full_hines_perturbation_windows(
         target, hines_factor, source_tree_indices, list(output_tree_indices)
     )
     print(json.dumps({"stage":"after_full_hines","scenario":scenario_name}), flush=True)
-    source_slots = {
-        source: int(seven_layout["source_indices"][source]) for source in source_names
-    }
-    print(json.dumps({"stage":"before_production_d0","scenario":scenario_name}), flush=True)
-    production_d0 = baseline.prima_reduce_passive_cable_multishift(
-        target, list(retained_indices), ORDER, conditioning.SHIFTS_HZ,
-        relative_tolerance=conditioning.RELATIVE_TOLERANCE,
-    )
 
     print(json.dumps({"stage":"after_production_d0","scenario":scenario_name}), flush=True)
     case_rows: list[dict[str, Any]] = []
