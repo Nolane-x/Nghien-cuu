@@ -29,7 +29,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-four-morphology-four-layout-boundary-ablation-no-avx512
+  group: amsn-prima-q25-four-morphology-four-layout-boundary-ablation-no-avx512-full-dispatch
   cancel-in-progress: false
 
 jobs:
