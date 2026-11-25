@@ -1,0 +1,256 @@
+{
+  "active_numpy_dispatch_targets": [
+    "X86_V3",
+    "baseline(X86_V2)"
+  ],
+  "coverage": {
+    "all_models_within_all_basis_orders": true,
+    "expected_model_layout_summary_rows": 144,
+    "expected_morphology_layout_summary_rows": 16,
+    "expected_raw_seed_rows": 864,
+    "model_layout_summary_rows": 144,
+    "morphology_layout_summary_rows": 16,
+    "raw_seed_csv_sha256": "4aa61b37b5923e4383114afc005e4793b8ed629450d82d801b2f732c352ccda4",
+    "raw_seed_rows": 864
+  },
+  "elapsed_wall_seconds": 31.623145641999997,
+  "interpretation_limits": [
+    "Counts only independent columns in the initial shifted inverse blocks, before later round-robin Krylov growth.",
+    "It measures seed-budget competition and does not itself prove that this is the only cause of q25 approximation-error changes.",
+    "The four morphologies are individual reconstructions, not population samples.",
+    "The models are passive linear-RC; no active-neuron or biological validation is claimed.",
+    "No production PRIMA order, retained port, solver or default is changed."
+  ],
+  "outputs": {
+    "model_summary": "prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_model_summary.csv",
+    "morphology_summary": "prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_morphology_summary.csv",
+    "raw": "prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_raw.csv"
+  },
+  "runtime": {
+    "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+    "numpy_cpu_features_detected": {
+      "ASIMD": false,
+      "ASIMDDP": false,
+      "ASIMDFHM": false,
+      "ASIMDHP": false,
+      "AVX": true,
+      "AVX2": true,
+      "AVX5124FMAPS": false,
+      "AVX5124VNNIW": false,
+      "AVX512BF16": false,
+      "AVX512BITALG": true,
+      "AVX512BW": true,
+      "AVX512CD": true,
+      "AVX512DQ": true,
+      "AVX512ER": false,
+      "AVX512F": true,
+      "AVX512FP16": false,
+      "AVX512IFMA": true,
+      "AVX512PF": false,
+      "AVX512VBMI": true,
+      "AVX512VBMI2": true,
+      "AVX512VL": true,
+      "AVX512VNNI": true,
+      "AVX512VPOPCNTDQ": true,
+      "AVX512_CLX": true,
+      "AVX512_CNL": true,
+      "AVX512_ICL": false,
+      "AVX512_KNL": false,
+      "AVX512_KNM": false,
+      "AVX512_SKX": false,
+      "AVX512_SPR": false,
+      "BMI": true,
+      "BMI2": true,
+      "CX16": true,
+      "F16C": true,
+      "FMA3": true,
+      "FMA4": false,
+      "FPHP": false,
+      "GFNI": true,
+      "LAHF": true,
+      "LSX": false,
+      "LZCNT": true,
+      "MMX": true,
+      "MOVBE": true,
+      "NEON": false,
+      "NEON_FP16": false,
+      "NEON_VFPV4": false,
+      "POPCNT": true,
+      "RVV": false,
+      "SSE": true,
+      "SSE2": true,
+      "SSE3": true,
+      "SSE41": true,
+      "SSE42": true,
+      "SSSE3": true,
+      "SVE": false,
+      "VAES": true,
+      "VPCLMULQDQ": true,
+      "VSX": false,
+      "VSX2": false,
+      "VSX3": false,
+      "VSX4": false,
+      "VX": false,
+      "VXE": false,
+      "VXE2": false,
+      "X86_V2": true,
+      "X86_V3": true,
+      "X86_V4": false,
+      "XOP": false
+    },
+    "numpy_current_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "thread_environment": {
+      "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": "[\"X86_V3\",\"baseline(X86_V2)\"]",
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_CORETYPE": "Haswell",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "threadpools": [
+      {
+        "architecture": "Haswell",
+        "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.34.237.2"
+      },
+      {
+        "architecture": "Haswell",
+        "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.29.dev"
+      }
+    ],
+    "verified_openblas_coretype": "Haswell"
+  },
+  "schema_version": 1,
+  "scope": {
+    "basis_orders": [
+      112,
+      168,
+      224
+    ],
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "neuromorpho_id": "NMO_03524",
+        "q25_node_ids": {
+          "apical_q25": 864,
+          "basal_q25": 272
+        },
+        "shared_output_node_ids": [
+          1,
+          583,
+          867,
+          367,
+          751,
+          866,
+          868
+        ],
+        "swc_records": 869,
+        "swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "neuromorpho_id": "NMO_162186",
+        "q25_node_ids": {
+          "apical_q25": 4488,
+          "basal_q25": 2713
+        },
+        "shared_output_node_ids": [
+          1,
+          2304,
+          4262,
+          2261,
+          515,
+          6608,
+          4180
+        ],
+        "swc_records": 7287,
+        "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+      }
+    ],
+    "neuron_segment_cap_um": 0.5,
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "seed_rank_cap_used_for_diagnostic": 224
+  },
+  "status": "passed",
+  "study": "four-morphology q25 initial multishift Krylov seed-budget diagnostic"
+}
