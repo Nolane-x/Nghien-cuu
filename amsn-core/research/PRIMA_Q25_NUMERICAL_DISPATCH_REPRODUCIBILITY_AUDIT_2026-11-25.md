@@ -82,7 +82,7 @@ The strict dispatch contract is now:
 - OPENBLAS_CORETYPE=Haswell and OPENBLAS_NUM_THREADS=1;
 - NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR;
 - exact packages: Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0;
-- an isolated preflight process calls numpy.lib.introspect.opt_func_info on representative float64/complex128 loops and rejects active X86_V4 or AVX512 implementations;
+- an isolated preflight process calls numpy.lib.introspect.opt_func_info() without filters, examines every optimized function and signature, and rejects any active X86_V4 or AVX512 implementation;
 - that verified target list is handed to later steps through GITHUB_ENV and stored in the numerical report.
 
 The introspection call was deliberately moved out of the long NEURON simulation process. A first attempt to call it inside the runner caused native exit-139 failures on the hosted runner; the separate preflight has passed and the main analysis now only parses its verified JSON handoff. The long simulation records the exact target list without repeating the unstable introspection call.
