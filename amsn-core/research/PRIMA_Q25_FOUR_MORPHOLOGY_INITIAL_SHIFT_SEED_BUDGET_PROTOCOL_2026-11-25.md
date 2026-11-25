@@ -1,10 +1,10 @@
 # PRIMA q25 four-morphology initial multishift seed-budget audit — protocol
 
 **Date:** 25 November 2026  
-**Branch:** \`research/prima-q25-cross-morphology-boundary-replication-2026-11-25\`  
-**Implementation:** \`research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py\`  
-**Tests:** \`tests/test_prima_q25_four_morphology_initial_shift_seed_budget.py\`  
-**Workflow:** \`.github/workflows/amsn-prima-q25-initial-seed-budget.yml\`
+**Branch:** `research/prima-q25-cross-morphology-boundary-replication-2026-11-25`  
+**Implementation:** `research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py`  
+**Tests:** `tests/test_prima_q25_four_morphology_initial_shift_seed_budget.py`  
+**Workflow:** `.github/workflows/amsn-prima-q25-initial-seed-budget.yml`
 
 ## 1. Question
 
@@ -27,10 +27,10 @@ The diagnostic uses the same four pinned holdouts, q25 node identities, source S
 
 The four layouts are exactly:
 
-- \`seven\`: the canonical seven shared ports;
-- \`eight_basal_q25\`: the same seven plus basal-q25;
-- \`eight_apical_q25\`: the same seven plus apical-q25;
-- \`nine_both_q25\`: the same seven plus both q25 ports.
+- `seven`: the canonical seven shared ports;
+- `eight_basal_q25`: the same seven plus basal-q25;
+- `eight_apical_q25`: the same seven plus apical-q25;
+- `nine_both_q25`: the same seven plus both q25 ports.
 
 For every morphology and each of the nine passive parameter scenarios, the audit constructs each layout and processes these six expansion shifts in fixed order:
 
@@ -40,8 +40,8 @@ For every morphology and each of the nine passive parameter scenarios, the audit
 
 The requested state orders are 112, 168 and 224. The initial shifted solves are rank-counted up to the maximum requested order, 224. At every shift, the script uses the same Hines shifted passive solve and twice-reorthogonalized block routine used by the conditioning audit:
 
-- \`_solve_shifted_passive_real(tree, shift_per_s, selector)\`;
-- \`_orthogonalize_block(start, basis_columns, relative_tolerance, max_order)\`.
+- `_solve_shifted_passive_real(tree, shift_per_s, selector)`;
+- `_orthogonalize_block(start, basis_columns, relative_tolerance, max_order)`.
 
 For each shift it records new independent columns, cumulative columns and remaining budget. The model-level output derives the remaining states and occupied fraction at all three requested orders.
 
@@ -65,9 +65,9 @@ Pinned runtime:
 - SciPy 1.16.3
 - NEURON 9.0.2
 - threadpoolctl 3.6.0
-- \`OPENBLAS_CORETYPE=Haswell\`, one OpenBLAS thread
-- \`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR\`
-- all functions/signatures returned by unfiltered \`numpy.lib.introspect.opt_func_info()\` were checked; active targets were \`X86_V3\` and \`baseline(X86_V2)\`, with no active X86_V4/AVX-512 dispatch.
+- `OPENBLAS_CORETYPE=Haswell`, one OpenBLAS thread
+- `NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR`
+- all functions/signatures returned by unfiltered `numpy.lib.introspect.opt_func_info()` were checked; active targets were `X86_V3` and `baseline(X86_V2)`, with no active X86_V4/AVX-512 dispatch.
 
 The report stores full runtime diagnostics and the exact active dispatch target list.
 
@@ -82,6 +82,6 @@ The report stores full runtime diagnostics and the exact active dispatch target 
 
 ## 5. Reproducibility
 
-The workflow is independently executable with \`workflow_dispatch\` and also runs on relevant pushes to the research branch. It performs the full runtime/SIMD gate, downloads and checksum-verifies the Allen SWC, checks all four pinned preflight manifests, runs regression tests, computes the tables, commits compact results and uploads a 90-day artifact.
+The workflow is independently executable with `workflow_dispatch` and also runs on relevant pushes to the research branch. It performs the full runtime/SIMD gate, downloads and checksum-verifies the Allen SWC, checks all four pinned preflight manifests, runs regression tests, computes the tables, commits compact results and uploads a 90-day artifact.
 
-The machine-readable report and CSVs are committed under \`amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*\`.
+The machine-readable report and CSVs are committed under `amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*`.
