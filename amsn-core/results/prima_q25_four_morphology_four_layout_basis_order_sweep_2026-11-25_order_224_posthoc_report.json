@@ -1,0 +1,76 @@
+{
+  "analysis": "paired basal-q25, apical-q25 and combined q25 layout contrasts",
+  "coverage": {
+    "interaction_summary_rows": 336,
+    "matched_case_keys": 3024,
+    "morphology_summary_rows": 168,
+    "source_summary_rows": 1008
+  },
+  "input": {
+    "case_metrics_rows": 12096,
+    "case_metrics_sha256": "cd5bd9fc64e3f25489eac7b04f7190ba94a143efa5aa64cde03c2d8930d3f336",
+    "comparison_rows": 9072,
+    "comparison_sha256": "87fec166e197ef2722256e38071dbd73f79ec1cfe917fda2e8c52db9a5049062"
+  },
+  "interaction_definition": {
+    "additive": "E_both - E_basal - E_apical + E_seven",
+    "interpretation": "Descriptive paired numerical contrasts only. They do not establish causality, biological interaction or population-level generalization.",
+    "multiplicative_ratio": "E_both * E_seven / (E_basal * E_apical)"
+  },
+  "layout_semantics": {
+    "apical_only": "eight_apical_q25",
+    "basal_only": "eight_basal_q25",
+    "baseline": "seven",
+    "combined": "nine_both_q25"
+  },
+  "limits": [
+    "Four individual morphology reconstructions are not a population sample.",
+    "The analysis inherits the passive linear-RC and declared numerical-protocol limits of the primary experiment.",
+    "Ratios are shown with absolute deltas because near-zero baseline residuals can make ratios unstable.",
+    "The multiplicative interaction ratio is a log-error-scale descriptor, not a causal or biological interaction effect."
+  ],
+  "metrics": {
+    "canonical_transient_nrmse_pct": {
+      "description": "Canonical absolute-voltage finite-window transient NRMSE",
+      "field": "finite_transient_nrmse_pct",
+      "unit": "percent"
+    },
+    "continuous_ac_error_norm_v_s": {
+      "description": "Absolute weighted continuous-AC error norm",
+      "field": "continuous_ac_weighted_error_norm_v_s",
+      "unit": "V\u00b7s"
+    },
+    "continuous_ac_error_pct": {
+      "description": "Continuous-time resolvent error with the declared ZOH input weighting",
+      "field": "continuous_ac_zoh_weighted_error_pct",
+      "unit": "percent"
+    },
+    "discrete_be_error_norm_v": {
+      "description": "Absolute weighted discrete backward-Euler error norm",
+      "field": "discrete_be_error_norm_v",
+      "unit": "V"
+    },
+    "discrete_be_error_pct": {
+      "description": "Discrete backward-Euler periodic-transfer error",
+      "field": "discrete_be_periodic_transfer_error_pct",
+      "unit": "percent"
+    },
+    "finite_dft_error_norm_v_samples": {
+      "description": "Absolute finite-record DFT error norm after the terminal-state correction",
+      "field": "finite_error_dft_norm_v_samples",
+      "unit": "V\u00b7samples"
+    },
+    "perturbation_transient_nrmse_pct": {
+      "description": "Numerically stable perturbation-coordinate finite-window transient NRMSE",
+      "field": "perturbation_coordinate_transient_nrmse_pct",
+      "unit": "percent"
+    }
+  },
+  "outputs": {
+    "interaction_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_224_posthoc_interaction_summary.csv",
+    "morphology_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_224_posthoc_morphology_summary.csv",
+    "source_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_224_posthoc_source_summary.csv"
+  },
+  "schema_version": 1,
+  "status": "passed"
+}

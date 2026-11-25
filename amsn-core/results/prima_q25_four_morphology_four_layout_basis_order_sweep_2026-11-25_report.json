@@ -1,0 +1,227 @@
+{
+  "combined_coverage": {
+    "interaction_summary_rows": 1008,
+    "morphology_summary_rows": 504,
+    "source_summary_rows": 3024
+  },
+  "coverage_per_order": {
+    "case_metrics_rows": 12096,
+    "matched_comparison_rows": 9072,
+    "posthoc_interaction_rows": 336,
+    "posthoc_morphology_rows": 168,
+    "posthoc_source_rows": 1008
+  },
+  "fixed_protocol": {
+    "dt_ms": 0.00625,
+    "expansion_shifts_hz": [
+      0.0,
+      100.0,
+      1000.0,
+      3000.0,
+      6000.0,
+      10000.0
+    ],
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "morphology_count": 4,
+    "neuron_segment_cap_um": 0.5,
+    "numpy_disabled_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+    "openblas_coretype": "Haswell",
+    "passive_parameter_scenarios": 9,
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0
+    ]
+  },
+  "interpretation_limits": [
+    "The sweep evaluates numerical stability of the four-layout passive PRIMA approximation across basis orders; it is not a biological validation.",
+    "The order-168 matrix must pass the pinned Haswell OpenBLAS and NumPy SIMD dispatch contract; orders 112 and 224 are recomputed under that same contract.",
+    "Ratios are accompanied by absolute errors in per-order post-analysis CSVs because very small baseline residuals can inflate ratios.",
+    "The four morphologies are individual reconstructions and must remain separate strata.",
+    "No production solver or default is modified."
+  ],
+  "order_runs": [
+    {
+      "basis_order": 168,
+      "case_metrics_rows": 12096,
+      "case_metrics_sha256": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+      "comparison_rows": 9072,
+      "comparisons_sha256": "29af1a3897c44d0aa946768a23ee815299e4fa982e7223e4b9130aa359fd2e6e",
+      "max_basis_orthogonality_error": 1.7763568394002505e-15,
+      "max_finite_identity_relative_error": 8.781488969255743e-12,
+      "numerical_dispatch": {
+        "numpy_current_dispatch_targets": [
+          "X86_V3",
+          "baseline(X86_V2)"
+        ],
+        "numpy_disabled_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+        "openblas_coretype": "Haswell",
+        "threadpools": [
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.34.237.2"
+          },
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.29.dev"
+          }
+        ]
+      },
+      "posthoc_interaction_rows": 336,
+      "posthoc_morphology_rows": 168,
+      "posthoc_source_rows": 1008,
+      "result_stem": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25",
+      "runtime_seconds": 2369.8400065160004,
+      "source": "previously validated four-layout run",
+      "status": "reference_loaded",
+      "unique_basis_hashes": 144
+    },
+    {
+      "basis_order": 112,
+      "case_metrics_rows": 12096,
+      "case_metrics_sha256": "0ceaf76ac9e948185909fe6608c0f4b67704bc74015d0146f3b9c03364369151",
+      "comparison_rows": 9072,
+      "comparisons_sha256": "1768f64f6e51f20213073f82a904a5b840f8572f84f1b836a600129c03fddb98",
+      "elapsed_driver_seconds": 1857.827107284,
+      "max_basis_orthogonality_error": 1.7763568394002505e-15,
+      "max_finite_identity_relative_error": 8.743810650683813e-12,
+      "numerical_dispatch": {
+        "numpy_current_dispatch_targets": [
+          "X86_V3",
+          "baseline(X86_V2)"
+        ],
+        "numpy_disabled_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+        "openblas_coretype": "Haswell",
+        "threadpools": [
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.34.237.2"
+          },
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.29.dev"
+          }
+        ]
+      },
+      "posthoc_interaction_rows": 336,
+      "posthoc_morphology_rows": 168,
+      "posthoc_source_rows": 1008,
+      "result_stem": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_112",
+      "runtime_seconds": 1856.979192027,
+      "source": "fresh finite-window four-layout rerun",
+      "status": "passed",
+      "unique_basis_hashes": 144
+    },
+    {
+      "basis_order": 224,
+      "case_metrics_rows": 12096,
+      "case_metrics_sha256": "cd5bd9fc64e3f25489eac7b04f7190ba94a143efa5aa64cde03c2d8930d3f336",
+      "comparison_rows": 9072,
+      "comparisons_sha256": "87fec166e197ef2722256e38071dbd73f79ec1cfe917fda2e8c52db9a5049062",
+      "elapsed_driver_seconds": 3793.964362757,
+      "max_basis_orthogonality_error": 1.7763568394002505e-15,
+      "max_finite_identity_relative_error": 8.757358898155067e-12,
+      "numerical_dispatch": {
+        "numpy_current_dispatch_targets": [
+          "X86_V3",
+          "baseline(X86_V2)"
+        ],
+        "numpy_disabled_cpu_features": "X86_V4,AVX512_ICL,AVX512_SPR",
+        "openblas_coretype": "Haswell",
+        "threadpools": [
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.34.237.2"
+          },
+          {
+            "architecture": "Haswell",
+            "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+            "internal_api": "openblas",
+            "num_threads": 1,
+            "prefix": "libscipy_openblas",
+            "threading_layer": "pthreads",
+            "user_api": "blas",
+            "version": "0.3.29.dev"
+          }
+        ]
+      },
+      "posthoc_interaction_rows": 336,
+      "posthoc_morphology_rows": 168,
+      "posthoc_source_rows": 1008,
+      "result_stem": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_224",
+      "runtime_seconds": 3793.092219217,
+      "source": "fresh finite-window four-layout rerun",
+      "status": "passed",
+      "unique_basis_hashes": 144
+    }
+  ],
+  "orders_failed": [],
+  "orders_passed": [
+    112,
+    168,
+    224
+  ],
+  "orders_recomputed": [
+    112,
+    224
+  ],
+  "orders_requested": [
+    112,
+    168,
+    224
+  ],
+  "outputs": {
+    "interaction_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_interaction_summary.csv",
+    "morphology_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_morphology_summary.csv",
+    "source_summary": "prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_source_summary.csv"
+  },
+  "reference_order": 168,
+  "schema_version": 1,
+  "status": "passed",
+  "wall_seconds": 5652.497692244
+}

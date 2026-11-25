@@ -1,0 +1,3548 @@
+{
+  "exact_coverage": {
+    "case_metric_rows": 12096,
+    "csv_read_back": {
+      "case_metrics": 12096,
+      "finite_dft_identity": 1728,
+      "frequency_summary": 1075536,
+      "layout_vs_seven_comparisons": 9072,
+      "morphology_layout_window_summary": 24,
+      "source_layout_window_summary": 144
+    },
+    "expected": {
+      "case_metric_rows": 12096,
+      "finite_dft_identity_rows": 1728,
+      "frequency_summary_rows": 1075536,
+      "layout_vs_seven_comparison_rows": 9072,
+      "master_frequency_points": 3201,
+      "morphology_layout_window_summary_rows": 24,
+      "source_layout_window_summary_rows": 144
+    },
+    "finite_dft_identity_rows": 1728,
+    "frequency_summary_rows": 1075536,
+    "layout_vs_seven_comparison_rows": 9072,
+    "morphology_layout_window_summary_rows": 24,
+    "source_layout_window_summary_rows": 144
+  },
+  "method": {
+    "backward_euler_discrete_transfer": "H_BE(exp(j*Omega)) = L (G + (1-exp(-j*Omega))*C/dt)^-1 B",
+    "backward_euler_frequency_mapping": "s_BE=(1-exp(-j*2*pi*f*dt))/dt; the discrete response equals the continuous resolvent evaluated at s_BE",
+    "continuous_time_resolvent": "H_AC(j*omega) = L (G + j*omega*C)^-1 B",
+    "discrete_input": "10-pA rectangular sequence; sample interval 0.00625 ms; onset 2 ms; widths 2 and 10 ms; DFT is taken over each exact observation window",
+    "finite_record_boundary_term": "Y=H_BE*U - L*(G+(1-exp(-j*Omega))*C/dt)^-1*(C/dt)*x[N-1]",
+    "finite_record_identity": "(G+(1-exp(-j*Omega))*C/dt) X = B U - (C/dt)*x[N-1]; the terminal state is included explicitly, not discarded",
+    "sample_and_hold": "u[n] is held constant on [n*dt,(n+1)*dt); x[n] is the state at the end of that interval; continuous comparator uses the exact zero-order-hold Fourier factor dt*sinc(f*dt)*exp(-j*pi*f*dt)"
+  },
+  "morphology_layout_window_interpretation_summary": [
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 60.26613888082473,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9987007684000342,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.001460702970583,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0001964012210598,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.5326501814560898,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 78.72824850396358,
+      "median_candidate_transfer_boundary_cross_term_pct": -11.368495301811631,
+      "median_perturbation_transient_worse_pairs_of_63": 49.0,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 13.100180709124396,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9989630146317174,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.0060332550320124,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0008814873247498,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.8013788004502969,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 56.708178393359,
+      "median_candidate_transfer_boundary_cross_term_pct": 58.66947459050583,
+      "median_perturbation_transient_worse_pairs_of_63": 52.0,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 56.95484501801811,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.000101637149047,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.0234312088186628,
+      "median_candidate_over_seven_discrete_be_ratio": 0.9998463009392304,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.1144250778158526,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 197.8499775205682,
+      "median_candidate_transfer_boundary_cross_term_pct": -303.64519950822444,
+      "median_perturbation_transient_worse_pairs_of_63": 34.5,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 13.290256750186416,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.000047400456186,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.0261318555675305,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0020666108448784,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.1801896170182353,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 118.58570198183357,
+      "median_candidate_transfer_boundary_cross_term_pct": -47.63099316814565,
+      "median_perturbation_transient_worse_pairs_of_63": 34.5,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 58.526960516333546,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9998726755827482,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.0347297605630255,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0011126206431533,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0070392593352444,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 181.40787731274278,
+      "median_candidate_transfer_boundary_cross_term_pct": -242.83038887321067,
+      "median_perturbation_transient_worse_pairs_of_63": 29.5,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 12.417629948618853,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0001606789116972,
+      "median_candidate_over_seven_continuous_ac_ratio": 1.0273715648948167,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0045154523737803,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 0.8458273680027013,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 107.25469957416955,
+      "median_candidate_transfer_boundary_cross_term_pct": -17.887206765206475,
+      "median_perturbation_transient_worse_pairs_of_63": 28.0,
+      "morphology": "NMO_03524_JacobsControl",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 119.95722325986593,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999960144185933,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.251984196402801,
+      "median_candidate_over_seven_discrete_be_ratio": 1.000110875042662,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 0.999749318991769,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 262.4975137655729,
+      "median_candidate_transfer_boundary_cross_term_pct": -847.6560883742059,
+      "median_perturbation_transient_worse_pairs_of_63": 31.5,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 19.469086393404666,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.000001073006871,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.3383863146190396,
+      "median_candidate_over_seven_discrete_be_ratio": 0.9997902619509998,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0010267925188687,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 142.5200650969639,
+      "median_candidate_transfer_boundary_cross_term_pct": -113.71872774523978,
+      "median_perturbation_transient_worse_pairs_of_63": 33.5,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 124.25113758779528,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999939989415435,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.8618821641720826,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0000283388019757,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0047853233918884,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 266.116155200517,
+      "median_candidate_transfer_boundary_cross_term_pct": -880.4476968706117,
+      "median_perturbation_transient_worse_pairs_of_63": 37.5,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 19.49538465504066,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0000014437441873,
+      "median_candidate_over_seven_continuous_ac_ratio": 3.1082328658770777,
+      "median_candidate_over_seven_discrete_be_ratio": 0.9998750374827681,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0010575487045825,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 144.76366034899632,
+      "median_candidate_transfer_boundary_cross_term_pct": -121.1355441213305,
+      "median_perturbation_transient_worse_pairs_of_63": 37.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 137.3805678230145,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0000082170241504,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.6619922721325655,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0031121086414596,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0036018368626263,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 279.1851671559164,
+      "median_candidate_transfer_boundary_cross_term_pct": -1057.693445125833,
+      "median_perturbation_transient_worse_pairs_of_63": 36.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 21.500197831028153,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999887860698082,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.7815486917860643,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0086665673884474,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0125601532605262,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 154.21749121526204,
+      "median_candidate_transfer_boundary_cross_term_pct": -146.76373348848674,
+      "median_perturbation_transient_worse_pairs_of_63": 46.0,
+      "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 59.571753554800985,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999678991711124,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.2406575831731317,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0009080356163689,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.03852065796241,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 183.52614132537695,
+      "median_candidate_transfer_boundary_cross_term_pct": -273.71541300767143,
+      "median_perturbation_transient_worse_pairs_of_63": 37.0,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 10.624274339382701,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999720145342984,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.250379199528585,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0006097750459755,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0448795586641966,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 144.02207611596322,
+      "median_candidate_transfer_boundary_cross_term_pct": -108.63226895248775,
+      "median_perturbation_transient_worse_pairs_of_63": 38.5,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 50.20791698050292,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999838497570704,
+      "median_candidate_over_seven_continuous_ac_ratio": 3.126391335336703,
+      "median_candidate_over_seven_discrete_be_ratio": 1.0020873686058547,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0243008616815095,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 180.70001775969604,
+      "median_candidate_transfer_boundary_cross_term_pct": -280.7445712026482,
+      "median_perturbation_transient_worse_pairs_of_63": 36.0,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 11.112036753125114,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999967459089805,
+      "median_candidate_over_seven_continuous_ac_ratio": 3.126391280421473,
+      "median_candidate_over_seven_discrete_be_ratio": 1.001918308539691,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0290426153359338,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 139.5736506996385,
+      "median_candidate_transfer_boundary_cross_term_pct": -95.24683540869671,
+      "median_perturbation_transient_worse_pairs_of_63": 37.0,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 47.445751146324,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.999988978611555,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.237658733833797,
+      "median_candidate_over_seven_discrete_be_ratio": 1.002585807323958,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0320504398037096,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 177.64844234615936,
+      "median_candidate_transfer_boundary_cross_term_pct": -298.42798678568545,
+      "median_perturbation_transient_worse_pairs_of_63": 36.0,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 10.454252931225323,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 0.9999789894429134,
+      "median_candidate_over_seven_continuous_ac_ratio": 2.27071170689086,
+      "median_candidate_over_seven_discrete_be_ratio": 1.002786106914566,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0292873364806485,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 134.3361569127551,
+      "median_candidate_transfer_boundary_cross_term_pct": -85.54810275211244,
+      "median_perturbation_transient_worse_pairs_of_63": 39.5,
+      "morphology": "NMO_162186_AllenL23",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 103.44803619816528,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0005228248575082,
+      "median_candidate_over_seven_continuous_ac_ratio": 4.982324275677742,
+      "median_candidate_over_seven_discrete_be_ratio": 1.9333583158870777,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.0367699279119595,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 103.99135207056483,
+      "median_candidate_transfer_boundary_cross_term_pct": -98.25410329105236,
+      "median_perturbation_transient_worse_pairs_of_63": 32.5,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_apical_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 43.49480002884215,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.001201699453549,
+      "median_candidate_over_seven_continuous_ac_ratio": 4.933108476911239,
+      "median_candidate_over_seven_discrete_be_ratio": 1.8851207364605882,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.034760538929003,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 73.59434878835322,
+      "median_candidate_transfer_boundary_cross_term_pct": 21.186062848121946,
+      "median_perturbation_transient_worse_pairs_of_63": 33.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 81.12769955106236,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0002641118691242,
+      "median_candidate_over_seven_continuous_ac_ratio": 3.3144542533138224,
+      "median_candidate_over_seven_discrete_be_ratio": 1.4185736907865594,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.3072732477346212,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 54.22147622273954,
+      "median_candidate_transfer_boundary_cross_term_pct": 5.44998683990274,
+      "median_perturbation_transient_worse_pairs_of_63": 41.5,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "eight_basal_q25",
+      "candidate_port_count": 8,
+      "median_candidate_boundary_component_of_error_norm_pct": 28.068928852993068,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0004712129289677,
+      "median_candidate_over_seven_continuous_ac_ratio": 3.548368155856985,
+      "median_candidate_over_seven_discrete_be_ratio": 1.909329376691964,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.2716840093669182,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 49.91208690227752,
+      "median_candidate_transfer_boundary_cross_term_pct": 67.95991368554789,
+      "median_perturbation_transient_worse_pairs_of_63": 40.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 243.87418974011737,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.00831781463773,
+      "median_candidate_over_seven_continuous_ac_ratio": 24.364688135041902,
+      "median_candidate_over_seven_discrete_be_ratio": 22.024339746046465,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 1.585384653381301,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 273.4675891985015,
+      "median_candidate_transfer_boundary_cross_term_pct": -1269.4164394907343,
+      "median_perturbation_transient_worse_pairs_of_63": 44.0,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 20.0
+    },
+    {
+      "candidate_layout": "nine_both_q25",
+      "candidate_port_count": 9,
+      "median_candidate_boundary_component_of_error_norm_pct": 80.92943484521052,
+      "median_candidate_over_seven_absolute_transient_nrmse_ratio": 1.0005697772986504,
+      "median_candidate_over_seven_continuous_ac_ratio": 27.566733025329427,
+      "median_candidate_over_seven_discrete_be_ratio": 25.805708735653873,
+      "median_candidate_over_seven_perturbation_transient_nrmse_ratio": 3.930056956128901,
+      "median_candidate_periodic_transfer_component_over_finite_error_norm_pct": 115.8986826568152,
+      "median_candidate_transfer_boundary_cross_term_pct": -106.49097562252022,
+      "median_perturbation_transient_worse_pairs_of_63": 52.5,
+      "morphology": "NMO_163775_Peng_mouse_Control",
+      "source_pulse_groups": 6,
+      "window_ms": 40.0
+    }
+  ],
+  "reproducibility_diagnostics": {
+    "basis_models": [
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "13a8258d8ae9c538913a5a917a12e5991f8e8429aa2a23c3a48e420fbbc7d604",
+        "capacitance_sha256": "c87de12f34737b3050829aa86d21d4f5c9dcc36b7300764b7d4723e3ce1ca640",
+        "conductance_sha256": "6d0c4f2347029188d769d5792f4be7a2bc340db9dc773d8baaed5d3df48ad222",
+        "input_sha256": "bdcfe78a0cbbaa8352a24105721c7a8d27024f13a7083d6338ed78a97070dbf6",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "a6fb620488bcdaa7ed5aaead362e61e082449805c62602fd4cb7cf9f20b519b4",
+        "capacitance_sha256": "433c8e912e34fcd6b9e0c2ba5adc9899b7500c751d6da0f10803590d8877b49c",
+        "conductance_sha256": "77b68d838d636a9d9744a4512025307ed668a4e885ed1d33bdf391c26f8eeb63",
+        "input_sha256": "8609296a9db9fc20b5e0d6a6e3ace2c53eae7660853000587ac4e644097fac9c",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.7763568394002505e-15,
+        "basis_sha256": "6e6f86516e59e9de7e2a4694b1f3b3c0250a55ee5b3d8f921cd67e69167ed99b",
+        "capacitance_sha256": "69b90470cef848a1d55db4eef7574b95c70dc36f7f57c72949ad9ead3a976f94",
+        "conductance_sha256": "b8ee5d1cbf20290a6a07da5d3e3f69b5d8b02a17520d8883a63181d347595411",
+        "input_sha256": "54d8137783c728f0c3b811be34ca57b7402d1fb1ed54cd37839928374eb40a86",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "248035b92bf3c3ee5958cbb006de98a27d3c8c7f1685fbeabd942478cf550ed7",
+        "capacitance_sha256": "7ba057760f5edbaed88d4adc359e033e5cba387608ca750bb3c8ad9d8230f2fb",
+        "conductance_sha256": "acedd2e1d111b384f6755353c6de7fc4b220e4427c135b1499e9202b84702217",
+        "input_sha256": "756e63f0d887ea4eb3191179258209eb1142bf318869a432de8b4ad327435e72",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "fdf652363fddc78ddbd9374be8ce9fbf84bd4e596c5a2de71a129361959b9d2b",
+        "capacitance_sha256": "2f7d730d7e8089a00012e3f220cd30acf545f8e16c1375045ea02d4e6dcb4942",
+        "conductance_sha256": "d942742c9c9536f2e8f5ae87da5061211a1409782c337ecd4a5298cabc4673cf",
+        "input_sha256": "b78acb6d5e7c1329628895fba6adaa9d3be5dd0a7a2c28bd4cee80c4d57dcf75",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "dee7f49ede2e49070f16c31d9ec00af96a14660ff1b61de1e544846f7a7021fa",
+        "capacitance_sha256": "bca446c35ed5b786126b02bb349d059230cd76c13692636a8e0e2611bf5ef616",
+        "conductance_sha256": "fb367b1edd0a727c931470a19db5c60f3f8108e1fe4bddc7291ac3f6cf043fea",
+        "input_sha256": "066b81cd09fd26906676deb27bef84006cfc00e7fc6461b9432fc4f93ae3a2e1",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "41b19076687ad0bd86b681f60544ed65375d91e05c24deba0af907df7d78b0d4",
+        "capacitance_sha256": "7e22a8f18fbd7e80919df659ba98de8b69a8f80ab3d31588cc2210dabb20b486",
+        "conductance_sha256": "dcddf1fdfad09d5037907ce12207511c09011b43c3b92d3d6477d0b9acfad33d",
+        "input_sha256": "65326f77501f99d111326567eb9fab7689f4d3c98154ee924820092ea6f00db7",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "b9b989a4ea562cf723be7c76cd304225cab6e8c2a57239bb8fc96d62230c36ce",
+        "capacitance_sha256": "b1658dafe3b6baa6aae449a9a07255642ea0420fc0f1ffefe665972736d57ef6",
+        "conductance_sha256": "d1f91796f1d8e9f549f536b914fe08367d94a44c88f90433a82fa5e617c2cb7c",
+        "input_sha256": "ec07581afa443abe2f7ed1bdec801b26d26cd4576e2ea678f54543cf73bc8edc",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "dc90e70eb024e3603881c2353ea182f2048c93f6262ca4036cd747e122bf6c9f",
+        "capacitance_sha256": "91f50c94736e04f017120ed2b8f36a54441ec02bea9495734dcd752f928f1113",
+        "conductance_sha256": "754ccd4972c029c907b6e6746b36f23aab187d61393b586fad1618ac50d830ee",
+        "input_sha256": "7b28a8b583d7de876512153b6e4c52e8027b6fa491fd58ca5bdd936242780682",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "0fb27ca10607249372eba97896acd82ee167b9b0e8d78260b855d784022f1e45",
+        "capacitance_sha256": "a39a545866eb04e69ebde3e9dd9db212c85b86618d681e69bc37ff9f451bf9d6",
+        "conductance_sha256": "03b19a426c23d3bfdecfaf30012f0347561b1c91822baee8afe9cde8d747c9b6",
+        "input_sha256": "f5f9e17ea580f6fcee986188643f52b7e143223b93742c891449871ec890c7d2",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "a0d1a6e7bcda4642360d9bd61de1f255be284bd28e09ad5f0990eb996c6425ae",
+        "capacitance_sha256": "aad051af4d6149d666ab901bd85032986f40ef261f7e52b0e8211a8dfcedbf81",
+        "conductance_sha256": "62c27ca28a85cd9dfe10aae8b88414df070e4008befe902815880bcee03d5d6a",
+        "input_sha256": "33ba164988edb0a3da4feed4b117659e2cb6ef75e346fb69fc6ac3493cbcdff0",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "efaaff6010efd7fadcce59350a38e018582a2a3491ab560791f6826a8c2035a0",
+        "capacitance_sha256": "b9b1aba3506dceb9ba819852ca37f516dc392b4069e64e0f3df2496fcda73e8e",
+        "conductance_sha256": "819217b543cc59a584864edc5316edd5a39b319c77436516409feeaea63cac6f",
+        "input_sha256": "ff8cf40f6f1223f868d6eff537a198f3e60cf46b48e4f44807460fd463c9f751",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "fe35b1f7f1f392b860651a2c3ac0a3fd6b252e52ba1400ed7d03088254da0fa7",
+        "capacitance_sha256": "91966a48852b4e931e11943638da05f5eeece6fe28c9ac92c658b0b12e6d2983",
+        "conductance_sha256": "4ac68a89fb69b46c33e43fa081576cb0adb51376b29168ee2528fa46515df011",
+        "input_sha256": "f833e5ea4d996c3e59e9c202e2259ea36b8731ebef9c2a8d382389216d636f86",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "eed510a5a750e3f6715b88e319483e18495237dc9ba6e794d5ff6ef768cc42f3",
+        "capacitance_sha256": "8d382e7b80dc9b6be031f78f7cdf44b39384e4d483dd583b6a07fe6f5cf3cd76",
+        "conductance_sha256": "6a93b4f8a936056ee1fa045411785ded10e669dfb27e3447fe2928a7697a7dbb",
+        "input_sha256": "8f46b28f1f0c436f691912cef525bcb79d531f3e3aeea6876b9fc4f29ddfeaa1",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.4432899320127035e-15,
+        "basis_sha256": "cce0906f4e7e5e44d61ffa83a7eb0ce7e942a4757e1815aa88ddef4621c42f62",
+        "capacitance_sha256": "9539fb485d7a964aad371251884d666c8306b53e8d9f1854de22932fc78a6c27",
+        "conductance_sha256": "d40e2cbb315079731978c8115321c1170f0bb11b8298d06f361299ea5468632c",
+        "input_sha256": "2138b63c22e13a78dda540f0e4663a4926062342be03f4f50459b28c34cbf105",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "32458643e6e9d715f8188fe3d693636cb4fd319aea7e3b0bc638a4907bb91857",
+        "capacitance_sha256": "a375bfc9f99701b35e8d994e72e4634f661005686fecd4e9822d3fc8d82b82c3",
+        "conductance_sha256": "9df29ac8a633193c68fae4794c98972d4bf5afa3372b38c19208623493c30d58",
+        "input_sha256": "9a888228771201564515bb71d8510bbf2859ec306b5f48f8e282aa5746ef60e5",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.5543122344752192e-15,
+        "basis_sha256": "b4c6fbd3a6f54f24499925d3e9689fa801c4018f50fbf605efe8fdd5d17fe269",
+        "capacitance_sha256": "f3701746a0368e8a3caf564648713506e3af6e4d51cd7568238ad7a7b0308f8e",
+        "conductance_sha256": "e184c327f5ae95dac758f02ca66a0a0eda533a2555cc0438475e53971e42436c",
+        "input_sha256": "1aa27c6c0a97a9ce2e62376b2156a45955b79bffbf8db34f466280287ba5c559",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "f8b63ae3eec75d1af758bb4be368c69c2fdda66ab1fb0d2468f9d29dfd4ba042",
+        "capacitance_sha256": "fc79aa66a3ac8bd42365b65cff29e91281c65f679f9e23734ece434b2b8bfeba",
+        "conductance_sha256": "3d7e89779e58872c34a1a7977a14d71aec9854870185de2d66c1b986c5b0c137",
+        "input_sha256": "196e1be32519d9621c6a8acf13f57d6dc66c3e2930e3c4d6bc3580f6ac6a23db",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "a00505441834a3bc5b03c4aebcf176995c6be143721a1b0cec2cc36dff0e2148",
+        "capacitance_sha256": "c940a06f210cd1d7ef2e4c398a539633bf2380814275989d07ef3691a0c795d3",
+        "conductance_sha256": "876cd10ec685c7b2be3f8179fe8f8bfc074c688ec08290dfcb98422119c095f6",
+        "input_sha256": "7182542dd27826c26bee1ea261e4d232aad0ab343ce869bf02a6d3de5f1fcee0",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.5543122344752192e-15,
+        "basis_sha256": "481a9b344580910567a2559fa00d425329da2c8a444756f62da0dc7634e70190",
+        "capacitance_sha256": "0cfc04d431a229f691b88d5a7ddd6d79430a0f00b433c7f0a33941c9dd9b743d",
+        "conductance_sha256": "b84f6ee67c952e46df93048e6dbfd376d6abd67878fadb8c00c452e3c550ae94",
+        "input_sha256": "a345bac6cf411fe167a6b26aa1c2bc936f55f61d9f0ee618068379351741d119",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "085731817fbbc3e48c48f3b2d53dc1acbc29cdb2660af791a5c7bf4bfd88343c",
+        "capacitance_sha256": "34ebd6f928fd3672a6f937b5fd9f0d186cbaacff13d3fd76036dbb307a131252",
+        "conductance_sha256": "1c8ee9319d65c2323003560adb9c21f32c8c2c013bbf13c016054dd254d72c8c",
+        "input_sha256": "701e807bde9c21132dc823ae4dec635ef22d2cc9bc41e43eb97ac33be3472bbe",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "b3334321664eecdd83cf443b3850677e76d8fa29d318594312d9b70ae697a98c",
+        "capacitance_sha256": "81724e8ba93fbd6b1920468717b7d6c294e9a1d819dd9d55e26afdb7c2572400",
+        "conductance_sha256": "5242933bccf05f993d7d9bf65679be58674e274586a2609e4ea2a7a4e2fe3d8c",
+        "input_sha256": "fda350806b0364d50c41f183a954e506dab5d826d4264246ee458a49f3b3a984",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.5543122344752192e-15,
+        "basis_sha256": "fbf493c3730c827867293e70466e606972b1bf183e31773f724d55ab473a163e",
+        "capacitance_sha256": "425e30f311697651a8047f030e298dcf5e768d702ee30cd4a3a7f31870ebea34",
+        "conductance_sha256": "874a462344763dbd13784fb342bc0e0d33d7716cea64a723fbe3bc6a2dbe007f",
+        "input_sha256": "22bc399b0e0b4554c98f8b24c5cc8ca064b16f5033bbfa40e4501fc8920a47d5",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "962da323effa9e941fa46f02918d725d12798eccb4d1220937c80e743b7dc38a",
+        "capacitance_sha256": "be59e0e5dfd94e064dca50f78135ae86484396dc78455617e941290e60981044",
+        "conductance_sha256": "61609c8e1768bb6d23f4c933e75380e6c3dc7bd7f9178065395e493270376aa2",
+        "input_sha256": "cf04a8a74ec8a68fd96d1f9d6f77aa0ec5a102508234ec4a5549295553d4af1e",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "f484547cbbd39e9a67c9078df317c7de36bd47195e23c74c1c9398bd5a2b60e2",
+        "capacitance_sha256": "eb758eb066c2ac16133d1bd479a9cc6adbdfbe6f597157eb1d26471c8c429f8f",
+        "conductance_sha256": "1c24caa225653f222e69a1dc98b035286283e8927d6bb7738b2ce7af5bfe0042",
+        "input_sha256": "c26675d5c37a3e089e30faffa76555137c1d566cc72b0dcc324b3fefa5308859",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "158565c04dee1a8174234ddba75ac0f13afe5015e3f074c6279b52d2e47c3ecf",
+        "capacitance_sha256": "5455603e8b8a608a3e6d373c79f909b4f1372334c8186f4e765b44dd0b3f97b1",
+        "conductance_sha256": "246c22e19d035cd7f81109ee8fa607255db24ed98e47b6f18e04156dbea7cf91",
+        "input_sha256": "ec8440ff002894c0a7c9cf03cbfee206fe9e2627bd96e12228f1af88a638a43d",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "5f94591264b25b207145e8e770809b9fd671a4e88126d1ba1c11226d3198436f",
+        "capacitance_sha256": "aff96742764edbd385451ca2a75cfed3f0e4ca67ff7d2fc0a8df9f93a4aa60db",
+        "conductance_sha256": "3a54852226146938f1d45bb26dc4e5e2febd56d7942d4f82b97d0f66a036a271",
+        "input_sha256": "698f7c058e92425e8d2b11ef15081c621ab2ee3a9f59380dead2eefc9255f252",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "8a351f408a5bd3e603def5b89bed6e652fa3f3e3b2e213345c62b095f0c3f337",
+        "capacitance_sha256": "e5c6d289175cd58142ef019377265270dd39de548471bfc6d9f57eb4b71d93de",
+        "conductance_sha256": "e91441ee36bd343644d1e98587ddef8b33a6119c81e974c8e03087613dba6abc",
+        "input_sha256": "37bf62fd53830dc846b6123ca247c2906ccdfc517d22b44467ce84f0fc86ff17",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "ea973ff4b2b9ecf3e208b6f95a5e4e6085b9a34a2a531f2f4c4c5d18343c7012",
+        "capacitance_sha256": "d7fff8399a640440f63b874486baec7003329e3f5e1736564da4cd1439810965",
+        "conductance_sha256": "0027b6c32c561007b52ac15c5077ccc222691630a042e6a7e267e44b6869f0b7",
+        "input_sha256": "aa4057fc7ba6148d52aa6547bcb4e8a2eb62cd2b6bcf73c58cf605e7428ae7ec",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.6653345369377348e-15,
+        "basis_sha256": "c9b17569f84a4fb387576afc73742c8fe88462cf2df4a0b056ce714a119ccf02",
+        "capacitance_sha256": "f53106d1ba33da4bf7c4538d823855764312a0deec9f139a7ce5867139f60801",
+        "conductance_sha256": "1d7416535c84ea8bdd00b943b40982faed2cc653365c8881222b8dcb0843e1f6",
+        "input_sha256": "3d81f4c962f35681ec6d001dd3800d618ac19ebcfaf0bca06ce4b5306989c060",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "621770d340a55ff141b06b84ed8f8782e179ae90afdecafb3719112ee247db7f",
+        "capacitance_sha256": "fce7ba7a63649f0eaf9a344835916dd6fa1011f63ef91023ddf4ca99d6605034",
+        "conductance_sha256": "c42dd21be8bc46d381d72d1cc5d6d59f34e8c2aeb185b94b6ec85c1410357bac",
+        "input_sha256": "5cb3c431dcc031a442641fe6af92afef93802708344354687fc16d4765c4227d",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "a77cfacd1deaf0b88cd3cc284dc7d3ad6d13278fad06553f8a0a2c887e2f3760",
+        "capacitance_sha256": "7fbaf980d28c49e2caf6a59f9e4409c482227566040e5b12b484f00b9cfbb715",
+        "conductance_sha256": "daad1cf7118c3a461a0cb88c81692de29bb9110d86e1fbc1e3c926187d9a59f1",
+        "input_sha256": "3610dc7e2ce0e854ded441b52a6da35194e3fa754894b2e76bf00536a94100b6",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "26ba793a51502548a6ccf6195c390c51b4a6f2e7a866d92937d4c287e04636ec",
+        "capacitance_sha256": "694c6538910d72366018a8d082e9f29c6c6e71ebf59790085d546e97c596c98e",
+        "conductance_sha256": "17081ebf86347a02b72578f8ef9af3ffbb9a0486cf90b8b980c6409be98edec7",
+        "input_sha256": "3de9e37417350d08ec8fc84b08b39b050693f8b7562593875eacd8f44e02defe",
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "d5bf3bc7c13bb7283e69c7069d545ddf536fc7ccd636774ccc82e86964e0b841",
+        "capacitance_sha256": "21f021b59938fb9cc4998d3cc8a60e0415c6e7dd1e8085f63a1710e3dc1b3359",
+        "conductance_sha256": "2bf9bafedc9b85074e623f409e77230d8d2f5b08689701a21bd1a7b824763097",
+        "input_sha256": "11daf95e5dcc30e52d0553989df7540456273030263353cf4ac26de7a592adaf",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.7763568394002505e-15,
+        "basis_sha256": "69fe6d75379fd9d1acf54d9e6d4264c8f02082a8aea0714de42bf85d78da3a34",
+        "capacitance_sha256": "82ba6de04c13c4e31c82b6d4867e74210732ce16a9c8322aa3ecbc726b5f09b2",
+        "conductance_sha256": "e5a1756bb8de0dda5f3f96ea9752ce1c1faa5d9487c98955a5b65c03fe24d5bf",
+        "input_sha256": "94327003f1507a53623f3dbebf466b975d0a022fba3b0941a2fa93120f13e6b9",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "9b32457d36ae705247c3260cfb7b785c9d8e84e9f4938461a9c71e573f63e214",
+        "capacitance_sha256": "66221926566302244a9aaf8adacd6b0053e1350ae1ade7f3af5c0242eead7034",
+        "conductance_sha256": "0b43628ef89961e82eec9b986f5d6f2db9d9dd36f319536c33c7e64607128dfd",
+        "input_sha256": "aa5855142b86c1452d6780cf59ff9db496f800a547040ce37e8d53ea58949ec7",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "2369c7d5ef8a40ee3a0c3b4162d6933722809905471e36ff7e0e008ea1dff5e5",
+        "capacitance_sha256": "435f3f5d325c78cf0e2799028065fe8801e657742cc0ec22361839fce9e2e99a",
+        "conductance_sha256": "8502bc1fc463d35bb46c0fbb4eaaf8c44080f65599da7916a8e296116c36083f",
+        "input_sha256": "056131c0b9900add5c90a0f56734d1fe3eb5e6ccf71b01eaf54c1aa01fdf4e77",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "b05726d4fbca91af8ca95ac4b7473996d05ddd596addfb50021bab9a1295f11c",
+        "capacitance_sha256": "6597df080835f8776e865166584cbea6ee3072025d41b7e8becdbb90ea38890a",
+        "conductance_sha256": "9c10e7e9a4fbe068f3e96d2bff722f653c20cbad50f9b0c5db240a3e36052d89",
+        "input_sha256": "6f5b271b0222813777e7bfe76cbacc1afdd693e1758ec202e22f166093317431",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "1b946f9a95d06bc6d67f59978baf0bc36718d5e987bb9995dad34f747b3ff706",
+        "capacitance_sha256": "50c6866fba00612e9844e57a9ab5f97c8fd2a4d61834e4754a04f714bb7a477d",
+        "conductance_sha256": "29b785c5b34c46cd0d7a93a7fc5d8cb94e5dac70b766e92838d162979a27babd",
+        "input_sha256": "c56c8a1e910331d43d64f9f5210fb5ec7ee977852a9e771b7ef1ec69bc70ae04",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "73695c00120cd81b2169222f20d4a0cbb4db91edef0cf395851f06a3e771e57f",
+        "capacitance_sha256": "441adf1ef6876f72df739f7bac764283307c5bc313acad6b6e0879188edb57c3",
+        "conductance_sha256": "7c8422445f6522de5431beb0596a149041bea730be1bb09e23a492c53714b961",
+        "input_sha256": "26609a7396e199d5511dfdc83677d37e7d25a7c3aaa6aecaf8e4f4dffcbe6545",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "2cb88c8a4c6b84907b4067d3d1e0aacc010801c1f5562f328474be8b57a382aa",
+        "capacitance_sha256": "573a83d8f77e6431945367928e48e78ee950cdb988c53ac7151803e0ad70c3ad",
+        "conductance_sha256": "9c19a66a8e0b27ebfdb45b31990fb32038acd4884f2575786dc3357fd3829c8c",
+        "input_sha256": "5e6cf6f2adc5e070df9db9e0f9c24cade5091d5e591bcdc84b20999d23b91243",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "568f62bb37e7528c44af8c0f4a997575b77d997cec72f501f8cd3415d729fc4a",
+        "capacitance_sha256": "05b688327e21eea0b143a99607af6c575a1f188e8dc7c4d1d110a47b38f8b87a",
+        "conductance_sha256": "bd91ade816b215a10f0f201957b6d3cdd35864f1d3331d1b49d6f90abe909a0d",
+        "input_sha256": "0e23f1b01f31cbc87445985c6445c7cf77a3ab8446f888897eba59a7d060f38a",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "5c613056716ac91c6850bfc3039d7dcb3924e94be9440cc228fe46e24d81f14a",
+        "capacitance_sha256": "060102e21322658e5774606a02f151f06a383e71412e4db9fb80a8c2ee6d2243",
+        "conductance_sha256": "9a0d38713789da8064ce7040f43be389829b1ac0691a2afce2672952b4b8640a",
+        "input_sha256": "2b150db8e60ca7a904f042a16d69d7a7c9badeef4feae75fa7213411a58970a9",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "d42e88dfc70fbce4519eb45f17b67f86f0578d327772444fcf45676d33bec7f0",
+        "capacitance_sha256": "cc21ac07a5aa8049c0c6ddb15a30ab21e10733fb2688ade37c84fd1685ee97a3",
+        "conductance_sha256": "c210388ed49e1d7460c2e929834b1946695b7d364f0b28d000541326ac4d16c7",
+        "input_sha256": "55a063f80429c84f45e5d9382c88b1877d90e6ce8b7910505847e1782f1ab21a",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "f4f14317e46c844bbfbc71808eb145c5d154208d5a9902879b02be0358eaa624",
+        "capacitance_sha256": "52c3e1f217c268fe6e0dde34bb3cfbd8ed6a9687b48860a90b33f6b121e2284c",
+        "conductance_sha256": "738f0a46d5b0b09f5a9a188881ad3fb3ef54673c9b6840e1579358bf8f00961d",
+        "input_sha256": "5aedbe1052dc007af3f503f4f4950673218f7e842cb2d2a4d57203a221748da5",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "dbd985511f27417d5a65d5dde2af04af745649d598a9a87bc7ad00464e3beeba",
+        "capacitance_sha256": "c43288adc2f19a0eb636c71e62cb91b5d7f311335e836d66eae0727213aaf1ff",
+        "conductance_sha256": "3af0d227c21f79b4098fdd3f4c5b9bc1919ed9d8012762cc0ddd3bbec4a1e8d9",
+        "input_sha256": "d4c80bad8419e58b857407b3683e104c8c12831cff28675659492e1380c023dd",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "56406aff1227a7e51d5415c33ac7b28132923211d6db42e456d24fb87620fccc",
+        "capacitance_sha256": "839840054d308c1ec9bdae76563c750da0c7a51f63eb7d12c931a7c421d2e683",
+        "conductance_sha256": "635bf64199f8f915f84d4431f02027e722a728d83ac42e25bb31ecefef9d6559",
+        "input_sha256": "c5b13e2b5b04cd88396ba6bf361cf4dfcb951c651c884cd95d206482988d419d",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "4c66a99d434ad7713cc9e423e4c70e50249e273c468aa12bc377b7720a42113e",
+        "capacitance_sha256": "aff950a5db47a452cb067ac93d0fd05de4ddd08cc91171b366e7dc8b6e8965db",
+        "conductance_sha256": "a3df89940265844c8b5d9b86010cd82e2b3bcbc490cba91e4c64320e13718b79",
+        "input_sha256": "b7f8e97626beeb6db8f55f8d01460b9e4ab936d6aa820a5772fdd63948101b47",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 6.661338147750939e-16,
+        "basis_sha256": "0239909d3d0f03c2a9f1ce04553105a3a6891340835f794fdb04ffe146769a60",
+        "capacitance_sha256": "57d98b97bce8db90cfa26ed8a9fc0af5b3e871e0a2f0e046fdb3ba77c5da1f20",
+        "conductance_sha256": "de82aa1ad7a4564e6eef2c66f441bca4107b79631730c70a719c7790a6ccd453",
+        "input_sha256": "cd96f8de1cfe9c840e234643b628c524c960aaea423c7f93e83b48a399071039",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "d730a5a4a0bccd8733984c323efae0ef2a2c8a6719c4f05dd7d961ac373c3fe1",
+        "capacitance_sha256": "c224f3c6b1fd297c7d6dab6075843643e2d7ae44b236b565b25c5c319a605889",
+        "conductance_sha256": "0fda22f583de4e48511b95086edd6a57037166ed8d005ac2d51bad3ace73f6bd",
+        "input_sha256": "6132ca129cc6cd0e3372fbf3540b0f0395a540065887d03ef6655f79ddb926d5",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "783fc7413062cd10d8ec5a259eb6c8edd85ed39ed7ae0a8542e7bb6da6f5ac2e",
+        "capacitance_sha256": "345c27c54aeecd9abd1b2407beface3da394ca80a4b6ba60f008103124adf9c4",
+        "conductance_sha256": "170bb613dd1480355757de87cbdb2df1b505fbdb1d387c45d44e767ec87ec1a7",
+        "input_sha256": "bf01a81643a08ef31cc19f223313069f185e63e57809b79c57ef498d91df600e",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "9223c72f27d1ab13e10ed3af82b4e4044c43471037b485f2d2b40633bd750e04",
+        "capacitance_sha256": "ddfc468e62013a881c0e2c31153eb486830fcf2557e88692be535dffecc7f05c",
+        "conductance_sha256": "4c69e9e7a5932d62476c0c870cc2fa5b7a1ec0c7f413669d9725b8adc3dce98e",
+        "input_sha256": "f29a2189c6db29c3304f473b6e5e782bcd0dafa214eb7c17703bbc543b334c96",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "f94c080c86631c86ecea43c34133c455229c47ab1e0b5b120fca1f6f383f6fe7",
+        "capacitance_sha256": "208ff06cab14892412d8543c6957f722e62976bc3b768679546002a9ad04ae4b",
+        "conductance_sha256": "a1b8d27328b49c8189e93f93c1059671a8a22b0318b5fc37c56301b75f04ff68",
+        "input_sha256": "662c3c28128a6f52a16c5e76c85b42318742d6a9d53c1efaa36330dfd0fad8aa",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "acdeab3813c30b8b52faca38f1c47cce92d2eda1d9c4cdcc69e4c2db59f069fd",
+        "capacitance_sha256": "a682b8185eca46b96e356b19395aa5de26113ed77fababf5a569c3589259d781",
+        "conductance_sha256": "49f9e4f90dc15989ba909adbdfca3aef3716927d59909478a0eba3b51d0f170b",
+        "input_sha256": "1fd7f8398f8dd6c4609a3eb6d7cc6029b717de0fa177fccd4994beb66689cca0",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "193d6d2766db3e73dc5a2d488d9b93a8aadedc0ce1fd1ad5672aad98e815d45e",
+        "capacitance_sha256": "95134cbc020e36095ad72d85ee9594af485ce7b55df2db4afe15fd44d344ea36",
+        "conductance_sha256": "12286e0c5dc016791f8632070e07b802b9a3093daa6cf7d0517e3a6c83eaf651",
+        "input_sha256": "b9de316b4d85fdc9e4d72581607c948fc1e31131b17ba0cef1176527e1207dad",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "d5fab1ea4daaeb00ed8c34fa8a03e69396cf2423f90f4faeeb4222eb0000db92",
+        "capacitance_sha256": "47facb936cb99645ad4a40d8879f3d6483ad939f5f357470e8d9916f286e8da2",
+        "conductance_sha256": "67fd622fd43b809d0d95fc7453769f4ae74a9379df0ed19a08f44c75d410d9a4",
+        "input_sha256": "8bb9d07fb16d441197e7eb7cb402b166c25a3740d3aa42b4b1d2d1bc63841313",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "aaf20b27432a350a0c315ae3689584ed4d3229790e097e7c1a86f52a4a27d907",
+        "capacitance_sha256": "7129d36b0466737d615c5c24a9ccbf8a6da31b6c711c66c4b3b4274d96b89512",
+        "conductance_sha256": "7c9738739e4d0abb35c2905da2ed7d3515bb6610164666b85043eca5abcd1a45",
+        "input_sha256": "b7f2cb322a86281004abcb4d0131092b9ea3fae97978ab790b410ebb31002c1e",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "d841e79412bc4d6e5b7a136838beac2cec7e22b4793673859735776a2e9a0bd3",
+        "capacitance_sha256": "ec6525af33665e2f1bcae4ded06263bac557cf98300a059a92c9026da596fc9f",
+        "conductance_sha256": "28ce9ac4f96ef9241cdbc6291ff485068e9df812500da5edbfed0f6b5cb4fc92",
+        "input_sha256": "ab6b80b4870b6ba3c58f2b4e4b2118835d813f0fc780187e249b70166643dd10",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "67e0d5abb6c2477c6440e7f0641d23078a0c3fac922d2396f3f2f88ac5a66049",
+        "capacitance_sha256": "58660cc1ffcd9e998697e71243ea8105d1d0ba6c703ffb73eb273e2a4f35c485",
+        "conductance_sha256": "a8dfa6c4bc92180750ae50c9555e997fe84394cbf679268a9cdcc6e6d7af6e3a",
+        "input_sha256": "57bf4d2471f9467fb4870c9e596d788e8effb982d6726d8e9ec775f8acfa0daa",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "31c7bc8742f8b762e5f6f56f4154316677ca6f76301b8ff867e3a952fb2b04cb",
+        "capacitance_sha256": "1a02251f2efe0045dc3d6acfce71d84030bc7495997aeec6ca4cbd9683cc202f",
+        "conductance_sha256": "89aede2711e58b57da9b39bc70dedc02a0ee01067f96646815d73d3b80bc8a3e",
+        "input_sha256": "513e71918d69ccdcf07e9c2cbd5ad288eecac963e6646f491bb3cf73cab599e1",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "544412935f5276deb770862a6e38c50c455a4d0a73aeb4e7098e1d529177f3bb",
+        "capacitance_sha256": "04cdc56306a9508f6a7aa4c0b7a96020f8ea9a80019e1bd17b83d6d9f8b3f452",
+        "conductance_sha256": "b375b8a96528d2dae9ae8355c2adbdd6fc7382d8e04e291497c52d489c1f82a9",
+        "input_sha256": "18c493fdee21c29f815b28e76bfef76f990fcbc86473748d3f87573502e32072",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "30531ce6cf0336edbc96bf587c253aa9418e7864add34de0373871f26ce188c3",
+        "capacitance_sha256": "18e9fa9582aa4690eb43cee3c93479a2163b40aa279ae428a4cfa36a19e37eab",
+        "conductance_sha256": "117a3c9e6ac06b010f3196dff5c0dc3f5336e06593c2a9e51057ccc16e72a0ef",
+        "input_sha256": "6dfe950cd58175087912890b6ae83e12f4b68a2e47a3c5cf203548dea5d40f93",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "a73a995ca7fe097d7e7e58b268112aab174be0cacad020330476407e03f0eb51",
+        "capacitance_sha256": "72a88c0b9cbd0637fc3a2334c16c734094e1874fe8e0a841729e142dabee064c",
+        "conductance_sha256": "f078439594a6e4172ba91063117dea0ac695c5066037feb8025d5bfe7265760f",
+        "input_sha256": "e2352bb7546750c30d25024c09114d131209fc867b7d40829b7df48d5afbeb22",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "d40b4266add4da404503e1b35ecbee4d0fb596014ca2dadadd11ea5c758876fc",
+        "capacitance_sha256": "a13006387fa11bfc60c37fe3ff63cd8cd96b9f7a3d5f8bd66bfdffb54959accb",
+        "conductance_sha256": "253e4ca459a25a743daf5864a4caa8cf010ccd8dd761fd142f72a9db70a4c8b3",
+        "input_sha256": "db9bfde6f68adc75e2b222692e5fcd0b01c583e0210096ab11a50ed6fa0c1455",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "1ae8d27267a971db51b1ab7df1e00da667e8829ac452a4335efe590f5defadd0",
+        "capacitance_sha256": "40fcfe9b052dd1954d972c095ee950d9ad2edf148c21a3a9fbf968b831e3ea9f",
+        "conductance_sha256": "7e90469a04dacaf2388eec82f7f7adb9d70fcc8478757e84447a02f6ff8c48ae",
+        "input_sha256": "221cb783e919e582dd6bca860bb1f9b33e6cc98018ac458da2ae0c1419f59dc6",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "9c6c2513f837fa514c4485864b51fd63c1bda88fa718a6e85e02fd3110c9da11",
+        "capacitance_sha256": "cc07478163e6f49f4d11216a46b9ee4245d0d216a1946767c018940e3dacdd89",
+        "conductance_sha256": "9cbbfdb7780f17177655b67a63e6684fee74fb6151acebf3ab307cedd6a298ad",
+        "input_sha256": "3a89ee7529628e503e6028424bb97fc86a9e6f3b7a5a6a7d843979f4558462b1",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "5c99e95fec5b2a7641b340dcba3f88181c9c83456fd8baa93fe635713c93afa2",
+        "capacitance_sha256": "5307f55ed64d3e44da7bb7126499b7063ee5c1c670809aa0866d0118bb61b895",
+        "conductance_sha256": "cc8ad707b2b74b33e3307f0d7bf090dc949e2c79b66f35fa17f6793d026fbd49",
+        "input_sha256": "a88a25a9eae820a96fa197d2974a0977360c828146681fddc1867ad372b4c4bb",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "d4027f73c452bb37cd6d6c2b73f5e41c693807d346aa5b7620f1e53d182986f2",
+        "capacitance_sha256": "27487fd1525b3486a87c9d4024e023e61294fcc8ecb22eaddb946d42721fab10",
+        "conductance_sha256": "408e04ce5fd1bf50dbee5572b18c730e96a250c3bdf593455a3cdc9f3e19afdd",
+        "input_sha256": "087e81213d79ccda4892e2acb05d77a9c7fefd6a9f69066a474ac7643104db01",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "6d81bd4dcc8a8e849454843ac2ac5aee89c8b7161b0606280c2498186b4d804c",
+        "capacitance_sha256": "092e97c12a9ff98a3b381e065d0060841e7846fa8e7b03d5a2ef67e2c34bb95b",
+        "conductance_sha256": "80638f4d6b7cec8e9ecf049346d82202408e134c66c0e57ab9cd4e4b8f98eef5",
+        "input_sha256": "cb9bb3cd2a07b3ec2567d2df1c85b3c951d960a54988224e5da61d3f7b5d0524",
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "32902668923d6dda586d1f52e46aedc76e16229142e8a490a319a2fff410566e",
+        "capacitance_sha256": "f2996bd3852bcc38e06012422f8eea04ab8f3c108b05f61aa94ddca2626eef68",
+        "conductance_sha256": "48226b1b96be8954a3bc77e85d60c16a97f0396a76f3d4e73eacefac0e41212d",
+        "input_sha256": "602bc7e7836d60026cea668b424d061a621ee2c93b81a136773597443174837d",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "178108f2ae4e113991fa74c1d50fe9a95385fe7962e835afb884e5bbb874184d",
+        "capacitance_sha256": "25ca3ff5b28760179cfce2251748fa5bf0c6b337031f3dc17749491785666815",
+        "conductance_sha256": "4b8a8551ba5358db6b91eedc6107cad7782362f984009343dbd7034c5ab24ba0",
+        "input_sha256": "afdb82edebefff08405a83a8256a99c63b524232fe302d47f806b0750d72c231",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "8358a1422a557725ce884f8cecc9d796b13c9f2765cd0cd6b6b9bcc3355554eb",
+        "capacitance_sha256": "38331dfc56d808fb336b3a8f45645f036066cb014a9d26ca895032eb6e4c1cf8",
+        "conductance_sha256": "b7c49cc68d5b550dd7650a81b1207758dd2739174a1ac2564a314f46d37dc4b0",
+        "input_sha256": "d27d219a713743bbbfa93df6c568bfcb590a755bec82c3d180f8061835f953a3",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "ae6d006427c80749d1c0607416725d5923ffcd8c31ec5f7b425d1886f40a4e98",
+        "capacitance_sha256": "a0c466903cd97ab209edf2902268f07e2afac5f6bb6938faf7cc98ccd60e9274",
+        "conductance_sha256": "cccc831243563ebd55df97ef63dac0c9ba88986a07ce764c57a133a211bfc678",
+        "input_sha256": "3971a0d374bbdabe2b3eba87aa686c4c4d58707bfde9a2539c5fda880a22ce80",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "eb52abdbb9ab6fec34809f301eed1cd23263632fb0077fa52e1c0ba8d1a46b95",
+        "capacitance_sha256": "8e3f59d23c17efc57c2c11ed3c8ae1f5403bf9553decea7af1de786cf0ffa3e6",
+        "conductance_sha256": "e430bca24d3a21e97b3c838c63859369831f4631fc48b3468dec0882f6013d00",
+        "input_sha256": "3f71c669984e3ec0d4d089e67fd9534accb1ba072f168797dafe6df1ac31eb00",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "b1f80957c8f15b03edff249466cc0c87694e068a71b993750977505025b6d03e",
+        "capacitance_sha256": "fe58b83f3b557ab47ab39ff75b88a5afee59ee90543689c483e1c45a079bf057",
+        "conductance_sha256": "cf299fb64a170d3c62514db98b413d666fa061347339e8edf41405cb3645bddd",
+        "input_sha256": "e5cd35a83c19124a3bc922781fd978e8599144f7ce87da9e8c1148103d78e505",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "a3f0adfb742ab6547376d2679a222279441884a2bf4aeff6071423f2448d441e",
+        "capacitance_sha256": "057d5aba6f22c2530c310fe720ab365b1dedcb5e6ca643ab8ec3fca2b6cc3997",
+        "conductance_sha256": "92fbd0a8e70e80463e3975202b51be0dc5eb2c066079d901201477cc3c56ac9c",
+        "input_sha256": "5e5f713a41cbb92ad53af03301d7d07c0d1aa1ce595ce3702496c3435759a4e5",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "80b5e364c5ca2f49806bb1ee6692aa7f4d5c2a09ca1e8a9ddf43d34c21078691",
+        "capacitance_sha256": "38306a3f52da5e4c12e84d7af87f756b1f7c2b7cedcf06ccf1b7f33ce3dfad47",
+        "conductance_sha256": "e72838c83710acc06234cac67f4b17c536a49a7d9aac1c5501bc2672894c650a",
+        "input_sha256": "219acf3c7efdc90b3eb156f1e932febf1e2865c04eda28270efd0a5d97cd8935",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "b62951b8c27e1fba1539af637bf3cd2b60d36010394ca202f255d7f76d70bfe7",
+        "capacitance_sha256": "bb67351f68d371aaa3d966f172ffed4cb699173e7d7f69f79cceaaf3508aaa35",
+        "conductance_sha256": "d4d6f33d11bc8315f72f9102bf70553ada78381969e9d237a844f903f004204c",
+        "input_sha256": "562bd46de234520707301c2a4ee7733960a67c2dd7cf919a65fbbb50fdfd5e3b",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "dc02c2b0c4855b5508a6b8e40aa61f484c411e8027320a61676a2d86d3e39a1b",
+        "capacitance_sha256": "c0dceca903cd9a0eef726a3432ade5db73e7223d9ddf8a12365afe8f83310152",
+        "conductance_sha256": "6d9d3959d1e9603a1d15de2bc0ece05fecec6d0e6c4ea0bc8778c76cb9f9efc8",
+        "input_sha256": "54fea0fbf3349051806d5fc43c6506588de0fae5630ab033a77c3a09bfeb9bcd",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "e2ba80e0d593e6c15e6b7396c777cb1f3838f41d460f232b150cbc62ec58683c",
+        "capacitance_sha256": "29ae51888e556d85a3632047d356406e7f0e69f1b0aa54d0f70920fc5ad90d4d",
+        "conductance_sha256": "d75fe3cf446361b6edc33d8e11562144dfc8190e331095a620f41cd1905daff2",
+        "input_sha256": "639ea7981a8dfa0777d1c67f51163ee92735eb40a05adac680125c02537928a2",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "eb2812d9ddebe65367a1e0d562c03a90c4484e5ef8185e4c0ab38513c82cb73e",
+        "capacitance_sha256": "8eab672cefe13adb4766d6f27d2af48ba8518999fa3945ae9c96c90449353f93",
+        "conductance_sha256": "9978bc2ddb904d78839fe6de61e3d3138dab4214832e01723d06137cebc7856a",
+        "input_sha256": "e6877324c996b1ca89e5c09e4b5137b384f0eac360f972753879e51e6c8eb9eb",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "5561b8a513108807cb33abb9bba3a19706f14bf920a936d4fcd16e94d4a19bfa",
+        "capacitance_sha256": "55fbc1edca0303aaaa32cb14e431d0c837ff52e9f551dc55e00f1d15df6ea415",
+        "conductance_sha256": "8f25686438403f037f9193e73baa54a65654c63d1c053aece3fc873b6bc9fa0f",
+        "input_sha256": "648efef7a0070da0646cc062f397fb4db40dc12f8ee23014849dcf2bc485707c",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "c52d97da3740688e518b86a4a9af54e21aeb9137fa20f513ae8d713164b9ab7b",
+        "capacitance_sha256": "bd3f86f83803739d3ed95d54a58c4b3d5c043618201bdd49c8bd9d0491165340",
+        "conductance_sha256": "d227a911f86a91142ec37db09c01830a4681e5a86743871cb7421a12b657e672",
+        "input_sha256": "988b38016f5153f2763b8563bd70851a411db1b410090da7c2c102af6ef892ef",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "ac4dc47bd045f5e03662e5c06b575aba616c1a3da466ed758ee3ff15f735158b",
+        "capacitance_sha256": "3c763db073c4b084ebd119e79a015e83e7df798dc2fe8038243f690eb0ca276d",
+        "conductance_sha256": "06ca0d9cd2fc0d8c6c3d16986e3371728a1c45583c0428eed6147f22ccb689e6",
+        "input_sha256": "23262e0d5107fec767651a1272169796ff9a329c166e9ae559f1f83b6410914a",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "8cfa720ae287bcbf8d71584f84c0e3150b2245daf4869fd4b48b06c1783e36b5",
+        "capacitance_sha256": "6dbdfc10e6dfaf8e7b3d0e735385425141cefd375d205578a858138016c98732",
+        "conductance_sha256": "4adf4b818417ae95fa90afb8d1c87248d1cde76e2fc275bbfc7b3b1dec371025",
+        "input_sha256": "fb836d95b55cf4f0212f248c471bbdbc061ce80de972c26b4250d9c0465dc093",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "f1844b0de591dc4f9fd8479cdb182bc0ed22ec96881517f637ca937467f8a3e0",
+        "capacitance_sha256": "5ae91b37d3bda09d9c13daa867b6158e8b18bc67bcab668079ddf575be83ff4c",
+        "conductance_sha256": "6e88ff651fbe1a499624345cddd4fbfbdc108a522473001dc8c90e87babaea71",
+        "input_sha256": "2f6575d4266ef7c5c4c6921022aea2bb041c28e7d11a3da028018ac55c7cb5ea",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "11816a4dbd8c9edc60857bc41ded5f3fdc88a58ce6ac9ea2bfdaeea5d24757a3",
+        "capacitance_sha256": "162192af05673d5261c35e652d040790ffbbe72e142748197646354dd82ba8ae",
+        "conductance_sha256": "6fe269f4a8a734d676b00a05514b76d2a29913757d06b49a8bdec347223bbb2a",
+        "input_sha256": "e968557f71c6977f8c71116515985a3f4c002fd0798143fc896becf0252483b7",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "b043cb549f1c68547be8e6bf8c8df0779023dfad0434cd9f0461e8dfdbfdf97f",
+        "capacitance_sha256": "edfb733ce65adcc18e7762861a65db1cf0e9b5993b76eb3d3fa8ae64951b057f",
+        "conductance_sha256": "b9df29e027c2d4033c9ee53908c938fce254da316f71513bd45dcff89dd1349b",
+        "input_sha256": "da75ea64784a48d5e22015870c15094b6790803b45e8a9ef0706a098a5b3d731",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "d698cee23d37992f96174a97824480b0fb2219f56d4ce3bbce755087d72f0b08",
+        "capacitance_sha256": "e5e35202d9e9f6d924d0c3feb58195b492bf15fb14f968fd90f6a53a099256d6",
+        "conductance_sha256": "2d0a569073f406f73ffacc00aee0ab91f4531ea45abddccadd21a90400fe5ba2",
+        "input_sha256": "a9ae810d28b5008544662211f960378fb93c41f09a7885f4c86675b2b631bd85",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 6.661338147750939e-16,
+        "basis_sha256": "aaa7d1cdc379a1dbd9a1e15e61ee5308cdb1dda9275159c899983daab9061e57",
+        "capacitance_sha256": "90aeb6890a28d619846df6f17715e9cb8663296f7f995ba110947a41b7f923fc",
+        "conductance_sha256": "9bc24ca3a91ade41b2ce432cbf2814f2c506c43860a9ed6ea0eb5e87539ef47d",
+        "input_sha256": "09cd412c621f0134b393386479644d102f229e6df40ca7083a9bc86593d6d2dc",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "8b24f2c37da3d95bc69637c890813f85b75a9899f95e3c8f9bf6ab3fae433853",
+        "capacitance_sha256": "0ef28035e30afbb8e32ee31a035cce5b8566b0dc0c47154f4becfc37d7428f07",
+        "conductance_sha256": "01b9a2c75f450adc28edd6ab51de2aa600fe6e8c5e8a7106d0bdf42d1496770f",
+        "input_sha256": "59477b8e09e1aa4c36f3ce24e07aa95ad1cf4d9a39de6f3fe361cb5db81539d5",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "2137dc25743642016279441c81ecebd6eb1a8e1eb44b04236d5b4825ca19fc37",
+        "capacitance_sha256": "f7ecef836326d9b3c09d80128d737094f5af888d4b40af504d0929930ac42540",
+        "conductance_sha256": "e8041159a23b8336c4b6ed49353fa1e36e3a2f1293374a7446d2419576035c22",
+        "input_sha256": "4b3470190a36933b4330a2af37782b3450c53581cb23a87ab9a584e74006a06f",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "809dcbc63efb1c094e91e16de2b7b62c60a7539402dd12d60a80ad1b2e381dd7",
+        "capacitance_sha256": "e0e742da458af85c09de26cbd1c319c0f7645cef7e5937728dc8d44c9b8d92dd",
+        "conductance_sha256": "5e28cb3ed9b4ce2e3e614b4ce8dc86a34742fc2d8abf684b0c68fa64e40a7148",
+        "input_sha256": "acbc11dbdbf3cacad015099ab05abe1f781b726b9530aa71807df6e16c4b3861",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "d42069a3c3ca0592a9755ac1ab638af693f71c568b19362605a34125329d9674",
+        "capacitance_sha256": "ffb70db5af31064f0b1096bbb071aeff4c3a202333a8501ca7583f211d1b473a",
+        "conductance_sha256": "c3a66d58f723a75cb5686307c138fb6fe705407a34dc81089fa9075368cfe00f",
+        "input_sha256": "f81a7ab8c305d0e5a324a5fc7db3e4624897295f17dc1c4adc0593db294cb7a5",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "5c30ee74b8517a8b70efa3f77736e2e990c2798de7829f5ddc22b550d92d2f75",
+        "capacitance_sha256": "9be79b2ccddad84615456a11cbf1cb831e012636ee718974455db6017d5b8e6d",
+        "conductance_sha256": "a3948870e80185d87a4d692d6f76b9275212ea0d016245a4aad6b5ff90ba7270",
+        "input_sha256": "78c5c275484ff938af8255dee51c11c40a9d9814f1fcae9be8a3103cfc1f03d8",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "a97836ab10e823d6687a4ff0ebad3f75d57abad90a640f0a28e857fa01bf8add",
+        "capacitance_sha256": "f8802877e21d58faa939d9096f835e35a482f89f7ba816e30beaa1e40d222a75",
+        "conductance_sha256": "f76d6d7a454221a3d39cd486a3dfcac5947c41addc009991ffd05cdb05f66cec",
+        "input_sha256": "a6f7e53f681d8d7a4c76795f40d804be29e46d77b1920408f5ebd1a46dc91587",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "807ba05f6fbad8dc158f03af8768e52f725c421d9f7c2f3ee108f1e1c4b9aa74",
+        "capacitance_sha256": "8a417d81fc56086cc16f6934772253e92353d160a14630d9ac20669a983ff918",
+        "conductance_sha256": "b32d667670230605538027d5cd4f080c95b48e16d4066f2749dc6af631ab1834",
+        "input_sha256": "26791e49802949c9dcdca0b5b1e4e8d8d4e2d30a55e2129214daff12f9e8501a",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "67325072edbde65dfd0c2b97ff6fac839aac37453286c1aebe9cd0aa3f62bc79",
+        "capacitance_sha256": "64c51d6460c8f475d0aa2e828e04ba360ba425da97ff7729298b89d203dbca83",
+        "conductance_sha256": "6b208e4f7b229a4da794f14e891cc0acb1e93d82db04ba7d861bc0a2af59f327",
+        "input_sha256": "2a811978bdb31d2fc77e854bf9a679b4dbca1c2bc999ed45454dc47098752393",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "7c35819eae9a4383a2b8df2eb1f8b8ce0146e3eab25e23b3aa82b4655b9412ad",
+        "capacitance_sha256": "07305b7db48cc7f518e60b3b5f2ae987ed7140d65c622755f990b04b66371213",
+        "conductance_sha256": "20646f6265cc6e6d0960972ffc81f5a8b6ef0bc8d5b3be98eb2d1b50ad8e3acb",
+        "input_sha256": "53a3dc0579b64008faf7b1542097ba4584d8232e9dadc6ad581287c8c8d3f7b3",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "6745626b3b5ec0d377d5fc1ce2505164a01f5ce0a7cf3181549daee979eb682c",
+        "capacitance_sha256": "44cfe2dd74942479bd8b7a3a606167f73ce4058c73eda66cf81d2b9161078478",
+        "conductance_sha256": "1c071a3cef38183069426ff5a5f4df297c137063e131fa43b603bc1fc0cf41c1",
+        "input_sha256": "8288ae2dfb676506c0367ff8e4b69895a702bcd56dc345a5a4911ea880287f8f",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "b918d6ad743b82766e1980bea345dc75f435c2f29d72c51f95c48f8b216792a0",
+        "capacitance_sha256": "dde4f9a5ef978635a1799f23866dbcd53f293044092cdb6bf51022e3c915f8f3",
+        "conductance_sha256": "8d8cf4ac2d35f574635ccdd5dc674a2b92ca3d6c890315a35141b166ee33ef18",
+        "input_sha256": "d82c22d2d3c6555dab3b047b5590b194527649cf6a2204206277da8824022649",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "db61ede62e6fb21be76595caab3661358136cdf087c6c0aedc4a14688d6c242b",
+        "capacitance_sha256": "939b2da19b78250456e7731d3013739272b1fd10e7155d79afb12333c5a8b212",
+        "conductance_sha256": "4852508463522923254ef2e52470bec24acba83c8837b0694d510d1a916e72b2",
+        "input_sha256": "d1c5a06ea9be461524c177e7e1a6f464530450c0234562f475e125ad918cc7bf",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "adf1c05765c434bdb88a691a2dbd71297b6e690f42db25dd0df147f935ae5ca2",
+        "capacitance_sha256": "342b2197caff7e2da0f41d2a39a9b408e7de18b4789d6ff80008506b4a941ef7",
+        "conductance_sha256": "9d0786d8d9b6ca9ef86ba875b01a9e0220d74c5bf49588424ec4c0cf6e7c74e1",
+        "input_sha256": "534f74739f4961cc0245997de8b1fb7300bf4b316c638b2c9c0340556a95536f",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "874328da4b98f5a438169511c8c807de78bbebc6abf909cde64c220ee5d50ce9",
+        "capacitance_sha256": "be7c8282873d474a81e4a8d193b98cbc338d50424ce80e5a45b60a468c8be57d",
+        "conductance_sha256": "b8facb57e6f530a21fda957723b23f52ea2e5e838dcdb9d74d2d77f663f5c7d2",
+        "input_sha256": "3bd8fa706d963b6526f52eb4bed24b428e4c178ac048b9f19c827f1910e2523b",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "953668dd9c124187cf80c6a507d32cc9fc41867940d389d91b87e74949b38440",
+        "capacitance_sha256": "20924ee8e671a4fecd69ad8a28bccee9e4d3c7bb34daf7cb5f200bae93b47185",
+        "conductance_sha256": "6c7d7b58660e18dd84e2029956215dec3ed2cb312cff4db2c41d708b53e7e60e",
+        "input_sha256": "67bf102d6ca6a1bcbf68379966e14aaee2715ccd49db02857d3178429077e380",
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "42c40a4a92d632e89d16307cc66ed1d6d467727163189ce2e1b5d7ce394ba80f",
+        "capacitance_sha256": "07f56657d6bfd3777b938cdedd3ee7fee24bd4e9bb6e7a7824e52702d0ef62a8",
+        "conductance_sha256": "bee503082ca1926b819714e8f5f5f9ac3565a8cabfbed6db04bfb9ea87b1d672",
+        "input_sha256": "6493d5e2b3dde7d7774243179f61cae3ee688b792ac477ca043c5ad44f1f6b65",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "dc8377ba5a54935151669ba6eb33d6d1eb5674238c890fea79d25541d615bd01",
+        "capacitance_sha256": "66194aa14ef0fb72e7f6ebca941935bf136c4a1fb314d6c4912a4d38d8ac52eb",
+        "conductance_sha256": "10d670d798e5119648ace750e9f56dc68702314251b49ace14e8fa42fa650de2",
+        "input_sha256": "e652c6e464374043f91c1f7015e8b0ca4a8d6c34501f96ef02e8509cb0b2faad",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+        "basis_sha256": "3976d7cf3cee95864141cb8173d456bdf178a2107a97fdf2c047c2cc33d1d235",
+        "capacitance_sha256": "2651e4e4c5070b99641e3593643eb00d3c59e74fe31dabe6c9b52bdce376991e",
+        "conductance_sha256": "a96b75fbf593d3fdb455b06137cf1f2aa767cd371ff7998cb4cdccfe0277924e",
+        "input_sha256": "ae90f1516b2879b44acb96faa4f81ee6cdf6a5af7f48523a722100db91af6ee8",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "698cacc6b7b257cd2545b9efbdb8f533e211e89eb9ffc05421195dcb0c7b188f",
+        "capacitance_sha256": "0afd9d3a61cead8f91256ccba4ca4bee82e676b61e355c4530e7d78498017c55",
+        "conductance_sha256": "f7ab0493e5456a418720dbe7e836c947c681ed27740a83789c478e1a5aa487ed",
+        "input_sha256": "fe50953308fc16b0e2c502f7d5211502e8bf324f9e71d48f1a9a6ffd026f7515",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "6d01380deccc66cad6cde6a95e762bbb414ffb8da038af57f767c7f35be1d328",
+        "capacitance_sha256": "d0a811dc241071146c11b9e406bcb13cd7405a808339bd44d836166914c78cb0",
+        "conductance_sha256": "0ceab8b3e6f197f436842030e61b0e8c17ad96000d49be92328ff7e909cad344",
+        "input_sha256": "1e7c6756f00fa39d1d2ef277cba249bfad7c7bc6faa90d5d5ebb9e888eab16a6",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "bf30dfcf972f3961169a727204c9c6b3d467c76a8f1a6c752224b69f861c6562",
+        "capacitance_sha256": "903f2bd23609ea92bc56b82a486744d4024d78efb41c9c626c2e56b2996d253b",
+        "conductance_sha256": "f3305169d548f8b03cdf5ed00b5f646e00084cda8039618cb148b6fbf2f8fbc6",
+        "input_sha256": "79edf3d1281a6f121c09eb02b5787c9d4333bc17afff6a0f287e08bc027ec7cc",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "a1386ad7fcefc5a66cc6b44b9f11b1b349489db94bd377c753f111358c81a492",
+        "capacitance_sha256": "6d331dd91c2423823fe2eadaadb7db7e4a20b77e370857288f7eade8f50bdbc5",
+        "conductance_sha256": "604dc0dbdb21c177cb201d53baeb2c6ac708d4291e6160660e591351095b9592",
+        "input_sha256": "a7c3a6cb813bada96af183d11b026b27262834df2a4c089b92d6519ee9c0f6d4",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "4ec9278f62273fe42d7242e2dd915c3f22fd88ce656009150e89b7f6099e3b73",
+        "capacitance_sha256": "5d91e2bb51729b3fc5d6483b2a941b8192528813bf3c249f3ee0c8bd40f5355b",
+        "conductance_sha256": "fbf9616d1abb57b353cf13ae0dc938f56aa512275e7adfca88dfe71f04ca12db",
+        "input_sha256": "8b78526fad2698170e6f729de251be1915f98f2fc05716c01f7ba89ceb16cf95",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "767144e3fa8581e6cb74918cdd4699acbf84dc3d4620965224d1e61828004e02",
+        "capacitance_sha256": "3e01850c1a5e6bb10aa66052fe6a0b7ff699afb865671052570cba2cd81ed6e6",
+        "conductance_sha256": "1ab1c12a3449c366208df7381b05cdbc8105907bb331c4b261e661717d33e231",
+        "input_sha256": "05951666fbcbd00d34fe6f345d08800e4f1a05850864c1a52270ce95dfa4cae1",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "ffb077a1cf2dd7667e0e3a8f5ff244bcf1b42143d6cda362957fd4bf6796de3f",
+        "capacitance_sha256": "66d20c756009766170627a7b3d93f4979a90443c64a2f1719a92ac0a5155171f",
+        "conductance_sha256": "0ae6f5efaaf934819c7df9b7eddded7e33a1a5b7f007db1f61f7fdcd59e75c4e",
+        "input_sha256": "246c4e980d00dd704da713d7b741b606bdb0afb4563ea84d30132c68b89d1c63",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "d88c09e261354f082637e17527ff8bca4ff4eea46df81bec554dc160f4e44aa0",
+        "capacitance_sha256": "6e8a685996c9d368373d47901f70bc415d7ec69b1ba08c53c0759cca3e0346a6",
+        "conductance_sha256": "eed151ac25fba237a2fa784ea3f175d64f50f781720a58e9c2bd05522c803745",
+        "input_sha256": "82447920f60a0d2927b3655f4a68a0a6b14d4ee10c4962718992d6e899b3ec78",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "9470d77458fd11edcb671a25911632387d53b74510f402f85d2a5e5682bce29c",
+        "capacitance_sha256": "1dbbb03981bd319ab378b41751fb962b66af4d8d7949c61b3366bc5ec78487fd",
+        "conductance_sha256": "92ed0de1f66679d1044a2af4dc8e8c1a2e79c263dd44fedb3ded4c8e91ffac1c",
+        "input_sha256": "2181239d0583c564397416103258dc571cb38de7268e1095dfc6bb6db69b0f48",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 7.771561172376096e-16,
+        "basis_sha256": "94dfd63c175a084ebcf38f7c2a4ed3cc0039b5ce83b6ccb7b4bb65546ddb2065",
+        "capacitance_sha256": "757eddab87cd172727c93a8853510ae5cded9f06e2b005fa02da170ac6a314cd",
+        "conductance_sha256": "d406e6984d8e997c8aca70efb4c5a35edf290c26dd46e0b3e3fc9dc6f9454254",
+        "input_sha256": "29048d9b31c47ffaecaf50ef37d98a40d4a603ba37b6a4ad57802502515bfa8a",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "e2df9ba8ce84a47a8b0f222cdf0f2ad0130d29f86715766b3563065d5d5476a5",
+        "capacitance_sha256": "c98bf6ec64f093b4a22e0d74d10ae915a200c116b83e9740598c48f3e1a1914f",
+        "conductance_sha256": "19d253cd21ed42030f2841ce1562ad419d3795bb56fa7e5b4c743518bc6ec21a",
+        "input_sha256": "1e483a0fa9d5ba46fc04c4b50de32f41708298cd168bb4602eb98079ca2d4cab",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "6d5d24b2e23223f591cb7a2373b270041828aacc94d9c666ceeddd0e018c9994",
+        "capacitance_sha256": "30c4c8d5670d1c7852d21fab72e9fc8d1153ee59fe6ec616a1b2547a694ea8a2",
+        "conductance_sha256": "113cec641e1c5240ecad74741d15b49fae3d99ffe609f98baea3c7c4607b6983",
+        "input_sha256": "9c1ead096c767953442cb2a525953bc5b9d05356c4ae065f37706d79d0a586be",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "d4ba24a1ac764c0b55aa2da655109443192e0fcfaba2a734f202ebdccff5b296",
+        "capacitance_sha256": "532f5e5e8a34547af13c629fa066728981b9f3334e6bf8679cbc94feb24ad11a",
+        "conductance_sha256": "511fc514f70eb25593a0498f1396b2940614939ac81df8ef3ab3a995070bab82",
+        "input_sha256": "c9243978ffc9ca5aa4aba3b68e0efe4a6c5651af40ab306875fc1f3a199c73a9",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "4d257e646846b76cc1520efa2e399c3d8b53ab48ae4334447b4910ebec542ef0",
+        "capacitance_sha256": "e45efd52c64472f9e7a81a50ce8ce0e9e12840a933cafeca70b29782c4e7f8e7",
+        "conductance_sha256": "59a9374d76b22ac9dbdb26d20effb991190eef7c54bc5321c3523a371ae85a74",
+        "input_sha256": "93d0f62473e424fdce59abd3d8a3d21cc894c9947476d14df10b4493456260d9",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "06447199338fc414e9681a07107eff78ac0e805cf4387ab665213cd581e378fa",
+        "capacitance_sha256": "983970f69e9db0dc2d1b72e2f7755f632452a25142402cb76738e4df67d29184",
+        "conductance_sha256": "22e26b16f5e1f2004851f7532dc0043e324767d1072fb41cdf1c88f7281ab772",
+        "input_sha256": "15cb542e95724bf5160f719bb807348d2068e095d605423acc782431a6da93af",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "be7f95c8abb65c37260c2c49bd540d49da9b1883cef029fa108f60d5be0114ba",
+        "capacitance_sha256": "006d5449a58e93cd1cc5ff4f895bea9f0e24c61f6a922f08c83210979ac71613",
+        "conductance_sha256": "bc16ec1ae512a5323327d1c25bbade45cf091fcbefca953ba5c6565082e90bce",
+        "input_sha256": "b027f7f26d5a18a9f82ef0acc86e142f089d5b33d82fc38825b7690766b4c5cd",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "58b7f7d94d4dacea2895e83ab60012cb5447e2a39bc9e58681882654e10ac58e",
+        "capacitance_sha256": "a079c96fc2f2dde26c9ab883123f8f466ef3d18e717bf1367af68c9c3a34d8ba",
+        "conductance_sha256": "8fdef8a9779fdfda57c4c48d7bdabe0a042e7a13940061f1f6d6b1d5f6d5733a",
+        "input_sha256": "16c5de3390372e86dd497935cedf2f869aa874e38e2036eb2b608b89045b3d89",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "cbdcb198556d6aa263187b53c6cd94128d210da336af2c52378c5c567b3890c2",
+        "capacitance_sha256": "7f67c3c1e7e8ef9d4086545bf3dc06d1675db5857ab67138ed5697ebc0344d02",
+        "conductance_sha256": "62f4a316ec540da54caca6702a2c52da1ddadfa9abe2855a86e2bd666a13002e",
+        "input_sha256": "6decf5df820345ae2e47f25cc9c94b4f3d57d032979d41c6bb4f9cb255f4f66e",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "b7aca484165b6fdf51e27421257032e42e8cba6dfe0b85c80e099a76c83529cf",
+        "capacitance_sha256": "a2b9db10f9458e74035354e020378be9feafccc12f6b956a5c1a1d141f6744d7",
+        "conductance_sha256": "cc0d373bf28018af542eb4e18d998113c2562433653f68503e5568783a6e0627",
+        "input_sha256": "6155d180a01fa01a6f18158ec2c8e0587e2ae98616c9c794eaf7c06c19bccd4d",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "6c93aad797ad6f2c0e0456fff6326c7a53ff3a4b8d89e85cff10c5f3ac18e8eb",
+        "capacitance_sha256": "1c8e9062090c36cd566d0b8f29a1e13c500aad0b9940a7b98e227691dd739fb0",
+        "conductance_sha256": "5e748f7c5f32aeeae426ed819a4c3fbc51963c223944ba43e8e6723e1a28be95",
+        "input_sha256": "e6a136bd07ef6458a311e6e206e284803222c30b0f330a999c3381174143389d",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "e3e2e9bc4363be5be8b7479f8a0882c264107c016791486d44bfc7e24453bfb6",
+        "capacitance_sha256": "62e7986d18b60a1c61fff6322f11c0816601ecb0cc81f69be58bee11f0df5693",
+        "conductance_sha256": "c2f2e8281e159eadd7f242d9dd6b08d18a2102218dae40bce018242a2ade2fd8",
+        "input_sha256": "3ad5201ab8bff2fc517024b7834bc0b5b54554e3ac81d214f1b7c3f74728d919",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "79e0f25752a078b695e2ad19a0a348183a2c49da676db24984f0e7de84fb5589",
+        "capacitance_sha256": "0ef6a4644bb6d4436eb90b0ee930d2cd90a6325ed2f3707ddd439e3f5c66c582",
+        "conductance_sha256": "1274f82d11a93822ed8bf53844263d98ef309b5c98ce6c700030c2b25ba92b46",
+        "input_sha256": "62bf6f188d5b1b393fb96eb6d2b0ff116d14749495189f183549ce610efefd4d",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "14fc48c0407e4ac48f121c439e6b5f1db7f5fa938c95cce938092ed98bb70d63",
+        "capacitance_sha256": "1cfc97495d52f07742002a28a5c27ef56b47a2553f00d0940f7b269130eb2fbb",
+        "conductance_sha256": "fb0cd724449330ab15b070b28f53c7da5624dcfd543a19c86ee1a2bbc7d03a4b",
+        "input_sha256": "01cf839eaf04e7cdf13f10ff8b50e59fa153ba03380f8d1e33bbec05c9413c77",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "2f794db05b073c460010aafbb8a744dd09813f45fdc7894e56b4cfdef3de855f",
+        "capacitance_sha256": "527a908439f1a361515267bb014c354bc196b22b5937de0036639d6de2e9ef94",
+        "conductance_sha256": "25082c709c1ff03ba9a083265a5ef9332deafcc4255d9251ba89e05bc5514d7a",
+        "input_sha256": "11d017562489c34ad4dbce33e169b95c9f03fc05ed9d270e9c65043374be175e",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "1135d065d7374b55b0d55da5d2bd110358b60fc311a38fed6b8a164114249e15",
+        "capacitance_sha256": "e3f2835a98e204c84ea9c746e582ecdb4e173895c79b3676cb77b1115a3e5761",
+        "conductance_sha256": "2768fc61e368361cf07d1e9a9078999ed000c8ca6e503315410f5ac2db9a3d5d",
+        "input_sha256": "b7ac215ba81bfe2fb9236cb360529734d42ed8b8be9cc9a572586b727b846478",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "309c4a58963dfbe73a8dbf01a9baca014e203b358f68e2d5c66f73cf29bd1aa5",
+        "capacitance_sha256": "1590700bd28aeba20c5fe9ec4216bdb68645d970b46e0da1ce7f4246b9be5375",
+        "conductance_sha256": "3122792ef2dbef8778400befa35dbc6324ffa8401d440e7de649ee97877012c7",
+        "input_sha256": "52f623c225fa5dfa969a88fa2adb7d0f780e6e94b9b4c4d76ee0b3a8a6f78508",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "2a12772cf31cebfa8b64ed99f18d388ddea69195e8307ef020b179cedce130c4",
+        "capacitance_sha256": "90fabe6a88616c540e40007ea2f7f44faa3b4cc9001fe0592e04bb48116e9112",
+        "conductance_sha256": "d056e2e0b6b8c65252c8da0862ec7c7605755e2180dcf1243e80c3ea1c75c0c3",
+        "input_sha256": "913266d6e239aab974ad33cefcefdc8906e290e91edb7a6eb5233e00e8397422",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "a54057f658d3620763d2d5e7762932ddb5909ed33333ac7ac1a91a25441ff1f7",
+        "capacitance_sha256": "2be5a2b36472a0d20d740f9ba75a93c8e67bcd1501cb15f5f51f4aea03987504",
+        "conductance_sha256": "dd5c397c1f21fa66fc77a99860ca889acb518c3e0ba886ef50e4d6743dac3da8",
+        "input_sha256": "85496424036474135257adb2247d88d8d1f594ecb91a492cad376445c9bf416c",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "c1f45ea2f11b9a452b86b3451abf903720df25b69f494c95dfe3094529a3b5b0",
+        "capacitance_sha256": "bd77529e0df06a4892076ef65158b0bc43a8bd95b557797a1036ad30db9d078f",
+        "conductance_sha256": "0036718c695bd1d49e7a62d11a84a3bb4cccbdb64bf2c2276ae6171f1968a325",
+        "input_sha256": "86710a0d9ce35b800978105ce40a462b0063ecc5c61ec944888c1f7f9fdf9dad",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "c4175a7146b3bb83a078de48d417bca707bf19d7ef03b5c7bc987bd382d1451e",
+        "capacitance_sha256": "33eb72d55193eee12547e36111dd3213a8d435c26b97b3dc2b07138c9291c3cf",
+        "conductance_sha256": "e94cfc7956fd14d08fbb19dd3cbef5dfeb69b327d3b44d645607796978499d95",
+        "input_sha256": "d19286b2981147a37f27d67ead568401f1a7fa4aa5f784806b0f4f568cbc4f0a",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+        "basis_sha256": "61708b18829772bf422da1bf0708c69684ef0e6433f9269f97e1b0172ac67d15",
+        "capacitance_sha256": "1d2619458db39d42a85f7727f7d111eab2fda4582fa14f2a7103eda4a5c7ca71",
+        "conductance_sha256": "268ac7a36fdc84507ab8615f16d19204b18822793cf1f5b5681056847c829059",
+        "input_sha256": "0ed6f09e3bf74b4ed388a15c65012070e0098fa01ad730045c71c7e6370c5e58",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "951005de90296627a961d5c3613dd630729bd0fafba172e6d59892c90b6c6504",
+        "capacitance_sha256": "17ea4d1ec7325e9097259e73b74a2350d3b1bd646e616a712b6d548268f3d033",
+        "conductance_sha256": "497f48656a3e9cfd09d88516df1c342eb64d4a27e6cac7ec2f91bdeea9ca9c21",
+        "input_sha256": "f6059629468472dd865942d7c9b1cdb5cf1e0e9c111c884f29e492df12d2cbce",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.2212453270876722e-15,
+        "basis_sha256": "74bffbda549dc64723c439f4ff894a6c9d84aa4925425c11bd594249cc8e67e8",
+        "capacitance_sha256": "3badb1bb586254a4a387b916520887c8e093a78e17b495614b111fa1d624300e",
+        "conductance_sha256": "19377c0d5b71ea904f7cd60f6c07e075f4e7406308b805a59e3b720a944be62d",
+        "input_sha256": "03067d1ade3a11921a34d6103d30fa63a56e8570e47eec75204ad2d73164d02e",
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 9.992007221626409e-16,
+        "basis_sha256": "0a50ca758d1807ea494e5b7e70b3e465e0ffb63bd0988ffc7ece7d8e72c11d02",
+        "capacitance_sha256": "a72dff6f7e898e8604dc62ea8cb77585b71be3dce1a42b347c60f1932448349e",
+        "conductance_sha256": "e5de71850e391e52ece2f5dfdb590046f3b35b08be444c55257dd2be280be266",
+        "input_sha256": "fd0cb08b068f57e69f34001ff5cbc8807186e2799e0c9a0d732c46b20e55eefe",
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 1.4432899320127035e-15,
+        "basis_sha256": "67a202316507dd130edfd7a4c7084b744fae428cd2cf0b46643212b758420e27",
+        "capacitance_sha256": "f4c9526890565f44fca9c6489fe31adb8f0457ef6295394fce2dfbc40684c316",
+        "conductance_sha256": "6372dcab48879a191fc4ebb51479ad2e382425325394286934cf1146271c7842",
+        "input_sha256": "e0c6d1205ccf104dcfe98e573137f37a2535f6df1a5255fc1cc84cd5f8db1c23",
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20"
+      },
+      {
+        "basis_orthogonality_max_abs": 8.881784197001252e-16,
+        "basis_sha256": "51fc3e569e415a7e32c8cdb6502ef4bf9000cef3f1886f2604dd51a93592366f",
+        "capacitance_sha256": "ec5309a72682907d57be50981bb5b1b2bcc01e74a8abcf0ba90ffa436415a810",
+        "conductance_sha256": "96e4320f75bfee88ad90212083dd7213d4848ea8e7e4feb876f2270201be53c1",
+        "input_sha256": "2cb1b64af749108b8fb56c150b4fd63cd1a82737682c65f38b5d0a12b7f6e348",
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20"
+      }
+    ],
+    "numerical_runtime": {
+      "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+      "numpy_cpu_features_detected": {
+        "ASIMD": false,
+        "ASIMDDP": false,
+        "ASIMDFHM": false,
+        "ASIMDHP": false,
+        "AVX": true,
+        "AVX2": true,
+        "AVX5124FMAPS": false,
+        "AVX5124VNNIW": false,
+        "AVX512BF16": false,
+        "AVX512BITALG": false,
+        "AVX512BW": false,
+        "AVX512CD": false,
+        "AVX512DQ": false,
+        "AVX512ER": false,
+        "AVX512F": false,
+        "AVX512FP16": false,
+        "AVX512IFMA": false,
+        "AVX512PF": false,
+        "AVX512VBMI": false,
+        "AVX512VBMI2": false,
+        "AVX512VL": false,
+        "AVX512VNNI": false,
+        "AVX512VPOPCNTDQ": false,
+        "AVX512_CLX": false,
+        "AVX512_CNL": false,
+        "AVX512_ICL": false,
+        "AVX512_KNL": false,
+        "AVX512_KNM": false,
+        "AVX512_SKX": false,
+        "AVX512_SPR": false,
+        "BMI": true,
+        "BMI2": true,
+        "CX16": true,
+        "F16C": true,
+        "FMA3": true,
+        "FMA4": false,
+        "FPHP": false,
+        "GFNI": false,
+        "LAHF": true,
+        "LSX": false,
+        "LZCNT": true,
+        "MMX": true,
+        "MOVBE": true,
+        "NEON": false,
+        "NEON_FP16": false,
+        "NEON_VFPV4": false,
+        "POPCNT": true,
+        "RVV": false,
+        "SSE": true,
+        "SSE2": true,
+        "SSE3": true,
+        "SSE41": true,
+        "SSE42": true,
+        "SSSE3": true,
+        "SVE": false,
+        "VAES": true,
+        "VPCLMULQDQ": true,
+        "VSX": false,
+        "VSX2": false,
+        "VSX3": false,
+        "VSX4": false,
+        "VX": false,
+        "VXE": false,
+        "VXE2": false,
+        "X86_V2": true,
+        "X86_V3": true,
+        "X86_V4": false,
+        "XOP": false
+      },
+      "numpy_current_dispatch_targets": [
+        "X86_V3",
+        "baseline(X86_V2)"
+      ],
+      "thread_environment": {
+        "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": "[\"X86_V3\",\"baseline(X86_V2)\"]",
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_CORETYPE": "Haswell",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "threadpools": [
+        {
+          "architecture": "Haswell",
+          "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "threading_layer": "pthreads",
+          "user_api": "blas",
+          "version": "0.3.34.237.2"
+        },
+        {
+          "architecture": "Haswell",
+          "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+          "internal_api": "openblas",
+          "num_threads": 1,
+          "prefix": "libscipy_openblas",
+          "threading_layer": "pthreads",
+          "user_api": "blas",
+          "version": "0.3.29.dev"
+        }
+      ],
+      "verified_openblas_coretype": "Haswell"
+    },
+    "trace_outputs": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "21f5cd454d9ffbd7b906970a1f0034853162c6dc4773cf7ab417a37eb51e5111"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "7b3d18d7c8672a04125790f9cfacbebc94733e14f45890ebbdd6699d462280e1"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "8c378b0d6b64448345849ba1473174f72ef74664a91f3c52b361ff01810df2dc"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "cbb65ef0f7e95667144e86d7d517466a15209d935250e9a9e72db28edb31bd49"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "bb18abab7b119383a56b354581c9763712421160821dbe4be3901d8b301ee84b"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "3098630b7bc644d96099ac61c2424743d582f90b42aa1aea4fb9c7c4569e7a40"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "09678ac50462463ff1a9ba25d765e9ff9859f02c9fac9ef618567ad6340472fd"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e116e818c55c464ea44835008111c209931c2f5673d45c15097fef6d9dc3697d"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a6097f458f40b7382475f1f6b3aebc4e0ec36797f383602756b81422de11ca52"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "273e143ca0760e51d982f4d5cb6c567cf8c38b471c0331a7a1c772cb5883b49b"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "f939beedb2c69757338ed4cdbb1cb809390f6899fa6d96c9434df69fcce25e5a"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ba7d0ce51b3891b4032d6bbd13c8bca31fe3cf4244e1065b78e1582aba1bdf24"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5459a4dd6682a87a4d6bf90d186856c55cc98ff331748982767fce8e016a3d9b"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a760c02e4393eecaaa962ab168186763724ec60f8aedfb0d9bf285352d28d746"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "22af62e9860ca1311b79b5a6cfa5cda1a477d3ba10331fc3d9e2e0069e7b848b"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "0699dc0b0be47d3eb7b85d7f0b12624a81dee4a2f9215af6951aa41db867b5bc"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "97dab98eef1f0d380e84abda598914a450a287eeed219ea4d0f1f4af73a06208"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c44b4cc04f471001eb3d4a67d8fa2ff18466600d97940fdde7de01dad0c03425"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5c507b85b551fd8ff9de75a3c5dbc641554a135735df8156e62dbadcad5c6d35"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "9181652cc1999354f96096b935f7256d834424419f6e1373330219bbd7d91e6d"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "71b5865684bb5de1ca3a92721ea917746579caab04bf8aa9fe7b1f6ee55aa253"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "b4ef0637e431e42e1c0f4804ef2d1465cc45169a9f930ce5559ce8bf230c255a"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "bcb6d5c105cbb6875d9ea93aa4442660c0ac733cda128218d3d270e5a3af0ac2"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "72485580113048d8acc1476606ab78d70f41ed7f409a02a5dc02ce44dbd6ace3"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f2b040180346021b4d4ef4d6ac1294e0a60220cc6d4d15c26f63d3eeeb06432d"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0a6a503354fd444eeb6a61487cfb1e53cd6f982dd6c9cf1075a50b792029454c"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a1095d9f060a0edccb12814c9485abf4b55312a1c7ffba43dc0f9fa1828d7c6a"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "0a50a8824670650183662cf8018c277bb0070b29e5c0d9927c519a2a4d73e1fb"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "c5c5ad397d9dbf81f7a213ba49cb1b1a71245664983371ce0ecab427224ec4dd"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "d73f2385712ba1231745e275ea94b6eec3f0bee0c57cd0f0164f94fea25c7398"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "4a0588b477d7bcc177cbe6fd17a892f99d142086df22cd319148eafaba8b8b1b"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ac073f79d83a48a2d34d9b81b1b7d664ca2708f5a46a19dfc0dc113ac31c5cf9"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "df0697c9060cf6a0f3addf911c6abafcf23b96005e8bdb81546aae3322b4eb6b"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "996c12cec4e00d4fa7039f9caeebc8b16f364f9c918b77934b64d839183df874"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "456026933660913e909ca07b3c9d4ae6827a8fd8d81129e0379e225a64a89e04"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a253d9b1c53a226ca3eea0df4bf30d3ba391300ad4e91fc96c472a276b87c601"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "ef19c011fdfd0c3d64828c99a39757cb89e4265e8d1732af22ffc28ab5326ec9"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "0e8ec9485fcb30131a7e2be7f6a11706d32bfcdac84123a94c5c41140f852f8b"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "73c9f9f7c2c7fd90e6379f5c347f7dda5c50e873a294aa643f7afc1c2af85eef"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "3015bff082bd355d39cc6becc5eba6f7f5b72f5580441e7b7ecbcaa13b4ea855"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "8f13209d97666069c2a5f886e8c0e445a1ef47ffdcd0bad33cd1b8396ab6e25a"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "688609e3e16ad09cfad98506836fc2d1614adf560f3408d564b9fe539759ef80"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "e2fa01b277cdcd215d3c317a1b13e6c8fd5726b6a0d6d3d02127420e710cc1a0"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "57d42cf755aa9bcc1342223167f1ba7f1b17b26ba108dafb0399ff600af34751"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "338c73a53798916c32e4af9d8d3fe78978e285cc84779638107ad142a2a7ab55"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "bd577f47f250ddd0843dd4b21b4cc43ac4a56ea006bc9bf4f340a6b5078cc594"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "8c6f5e2423f1bad852b22234ee39962123d07f299912a9a3dd55e6ecc4f71060"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "4acc6b7c802fa9cbf96068c3b73829118d4f2e84d69750d630dc5633f140ba24"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "80a3fa19765b2c9c5fbb921b7891c5dac1998d746a2c887bd3b8ef7e91c47778"
+      },
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "ab69c8edc8af32ca80aa20c7960197e702092615b2edaab32eebc423a11b8323"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "efa70f0e1af858716831488d65164bb92de7a0caacb5636ec90484adec747ebd"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "b68cf75942a414b27d3fc8eea267672be0fd8af05978cdf081d5533431cef8e3"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "d812796a61a98d8a74d63ff44cd724ce6b8322f05ed538926e2b7d0cd2adae62"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "dfb18e07740af351cce72c4cb13d516bbf619feed559af69e9ba8b0754192084"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "2ec82df2026ed468761309dfbe7d028d7dbcb7160603560ce29cc2419ea49e19"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "8e269d964cdfc00b8bada5a2de66caa36419793f3f798e16c9c4ca49cd2290ac"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "11ba571902cb7c28ee8cfa02675a107219069b95ce7414706966ede29d45b4f1"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "c1909658f244c0136b529a09e015592db57bbea99a2b196b394bc9bc6c8da4bc"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "67e514a9ada087b65dd3e19bb0d191decdab663b68b4f7e1e67dfa6fc62a36e3"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b0fbd42591d5c694b7015504a7cd9d6900f42c2c52d3c5f53a66331493e757d1"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "cf9fe66a2693b02276bd3f8051592a58c91aff1cc478bbaffc2398ebd8171aad"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "a0505328204560260d6219fbd8b8403133ffab8a52b7280f56d59cdc46adfee4"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "d34ffecb4d6c1ee15a085fe65937caa4e5a768b56b8c8b1968febc7e937356c7"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "d23d3ff4a565c8096ea6b0ee1c27a93d61f012adc486e657ee84ac4cc9cffde4"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "80cbf0b7f71320f7ac79a845e096601c4421b817102ebe7827a29e8788974a33"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "851ffb49abf38ee34e986472afa5f2be0b653af231c9e4c2b296d83af6b2778b"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "f0f5db414d908f26427808f19c77d332d908ee0b0980bcffc2fad6bfd5f418ed"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "47ca3d693da7ed36cbefc0116fb3d86381493eb2075fd737b24adcff83cf4f68"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "55e48edbdb086ef10f7ea30bcc3dc9abeecbf03be242a378a4c910facbee2bd9"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "34591e7fe3bced5fddcfac9da1bfd015b19427946096d374f0d62ad03c8f19ee"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "aa95655818f0128a7d6a6a930778ce07dc962109bebdae8002c0a262b2081099"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "fd7fa01b222359f1a7060c51fc2aba31519fd0bcb9d09080dcbae14b1e0d5608"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9d90ab30c0c54599833e1745c8cf34df87c0d56ab9645a496315a0afcbe14ae5"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2f6e9743805af324d4c2f8f8a4b2e41640bc5fbce05c7209c9e67c43855bb1ee"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "4636166cb413a4cfeba0724f35cb6f5a3b9b76a71f6a5dbe2b68a28dc06f4c0e"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "d004e09d5d303613dd649b202006eebcb705ae0b9968d28224f35d0ecb899b16"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "d0412ee4f1a39fac4c035afd3a2b47550db68b9902451e00f5a59b6290144337"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "54537be732d929e794334ca108548182444d400b265d5c1af5ea106a50a5a597"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "d84579601ced453a4e68ea5c7c0d6b683eb48a08351b5a8f66e05a0d3892b669"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "174c9159acfef6c66916d3ce960a28ee5ebd606b16b362d26d4d4f1f7e30a192"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "6d6281dc49bb9b954aac7c078e15c264c2bcd524d0ddf482b429e1d94deb2ba1"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "b54ef84aa6a88f6ebef77469da5ca3a53e6b663a58b2e41edddbb95503691b23"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "5c167dcf4e2d2d07a4bf32d0dd04a2086805958c073d030554f81824d60e6d84"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "d6d647413c74896b3ff9615ef1540e8ec9d7327e19d1065408a365d98a95d71d"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "a687b92d23999758f386d0b5530c690802800a153eb45aa77cc3f0c656ad9b5b"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "4d98beb8277f9eca232d1836fd4593f655f47c060ff8f1d238a0b2174dd57701"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "6d7be3ea7f6778263b005bab4513a7988f67742af1cbc99affa797e16d77fa36"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "5600e201a982396fcdd81c46e23df26190c87b114247025477e7ee65d7e61cfb"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "2215ebb3967d8e854d905ad793f2689ec2cfef5bbe25d7beddde8681281e832b"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a9ab5e7aaaca1aaf85a8d192634f7158f482f464ba00567ed0734881b8b38719"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "49447100c7cc6791d50fae7f206088f6a86ad6830dc1800b6855ce7297e371a9"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "59d3d0171fdc8e75d00960a59338f944876ca7b7b026f1a79cdef8948018e1d9"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c036fea473b00fc80c24064f57ee16de8d0b1b1841e4025446728cb410cd8b40"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "e2c7502d5a685b1b901e11f553cedf455be71de9f895c1699de19f33e44f1b7f"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "009f6d441b4ed22caa440f67c942572a4c533a5789a087eda958c6487970f5af"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "2ecf27563e5d2a04b9184e79f952537ebd5433934583f9eb2aa14f288a41234c"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "04e639885e4eec5a33fbd29c5196bc4df67dbe4500df97f91a28f8a9c7cb4a03"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "adb35d000ca29f709ce789ca2d3a5eb08808f711390eb93a74c9fe9a768ee670"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "91f9053f7d97aa221a03544d9c692abec994be7f3d9f94b3f4c9cc069183bdb7"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "d4ecb70d1587fa1acc0e735f9316bf5a7e8a82fe272a863ff05350cfc4b64b75"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "566d4e2c447f1818c0d26b63f2b0535f5e8f857b79cd888f8aab7f67c45037c6"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "b12740072c7a4d4c9657bb2aa745eb52ebc74363604dc46b10682c8788006a7c"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "41191e050582b82e2aaaa7aac122dce141b036a93aa9f08df16ec23d5a04b676"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "6b45874a9277cc45e388cc3bf80cfdc5ea6d03fa2577adc349ac7088afccf3a0"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "39dc82835380aba1c0dfe54545d4a4644c73e9c45bbd223b2efa157b046702a0"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "a05644019bcc518f24a929d77fc61082d4340ac8288fe8e412d562994bb13363"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "27add4de4d4b26c1383067014640e76e25ab00d240a0d33b2af6b06ec7c517cd"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c4bf7bfb75fcf7d51d4284a6d4ceab0dab6625d4af3224f72afeb47d306e225e"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5bf5cb3c42cc60bd8c03d9273286ca5bbf2e1308ac745e3d94c38ac1de06e31e"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "80924bcad74e75ba0d22806331f3acf1848aac319b1cefcbac239ee7958dd74e"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "60343c4423a5064a15a69f0c9eb49676e35ed2634bbb87a5a4089cc895c56ced"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "e4e93bbfa036de454c696b6655d8e71da1118614ee600bde6052ad9dec843c7d"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "c91462dc25980376519daae25afb627218f4a765fce3eccc3c57b5025e16b28f"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "cfbca2fc3da8334e62c85df7944e3ea14d39f5b097e2f9dfeeb3204990677ea6"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "306f741d8a132ef56cc59bbe29b5c629f3e802eeafc38d6f2a52333841fc286b"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2737638affc8285b927cfbf13f1df05e08017aa9a168e3c8f3112c4e1e81e9d7"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "6c50ce5a09342b302fe627c5899c42bd265a901cb301663674d5ee4f8ff7bd2d"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "c3b08941f54e8362654f1f6c75afee363e81abddd32442658575ddbede17bffd"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "6adc3d54ceaa810f586f1904383888ca3303ee1350b6bfac8c86dde56bf4cfd8"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "f2699df45c4c3f74d5c78492af10c50781a4f929ea607dfe5a2689977ae50e82"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "6874647dd55beffdc671a7e4cc46f849774c4dd5db9df720d7b55bc5d1d4046c"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "b77e8c97a2405247c8aa6d642495f4617ce0603400a03070fa813849d8b3eb9b"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "90892684103f36d297bb15f57e7742aea3bb3bcb122dd408c42643bba2301d12"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "51372d9ba437804f73fd1ae29363984bc23f5c148eb7a50ddadba56d72af3c01"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "7a2e28b87ab64fd047d74c68ab14a93fbfaf5c6dfb4634168c07b6b7fb6b0912"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ae984a31ab585101d6c3f2cbc086bfb61724f6f05cb0ccfae654ff2bf9bb6572"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "e7da29971c2c6f969439809b28efd882401942429582f16ed826ebeea412f1ba"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "47c0c78f741a7cc35d6bd40e420abd3d8999260b2151bc8b58c59971b86ca8c0"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "b80f6b0f4c12925af307e64230f59f81214f7799591219e78448a1fb63e487fa"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "8ccc5e3fc1c4c276d8ab42476cb1a6ca34cec8022649b14851bf6a5c5fce6d55"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "6b384df95f9fa88fd6022aae708f64bbe0f98e313699434075ac91477a539800"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "6e432c0c8ba90073f25a75e93e8d3b7a4b703d5c34dc2fcc85c926d9e910df01"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "5cfff51c179cc2f77ff1dec6f99375310054fcb3d5d908153f82da48b60eba0f"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "f0ed2323ef5dc0ec8c705adabe74cb203618202912d21cfffd05db594caeb7e8"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "28e77cc0682b8ec42d51b4b546ea2242e665a3eaace8eed55c76cc767f6e2b92"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "5b05035ad6590212b97c405db055c0c332a3caecba7c6164282c333e6b1d4b5c"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "7309d6343d87adff0df001d250c321bae36a63218564c70a13beb685531c5c16"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "496cb79487652367a9f8548fe81ee2fbf5d99b474bbb73c493314c3f10bf75a2"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "129acb59e648236ed18a9d91b6587bd478bfe33aa6e4fe26c0c7038c6a73f61e"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "e8add6e330287d7863693d488ccfff308c429218e1250c6f14dc009dacf32b9d"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "142e4b01f5b8054827668f4e6558e422ea442e4bdf3ef351b3077ad3a01e0039"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "c12cd088940d6221ced738c9e1f095dc6341da46ece80b6a0e226e1708789679"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "66b50b06d894f4296fdd28ff7d93eaaa1d7e7fc9ddbb6d3c80235a671d0b5366"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "a0a7ff42ef1ffdf5419d4210702eb7304a052a6459976e6c4084f66a25142b31"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9a4ee4bcc11cabe3d739c256b58894d33c5efbcb9fbf8f10c821d59200cd2d9d"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "75bc35b1be311886973392864526fea94515d2f59b7b77c2e652ed9350c25cd4"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "e4e5bca32298886bda13f0ef507c313a7d942c2c8d387ba8aad214ea2c31e2e9"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "aa554f60ae5d4787f6491898a7ff00d434cfdab52b77dc51b2cf2854a5612f3a"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "8f407f1c9cdb1a4cb3838a204700ced990818cd664aed6e5be0206d074f8cac3"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "c9b9e97794c7e0923213b956c4d1ba1ac20ae9a1e536aff20c149defd9a668d9"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "04ad1155708d877931c37bf0ba314322088008a25598c0b5549e1a9238f4752c"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "60a6e063beb85d9461a99ccc2758d8aee389dff11d4e99fdeb8205daed2e16b4"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "962563da8b87297023039ba6e977336375ffa41687eec483bf70f7112e7171cb"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "11551f290e4693efdd3ae00914391e5decf527bc8bc2f3acc7b56e574348e911"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "bc024dcb228f4a94bb087e684e31b87908c5285665232cd090eca748bcda75a7"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "31624993746f1eb2e2385b363ee9d0564773f1df5f5805993dc8928f2ed9134e"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "4b0139ad9173caffe5a0e6df528b88101c5fe710323b6ea89698facec4793811"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "298ca82d941cee16ff046c3f8c4f92df636e9cc8de8c823fe0acb872e133d9df"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a9027d5683ba675e0508fd8202d77e992e9b6c106412f97b212d615d9bb5906c"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "200476161e18a0bf48e2e12d03ccd215c24e9a0df39edd3a1ad12bdb2000d843"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "feee88c039e500836423b96eeea0533775c0f8a7155c35cd1c6e21cc55563bd3"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_03524_JacobsControl",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "82e10ec54cfb659b1a9765f55a7f308788e1a20b58213c1ef81ff3b6bd5b6198"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "7aba2ccb44665a78f984b112f782f3aeb8defc07456c0d08eb6eaaa5884ec3ec"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "049295eacebe54fcf420484d7ecf48089f899d6b017ddcc45c66185651bed159"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "b6735ed13c955454a993fd7615eecdaefa60740feb6a2bdd124525415532f5ae"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "e58298ad87c1042ab523b1ea22d44b08be8f3f74b6e38fa2777a91cae9a86bf7"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "44c89b5bce33bb42391d962c4b0a8d71d60b73b818b27596fda45c8476bb2132"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "nominal",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "5252bdae1c66b973e09472db385a0943debba5a6e407003eaa831a867454d29c"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "3011240ff35ad78b69ee4c798a54df7be3bc43d6e7013e29dc87340b852880d8"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "81bf2043e2303012176bad2bf264b7a80fbdfafcfc771e3518976c287d152b06"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "a3461b434e25f289523895a9a3d2e484a44c58c7b3353015eed0842303d46d80"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "a9b3e1644fcaef2b23059fae2666b5bf40a21a1d35937802b92b1e0213c7429a"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "c4950a5e9c2e006418e75a8f42f55b1c6eee829bd7b63896481032adf6fce1e4"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "96b943877b30a321e85db542c6626818d9d06feff255f72ed645ba930aa24a80"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "1b095f30938d50fc32a19ec0360e2678209193f22578c8276936aaa69ce3f66d"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "85b0eb793be5ac9d19ccf002a27dac51fcc936e523de4d8ba6cba567ef105bfd"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "6620417a5f9d090bc49b7f17817d7b28aff32f5addaf00f2eb552684e81b7c2f"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "bc0dc6361bde76f6818e2ced88af7f07d934781b61d3c8416bddd5da8a01e128"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "3438c69c6fa67e2300966335c2c26b0bf9d0a360860a6368935c90b2f3147e9c"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Rm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "0923486091d2a6d8cd5f7573be1f8355d6b4260136950620388fc344c346e78f"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "0202e7b76139e61af09ccc8a363aff3663575b00e5d359128d8ca987c4c37507"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "f08706b9ba05f3a73710aa03671a9c1822bfde8e1bf158298f9ad76f268f9b8e"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "dce7347721fc486fd92f3ed7228709743f7e8b632dec44247f26d7268b3cc7e0"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "ab0227e57e429e48a6e917db5e63a7f686e8dcd80b3bfce2c04f12e4f07e0d91"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "7cc1f0f865dabcf70bebf11a37fd579ab1076ca8ed9a4dacc97c5e7e5d6e01b1"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "945a569de354155b9c2a7dee84eb31a30da0166b005e9c179f9d9a6c11ee6260"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "8f149f1f1197f7c6011b801d2a8e78d87122d01059f7d2875542697214ad5ac5"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "98511b14ea57170485745c7f5ff21e8543e6011130683f74ea4ca97dd5cc9048"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "82c3b380691a51cd161c8a68a7949390f8001b4b228610dffbaff4ee6c602054"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "c732d5ff1d2715e63a063e5330269ea75f60a1bf2e3eb361f91c947acd54e47d"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "8d5dc0d9d250d07abd06082c66bc011660da5ad0b8f21f59f9178aa78f4de26d"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Cm_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "9232c13e565a8a1c11aef3dd8604fa478d17a583e65bc2bd9e2b6f49e1580429"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "51c3e52862a4e2f47a3f12a70e168e333816548beabfda7fc5821edfb645bd21"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "6948706b181904abb9318f29451cbb74c82d32135b1e2157cf9a60815c9f03a8"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "45758d068591460fc41610a08e792caae24ce7342083f406d05173173fc2309d"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "4cd3784f866fb58bded3df8dd88aea6d82e3f831bcf347d1f878a9093739d3ff"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "6222b9f6de70a936d06c79c2e8e01ce240923eb8c1a27173483a039b5ac042da"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "14470b4320d4ca9a05d83dd9cf46b3a3c8c9b22669d2f3159babd9daa4302119"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "a2e9bb92acb88143e53dee0495908f456f33a34519cb020f09cfa8fea9da4867"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "9c569c008c8435fa939142fc44990ce113bb7663d240a6a59e90b07e194678f3"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "1d81ef8c68195c79fcce792d9a6b365c638441eb30fdae36739cff91daa27920"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "a75406f1855e14870aa40546cac2b25aae9a21924162a10142d7f62d41494107"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "a49a5637f9e6a2744ae0d4d026908d2b01378238f23878fd571b965ad8e3ce0f"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "Ra_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "8b04c9ba95058b77f386b814dd6b892460edc3ffa38afe58c6969c3232fae388"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "1d3853d2b8a44d64d2b0bd60279a7c892bb4c6df05840e64db8e9fc30049e762"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "2109f426bd9a31806584ae040b1b3e4a2ac76f2d4b0085e108787dd8b66b2e4d"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "486fb3424f14c44dc9cf9c0ff977a1d3024cc4f0ccb3a1ab6bd992602c27b690"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "a9d837378c8f2a88c9017661cc783256c955e5986be062c13018b319461bddcb"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "c0655a8558f0bb7d0dd3b733a224ff6fc1151edb3ef20d9f2f8261abd2cdc62a"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_minus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "ffd3bcb189a7e2be53ba54c0ce2b8e21e68603e5c5effa85d8ff8453282f7b2d"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_canonical_absolute",
+        "trace_sha256": "9a34e8eaa56eb7043ebcfd4a70ad5dfdc54c0b9bf191cd1eecd9c991a7f41c45"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "full_hines_perturbation",
+        "trace_sha256": "c91713cb768a587c51ae1586231fd26823b07b5bcbdab49d95ea403155500dba"
+      },
+      {
+        "layout_id": "seven",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_seven",
+        "trace_sha256": "c8300dc697285b615829233e0c7a0876e44f031aa6bc58785ab3e1c326b38220"
+      },
+      {
+        "layout_id": "eight_basal_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_basal_q25",
+        "trace_sha256": "75ad3fe101b08d32eff0e6aa405dcca83a73e8baeff9ee78ea4e26f9ecf861bb"
+      },
+      {
+        "layout_id": "eight_apical_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_eight_apical_q25",
+        "trace_sha256": "46fbca2c69969c6da81be46555fef06539249776b84e22fc2118fd108caacde9"
+      },
+      {
+        "layout_id": "nine_both_q25",
+        "morphology": "NMO_162186_AllenL23",
+        "parameter_scenario": "all_plus20",
+        "trace_kind": "reduced_nine_both_q25",
+        "trace_sha256": "5ac94b405ed122ac5a40d45ab978b7a36aa5662e6b0f3b5e353e33af810a6201"
+      }
+    ]
+  },
+  "runtime": {
+    "neuron": "9.0.2",
+    "numpy": "2.5.5",
+    "python": "3.12.16",
+    "scipy": "1.16.3",
+    "wall_seconds": 3793.092219217
+  },
+  "schema_version": 1,
+  "scientific_limits": [
+    "The discrete transfer is exact for the declared backward-Euler state update and sample/hold convention.",
+    "The continuous AC comparator is sampled on finite-record DFT bins and weighted by the ZOH input spectrum; it is not the exact sampled response of the continuous-time differential equation.",
+    "The transfer-only H_BE*U term is a periodic/circular record component; the terminal-state correction is required for a finite record initialized at rest.",
+    "Four individual passive linear-RC morphology reconstructions are compared; they are not populations. Control, mouse and epilepsy-surgical source conditions remain separately identified.",
+    "Large relative transfer-error ratios can occur when the seven-port denominator is extremely small; absolute weighted norms and finite transient NRMSE are retained.",
+    "Full Hines remains canonical. No production solver code or defaults are changed.",
+    "No active-neuron, synaptic, plasticity or biological validation is claimed."
+  ],
+  "scope": {
+    "basis_order": 224,
+    "dt_ms": 0.00625,
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "master_frequency_grid_hz": {
+      "maximum": 80000.0,
+      "minimum": 0.0,
+      "points": 3201,
+      "step": 25.0
+    },
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_output_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_records": 4209,
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_output_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_records": 7228,
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "neuromorpho_id": "NMO_03524",
+        "q25_node_ids": {
+          "apical_q25": 864,
+          "basal_q25": 272
+        },
+        "shared_output_node_ids": [
+          1,
+          583,
+          867,
+          367,
+          751,
+          866,
+          868
+        ],
+        "swc_records": 869,
+        "swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "neuromorpho_id": "NMO_162186",
+        "q25_node_ids": {
+          "apical_q25": 4488,
+          "basal_q25": 2713
+        },
+        "shared_output_node_ids": [
+          1,
+          2304,
+          4262,
+          2261,
+          515,
+          6608,
+          4180
+        ],
+        "swc_records": 7287,
+        "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+      }
+    ],
+    "nyquist_hz": 80000.0,
+    "parameter_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "pulse_amplitude_pA": 10.0,
+    "pulse_onset_ms": 2.0,
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0
+    ]
+  },
+  "status": "prima_q25_four_morphology_four_layout_boundary_ablation_passed",
+  "validation": {
+    "all_morphology_preflights_passed": true,
+    "all_morphology_sha256_checked": true,
+    "both_morphology_sha256_checked": true,
+    "finite_identity_relative_tolerance": 2e-08,
+    "full_hines_identity_coordinates": "The DFT identity uses a second mathematically equivalent full-Hines replay in perturbation coordinates (zero initial perturbation, zero leak source). The canonical absolute-voltage replay is retained for transient NRMSE, and its difference from perturbation coordinates is recorded separately.",
+    "identity_normalization": "output DFT L2 norm; finite-error identity is not divided by the much smaller inter-model residual norm",
+    "max_finite_error_identity_relative_error": 8.757358898155067e-12,
+    "max_finite_identity_absolute_error_v_samples": 4.8097884568097377e-11,
+    "max_finite_identity_relative_error": 8.757358898155067e-12,
+    "max_model_identity_relative_error": 8.743810650683813e-12,
+    "transient_metric_note": "The canonical absolute-voltage transient NRMSE is retained for historical continuity. The perturbation-coordinate transient NRMSE is also reported and is the numerically stable comparison for these small passive residuals; the absolute-vs-perturbation trace delta is recorded per case."
+  }
+}
