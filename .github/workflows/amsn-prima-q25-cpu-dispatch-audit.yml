@@ -1,0 +1,79 @@
+name: Audit PRIMA q25 CPU-dispatch rerun
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-cpu-dispatch-audit.yml"
+      - "amsn-core/research/audit_prima_q25_cpu_dispatch_rerun.py"
+      - "amsn-core/tests/test_prima_q25_cpu_dispatch_rerun_audit.py"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-cpu-dispatch-audit
+  cancel-in-progress: false
+
+jobs:
+  compare-independent-rerun:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+      - name: Download the second complete order-168 artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: prima-q25-four-morphology-four-layout-boundary-ablation
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 45585843464
+          path: recovered
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Test and run paired rerun audit
+        working-directory: amsn-core
+        run: |
+          python -m unittest discover -s tests -p "test_prima_q25_cpu_dispatch_rerun_audit.py" -v
+          python research/audit_prima_q25_cpu_dispatch_rerun.py \
+            --reference-dir results \
+            --rerun-dir ../recovered/results \
+            --output-dir results
+      - name: Commit rerun raw metrics and sensitivity audit
+        run: |
+          stem="prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            "amsn-core/results/${stem}_rerun_455858_case_metrics.csv" \
+            "amsn-core/results/${stem}_rerun_455858_report.json" \
+            "amsn-core/results/${stem}_rerun_455858_layout_vs_seven_comparisons.csv" \
+            "amsn-core/results/${stem}_rerun_455858_source_layout_window_summary.csv" \
+            "amsn-core/results/${stem}_rerun_455858_morphology_layout_window_summary.csv" \
+            "amsn-core/results/${stem}_rerun_455858_finite_dft_identity.csv" \
+            "amsn-core/results/${stem}_rerun_455858_metric_differences.csv" \
+            "amsn-core/results/${stem}_rerun_455858_morphology_sensitivity.csv" \
+            "amsn-core/results/${stem}_rerun_455858_comparison_report.json"
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive paired q25 CPU-dispatch rerun audit"
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Preserve machine-readable audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-cpu-dispatch-rerun-audit
+          path: |
+            amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_metric_differences.csv
+            amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_morphology_sensitivity.csv
+            amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_comparison_report.json
+          if-no-files-found: warn
+          retention-days: 90
