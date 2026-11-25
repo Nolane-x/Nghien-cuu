@@ -20,6 +20,18 @@ The repaired workflow [45625185575](https://github.com/Nolane-x/Nghien-cuu/actio
 
 The recovery manifest now distinguishes the original artifact (recovery evidence) from the corrected artifact (official archive): [recovery manifest](../results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json).
 
+## 0A. Independent numerical replay — matching matrices confirmed
+
+A second independent corrected replay [45616883949](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616883949) completed the observer numerical analysis with report status `passed` and uploaded artifact [15032804913](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616883949/artifacts/15032804913).
+
+- Artifact: 1,441,658 bytes; SHA-256 `dad77d25825a7ca9ba3c0de7cdbb987f7d05e5674f74d81a8b353d14ebcf1a23`.
+- The independent report matched **144/144** primary basis hashes and recorded the same maximum finite-DFT identity relative residual, `5.386622461553216e-12`, against `2e-8`.
+- All six numerical CSVs are byte-identical to the official corrected archive 45625185575: basis hashes, case metrics, finite-DFT identities, layout-vs-seven comparisons, morphology summaries and source summaries.
+- Only report JSON and timing text differ because they contain run-specific metadata and runtime. The independent run's wall time was 3,777.69 s.
+- Its overall Actions conclusion is failure only because the duplicate Git archival step encountered add/add conflicts on report/time paths already committed by the official run. The numerical calculation and artifact upload succeeded. Its artifact is therefore independent reproducibility evidence, not a second canonical Git result.
+
+The recovery manifest now lists three successful/recovered numerical observer executions: original artifact recovery 45616908599, canonical committed run 45625185575, and the independent matching replay 45616883949.
+
 ## 1. Why this result is recoverable
 
 The original workflow's job-step record shows that:
