@@ -1,0 +1,267 @@
+{
+  "coverage": {
+    "basis_hash_rows_matched_to_primary": 144,
+    "candidate_vs_seven_comparisons": 2592,
+    "case_metrics_rows": 3456,
+    "finite_dft_identity_rows": 3456,
+    "identity_tolerance": 2e-08,
+    "max_finite_identity_relative_error": 5.386622461553216e-12,
+    "morphology_summary_rows": 336,
+    "source_summary_rows": 2016
+  },
+  "interpretation_limits": [
+    "This observer-only analysis does not change production code or the primary four-layout model.",
+    "The 144 PRIMA basis hashes must match the accepted pinned order-168 report exactly before any output comparison is accepted.",
+    "The experiment remains passive linear-RC and uses four individual morphologies, not a biological population.",
+    "Large relative ratios are accompanied by absolute error changes because the seven-port q25 observer residual may be near zero."
+  ],
+  "outputs": {
+    "basis_hashes": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_basis_hashes.csv",
+    "case_metrics": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_case_metrics.csv",
+    "finite_dft_identity": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_finite_dft_identity.csv",
+    "layout_vs_seven_comparisons": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_layout_vs_seven_comparisons.csv",
+    "morphology_summary": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_morphology_summary.csv",
+    "source_summary": "prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_source_summary.csv"
+  },
+  "primary_reference": {
+    "basis_hash_expected": 144,
+    "basis_hash_match_count": 144,
+    "case_metrics_sha256": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "report_sha256": "aa1a09f1034ac820f3c63b663b57d08114d22556e71004888c7d6869d728d5c4"
+  },
+  "runtime": {
+    "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+    "numpy_cpu_features_detected": {
+      "ASIMD": false,
+      "ASIMDDP": false,
+      "ASIMDFHM": false,
+      "ASIMDHP": false,
+      "AVX": true,
+      "AVX2": true,
+      "AVX5124FMAPS": false,
+      "AVX5124VNNIW": false,
+      "AVX512BF16": false,
+      "AVX512BITALG": false,
+      "AVX512BW": false,
+      "AVX512CD": false,
+      "AVX512DQ": false,
+      "AVX512ER": false,
+      "AVX512F": false,
+      "AVX512FP16": false,
+      "AVX512IFMA": false,
+      "AVX512PF": false,
+      "AVX512VBMI": false,
+      "AVX512VBMI2": false,
+      "AVX512VL": false,
+      "AVX512VNNI": false,
+      "AVX512VPOPCNTDQ": false,
+      "AVX512_CLX": false,
+      "AVX512_CNL": false,
+      "AVX512_ICL": false,
+      "AVX512_KNL": false,
+      "AVX512_KNM": false,
+      "AVX512_SKX": false,
+      "AVX512_SPR": false,
+      "BMI": true,
+      "BMI2": true,
+      "CX16": true,
+      "F16C": true,
+      "FMA3": true,
+      "FMA4": false,
+      "FPHP": false,
+      "GFNI": false,
+      "LAHF": true,
+      "LSX": false,
+      "LZCNT": true,
+      "MMX": true,
+      "MOVBE": true,
+      "NEON": false,
+      "NEON_FP16": false,
+      "NEON_VFPV4": false,
+      "POPCNT": true,
+      "RVV": false,
+      "SSE": true,
+      "SSE2": true,
+      "SSE3": true,
+      "SSE41": true,
+      "SSE42": true,
+      "SSSE3": true,
+      "SVE": false,
+      "VAES": true,
+      "VPCLMULQDQ": true,
+      "VSX": false,
+      "VSX2": false,
+      "VSX3": false,
+      "VSX4": false,
+      "VX": false,
+      "VXE": false,
+      "VXE2": false,
+      "X86_V2": true,
+      "X86_V3": true,
+      "X86_V4": false,
+      "XOP": false
+    },
+    "numpy_current_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "thread_environment": {
+      "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": "[\"X86_V3\",\"baseline(X86_V2)\"]",
+      "BLIS_NUM_THREADS": "1",
+      "MKL_NUM_THREADS": "1",
+      "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+      "NUMEXPR_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "OPENBLAS_CORETYPE": "Haswell",
+      "OPENBLAS_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "0",
+      "VECLIB_MAXIMUM_THREADS": "1"
+    },
+    "threadpools": [
+      {
+        "architecture": "Haswell",
+        "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/numpy.libs/libscipy_openblas64_-4b78795a.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.34.237.2"
+      },
+      {
+        "architecture": "Haswell",
+        "filepath": "/opt/hostedtoolcache/Python/3.12.16/x64/lib/python3.12/site-packages/scipy.libs/libscipy_openblas-b75cc656.so",
+        "internal_api": "openblas",
+        "num_threads": 1,
+        "prefix": "libscipy_openblas",
+        "threading_layer": "pthreads",
+        "user_api": "blas",
+        "version": "0.3.29.dev"
+      }
+    ],
+    "verified_openblas_coretype": "Haswell"
+  },
+  "schema_version": 1,
+  "scope": {
+    "basis_order": 168,
+    "layouts": [
+      "seven",
+      "eight_basal_q25",
+      "eight_apical_q25",
+      "nine_both_q25"
+    ],
+    "method": "For every layout, q25 voltages are read from the full-compartment basis rows. When a q25 node is not retained, it remains an observation-only output; it is not added to the input selector B. This separates output measurement from the Krylov subspace change caused by adding a retained input/output port.",
+    "morphologies": [
+      {
+        "morphology": "NMO_163775_Peng_mouse_Control",
+        "neuromorpho_id": "NMO_163775",
+        "q25_node_ids": {
+          "apical_q25": 4096,
+          "basal_q25": 224
+        },
+        "shared_node_ids": [
+          1,
+          144,
+          3926,
+          4180,
+          40,
+          4104,
+          3948
+        ],
+        "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f"
+      },
+      {
+        "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
+        "neuromorpho_id": "NMO_107159",
+        "q25_node_ids": {
+          "apical_q25": 4404,
+          "basal_q25": 6609
+        },
+        "shared_node_ids": [
+          1,
+          6363,
+          4735,
+          5564,
+          7023,
+          4301,
+          4623
+        ],
+        "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023"
+      },
+      {
+        "morphology": "NMO_03524_JacobsControl",
+        "neuromorpho_id": "NMO_03524",
+        "q25_node_ids": {
+          "apical_q25": 864,
+          "basal_q25": 272
+        },
+        "shared_node_ids": [
+          1,
+          583,
+          867,
+          367,
+          751,
+          866,
+          868
+        ],
+        "swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748"
+      },
+      {
+        "morphology": "NMO_162186_AllenL23",
+        "neuromorpho_id": "NMO_162186",
+        "q25_node_ids": {
+          "apical_q25": 4488,
+          "basal_q25": 2713
+        },
+        "shared_node_ids": [
+          1,
+          2304,
+          4262,
+          2261,
+          515,
+          6608,
+          4180
+        ],
+        "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+      }
+    ],
+    "pulse_widths_ms": [
+      2.0,
+      10.0
+    ],
+    "q25_output_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "q25_output_swc_ids_by_morphology": {
+      "NMO_03524_JacobsControl": {
+        "apical_q25": 864,
+        "basal_q25": 272
+      },
+      "NMO_107159_Tamas_human_pyramidal_Control": {
+        "apical_q25": 4404,
+        "basal_q25": 6609
+      },
+      "NMO_162186_AllenL23": {
+        "apical_q25": 4488,
+        "basal_q25": 2713
+      },
+      "NMO_163775_Peng_mouse_Control": {
+        "apical_q25": 4096,
+        "basal_q25": 224
+      }
+    },
+    "sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "windows_ms": [
+      20.0,
+      40.0
+    ]
+  },
+  "status": "passed",
+  "study": "q25 observer-only readouts with fixed versus q25-enriched PRIMA input bases",
+  "wall_seconds": 3617.8036603259998
+}
