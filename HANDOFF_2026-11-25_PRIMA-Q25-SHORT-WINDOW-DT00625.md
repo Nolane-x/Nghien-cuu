@@ -27,3 +27,12 @@ Implementation and focused tests are authored. Full computation is pending Actio
 ## Limits
 
 Only two passive morphology instances. The finest timestep is a numerical reference, not exact continuum truth. No production solver/default is changed.
+
+## Current blocker — repeated short-window metrics differ
+
+The original workflow [45551126065](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45551126065) passed all 18 tests and the full calculation. A same-commit rerun also passed, but its Hines temporal CSV was byte-identical while the reduced-model metric and ratio CSVs changed. This means the CI pass alone is not enough to accept the PRIMA short-window ratios as reproducible.
+
+The observed maximum absolute change in perturbation NRMSE was about \(1.65\times10^{-10}\) percentage points, a small absolute change but material relative to the very small residuals. Do not claim a converged 20/40-ms 9/7 ratio from the first artifact alone.
+
+The latest commit pins BLAS-related thread counts to one and adds reproducibility metadata: basis, reduced \(G/C\), input and trace digests plus NumPy/BLAS/threadpool configuration. Workflow runs [45552270328](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552270328) and [45552298117](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45552298117) validate the changes. Next: compare the saved basis hashes and trace hashes across a repeated run of the final commit. Accept the ratios only if repeated hashes and CSV outputs match; otherwise isolate the first differing stage and keep the results provisional.
+
