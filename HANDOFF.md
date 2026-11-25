@@ -65,15 +65,18 @@ An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/action
 - Protocol: [PRIMA_Q25_OUTPUT_AWARE_DUAL_SEED_BASIS_PROTOCOL_2026-11-25.md](amsn-core/research/PRIMA_Q25_OUTPUT_AWARE_DUAL_SEED_BASIS_PROTOCOL_2026-11-25.md).
 - Workflow [45633147052](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45633147052) completed **success**: compileall passed and **5 tests passed**.
 - Tests verify exact D0 parity with production multishift PRIMA when no dual seeds are added; q25 dual resolvent vectors enter the state basis while the input selector remains the original retained ports; q25 observation rows are separate; reduced G/C remain Cholesky-positive; basis orthogonality and input/index/frequency contracts pass.
-- This is an implementation/unit-test milestone only. No full morphology pilot has been run and no output-accuracy improvement is claimed. Production `src/amsn/prima.py`, solver behavior and defaults remain unchanged.
+- The five-test implementation milestone preceded the successful Peng pilot. The prototype now has a full single-morphology nominal-scenario numerical result (see the accepted pilot report below); cross-morphology/nine-scenario robustness is still untested. Production `src/amsn/prima.py`, solver behavior and defaults remain unchanged.
 
-### Output-aware dual-seed Peng pilot — runner prepared, CI in progress
+### Peng output-aware dual-seed pilot — accepted and archived
 
 - Research-only prototype `amsn-core/research/experimental_prima_output_aware_basis.py`; focused tests `amsn-core/tests/test_prima_q25_output_aware_dual_seed_basis.py`; [protocol](amsn-core/research/PRIMA_Q25_OUTPUT_AWARE_DUAL_SEED_BASIS_PROTOCOL_2026-11-25.md).
 - Focused CI [45633147052](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45633147052) passed: compileall and 5 tests, including bitwise D0 parity on a toy fixture, fixed input selector, separate output rows, positive-definite projected G/C and orthogonality.
-- Added Peng NMO_163775 order-224 pilot runner `amsn-core/research/run_prima_q25_peng_output_aware_dual_seed_pilot.py` and workflow `.github/workflows/amsn-prima-q25-peng-output-aware-dual-seed-pilot.yml`. Five predeclared schedules: D0 none; D1-low 0 Hz; D1-mid 1,000 Hz; D1-high 10,000 Hz; D2-mid-high 1,000/10,000 Hz. B remains the original seven input ports; all seven shared outputs and both q25 outputs are measured.
-- The first several CI attempts exposed only reporting/dispatch-evidence wiring issues after the pilot's calculation and DFT gates had run; those workflow issues were fixed. Latest queued run: [45636849975](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636849975). Do not accept any dual-seed numerical improvement until this run passes exact 540-case/90-summary coverage, D0 parity, positive-definite G/C, orthogonality and the two finite-record DFT identity checks.
-- This is a single-morphology, nominal-scenario pilot only. No production solver/default changes and no biological inference.
+- Added Peng NMO_163775 order-224 pilot runner `amsn-core/research/run_prima_q25_peng_output_aware_dual_seed_pilot.py` and workflow `.github/workflows/amsn-prima-q25-peng-output-aware-dual-seed-pilot.yml`. Five schedules: D0 none; D1-low 0 Hz; D1-mid 1,000 Hz; D1-high 10,000 Hz; D2-mid-high 1,000/10,000 Hz. B remains the original seven input ports; all seven shared outputs and both q25 outputs are measured.
+- Canonical run [45636631081](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636631081) completed **success** through computation, exact 540-case/90-summary read-back, result commit and artifact upload. Results commit `22ba7b6994c871d3784f5abf15a2fe9311abe60d`; artifact [15033336785](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636631081/artifacts/15033336785), 77,205 bytes, ZIP SHA-256 `a19c928f99eb361300a6f5c8e793550e3cc1854dd177ed4739271ba459d5a95b`.
+- All five schedules reached order224. Exact D0 parity against the production multishift basis was asserted; seven input ports remained unchanged; all reduced G/C Cholesky checks passed; max basis orthogonality error was 1.55e-15. D0 and D2 finite-record BE DFT identity checks passed at 1,601 bins with max relative residuals 1.10e-13 and 2.25e-13 (tolerance2e-8).
+- Dual seeds improved both q25 outputs in **24/24 paired cases per schedule**. Pooled q25 median NRMSE fell from 5.16e-7% under D0 to 9.92e-12%–2.08e-11%. The seven shared outputs remain around 1e-11% absolute NRMSE; their relative ratios move because D0 is near the numerical floor. See detailed report [PRIMA_Q25_PENG_OUTPUT_AWARE_DUAL_SEED_PILOT_RESULTS_2026-11-25.md](amsn-core/research/PRIMA_Q25_PENG_OUTPUT_AWARE_DUAL_SEED_PILOT_RESULTS_2026-11-25.md), manifest [prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_manifest.json](amsn-core/results/prima_q25_peng_output_aware_dual_seed_pilot_order224_2026-11-25_manifest.json), and [research log](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-PENG-OUTPUT-AWARE-DUAL-SEED-PILOT.md).
+- Overlapping run [45636849975](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636849975) also passed calculation/coverage but failed only during duplicate Git add/add rebase conflicts on report/time after the canonical result had committed those paths. It uploaded no artifact; 45636631081 is canonical.
+- This remains a single-morphology, nominal-scenario proof of concept. No production solver/default change and no biological inference.
 
 ### Output-observer CI archival correction
 
@@ -91,11 +94,11 @@ An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/action
 
 ### Current guardrails and next sequence
 
-1. Confirm corrected observer run 45625185575 completes the archival path; the earlier artifact and numerical report have already been recovered and SHA-256 verified.
-2. Run the small output-aware dual-seed pilot on Peng with the seven-port B selector fixed; test D0 parity, sparse dual shifts, seven shared outputs, q25 outputs, passivity and full-Hines identities before expanding to all morphologies.
-3. Use the accepted 112/168/224 sweep to isolate the remaining Peng-specific order224 residual; compare absolute and relative errors rather than repeating the completed broad sweep.
-4. Reconcile all accepted matrices and update dated report/logs. Keep failed and cancelled attempts as history, never as accepted results.
-5. Do not merge PR #33/#34 or alter production solver/defaults without explicit authorization.
+1. Treat observer run45625185575, basis-order sweep45616046400, and the Peng dual-seed pilot45636631081 as accepted archived evidence. Keep their manifests/reports as canonical sources.
+2. Extend the dual-seed experiment to all four morphology strata and all nine passive parameter scenarios at order224. Keep D0, D1-low, D1-mid, D1-high and D2 initially; do not optimize the schedule on the Peng nominal case alone.
+3. Preserve the seven-port B selector for every treatment. Require exact D0 parity, nine output rows, G/C Cholesky positivity, orthogonality, conditioning/rank diagnostics, source checksums, and all seven shared plus two q25 transient metrics.
+4. Run a predeclared finite-DFT identity sample for each morphology/scenario under D0 and D2; use exact case/summary read-back counts and report absolute errors/deltas alongside relative ratios.
+5. If a schedule remains Pareto-useful across morphology/scenario strata, write a cross-morphology report and propose a research-only API integration. Do not change production defaults or merge PR #33/#34 without explicit authorization.
 
 ---
 
