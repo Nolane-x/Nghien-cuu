@@ -209,6 +209,12 @@ def test_sampled_current_matrix_preserves_charge_and_source_routing():
         source_row = source_indices[audit.SOURCE_NAMES.index(source)]
         assert source_row < 16
 
+def test_short_window_audit_excludes_already_stable_long_windows():
+    assert audit.WINDOWS_MS == (20.0, 40.0)
+    assert 0.00625 == audit.FINE_REFERENCE_DT_MS
+    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125, 0.00625)
+
+
 def test_expected_dt_order_and_fine_reference():
     assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125, 0.00625)
     assert audit.FINE_REFERENCE_DT_MS == 0.00625
