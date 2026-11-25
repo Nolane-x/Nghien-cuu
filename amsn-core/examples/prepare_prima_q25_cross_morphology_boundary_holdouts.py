@@ -306,6 +306,38 @@ def main() -> None:
     json_path = RESULTS / f"{RESULT_STEM}_report.json"
     json_path.write_text(json.dumps(result, indent=2, sort_keys=True, allow_nan=False) + "\n",
                          encoding="utf-8")
+    # Emit the compact compatibility contract consumed by the finite-window
+    # decomposition runner. Preserve the full report separately above.
+    preflight_dir = RESULTS / f"{RESULT_STEM}_holdouts"
+    preflight_dir.mkdir(parents=True, exist_ok=True)
+    for morphology_report in morphology_reports:
+        preflight_payload = {
+            "status": "PASS",
+            "source": {
+                "source_sha256": morphology_report["swc_sha256"],
+                "neuromorpho_id": morphology_report["neuromorpho_id"],
+            },
+            "amsn": {
+                "q25_only_swc_node_ids": [
+                    int(value) for value in
+                    morphology_report["q25_only_swc_node_ids"].values()
+                ],
+                "seven_unique_port_node_ids": [
+                    int(value) for value in
+                    morphology_report["shared_output_swc_node_ids"]
+                ],
+            },
+            "neuron": {
+                "version": morphology_report["neuron_version"],
+                "segment_cap_um": morphology_report["segment_cap_um"],
+                "maximum_segment_length_um": morphology_report["maximum_segment_length_um"],
+            },
+        }
+        safe_name = morphology_report["morphology"]
+        (preflight_dir / f"{safe_name}.json").write_text(
+            json.dumps(preflight_payload, indent=2, sort_keys=True, allow_nan=False) + "\n",
+            encoding="utf-8",
+        )
     csv_path = RESULTS / f"{RESULT_STEM}_mapping.csv"
     write_csv(csv_path, all_mapping_rows)
     print(json.dumps(result, indent=2, sort_keys=True))
