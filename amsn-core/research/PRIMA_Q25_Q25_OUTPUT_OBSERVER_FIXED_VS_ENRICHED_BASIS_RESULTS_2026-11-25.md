@@ -7,6 +7,19 @@
 **Artifact ZIP:** 1,441,656 bytes; SHA-256 `2391661263ef1c959d550e8a336c8fed89e1f1dfcc626ddab16b3db60bed8aa3`  
 **Corrected archival replay:** [run 45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575), still running at the time this recovery report was written.
 
+## 0. Corrected archival replay — now official
+
+The repaired workflow [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) completed **success**, including the numerical analysis, Git result commit and artifact upload.
+
+- Results commit: [8f971b74807ec715cff2f4db39ebc9db7398cf32](https://github.com/Nolane-x/Nghien-cuu/commit/8f971b74807ec715cff2f4db39ebc9db7398cf32).
+- Corrected artifact: [15032389094](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575/artifacts/15032389094), 1,441,661 bytes; ZIP SHA-256 `8c82e3a4c43eabe98e95e482749ccf3f7af7a1c7145ba2ecf39f6f1e9a00f4d1`.
+- Committed report blob SHA-1: `09c03edbce0cbb0661c2507cef3abcfdd308ce74`; report status remains `passed`.
+- Maximum finite-DFT identity relative residual remains `5.386622461553216e-12`, below the `2e-8` gate.
+- Runtime in corrected run: 3,617.80 s; peak RSS 365,204 KiB. Active NumPy targets: `X86_V3` and `baseline(X86_V2)`; Haswell OpenBLAS, one thread.
+- All six numerical CSVs are byte-identical to the recovered original artifact: basis hashes, finite-DFT identity, case metrics, candidate-vs-seven comparisons, morphology summary and source summary. The only differing files are the run-specific report JSON and timing metadata. The corrected run is the canonical branch-archived source.
+
+The recovery manifest now distinguishes the original artifact (recovery evidence) from the corrected artifact (official archive): [recovery manifest](../results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json).
+
 ## 1. Why this result is recoverable
 
 The original workflow's job-step record shows that:
