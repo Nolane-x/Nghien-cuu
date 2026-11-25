@@ -115,13 +115,32 @@ Here E is one error metric for the same paired case. M > 1 means the combined er
 4. The additive contrast E_both − E_basal − E_apical + E_seven is also retained in the post-analysis outputs. Its numerical magnitude is scale-dependent; the multiplicative contrast is useful here for comparing relative residual changes but must not be interpreted as a causal or biological interaction.
 5. Continuous-AC, discrete-BE periodic-transfer, canonical transient and perturbation-coordinate transient results are different estimands. In particular, continuous-AC frequency ratios should not be used as a substitute for the finite-window transient result.
 
-## 6. What this does and does not establish
+## 6. Finite-record boundary term and cancellation
+
+The finite-window residual is not the periodic-transfer mismatch by itself. For each paired case it is decomposed into the periodic-transfer component and the terminal-state boundary component, with their cross-term retained. The following table reports medians across the 378 scenario/source/pulse/output pairs for the combined nine-port layout. Norms are in V-samples; component shares and the signed cross-term are percentages of the finite-error energy/norm convention defined by the runner.
+
+| Morphology | Window | Periodic component norm | Terminal-boundary norm | Total finite-error norm | Periodic share | Boundary share | Cross-term |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Jacobs | 20 ms | 4.080 × 10⁻¹⁴ | 3.005 × 10⁻¹⁴ | 3.923 × 10⁻¹⁴ | 128.2% | 57.2% | −91.4% |
+| Jacobs | 40 ms | 5.323 × 10⁻¹⁴ | 9.787 × 10⁻¹⁵ | 9.391 × 10⁻¹⁴ | 73.1% | 10.1% | +42.3% |
+| Tamas | 20 ms | 9.645 × 10⁻¹¹ | 9.424 × 10⁻¹¹ | 1.510 × 10⁻¹¹ | 572.9% | 575.5% | −6,598.8% |
+| Tamas | 40 ms | 1.385 × 10⁻¹⁰ | 8.329 × 10⁻¹¹ | 9.883 × 10⁻¹¹ | 135.4% | 96.9% | −177.8% |
+| Allen | 20 ms | 3.115 × 10⁻¹³ | 2.603 × 10⁻¹⁴ | 2.304 × 10⁻¹³ | 101.6% | 12.2% | −12.5% |
+| Allen | 40 ms | 4.021 × 10⁻¹³ | 6.990 × 10⁻¹⁵ | 3.823 × 10⁻¹³ | 100.3% | 2.5% | −0.7% |
+| Peng | 20 ms | 4.055 × 10⁻¹⁰ | 3.784 × 10⁻¹⁰ | 4.191 × 10⁻¹¹ | 559.4% | 570.5% | −6,379.2% |
+| Peng | 40 ms | 5.796 × 10⁻¹⁰ | 3.515 × 10⁻¹⁰ | 3.820 × 10⁻¹⁰ | 134.9% | 98.7% | −180.2% |
+
+**The main numerical feature is cancellation.** In Tamas and Peng at 20 ms, the periodic and terminal-boundary component norms are each around 5.6–5.8 times the finite-record error norm, while their signed cross-term is strongly negative. At 40 ms, the cancellation remains material but is less extreme. This explains why quoting either component alone would substantially misrepresent the actual finite-window residual. Allen's boundary component is much smaller at 40 ms, while Jacobs changes sign in its median cross-term between the two windows.
+
+These are per-case decompositions summarized by medians; the median component norms and median percentages are separate summaries and should not be algebraically combined as if they were one representative observation. The identity itself was checked on every output record: maximum relative residual 8.78149 × 10⁻¹², below 2 × 10⁻⁸. Large signed cross-term percentages arise because the denominator is the much smaller residual after vector cancellation; they are not percentages of biological energy.
+
+## 7. What this does and does not establish
 
 This experiment shows that the effect of adding q25 output ports depends on morphology and that the two q25 changes can interact strongly in the reduced model. It does **not** show that one anatomical port layout is universally superior. Ratios must be read alongside absolute error changes, especially when the seven-port error is near the numerical floor.
 
 The four inputs are individual reconstructions, not a population sample. Peng is a mouse Control cell whose source metadata says No Diameter; Jacobs has moderate dendritic integrity and an incomplete axon; Allen is an epilepsy surgical specimen and not a healthy control; Tamas is one human Control pyramidal comparison cell. The models are passive linear-RC reductions. This does not validate active channels, action potentials, synapses, plasticity or biological physiology. Full Hines remains the canonical reference and no production default is changed.
 
-## 7. Reproducibility files and next steps
+## 8. Reproducibility files and next steps
 
 The complete 1,075,536-row frequency matrix, all raw metrics, comparison pairs, preflight files, runtime evidence and source SWC needed for the Allen holdout are preserved in [Actions artifact 15010408589](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45585262246/artifacts/15010408589).
 
