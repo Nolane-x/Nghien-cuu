@@ -357,6 +357,7 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
         raise ValueError("primary four-layout report is not basis order 168")
     if version("numpy") != "2.5.5" or version("scipy") != "1.16.3" or version("neuron") != "9.0.2":
         raise RuntimeError("output observer requires the pinned numerical package versions")
+    primary_dispatch = verify_pinned_runtime(primary_report)
     runtime = runner.numerical_runtime_diagnostics()
     if runtime["verified_openblas_coretype"] != "Haswell":
         raise RuntimeError("output observer did not run with pinned Haswell OpenBLAS")
@@ -365,7 +366,6 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
     environment = runtime["thread_environment"]
     if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL,AVX512_SPR":
         raise RuntimeError("output observer NumPy SIMD restrictions differ from primary")
-    primary_dispatch = verify_pinned_runtime(primary_report)
     primary_basis = _basis_report_index(primary_report)
     primary_case_rows = read_csv(primary_case_path)
     if len(primary_case_rows) != 12096:
