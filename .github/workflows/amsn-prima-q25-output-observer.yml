@@ -101,7 +101,7 @@ jobs:
               handle.write(
                   "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON="
                   + json.dumps(current_targets, separators=(",", ":"))
-                  + "\\n"
+                  + "\n"
               )
           PY
       - name: Download and verify Allen standardized SWC
