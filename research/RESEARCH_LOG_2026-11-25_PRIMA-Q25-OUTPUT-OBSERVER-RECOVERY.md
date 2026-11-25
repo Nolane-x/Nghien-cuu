@@ -81,7 +81,7 @@ The four inputs are individual reconstructions, not a biological population. All
 - Detailed report: `amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md`.
 - Recovery manifest with original ZIP digest and extracted file hashes: `amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json`.
 - Handoff updated: `HANDOFF.md`.
-- Corrected archival replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) was still performing the full calculation at the last check. It must complete the corrected commit/rebase/push and artifact steps before raw observer outputs are called branch-archived.
+- **Superseded initial checkpoint:** at the time of first recovery, corrected replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) was still calculating. It subsequently completed success through Git commit and artifact upload; see section 7 below. Its outputs are now the official branch archive.
 
 ## 7. Corrected workflow now archives the outputs officially
 
