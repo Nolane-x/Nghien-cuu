@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "source": {
+    "source_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+    "neuromorpho_id": "NMO_163775"
+  },
+  "amsn": {
+    "q25_only_swc_node_ids": [
+      224,
+      4096
+    ],
+    "seven_unique_port_node_ids": [
+      1,
+      144,
+      3926,
+      4180,
+      40,
+      4104,
+      3948
+    ]
+  },
+  "neuron": {
+    "version": "9.0.2",
+    "segment_cap_um": 0.5,
+    "maximum_segment_length_um": 0.4999943591
+  },
+  "evidence": {
+    "kind": "compatibility_contract_reconstructed_from_previously_validated_preflight_and_matched-port_report",
+    "workflow_run_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45311916600",
+    "validated_on": "2026-11-24",
+    "note": "The four-morphology runner independently rechecks the checked-in SWC checksum, recomputes the 7/9-port map, and compares q25 identities against this pinned record."
+  }
+}
