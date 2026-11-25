@@ -83,6 +83,24 @@ jobs:
                             "source_sha256": digest, "preflight": preflight["status"],
                             "scenarios": scenarios}, indent=2))
           PY
+      - name: Preflight and export active NumPy SIMD dispatch targets
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          sys.path.insert(0, "research")
+          from analyze_prima_q25_four_morphology_four_layout_boundary_ablation import (
+              numpy_current_dispatch_targets,
+          )
+          targets = numpy_current_dispatch_targets()
+          assert targets, "no active NumPy SIMD targets detected"
+          unsupported = [x for x in targets if "X86_V4" in x.upper() or "AVX512" in x.upper()]
+          assert not unsupported, unsupported
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as handle:
+              handle.write("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON=" + json.dumps(targets) + chr(10))
+          print(json.dumps({"active_numpy_dispatch_targets": targets}, indent=2))
+          PY
+
       - name: Compile research runner and focused role-isolation tests
         run: |
           python -m compileall -q research/prima_q25_jacobs_role_specific_seed_allocation.py
