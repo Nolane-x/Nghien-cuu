@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "study": "Four-morphology, nine-scenario PRIMA q25 output-aware dual-seed order224 validation",
+  "date": "2026-11-25",
+  "repository": "Nolane-x/Nghien-cuu",
+  "branch": "research/prima-q25-cross-morphology-boundary-replication-2026-11-25",
+  "workflow": {
+    "run_id": 45639939767,
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767",
+    "conclusion": "success",
+    "calculation_head_sha": "0511c4481838b1a2c8cad87b58d4c1bc54e01a6f",
+    "results_commit": "fe048f52d376e3d5269f80d0009eefafd01e1565",
+    "results_commit_url": "https://github.com/Nolane-x/Nghien-cuu/commit/fe048f52d376e3d5269f80d0009eefafd01e1565"
+  },
+  "artifact": {
+    "id": 15035937283,
+    "name": "prima-q25-four-morphology-output-aware-dual-seed-order224",
+    "size_bytes": 527486,
+    "file_count": 13,
+    "zip_sha256": "fe798929f805f3702c89a704e42e4567a9371c456bc8baf71c8d9a76f7791f84",
+    "url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767/artifacts/15035937283",
+    "retention_days": 90
+  },
+  "source_morphologies": [
+    {
+      "name": "NMO_163775_Peng_mouse_Control",
+      "neuromorpho_id": "NMO_163775",
+      "records": 4209,
+      "swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+      "preflight_path": "results/NMO_163775_PengControl_holdout/preflight.json",
+      "preflight_status": "PASS",
+      "preflight_sha256": "1041fcf82ed05f30a2dc6cd62df67d35d78fd7b9566f5ff8ae59ea65bcebc46c"
+    },
+    {
+      "name": "NMO_107159_Tamas_human_pyramidal_Control",
+      "neuromorpho_id": "NMO_107159",
+      "records": 7228,
+      "swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+      "preflight_path": "results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json",
+      "preflight_status": "PASS",
+      "preflight_sha256": "cc544b841539cfcbd251f1f6dbae6c14f9697508bd6b87a2a8fe95be863f2b3a"
+    },
+    {
+      "name": "NMO_03524_JacobsControl",
+      "neuromorpho_id": "NMO_03524",
+      "records": 869,
+      "swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+      "preflight_path": "results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_03524_JacobsControl.json",
+      "preflight_status": "PASS",
+      "preflight_sha256": "088f7e8fe4179b31635a19d5e850dcc10104606a9dc2e58326801d219e2d65c0"
+    },
+    {
+      "name": "NMO_162186_AllenL23",
+      "neuromorpho_id": "NMO_162186",
+      "records": 7287,
+      "swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+      "preflight_path": "results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_162186_AllenL23.json",
+      "preflight_status": "PASS",
+      "preflight_sha256": "58a9d2a7f711e57bb2db38789d266093bcbd48f457daea497f60a41c1e6add28"
+    }
+  ],
+  "protocol": {
+    "order": 224,
+    "morphology_count": 4,
+    "passive_scenario_count": 9,
+    "passive_scenarios": [
+      "nominal",
+      "Rm_minus20",
+      "Rm_plus20",
+      "Cm_minus20",
+      "Cm_plus20",
+      "Ra_minus20",
+      "Ra_plus20",
+      "all_minus20",
+      "all_plus20"
+    ],
+    "schedules": {
+      "D0_none": [],
+      "D1_low_0hz": [
+        0
+      ],
+      "D1_mid_1000hz": [
+        1000
+      ],
+      "D1_high_10000hz": [
+        10000
+      ],
+      "D2_mid_high": [
+        1000,
+        10000
+      ]
+    },
+    "input_ports": 7,
+    "observed_outputs": 9,
+    "primal_input_expansion_shifts_hz": [
+      0,
+      100,
+      1000,
+      3000,
+      6000,
+      10000
+    ],
+    "current_sources": [
+      "soma",
+      "basal_q75",
+      "apical_q75"
+    ],
+    "pulse_amplitude_pA": 10,
+    "pulse_onset_ms": 2,
+    "pulse_widths_ms": [
+      2,
+      10
+    ],
+    "timestep_ms": 0.00625,
+    "observation_windows_ms": [
+      20,
+      40
+    ],
+    "neuron_segment_cap_um": 0.5,
+    "workers": "One isolated Python/NEURON subprocess per morphology/scenario pair (36 total)."
+  },
+  "acceptance": {
+    "status": "passed",
+    "worker_groups_expected": 36,
+    "worker_groups_passed": 36,
+    "case_metrics_expected": 19440,
+    "case_metrics_read_back": 19440,
+    "group_summary_expected": 3240,
+    "group_summary_read_back": 3240,
+    "morphology_summary_expected": 360,
+    "morphology_summary_read_back": 360,
+    "scenario_summary_expected": 810,
+    "scenario_summary_read_back": 810,
+    "pooled_summary_expected": 90,
+    "pooled_summary_read_back": 90,
+    "finite_dft_identity_expected": 72,
+    "finite_dft_identity_read_back": 72,
+    "basis_metadata_rows": 180,
+    "duplicate_case_keys": 0,
+    "exact_D0_parity_passed_for_every_worker": true,
+    "all_input_selectors_remained_seven_ports": true,
+    "all_five_schedules_reached_order224": true,
+    "reduced_G_and_C_cholesky_passed_for_all_180_models": true,
+    "maximum_basis_orthogonality_error": 1.7763568394002505e-15,
+    "reduced_G_condition_number_range": [
+      340884.8385022531,
+      4181402.9276217553
+    ],
+    "reduced_C_condition_number_range": [
+      62.935414218968425,
+      338.2957130366864
+    ],
+    "finite_dft_identity": {
+      "rows": 72,
+      "all_passed": true,
+      "frequency_bins_per_row": 1601,
+      "window_ms": 20,
+      "input_record": {
+        "source": "soma",
+        "pulse_width_ms": 2
+      },
+      "schedules": [
+        "D0_none",
+        "D2_mid_high"
+      ],
+      "tolerance": 2e-8,
+      "max_full_hines_relative_error": 3.2862696036373863e-12,
+      "max_reduced_relative_error": 3.261169162441114e-13,
+      "max_full_hines_absolute_error": 3.1102066846709826e-12,
+      "max_reduced_absolute_error": 4.753540866017509e-13
+    }
+  },
+  "pooled_metrics": {
+    "q25_cases_per_schedule": 864,
+    "shared_output_cases_per_schedule": 3024,
+    "q25_D0_median_nrmse_pct": 1.490954109571728e-8,
+    "q25_schedule_summary": {
+      "D1_high_10000hz": {
+        "median_nrmse_pct": 2.0529091508177483e-11,
+        "median_ratio": 0.00421118692562335,
+        "p90_ratio": 0.9039405036191772,
+        "worst_ratio": 9.694788193340168,
+        "improved_cases": 790,
+        "total_cases": 864,
+        "median_delta_percentage_points": -1.4866834516857142e-8
+      },
+      "D1_low_0hz": {
+        "median_nrmse_pct": 3.687486461004813e-11,
+        "median_ratio": 0.016791325692736017,
+        "p90_ratio": 1.0364904636773682,
+        "worst_ratio": 8.890822752809427,
+        "improved_cases": 772,
+        "total_cases": 864,
+        "median_delta_percentage_points": -1.4545829243831136e-8
+      },
+      "D1_mid_1000hz": {
+        "median_nrmse_pct": 2.76355567470725e-11,
+        "median_ratio": 0.009845233242150243,
+        "p90_ratio": 1.0842376339198159,
+        "worst_ratio": 15.104520746499498,
+        "improved_cases": 758,
+        "total_cases": 864,
+        "median_delta_percentage_points": -1.4832251513283378e-8
+      },
+      "D2_mid_high": {
+        "median_nrmse_pct": 2.1072767085511262e-11,
+        "median_ratio": 0.004243404672532029,
+        "p90_ratio": 1.3000201235282427,
+        "worst_ratio": 17.49618920126016,
+        "improved_cases": 730,
+        "total_cases": 864,
+        "median_delta_percentage_points": -1.4867324325428974e-8
+      }
+    },
+    "q25_by_morphology_D1_high": {
+      "Jacobs": {
+        "D0_median_nrmse_pct": 1.265817045204659e-11,
+        "candidate_median_nrmse_pct": 9.646224552755916e-12,
+        "median_ratio": 0.7263151999064767,
+        "improved_cases": 142,
+        "total_cases": 216
+      },
+      "Tamas": {
+        "D0_median_nrmse_pct": 3.343119099186759e-8,
+        "candidate_median_nrmse_pct": 1.3683901340166976e-10,
+        "median_ratio": 0.0036739751790332937,
+        "improved_cases": 216,
+        "total_cases": 216
+      },
+      "Allen": {
+        "D0_median_nrmse_pct": 7.099188337353437e-9,
+        "candidate_median_nrmse_pct": 2.5168595936384207e-11,
+        "median_ratio": 0.004470413499650907,
+        "improved_cases": 216,
+        "total_cases": 216
+      },
+      "Peng": {
+        "D0_median_nrmse_pct": 2.38274987052027e-7,
+        "candidate_median_nrmse_pct": 1.6863232095114014e-11,
+        "median_ratio": 0.00007001769638556642,
+        "improved_cases": 216,
+        "total_cases": 216
+      }
+    },
+    "q25_morphology_scenario_window_groups_below_ratio_1": {
+      "D1_high_10000hz": 129,
+      "D1_low_0hz": 129,
+      "D1_mid_1000hz": 127,
+      "D2_mid_high": 121,
+      "groups_per_schedule": 144
+    },
+    "q25_shared_output_summary": {
+      "shared_D0_median_nrmse_pct": 1.4361449003827105e-11,
+      "D1_high_10000hz": {
+        "median_nrmse_pct": 1.6215102006169287e-11,
+        "median_ratio": 1.0098197579779307,
+        "p90_ratio": 2.0321411143458814,
+        "worst_ratio": 10.582050214744266,
+        "median_delta_percentage_points": 5.145199775361641e-13,
+        "max_abs_delta_percentage_points": 1.0392566526269886e-10,
+        "better_cases": 1310,
+        "worse_cases": 1714
+      },
+      "D1_low_0hz": {
+        "median_nrmse_pct": 1.8155500269453353e-11,
+        "median_ratio": 1.0114845863877597,
+        "p90_ratio": 2.719026651010902,
+        "worst_ratio": 22.595202122391917,
+        "median_delta_percentage_points": 5.755768433341444e-13,
+        "max_abs_delta_percentage_points": 1.1454362719398843e-10,
+        "better_cases": 1267,
+        "worse_cases": 1757
+      },
+      "D1_mid_1000hz": {
+        "median_nrmse_pct": 1.8031449407489304e-11,
+        "median_ratio": 1.0085571754010756,
+        "p90_ratio": 2.119168742334446,
+        "worst_ratio": 16.71017563609533,
+        "median_delta_percentage_points": 3.994002701398085e-13,
+        "max_abs_delta_percentage_points": 1.4945250025576218e-10,
+        "better_cases": 1313,
+        "worse_cases": 1711
+      },
+      "D2_mid_high": {
+        "median_nrmse_pct": 1.7803298716816718e-11,
+        "median_ratio": 1.0230176810844545,
+        "p90_ratio": 2.4783712473732034,
+        "worst_ratio": 18.654096552397135,
+        "median_delta_percentage_points": 1.0945001163582756e-12,
+        "max_abs_delta_percentage_points": 1.1046840440371813e-10,
+        "better_cases": 1148,
+        "worse_cases": 1876
+      }
+    }
+  },
+  "runtime": {
+    "wall_seconds": 1085.854270547,
+    "worker_total_seconds": 1007.7144076500006,
+    "max_worker_seconds": 36.69235129699996,
+    "worker_processes": 36,
+    "python": "3.12.16",
+    "numpy": "2.5.5",
+    "scipy": "1.16.3",
+    "neuron": "9.0.2",
+    "openblas_coretype": "Haswell",
+    "blas_threads": 1,
+    "numpy_dispatch_targets": [
+      "X86_V3",
+      "baseline(X86_V2)"
+    ],
+    "numpy_disabled_cpu_features": [
+      "X86_V4",
+      "AVX512_ICL",
+      "AVX512_SPR"
+    ]
+  },
+  "files": {
+    "case_metrics": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_case_metrics.csv",
+      "rows": 19440,
+      "sha256": "7d36f49b093d6647072b78fba8fe50dc76383d35bad5c50da4664d14d58153fd",
+      "git_blob_sha1": "f85b47c6a6d2944c7e3c4195cd73f897171d6112",
+      "bytes": 2754734
+    },
+    "group_summary": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_group_summary.csv",
+      "rows": 3240,
+      "sha256": "2f1e445f7623c3985921e9564dc602712b5dcdfd937109933d27e3a3e837c043",
+      "git_blob_sha1": "6315a61a7662791127831b4628ae82ba3307f4c0",
+      "bytes": 592229
+    },
+    "morphology_summary": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_morphology_summary.csv",
+      "rows": 360,
+      "sha256": "1a9d8159c49d4b55d6921282c032954cd599205699d497000daaac8c06431bcf",
+      "git_blob_sha1": "311575380584a7b9c1817ef6f6c0aa075a02813f",
+      "bytes": 59174
+    },
+    "scenario_summary": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_scenario_summary.csv",
+      "rows": 810,
+      "sha256": "45286f1533e1a8e2596e44b5d165b0025fd3ee233d04e62419c69db8efa21cef",
+      "git_blob_sha1": "099e025795b0aee0e29ef3967094b4a2f52e2e11",
+      "bytes": 117439
+    },
+    "pooled_summary": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_pooled_summary.csv",
+      "rows": 90,
+      "sha256": "2b9ddc42f041cf95de23a51809fa3465ef1d87f0cf48c3ca00313ec72f46894d",
+      "git_blob_sha1": "bb2947250d4db8cbf738ebfbd926d283c7d74627",
+      "bytes": 12535
+    },
+    "finite_dft_identity": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_finite_dft_identity.csv",
+      "rows": 72,
+      "sha256": "6a360c7650ca4196efa3935e88462c48e70fe19d9bd2915334db9247b728bca8",
+      "git_blob_sha1": "9e7dcb4aa531ec941662ec26c1c0f21a0e49760a",
+      "bytes": 15738
+    },
+    "basis_metadata": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_basis_metadata.json",
+      "rows": 180,
+      "sha256": "2f87b27846f00e29219ffb3e4bea63998c2dbab74c381bc7d7e951e1914bff70",
+      "git_blob_sha1": "59fd7b6973a96ca3788474a852225161e03a7b8d",
+      "bytes": 196059
+    },
+    "report": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_report.json",
+      "sha256": "68203f641b4ced8edb6c7d2db85c5e086d938cdd835c22948f0e43a9869dc2ba",
+      "git_blob_sha1": "295d1fdae101a67bb70c723b98a3dd0ad9e6d312",
+      "bytes": 10849
+    },
+    "timing": {
+      "path": "results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25.time.txt",
+      "sha256": "41f4db1f6d3a5617913d52f75fec2ea6669acf9a4cdc1fee39a434f91a53e910",
+      "git_blob_sha1": "c7d0c0632b52231a90febf160084c06c979e4107",
+      "bytes": 96
+    }
+  },
+  "accepted_report_path": "research/PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_RESULTS_2026-11-25.md",
+  "protocol_path": "amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_PROTOCOL_2026-11-25.md",
+  "runner_path": "amsn-core/research/run_prima_q25_four_morphology_output_aware_dual_seed_sweep.py",
+  "scientific_limits": [
+    "Four individual morphology reconstructions are not a biological population sample.",
+    "Allen NMO_162186 is an epilepsy-surgery specimen; Peng NMO_163775 metadata says No Diameter.",
+    "Passive linear-RC model reduction only; no active channels, action potentials, synapses, plasticity, calcium signalling or biological validity.",
+    "D1-high q25 improvement is strong in Tamas, Allen and Peng but Jacobs apical-q25 is a clear near-floor exception.",
+    "Shared-output absolute deltas are tiny but are not universally zero; relative ratios are sensitive to the near-zero D0 denominator.",
+    "The finite-record DFT identity sample is restricted to soma/2-ms/20-ms under D0 and D2.",
+    "No production solver, input-port default or basis-order default changed; full Hines remains canonical."
+  ],
+  "decision": {
+    "strongest_aggregate_research_candidate": "D1_high_10000hz",
+    "pareto_alternative_if_prioritizing_shared_output_change": "D1_mid_1000hz",
+    "not_preferred_in_aggregate": "D2_mid_high",
+    "rationale": "D1-high has the best aggregate q25 median/P90 and improvement count using only two dual seeds; D1-mid slightly minimizes the shared-output median ratio/delta; D2 offers no aggregate benefit over D1-high sufficient to justify more seed directions. None is approved as a production default."
+  },
+  "concurrent_duplicate_run": {
+    "id": 45641197995,
+    "state_at_manifest_creation": "in_progress",
+    "head_sha": "3480d2ae92ed979185828e7b4b3965fe0877b33c",
+    "note": "A duplicate push-triggered run was queued while docs under amsn-core/research/** were updated. Canonical accepted run45639939767 is the only accepted source; if the duplicate finishes, reconcile it as an independent replay and retain its own artifact/checksums without changing the canonical interpretation."
+  }
+}
