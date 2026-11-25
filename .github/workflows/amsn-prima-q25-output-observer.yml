@@ -1,0 +1,169 @@
+name: PRIMA q25 output-observer fixed-vs-enriched basis
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-output-observer.yml"
+      - "amsn-core/research/analyze_prima_q25_output_observer_fixed_vs_enriched_basis.py"
+      - "amsn-core/tests/test_prima_q25_output_observer_fixed_vs_enriched_basis.py"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv"
+      - "amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-output-observer
+  cancel-in-progress: false
+
+jobs:
+  q25-output-observer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    defaults:
+      run:
+        working-directory: amsn-core
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned AMSN numerical runtime
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install --only-binary=numpy numpy==2.5.5
+          python -m pip install threadpoolctl==3.6.0
+      - name: Verify pinned runtime and OpenBLAS dispatch
+        run: |
+          python - <<'PY'
+          import importlib.metadata as metadata
+          import os
+          import numpy as np
+          from threadpoolctl import threadpool_info
+          expected = {
+              "numpy": "2.5.5",
+              "scipy": "1.16.3",
+              "neuron": "9.0.2",
+              "threadpoolctl": "3.6.0",
+          }
+          observed = {name: metadata.version(name) for name in expected}
+          assert observed == expected, observed
+          pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
+          assert pools and {p.get("architecture") for p in pools} == {"Haswell"}, pools
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
+          print("PASS: pinned numerical runtime", observed)
+          print("OpenBLAS pools:", pools)
+          print("NumPy detected CPU feature map:", np._core._multiarray_umath.__cpu_features__)
+          PY
+      - name: Download and verify Allen standardized SWC
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Q25-OutputObserver/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Run q25 observer regression tests
+        run: |
+          python -m pytest -q tests/test_prima_q25_output_observer_fixed_vs_enriched_basis.py
+          python -m py_compile research/analyze_prima_q25_output_observer_fixed_vs_enriched_basis.py
+      - name: Gate on accepted pinned order-168 primary results
+        id: primary
+        run: |
+          python - <<'PY'
+          import csv, json, os
+          from pathlib import Path
+          report_path = Path("results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json")
+          metrics_path = Path("results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv")
+          if not report_path.is_file() or not metrics_path.is_file():
+              print("Primary order-168 result is not committed yet.")
+              ready = False
+          else:
+              report = json.loads(report_path.read_text(encoding="utf-8"))
+              runtime = report.get("reproducibility_diagnostics", {}).get("numerical_runtime", {})
+              env = runtime.get("thread_environment", {})
+              pools = [p for p in runtime.get("threadpools", []) if p.get("internal_api") == "openblas"]
+              with metrics_path.open(newline="", encoding="utf-8") as handle:
+                  count = sum(1 for _ in csv.DictReader(handle))
+              ready = (
+                  report.get("status") == "prima_q25_four_morphology_four_layout_boundary_ablation_passed"
+                  and report.get("scope", {}).get("basis_order") == 168
+                  and env.get("OPENBLAS_CORETYPE") == "Haswell"
+                  and env.get("NPY_DISABLE_CPU_FEATURES") == "X86_V4,AVX512_ICL"
+                  and bool(pools)
+                  and {p.get("architecture") for p in pools} == {"Haswell"}
+                  and count == 12096
+                  and len(report.get("reproducibility_diagnostics", {}).get("basis_models", [])) == 144
+              )
+              print(json.dumps({
+                  "ready": ready,
+                  "case_metric_rows": count,
+                  "openblas_core": [p.get("architecture") for p in pools],
+                  "thread_environment": env,
+                  "basis_model_count": len(report.get("reproducibility_diagnostics", {}).get("basis_models", [])),
+              }, indent=2, sort_keys=True))
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"ready={'true' if ready else 'false'}\n")
+          PY
+      - name: Run fixed-vs-enriched q25 output observer analysis
+        if: steps.primary.outputs.ready == 'true'
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25.time.txt \
+            python research/analyze_prima_q25_output_observer_fixed_vs_enriched_basis.py \
+              --primary-results-dir results \
+              --output-dir results
+      - name: Commit verified observer-only matrices and summaries
+        if: success() && steps.primary.outputs.ready == 'true' && hashFiles('amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_report.json') != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          stem="prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25"
+          git add \
+            "amsn-core/results/${stem}_case_metrics.csv" \
+            "amsn-core/results/${stem}_layout_vs_seven_comparisons.csv" \
+            "amsn-core/results/${stem}_source_summary.csv" \
+            "amsn-core/results/${stem}_morphology_summary.csv" \
+            "amsn-core/results/${stem}_finite_dft_identity.csv" \
+            "amsn-core/results/${stem}_basis_hashes.csv" \
+            "amsn-core/results/${stem}_report.json" \
+            "amsn-core/results/${stem}.time.txt"
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive q25 observer-only fixed versus enriched basis study"
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Preserve observer-only matrices and evidence
+        if: always() && steps.primary.outputs.ready == 'true' && hashFiles('amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_report.json') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-output-observer-fixed-vs-enriched-basis
+          path: |
+            amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_*.csv
+            amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_report.json
+            amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25.time.txt
+          if-no-files-found: error
+          retention-days: 90
