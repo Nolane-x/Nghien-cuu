@@ -130,6 +130,25 @@ class TestQ25OutputObserver(unittest.TestCase):
         expected = np.asarray([[[1.0], [1.0]], [[2.0 / 3.0], [2.0 / 3.0]]])
         np.testing.assert_allclose(response, expected, rtol=1e-14, atol=1e-14)
 
+    def test_q25_retained_role_map_separates_retained_and_observer_only_outputs(self):
+        retained = observer.q25_retained_role_map(
+            {"basal_q25": 272, "apical_q25": 864},
+            [1, 367, 583, 751, 866, 867, 868, 272],
+        )
+        self.assertEqual(retained, {"basal_q25": True, "apical_q25": False})
+        both = observer.q25_retained_role_map(
+            {"basal_q25": 272, "apical_q25": 864},
+            [1, 367, 583, 751, 866, 867, 868, 272, 864],
+        )
+        self.assertEqual(both, {"basal_q25": True, "apical_q25": True})
+
+    def test_q25_retained_role_map_rejects_incomplete_q25_identity_map(self):
+        with self.assertRaisesRegex(ValueError, "does not match"):
+            observer.q25_retained_role_map(
+                {"basal_q25": 272},
+                [1, 272],
+            )
+
     def test_observer_requires_exact_primary_numpy_dispatch_match(self):
         primary = {
             "numpy_current_dispatch_targets": ["X86_V3", "baseline(X86_V2)"],
