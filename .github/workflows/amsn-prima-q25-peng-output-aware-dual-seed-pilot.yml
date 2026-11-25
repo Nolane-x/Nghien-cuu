@@ -86,6 +86,24 @@ jobs:
             "neuron":neuron.__version__,"threadpools":pools,"swc_sha256":digest,
             "preflight":preflight["status"]},indent=2))
           PY
+      - name: Preflight and export active NumPy SIMD dispatch targets
+        working-directory: amsn-core
+        run: |
+          python - <<'PY' >> "$GITHUB_ENV"
+          import json
+          from research.analyze_prima_q25_four_morphology_four_layout_boundary_ablation import (
+              numpy_current_dispatch_targets,
+          )
+          targets = numpy_current_dispatch_targets()
+          assert targets, "no active NumPy SIMD targets detected"
+          unsupported = [
+              item for item in targets
+              if "X86_V4" in item.upper() or "AVX512" in item.upper()
+          ]
+          assert not unsupported, unsupported
+          print("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON=" + json.dumps(targets))
+          print(json.dumps({"active_numpy_dispatch_targets": targets}, indent=2))
+          PY
       - name: Compile research-only pilot and tests
         working-directory: amsn-core
         run: |
