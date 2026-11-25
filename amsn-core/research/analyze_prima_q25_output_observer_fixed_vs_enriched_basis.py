@@ -153,6 +153,22 @@ def verify_pinned_runtime(primary_report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def assert_matching_numpy_dispatch(
+    primary_dispatch: dict[str, Any],
+    observer_runtime: dict[str, Any],
+) -> None:
+    """Refuse the observer comparison unless both processes used identical active NumPy targets."""
+    primary_targets = list(primary_dispatch.get("numpy_current_dispatch_targets", []))
+    observer_targets = list(observer_runtime.get("numpy_current_dispatch_targets", []))
+    if not primary_targets:
+        raise RuntimeError("primary report has no active NumPy dispatch targets")
+    if observer_targets != primary_targets:
+        raise RuntimeError(
+            "output observer NumPy current-kernel dispatch differs from primary: "
+            f"observer={observer_targets!r}, primary={primary_targets!r}"
+        )
+
+
 def _basis_report_index(report: dict[str, Any]) -> dict[tuple[str, str, str], dict[str, str]]:
     rows = report["reproducibility_diagnostics"]["basis_models"]
     index = {
@@ -361,8 +377,7 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
     runtime = runner.numerical_runtime_diagnostics()
     if runtime["verified_openblas_coretype"] != "Haswell":
         raise RuntimeError("output observer did not run with pinned Haswell OpenBLAS")
-    if runtime["numpy_current_dispatch_targets"] != primary_dispatch["numpy_current_dispatch_targets"]:
-        raise RuntimeError("output observer NumPy current-kernel dispatch differs from primary")
+    assert_matching_numpy_dispatch(primary_dispatch, runtime)
     environment = runtime["thread_environment"]
     if environment.get("NPY_DISABLE_CPU_FEATURES") != "X86_V4,AVX512_ICL,AVX512_SPR":
         raise RuntimeError("output observer NumPy SIMD restrictions differ from primary")
