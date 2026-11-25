@@ -308,7 +308,7 @@ def main() -> None:
         enriched = build_output_aware_passive_basis(
             target,
             retained_indices,
-            tuple(q25_tree_indices.values()),
+            (q25_tree_indices["basal_q25"], q25_tree_indices["apical_q25"]),
             max_order=ORDER,
             input_expansion_frequencies_hz=conditioning.SHIFTS_HZ,
             output_seed_frequencies_hz=dual_frequencies,
