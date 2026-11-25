@@ -1,56 +1,87 @@
-# PRIMA q25 initial multishift seed-budget audit protocol
+# PRIMA q25 four-morphology initial multishift seed-budget audit — protocol
 
 **Date:** 25 November 2026  
-**Script:** audit_prima_q25_four_morphology_initial_shift_seed_budget.py  
-**Workflow:** ../../.github/workflows/amsn-prima-q25-initial-seed-budget.yml
+**Branch:** \`research/prima-q25-cross-morphology-boundary-replication-2026-11-25\`  
+**Implementation:** \`research/audit_prima_q25_four_morphology_initial_shift_seed_budget.py\`  
+**Tests:** \`tests/test_prima_q25_four_morphology_initial_shift_seed_budget.py\`  
+**Workflow:** \`.github/workflows/amsn-prima-q25-initial-seed-budget.yml\`
 
 ## 1. Question
 
-The fixed-order q25 ablation shows that adding basal-q25 and apical-q25 can change errors at the seven shared outputs. One implementation-level explanation is that each retained port contributes an initial shifted inverse block at each expansion shift. Adding ports can therefore increase the rank consumed before subsequent round-robin Krylov growth begins.
+The four-layout q25 ablation changes the retained-port selector at a fixed PRIMA order. The implementation seeds a multishift rational-Krylov basis from shifted inverse blocks before growing the remaining basis in round-robin order. This audit measures the **independent columns actually added by those initial shift blocks**, after orthogonalization against columns seeded by earlier shifts.
 
-This audit measures that initial seed budget on the same four morphology reconstructions and exact 7/8/8/9-port layouts. It is a structural diagnostic, not a response-error experiment and not proof that seed-budget competition is the sole cause of the q25 error changes.
+It answers a narrow implementation question: how much of the requested state order is occupied before later Krylov growth begins, and how does that depend on morphology and the basal/apical q25 additions?
 
-## 2. Exact protocol
+It does not rerun the full transient response matrix, compute a final 112/168/224 reduced basis, or claim that seed-budget competition is the sole cause of response-error changes.
 
-For each of the four checked SWCs, each of the nine passive parameter scenarios, each retained-port layout, and each of the six declared expansion shifts:
+## 2. Matched design
 
-1. Build the same cable tree and passive parameter variant used by the primary four-layout experiment.
-2. Form the retained-port selector \(B\).
-3. At each shift \(\sigma\), solve the same shifted passive system \((G+\sigma C)^{-1}B\) using the existing Hines real-shift solve.
-4. Orthogonalize the shifted block against the already accumulated initial seed columns using the same two-pass orthogonalization and relative tolerance \(10^{-12}\).
-5. Record the independent columns contributed by that shift, the cumulative initial seed rank, and the remaining number of states at orders 112, 168 and 224.
+The diagnostic uses the same four pinned holdouts, q25 node identities, source SWC checksums and 0.5-µm NEURON segment cap as the four-layout boundary ablation.
 
-The six shift values remain 0, 100, 1,000, 3,000, 6,000 and 10,000 Hz. The four layouts are “seven”, “eight_basal_q25”, “eight_apical_q25” and “nine_both_q25”.
+| Morphology | NeuroMorpho ID | Shared seven SWC IDs | Basal-q25 | Apical-q25 |
+|---|---|---|---:|---:|
+| Peng mouse Control | NMO_163775 | 1, 144, 3926, 4180, 40, 4104, 3948 | 224 | 4096 |
+| Tamas human pyramidal Control | NMO_107159 | 1, 6363, 4735, 5564, 7023, 4301, 4623 | 6609 | 4404 |
+| Jacobs human Control | NMO_03524 | 1, 367, 583, 751, 866, 867, 868 | 272 | 864 |
+| Allen L2/3 epilepsy surgical specimen | NMO_162186 | 1, 515, 2261, 2304, 4180, 4262, 6608 | 2713 | 4488 |
 
-The numerical runtime is pinned to Python 3.12.16, NumPy 2.5.5, SciPy 1.16.3, NEURON 9.0.2 and threadpoolctl 3.6.0. OpenBLAS is pinned to Haswell with one thread. NumPy's complete current SIMD dispatch inventory is collected in an isolated preflight and rejects any active X86_V4 or AVX-512 kernel. The verified target list is handed to the script through GITHUB_ENV; the script does not rerun NumPy introspection in the analysis process.
+The four layouts are exactly:
 
-## 3. Coverage contract
+- \`seven\`: the canonical seven shared ports;
+- \`eight_basal_q25\`: the same seven plus basal-q25;
+- \`eight_apical_q25\`: the same seven plus apical-q25;
+- \`nine_both_q25\`: the same seven plus both q25 ports.
 
-| Output | Expected rows |
-|---|---:|
-| Four morphology × nine scenarios × four layouts × six shifts | 864 |
-| Morphology/scenario/layout initial seed summaries | 144 |
-| Morphology/layout summaries across nine scenarios | 16 |
+For every morphology and each of the nine passive parameter scenarios, the audit constructs each layout and processes these six expansion shifts in fixed order:
 
-Each model/layout group must have exactly six unique shifts, consistent cumulative rank, nonnegative remaining state budget, and no shift block rank greater than the retained port count. All 144 groups must fit inside each requested order.
+\[
+0,\ 100,\ 1000,\ 3000,\ 6000,\ 10000\ \text{Hz}.
+\]
 
-## 4. Expected seed-budget interpretation
+The requested state orders are 112, 168 and 224. The initial shifted solves are rank-counted up to the maximum requested order, 224. At every shift, the script uses the same Hines shifted passive solve and twice-reorthogonalized block routine used by the conditioning audit:
 
-If all ports contribute linearly independent columns at each of the six shifts, the initial block sizes are:
+- \`_solve_shifted_passive_real(tree, shift_per_s, selector)\`;
+- \`_orthogonalize_block(start, basis_columns, relative_tolerance, max_order)\`.
 
-| Layout | Ports | Initial seed columns | Remaining at order 112 | Remaining at order 168 | Remaining at order 224 |
-|---|---:|---:|---:|---:|---:|
-| seven | 7 | 42 | 70 | 126 | 182 |
-| eight_basal_q25 | 8 | 48 | 64 | 120 | 176 |
-| eight_apical_q25 | 8 | 48 | 64 | 120 | 176 |
-| nine_both_q25 | 9 | 54 | 58 | 114 | 170 |
+For each shift it records new independent columns, cumulative columns and remaining budget. The model-level output derives the remaining states and occupied fraction at all three requested orders.
 
-These are arithmetic expectations, not assumed observations. The audit records the actual independent rank after each shift. Rank loss or dependence can make the observed seed budget smaller. The later adaptive Krylov growth, frequency distribution, projected operator conditioning and finite-window response errors are not represented by the initial count.
+## 3. Coverage and pinned numerical runtime
 
-## 5. Interpretation rules
+| Output | Expected | Observed |
+|---|---:|---:|
+| Raw shift rows | 864 | 864 |
+| Morphology × scenario × layout groups | 144 | 144 |
+| Morphology × layout summaries | 16 | 16 |
+| Morphologies | 4 | 4 |
+| Parameter scenarios per morphology | 9 | 9 |
+| Expansion shifts per group | 6 | 6 |
 
-- A difference of 6 or 12 initial seed columns between layouts confirms a real difference in the initial subspace budget for this implementation.
-- A larger initial seed budget is not automatically worse: the added columns may also better represent the desired response directions.
-- If error penalties shrink at order 224 while seed ranks remain 42/48/54, that is consistent with a fixed-order truncation-budget effect, but the convergence results must be inspected directly.
-- If penalties persist at larger order, the retained-port geometry, shift placement, conditioning, and output/source directions require closer study.
-- This diagnostic does not validate biological function and does not change solver defaults or production behavior. Four individual morphologies are not a population sample.
+All four SWC checksums and source/preflight manifests were revalidated. The audit completed in 31.62 seconds.
+
+Pinned runtime:
+
+- Python 3.12.16
+- NumPy 2.5.5
+- SciPy 1.16.3
+- NEURON 9.0.2
+- threadpoolctl 3.6.0
+- \`OPENBLAS_CORETYPE=Haswell\`, one OpenBLAS thread
+- \`NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR\`
+- all functions/signatures returned by unfiltered \`numpy.lib.introspect.opt_func_info()\` were checked; active targets were \`X86_V3\` and \`baseline(X86_V2)\`, with no active X86_V4/AVX-512 dispatch.
+
+The report stores full runtime diagnostics and the exact active dispatch target list.
+
+## 4. Interpretation rules
+
+1. “Initial seed columns” means independent columns surviving orthogonalization across the six initial shifted inverse blocks. It is **not** the nominal raw block-column count and not the final basis size.
+2. Remaining budget is requested order minus cumulative initial independent seed rank. Later round-robin Krylov growth, rank loss and the final basis construction are not included.
+3. Compare morphologies separately. These are four individual reconstructions, not a population sample.
+4. The observed seed-budget difference is a plausible contributor to fixed-order approximation changes, but this audit is not a causal intervention. The full order-convergence sweep and matched output-observer comparison remain necessary to determine how the error differences evolve with order.
+5. This is passive linear-RC numerical analysis only. It does not assess active channels, action potentials, nonlinear synapses, plasticity or biological validity.
+6. No production PRIMA order, retained-port layout, solver default or production behavior is changed.
+
+## 5. Reproducibility
+
+The workflow is independently executable with \`workflow_dispatch\` and also runs on relevant pushes to the research branch. It performs the full runtime/SIMD gate, downloads and checksum-verifies the Allen SWC, checks all four pinned preflight manifests, runs regression tests, computes the tables, commits compact results and uploads a 90-day artifact.
+
+The machine-readable report and CSVs are committed under \`amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*\`.
