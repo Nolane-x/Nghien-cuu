@@ -1,0 +1,27 @@
+{
+  "status": "PASS",
+  "source": {
+    "source_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+    "neuromorpho_id": "NMO_162186"
+  },
+  "amsn": {
+    "q25_only_swc_node_ids": [
+      2713,
+      4488
+    ],
+    "seven_unique_port_node_ids": [
+      1,
+      515,
+      2261,
+      2304,
+      4180,
+      4262,
+      6608
+    ]
+  },
+  "neuron": {
+    "version": "9.0.2",
+    "segment_cap_um": 0.5,
+    "maximum_segment_length_um": 0.4999836697050189
+  }
+}
