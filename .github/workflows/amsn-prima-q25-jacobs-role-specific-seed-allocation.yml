@@ -1,0 +1,172 @@
+name: Research-only PRIMA Jacobs q25 role-specific seed allocation
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-jacobs-role-specific-seed-allocation.yml"
+      - "research/prima_q25_jacobs_role_specific_seed_allocation.py"
+      - "research/test_prima_q25_jacobs_role_specific_seed_allocation.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-jacobs-role-specific-seed-allocation
+  cancel-in-progress: false
+
+jobs:
+  jacobs-role-specific-seed-allocation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
+      AMSN_PRIMA_BASIS_ORDER: "224"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.16"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned AMSN numerical runtime
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=numpy numpy==2.5.5
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install threadpoolctl==3.6.0
+      - name: Download and verify Allen standardized SWC required by shared morphology registry
+        working-directory: amsn-core
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --user-agent "AMSN-NeuroMorpho-Q25-Jacobs-Role-Seed/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Verify Jacobs source, scenario contract and numerical runtime
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+          sys.path.insert(0, "research")
+          import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
+          specs = [item for item in core.MORPHOLOGIES if item["neuromorpho_id"] == "NMO_03524"]
+          assert len(specs) == 1, len(specs)
+          spec = specs[0]
+          source = Path(spec["module"].SWC)
+          digest = hashlib.sha256(source.read_bytes()).hexdigest()
+          assert digest == spec["expected_sha256"], (digest, spec["expected_sha256"])
+          preflight = json.loads(Path(spec["preflight"]).read_text())
+          assert preflight["status"] == "PASS"
+          assert preflight["source"]["source_sha256"] == digest
+          scenarios = list(spec["module"].baseline.parameter_cases())
+          assert scenarios == list(core.SCENARIO_NAMES) and len(scenarios) == 9, scenarios
+          print(json.dumps({"morphology": spec["name"], "records": spec["expected_records"],
+                            "source_sha256": digest, "preflight": preflight["status"],
+                            "scenarios": scenarios}, indent=2))
+          PY
+      - name: Compile research runner and focused role-isolation tests
+        run: |
+          python -m compileall -q research/prima_q25_jacobs_role_specific_seed_allocation.py
+          python -m compileall -q research/test_prima_q25_jacobs_role_specific_seed_allocation.py
+      - name: Run existing and new output-aware basis invariants
+        working-directory: amsn-core
+        run: |
+          python -m pytest -q \
+            tests/test_prima_q25_output_aware_dual_seed_basis.py \
+            ../research/test_prima_q25_jacobs_role_specific_seed_allocation.py
+      - name: Run Jacobs nine-scenario role-specific seed allocation
+        run: python research/prima_q25_jacobs_role_specific_seed_allocation.py
+      - name: Verify global report, case coverage, passivity and DFT identity
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          stem = "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25"
+          results = Path("amsn-core/results")
+          report = json.loads((results / f"{stem}_report.json").read_text())
+          assert report["status"] == "passed"
+          assert report["morphology"]["neuromorpho_id"] == "NMO_03524"
+          expected = {
+              "worker_groups_passed": 9,
+              "case_metrics_read_back": 9720,
+              "scenario_summary_read_back": 1620,
+              "pooled_summary_read_back": 180,
+              "finite_dft_identity_read_back": 45,
+              "basis_metadata_read_back": 90,
+              "unique_case_keys": 9720,
+          }
+          for key, value in expected.items():
+              assert report["coverage"][key] == value, (key, report["coverage"][key])
+          gates = report["numerical_gates"]
+          assert gates["d0_exact_production_parity_all_scenarios"] is True
+          assert gates["prior_nominal_d0_and_both_10k_case_metrics_bit_exact"] is True
+          assert gates["seven_input_ports_unchanged_all_models"] is True
+          assert gates["all_models_reached_order_224"] is True
+          assert gates["all_finite_dft_identities_passed"] is True
+          assert gates["max_basis_orthogonality_abs"] < 2e-12
+          counts = {"case_metrics": 9720, "scenario_summary": 1620,
+                    "pooled_summary": 180, "finite_dft_identity": 45}
+          for suffix, count in counts.items():
+              path = results / f"{stem}_{suffix}.csv"
+              with path.open(newline="") as handle:
+                  assert len(list(csv.DictReader(handle))) == count, path
+          metadata = json.loads((results / f"{stem}_basis_metadata.json").read_text())
+          assert len(metadata) == 90
+          assert all(row["actual_order"] == 224 and row["seven_input_ports_unchanged"]
+                     for row in metadata)
+          manifest = json.loads((results / f"{stem}_manifest.json").read_text())
+          assert manifest["status"] == "passed"
+          print(json.dumps({"status": report["status"], "coverage": report["coverage"],
+                            "numerical_gates": report["numerical_gates"],
+                            "q25_pooled_paired_summary": report["q25_pooled_paired_summary"]},
+                           indent=2))
+          PY
+      - name: Commit verified diagnostics and raw paired measurements
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_case_metrics.csv \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_scenario_summary.csv \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_pooled_summary.csv \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_finite_dft_identity.csv \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_basis_metadata.json \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_report.json \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25.time.txt \
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_manifest.json
+          git commit -m "results: archive Jacobs q25 role-specific PRIMA seed study"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Preserve raw metrics and reproducibility evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-jacobs-role-specific-seed-allocation-order224
+          path: |
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_*.csv
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_basis_metadata.json
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_report.json
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_manifest.json
+            amsn-core/results/prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25.time.txt
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_03524_JacobsControl.json
+          if-no-files-found: error
+          retention-days: 90
