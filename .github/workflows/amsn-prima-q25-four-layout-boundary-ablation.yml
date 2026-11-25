@@ -70,6 +70,7 @@ jobs:
         run: |
           python - <<'PY'
           import importlib.metadata as metadata
+          import json
           import numpy as np
           import os
           from threadpoolctl import threadpool_info
