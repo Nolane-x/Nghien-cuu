@@ -78,16 +78,20 @@ An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/action
 - Overlapping run [45636849975](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45636849975) also passed calculation/coverage but failed only during duplicate Git add/add rebase conflicts on report/time after the canonical result had committed those paths. It uploaded no artifact; 45636631081 is canonical.
 - This remains a single-morphology, nominal-scenario proof of concept. No production solver/default change and no biological inference.
 
-### Four-morphology, nine-scenario output-aware dual-seed sweep — active run
+### Four-morphology, nine-scenario output-aware dual-seed sweep — accepted and archived
 
 - Runner: `amsn-core/research/run_prima_q25_four_morphology_output_aware_dual_seed_sweep.py`.
 - Protocol: [PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_PROTOCOL_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_PROTOCOL_2026-11-25.md).
-- Workflow: [45639939767](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767), currently **in progress** at the 36-worker numerical sweep.
-- First attempt [45639701286](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639701286) stopped at the initial source preflight because the standardized Allen SWC was not in the checkout. The workflow now downloads it from the same NeuroMorpho endpoint used by the accepted four-layout workflow and checks SHA-256 `a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc`.
-- The corrected run passed runtime installation, all four morphology SWC/preflight checks, active NumPy dispatch export, compileall and the five dual-seed unit tests. It is currently running the isolated morphology/scenario workers. No global result is accepted yet.
-- Expected global coverage: 36 workers; 19,440 case rows; 3,240 worker-group summaries; 360 per-morphology summaries; 810 per-scenario summaries; 90 pooled summaries; 72 finite-DFT identity rows; 180 basis metadata records.
-- The five schedules remain D0, D1-low (0 Hz), D1-mid (1 kHz), D1-high (10 kHz), D2 (1/10 kHz), all at order224 and with exactly seven input ports/nine output rows.
-- Wait for exact read-back, all DFT identities, Git archival and artifact upload before writing a cross-morphology conclusion. Preserve the Peng nominal pilot only as an initial single-stratum result.
+- Canonical workflow [45639939767](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767) completed **success** through all 36 workers, exact read-back, DFT identity checks, Git commit and artifact upload.
+- Results commit: `fe048f52d376e3d5269f80d0009eefafd01e1565`; artifact [15035937283](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45639939767/artifacts/15035937283), 527,486 bytes; ZIP SHA-256 `fe798929f805f3702c89a704e42e4567a9371c456bc8baf71c8d9a76f7791f84`.
+- Exact coverage: 19,440 case rows; 3,240 group summaries; 360 morphology summaries; 810 scenario summaries; 90 pooled summaries; 72/72 finite-DFT identities; 180 basis metadata rows. No duplicate case keys. All four morphology preflights/checksums passed.
+- All 180 models reached order224, retained exactly seven input ports, passed reduced G/C Cholesky checks and D0 exact parity. Maximum basis orthogonality error: 1.776e-15. Maximum full-Hines/reduced finite-DFT relative residuals: 3.286e-12 / 3.261e-13 against 2e-8.
+- Aggregate q25 results: D1-high (10 kHz) median paired ratio 0.00421, P90 0.904, and 790/864 paired cases improved. D1-mid had the smallest shared-output median ratio increase (1.0086) but weaker q25 median (0.00985). D2 had no aggregate benefit over D1-high sufficient to justify more seed directions.
+- Morphology exception: D1-high improved q25 in every Tamas, Allen and Peng case (216/216 each); Jacobs improved 142/216 only. Jacobs apical-q25 is often near the numerical floor and can worsen; do not claim a universal improvement.
+- Seven shared outputs remain near 1e-11% absolute NRMSE. Relative ratios can move on this near-zero baseline; report absolute deltas. D1-high shared-output median ratio is 1.0098; D1-mid 1.0086.
+- Detailed report: [PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_RESULTS_2026-11-25.md](research/PRIMA_Q25_FOUR_MORPHOLOGY_OUTPUT_AWARE_DUAL_SEED_SWEEP_RESULTS_2026-11-25.md). Manifest: [prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_manifest.json](amsn-core/results/prima_q25_four_morphology_output_aware_dual_seed_order224_2026-11-25_manifest.json). Protocol and runner remain under `amsn-core/research/`.
+- An overlapping push-triggered duplicate run [45641197995](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45641197995) started from an older documentation commit and is separate from the accepted result. Treat run45639939767 and commit fe048f5 as canonical; reconcile the duplicate only if it completes, without replacing the accepted files.
+- This remains passive linear-RC evidence on four individual reconstructions, not a biological-population result. Full Hines and all production defaults remain unchanged.
 
 ### Output-observer CI archival correction
 
@@ -105,11 +109,12 @@ An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/action
 
 ### Current guardrails and next sequence
 
-1. Treat observer run45625185575, basis-order sweep45616046400, and the Peng dual-seed pilot45636631081 as accepted archived evidence. Keep their manifests/reports as canonical sources.
-2. Extend the dual-seed experiment to all four morphology strata and all nine passive parameter scenarios at order224. Keep D0, D1-low, D1-mid, D1-high and D2 initially; do not optimize the schedule on the Peng nominal case alone.
-3. Preserve the seven-port B selector for every treatment. Require exact D0 parity, nine output rows, G/C Cholesky positivity, orthogonality, conditioning/rank diagnostics, source checksums, and all seven shared plus two q25 transient metrics.
-4. Run a predeclared finite-DFT identity sample for each morphology/scenario under D0 and D2; use exact case/summary read-back counts and report absolute errors/deltas alongside relative ratios.
-5. If a schedule remains Pareto-useful across morphology/scenario strata, write a cross-morphology report and propose a research-only API integration. Do not change production defaults or merge PR #33/#34 without explicit authorization.
+1. Keep the accepted observer, order-convergence, Peng pilot and four-morphology dual-seed sweep reports/manifests as canonical. The current full-sweep result is run45639939767 / commit fe048f5.
+2. Continue with a targeted Jacobs apical-q25 investigation: compare basal-only, apical-only and paired dual-output seeds, using predeclared shifts and holdout passive scenarios. This is the main exception that prevents a universal D1-high recommendation.
+3. Keep D1-high (10 kHz) and D1-mid (1 kHz) as explicit research candidates: D1-high is strongest for q25, D1-mid slightly minimizes shared-output median ratio/delta. Do not promote either to a production default.
+4. Check the overlapping run45641197995 only as an additional replay; never replace the accepted canonical output files unless its numerical matrices are checksum-identical and its report/archive is clean.
+5. Preserve seven input ports, congruent projection, D0 exact parity, G/C positivity, orthogonality, per-morphology/scenario summaries and DFT identity gates. Full Hines remains canonical; no active-neuron or biological-population claims are established.
+6. Do not merge PR #33/#34 or change production solver/defaults without explicit authorization.
 
 ---
 
