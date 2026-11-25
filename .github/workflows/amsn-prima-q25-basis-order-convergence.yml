@@ -85,10 +85,8 @@ jobs:
           assert pools, "OpenBLAS runtime was not detected"
           assert {p.get("architecture") for p in pools} == {"Haswell"}, pools
           assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL,AVX512_SPR"
-          dispatch = np.lib.introspect.opt_func_info(
-              func_name="add|absolute|multiply|sqrt",
-              signature="float64|complex128",
-          )
+          # No filters: inspect every optimized NumPy function and signature.
+          dispatch = np.lib.introspect.opt_func_info()
           current_targets = []
           stack = [dispatch]
           while stack:
