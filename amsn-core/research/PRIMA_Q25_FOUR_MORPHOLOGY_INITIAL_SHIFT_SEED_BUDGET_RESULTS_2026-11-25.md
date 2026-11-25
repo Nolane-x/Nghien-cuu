@@ -101,7 +101,7 @@ This is a concrete implementation-level pathway by which a fixed-order multishif
 
 ### Important counterexample: equal seed ranks, different response errors
 
-Allen, Tamas and Peng have **identical initial seed ranks for every layout** (42/48/48/54), yet the combined-nine-port perturbation-transient median ratios in the accepted earlier order-168 matrix differ substantially:
+Allen, Tamas and Peng have **identical initial seed ranks for every layout** (42/48/48/54), yet the combined-nine-port perturbation-transient median ratios in the previously accepted, pre-strict-dispatch order-168 matrix differ substantially:
 
 | Morphology | 20-ms combined/seven ratio | 40-ms combined/seven ratio |
 |---|---:|---:|
