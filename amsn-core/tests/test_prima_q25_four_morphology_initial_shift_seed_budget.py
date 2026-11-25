@@ -106,8 +106,9 @@ class TestQ25InitialShiftSeedBudget(unittest.TestCase):
 
     def test_per_shift_seed_rank_cannot_exceed_retained_port_count(self):
         rows = synthetic_seed_rows()
-        rows[0]["independent_seed_columns"] = 8
-        rows[0]["cumulative_seed_columns"] = 8
+        for index, row in enumerate(rows[: len(SHIFTS)]):
+            row["independent_seed_columns"] = 8
+            row["cumulative_seed_columns"] = 8 * (index + 1)
         with self.assertRaisesRegex(ValueError, "exceeds retained port count"):
             audit.summarize_seed_rows(rows, shifts_hz=SHIFTS)
 
