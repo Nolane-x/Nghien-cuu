@@ -29,18 +29,18 @@ def test_invalid_timestep_that_misses_pulse_edge_is_rejected():
 
 def test_expected_coverage_contract():
     assert audit.expected_counts() == {
-        "metric_rows": 18144,
-        "seven_nine_comparison_rows": 9072,
-        "source_window_summary_rows": 144,
-        "morphology_window_summary_rows": 24,
-        "hines_temporal_convergence_rows": 6048,
-        "hines_temporal_convergence_summary_rows": 16,
+        "metric_rows": 24192,
+        "seven_nine_comparison_rows": 12096,
+        "source_window_summary_rows": 192,
+        "morphology_window_summary_rows": 32,
+        "hines_temporal_convergence_rows": 9072,
+        "hines_temporal_convergence_summary_rows": 24,
     }
 
 
 @pytest.mark.parametrize(
     ("coarse_dt", "fine_dt", "stride"),
-    [(0.1, 0.025, 4), (0.05, 0.025, 2), (0.025, 0.025, 1)],
+    [(0.1, 0.0125, 8), (0.05, 0.0125, 4), (0.025, 0.0125, 2), (0.0125, 0.0125, 1)],
 )
 def test_fine_trace_alignment_uses_end_of_step_samples(coarse_dt, fine_dt, stride):
     fine = np.arange(40, dtype=float).reshape(20, 2)
@@ -94,7 +94,7 @@ def test_source_window_summary_aggregates_all_scenarios_and_outputs():
                                     "nine_over_seven_perturbation_transient_ratio": 2.0,
                                 })
     rows = audit.summarize_source_windows(metrics, comparisons)
-    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 144
+    assert len(rows) == audit.EXPECTED_SOURCE_SUMMARY_ROWS == 192
     assert all(row["scenario_output_pairs"] == 63 for row in rows)
     assert all(row["median_nine_over_seven_ratio"] == 2.0 for row in rows)
 
@@ -120,7 +120,7 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
                             "median_absolute_vs_perturbation_delta_pct": 0.01,
                         })
     rows = audit.summarize_morphology_windows(source_rows)
-    assert len(rows) == 2 * 3 * 4
+    assert len(rows) == 2 * 4 * 4
     assert all(row["source_pulse_groups"] == 6 for row in rows)
     assert all(row["worse_pairs_of_378"] == 378 for row in rows)
 
@@ -128,7 +128,7 @@ def test_morphology_window_summary_keeps_all_dt_and_windows():
 def test_hines_convergence_summary_uses_full_scenario_protocol_output_coverage():
     rows = []
     for morphology in ("m1", "m2"):
-        for coarse_dt in (0.1, 0.05):
+        for coarse_dt in (0.1, 0.05, 0.025):
             for window in audit.WINDOWS_MS:
                 for scenario in audit.SCENARIO_NAMES:
                     for source, pulse in audit.PROTOCOL:
@@ -140,7 +140,7 @@ def test_hines_convergence_summary_uses_full_scenario_protocol_output_coverage()
                                 "full_hines_coarse_vs_fine_nrmse_pct": 0.2,
                             })
     summary = audit.summarize_hines_convergence(rows)
-    assert len(summary) == 2 * 2 * 4
+    assert len(summary) == 2 * 3 * 4
     assert all(row["paired_scenario_protocol_output_rows"] == 378 for row in summary)
 
 
@@ -210,5 +210,5 @@ def test_sampled_current_matrix_preserves_charge_and_source_routing():
         assert source_row < 16
 
 def test_expected_dt_order_and_fine_reference():
-    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025)
-    assert audit.FINE_REFERENCE_DT_MS == 0.025
+    assert audit.DT_GRID_MS == (0.1, 0.05, 0.025, 0.0125)
+    assert audit.FINE_REFERENCE_DT_MS == 0.0125
