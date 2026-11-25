@@ -28,8 +28,8 @@ if str(RESEARCH) not in sys.path:
 import audit_prima_q25_basis_conditioning as conditioning
 import audit_prima_q25_extended_backward_euler as tail
 
-DT_GRID_MS = (0.1, 0.05, 0.025, 0.0125)
-WINDOWS_MS = (20.0, 40.0, 100.0, 200.0)
+DT_GRID_MS = (0.1, 0.05, 0.025, 0.0125, 0.00625)
+WINDOWS_MS = (20.0, 40.0)
 SOURCE_NAMES = tuple(tail.SOURCE_NAMES)
 PULSE_WIDTHS_MS = tuple(tail.PULSE_WIDTHS_MS)
 LAYOUT_IDS = tuple(tail.LAYOUT_IDS)
@@ -37,7 +37,7 @@ BASIS_ORDER = int(tail.BASIS_ORDER)
 SOURCE_COUNT = len(SOURCE_NAMES)
 PROTOCOL = tail.column_protocol()
 SCENARIO_NAMES = tuple(conditioning.peng_replay.baseline.parameter_cases())
-RESULT_STEM = "prima_q25_backward_euler_fine_step_convergence_2026-11-24"
+RESULT_STEM = "prima_q25_backward_euler_short_window_dt00625_2026-11-25"
 FINE_REFERENCE_DT_MS = min(DT_GRID_MS)
 
 EXPECTED_METRIC_ROWS = (
