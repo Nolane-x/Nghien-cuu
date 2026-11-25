@@ -243,7 +243,7 @@ def test_morphology_window_summary_keeps_perturbation_metric_separate():
                     })
 
     rows = audit._summarize_morphology_windows(source_rows)
-    assert len(rows) == 2 * len(audit.WINDOWS_MS)
+    assert len(rows) == audit.EXPECTED_MORPH_WINDOW_SUMMARY_ROWS
     assert all(row["source_pulse_groups"] == 6 for row in rows)
     assert all(
         row["median_nine_over_seven_absolute_transient_nrmse_ratio"] == 1.02
