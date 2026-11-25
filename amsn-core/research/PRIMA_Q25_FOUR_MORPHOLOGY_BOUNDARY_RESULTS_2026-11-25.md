@@ -12,7 +12,7 @@ The four-morphology run completed successfully. Every workflow gate passed:
 
 - Source SHA-256 and morphology record counts checked for all four SWCs.
 - The seven shared output node IDs and two q25-only IDs were checked separately per morphology.
-- Eight-morphology? No: four-morphology numerical regression and q25 mapping tests passed.
+- Four-morphology numerical regression and q25 mapping tests passed.
 - All four preflight contracts passed.
 - Every expected CSV row count was read back and verified.
 - The finite-window DFT identity stayed below its declared tolerance.
