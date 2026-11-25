@@ -126,7 +126,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           # Keep the per-order 190-MB frequency summaries in the Actions artifact.
-          for order in 112 224 280; do
+          for order in 112 224; do
             prefix="results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_order_\${order}"
             git add "\${prefix}_case_metrics.csv" \
                     "\${prefix}_finite_dft_identity.csv" \
