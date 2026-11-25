@@ -5,13 +5,14 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 
-## Checkpoint mới nhất — PRIMA q25 timestep refinement (24/11/2026)
+## Checkpoint mới nhất — PRIMA q25 fine-step convergence (24/11/2026)
 
-- [Báo cáo](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_TIMESTEP_REFINEMENT_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-TIMESTEP-REFINEMENT.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-TIMESTEP-REFINEMENT.md), [PR #31](https://github.com/Nolane-x/Nghien-cuu/pull/31) (draft).
-- [Workflow 45426480184](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45426480184) pass 15/15 tests; full matrix and all 6 CSV read-backs pass. 18,144 metrics and 9,072 paired comparisons.
-- Tỷ lệ NRMSE 9/7 ở cửa sổ 100–200 ms gần như không đổi giữa dt 0,1 / 0,05 / 0,025 ms (Tamas ~31,6–31,9×; Peng ~33,4–33,7×). Ở 20–40 ms, timestep ảnh hưởng rõ hơn.
-- Sai khác full-Hines so với tham chiếu 0,025 ms: median khoảng 0,52–0,59% tại dt 0,1 ms và 0,176–0,197% tại dt 0,05 ms, giảm khoảng 2,9–3,0× khi giảm một nửa timestep. Đây lớn hơn rất nhiều sai số rút gọn PRIMA \(10^{-9}\%\)–\(10^{-8}\%\).
-- Bước tiếp: kiểm tra thêm dt 0,0125 ms; không thay đổi solver/default production. Chỉ hai morphology thụ động, không phải biological validation.
+- [Báo cáo](amsn-core/research/PRIMA_Q25_BACKWARD_EULER_FINE_STEP_CONVERGENCE_2026-11-24.md), [handoff](HANDOFF_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md), [research log](research/RESEARCH_LOG_2026-11-24_PRIMA-Q25-BACKWARD-EULER-FINE-STEP-CONVERGENCE.md), [PR #32](https://github.com/Nolane-x/Nghien-cuu/pull/32) (draft).
+- [Workflow 45428685906](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45428685906) pass 15/15 tests; full matrix và 6 CSV read-back đúng số dòng: 24.192 metric, 12.096 cặp 7/9-port.
+- Ở cửa sổ 100–200 ms, tỷ lệ NRMSE 9/7 ổn định trong khoảng 0,6% (Tamas) và 0,2% (Peng) giữa dt 0,1–0,0125 ms. Ở 20–40 ms vẫn còn phụ thuộc timestep.
+- Sai số full-Hines so với dt 0,0125 ms: median 0,63–0,68% tại dt 0,1; 0,265–0,296% tại dt 0,05; 0,089–0,100% tại dt 0,025. Tỷ lệ phù hợp xu hướng hội tụ backward-Euler bậc nhất.
+- Bước tiếp: nghiên cứu riêng cửa sổ 20–40 ms ở dt 0,00625 ms và tách thành phần periodic-transfer / terminal-boundary. Không đổi production defaults; chỉ hai morphology thụ động.
+
 
 ## Checkpoint mới nhất — PRIMA q25 exact backward-Euler transfer (24/11/2026)
 
