@@ -15,6 +15,8 @@ import gc
 import hashlib
 import importlib.util
 import json
+import os
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -149,6 +151,39 @@ def _posthoc_paths(stem: str) -> dict[str, Path]:
     }
 
 
+def isolated_order_runner_environment(
+    order: int,
+    result_stem: str,
+    base_environment: dict[str, str] | None = None,
+) -> dict[str, str]:
+    """Build a strict, order-scoped environment for a fresh NEURON process."""
+    if order not in ORDERS_TO_RUN:
+        raise ValueError(f"order {order} is not part of this sweep")
+    if result_stem != result_stem_for_order(order):
+        raise ValueError("result stem does not match the requested basis order")
+    environment = dict(os.environ if base_environment is None else base_environment)
+    targets_raw = environment.get("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON", "")
+    try:
+        targets = json.loads(targets_raw)
+    except json.JSONDecodeError as exc:
+        raise ValueError("missing or invalid active NumPy dispatch handoff") from exc
+    if not isinstance(targets, list) or not targets:
+        raise ValueError("active NumPy dispatch handoff must be a non-empty list")
+    unsupported = [
+        str(target) for target in targets
+        if "X86_V4" in str(target).upper() or "AVX512" in str(target).upper()
+    ]
+    if unsupported:
+        raise ValueError(f"unsupported active NumPy dispatch targets: {unsupported!r}")
+    if environment.get("OPENBLAS_CORETYPE") != EXPECTED_OPENBLAS_CORETYPE:
+        raise ValueError("isolated order process must use the pinned Haswell OpenBLAS core")
+    if environment.get("NPY_DISABLE_CPU_FEATURES") != EXPECTED_NUMPY_DISABLED_FEATURES:
+        raise ValueError("isolated order process must use the full NumPy SIMD disable list")
+    environment["AMSN_PRIMA_BASIS_ORDER"] = str(order)
+    environment["AMSN_PRIMA_RESULT_STEM"] = result_stem
+    return environment
+
+
 def run() -> dict[str, Any]:
     validate_order_grid()
     required_reference_files = (
@@ -163,10 +198,6 @@ def run() -> dict[str, Any]:
             f"the convergence sweep starts; missing: {missing}"
         )
 
-    runner = _load_module(
-        "q25_four_layout_order_sweep_runner",
-        RESEARCH / "analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py",
-    )
     posthoc = _load_module(
         "q25_four_layout_order_sweep_posthoc",
         RESEARCH / "summarize_prima_q25_four_layout_interactions.py",
@@ -230,10 +261,14 @@ def run() -> dict[str, Any]:
         stem = result_stem_for_order(order)
         order_started = time.perf_counter()
         try:
-            runner.BASIS_ORDER = order
-            runner.tail.BASIS_ORDER = order
-            runner.RESULT_STEM = stem
-            runner.main()
+            child_environment = isolated_order_runner_environment(order, stem)
+            runner_path = RESEARCH / "analyze_prima_q25_four_morphology_four_layout_boundary_ablation.py"
+            subprocess.run(
+                [sys.executable, str(runner_path)],
+                cwd=AMSN_ROOT,
+                env=child_environment,
+                check=True,
+            )
 
             report_path = RESULTS_DIR / f"{stem}_report.json"
             report = json.loads(report_path.read_text(encoding="utf-8"))
