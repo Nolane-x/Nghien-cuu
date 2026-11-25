@@ -197,23 +197,23 @@
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 4.749088493030391e-08,
-      "median_nine_over_seven_transient_ratio": 24.891661473562372,
-      "median_nine_transient_nrmse_pct": 4.217516192600609e-09,
-      "median_seven_transient_nrmse_pct": 1.4404701872630126e-10,
+      "median_nine_over_seven_transient_ratio": 24.64411817386432,
+      "median_nine_transient_nrmse_pct": 4.2199249811365084e-09,
+      "median_seven_transient_nrmse_pct": 1.4455862899518797e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 116.94240314122574,
+      "p90_nine_over_seven_transient_ratio": 122.14912157086299,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 374
+      "worse_pairs_of_378": 372
     },
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 7.772419486752535e-08,
-      "median_nine_over_seven_transient_ratio": 50.027965809901396,
-      "median_nine_transient_nrmse_pct": 1.2298595075753903e-08,
-      "median_seven_transient_nrmse_pct": 3.293147437489855e-10,
+      "median_nine_over_seven_transient_ratio": 49.13916550761121,
+      "median_nine_transient_nrmse_pct": 1.2298245012160464e-08,
+      "median_seven_transient_nrmse_pct": 3.3089659670355737e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 74.8815558614156,
+      "p90_nine_over_seven_transient_ratio": 74.63212534802196,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -221,23 +221,23 @@
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 5.339329842955648e-08,
-      "median_nine_over_seven_transient_ratio": 26.547137111312743,
-      "median_nine_transient_nrmse_pct": 4.1278645085446314e-09,
-      "median_seven_transient_nrmse_pct": 1.6058215076557074e-10,
+      "median_nine_over_seven_transient_ratio": 26.388898839904044,
+      "median_nine_transient_nrmse_pct": 4.129907356288535e-09,
+      "median_seven_transient_nrmse_pct": 1.6042739766839166e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 101.78414274141494,
+      "p90_nine_over_seven_transient_ratio": 97.509393240122,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 370
+      "worse_pairs_of_378": 371
     },
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 9.099249014916535e-08,
-      "median_nine_over_seven_transient_ratio": 49.90622823285206,
-      "median_nine_transient_nrmse_pct": 1.2126042726170222e-08,
-      "median_seven_transient_nrmse_pct": 3.119949608929849e-10,
+      "median_nine_over_seven_transient_ratio": 49.78909737783298,
+      "median_nine_transient_nrmse_pct": 1.2126073970644736e-08,
+      "median_seven_transient_nrmse_pct": 3.123523856838436e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 74.79572670225551,
+      "p90_nine_over_seven_transient_ratio": 74.9953013455941,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -245,23 +245,23 @@
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 3.6870448852384835e-08,
-      "median_nine_over_seven_transient_ratio": 27.054817483203486,
-      "median_nine_transient_nrmse_pct": 3.874372703808095e-09,
-      "median_seven_transient_nrmse_pct": 1.31617659929476e-10,
+      "median_nine_over_seven_transient_ratio": 27.194912891119948,
+      "median_nine_transient_nrmse_pct": 3.875251041187288e-09,
+      "median_seven_transient_nrmse_pct": 1.3066138779371542e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 125.93069531770416,
+      "p90_nine_over_seven_transient_ratio": 123.98965227963231,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 370
+      "worse_pairs_of_378": 369
     },
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 5.686852854023371e-08,
-      "median_nine_over_seven_transient_ratio": 54.851849415408026,
-      "median_nine_transient_nrmse_pct": 1.1814446100873775e-08,
-      "median_seven_transient_nrmse_pct": 3.1595475833782247e-10,
+      "median_nine_over_seven_transient_ratio": 54.87874951926854,
+      "median_nine_transient_nrmse_pct": 1.1814469405307558e-08,
+      "median_seven_transient_nrmse_pct": 3.1543195737673794e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 74.60744654164628,
+      "p90_nine_over_seven_transient_ratio": 74.85601880211544,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -269,23 +269,23 @@
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 5.350359215225706e-08,
-      "median_nine_over_seven_transient_ratio": 26.588103112421543,
-      "median_nine_transient_nrmse_pct": 3.4735033803754087e-09,
-      "median_seven_transient_nrmse_pct": 1.3432644409996977e-10,
+      "median_nine_over_seven_transient_ratio": 26.79991031776564,
+      "median_nine_transient_nrmse_pct": 3.4739354945753515e-09,
+      "median_seven_transient_nrmse_pct": 1.3396172654698005e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 105.80218728454398,
+      "p90_nine_over_seven_transient_ratio": 105.04006306961034,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 370
+      "worse_pairs_of_378": 371
     },
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 8.556680311249199e-08,
-      "median_nine_over_seven_transient_ratio": 57.036456605691285,
-      "median_nine_transient_nrmse_pct": 1.1173720763637542e-08,
-      "median_seven_transient_nrmse_pct": 2.868327693417153e-10,
+      "median_nine_over_seven_transient_ratio": 57.13031188657635,
+      "median_nine_transient_nrmse_pct": 1.1173806679021236e-08,
+      "median_seven_transient_nrmse_pct": 2.855174149265985e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 72.99949385477586,
+      "p90_nine_over_seven_transient_ratio": 72.9424117015516,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -293,23 +293,23 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 4.126131786060624e-08,
-      "median_nine_over_seven_transient_ratio": 24.439960145522868,
-      "median_nine_transient_nrmse_pct": 2.8509386150110307e-09,
-      "median_seven_transient_nrmse_pct": 1.2140660976777886e-10,
+      "median_nine_over_seven_transient_ratio": 24.468988390270283,
+      "median_nine_transient_nrmse_pct": 2.851359710222387e-09,
+      "median_seven_transient_nrmse_pct": 1.2070960115906982e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 88.34247482384528,
+      "p90_nine_over_seven_transient_ratio": 88.77896272006691,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 374
+      "worse_pairs_of_378": 373
     },
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 6.344103055067046e-08,
-      "median_nine_over_seven_transient_ratio": 55.24486965008195,
-      "median_nine_transient_nrmse_pct": 1.0126821987241238e-08,
-      "median_seven_transient_nrmse_pct": 2.7680735348718344e-10,
+      "median_nine_over_seven_transient_ratio": 55.21338375251712,
+      "median_nine_transient_nrmse_pct": 1.0126785588092918e-08,
+      "median_seven_transient_nrmse_pct": 2.7616557352012707e-10,
       "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
-      "p90_nine_over_seven_transient_ratio": 79.42631572481108,
+      "p90_nine_over_seven_transient_ratio": 79.53120575857955,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -317,11 +317,11 @@
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 1.3359669195820891e-09,
-      "median_nine_over_seven_transient_ratio": 112.67658359813464,
-      "median_nine_transient_nrmse_pct": 1.2822418970258193e-08,
-      "median_seven_transient_nrmse_pct": 8.332155465296093e-11,
+      "median_nine_over_seven_transient_ratio": 114.76832884261802,
+      "median_nine_transient_nrmse_pct": 1.2823293791555708e-08,
+      "median_seven_transient_nrmse_pct": 8.677263016833902e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 220.13782811630318,
+      "p90_nine_over_seven_transient_ratio": 220.11131475653218,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 373
@@ -329,11 +329,11 @@
     {
       "dt_ms": 0.00625,
       "median_absolute_vs_perturbation_delta_pct": 2.000523888602845e-09,
-      "median_nine_over_seven_transient_ratio": 65.33747873935543,
-      "median_nine_transient_nrmse_pct": 6.404928113884529e-08,
-      "median_seven_transient_nrmse_pct": 8.934148679227618e-10,
+      "median_nine_over_seven_transient_ratio": 65.0608092735973,
+      "median_nine_transient_nrmse_pct": 6.40484610322962e-08,
+      "median_seven_transient_nrmse_pct": 8.938249120396021e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 102.5993748503836,
+      "p90_nine_over_seven_transient_ratio": 102.61273369092365,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -341,11 +341,11 @@
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 5.249352438031524e-10,
-      "median_nine_over_seven_transient_ratio": 118.81406929340207,
-      "median_nine_transient_nrmse_pct": 1.2490726290974807e-08,
-      "median_seven_transient_nrmse_pct": 7.732679698418136e-11,
+      "median_nine_over_seven_transient_ratio": 119.5026596014348,
+      "median_nine_transient_nrmse_pct": 1.2490706218169646e-08,
+      "median_seven_transient_nrmse_pct": 7.656064064537238e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 225.54301720318878,
+      "p90_nine_over_seven_transient_ratio": 225.55595924677482,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 374
@@ -353,11 +353,11 @@
     {
       "dt_ms": 0.0125,
       "median_absolute_vs_perturbation_delta_pct": 8.513421851121824e-10,
-      "median_nine_over_seven_transient_ratio": 64.98160450273993,
-      "median_nine_transient_nrmse_pct": 6.333190156448179e-08,
-      "median_seven_transient_nrmse_pct": 8.909348465141734e-10,
+      "median_nine_over_seven_transient_ratio": 65.30734148242536,
+      "median_nine_transient_nrmse_pct": 6.333236269385963e-08,
+      "median_seven_transient_nrmse_pct": 8.907022399362644e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 102.54803130240691,
+      "p90_nine_over_seven_transient_ratio": 102.54300724137968,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -365,11 +365,11 @@
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 9.21773348630409e-10,
-      "median_nine_over_seven_transient_ratio": 123.6771951152478,
-      "median_nine_transient_nrmse_pct": 1.1866698326223517e-08,
-      "median_seven_transient_nrmse_pct": 7.10763988370384e-11,
+      "median_nine_over_seven_transient_ratio": 123.5638834763142,
+      "median_nine_transient_nrmse_pct": 1.1866770182957713e-08,
+      "median_seven_transient_nrmse_pct": 7.066424203108486e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 230.65232155822764,
+      "p90_nine_over_seven_transient_ratio": 230.66748433644204,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 374
@@ -377,11 +377,11 @@
     {
       "dt_ms": 0.025,
       "median_absolute_vs_perturbation_delta_pct": 1.3445201684834925e-09,
-      "median_nine_over_seven_transient_ratio": 63.89276059513926,
-      "median_nine_transient_nrmse_pct": 6.193738893886005e-08,
-      "median_seven_transient_nrmse_pct": 8.633928948190255e-10,
+      "median_nine_over_seven_transient_ratio": 64.52494690353966,
+      "median_nine_transient_nrmse_pct": 6.193727104337752e-08,
+      "median_seven_transient_nrmse_pct": 8.630839596355994e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 103.07820636302513,
+      "p90_nine_over_seven_transient_ratio": 103.08779027603784,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -389,23 +389,23 @@
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 6.864217874601423e-10,
-      "median_nine_over_seven_transient_ratio": 130.10690594962244,
-      "median_nine_transient_nrmse_pct": 1.0682320039137848e-08,
-      "median_seven_transient_nrmse_pct": 6.193133466152193e-11,
+      "median_nine_over_seven_transient_ratio": 128.3831063603976,
+      "median_nine_transient_nrmse_pct": 1.0682204057801225e-08,
+      "median_seven_transient_nrmse_pct": 6.15360668193582e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 245.89173086725714,
+      "p90_nine_over_seven_transient_ratio": 246.58186543902823,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
-      "worse_pairs_of_378": 375
+      "worse_pairs_of_378": 377
     },
     {
       "dt_ms": 0.05,
       "median_absolute_vs_perturbation_delta_pct": 1.0910231925583466e-09,
-      "median_nine_over_seven_transient_ratio": 67.68052635842355,
-      "median_nine_transient_nrmse_pct": 5.928968420069194e-08,
-      "median_seven_transient_nrmse_pct": 8.206494583962216e-10,
+      "median_nine_over_seven_transient_ratio": 67.66879401984176,
+      "median_nine_transient_nrmse_pct": 5.928984989735579e-08,
+      "median_seven_transient_nrmse_pct": 8.204157103653688e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 104.50957388269578,
+      "p90_nine_over_seven_transient_ratio": 104.51503836180304,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -413,11 +413,11 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 6.540789402333308e-10,
-      "median_nine_over_seven_transient_ratio": 138.2398894449047,
-      "median_nine_transient_nrmse_pct": 8.55098923942456e-09,
-      "median_seven_transient_nrmse_pct": 4.532443769263143e-11,
+      "median_nine_over_seven_transient_ratio": 138.26170827253583,
+      "median_nine_transient_nrmse_pct": 8.551090571880244e-09,
+      "median_seven_transient_nrmse_pct": 4.51187813297208e-11,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 274.062829145652,
+      "p90_nine_over_seven_transient_ratio": 274.23810543071227,
       "source_pulse_groups": 6,
       "window_ms": 20.0,
       "worse_pairs_of_378": 378
@@ -425,11 +425,11 @@
     {
       "dt_ms": 0.1,
       "median_absolute_vs_perturbation_delta_pct": 1.0244913978880957e-09,
-      "median_nine_over_seven_transient_ratio": 70.09219390710363,
-      "median_nine_transient_nrmse_pct": 5.449699358051001e-08,
-      "median_seven_transient_nrmse_pct": 7.488870537856562e-10,
+      "median_nine_over_seven_transient_ratio": 70.08762561852897,
+      "median_nine_transient_nrmse_pct": 5.4496953026020326e-08,
+      "median_seven_transient_nrmse_pct": 7.489450065542285e-10,
       "morphology": "NMO_163775_Peng_mouse_Control",
-      "p90_nine_over_seven_transient_ratio": 107.18480843942811,
+      "p90_nine_over_seven_transient_ratio": 107.19838751765991,
       "source_pulse_groups": 6,
       "window_ms": 40.0,
       "worse_pairs_of_378": 378
@@ -837,8 +837,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 7.771561172376096e-16,
         "basis_sha256": "3cbdd082b8c1ca0b812fae3517b8cd84003a8e316b1aff229a1f8849579680ba",
-        "capacitance_sha256": "4f8cbcd1ba786f3205a4297521197b208c39264d3ab062b298c9ce823417518f",
-        "conductance_sha256": "4efaa39088d6b46a0c6a2c90b0e30348947c94c9c451a3a7d626f43cefba7b4c",
+        "capacitance_sha256": "f5e4cc5ec45d8d28644ef75a6dc8da119545afca6e142588db9d15c2bc0d7d6a",
+        "conductance_sha256": "8ba4a39efa99c91b571c73507e610c56cd05bf857721b9ca85c481573dac1fc9",
         "input_sha256": "d9eac50fc01b2325230414c8f89c2f01183acf33a8699a60dbc65bda8892e90b",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -858,8 +858,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 9.992007221626409e-16,
         "basis_sha256": "f650c1b13a266f2de7b5582ac8bb44e01c6ce1960f166cad41d324c28c3b6763",
-        "capacitance_sha256": "3a93b8ac0822cb5ae7f0ebd3eb8e7f165bec71be5d02b6db09578e735999afcc",
-        "conductance_sha256": "c3830e6eb78c9f516537ed3528eb181c295ca0bfca633e4897f149f18c4154dc",
+        "capacitance_sha256": "821d2c21ee7487edcf3dee71ddcce0377810269c3356f96fa9076066056fb322",
+        "conductance_sha256": "83436124a28c8bd3711107800cc8f1d7fb88c516ce8f4a6ebcf52793dca42b4a",
         "input_sha256": "aad3ab598d05750d3e7264c3196f9aa607400374be49336f4f306ac441ec938b",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -881,8 +881,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 9.992007221626409e-16,
         "basis_sha256": "645ac74af5bc4fd58093eeb41cfc810413253eb59a3a90dd2aed80053af0384b",
-        "capacitance_sha256": "e721ae953854197391d7d9cb55f7dc86d53dfb66d5241cd1995120c4b948905d",
-        "conductance_sha256": "298815400e521fabc108bb8a61ca42454f875b61d002e437fc113b151052147a",
+        "capacitance_sha256": "483ad9874523e4fed1b5a45ae7c66dbde0b61b4c701e0e7f2892a0cfd4fbbcde",
+        "conductance_sha256": "1262f35057f9cd10fcac3d77e9a13fde87c1521e07329498a7fd1327ae901d48",
         "input_sha256": "4774a1a09cb684ff6de6ac5f7f97ad6ce778457841e996155ecb78c1ceedf137",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -902,8 +902,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.2212453270876722e-15,
         "basis_sha256": "7d74f5383fff62b9b1f9517ee6ef988c1fcf80ae6c95254e22c7af0a28d28f09",
-        "capacitance_sha256": "c316a97af61fad4a8754353406028af239828eec00d9c9a5cda943b871f29719",
-        "conductance_sha256": "6dac1a5a595a9372ab64a108807cb760b721af138a6e78897e527aa6ad7928c7",
+        "capacitance_sha256": "fa195d0eb34751a6a62c99a1b5a86f3c5c5ccd353d7aa23f937f2799b760ac0b",
+        "conductance_sha256": "64e69c6e4915b347160984d1ba89dca4056d11d07fb8205a6ff534659aac357f",
         "input_sha256": "8b957bfb3243f46b19dd5ba100ae0666b31671b019b06b5a4178dca783acc8fd",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -925,8 +925,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "d237fc61820a578e1526df81448d1ea1fb625eddedbf8eaad92f58b85591ee18",
-        "capacitance_sha256": "f4fcb94e205f46620e3935b68fd7aeb9ca6f04801606d17c91c431359d46d7e6",
-        "conductance_sha256": "8e2db2b14b522c6510ff6190a7d80a074a1a8cb05d6a2a7df5458b6c69e31150",
+        "capacitance_sha256": "929b57002da1f2882885c0bd519056fae654df225ff095b9e6ec91794b7dbe75",
+        "conductance_sha256": "ab00552d043d650d8709c4c0d307910626154a4cb33e35ef99f41acad4563af4",
         "input_sha256": "7b5412f2bea989953357ddf969a99b3252f948b4ff09badc036cf165c66f815e",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -946,8 +946,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "ea3c132977e6b1926b0706a8bc110b9ad7257d44afba891cd6377f396b5b8a3b",
-        "capacitance_sha256": "c9fb6fe49d38907979f4ac41c5040fdea2e7e8ccd4b5903c6ab9553cab49bbf5",
-        "conductance_sha256": "7cb76c83bdf796f74648d601154463b1e3081bf60ba215e1b1c6aa42f7dea04a",
+        "capacitance_sha256": "f805f189b463a8ad88254027dfe22c5b039cebade62b544c9ca05195d1230f87",
+        "conductance_sha256": "5fd5401539d49108ff3e628b63dc2e969cb23e62042df1e5ac7a8d1a6af6b0bb",
         "input_sha256": "51d5805b7959a6c549c27784d86ef4cd6fe434c3a4a331110a901835f177a90a",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -969,8 +969,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 6.661338147750939e-16,
         "basis_sha256": "dc4208f69705e6b604a07b6daf4081696bc14332c7090703a6d1b141236813a2",
-        "capacitance_sha256": "3e893d821122b42368c626e99451652bef810a69297bfa07596bf3ecd777cc8f",
-        "conductance_sha256": "c9b1d583b71586652bda8bae4cca8182305944c75053043edc883aae73cf03ed",
+        "capacitance_sha256": "19c1a1af0b9a0336bd8f4d49a3ea61e035bf034136ae44e5c3fea6d9fff58a57",
+        "conductance_sha256": "6a23afe38ff47ca45d12800cbcd046f31846c9a60361413be30bae335c69ec60",
         "input_sha256": "44f1edece57befed83fd74c485d2ad8f618e4a028d948b1618a6875afd172c03",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -990,8 +990,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.1102230246251565e-15,
         "basis_sha256": "ca3f26e46eb39ffdb2379959b0b56c5c7ddd1cd914eb225d15a47ccc916ad4dc",
-        "capacitance_sha256": "926f4315a8720f239ef1ea5f06b55849636c22d614674ecc5adee40d3d25637f",
-        "conductance_sha256": "b9f88163c5346008c9592cbdf4ff0a518d1ceb568a0bf3db1c9fa1fc8fe0a220",
+        "capacitance_sha256": "8a2c830c201f61ae5e1233e21c493e8871e0d8bb0632b989d1950f67de2e8b7a",
+        "conductance_sha256": "455aa7dfa0e127dc58f5b37fa0765b79d340636aa1fc4d88a90fbbc208b9eb39",
         "input_sha256": "e9f723c72f3e04e9e4189338c7ba6fa18d369ccefbab58d9043e61d00fd99975",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1013,8 +1013,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "6d2e4b8665bee2c20a36dbf84e3c77383c8196d31dfc04fb180c99b845ac1dc9",
-        "capacitance_sha256": "92ca4ad1011c7d23fc0029cd6c1c87fca6a0ef85b7f1659eaa8104bf2bc81b2d",
-        "conductance_sha256": "4a36c6428f238c56784444062e95bcd1053bbc04263a1c143e7a28ac1018a763",
+        "capacitance_sha256": "4d206003d93b9c21381fd28adecb63e48b41c8fb207daf49dd4452b2111a1bfb",
+        "conductance_sha256": "04a99610c36e909db9d0da8eee5413a21b1da14a2959a8d733dc22e8f2785dc5",
         "input_sha256": "2f23b627e99d8d90c6abc201f1691b844877e8fc8c75decddf5f434c267a62a4",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -1034,8 +1034,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "4a03e0e9c943164baa4f35e259daa161efd95545bda3b28ab20d65eda83a3340",
-        "capacitance_sha256": "a5f393b7de8cb05118f688d1994b9dbce22701a9b4e57420db023d385820a2d5",
-        "conductance_sha256": "07662f6c92fc4c8ea6f7ba5f7ed762cc4ef7185899aa7f4cb5a2563075d56901",
+        "capacitance_sha256": "12ad4651513a23f2c611d93205374aa8f0753a3f7fe2ce92e9779aae3ebe6e5d",
+        "conductance_sha256": "62078110ba30ced0d905367b096f7e13205afc769762acbb34ced41227e0f5c7",
         "input_sha256": "495225d0798adbcae09f8b1fa3a89aff1a913d5a17b9bca1a0d3587128690217",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1057,8 +1057,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 9.992007221626409e-16,
         "basis_sha256": "a7ec579007b873f79ed65249cf5c4ce57b5b75c8c1cbca2b97bbff53e5416fb5",
-        "capacitance_sha256": "8b2a533102672fe10a0e69b588b2b34f456844585494da75d7ea5f6897ec19b2",
-        "conductance_sha256": "bc155433b5c756b915979dbcb7ac26daa190d810f962106a5219f38dab3b7f04",
+        "capacitance_sha256": "13844dc9eb0c649a585d1c35fda015e21cddc0c6914859e3854e87b4fef3c4a7",
+        "conductance_sha256": "a00dbe3f473e4a48ba71993501b75a27f10e7490e0b571146c1f2b1010810d08",
         "input_sha256": "006d00bb7b6c11e4afc5807febb71f60b2fa57d47485e5d812dca0bfaafd74ca",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -1078,8 +1078,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.1102230246251565e-15,
         "basis_sha256": "72e8bff9963a7caf35905d11f14b2da8c8f7ad6ed35b7bdb9a942ae765d1767c",
-        "capacitance_sha256": "ccb5d5e8b6bce282586ef0a6c456bfdb514c301b44505d63030d18c3c6531233",
-        "conductance_sha256": "220da156f9acb8cf1c053fb786acea2034b644dee4d89697c0e7ef8ae5384148",
+        "capacitance_sha256": "2d6a260f32a20c91b7c8290a9f15b09b435245f1b7663de82098cacd855e3432",
+        "conductance_sha256": "c6f03f1264e07e1b7d8cc0cd204b016ffee6a29d6e92376874a600bb1a39bbba",
         "input_sha256": "4186d7ff9d84bf86527a6b96dfd88aba0646a378de98e6750555b28ed6399f19",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1101,8 +1101,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.1102230246251565e-15,
         "basis_sha256": "0030ddb74d48435757decafa9a5606bdbf6cc3be42a9a279acd2fe50b6144134",
-        "capacitance_sha256": "29f1959d555e96b9240cb31007f708bad45355840f5cf6747f829a8767faa443",
-        "conductance_sha256": "6664cd8cd9419af5b64d61cc9f92fd1f88c58ef6d31f2118cad0905da7b57311",
+        "capacitance_sha256": "6badc2fda338b3d04272d9b51018fadc241085b3dff72a30db5aefc8a3bb87e6",
+        "conductance_sha256": "a8a2cfb3f57b357634621b7f5afdac3e5e4a2d608fa2d525cf815f75c1ba17b8",
         "input_sha256": "68bef0eba77fcc7ad5f53da15f53dbe10080f40476a16efae6a067ad4978da05",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -1122,8 +1122,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "28aa04d93b5445bfc892c371427c6e8a909c4ebe8c49aa9571e05a05023c0ae1",
-        "capacitance_sha256": "07df20ba62e7ffcca1fa52481213cdac1dd604b737c4c7a98840e11d32e2088a",
-        "conductance_sha256": "cdfd8984f9c185275de83507808445b0f7ef95e6a50416d7953cdce2ecd7c7a1",
+        "capacitance_sha256": "66348c73cd2281f1e8efc1a91cc16a7177bfea311c76d4d70dd0541b99d2943f",
+        "conductance_sha256": "1559ce10133dfc3be5c558d6ca0edd9a10326c5ec179d54a3079b86fa153c217",
         "input_sha256": "7ac33cb8baed6ea6d0c5b7f2934f57151a30f8c1ee172de5645aeb491bf18faf",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1145,8 +1145,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.1102230246251565e-15,
         "basis_sha256": "934ecef843433347b16e12166b83e7cf23c9010cad3577fec5da58ddf66a12b7",
-        "capacitance_sha256": "c2d8f82db3c9ac26b69e1598c8279b768d5aea29fc45b2240040ee66e79f97dd",
-        "conductance_sha256": "7c6dcd3a7034e22589e65fc7d5e034604dc380cde9c51c24a0d587f255de8b0b",
+        "capacitance_sha256": "f1c016653501181b23b44e41c8678c9c061aa7e77d99e0ade1da9fd46404875e",
+        "conductance_sha256": "14222c8703c8758f02cd064f0650bc794725f9a169718ee14f821d977644c6a3",
         "input_sha256": "01618e330106167e4b4594e3c84b7fb27f1c6940cd567eab2d561d4f88a7ec9e",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -1166,8 +1166,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 8.881784197001252e-16,
         "basis_sha256": "42d7e09c45b250c3dab40691c024a8ce2f674013c7a5d988def296757fb5cfde",
-        "capacitance_sha256": "c7e3e5130778b3b2700d97af76478ab448c96e0ff15e4d1bbf6083ee93a954cc",
-        "conductance_sha256": "b3b400e37b983a05032110ee71a5c396a88962fcc3a62c7c7940248a3a9735ca",
+        "capacitance_sha256": "6640e562e697c956c4fbaf80d1ad3bfbc7adeab7888b4a2f5a5c8e5f019aba10",
+        "conductance_sha256": "e787384316eb9f6c3aacb895bc7e9de1e3bbab6b5dd65814fd09f8694e4935a9",
         "input_sha256": "37183b2773a4a5e197939710ebce6d662c3351e3162fc02f0d105c359062d775",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1189,8 +1189,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 1.2212453270876722e-15,
         "basis_sha256": "e940d63b6d1640613c5e700cebeaabdbbb1b52e2e9b941bfea14010c39e45fd9",
-        "capacitance_sha256": "a237c75a23cb9d30dd589f667481f4946703d92cbcd72b305e7e6f3f167528ab",
-        "conductance_sha256": "cccfb449d7404ec0180fba9c381ddf11ec2926da7021fc3fb5896c46ba45c6ce",
+        "capacitance_sha256": "08c5dd6e9bc65bc5a1a7d1dea99cf0e939f5db5283b2544a99241bc674b1c9a2",
+        "conductance_sha256": "96703c7800a00472d7bf15fc074061311f114b19462e17797a5974020902cb7e",
         "input_sha256": "2c475f9eaf0591ee2a8fd48e5d626ad5292da081ca70b63c83fecaa38fb3951f",
         "layout_id": "seven",
         "layout_port_indices_sha256": "adb092f651837dde863191bcc2db5b125e451c76cd5675ebd7e0e826430ad0cf",
@@ -1210,8 +1210,8 @@
         "basis_order": 168,
         "basis_orthogonality_max_abs": 9.992007221626409e-16,
         "basis_sha256": "78fab162d476374835a78a3bd0edd8435cf6fab2d1940e9249da988b7d7c96bc",
-        "capacitance_sha256": "cbe6aa41a85ec85125f98eedfd17857c5aea12ddf8d09502c3ff5da431f9ffeb",
-        "conductance_sha256": "87891fe092867f07d3c4c17c515e5f2938ecafe858fb582a22d5dcb628ecc529",
+        "capacitance_sha256": "9e77058e1cddccb2f73855f1a6e8c1b776771edca2cca92d4bb45ff552c90a57",
+        "conductance_sha256": "572ebdd9353fae08924c8222023febebfc55d268da108cc2a91f24109dfc4051",
         "input_sha256": "ac25b3767adad0664dc7650744cd3a4d816494938d0ea00a824c5edefdf60b50",
         "layout_id": "nine_both_q25",
         "layout_port_indices_sha256": "970578d96abab2cf65b5b9d46a4118b54d9a136543b5b6797c93638dd9cf7a91",
@@ -1233,13 +1233,13 @@
     "numerical_runtime": {
       "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
       "thread_environment": {
-        "BLIS_NUM_THREADS": null,
-        "MKL_NUM_THREADS": null,
-        "NUMEXPR_NUM_THREADS": null,
-        "OMP_NUM_THREADS": null,
-        "OPENBLAS_NUM_THREADS": null,
-        "PYTHONHASHSEED": null,
-        "VECLIB_MAXIMUM_THREADS": null
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
       },
       "threadpools": [
         {
@@ -1267,14 +1267,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "743fcc353477908dbcee93aa470238c95872ee8edb634cb329e733efb89aa7d1"
+        "trace_sha256": "0ccd83a6eeea92ff430b36acae6d2d7e75006cd55e4a1da93c8de2b62a348e40"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "05d960791025cc95c10370884959d5962297f78b528a13ed4a088c7976cdcaff"
+        "trace_sha256": "9abdc12bc17d59f7a33e061fe140ce0ffcddd16a87f1d06422f79c848a140129"
       },
       {
         "dt_ms": 0.05,
@@ -1295,14 +1295,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "5e9ba3c740855d4d8fda361b582bfcdb607d048774f6930cf2469d56bbfc08ef"
+        "trace_sha256": "4ab47026696bb099186131b36f51c488d38b86ae56249f12493059df5ab18e17"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "0d91b6b27e053172cd71fd8124af7e94fcffb3f10fee8452ffe3c202bacc6f2e"
+        "trace_sha256": "229b7a9c3afe4431eb191ca01e0123c2dfc72b9d42f8998e911859ff83dfca5f"
       },
       {
         "dt_ms": 0.025,
@@ -1323,14 +1323,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "99f6fbc9e4a2feaef3689879c092544a6c9221b6d529e7f10670473a29e3c9d9"
+        "trace_sha256": "bdb7a084bc9845f8104b749b088d4818f4c2be311d4af896730eb08b88d96d3f"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "0c85e1272836ed2a7c2af4f980bf0926ea87475d8dda7557734b34de6cba6965"
+        "trace_sha256": "99e9e642ea6d01068866553547544d29e578bf5e1233bdc47e896eaee2d6c228"
       },
       {
         "dt_ms": 0.0125,
@@ -1351,14 +1351,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "a4ee7d7502cfc04be683fc213a3dd6f7df1e7ede57f511c17ed2ae5a23f9713e"
+        "trace_sha256": "37d6a5aaef8a71db73b54c6b7c03fb33003ba6599203435930c20d987511ca78"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "bfd04966249d540dd8786de1d401464b508f4925c2bfbbc7e63dc80a0a1a722b"
+        "trace_sha256": "a6ae33c7ceafc41e124090546dcc392bd0d1654b8d53e3daa7dc797f167bd5e1"
       },
       {
         "dt_ms": 0.00625,
@@ -1379,14 +1379,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "f10ebf83046d457ca27fe9aba237396f2317a69a23adadedcb96f57168632ea5"
+        "trace_sha256": "b1f9598d5ca399dc1bf053d27a503c35ac25825c89bc2b6812b6cbbc426d96b9"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "94cab57ffd7567d694052d1edad206fbbc2c2f12b0267f81bdde7c5ba81e9e12"
+        "trace_sha256": "b8a2f7994ae1cd139e20e59e5b11af13153e677ef9b09dc90fd535e68dc2af66"
       },
       {
         "dt_ms": 0.1,
@@ -1407,14 +1407,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "12632429d42f3b65fd9d964b044ed7043320aa3e90e102d676fd1fe3f5ff1d43"
+        "trace_sha256": "87d45ca8e76d30f042dc4af6e9b227d2c4dda90a5dc80338aa4ec1de79266a67"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "15334dd437720340ac4626955a73ba3c8148b446a755f520bca37b72b4dd3115"
+        "trace_sha256": "b7ecee9f03b6f878b4646dd4389162860a352cfbd0c78db03cb22b1b8e978947"
       },
       {
         "dt_ms": 0.05,
@@ -1435,14 +1435,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "601e12bd4ab6eaab94800a595e218e244f41c1622cc13a2e79c14963f34f0c1e"
+        "trace_sha256": "7d8b4d43e4662a5e8c23c967bed4015c1608d4b6dec0d7a382525655b1c3a7af"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "97b77a60cac92539c49600819833958ca3f8697243745b7dba91b9d02c60852e"
+        "trace_sha256": "1347c1a569ac7c5b5d02132aafb95bf4fb3aa4c0c18085995e9f96c0d92947e5"
       },
       {
         "dt_ms": 0.025,
@@ -1463,14 +1463,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "772014f23f3bb0b0de312d721421fc63c929acee79a1e62f590f2b91b999038c"
+        "trace_sha256": "f5ddaec600b013b5792225675cdbdc32658a8e47bda67e91ece3c8594056c482"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "32f1558d5d6998b0b8af9d0af3586aa27d35e7f223c01c7a03d803575067cbd9"
+        "trace_sha256": "e204e6695a5858912f5b91263ff4525d75a9d6f386dbcde22d55533b73d528f3"
       },
       {
         "dt_ms": 0.0125,
@@ -1491,14 +1491,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "4a0858a7475dc293d159b5af69d41d2e4fb463b6b8dc8b8df02aec122e617e8a"
+        "trace_sha256": "900d9e64fe8e19209b9488dd159c6878fd38a7e88b064f10b85a1cea3bf03760"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "3501d602c0bfeb7e81ac90d46163dea1ff806c18745678696618a2464704416f"
+        "trace_sha256": "48b77cd3bdc5f1491a0ffaf5d28823548795f60ecdf16d1ae51b21c9d57bbf3b"
       },
       {
         "dt_ms": 0.00625,
@@ -1519,14 +1519,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d6abf3e655ed510d056621adb56d711734703d51a1188659a4528d583c66f7c1"
+        "trace_sha256": "538e5ef2e733e20710ef68281f890a4e47458ac7c0b9ab3c3d159e517a756bad"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "b96c85f86cce33889bd0711569c6db9237ba22f6e13536d4829a2369698bc265"
+        "trace_sha256": "c5e409b01d5897d10b4a809ba80c734ff8bbcf6113b2b0265db3b94b5cf435b4"
       },
       {
         "dt_ms": 0.1,
@@ -1547,14 +1547,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "3c6561b9cb7bf8bddc27aabadb942ab3fb137da74572642c939361ee618937bf"
+        "trace_sha256": "6a2e5243cfdde7a719502600be3f986a58bbceb28f056bde3d2da98ff3697494"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "d24c953c4331098ca743d5bdc4cd22e0672c989d77e68bef9eef1ca00b2bfe80"
+        "trace_sha256": "494521ebcb369ce3ef7aa4682037a74e66857e2d8e14d2e53cbd60c373c8e271"
       },
       {
         "dt_ms": 0.05,
@@ -1575,14 +1575,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "1bc9e8b7732492f96996754838c7469835309c9899b048c2dd19747a15e08d24"
+        "trace_sha256": "53e39c7ddff588c7e2530849d1ac5f83201208b337b4d020007e70d5b3a106c3"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "f915c0aa684df30a4da0d573583ad8149a5a159a5e1aaf2295602d245bd59731"
+        "trace_sha256": "5784f50c5c1dacafddd41b6ef6164fb84d90dd48a6f0fb09175b82d869a0f25c"
       },
       {
         "dt_ms": 0.025,
@@ -1603,14 +1603,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "7da3651c426b40eedefb9d545a24681414ae742f4bfd39178ca4941289f6893c"
+        "trace_sha256": "2f7e53906e760d89e338305d6154eaf4dc3f2a897103261c6bfbe06d2f2291ea"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "f1e74b0fdcad265e84b1ccae12d42b80ad637e14f453d4504ce44dfd3c2d5e77"
+        "trace_sha256": "8ef0c0159fcbc36f2c9e9783f4ff3a09c5c359816eba5ea3fc3cf7f5a199aecc"
       },
       {
         "dt_ms": 0.0125,
@@ -1631,14 +1631,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "e3ca08847aa95701d43adf6de1c4e316db5e0b7231b34e311fdc69235ff6b673"
+        "trace_sha256": "53f364eb80e286a3755907ec102e68c7b6b9893825a8d4e766279b1e5a334cfd"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "ae69557755564f6defdac4ae6cd99d824b884b43fc124b97f7286da1667b731d"
+        "trace_sha256": "6792990ce358f55d9c8989c684063bd73df69377823e20dc07bd013da2df65c2"
       },
       {
         "dt_ms": 0.00625,
@@ -1659,14 +1659,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "7a91fb9699354747f5a98639f32bfbe58dd2179a24b74f675baa819b16afa100"
+        "trace_sha256": "107811c853293a722a6c17abc1fd4c800046297d003118e9e89244f16fef3197"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "102c0ebaa74f026000892804922033f288faefebe1156dd7cb73cf0ecd8f55ac"
+        "trace_sha256": "f7a9d0d92e19e3c356bfb7dc2b2bd314d7803ec9fbf737721d058de3af6ac704"
       },
       {
         "dt_ms": 0.1,
@@ -1687,14 +1687,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "f1ec9eb615117afe3b090334883b16e979aee9fc54266f698336021554030f07"
+        "trace_sha256": "afb9b90ec5756cb334341ef21b1b3efc79803e0bf38a14c0e6169d00e3b34c33"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "774028baebefbc94be2cb2d75260136474a8d60062b68117bdc2ecf9e6fb102f"
+        "trace_sha256": "5eac28b6d611e0815235729b5c8056ef32e3f48a7b083c3fd1fb4f52195e587c"
       },
       {
         "dt_ms": 0.05,
@@ -1715,14 +1715,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "aa96e2a7924ff53c936c15dc83769fe28dfb506a7e38116147c72576b1ed2b32"
+        "trace_sha256": "0d65ae8613c075c480feeebcd9ec6156f28a86eb50a2f93dfc4ed32ecd9c03e7"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "b3ed2a6386b73488782bca596cc61707fcebf977a8985268a8842f3a5314fbe1"
+        "trace_sha256": "3a64e5c58a67985281962460a8916a97110a647660dfd20b775a8ef72fb57e95"
       },
       {
         "dt_ms": 0.025,
@@ -1743,14 +1743,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c548810a15b62dc85c583151c3c79ad71f7c54b1d4f3c9f7569bd640e2c83449"
+        "trace_sha256": "2747e1df2020b1e69cf9a249239de97b4ba4f6b2f67d26335ab591a14e1cee1c"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "0e5dfc0d156f9cd3c2455503ecedd693d870b479426d0251e440c1c10272d8b7"
+        "trace_sha256": "fa979ee8e129a492bdf5f65b09c0cf13caf77f28b9c5c029793b75aa679c4f6f"
       },
       {
         "dt_ms": 0.0125,
@@ -1771,14 +1771,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "7c559881b859a6f42f4fc6d41e8cc9eb26c7539a7b555f082bb6c47bc98ae040"
+        "trace_sha256": "64b77e14db1f105f28ee647329c651c4db92b678d681f3d033d3a348db714907"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "8d9060c5b5556c9f62f117f97c715ab4e3301b0dbe4b45e5c4a47e8d55b5fb48"
+        "trace_sha256": "4faf4b384249d15db12e8c69d7e0fe80182cb8fd8b41016baeaea013e8b30c79"
       },
       {
         "dt_ms": 0.00625,
@@ -1799,14 +1799,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "12cce6b2488fb5ceefcd163f85aae5b64a39153cd29b48e3ef7802f4ff918d18"
+        "trace_sha256": "fa44ff3a88d6ea5ec6c87d9b4b4d47c9e17c7e504850263542753e23e5b9abfe"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "2d63212ef74ed3f1495f59830e4fdc7467c42c8c02d405084e1dbc6133b6ee44"
+        "trace_sha256": "f679a98efacd5c6f045d52320284056a35943afd793745d3f56cf2d9783de629"
       },
       {
         "dt_ms": 0.1,
@@ -1827,14 +1827,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "ebf7e26600f977d6ee9700b2c040f952c9ad27a5ace19282b39a5d83c8441549"
+        "trace_sha256": "bbcba068e4b1c10a42e77c2211982f957b0b70dd07280ebb6d761667fb06f0a7"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "ecfe4391fd0c7420efd06f444a1cdd556e7c1440ba41399b932a0be146271243"
+        "trace_sha256": "eeb25cfbc2203e1edb6674b06db1248c5b3ecbe3e25c4260bebdc7a39926aca7"
       },
       {
         "dt_ms": 0.05,
@@ -1855,14 +1855,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "1f9d9880b61a56d4e38242465c50ff6a15ed332a1bdc49ab9de5485a8b59be25"
+        "trace_sha256": "046c09df777f4c807959a17e4430afd7ad736125afab70a658a1dea9e969991f"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "eef401e7182578714f72ab326ce06651f78f15efd658131ddedce296490bd15e"
+        "trace_sha256": "175984ac3c0ead8f2e19f67be4f93557170b9ad0104212d9fd4e425b27e78adb"
       },
       {
         "dt_ms": 0.025,
@@ -1883,14 +1883,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "cc13f9c207c918c30d3c7157627b63e9f2ce81be977309d22e2058650838fbe2"
+        "trace_sha256": "0869f23b7514c1f840633186f0718a113f4e9391a37200b20aa2d97a13a84730"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "6ee4f76502291a1f5846130610c2a45e57eb546e9843e2c3b71d0a0b27931141"
+        "trace_sha256": "f178c6892d9b752cc10d7a0f11755f606d50870ad5a5c5d25e87dcdb2354b00e"
       },
       {
         "dt_ms": 0.0125,
@@ -1911,14 +1911,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c2b7291a3a7fc240111844b1c167bfba620fc5feed75c5203d4a6d3a9cebb747"
+        "trace_sha256": "8369005ae2d92488883ffd7287f85777945ad2a11cb50573a9032f2b1a1aefa5"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "b6d68536a90b56361fe17604813d53f3d66edf98bb72f04089321f83ca9979ce"
+        "trace_sha256": "5630b2f2d5341c89d789499fb14190b0c51d902b93e616d5e657da7f0d2a7e24"
       },
       {
         "dt_ms": 0.00625,
@@ -1939,14 +1939,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "e1dcf9b70c1be1e30ef002470e0c08bc77aa66b98cb572873d310f093f8378db"
+        "trace_sha256": "1f97904a7b2d13edfd54720538600c7ce76f8dcb47c908546e126bc4b0d6ab1c"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "d871134e4407bf2b46f6e89d97a9778ea57b96c2ae6e0d76b6bdf73e43daa951"
+        "trace_sha256": "7a82b84853d05d8281f0271cd353d739a8116036a2e1afdba25f007d87f2013c"
       },
       {
         "dt_ms": 0.1,
@@ -1967,14 +1967,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c0829498b0dd25ac31d87533a2a7bda3c5d32b96346f31ae68941d76729be4fa"
+        "trace_sha256": "fbf40cd3ba05f9d78f266e1042199ac7e7cab9142559b5d84c13011bab2a75ed"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "a3a189696e022e4cc6a17a54be92bdf05568a2a2f5faf47e11505042e6c50d2b"
+        "trace_sha256": "aa36a75ccd85cf48506293f13e7a1061a66f9fcd60e22ed2337ea19f738ac961"
       },
       {
         "dt_ms": 0.05,
@@ -1995,14 +1995,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "e5bca8750ff2bf569c2c5f97648a2f3192f652e8790b06b42f223d5c1618d02b"
+        "trace_sha256": "37e28f24418268cb565ba4a645590751d40f7e3c9df724fe9c419f4290318971"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "9d7f58042c4a51ce7a3d6922470705f861a903c0aa9e8edd95a2878de58d9e8b"
+        "trace_sha256": "92ee54ecc0581a241edb51859c50e14924bb7c72c780bf8c654317748f7fe991"
       },
       {
         "dt_ms": 0.025,
@@ -2023,14 +2023,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "18633d7d63d7142533be0ea58974661a6193e2ed68f1bcdaf55852fbcc2cd0c1"
+        "trace_sha256": "a5215fd39404a1ff7f706231cdb6e0b0a1269e3d194f0c539e66d6dacdd1c08d"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "a16acdbe0d6d260985fd699f2aed85bd824bc94e5d1cfcdd06b083c1fa419350"
+        "trace_sha256": "09b2c54bdc752ad847412639e82ff8387719143ebe8da149032de67cfd348b90"
       },
       {
         "dt_ms": 0.0125,
@@ -2051,14 +2051,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "365d0d246aa658eb4dade61cd1017e2817bbe8f445126bbb0e7d1d703cd89a78"
+        "trace_sha256": "3540fe45dcf17eda92aaf3da3dbe2928b185738da3fed2e547e52f2c8e8a7f40"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "bc6904e3005c9881ee08ee1c68588e93b3cb13f24dc333c0f7ba321fb1f15136"
+        "trace_sha256": "d11ee78d55b48ff1e159541647139a537bcd867d76bc00254fa56690db72a528"
       },
       {
         "dt_ms": 0.00625,
@@ -2079,14 +2079,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d1447254a63982c96266eeebf88ea8127d66db7b64d015c2677a97efd99f839d"
+        "trace_sha256": "6926c8a5c983f606dcc57ae84d3fda9ec46d433bded49d79093d25c233be642d"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "84719a51af82f529d6024bd26ba033bd26aff3fdb6e25eda4fb3f8ed82d0422e"
+        "trace_sha256": "f528514d8d8521f834a87b14d69cff08906b9b66e994c6b05aa2cd1ccc6b9d84"
       },
       {
         "dt_ms": 0.1,
@@ -2107,14 +2107,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "64ceb2a91a4c4d4dbfa466cf12494785810b4803554199f9dc4d742fd27c1afa"
+        "trace_sha256": "a45be5b517f024d8825eb35ad82a94a10696466f5ba59eccef583fe4adb06d98"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "427040640ac63bb72e035be593889e566eb08993a4417d3f0d3bc722dd3c4f02"
+        "trace_sha256": "5f1804608f33808e87d384b4044e12f9690bfccd0cccb8e241a92860397c7121"
       },
       {
         "dt_ms": 0.05,
@@ -2135,14 +2135,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "2b3609df626edd0b32b02ffb13db4037d5557f193ea9754d8a42dac16f21311e"
+        "trace_sha256": "44dd89311845ff5803345b9c025ed73c814dae7e10e56fa0fe92db06b0b98dd9"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "66839766efa838ac7d57bed774d88d5ae8418fe2b20073d71326ef2b56bc4dc3"
+        "trace_sha256": "089835dfb42490ab0edf994e7c19cf5db09df515c4b2031bbc12ef972c4d52e2"
       },
       {
         "dt_ms": 0.025,
@@ -2163,14 +2163,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "769b2ef42ffa87c0d46091ef4fcd9816009ba4c4131db1735c04e8414c3d2341"
+        "trace_sha256": "11b0d2b2146bfe046f64b7bcb5d8b5f9459cb44a9c371f212d7704fd3e7aab2a"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "06803f6308667508b450bed82430c7ba3b3d7aee82f9aee77f99523d058a5988"
+        "trace_sha256": "5568a249d6f346888d469f4cf2e0a3741489062fef1c7f3ceaf6b9d2a9a9f7d0"
       },
       {
         "dt_ms": 0.0125,
@@ -2191,14 +2191,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d51b80c436c2d7d70a2ff23505de026ee162aaa20065ff3a39e2e8c7696b8550"
+        "trace_sha256": "082bfc337448f7a442de9605821bba3e6def2b90427d8082738ab056e74dba64"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "61306ec932a5a5129718b6a24f9fc177097e509c77310f0764cd89b119c2f838"
+        "trace_sha256": "969713995bbc900c850aa677342a621cd3fda9ba68ad8fdd0bd7cf3e2ce1a446"
       },
       {
         "dt_ms": 0.00625,
@@ -2219,14 +2219,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "6164ae21ef5f89a3d19e3573403c16c58197fe8ca4ced09f12f088375b9b2a51"
+        "trace_sha256": "dc2fb434f6bcd292b7db20d16c0a1f6f70d14bd1acba35ce5a9bd069a7e3ea9b"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "f21ef03a29d6bda0cc0f0b9d169c7b8b640be34b1bc566c851cd39225d5dee8e"
+        "trace_sha256": "5d329d03187d113d9fa26215cc21e801eaad45fb54e6f61cdb4cd181c0a20d94"
       },
       {
         "dt_ms": 0.1,
@@ -2247,14 +2247,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "4784b61ee5fb072292269c6c49c507e4e07d5144524277a83ea4cd1a2453bff2"
+        "trace_sha256": "44b18e6105c61a5711136d663ee767ff02aef1bdff49fa5563e9c991c0d828e4"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "e4759c445a3f1c6dbc9ddc78d7e4c169c09d0ab347593eddf7ce49c6394f5dd8"
+        "trace_sha256": "b6da6d9093d1480daea838bdb7973c2f72eba7cb1571b2adf015d41921e042bd"
       },
       {
         "dt_ms": 0.05,
@@ -2275,14 +2275,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "b332c8e849cbaa5699194e569a005f11390b61bc9aa0efbac526121ea3860974"
+        "trace_sha256": "c9b45076b80b8bdc7b859bd17efc7a85c36c6dc006e93d1192b9dbe677b9469c"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "45f67e0e93831c3976bef1050573948497e5e154966a0317f7d00c736099d22f"
+        "trace_sha256": "cec618fb32258c915cd7fb17dc89f868ec2e56ab7fa7425acb3923ee414d6976"
       },
       {
         "dt_ms": 0.025,
@@ -2303,14 +2303,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "dc9934137cfc9d78278ac6e5eed5fd752269aeb821b943196a9c9cdc94982c5c"
+        "trace_sha256": "e0d9512bf160e5ce15e855f21c3911bf306344a6526755eb82c709b6c20600cc"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "04ede4d8098e2292bfe744971662ee7be9db0c8d33e60d25d6affcc56b6e664b"
+        "trace_sha256": "53a392167239b4be771da129300bcdedfdc703cdd396debcfa97372b0bac091e"
       },
       {
         "dt_ms": 0.0125,
@@ -2331,14 +2331,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "25811080536234ce5f92f4bc6218dc41c960055dc00726a6060b2ae940aca7d3"
+        "trace_sha256": "ccf570a11b53076753f5827582cb89a9d05c878a9bfa6ac571d1b88ec8b0c175"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "338efcbc5ceed97f6ca3dda0593067669ab8dcef519b083031f11da1f4abaa46"
+        "trace_sha256": "e48de51097e0f376e54b9469d58ecd804644dc187e9c4d45f405970e118b9020"
       },
       {
         "dt_ms": 0.00625,
@@ -2359,14 +2359,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "01f8e943a4905f1a41a4c70181c0bd71333c599fc67aa3b177c612d30f248b1b"
+        "trace_sha256": "23c22e13769c6d221de14f994aa7465687bb2c562c7508d1808c2ebf01ee470f"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "60dc6c9a8da86521e81dc9d1e68f1d2efce6bd86d1f6e71e90a01c63977fdb9a"
+        "trace_sha256": "a3fab3f997d1d0f2f6deeb121024f8cca26c2aa95ebdae3c35ac801ebafdc56b"
       },
       {
         "dt_ms": 0.1,
@@ -2387,14 +2387,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "1e9f5e107836785d25deebdf4c1d92c49eee5d0929be5662c02a8dc759468779"
+        "trace_sha256": "dd492162a4dbcb16d3005685f01a1bbe74ef1c07e0987c5b7c56e7a5ecfb0914"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "9f859b5d2f094e5bb10b49e557279a14b4cd4b499b0872c22a57a9b1435a0929"
+        "trace_sha256": "68bc5eb5f0be61e3ee39d7d8633d228c2cb6bd6fb04c43bec5631fc8f9829d65"
       },
       {
         "dt_ms": 0.05,
@@ -2415,14 +2415,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "625ac7fc9ee4cadb1fc107e6e908c17d41ba32a60b491d4b668c6ad3cbaa5eb7"
+        "trace_sha256": "bb42d0898e7b79262d6061f103b404480b6d09f83f145c903a116a5694913d91"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "c063852a5d654f8c94f99480d7e918f069856ceec812ba002d582f70b6aa41a5"
+        "trace_sha256": "25150d0787033011b6843698b01caa8b185447709d196bb4426c56fa994d7b3b"
       },
       {
         "dt_ms": 0.025,
@@ -2443,14 +2443,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "aa8e0500d7a2215e239b6d838a5204714e9d19f40020c912029b4ccc29b0c726"
+        "trace_sha256": "1dc8e6237d698756e7700af644508918b7ab9f1f5b6888313e7858289b248ba8"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "82edbd8ed54fe855fe934b6314b061c86aa78ae1c2477ba64dea463e7f83f39b"
+        "trace_sha256": "bf8461acbb718bdf74bd383e6cad58eae8d687a00ec6047661f07e0cfb0a12c4"
       },
       {
         "dt_ms": 0.0125,
@@ -2471,14 +2471,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "cacaefdebb3b555bcf00d24fe44346574cca1044552b89150bde53f5d103e62f"
+        "trace_sha256": "13f142859f96763c7946f879be6fb039ee8d69a3bcab4c4b61fd743335f599a3"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "cb36edc92d3f04f79c540ce92c43b66e7628bcf5e6f1dd8aa332d0c678043474"
+        "trace_sha256": "60a3b8616203b234565ba990232383ad41c933a6c134295332be3da05f8cf2fb"
       },
       {
         "dt_ms": 0.00625,
@@ -2499,14 +2499,14 @@
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "89fc553d580ac385ec550e265c1dc81d8c6a87787208b323b2d930f478f1f4af"
+        "trace_sha256": "f0a00f6f5872a03a3bbabd1e7bdfe838780efb512f888239055d8d1064ba7cef"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_163775_Peng_mouse_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "c2949dfc44f40933f1452dd34c36d6fb588ea2360b651b5b5b9bb9ad322ebad7"
+        "trace_sha256": "e148328534741769578735c2d6bd9961d5d9fad5456f61ca851c6af931c44bd5"
       },
       {
         "dt_ms": 0.1,
@@ -2527,14 +2527,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c23312346ef75ae45b1cdb95a2ced4450766e04ab9bbcc6edc054e2f189000c0"
+        "trace_sha256": "be523e5774f37f45643c0b79744779033166ad5af715682fb405e657890608d4"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "17e2496298df6585c83fb395ad44d87b19acf547ab43adeb68c51abb052165c6"
+        "trace_sha256": "e75d9e7a72d0e20e291ce990904a953f0dbc089c04027fcecba260b72a03fe8f"
       },
       {
         "dt_ms": 0.05,
@@ -2555,14 +2555,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "df2a624a45347cc9bd3646ee2ca2c44e6681ac52b250b0319cb53ca9ecb8b98c"
+        "trace_sha256": "0150e4dfb19d9938ab727a625679f93b4c0a333a5fa9146540d9d31dcd4fdd84"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "8701014fb8b1feadd5468a9df11e87573d82520fa27124a81d330051cd3c612a"
+        "trace_sha256": "b757e168d345cb0ba9b15f1f1296c74aa965a9783944f5c75d925d7fd4198ba2"
       },
       {
         "dt_ms": 0.025,
@@ -2583,14 +2583,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "dbea10a917ef022ec18d918c52c8c20ab5d994ea9043a98cda1a63c342aeaaa8"
+        "trace_sha256": "bc2f0d975e234a7af078db95c4907170626a8ff7e5084c03bf735bfcfb66c678"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "bcf31efc27fa6f9056e8e28b2b9e3dcb253d1faaf1736de06a26cd95c36e2610"
+        "trace_sha256": "fd24fc848d9a408024080fc7b5123a305da137bfb9fc5e9e8017a9dd712fe957"
       },
       {
         "dt_ms": 0.0125,
@@ -2611,14 +2611,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d52acede7d8ed7f8a402469dda889704336113a176385baa5e4318076eb6e26b"
+        "trace_sha256": "d51053a9105775549f3dea0453be4ed7eb51841d0e314e6ab4eabecda67d6120"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "67ed73dd335947ca8478d9dfbed6c6d13396e89a73986b4c786cf161dac863aa"
+        "trace_sha256": "d0034060487af248e00996a89cca24237f1e94b160495767b9049b7a208c155f"
       },
       {
         "dt_ms": 0.00625,
@@ -2639,14 +2639,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "64c1d1750b2f7ab21326bc9bc5a7c879378ffeb69a6477c422887aef0580062a"
+        "trace_sha256": "2cff4fa8244469fd10191cf5422fa9c1324a0a5829ca0b0c5035d53de621bef9"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "nominal",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "a0f47513f86827945842fb6b68eba526a0ff779ed37a0d3c5bc49375494ea647"
+        "trace_sha256": "266ccaf4f16b7eb588cff600773eaf022adda0c72c0d0debc01ec9023517c2e7"
       },
       {
         "dt_ms": 0.1,
@@ -2667,14 +2667,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c19e8f28235d30c942ec932416e3cf9f120a2ab819031bd9a2ef62be52068206"
+        "trace_sha256": "bbd92dd38de61640ae729f74b87376ae34e6ef1f0f8aa1bf7c36cff453784f72"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "8c307ae63c6c45599c49ee52fac32304d224200335bc0dfc0393014ce7662715"
+        "trace_sha256": "fa82ecebbebad9e92ec5f65a55443b942a5f222d7408943b4e8be8373d087f49"
       },
       {
         "dt_ms": 0.05,
@@ -2695,14 +2695,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "f3d4104417fa1b1fcee7373741a1fcb30847cf1c7222cc93b97d75be25cdff42"
+        "trace_sha256": "80b549f94bfdfd73ee497a8a3dd914d051829a74b266793aa2e6e1a1f1070a87"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "a4e63835d65d96dae9b3be20c66b798ba3a7e9ed00b315d63c8ba0bca93592ce"
+        "trace_sha256": "92dd605dcf94df0f9fe372072a924837a335768c90f148e137a6b64789cd2c34"
       },
       {
         "dt_ms": 0.025,
@@ -2723,14 +2723,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "dd6b4f60b827d590e3954b429ee2a1077507a2433908e4c7fe543ac11b11aee6"
+        "trace_sha256": "9618452c9c3114c53a1cca72d704efab3ff624b144f0608c97c906d8094ff43f"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "a70dfdf5683f2a9a7dc53dd1895e6200553bd81323184ee3c15d8e5dcd86682a"
+        "trace_sha256": "acccd16b813ebcc7000a8a0bda204a7434d891fc0f99abfda14c993ee4f14f92"
       },
       {
         "dt_ms": 0.0125,
@@ -2751,14 +2751,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "7244396c1a6cd300970d5176929879902f3b144191070a4b82239442714d9d65"
+        "trace_sha256": "0c8a4a1de74ac1821d18f5929639a1cebaeb91a8279c2a76adffca1e52891033"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "3daf42c212ba5a2b12da5205bf72fbf5a1e0475801bb77bd5c30e58199fe1aae"
+        "trace_sha256": "11051604cafa6def1b74ec25b96434b1003dbacd1a278b00b12ed91c076be1ad"
       },
       {
         "dt_ms": 0.00625,
@@ -2779,14 +2779,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "f785f7e908a2b33565c056a962c18fae216de152303d8784dbd499d8da3e1bcf"
+        "trace_sha256": "b662c038f0c34cd6ebd1a1f02a2b5e2cafd7f517e4498c7dc8bd06ded501df20"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "2530bcea71f6460559c14dd4e5bd24b36f2547c8d5626d023fc6bbb16bf740be"
+        "trace_sha256": "d1d7141c0cdd1e6ae25a32caaf971658a0f52e1cc0ec3169eaa03dc55b7209fe"
       },
       {
         "dt_ms": 0.1,
@@ -2807,14 +2807,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "cc4a7de1d4dc3227685ca8b95460422a86ef62d21facd90826cbc4d962b77345"
+        "trace_sha256": "451c03f9a81ca089f8a7c5902d899a1e8735d34cc371fc7fd4dbbbd0fccba9fa"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "4953cf61a6cb77a6bf8bc1437e2fdb4e6b5b69428d5e04d0ee97352ecf1d234a"
+        "trace_sha256": "664e219e00cd586300debb8730c68efd485772ae02c056572349d985780294b9"
       },
       {
         "dt_ms": 0.05,
@@ -2835,14 +2835,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d9acbb1f67247bdad86136f983408be71c3213d8225ed1bda00e77009945055d"
+        "trace_sha256": "0761e25628072f63379ad12220e39769684293f2564d1d3d60addd2e68126f60"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "2286097c24775a96bd9e8354b8e10c264230b70006fc2546504fd688d0f28ad6"
+        "trace_sha256": "055bfc7f7b250b392198243b02d4f2dcefe6844273b623f647e0ac15225eb1b9"
       },
       {
         "dt_ms": 0.025,
@@ -2863,14 +2863,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "51fbeadd281281a4acddc6445e9dd36e1f42740a684f32b41ebfdca66d3f5545"
+        "trace_sha256": "9b7e971b50edd7ae40eceeedc20ac522c0e4f1cdbe434fff6caa2ab4fa2fc6e6"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "4c174527b777ae10fc0d1d22e7c3264c2e39c9b4ae70502989a6f38d5dc32205"
+        "trace_sha256": "ac2265123c247f03e00ea1070ec6970321d316ee6c3ae5e27feefe7d6e8fd710"
       },
       {
         "dt_ms": 0.0125,
@@ -2891,14 +2891,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "8c3235641c30e3d08ddc9eb39cb14218f7ff84c1bf68baa5e63c3197516d125d"
+        "trace_sha256": "0efc443d3e3c16fc52b40cb2aae6377f869089491bf47bdeb62dc537f125f959"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "1abb6ec739e5bc39d5ee7a54055127cd1b78804c38bb49de0a28c1415c0c3f88"
+        "trace_sha256": "2543b69e01cecdf315bb3ea781d39b8463dfbda0d1de3a4340e551e8bc43f39b"
       },
       {
         "dt_ms": 0.00625,
@@ -2919,14 +2919,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "aba2874fd6fb43e9f4b36d94b3f3c2d997a499c3b8909890190df904e98d1a86"
+        "trace_sha256": "18432b369d44b39dc464b7b860062e97292bf55859271d0de4a93b658ed75f44"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Rm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "31166145ad0eb440f213633adbf72472d2d35ce307bec3abac0162c6d44d0668"
+        "trace_sha256": "8093eb5dc6b95661f3e69e430f1ab4805fcb5a106ddb1338ff195f2d7471a3aa"
       },
       {
         "dt_ms": 0.1,
@@ -2947,14 +2947,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "11fbc577149a2b7ef480d106ffbc9de2f021a06d0e15eaf1a8e0f322b21e9da4"
+        "trace_sha256": "c708b4d63cfcfc063b18f08dafabe6211aab336810f0dd648019e5e4cab1ee32"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "52b784498154d0d6315756a15068649c455ac2f02bb311fc18f67c72f7bc55ab"
+        "trace_sha256": "98ca477b81c4391d7e2802b530a4b018d8e445e3118f54eb33370b381f2c6e4f"
       },
       {
         "dt_ms": 0.05,
@@ -2975,14 +2975,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "a95e2f11b3fd54e16502a42f25db8b5e9b67ebe9251b2b977544edfe06139736"
+        "trace_sha256": "761bba95d09a1f02408d0caf84d9d0695da180de62590ebb2bdc392276e7c3ba"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "323673afaff2a2bc7265cfb224060b4031615b329b6212959a471b16cc1ffd6d"
+        "trace_sha256": "20bd981d37681a1d62c3dea7cecafc4b57f5437510e3d393c853bfafb6aa61a9"
       },
       {
         "dt_ms": 0.025,
@@ -3003,14 +3003,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "8bf95e402bfcf56af344b8f1868cf17c862542f8fb9d26aeeea442be82eb58b1"
+        "trace_sha256": "8ba55add7f1dd35bde3bacd8b2a2dc319beb01accf7f00077d2a06b79f6c92bd"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "6955de14c6fde7a08c5ace8cbdda3fbd4e7db15b39401b27e499bf514df90a4a"
+        "trace_sha256": "c64d04e83841f6155104024b85540ba1545eb37b9e0a2228db529df7be19005a"
       },
       {
         "dt_ms": 0.0125,
@@ -3031,14 +3031,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "2bf78ec7d1912ffd8f3605124a636735e9aa1c78d7e5a5c89ca55429f320aa97"
+        "trace_sha256": "64cccf3c6cbd414ca7830bf59d7c3ac3dc63296518975416bac591682ed95dd0"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "c03e8c7d240c4d6b518021fd241fcfa6acc72617336048ba66862d7f8ac0ef10"
+        "trace_sha256": "056a6c7995d7bb1f7f884dd6f02b44a3e79cbc3af5f9abd900e0182a6b2f09e2"
       },
       {
         "dt_ms": 0.00625,
@@ -3059,14 +3059,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "585b87f5566b487e082f3c96fed0a93cb887783b3a6db3ef87ce1dd97e17b77f"
+        "trace_sha256": "90d012a19fdcf4bcf2ccd74f5aa76dbb73b64c1dc8031875b67c5aad39c4661c"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "09df69dd1f813353880ec86ee83e3883943db6b30462a185c11e8b3e4b2f7cf4"
+        "trace_sha256": "2c1c9b15302d79f558994737388107f598b061bb049f4d6032303216bc021b6b"
       },
       {
         "dt_ms": 0.1,
@@ -3087,14 +3087,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "9be41e9b714a2c279539791575e35f0ffe8227d893ca2009a9b2ea92ed4e571b"
+        "trace_sha256": "a54591a60b64cd66072197d4edcfe5ea4282cb05f52b91a36265af1172aa40d0"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "c2f1ae467fc7f654e33299e2661558e52ca49c6890e92461f79ad9c056c150ef"
+        "trace_sha256": "a69adba5b6357614acc6270464f737ac7e20437000c3b99d5b75bc9c4894caa5"
       },
       {
         "dt_ms": 0.05,
@@ -3115,14 +3115,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "be5cd40f003b167783f57f6e3e4f84751efcdd9d7ea581981faf23f2a18a11ec"
+        "trace_sha256": "3cd6fe1cb535b30788e6bd2e36a9a2132092b4e3b39757e289480673fa39b0f2"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "31946403aae35b39c007735a1dbfcd459b94abf553d74da871b258b20d90bd9a"
+        "trace_sha256": "82469c9c2f53f8f8c1b36c3ad8553289c798ce95e7f671915fcab94aa2ba2284"
       },
       {
         "dt_ms": 0.025,
@@ -3143,14 +3143,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "5ea96962f6020770487aa48a52b38fa95c8267c7654248edf96e61d48d2155d2"
+        "trace_sha256": "c5a41370e989ab91fcd5f873c062bcb2692c470162455523ebb1f8b1fd086845"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "f8f5696e7ea693653209ac419f28a767449024c8f0129ae6d93f59a9afcc4fab"
+        "trace_sha256": "653a211330eee8d9a63aa678997fbdc124d7fa57d733e4ad6a319da7b0c6d609"
       },
       {
         "dt_ms": 0.0125,
@@ -3171,14 +3171,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "e0f5e865de533d2d4eebee362f1a5a031d478441e8086c766d729d5bb3a28b96"
+        "trace_sha256": "4a081f8121e439c92df7613771269d1398ef9e9a3817cc5e65f5cc657d7d60ba"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "4143a354d72fe1733d85948a00a217f448834764bc9659814d6babf4f6cc1c1d"
+        "trace_sha256": "f9ceed78a21ab7cf668a2b88b266779493ceab10f9c49003043b900d756296dc"
       },
       {
         "dt_ms": 0.00625,
@@ -3199,14 +3199,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "7defd42b0a36ece101a436ff0b601b28b7730aff505da33c0f7aca5a14511481"
+        "trace_sha256": "2386145dda44ae078738f4384949a2ffbcd2cb70e0a7c2ebf0867036ff1ab6ae"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Cm_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "9974454919ae93cd5f91d0fc7f9a2a897fe731af5e1d3b72509b597ccbb33b03"
+        "trace_sha256": "7980e1ce28568f4e5ef77814b0a71be0c9f1b9ceedfcfe1e827ba5c71043d4e4"
       },
       {
         "dt_ms": 0.1,
@@ -3227,14 +3227,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "348506d9c3bc4ade7f469618fd8fffe4016f27ecd92d937750c1888a90f21a91"
+        "trace_sha256": "2026514da5ca5ec2e973df915d5ca2a8d3eb9320b6ae89c47ed5953f1a3fecac"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "3ac7d801670dae2cbe4743e11963a8cd026678335b4b187943081c49c35df36a"
+        "trace_sha256": "2c42ad948d19b74b347661cc73cd09309dab5beaf0bb5eb6ceee4b2a436110ea"
       },
       {
         "dt_ms": 0.05,
@@ -3255,14 +3255,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "24783c99dcfa60165824420666c81b8edc69f225d86bac9b8b966ae0ed40469e"
+        "trace_sha256": "204c6fc9c6a6be3277b0d896a24ff750196e684e353f7afaec0f58edf6351164"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "225f1b4ea17b7a81734e0c177e3dceeb307560182f7e82fdc6ea181f5f46e3fc"
+        "trace_sha256": "7bbaae917abd844ff44fd02190f10ea0032d08130cc0fcf0e073caf583f89d47"
       },
       {
         "dt_ms": 0.025,
@@ -3283,14 +3283,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "d11a1be99f81076443972a79f182148ae35e0fdfb89365df8db95bd3ec346076"
+        "trace_sha256": "5c8f3ca53d0fbb7b7dac06279a6340e2461060eb7446144e9d9cb7633083866c"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "66adc474a06ee46e03cf50daf83fb2ac9f050084bba921a718025e68aeb1c881"
+        "trace_sha256": "a33f4eedf7419d3bb87c77fd0f6888bcc5523ff8e5a3041907ae13b2d5f8a169"
       },
       {
         "dt_ms": 0.0125,
@@ -3311,14 +3311,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "4188cb62cbc21c2a36ee9b8f5d983c2022de19f19c111964ba881a06af9c5aa7"
+        "trace_sha256": "598ed3024de1024e365a1f1701a9455c9f4ab065a07762558fa807f1c375c390"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "90f83f0c0e691b3c7eebf9bafd44150aa1747510fe5cfeca72f395abfac5a79c"
+        "trace_sha256": "61e79f32d0a085c7d2a49094d46db2cba01a39cd68e13c334e45d2c7aba5a98f"
       },
       {
         "dt_ms": 0.00625,
@@ -3339,14 +3339,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "77ddc16868c9ad46b305fe2eb1125d19be2bd5cfddebc2e46de85feec8f671ea"
+        "trace_sha256": "44f3dbec8820640f5b08bde51e39eaa1c7cca50210ef592851a3554e663af00f"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "6bc66630258db0ad9e3927bbc697b9009fbc38475bf6e5e20612042abaaa59e4"
+        "trace_sha256": "08048df2d8c6fea6883eeb1eb3b05275f60a52248c863442a1d62f9d4ea0dd2e"
       },
       {
         "dt_ms": 0.1,
@@ -3367,14 +3367,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "83dbadcb69f056bebd1a743e5b04996cf81a3882738865b457c196f0e1fce0a2"
+        "trace_sha256": "fdf6267c1685bca72339cb32fc923213dfc9c767373e923fcd3bcd6ab109e048"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "f7ef10eaba50c4157b3a5e37e3f394961c57ad1d102852998cd5caeeb464aca8"
+        "trace_sha256": "bbc3984fcf9c543489401d7cb8fba5989c51854e208e0dfb19610ac2f2746890"
       },
       {
         "dt_ms": 0.05,
@@ -3395,14 +3395,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "5b0a9b1d2be631699dc3272210c6a064f87c73981ff03d704808be8a4ce48c8d"
+        "trace_sha256": "7bab2d0e41a2498739f017f05f190ed4bc04fb5f3b6a663efbb4529a8450726e"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "940fa8f8620ed5fda53b9e49a5f1c99cb1ae4e798272b9332dcbf65dac5c85ae"
+        "trace_sha256": "24c92b6aa5afeb2c43353cc185824652166fe75158b7c703cddc1843228eed5f"
       },
       {
         "dt_ms": 0.025,
@@ -3423,14 +3423,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "16ff9a901a4ea2d57fd8702c0d169f810d2963718ac51c597756608bca460af7"
+        "trace_sha256": "1ee247ab5dc7c1e9a1c087a71b47b9f2696ba72e59fee54c959bda6fc0e1173a"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "3c7fd9e35e4fab87dfba59ee4de56da66ac6d230e8d38ddbb1cbe1b83778e709"
+        "trace_sha256": "d9b0e4fce1e85adc1aacd63b26700009d1974310816073962cdaa964ac33113b"
       },
       {
         "dt_ms": 0.0125,
@@ -3451,14 +3451,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "e48b97effa2513d740233a1b00e50c1836ba393b88f604c640dd17c5732226ba"
+        "trace_sha256": "e4fb8b8ca4fc5457d70071e8559f5614d5af271ad00539ed6790f98a04f7788f"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "51b78039d1331d2d30612e3aceae5396e2c70ec099cc447c216f22ef8c39dbe8"
+        "trace_sha256": "832dbfe05cdc0e650a3ae4ebc58d54ae0516c95a14a5f6261f3856a832b8d424"
       },
       {
         "dt_ms": 0.00625,
@@ -3479,14 +3479,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "b9e58a43465e87ec52c8fc455c77dbf3c7814b9bd61323d307b8536d138e1de0"
+        "trace_sha256": "66f907dba6c5d3a1a0b5c70aee6b7b34587588c44c82e39a03d1beecf73b428c"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "Ra_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "886ddb277107514b98ae2ffe9a30d99f2e2d4235e8898630cb6bf2738476e461"
+        "trace_sha256": "a2005f41cd5bd0aee9a613fb256bf3201550a043853c309c1560eb18e0a28160"
       },
       {
         "dt_ms": 0.1,
@@ -3507,14 +3507,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "2f6c899b047db592a9f569dd27ea699bcef9607b757f3f58824224d27f6de1e6"
+        "trace_sha256": "e41ac42bf7201446dc7bcb0124396729a99261491d0be7c5cecc184d62cdad8d"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "e400493ff19fef2f36496ccaf34423ce96f9440e7998e7eb45b3731b45b2c52b"
+        "trace_sha256": "7f7e17986d57d3deb54cff87ba649acae6cf32515c5fafd76db7d7ae91281ead"
       },
       {
         "dt_ms": 0.05,
@@ -3535,14 +3535,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "cfb87c6885be892c0057db706774b483ece03f4c7ce150acedea89bbce622822"
+        "trace_sha256": "abac439dead39d786169e4158c5cdca5e63e9e24bbd61c3aa868a06dfd81491a"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "62439f232729f28deac33c0c3cbbf081887eb5c0049bd02c7fdd46cda2f8a4e1"
+        "trace_sha256": "752326ee3eb47e862fe520e59cb8a61fa105b472b667b098f3cfb19c7fdc1dd7"
       },
       {
         "dt_ms": 0.025,
@@ -3563,14 +3563,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "3422a7991db9974ad8512025aed6b17f1979af50714e583c6815bcfabb7da11c"
+        "trace_sha256": "d3f9dbf0336576986ed625aa55db320e19f055a38d4140c74db8fe0a4897763d"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "92ee148366e939eb76ac91e194a27c54018696419dd297b11af2a65b286afe05"
+        "trace_sha256": "8b89a9156bf5c5a253e281fcf7452e0abc13a0b2b138fef2bc1e8a3578641c0c"
       },
       {
         "dt_ms": 0.0125,
@@ -3591,14 +3591,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "77a5d565fdd0876cefdb8925a5c5eb14e1e9eeb88503375ba6971fd6d0ba9e7e"
+        "trace_sha256": "66338665db7f0d63c24ca17066cd624bb9a6350b6b379d6bbdae92ea1287a2d5"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "bbd49ee8c41175525b86b01940851cd5418056da536fa7a6ae51f673dce28d64"
+        "trace_sha256": "9c527b6b4cebd675d0d9753b3ff1b1d828a4cce0bf08d91bba06dfc7501fecc9"
       },
       {
         "dt_ms": 0.00625,
@@ -3619,14 +3619,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "c9e73d097a1b04c6bddc24620e675ca3ddcc36b31f6ca1f62ec5ffc34e2f0632"
+        "trace_sha256": "b4d2c1537d1f2ee7b019e32da64020bf52f8c7005b399c86aad78260ec37bdf2"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_minus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "79bcd0c756310c665c0bfe4c10111d1041a8e99c0134c55691a703f532effe2f"
+        "trace_sha256": "d25ac487f09f5f1e4fe21d715923a52045f071cfb5e3507b7a6a84a2d3d01562"
       },
       {
         "dt_ms": 0.1,
@@ -3647,14 +3647,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "1d4d4593a8f78ebbd45149b9d743445f3994672167a2dac876a1b4d3ae1c623f"
+        "trace_sha256": "788c12559bad6de7bff1bde1cfd15636cb5edd76a7379caff084f98d7a621b07"
       },
       {
         "dt_ms": 0.1,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "ff9bd24f3f798692b5cf986ed555997a39f2faf260bfb2b524301bfaa6df4c7c"
+        "trace_sha256": "828a635b40a685ca1155510846fe9548dc2f1f6e791d88657955c1039a58879e"
       },
       {
         "dt_ms": 0.05,
@@ -3675,14 +3675,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "f12d7c5a167aeb7604f9ab2bf7664facd4a9845c622d787296036cc1fbac5966"
+        "trace_sha256": "684151159368ab62c77ebd0f563d5834112c615819d1e74a06a5e9f04a81530b"
       },
       {
         "dt_ms": 0.05,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "b910abe810dcadc64b403d63b96cc1d0d3914f771fe9c2e7bccb3c4b4b3348f6"
+        "trace_sha256": "0ec8b0c629751e4949df78a62554e7b5bc0fd47f330accc97cd462442d654bcd"
       },
       {
         "dt_ms": 0.025,
@@ -3703,14 +3703,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "3ab2d8cd8c8f9fdd7383d340f3c68ea1607e4ab0f9d7a4d687ae16c7d38ef974"
+        "trace_sha256": "01b9122e15546144a9130532ce6048fda7d3ec01e01bb8c2a337e91296c41822"
       },
       {
         "dt_ms": 0.025,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "d8b6f80cd121c308c0261ba222f8d5a0050eefde9e3c5e4a317cb87c20001941"
+        "trace_sha256": "ab8942f92dcf846ed3b6e8f5e388ae064c7ef20e16a63bfba0d311373acb7865"
       },
       {
         "dt_ms": 0.0125,
@@ -3731,14 +3731,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "221114c1dadc5c8984e580c00216caae4ca4c3d84631f348548b14c8a0668c2a"
+        "trace_sha256": "c8640811fbdc5a3c4978b1df97e2d9f4f6ae9fca5cbeeaea7c36d50ac787300d"
       },
       {
         "dt_ms": 0.0125,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "938f1741fabea3687611ed1720d523787abef001c82594c934e37ad577a1a586"
+        "trace_sha256": "cdc0f3da2e082e5ead8f47e60fecba2c5ecc0e46b15bdbbca6c018a2d720d73e"
       },
       {
         "dt_ms": 0.00625,
@@ -3759,14 +3759,14 @@
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_seven",
-        "trace_sha256": "1510fb5849b2c3cb410da8d0dd6b229f6579d194cbdf446ae651e0c2345ae2ff"
+        "trace_sha256": "480034b45bc37546eaca92fd6cf82a68468b69569a3000539de6604c4c760d89"
       },
       {
         "dt_ms": 0.00625,
         "morphology": "NMO_107159_Tamas_human_pyramidal_Control",
         "parameter_scenario": "all_plus20",
         "trace_kind": "reduced_nine_both_q25",
-        "trace_sha256": "e9baea20c053d6cc30f83f94e08b08c362997c2b9f7ab361f80ebce2abc97f95"
+        "trace_sha256": "96194ae43042e92724c04cfd8d4dac7b45db204d53d5afdbec6b91d9062069bb"
       }
     ]
   },
@@ -3776,7 +3776,7 @@
     "numpy": "2.5.5",
     "python": "3.12.16",
     "scipy": "1.16.3",
-    "wall_seconds": 205.91958452
+    "wall_seconds": 162.52115782200002
   },
   "schema_version": 1,
   "scientific_limits": [
@@ -3874,6 +3874,6 @@
     "all_morphology_preflights_passed": true,
     "all_morphology_sha256_checked": true,
     "fine_hines_reference_dt_ms": 0.00625,
-    "maximum_absolute_vs_perturbation_hines_trace_delta_pct": 2.7010354556430252e-08
+    "maximum_absolute_vs_perturbation_hines_trace_delta_pct": 2.7010354556430245e-08
   }
 }
