@@ -131,6 +131,46 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsupported NumPy SIMD targets"):
             driver.validate_reference_dispatch(report)
 
+    def test_isolated_order_environment_sets_distinct_order_and_result_stem(self):
+        environment = {
+            "OPENBLAS_CORETYPE": "Haswell",
+            "NPY_DISABLE_CPU_FEATURES": "X86_V4,AVX512_ICL,AVX512_SPR",
+            "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '["X86_V3","baseline(X86_V2)"]',
+            "PRESERVED_SETTING": "yes",
+        }
+        child = driver.isolated_order_runner_environment(
+            112,
+            driver.result_stem_for_order(112),
+            environment,
+        )
+        self.assertEqual(child["AMSN_PRIMA_BASIS_ORDER"], "112")
+        self.assertEqual(child["AMSN_PRIMA_RESULT_STEM"], driver.result_stem_for_order(112))
+        self.assertEqual(child["AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON"],
+                         environment["AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON"])
+        self.assertEqual(child["PRESERVED_SETTING"], "yes")
+
+    def test_isolated_order_environment_rejects_unpinned_or_avx512_dispatch(self):
+        with self.assertRaisesRegex(ValueError, "active NumPy dispatch handoff"):
+            driver.isolated_order_runner_environment(
+                112, driver.result_stem_for_order(112),
+                {"OPENBLAS_CORETYPE": "Haswell",
+                 "NPY_DISABLE_CPU_FEATURES": driver.EXPECTED_NUMPY_DISABLED_FEATURES},
+            )
+        with self.assertRaisesRegex(ValueError, "unsupported active NumPy"):
+            driver.isolated_order_runner_environment(
+                224, driver.result_stem_for_order(224),
+                {"OPENBLAS_CORETYPE": "Haswell",
+                 "NPY_DISABLE_CPU_FEATURES": driver.EXPECTED_NUMPY_DISABLED_FEATURES,
+                 "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '["X86_V3","AVX512_SKX"]'},
+            )
+        with self.assertRaisesRegex(ValueError, "result stem"):
+            driver.isolated_order_runner_environment(
+                224, "wrong-result-stem",
+                {"OPENBLAS_CORETYPE": "Haswell",
+                 "NPY_DISABLE_CPU_FEATURES": driver.EXPECTED_NUMPY_DISABLED_FEATURES,
+                 "AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON": '["X86_V3"]'},
+            )
+
     def test_coverage_constants_match_four_layout_case_design(self):
         self.assertEqual(driver.EXPECTED_CASE_ROWS, 4 * 9 * 4 * 3 * 2 * 7 * 2)
         self.assertEqual(driver.EXPECTED_COMPARISON_ROWS, 4 * 9 * 3 * 3 * 2 * 7 * 2)
