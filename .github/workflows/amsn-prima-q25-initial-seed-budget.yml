@@ -148,7 +148,7 @@ jobs:
             results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_model_summary.csv \
             results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_morphology_summary.csv \
             results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json \
-            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt
+            results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt
           git commit -m "results: archive four-morphology q25 initial seed budget"
           git fetch origin "$GITHUB_REF_NAME"
           git rebase "origin/$GITHUB_REF_NAME"
@@ -159,8 +159,8 @@ jobs:
         with:
           name: prima-q25-four-morphology-initial-seed-budget
           path: |
-            results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*.csv
-            results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_*.csv
+            amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25_report.json
             amsn-core/results/prima_q25_four_morphology_initial_shift_seed_budget_2026-11-25.time.txt
           if-no-files-found: warn
           retention-days: 90
