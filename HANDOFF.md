@@ -43,6 +43,30 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 - Detailed analysis: [PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md](amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md). Recovery manifest: [prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json](amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json). Research log: [RESEARCH_LOG_2026-11-25_PRIMA-Q25-OUTPUT-OBSERVER-RECOVERY.md](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-OUTPUT-OBSERVER-RECOVERY.md).
 - Corrected archival replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) passed its preflight/reference gates and was still running the full numerical observer analysis at the last check. Do not mark the raw observer CSVs as committed until that replay or an equivalent verified artifact-recovery commit completes.
 
+### Basis-order convergence 112/168/224 — accepted and archived
+
+- Canonical run [45616046400](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400) completed **success**, including numerical calculation, exact CSV read-back, Git result commit and artifact upload.
+- Result archive commit: `09d65210d081ad3acecb6bcb0ff8bf34ffa8b04a`.
+- Artifact [15031057886](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400/artifacts/15031057886), 134,290,729 bytes; ZIP SHA-256 `3eb04bf772ef93f90facac5cf4ea7b4f126f37bfbab12dd4acf81b377b79e65e`.
+- Orders 112, 168 and 224 all passed. Order168 is the accepted strict reference; orders112 and224 were independently recomputed in child Python/NEURON processes.
+- Per-order coverage: 1,075,536 frequency rows; 12,096 cases; 9,072 matched comparisons; 144 source/layout/window summaries; 24 morphology/layout/window summaries; 1,728 finite-DFT identity rows. Posthoc: 336 interaction,168 morphology,1,008 source summaries per order.
+- Maximum finite-DFT identity residuals: order112 8.74381e-12; order168 8.78149e-12; order224 8.75736e-12 (tolerance2e-8). Maximum basis orthogonality error1.77636e-15; 144 unique basis hashes per order.
+- Key result: order224 nearly removes the combined-q25 transient penalty in Tamas (ratios1.004/1.016) and Allen (1.043/1.043), brings Jacobs below/near1 (0.944/0.894), but Peng retains1.947/3.745 despite very small absolute error increases. Periodic-BE and finite-window transient metrics remain different estimands.
+- Detailed report: [PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_BASIS_ORDER_SWEEP_RESULTS_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_BASIS_ORDER_SWEEP_RESULTS_2026-11-25.md).
+- Run manifest: [prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_manifest.json](amsn-core/results/prima_q25_four_morphology_four_layout_basis_order_sweep_2026-11-25_manifest.json).
+- Research log: [RESEARCH_LOG_2026-11-25_PRIMA-Q25-BASIS-ORDER-CONVERGENCE.md](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-BASIS-ORDER-CONVERGENCE.md).
+
+An overlapping rerun [45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005) completed calculation and artifact upload but its duplicate Git archive step failed with add/add rebase conflicts after the canonical result commit had already written the same paths. Its numerical CSVs and summaries match the canonical artifact; its conflict-marked report/time files are not accepted. Use run45616046400 as the canonical report and artifact.
+
+### Research-only output-aware dual-seed prototype — focused CI passed
+
+- Prototype: `amsn-core/research/experimental_prima_output_aware_basis.py`.
+- Tests: `amsn-core/tests/test_prima_q25_output_aware_dual_seed_basis.py`.
+- Protocol: [PRIMA_Q25_OUTPUT_AWARE_DUAL_SEED_BASIS_PROTOCOL_2026-11-25.md](amsn-core/research/PRIMA_Q25_OUTPUT_AWARE_DUAL_SEED_BASIS_PROTOCOL_2026-11-25.md).
+- Workflow [45633147052](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45633147052) completed **success**: compileall passed and **5 tests passed**.
+- Tests verify exact D0 parity with production multishift PRIMA when no dual seeds are added; q25 dual resolvent vectors enter the state basis while the input selector remains the original retained ports; q25 observation rows are separate; reduced G/C remain Cholesky-positive; basis orthogonality and input/index/frequency contracts pass.
+- This is an implementation/unit-test milestone only. No full morphology pilot has been run and no output-accuracy improvement is claimed. Production `src/amsn/prima.py`, solver behavior and defaults remain unchanged.
+
 ### Output-observer CI archival correction
 
 - Original observer run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) passed runtime/dispatch, source checksum, regression tests, primary-reference gate and the numerical observer calculation (report status passed; reported run time 2,512.57 s). Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) uploaded successfully.
@@ -53,14 +77,14 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 
 ### Other downstream runs — last inspected status
 
-- [Basis-order convergence 45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005): runtime/dispatch, source checksum, tests, q25 preflights and strict order-168 reference gate passed; order 112/224 sweep still running.
+- [Basis-order convergence 45616046400](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046400) is now **accepted success** for orders 112/168/224; see the result report and manifest above. The overlapping run45616919005 is a duplicate archive conflict, not the canonical result.
 - [Four-morphology four-layout ablation 45616046681](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681) is now **complete success**; full matrix, exact coverage/identity gates, archival commit and 70.25-MB evidence artifact are verified above.
 - These are independent workflows. Do not infer completion from preflight gates; require full coverage, identity checks, report/CSV read-back, archival and artifact evidence.
 
 ### Current guardrails and next sequence
 
 1. Confirm corrected observer run 45625185575 completes the archival path; the earlier artifact and numerical report have already been recovered and SHA-256 verified.
-2. Finish and validate the 112/168/224 order sweep. Compare absolute errors and both transient coordinate metrics; report rank, conditioning, orthogonality, hashes, runtime and peak RSS.
+2. Run the small output-aware dual-seed pilot on Peng with the seven-port B selector fixed; test D0 parity, sparse dual shifts, seven shared outputs, q25 outputs, passivity and full-Hines identities before expanding to all morphologies.
 3. Treat the accepted strict-dispatch 7/8/8/9-port matrix as the order-168 anchor; compare fresh order-112/224 results against it and revisit source/weighting only if the q25 penalty persists.
 4. Reconcile all accepted matrices and update dated report/logs. Keep failed and cancelled attempts as history, never as accepted results.
 5. Do not merge PR #33/#34 or alter production solver/defaults without explicit authorization.
