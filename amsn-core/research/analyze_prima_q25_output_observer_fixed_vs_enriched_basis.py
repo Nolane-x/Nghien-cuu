@@ -292,8 +292,8 @@ def build_summaries(comparison_rows: list[dict[str, Any]]) -> tuple[list[dict[st
                 "valid_ratio_scenarios": len(ratios),
                 "median_candidate_over_seven_ratio": median(ratios) if ratios else "",
                 "p90_candidate_over_seven_ratio": percentile(ratios, 0.90) if ratios else "",
-                "median_absolute_error_delta": median(deltas),
-                "p90_absolute_error_delta": percentile(deltas, 0.90),
+                "median_candidate_minus_seven_error": median(deltas),
+                "p90_candidate_minus_seven_error": percentile(deltas, 0.90),
                 "candidate_worse_scenarios": sum(x > 0.0 for x in deltas),
                 "candidate_better_scenarios": sum(x < 0.0 for x in deltas),
             })
@@ -315,8 +315,8 @@ def build_summaries(comparison_rows: list[dict[str, Any]]) -> tuple[list[dict[st
                 "valid_ratio_pairs": len(ratios),
                 "median_candidate_over_seven_ratio": median(ratios) if ratios else "",
                 "p90_candidate_over_seven_ratio": percentile(ratios, 0.90) if ratios else "",
-                "median_absolute_error_delta": median(deltas),
-                "p90_absolute_error_delta": percentile(deltas, 0.90),
+                "median_candidate_minus_seven_error": median(deltas),
+                "p90_candidate_minus_seven_error": percentile(deltas, 0.90),
                 "candidate_worse_pairs": sum(x > 0.0 for x in deltas),
                 "candidate_better_pairs": sum(x < 0.0 for x in deltas),
             })
