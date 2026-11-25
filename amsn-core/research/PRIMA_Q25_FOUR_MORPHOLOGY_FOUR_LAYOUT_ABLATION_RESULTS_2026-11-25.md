@@ -155,13 +155,19 @@ The finite-window residual is not the periodic-transfer mismatch by itself. For 
 
 These are per-case decompositions summarized by medians; the median component norms and median percentages are separate summaries and should not be algebraically combined as if they were one representative observation. The identity itself was checked on every output record: maximum relative residual 8.78149 × 10⁻¹², below 2 × 10⁻⁸. Large signed cross-term percentages arise because the denominator is the much smaller residual after vector cancellation; they are not percentages of biological energy.
 
-## 7. What this does and does not establish
+## 7. Reproducibility caveat discovered after the independent rerun
+
+A second full order-168 run passed the same coverage and finite-DFT identity checks, but it did not recreate the same PRIMA bases. NumPy's recorded CPU-feature set differed between the two runner hosts; all 144 basis hashes and all 144 projected G/C/input hashes differed. The median combined-nine-port ratios for Tamas and Peng remained very high, but Jacobs' perturbation-coordinate transient ratio moved from 1.32–1.43 to approximately 1.00–1.05. Allen also moved from about 1.35–1.43 to 1.50–1.70 for the perturbation metric. Therefore, the precise Jacobs/Allen transient conclusions in this run-specific table are provisional.
+
+The full comparison, exact per-case change statistics and runtime-dispatch controls are recorded in the [numerical-dispatch reproducibility audit](PRIMA_Q25_NUMERICAL_DISPATCH_REPRODUCIBILITY_AUDIT_2026-11-25.md). The workflows now pin OpenBLAS to Haswell and disable the detected NumPy X86_V4/AVX512_ICL dispatch targets, then verify that configuration before accepting a numerical run. A new pinned order-168 run is being used as the clean reference; the 112/168/224 sweep is blocked until that reference is present.
+
+## 8. What this does and does not establish
 
 This experiment shows that the effect of adding q25 output ports depends on morphology and that the two q25 changes can interact strongly in the reduced model. It does **not** show that one anatomical port layout is universally superior. Ratios must be read alongside absolute error changes, especially when the seven-port error is near the numerical floor.
 
 The four inputs are individual reconstructions, not a population sample. Peng is a mouse Control cell whose source metadata says No Diameter; Jacobs has moderate dendritic integrity and an incomplete axon; Allen is an epilepsy surgical specimen and not a healthy control; Tamas is one human Control pyramidal comparison cell. The models are passive linear-RC reductions. This does not validate active channels, action potentials, synapses, plasticity or biological physiology. Full Hines remains the canonical reference and no production default is changed.
 
-## 8. Reproducibility files and next steps
+## 9. Reproducibility files and next steps
 
 The complete 1,075,536-row frequency matrix, all raw metrics, comparison pairs, preflight files, runtime evidence and source SWC needed for the Allen holdout are preserved in [Actions artifact 15010408589](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45585262246/artifacts/15010408589).
 
