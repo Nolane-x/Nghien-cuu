@@ -40,6 +40,8 @@ jobs:
       NEURON_NOGUI: "1"
       AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
       OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL"
       OMP_NUM_THREADS: "1"
       MKL_NUM_THREADS: "1"
       BLIS_NUM_THREADS: "1"
@@ -61,6 +63,21 @@ jobs:
           python -m pip install -e ".[test]"
           python -m pip install --only-binary=neuron neuron==9.0.2
           python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install threadpoolctl==3.6.0
+      - name: Verify pinned NumPy and OpenBLAS CPU dispatch
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import numpy as np
+          import os
+          from threadpoolctl import threadpool_info
+          pools = [p for p in threadpool_info() if p.get("internal_api") == "openblas"]
+          assert pools, "OpenBLAS runtime was not detected"
+          assert {p.get("architecture") for p in pools} == {"Haswell"}, pools
+          assert os.environ["NPY_DISABLE_CPU_FEATURES"] == "X86_V4,AVX512_ICL"
+          print("PASS: pinned OpenBLAS architecture", pools)
+          np.show_runtime()
+          PY
       - name: Download and verify Allen standardized SWC
         working-directory: amsn-core
         run: |
@@ -180,7 +197,8 @@ jobs:
                   amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_source_layout_window_summary.csv \
                   amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_morphology_layout_window_summary.csv \
                   amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_finite_dft_identity.csv \
-                  amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json
+                  amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_report.json \
+                  amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25.time.txt
           if ! git diff --cached --quiet; then
             git commit -m "results: archive four-morphology q25 four-layout boundary ablation"
             git fetch origin "$GITHUB_REF_NAME"
