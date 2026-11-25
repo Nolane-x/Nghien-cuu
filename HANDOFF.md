@@ -24,6 +24,15 @@ This update supersedes older status statements below when they refer to the same
 
 Both transient coordinate conventions must remain in reports. The ratio is not absolute biological error and can be inflated by a very small seven-port denominator. Keep the four reconstructions as separate strata; Allen is an epilepsy-surgery specimen, and Peng metadata says No Diameter. The result is limited to passive linear-RC numerical reduction, not active-neuron or biological-population validation. Full Hines remains canonical.
 
+### Strict full-dispatch four-layout replay — accepted
+
+- [Run 45616046681](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681) completed **success**: full four-morphology 7/8/8/9-port order-168 calculation, exact CSV read-back, finite-DFT identity, Git archival and artifact upload all passed.
+- Coverage: 1,075,536 frequency rows; 12,096 case metrics; 9,072 matched comparisons; 144 source/layout/window summaries; 24 morphology/layout/window summaries; 1,728 finite-DFT identity rows. Maximum identity residual 8.78149e-12 against 2e-8.
+- Artifact [15027292605](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681/artifacts/15027292605), 70,254,593 bytes; ZIP SHA-256 4171ef306c4e53a4f5ec0637883c33243d0f36294c80ff093753ec070ca0c8ab. Results commit 2326ea077c3c6821ba427aef9b009b655e052cfe.
+- Compared with the previously archived report at commit 27c3e6668a34c4ea97de4cde5412602d896fb0dc, all 144 basis/G/C/input hash records match, and five tracked numerical CSV Git blobs are identical. The current report captures different runner CPU-feature availability and runtime metadata, not changed matrices. This is strong replay evidence for these pinned conditions, not a universal all-hardware reproducibility claim.
+- Paired post-analysis is marked passed: 3,024 matched case keys, 336 interaction summaries, 168 morphology summaries and 1,008 source summaries. Inputs match the archived primary-matrix hashes.
+- Detailed report: [PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_STRICT_DISPATCH_REPLAY_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_STRICT_DISPATCH_REPLAY_2026-11-25.md). Run-specific artifact manifest: [prima_q25_four_morphology_four_layout_strict_dispatch_replay_2026-11-25_manifest.json](amsn-core/results/prima_q25_four_morphology_four_layout_strict_dispatch_replay_2026-11-25_manifest.json).
+
 ### Output-observer CI archival correction
 
 - Original observer run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) passed runtime/dispatch, source checksum, regression tests, primary-reference gate and the numerical observer calculation (report status passed; reported run time 2,512.57 s). Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) uploaded successfully.
@@ -35,7 +44,7 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 ### Other downstream runs — last inspected status
 
 - [Basis-order convergence 45616919005](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616919005): runtime/dispatch, source checksum, tests, q25 preflights and strict order-168 reference gate passed; order 112/224 sweep still running.
-- [Four-morphology four-layout ablation 45616046681](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681): runtime/dispatch, tests and all four q25 preflight contracts passed; numerical calculation still running.
+- [Four-morphology four-layout ablation 45616046681](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616046681) is now **complete success**; full matrix, exact coverage/identity gates, archival commit and 70.25-MB evidence artifact are verified above.
 - These are independent workflows. Do not infer completion from preflight gates; require full coverage, identity checks, report/CSV read-back, archival and artifact evidence.
 
 ### Current guardrails and next sequence
