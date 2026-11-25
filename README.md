@@ -5,6 +5,15 @@ Kho lưu trữ dài hạn cho các nghiên cứu khoa học, kỹ thuật và ki
 > **GitHub là bản lưu chuẩn.** Mọi mã nguồn, dữ liệu, kết quả và handoff quan trọng phải được lưu tại đây; không để kết quả chỉ tồn tại trong hội thoại.
 
 
+## Checkpoint mới nhất — PRIMA q25 four-morphology / seed-budget (25/11/2026)
+
+- [Handoff mới](HANDOFF_2026-11-25_PRIMA-Q25-FOUR-MORPHOLOGY-SEED-BUDGET.md) ghi trạng thái và chuỗi công việc tiếp theo của nhánh nghiên cứu bốn morphology.
+- [Kết quả seed-budget](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_RESULTS_2026-11-25.md), [protocol](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_INITIAL_SHIFT_SEED_BUDGET_PROTOCOL_2026-11-25.md), [run 45612672472](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45612672472) — pass toàn bộ. Coverage 864 dòng initial shifts, 144 morphology/scenario/layout groups, 16 morphology/layout summaries; strict runtime, full NumPy SIMD dispatch, bốn preflight và tám test đều đạt.
+- Rank độc lập của sáu initial shifts: Jacobs 33/39/34/40; Tamas, Allen và Peng đều 42/48/48/54 cho 7-port / basal-only / apical-only / combined. Đây là seed-budget trước round-robin Krylov growth, không tự nó chứng minh nguyên nhân sai số.
+- [Four-layout 7/8/8/9-port report](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_ABLATION_RESULTS_2026-11-25.md) giữ ma trận 4 morphology, 9 passive scenarios, 4 layout và finite-window/DFT identity.
+- Strict full-dispatch order-168 primary đang chạy tại [run 45613803039](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45613803039). Runtime, active NumPy dispatch, regression tests và cả bốn q25 preflight đã pass; phép tính dài, identity gate và commit kết quả chưa hoàn tất. Không dùng các run cũ bị kẹt trong concurrency group cũ làm kết quả nghiệm thu.
+- Sweep 112/168/224 và q25 output observer chỉ được chấp nhận khi cùng dùng report strict primary mới. Full Hines vẫn là solver tham chiếu; chưa thay đổi production defaults.
+
 ## Checkpoint mới nhất — PRIMA q25 short-window đã tái lập (25/11/2026)
 
 - [Báo cáo](amsn-core/research/PRIMA_Q25_SHORT_WINDOW_DT00625_2026-11-25.md), [handoff](HANDOFF_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md), [research log](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-SHORT-WINDOW-DT00625.md), [PR #33](https://github.com/Nolane-x/Nghien-cuu/pull/33) (draft).
