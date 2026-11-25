@@ -1,0 +1,3566 @@
+[
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "fd47b1b75a2bcf39ca25fb1711932f5fde18769ab82b72c2fc8052328b7cd32b",
+    "capacitance_condition_number": 323.03641323073566,
+    "capacitance_sha256": "1179792be39db5a41d530ebf27929fd11ee1a3ce01272e116a6b4337616941e5",
+    "conductance_condition_number": 1543318.9237949857,
+    "conductance_sha256": "b602f6d82be28bd396e12176e59cd878627f99c30c150d2eb60650ee64515702",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "7cf0c62402d8a4e1f5feec7c7212063ec0a2967d461f297708320c2836e5b21c",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.3908374960000174
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 7.771561172376096e-16,
+    "basis_sha256": "cc23af9217b587a0111c74fe02a9db833478eb7af76d54e429dd745f3bc32b03",
+    "capacitance_condition_number": 325.38231708896666,
+    "capacitance_sha256": "28f42bf666814695d4988ce38f2898977810a0a78ff1ad3a4dc219486cdd07e4",
+    "conductance_condition_number": 1550804.2596546041,
+    "conductance_sha256": "a48bf7b92e42f00e8441c6668932e12c0419cbb2e33c0760739958641b0bcdfb",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "575231327832f95b027cf0ec3bccbc4311d146fe72c0652a99ef1c7283a8ca2d",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4230643040000075
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "0a5f89e714bfe54f582dcf110f3ae7e469ccc2538052c30825326b82e8276004",
+    "capacitance_condition_number": 323.2101279750489,
+    "capacitance_sha256": "70c6de91492c42f4c476eeca9e65c816aeedab3d0406caf26c70877b49c137e1",
+    "conductance_condition_number": 1534145.0763859237,
+    "conductance_sha256": "613ceb662707c75c292c1d7ed972ed648942023eec31245528d6265b8c54e66c",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "01d2c461fb81a60c219daec8e097041f3a42e466b927fcfb7a6fa2f4ad68a982",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4104342290000034
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "b48ecbc96e7e329f8a8380143b2f1d718bf9000a32ef3674f49caef96237c973",
+    "capacitance_condition_number": 323.91307559311247,
+    "capacitance_sha256": "0c999769a01b6f9e89438f460f525bc531d4907bad7b6020e450d7f01df95ffc",
+    "conductance_condition_number": 1532469.3770593558,
+    "conductance_sha256": "d092e23f79373a865112457e59d1f1d11dca6de10c5c22748526d2b84caed480",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "b7ff2a7aef69a3b06c2acc69bf29c138366402927678f867a7a61e8bbeb0fbb9",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4303976509999927
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "9484898b3fc1d9cb44422f694b464385ea32209b93a17b68354a611308fc7e17",
+    "capacitance_condition_number": 325.7004217637599,
+    "capacitance_sha256": "a54145d304ef3d4e1670578f4a1bf8a5400bba76740e00eb8c3b3e4eb9e72c2c",
+    "conductance_condition_number": 1546596.5534362702,
+    "conductance_sha256": "9fd35e3e1dae868ee366c1fabdf2f489eccadacc90884f48dfe96fe91a605336",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "81771d979d1aec205291aec992a2951962cd8537e34b2e140d3ec6b96411cebd",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4219396580000137
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "f6202403d2f67549a9fc953ea99ed669c6228c7815bd00c6c62afd128b2e6b10",
+    "capacitance_condition_number": 327.73014488574006,
+    "capacitance_sha256": "9ef205673a9342c8900b64c342d44a08a65c0f310664385635f7321b3b68a2f5",
+    "conductance_condition_number": 1535749.9432101017,
+    "conductance_sha256": "20ea297ffa08058c47586e8360cb51bfaf6bc023681517cca1a0e353df0911e6",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "06a1f4b60d07164fec95a370b3e3eb75d44d07cae69d15ca877755f5c4976837",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4245958509999923
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "220ae84174411675281ea213f38fbf427e962b001ff13d4a1d476da5708bf51a",
+    "capacitance_condition_number": 325.9446657038572,
+    "capacitance_sha256": "8af25658bf3480b4e44895deb389e2cd6bf593172749c651d2f69719868fc604",
+    "conductance_condition_number": 1546176.8097855276,
+    "conductance_sha256": "a1d302fd0bde9fdc0110958c1fac99e245a7c21d073d05f9249641ab5b82a54e",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "de075816821e700b9f8c205e648b8b3b321d18ad239262b28a7e185b80b9023b",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.416360644000008
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "3b3ec6f5f0a06db2fbbabccb25da1ed9ad2fb32a73e752b2eae63e32aa2eb18e",
+    "capacitance_condition_number": 329.1934153090934,
+    "capacitance_sha256": "83510592b787db5f6e22259a0ca076c7e79cfcb3a30dcd6093638ba8b252779a",
+    "conductance_condition_number": 1544730.5870599027,
+    "conductance_sha256": "f350c67bae456e6d1744ae5b5be42722925970dfb78331df3f07a8ed9fe325a0",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "522c90b13658be5d1cd3b811a66dbc6cc33b470e2bde76fa6b540400fc0012f2",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4106989119999866
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "d6f83fbcb0245ac862e5b5af2518fb90c91033fc1b6e2ceb650e2172ee13bb20",
+    "capacitance_condition_number": 327.2416976869403,
+    "capacitance_sha256": "650c2f7e3a509ab203c738c034e243a00b2464ebc0289e572e6bea4b50b4c6a3",
+    "conductance_condition_number": 1539756.1598203592,
+    "conductance_sha256": "dff6a10b3819a15afb86e0dcbb64b56eb2cd524539724678d486f2221c4af873",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "dabf482f945e464cadacfa1813deda5c77375f18dbff323da6b4ce70e100e401",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.3899256349999973
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "3ebe515c4aefd8bcd0fef02615ead562564fca151983521c4db7ff09d1b22b87",
+    "capacitance_condition_number": 325.2745808096862,
+    "capacitance_sha256": "1745f62c2f1a30a847ec185f182930e1d82d2ff34210508a4ae081c0a0fda993",
+    "conductance_condition_number": 1501596.090934235,
+    "conductance_sha256": "5da6a700c1ca4516bb9906a2a643454ea09fb1d73cb663225b34c70c8d8eeb3a",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "47083f685f43f87584d98437430c9538b6f1c535e418c94467424203ddddb7df",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "nominal",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4402645979999704
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "78d1f12ea8adfd33262eb7b05c3e17a673045506e6984172450b42dda9bd8e8a",
+    "capacitance_condition_number": 327.1276219570574,
+    "capacitance_sha256": "160a27a5e2acfe946c3865489bcad75f62db40cb80e16c7a3e89d434ee60c39d",
+    "conductance_condition_number": 1224659.506326288,
+    "conductance_sha256": "8e253699de9a3b684068e252f18c5c0f3582c243240a56cc882b52b5edee73ff",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "800ce85122532706c216542fe585c9f250aa4f81514016b96e0cc7e65809fd24",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.411239159000047
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 7.771561172376096e-16,
+    "basis_sha256": "f3346a632705baca29f3d003724228d1d6baed3c6f1dc8c2535f08313412df10",
+    "capacitance_condition_number": 330.4280153654018,
+    "capacitance_sha256": "b0af66890dcfbc0f03ca91bb3bb65b7b4a5b0563bc6e303432e0b3845f10290c",
+    "conductance_condition_number": 1242206.2883412447,
+    "conductance_sha256": "6d1ff79b1976302d88c1d4f7a7cec659224dfe4799c3eea327c41a20ad3e4cd7",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d9e57e7594d301c486e2f53bff36cc71fed08b418c97ab9df21af7e1a542bca9",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4465943769999967
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "ea4c4e1d937fa5a8749806831d015e5471f79432fd69403ecaeffd797682caa5",
+    "capacitance_condition_number": 328.73792785508994,
+    "capacitance_sha256": "3f83441d79b20d05962b96d73199ac803dad5f2c47f09ccc925ed8baaf66cf36",
+    "conductance_condition_number": 1225394.1140631652,
+    "conductance_sha256": "53cc93a1540d983516a6af13ca54a96e4cab0374072cb9ef2e82249ea41b4690",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "4f9041f566dac7cf66cb3923dda2007c3e44e8fa9504e53dbea7709fd389fb38",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4491888019999806
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "48498ea6fae8e5e1bc9a24ed9ccbaea033ccc3196c53f267f9a24bc54a34dce6",
+    "capacitance_condition_number": 329.9293511137884,
+    "capacitance_sha256": "83f1737c5d0f796d960b3f9dd6fac8ebd53e865ba2ee057df64cc5aafff83412",
+    "conductance_condition_number": 1237216.5937397266,
+    "conductance_sha256": "3f9e432e6c8edd8ad8c40fa75af1d4dbac76e8ec3c4022a9ede49f539e862f16",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "ce6cea585a3c54008ac33f2fb822bb77008036447ba8f53fec079b75414b6ef4",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.453825490999975
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "f1504858a10073a1b867e9081f9de3e3e9b0c7a69a30ba82ea946e54c4ec1df1",
+    "capacitance_condition_number": 335.18048038672634,
+    "capacitance_sha256": "be77e74a6e234c1ee6b9200babed38a64cb0637824821f8ddd9c2aa68c22507f",
+    "conductance_condition_number": 1234162.4401765536,
+    "conductance_sha256": "bd60917f1379e90161f65e8e99699cabfbe9240e58f6257df7b09d83689dfd69",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "a3e874959af62b60e6ec7952c36a9b3d6dbcc8a08f15c17b78b5e30ef87e637f",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4552977499999997
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "7ce2a325047407e774c7de681e2ff574e527763f8dddc2151a1cbc66cac21114",
+    "capacitance_condition_number": 333.9471546367606,
+    "capacitance_sha256": "0293bd6d3fd46cd65b88147939f6e25ca4520e5438a8606701d3866043d90469",
+    "conductance_condition_number": 1242316.521891693,
+    "conductance_sha256": "c58b7241353fe2cebee71430548988e20cc1918edbacb86b41ca261b523994cd",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "075945efd6e3ee2e59745e00e4530fad41e98bf96832a849048d5e8bcc0c3eac",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.5096312329999932
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "d5b9b22f32a64b9623a7b25d08a1447c230b16a1440fa9192e2bdefe6ca4b8c8",
+    "capacitance_condition_number": 333.0127849616099,
+    "capacitance_sha256": "03ef19f0087fa241711c320689cad4f9ad4ca63de0302ef13a7a07b093e7399e",
+    "conductance_condition_number": 1229680.301407648,
+    "conductance_sha256": "12339eff78920c442711935b930c8ca44e42e656b1ce44a819fa0fea3f6bd75c",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "26c7cb661ba3714385ecfac00f3d202e5e6568ebbcd8e57421c0a89d0b1748aa",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4472834210000087
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "029b4492293b189d1efbdba0aae17a863eecc92abb8ea1052a45311e3e6e402f",
+    "capacitance_condition_number": 332.98079248274973,
+    "capacitance_sha256": "5d13cf06cbb44aa5a442fd4f83f6a0b667ddf515d4a7251747c63b268bd63b8d",
+    "conductance_condition_number": 1237137.56027753,
+    "conductance_sha256": "27bdadeb6e7d541c47c148c97b7bf3dc6b436d369e118c66b409b3bb9ca18f06",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "0676e38bcf53ee4531013f96d4720fdaf6a2c94f65c5d62fb280a04e369d2566",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4396605339999837
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "37bdd3c68a3d593de77dacedbddc512a59b4be888b2cbae34ba20c487943177a",
+    "capacitance_condition_number": 331.33307650233513,
+    "capacitance_sha256": "21b8c8d1a95eaabd70919ac90e8b670ee6a7d3ac4eb82e2ba11fb934ae706031",
+    "conductance_condition_number": 1233166.1207111152,
+    "conductance_sha256": "4fb843a6dec788277da01389704d6d715126c7d098c23ddda4be94bfc66689c6",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "307e6e8a651f954ae93a645d5ee4ca9c6a97db29a60a2a7a83009a942b09c8bd",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4359445069999879
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "f8866aa90d4e072f60ba3a1a7a4c12c38d3702289a85b62613a8e81c326fed5d",
+    "capacitance_condition_number": 331.9010275647926,
+    "capacitance_sha256": "4e7bf7dcad2df165a2bf775170233bb8d65c5a230edd5ac9b2ab36947a106ea4",
+    "conductance_condition_number": 1223398.090940535,
+    "conductance_sha256": "16d8bdef2b2a98db5252ee2e2100279519ca13782c41bcd244993f5c3cc0a431",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "30981ef0d5e1aacaf25230338473e6e306b35df7297f212b4f99c26d1cc4bad4",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_minus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.484758047000014
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "6984872154bd74428597c92c3a225eaed824df1b82614db4b9981e37f0f1ebd9",
+    "capacitance_condition_number": 324.0092198623659,
+    "capacitance_sha256": "efab3c66de2b0517eca7caca816924427adc9d0b700369e7c3a9b3beb5662be2",
+    "conductance_condition_number": 1830495.9978292002,
+    "conductance_sha256": "4f7a3109cb3ef095fd5c26d96a4a2e75a322b41bc2a0af06294fc672a6f197fd",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "9b35432ad9e848a8c44714126794a00f2b9735a0457d0742dcfa7892f3469bd0",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4015338730000053
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "73d802a90d9bf63556d12e3d1e7d9d9d6792bd720066c20c40b7a065fa93d58a",
+    "capacitance_condition_number": 320.31716704807525,
+    "capacitance_sha256": "c275f56cf1aded2af8f28b7159a1c099f9b2ea77095a9291f9901c670f903991",
+    "conductance_condition_number": 1818847.0684495773,
+    "conductance_sha256": "faf8ac4c9c84dac0dbfc2d8d64af752910172c10068b95ed72900d2d98402bbb",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "aeede8793002468d893ef27b2bfc2feb252c282218a9c11063733dfe0ff6e7c3",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4421488450000197
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "e9e2705bf16dce65859d5db4732eff110cb80531660bdc01aa6786d2ad645673",
+    "capacitance_condition_number": 322.27232665492613,
+    "capacitance_sha256": "561688f0d8b11b7a2b33e9d9f91f1ef8b43b0a9a8a6767e55fe86411c10bc03a",
+    "conductance_condition_number": 1822223.9918329858,
+    "conductance_sha256": "0045610b7776e230228e758008b4e8c003449fe71bf1528f4a36d49d46e39cbb",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d5abddfa88599e2ed8ff1c784d1962b392b53b0462110b8e87a79c3128595ce2",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4525205159999928
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "b851414e7e543147493b19580d90a7a157d67dc3a1fae5aad494b281e7550daf",
+    "capacitance_condition_number": 322.00132269475137,
+    "capacitance_sha256": "588a81affb12074ee7fba245664154849bc979ac9ca56bfaa62625499eff35a4",
+    "conductance_condition_number": 1814354.3555980944,
+    "conductance_sha256": "aded9f939dc89a97e8f8f75720f4cffc28bfe4052912c842c5af02eb6456cbe1",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "bb8030c6cbfaf98c70cfc0febc73626c6b0ca0f743885c652ce2914850069533",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4467219360000172
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "b26ff0247457a47a393a01da39988986e95f6dd105a8539d539c52c8c9005338",
+    "capacitance_condition_number": 326.50090160184453,
+    "capacitance_sha256": "657016ac030ea5340972ef8e4ade9a98e4822d6ce2f68eb25c5d38d0f85f6d72",
+    "conductance_condition_number": 1797870.4981096007,
+    "conductance_sha256": "743c436e6443c6b449c18dd3601baa1c0d359b1890fe2ade7d9585ec0792b6e4",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "5c963e7b2d7a0ce842cda4a66fcae84bc248e9dbc9026e219adeb8bfeca5f728",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4460603059999926
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "e12c08c190ad3be11db0810b3e1d9b3386783921cb0f6f8c6cf5da8aad2826cd",
+    "capacitance_condition_number": 325.8540826822801,
+    "capacitance_sha256": "b8423faa5dfa3bf45180a3e8cfd38fcbca4f9e5c44a8da86f0ee82edd8ca6545",
+    "conductance_condition_number": 1799139.210688855,
+    "conductance_sha256": "2d7db8a0b1892f4bf88c8865f88ac1ed4940f8779fb53d3e1b65bb6c13196f62",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d0a295f0f805b0dd75f7b0c7f0811238b2f617ee6eb306319e69d1e1e6fdb393",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4419022920000089
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "4d93bbbfe7753d9632b26b2573217624c4c92999accbe10b5b97bc03f35f16dc",
+    "capacitance_condition_number": 328.5778398337631,
+    "capacitance_sha256": "626daf723f62b18650b695dd9e75076b8646baf2fb67eca8c264ea723b409850",
+    "conductance_condition_number": 1818958.4524438172,
+    "conductance_sha256": "18e0fc30701cf299ff3c4ef5d7a673588628d8970a108165e8b7572cb36c89cc",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "a585e3056a60cb49d157fd5f5597fda11a4878767c743dbc5b93a673ecc26e36",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4458180199999902
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "a70b7fb08fcb01d088303992cca9d8ff138a8c12430f19ae7bc8d5a6e72b6b3e",
+    "capacitance_condition_number": 328.1340709844649,
+    "capacitance_sha256": "67e67644c663ea02e032ce89289e7c308edb99cb77acfd1369ab7357e36a1b9e",
+    "conductance_condition_number": 1822950.8329983845,
+    "conductance_sha256": "5126a7affd88a1430d55b1b25a8a30a89f9da39405b6a361ac3aa934a43d20d5",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "f883e5f54312faff0514892b1211dd1799b57d7de81a89d420c505c1b7d25f78",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4194780579999815
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "e1f28cef714ca633b8859db1697d0216050f814fa005bc5fca5289e21b456b46",
+    "capacitance_condition_number": 329.70584074852076,
+    "capacitance_sha256": "4467be8b4ebd0a38dccc2b6125d3923cad4700fd9d4e6fc604a54f5b1a37fb44",
+    "conductance_condition_number": 1830207.064087877,
+    "conductance_sha256": "a7abf0672b0fe3d35c0f02916ab641372082d98838ec68c747aefe8eb09bb9d0",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "60e14a0c01d3c3dc9fc355178286b8662ba4fcd9d8b07ec2135a329ddf16241b",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.418922856999984
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "dd417bbb310459d7a67318210a37c150ed10a2430406d375f84e477ab0db2e33",
+    "capacitance_condition_number": 325.96697602635777,
+    "capacitance_sha256": "680b7416ceb7703fe7c625f88a3140b57ef4f5776117dcfebebc3377d43c3644",
+    "conductance_condition_number": 1796214.6239827701,
+    "conductance_sha256": "d79ebcc2e8aacbc8aeb468d416997d61523d03bdd9d31d3b8dc8dfd9da976038",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "4d8cc54d7cfcb5de80f66fb48838982d38e2dedc91f05f3150dc69e153e77438",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Rm_plus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.468168171000002
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "613a723a7669a603989add33c9538722201bb73a0c62df2c79bf44c25e6dfe71",
+    "capacitance_condition_number": 318.7342198577494,
+    "capacitance_sha256": "0442ef2713d96191728bd49a175e1db6d532cc129d0fde198cbc837e524925f6",
+    "conductance_condition_number": 1474141.100831557,
+    "conductance_sha256": "2acf65dc21dd4ede98383eb7266b27f45bcc1a3074814ab70b24444b793ed67c",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "6de946af3df0c04f2b926f361de451d7cca051816cb93fa4dc116f45ce480486",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4039448129999528
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "63bad340494d5d92a8e6e7564734d73348cd411bc34781f571c8fd4c18b00738",
+    "capacitance_condition_number": 323.5574451032966,
+    "capacitance_sha256": "e21312bdb43b978e2c9488ae241dfc37ae4e13a1b37101a487b829ee810f8c7a",
+    "conductance_condition_number": 1494116.0346289119,
+    "conductance_sha256": "637ef2cc795b1395100b88c7694c497b6f32ba7353b6ee560ee1cbd214e320aa",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "edaa51fc3ae1f7175cc7c59ccf10051320b17d69235e93bffc43736bbd80ca29",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4458244310000055
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "6ea9e517b6a5bedaf8d86d7bee3b844d3d2e4d1da6fb5c2e4f2b5c8acba7422f",
+    "capacitance_condition_number": 325.19043947583623,
+    "capacitance_sha256": "c15a14496820f8b308332e59bdbcdd3dca3c82efbd22b53b7a08b376c612e89c",
+    "conductance_condition_number": 1502650.0672722354,
+    "conductance_sha256": "a0e72061c80dcc8816f03c3753d4fa59128962918e7b59758f69fcf09922514e",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d286b98134a6c0a40dae1c3ab4472f2b3b26e02d11c8a3322feeb36d81a3928a",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4272656580000103
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "c9d51a8e710a819511fd4da9db70194c1a649b4b335411b33fa84105205c3d0b",
+    "capacitance_condition_number": 324.7001088166135,
+    "capacitance_sha256": "ad1db320badbc8a4e49670d1a7e044bd24c09ebf4b2e2fdfe487031fa57923d0",
+    "conductance_condition_number": 1494437.1237216936,
+    "conductance_sha256": "7f7f9df0f7b8905762ffc8ef4e96d3c24f0967aff703e6956a69ace31ca9f222",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "e9e1f0c72ae6aa60cc892286477b98ff4388bbd4d41fa60ea7902a71730445c9",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4408979909999857
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "e3757873533c663e03ea60750003b9e417c8e484862aacb4a0dcbdd9a5b75ba6",
+    "capacitance_condition_number": 324.51590985130593,
+    "capacitance_sha256": "0e1a65883bb08247c54005c3338f681d002f556a5b769cf5adcb4a8d717a976c",
+    "conductance_condition_number": 1502331.111700994,
+    "conductance_sha256": "1d816b1e57e9c1c075781dff04290dbf4dab89c6ffcd5ab8b527543276af3848",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "a490b1aecc41c960ed844df1822f204040b008e0da8f4cd7b1c4f9eb53441a7c",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4440964730000019
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "2282f82d80502bfd18fd94448c3845ae61d036d5a151e0ba09e455c065110230",
+    "capacitance_condition_number": 323.28752762766646,
+    "capacitance_sha256": "f7ed8a99ef5208444775e528d3402a28e11a20f20e4ff8645a90f84a18197941",
+    "conductance_condition_number": 1493914.430125115,
+    "conductance_sha256": "c414966d1a76e724c8e6ad21b56d34fd8bd40be3f6fccf9c44a91d5d7d239231",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "464fbcd3bcb8a07eabbb64723ddffc6743a4761e502b66a8f4155017afcdf16b",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.439253156999996
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "d3edb7d88b93094c27f5d88503b7dd8e10cc3e1859fd6500ce8b37eb7be9e4d4",
+    "capacitance_condition_number": 325.8000290916751,
+    "capacitance_sha256": "b66d89fe905909ad53b72de9ea54e7dc18b0f22f76c3aef46ec314a43c7df702",
+    "conductance_condition_number": 1522547.802294077,
+    "conductance_sha256": "d0bd68b288a830e4b4fb3f9c9d4f95dcfd73266d5ceeadd3e6851f5fd8b26879",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "72ad00f7f4127784d4d3cb6c42d9f4937b839f092fd387eed0a7fcc00088cb91",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4281347050000477
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "a767b562fcb7eb6f627c3258dc97a4be0603df28ec97cd82f41b9975b80d500a",
+    "capacitance_condition_number": 325.480639027778,
+    "capacitance_sha256": "0845f96f03331d2f92d0545d8542c7d2532f4710ec5af0c6c389362d1e664f48",
+    "conductance_condition_number": 1467249.9882706993,
+    "conductance_sha256": "8fdb03d8942fc7ef8ea896eeb0d7521633352b9ffab697b88281ef38ded8b1d9",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "cfb7bb074277ff2792935ed743cad630a8ea946a73cf65196582e8dfdf77bc18",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4149342200000206
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "5abd0baed5ca9de7a56e9709d6c5210b30bebe0ef3f0aacb9d25ce6e301d1eb4",
+    "capacitance_condition_number": 325.3474052545416,
+    "capacitance_sha256": "8b04dd5169d164c4fd3b37c40fee6b75220a2dc7cd10a6a6a8995c30f69cd686",
+    "conductance_condition_number": 1481318.8006573238,
+    "conductance_sha256": "19cf0566c605710698cedd2e7c07ac81be05ad3ea3192711246f2bf114ef6462",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "b8288ec888f80db3fa5fcfdcacd9fd07ec98499634ce814167285cd6e58ea7a3",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.406431170000019
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "aa7447f2f6f57c7c2dcde1b6a61ae84388e2461559e657ad3b9e2977a1f0bbd2",
+    "capacitance_condition_number": 324.5692556292851,
+    "capacitance_sha256": "5d51b21c6651c414a16ecb70381478de541cfb590ba89f91e62784b9cf9454b1",
+    "conductance_condition_number": 1455120.1830229997,
+    "conductance_sha256": "59a74a1b8ea1ac3f5bfe94d489508b097d2f7553769f7dc84364fd9f721d636a",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "96d325a1f78964292c3f1d61f7395d8b9c3ae26830078f60d14235195ea7bca7",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_minus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4485717079999745
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "6b9da01c43b804d9eebb3929714271e3b8ab5b48e08f811d8620251c390b5ca3",
+    "capacitance_condition_number": 327.09426838133845,
+    "capacitance_sha256": "09555ca113f8ea7ce51bf7df400fa866bedaa8af2d52765ab01dbd71871589f2",
+    "conductance_condition_number": 1568184.7993751834,
+    "conductance_sha256": "a18762b0a221b25c08863f08d8b3ebc03b9dff970a0191e80c99b82ba71047fc",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "62d828892d1894dcbddb4372d756d4050b0edbb2b63a8f6125d1ef4372ee137d",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4061328939999953
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "c194ddb22b35cb1a228376dc70b571478aa9fcfe90db68af6f7f34a9c9165867",
+    "capacitance_condition_number": 325.8378525294594,
+    "capacitance_sha256": "c25072b8004afdfd8e4c94c1fbf52999527c783cbac1961559b7107105d390db",
+    "conductance_condition_number": 1558234.742423277,
+    "conductance_sha256": "44ef07b72901c0c84be18989b908a3a0c0dd0ecf33a4967d6af057feb288397b",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "a85431cec9d9462f11739c855a10fce1af92dd05350b347483228efe3a16e96d",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4411462450000272
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "a3e23344aaa7ce38768ead2ed4fe1b632b1ed70fb825692b39f5d8ec5cc41246",
+    "capacitance_condition_number": 326.6049803705569,
+    "capacitance_sha256": "3ebac6c7c07d533f1ebc099e3c8b880d089ccf597f1b29cd309a15dee90823d0",
+    "conductance_condition_number": 1565048.7229367753,
+    "conductance_sha256": "d93409925c271c8db728943a11e9999316cccb50cd6d86ee7d75d335f7e4becb",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "3f34994b81b80307a8921ce3e22d042774edf5b62df61787ccb13de05795ae04",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.438394303999985
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "bb8351f44cc767cce3a6bebde9cbdbaac5bb58789cc39bfd0d4cbcca1bf8e926",
+    "capacitance_condition_number": 324.88839329994687,
+    "capacitance_sha256": "23520d81511519f1d425346f92ff8f26037624c60bf2f89a091de986d13cef34",
+    "conductance_condition_number": 1568934.2156572528,
+    "conductance_sha256": "efff2b2d958e77d5c494255ce5e670918506817de4fb1c2561061b363dfe52ab",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "ba8906ebac67c12ead0e99cb8467066a8e1d38230cdf1e0ed731a58c50214939",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4419624770000041
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "a71b717858e261b953acea8b82a03b2887acd472fd0a55ef84b61073fdccfbf0",
+    "capacitance_condition_number": 338.12546386563764,
+    "capacitance_sha256": "3d5c29e6ff5a926dfb27b3d5516dd7419ec85ddd8ea2350a7fdd98c3f2b2e7d1",
+    "conductance_condition_number": 1562337.8872951313,
+    "conductance_sha256": "709b393ae99eef56f2389aae5b9e292b9d8e460ae0d5cb1520f553fb7265fc7c",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d27189061299f87189f1766b8bffa5784c2b823ee1c98fe6d5bb0b011742ba0e",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4406997069999647
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "cc7d5f46cb6f70526fd74c52b037429c4533bda464bae66f7f9967bf71df16a8",
+    "capacitance_condition_number": 338.07065221441303,
+    "capacitance_sha256": "a27b57384f3499dbe7a0d77448c2c7b15a9487efc079836b0163d7bc075ac904",
+    "conductance_condition_number": 1566454.7693259444,
+    "conductance_sha256": "e79971086ebfe24e13538ed72b7e9f41ab85525754c356bd11575baa10853a2d",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "9ad1e4d7776185ecb276edafef9bee8c91cb2e058ef7e22958f56d0c1b3fbcc0",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.441674402999979
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "d3520cea8b644aab8e434c21c293c1a51a4a76610ef9c39aec18b6bc89455ed3",
+    "capacitance_condition_number": 339.02114205574446,
+    "capacitance_sha256": "2a306f3ca9800700890a2b9970245bcca0b234ea9830909f538b31a7e925c3eb",
+    "conductance_condition_number": 1563370.8661905027,
+    "conductance_sha256": "31b3f2f973a3a21c4f9fb5415e3ac4f940bcf794a80be898e4fe8a1979d79199",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "4f9b03c6eee0aceef84eda22efec4aaaa48bdebc00acec209f8a4aac087e49f9",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4549415989999943
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "e8e5bd8eec5c2ac08df15d297a4b60f6e68879508373a9cffd6b3b789c663b7f",
+    "capacitance_condition_number": 337.653331834474,
+    "capacitance_sha256": "50a58451bef52126f8534c6fed503d6f86c8cfe412ed4d6a33017bdc0076a021",
+    "conductance_condition_number": 1558625.3955368255,
+    "conductance_sha256": "ce830ad7faf0e5cc8013ae9d6cc392cd565971951531e62711ea6f7d7c235263",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "fbf148e02d84c5fda3f1c0442ccd415e1a13dfa375254a10ad1501bfea10bf9e",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4187993689999985
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "819ee04ed58486cac3fa2b5539087790a60316a9481fe08ba12dcf0edeaa783e",
+    "capacitance_condition_number": 334.4569938313689,
+    "capacitance_sha256": "0398d99dc0053931603f1bb8be58e8b3433ff600c176cfe835583dd3d972e4f8",
+    "conductance_condition_number": 1565438.6753175273,
+    "conductance_sha256": "4c5d4f6602c2becbc5c935c9ad8af070203300c237199fac5f771e5fb6505769",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "1ad152a84d58b5af392035b7e98f7d1d729c7cecf396bcac50fe509e421e89b5",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4204037540000058
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "39b3fbc34fa88d23bf1811eb27ada6512360dacf434ee4a0b875b2d6a576075e",
+    "capacitance_condition_number": 333.97647770109785,
+    "capacitance_sha256": "a0217472be73a25f40ea7ee3f640e5431a88fb4a36caa4190e20b02a013a4473",
+    "conductance_condition_number": 1554975.8353817319,
+    "conductance_sha256": "2239ea2cfb11ed696ee1d7b45d64d90febbedf443fad5c5888166c07b8d51a21",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "a596f0c2fb9696da75b4482bba4b076c4fbf566ecb93d4df70bfd8de83a704be",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Cm_plus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.465036017999978
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "d874964138d9f219711c8d2019d725ba3d9a727dfb15b516ff947f103fc3e24d",
+    "capacitance_condition_number": 325.9622751201445,
+    "capacitance_sha256": "efdfe9747cd36c4f9419dd2d5a3510e203ca13a85b02c53b8b1a809ae126e0a9",
+    "conductance_condition_number": 1871824.1007834745,
+    "conductance_sha256": "eb85cb4208270590a82934c5ecc759ced723618930b60d1ff88ec4d056193270",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "fb668e13a6ac96c16d14a93af1eb2a5d988720a8dcbf6947ea8bbc06b5d6bfb3",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.3981608779999988
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 7.771561172376096e-16,
+    "basis_sha256": "f9ce6a9408b1be22066fd58d96eaac420e640599167eb57399399b1522e3cf21",
+    "capacitance_condition_number": 331.2611500899052,
+    "capacitance_sha256": "45b3ac266515ab40a85df6c61631c640906f4488994e05a7de09a65ff21c5910",
+    "conductance_condition_number": 1852988.003732904,
+    "conductance_sha256": "bcecd4465384ce9234548d30b38e5e8fa8fe0bc46f561b60a0f93436c97cbff4",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "ef740722820a8b2a9e1e362b71ba86b94f32ebf69b13dce67efc586b1c1723b5",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.433335322000005
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "403923e6ce0b636ed25e16fe21cd036acc8cfe35971c1d65244b77713371592f",
+    "capacitance_condition_number": 326.2017075514298,
+    "capacitance_sha256": "072dfa268023f0839b0fc042edee9c0a53793692bad03d8a55305cbbae0d7c78",
+    "conductance_condition_number": 1857877.165460701,
+    "conductance_sha256": "f3e2a0ad7f1051f26a250da9f784cd55b6535abd2904b21e09fba5f20fb57b39",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "0e5cf358b270988efe7e831adf7b1626c1b8da365bba9b1dafb49846705c4121",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4183760799999732
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "968180824223fc3682db2200516e01c646971dbe0516a0a2ce21582ee3f52c26",
+    "capacitance_condition_number": 327.7800358588616,
+    "capacitance_sha256": "f23c2638aa13a54d44a442621efac0c4220989c8edb8a87007f85a431558a4df",
+    "conductance_condition_number": 1878050.8259667372,
+    "conductance_sha256": "2cbb11ccc61b2600275d220fc4e51555f1f1a821760ae1663193395828a6e630",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "439c8b05c9203c8528e59111906503706d7c7cd4c8655284d02318826afa2e05",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4457656760000077
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.7763568394002505e-15,
+    "basis_sha256": "8132ca4a37d608967c4ca1ce635e9714b281df2412c358ceba966228a344c6e7",
+    "capacitance_condition_number": 329.41543026064755,
+    "capacitance_sha256": "458287f32733eb34892fd4928faf36e4ca93f263e9d2c3772d5a6e382d8eccff",
+    "conductance_condition_number": 1868564.4303222434,
+    "conductance_sha256": "c4f28f39fb405ee52a7ac21ec40c85cadfe0e44559991fa24fbd99e5080f40fc",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "40fb3adfdcd01f16f1e4926e90af98ea8c3d86a5b89d258fe27763c30e2e0b08",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.433834360999981
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "c7bd48f1d775f769cad237ad147b4cacac9d7a6feaa4299c73d3ea93e1c35d24",
+    "capacitance_condition_number": 324.93399159403526,
+    "capacitance_sha256": "67b7a6f19de8e520a918ebc90f7d46515acd8ca94e5063a8c4ad8b993bd58b9f",
+    "conductance_condition_number": 1842686.4722533547,
+    "conductance_sha256": "4e19a513fb919ae34491866e949df1be46565b42e7e9b75a4784f8001fe92ab9",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "9d5d62854ad73b819111e094e9da4cdc75ed96432bf6d9ee10ab24bbe943d1f5",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4301971869999761
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "6841fd511db350af4efcd332d706a28043fbfec6d621491e7b9af227ea6d208b",
+    "capacitance_condition_number": 328.5737041909721,
+    "capacitance_sha256": "d22e3154a621182186cf5273508f9c0904488bbc44f1d75efff03b393cf0a31a",
+    "conductance_condition_number": 1864235.6309164502,
+    "conductance_sha256": "6dd1f4a14f01d86847edfa7736f66c9c66c4a893c6a9c71dea90227b5cab7b38",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "8550f0517f36a04700d36c257220bf914fe91bc7f02efcfcc7070c818d2890ec",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4270839209999622
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 9.992007221626409e-16,
+    "basis_sha256": "dae03ed221199bea181892c27a385589d52f7dd14ea008f368f619427e377f7c",
+    "capacitance_condition_number": 329.91948104905316,
+    "capacitance_sha256": "f17c5088212dcb49eed1990be7221e87cc0ad91da44617a8267f228f943c1a55",
+    "conductance_condition_number": 1845644.2813176347,
+    "conductance_sha256": "dadb6b984bb7b1d04ef2ea2e9351731c863e4b2e9d8ff8aef39aad71be0480dc",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "82b8c0de18b5b4c1b14bb9a24adff46a6a4a273def6b35cfbb846b2af3b1f2d0",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4044836869999813
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "f4bd2d7c1c8051ad922d60ed043c1fbaf7af6cd2aca563e1480fad63ae4f607c",
+    "capacitance_condition_number": 331.28482595259015,
+    "capacitance_sha256": "bbeaab6f69309f9c40cecec7813aa547c0ae24da0ec6b3beacbf07248d1d2018",
+    "conductance_condition_number": 1891213.6391766064,
+    "conductance_sha256": "09769db62ac124f5d4dc253b2172293ef3d020ed34cb3bd99ce8173d3736081e",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "5807312b98e87ea0b28614d8d9444fee2daa6783df1a8b378f7fe24fc19b055d",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4051336130000323
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "05c4e9857bcb53d6f7511585122edadf6503d04b0dbb7206ff507d2113dae2a9",
+    "capacitance_condition_number": 327.95037707056434,
+    "capacitance_sha256": "3bde76146c2612aab824893d8bd109db8a95f7e1662ccbc79d16db82c857002f",
+    "conductance_condition_number": 1818072.740290133,
+    "conductance_sha256": "2f311706aa833783e3293cf1a71650d9b404600e5ec3aee66fbe9c5ee53d7297",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "707b7e0df66c1f1285b0a446a67fdf922dadeac37cd0ff70551bd94afed58f52",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_minus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.449755658000015
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "122373bf04547243165376898d18f9791f8bf84ac608dfae8a00b92dd9adb0cd",
+    "capacitance_condition_number": 325.1722576864985,
+    "capacitance_sha256": "21e9af6eb11aa7de5aba175bad0f2232e2c59053c14c9e18963afa1777577f0b",
+    "conductance_condition_number": 1286827.0238249463,
+    "conductance_sha256": "b69f3193cec739d60398d67634be6c776a2742e93597588ead411564b91c12f5",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "0a142723cd301584c444660e83741e6f2d1d60fd58891b8b665fc0040d2150d4",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4162802409999813
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "23e8a47aa911b650050bb642972f064f8d1b4614b878d19079bb637578e76746",
+    "capacitance_condition_number": 326.12490488462123,
+    "capacitance_sha256": "57631ba749e8cb6a702ee4abda0006a2cc32ab4c1808610f45d9eae083c27d6f",
+    "conductance_condition_number": 1289316.2066942754,
+    "conductance_sha256": "fba93dff8302562b6e594bd33ed25760377a95e618c45096e83a285e083bf379",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "018d8b1952bdbf5c5d782b295c8345f549bea71f34c8155a99a955674b44ed4e",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4655540379999934
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "5f9aeb20144a49bbfdaed355c0ebefceff203033f8b3b798cf5a82698bc99980",
+    "capacitance_condition_number": 329.08455514999605,
+    "capacitance_sha256": "7ff767f7199eaea004c64c2808b513d42ef9fd7b3a8843d23194f762c30be02c",
+    "conductance_condition_number": 1304847.3265107765,
+    "conductance_sha256": "3577a00273f3abd38d80e36b0fcf137e155f76235d54acf54db812b47e472a58",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "41b1e3295a5fd4c334bac2529f78b949fdc41a2a6d3d0c38c2055e451bbb037c",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.425661386999991
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "902ebf8f3f7d9301644beb541d4785259a42dcb44bfaa6fb0f0b513ba525465d",
+    "capacitance_condition_number": 331.3869761641139,
+    "capacitance_sha256": "ccf19982300769cb6d20fc43aec7019393eaa9e40d95988a81689b3907216a49",
+    "conductance_condition_number": 1294109.573375554,
+    "conductance_sha256": "4f94b8f4d3c41fe4735306fc6578fa65d84f5e8458a7d234ef95c5c93644781a",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "d0bde6d87ca49cda5edbef36fcb9330918e1ba7c0f64ee9195b47884c5ce8d51",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4423275290000106
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "2cc160f1cce7b073e1423118477cb1f2e51a312057be039aece60bf68a166ee7",
+    "capacitance_condition_number": 332.42781687467146,
+    "capacitance_sha256": "973b05e025f317c2ce0ae3f35d1bf1389c3dc91d072e172fbd190a7772e6e4a1",
+    "conductance_condition_number": 1297498.6457390687,
+    "conductance_sha256": "7e19b4e46560bdc41458aa1d66666b51f4d8d544a56e1ede3d79d29eb0a9e3e5",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "a6cd4826fa1245c92c2d5990cbe8810108f7c23521b129490892fc9f2aa5579d",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4370909389999724
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "32a62b87c88533ca7ff3f7400dbb17a14e8938f4de50fa16449dfda4beb479f0",
+    "capacitance_condition_number": 330.03638885773984,
+    "capacitance_sha256": "ef5f237dbad54637c62af815133b7d22d300063414ec794cd34c97a49a6782af",
+    "conductance_condition_number": 1293860.7209977484,
+    "conductance_sha256": "a21365d00166d5140be79e8aa5326df48cb8f2c8c1f0948c3a0fb20548c800ca",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "4171407dbd861df389fda5dba7dfcb29ce03a4a29bf05381ae30324f74825658",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4599060729999565
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "a804bdd26c8bf1392b81e9daeaaa72da2ee8e0047684b34dd25291daf625c2c0",
+    "capacitance_condition_number": 329.9863879368469,
+    "capacitance_sha256": "58f1b59fee4860c58036ec12be149ad29db36c2e68d752a58289fd41ef561d5d",
+    "conductance_condition_number": 1293140.141919447,
+    "conductance_sha256": "bace885b8e2a756db579d573cb57d892a66f19103c570f7873f909acca14f577",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "32978e4a21153fb45f5196513d990b0909310e3825097ffc548dc16c1dc43d19",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4350132939999867
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "68c9407586f35105cacef507facdfd538a2903c49f9fd42d4a5db43a28c56cb4",
+    "capacitance_condition_number": 334.9173209793743,
+    "capacitance_sha256": "749e89b794bd3911e94ee854cc0128299e417af97d3f5fb04966de02ee91f344",
+    "conductance_condition_number": 1306437.8989927308,
+    "conductance_sha256": "65264f70141eb0d6b9e74309742800fa3c352212a6f5a270446b91d9d398f4ac",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "2fa59dfff4255c66707ecd5298ad445fc1fbdc364c7038b58f64b540d317e8d1",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4227267700000539
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "503b36df731ccb2cf6470d0fdaf3e6c4fc058dc984c53c74d776357f29dd4f07",
+    "capacitance_condition_number": 333.5728886632774,
+    "capacitance_sha256": "7e4be791ace1360a256a3c3b32061d82ba4887847ff8031389097ce548f740c5",
+    "conductance_condition_number": 1298940.0749875237,
+    "conductance_sha256": "1f1fa54d62bb7ef3df54aee46736f7ec1c2321e47e7bd91deb13c39ca8905036",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "d90654e071123c99e1fc60bb5949d372c504562ce011ee71a509040ed78a91fa",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4114477649999344
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "97674124f503f21699d49a72520306787eb05cafbb51faf30a400995a78a8c16",
+    "capacitance_condition_number": 334.4236136460241,
+    "capacitance_sha256": "9ab1fd9f0e0d4cea29bad57a30535b7e561b2ec76699c2d081177e4d4153b201",
+    "conductance_condition_number": 1307196.6140628823,
+    "conductance_sha256": "e83932d6f8c57ed1ea5729ebdc10123b49434374dac12a819291f85094d9b0cb",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "dc2f191004b7bd1fc6c51ac3ee995c94d1d4e0cbfd54c383747cb84131200e9f",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "Ra_plus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4685361119999243
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "16da76c634faabf38bfa2392bf310ae9900a6462cc06286392265672677407e3",
+    "capacitance_condition_number": 320.99092175960146,
+    "capacitance_sha256": "0139595791a2a0341e49c14de29607ef475f44b74d35540ed0de00c3f5e73046",
+    "conductance_condition_number": 1454609.0992610867,
+    "conductance_sha256": "ebd85cd935093f1fa9079891200bbf04d776e17b5da365f4cf0d6d725cadc80c",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "db24b281b19636ea441c5a154b9d9a22f1e7c9c245d736331e2671be3f49e98c",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.410487355999976
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "ba2e736b3d32bda208ad39604182477500b7a30c385b4e5eaf677e7db26ed88d",
+    "capacitance_condition_number": 319.97411996565313,
+    "capacitance_sha256": "de14226c3a03e564b7b09e53dbf87569b22e6f2297d543a172ea2a74e68dfb0a",
+    "conductance_condition_number": 1435380.5729316298,
+    "conductance_sha256": "e61a3ad6bb82aed12a8cd90226e3321991e8208fbcc893e02881f67687438bfa",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "aa2fadbc56110ac08180378e02270b23279b500ec0c962d9c9e70e210d3365c1",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.446354165999992
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "3e9323cca75e215c97717d65a34af5e667597c8d7b385e39d63ebba0a1f3d650",
+    "capacitance_condition_number": 317.833963209643,
+    "capacitance_sha256": "22cbdfc7d9d9313a50ff0e17c1fc50e061c3cf1f383a8bef18c20632330a92af",
+    "conductance_condition_number": 1418817.9017588813,
+    "conductance_sha256": "f988377b2945b0411d1b42df15df361cde8dd2f7ec682eb503193f7669460907",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "3c2103ca08062414b8c037b2d1cfb24cd8b3e310cdc0fc69ce366471eb297733",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4227327229999673
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "ad88d95492dbcfce92326f83e02f9a425bba1e927d54462d2d39f5cb12c8660f",
+    "capacitance_condition_number": 318.3893120305804,
+    "capacitance_sha256": "4d8bb7e49d2340996ca3bedac973c57baa4706c47ce18e88fdc91e4aedcbf121",
+    "conductance_condition_number": 1449455.6005473107,
+    "conductance_sha256": "5adaca69fdfb66a2c9562b91ff47e5bdd7152c67968cd251056a9a375cabcd3b",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "1c98a15a2c18a616c1fd52bf5534ad37c050cf7cead3e87db6641a385d29e077",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4378696479999462
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "aef9b67b39c0e3feac2acec9f4953695da40242e17f383e4c617bb3acba405cd",
+    "capacitance_condition_number": 326.5900411497007,
+    "capacitance_sha256": "ab4bc965cb8245c3e3d1ac6ce75f4f25e436032196423ce34e5795f494164032",
+    "conductance_condition_number": 1427321.3635938158,
+    "conductance_sha256": "a2cd20db3ed5bf2a0087fe541bea88325c1401be6abead2d980966916357e818",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "73edb8a2d67ad7a735117a1a494bb9360a8d84f37874f935140fe5e6fa6cc30b",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4370572389999552
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "84bd503c964498389b5528d91eaec29f2ff64d3e7542dc28cc10ae9c41b8e93b",
+    "capacitance_condition_number": 324.60371245547304,
+    "capacitance_sha256": "2996525fef3039089f2a75529e973a13d8871f880ef947288fdd5c314373e288",
+    "conductance_condition_number": 1422826.2694442945,
+    "conductance_sha256": "a8484e628964841d96f98d3ba45a0c38bddfab56bdfcd175a346e73e2c9fce1d",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "38dc7eff922fee475654ce270cb77092191beb6aa688c396f308792ad38c2fd2",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4421387900000582
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 8.881784197001252e-16,
+    "basis_sha256": "56660286432731b3546a739eeda3a96f4014319173512a6accc917d7624adfb5",
+    "capacitance_condition_number": 327.86834588507946,
+    "capacitance_sha256": "9f253e6106fec2c13e17beb2d142e21e27634e26c3b994a7400461ef4777ff3d",
+    "conductance_condition_number": 1448884.511365843,
+    "conductance_sha256": "bbafc2d75f501f2e5976e21e12c4747c56c1849b2ab7eec4a93508e92cd9053f",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "c18dcc2331691560a0dbcba93832eefed29d67640d4fe4fb7a2c3a855695ec80",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4306411989999788
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "7fe291030aac01ab7ff255f4f45048f7c3ea487742b2457b6a9a921cccdec382",
+    "capacitance_condition_number": 323.25549885445554,
+    "capacitance_sha256": "c46e438415512758212b2c7972a7d7a2bb39b65d71cfd87b5b04a6243ed23d63",
+    "conductance_condition_number": 1391890.323067074,
+    "conductance_sha256": "7a84250ac60a25f1854e5a9cb8f474fdb7db87b322018770906c96883f95d810",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "08be9c68ab59f8262441f66d6461df88c1202562a155419e235878d4872774c9",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.414334030999953
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "491fa8732e038ff3973a1ab114f972de9d16d3fadb91c712c956079ed3309ffd",
+    "capacitance_condition_number": 326.42023664329605,
+    "capacitance_sha256": "16ab58a844a8b0f95c50d2326f63b6540c01897c6579f6b9a65803cdbe0b5593",
+    "conductance_condition_number": 1448764.9296955767,
+    "conductance_sha256": "5b83bf5d9dfca65accd6b6cbd5b37dfeab5132cba0b56fa1358956cf66675c99",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "61e75626bbf007ef350706496d2bcc08814a31dd10b878c954af913dcad4c953",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4038578669999424
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.1102230246251565e-15,
+    "basis_sha256": "6f24b4fa1de7ff80a17167c4d8d2975fd28ade5f95b7d4c36f7dc57f356230ea",
+    "capacitance_condition_number": 323.61872110110136,
+    "capacitance_sha256": "cf7cebff7ac5dbd69ce11fe8ea52c32699728d744bb2f9fa94c114bf77e75462",
+    "conductance_condition_number": 1396177.4780553095,
+    "conductance_sha256": "9484f6cbd9e7438522b208f52aa4e606f4654b929d1ef548ab0bde3edfb99147",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "34488e6bb355d55dbe8f1dd296327ae4f5f521562475d5550f33576b0740a5cf",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_minus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4649114910000662
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "78fa99892a98158d634955d39784eed9283fe1fcd241d8f8bdc95c2aba7162e9",
+    "capacitance_condition_number": 333.18494284731594,
+    "capacitance_sha256": "d5214eee4440c4abc28795a16a04aa09f82dbe190d65a3c890da732ca5bfdfb7",
+    "conductance_condition_number": 1583588.2182265518,
+    "conductance_sha256": "ddedf739df56f15bb6eab0044381dd09b7d39e78b8ec718c6afaa7408bd512d9",
+    "dual_seed_frequencies_hz": [],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 0,
+    "initial_output_seed_columns_per_shift": [],
+    "input_sha256": "6fb87fd392aa273df05aeb567d4deee3365e28c5719c3444dd7f40b0d573eb1b",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "D0_none",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.399711539000009
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "3021af17c128f451267a2dddfd76c2d1ce3e5a5b2015b706b8e089ee40bd6148",
+    "capacitance_condition_number": 333.47038419211515,
+    "capacitance_sha256": "e450e908ad74c7acb8f4dc9b62c15019cfa97dce2064a4ce8e9d11540a9a9972",
+    "conductance_condition_number": 1583005.1326817994,
+    "conductance_sha256": "133dcfb28508e9d507467fe575da38585e01fabc4450f5bf29149d9334b586c7",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "4f3ad9f7ad17aecc7b60bb2abfa40d67a7ff966dc59e1ca56a75c5abc9c23182",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "APICAL_0",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4405320140000413
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "edad03d04e8b4a7fed33788122ef16ca510c48c48efed60351f3feedcd22150f",
+    "capacitance_condition_number": 335.4903548235493,
+    "capacitance_sha256": "732a0ed3d8d0b3d5eb5554f264c01c220d1fb2e037b4365675fcc865af386295",
+    "conductance_condition_number": 1582065.7377998412,
+    "conductance_sha256": "98fd25e984f5dae228ee304ff5af98e8de1515964c07d710f00aedc4bc3f8d81",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "17476a0153c4ab01bc6813ce38d56decd98e9f110bbacae55eead850ffacc0cc",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "APICAL_1K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4408647540000175
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "5df96bfee168460d0880eed80a6952b67d361c5cb988b7e5c9c69b19643c3a40",
+    "capacitance_condition_number": 329.2428273580528,
+    "capacitance_sha256": "3a0eadabf5eae8f1f15c6f44e4692b51c6b3ceaac13bc8dd9220d2d0cbc382aa",
+    "conductance_condition_number": 1584710.288242924,
+    "conductance_sha256": "239b66279b9ca6666a3b3d79fa4f2e49d9fdd65af21c17c57fe0cc44f54cd068",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "81a9982c4ac3c43f47d458b1c3080f2d9164c1cad5ae3fdf299110e8519a3623",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "APICAL_10K",
+    "seed_node_indices": [
+      14
+    ],
+    "seed_node_roles": [
+      "apical_q25"
+    ],
+    "seed_role": "apical",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4376849819999507
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "7c4988fbc0830705c8750c4e0f061495c27d5199c922d4a66e1a7bf1c7577d65",
+    "capacitance_condition_number": 337.783903093437,
+    "capacitance_sha256": "1d8565228cfa7141e9a6973bd12aa248ff3accbda900dec298c80b4bd3f5aba1",
+    "conductance_condition_number": 1586169.3230664385,
+    "conductance_sha256": "813a894d2a2f3de63da7f20f51af37aa2929df8be176e35dabff31fdfb240fa1",
+    "dual_seed_frequencies_hz": [
+      0.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "06da19bc283fc72518fed8338832b1c600ecc14a434868a66b6c273792da9d2a",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BASAL_0",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4305140550000033
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "9be118a857659f0083c32e7b99c7fecc413ca1835709a108ec446169a422d36a",
+    "capacitance_condition_number": 335.7305766103271,
+    "capacitance_sha256": "7defd2a24fcd37ea0e846e2e22deb0661f693cc77e52cf33699c458eaac218bf",
+    "conductance_condition_number": 1574197.9652054203,
+    "conductance_sha256": "1fb45f1de039c530d5afd374ff0435c7ad4abc13ed0da664638751239dbaf9b3",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "47cf21d34613008152851c5da2368adc3329ad3d60153823d7b1eea055f73f4f",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BASAL_1K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4321069709999392
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "42ceda7dad67773deb65447150e001eb2a8b1c47b468a016dff37eb563c4c1b6",
+    "capacitance_condition_number": 337.6013418366678,
+    "capacitance_sha256": "a38dd1bef5c35eb92481a02f24169ca99e00538362b1f03bfdf609141148ee3a",
+    "conductance_condition_number": 1587831.8259269574,
+    "conductance_sha256": "1facb8f0fa26f6ebd76989e209cba4d722919c200551b9f170db8218713e4ab0",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 1,
+    "initial_output_seed_columns_per_shift": [
+      1
+    ],
+    "input_sha256": "5ca0d26d4e1d2c7d0f3c7fd37f9a52d7f0513200608af83f7aa63de7ea0bb518",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BASAL_10K",
+    "seed_node_indices": [
+      250
+    ],
+    "seed_node_roles": [
+      "basal_q25"
+    ],
+    "seed_role": "basal",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4302633859999787
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "2d1537b7e2cf4dbfe2c216bc913cd58df2f718ad22265064c895f242167ab166",
+    "capacitance_condition_number": 338.25370846330816,
+    "capacitance_sha256": "52b1ae6df9dda6a3cdc7da349619de8f2bcbb1865625e846753e37d562fcdfd8",
+    "conductance_condition_number": 1577820.9833520534,
+    "conductance_sha256": "3c02e8ef3414ad0f75c20efdeb4648c3ccdbd29a092b3a57aacf3d6e6f7b6ea9",
+    "dual_seed_frequencies_hz": [
+      1000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "5a7715eae8a0ee13cbf2785a29d926069d65adbc94a427e7a5998a46a6a21fca",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BOTH_1K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4046658209999805
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "67b444bb7c6fe43f8b9d603c5f5c262fb558fb52cbc6e0077fd25dc38a2b10d4",
+    "capacitance_condition_number": 337.45101769444926,
+    "capacitance_sha256": "43214dc780fd3125cd5f0a7ecdf6a0171cfc36c0f174c73682bede0e607ee337",
+    "conductance_condition_number": 1586547.338402192,
+    "conductance_sha256": "9cbf3ec7d4e9a4c6db309516b5409549c76a780991830913ea3dbadf9405d793",
+    "dual_seed_frequencies_hz": [
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 2,
+    "initial_output_seed_columns_per_shift": [
+      2
+    ],
+    "input_sha256": "bfe78f7dfc12977b2ff0b367d316c6cb46565721e4af2f5d6f7c1bdfedd7ddaf",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BOTH_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.4024403859999666
+  },
+  {
+    "actual_order": 224,
+    "basis_orthogonality_max_abs": 1.3322676295501878e-15,
+    "basis_sha256": "d7dcaa55cbe2397c07d4680077f9e62bc52c6cd07f73e7d783d77ade4f0f4db1",
+    "capacitance_condition_number": 333.5980496396751,
+    "capacitance_sha256": "97ded39a85cfecec764bb345e30abadd57186de34ba116b6bd0e8ddcc0319126",
+    "conductance_condition_number": 1568889.3223660446,
+    "conductance_sha256": "456da7fd971abfd9d727af16160ed3f984439c9a1e6fc210c35ce873881d6b7c",
+    "dual_seed_frequencies_hz": [
+      1000.0,
+      10000.0
+    ],
+    "initial_input_seed_columns": 33,
+    "initial_input_seed_columns_per_shift": [
+      7,
+      6,
+      5,
+      6,
+      5,
+      4
+    ],
+    "initial_output_seed_columns": 3,
+    "initial_output_seed_columns_per_shift": [
+      2,
+      1
+    ],
+    "input_sha256": "a3fca998538e12bb65f4acdff16128593b7c58c283f06c2b9e5680e8ccfb1f88",
+    "morphology": "NMO_03524_JacobsControl",
+    "neuromorpho_id": "NMO_03524",
+    "scenario": "all_plus20",
+    "schedule": "BOTH_1K_10K",
+    "seed_node_indices": [
+      250,
+      14
+    ],
+    "seed_node_roles": [
+      "basal_q25",
+      "apical_q25"
+    ],
+    "seed_role": "both",
+    "seven_input_ports_unchanged": true,
+    "wall_seconds": 1.455858281000019
+  }
+]

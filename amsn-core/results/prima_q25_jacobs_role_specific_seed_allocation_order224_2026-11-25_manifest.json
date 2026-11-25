@@ -1,0 +1,49 @@
+{
+  "coverage": {
+    "basis_metadata": 90,
+    "case_metrics": 9720,
+    "finite_dft_identity": 45,
+    "pooled_summary": 180,
+    "scenario_summary": 1620
+  },
+  "files": [
+    {
+      "bytes": 1348458,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_case_metrics.csv",
+      "sha256": "77f731a55bd5232823ed2e4076b3d0af492c216193805528692f610775c9494e"
+    },
+    {
+      "bytes": 238922,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_scenario_summary.csv",
+      "sha256": "6cbaa501aeacc33dd5ce052e87a168f08f574ce082f866339aba22ebf9c0de07"
+    },
+    {
+      "bytes": 25356,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_pooled_summary.csv",
+      "sha256": "bcb3624f2fcc12f2af0f20e3a305e8621c53df9ab4648d5b14566eccaa659a4b"
+    },
+    {
+      "bytes": 9666,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_finite_dft_identity.csv",
+      "sha256": "4b6491d3724574413f4c1af155390ffb71a697bfbaad28d6e763422c885e73f8"
+    },
+    {
+      "bytes": 109293,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_basis_metadata.json",
+      "sha256": "1724c1dbbc333f4cd4301cf82e413a1b3ec1c017c8dd6e06fc189d7e34e1d158"
+    },
+    {
+      "bytes": 34794,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25_report.json",
+      "sha256": "e522eaf232c2664bf1e0b7aba5198717d9bde4a6dc8473d2cc2693218942a2c5"
+    },
+    {
+      "bytes": 93,
+      "path": "prima_q25_jacobs_role_specific_seed_allocation_order224_2026-11-25.time.txt",
+      "sha256": "4cc11c8b36d6b0eafdce2b01cbf0b39fcf899190b8fd48a0a62a0a283fa6ed1e"
+    }
+  ],
+  "source_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+  "status": "passed",
+  "workflow_scope": "Jacobs NMO_03524 role-specific q25 output-dual seed allocation"
+}
