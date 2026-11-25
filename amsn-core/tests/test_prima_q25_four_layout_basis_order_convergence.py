@@ -13,7 +13,7 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
     def test_declared_order_grid_includes_existing_reference_once(self):
         self.assertEqual(
             driver.validate_order_grid(),
-            (112, 168, 224, 280),
+            (112, 168, 224),
         )
 
     def test_reference_order_reuses_completed_result_stem(self):
@@ -23,12 +23,12 @@ class TestQ25BasisOrderSweepDriver(unittest.TestCase):
         )
 
     def test_new_orders_have_distinct_deterministic_stems(self):
-        stems = [driver.result_stem_for_order(order) for order in (112, 224, 280)]
+        stems = [driver.result_stem_for_order(order) for order in (112, 224)]
         self.assertEqual(len(stems), len(set(stems)))
         self.assertTrue(all(f"order_{order}" in stem for order, stem in zip((112, 224, 280), stems)))
 
     def test_invalid_and_unplanned_orders_are_rejected(self):
-        for order in (0, -1, True, 84, 1680):
+        for order in (0, -1, True, 84, 1680, 280):
             with self.subTest(order=order):
                 with self.assertRaises(ValueError):
                     driver.result_stem_for_order(order)
