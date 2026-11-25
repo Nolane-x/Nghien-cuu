@@ -1,0 +1,216 @@
+{
+  "basis_hash_comparison": {
+    "basis_sha256": {
+      "different": 144,
+      "equal": 0,
+      "total": 144
+    },
+    "capacitance_sha256": {
+      "different": 144,
+      "equal": 0,
+      "total": 144
+    },
+    "conductance_sha256": {
+      "different": 144,
+      "equal": 0,
+      "total": 144
+    },
+    "input_sha256": {
+      "different": 144,
+      "equal": 0,
+      "total": 144
+    }
+  },
+  "basis_order": 168,
+  "case_metric_rows_each": 12096,
+  "case_metrics_sha256": {
+    "reference": "dff980e065b2f497f8aea930b3fd5a16e1db680e80ff84c1d79968430b020c13",
+    "rerun": "24636e3efd96e4fe1d509e164c539afaa320e058be2a22610e9deb88c68b1866"
+  },
+  "cpu_dispatch": {
+    "reference": {
+      "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\"\n    ],\n    \"not found\": [\n      \"X86_V4\",\n      \"AVX512_ICL\",\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+      "runtime_versions": {
+        "neuron": "9.0.2",
+        "numpy": "2.5.5",
+        "python": "3.12.16",
+        "scipy": "1.16.3",
+        "wall_seconds": 2546.823403504
+      },
+      "thread_environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "threadpools": [
+        {
+          "diagnostic_error": "ModuleNotFoundError: No module named 'threadpoolctl'"
+        }
+      ]
+    },
+    "rerun": {
+      "numpy_build_configuration": "{\n  \"Compilers\": {\n    \"c\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"cc\"\n    },\n    \"cython\": {\n      \"name\": \"cython\",\n      \"linker\": \"cython\",\n      \"version\": \"3.3.1\",\n      \"commands\": \"cython\"\n    },\n    \"c++\": {\n      \"name\": \"gcc\",\n      \"linker\": \"ld.bfd\",\n      \"version\": \"14.2.1\",\n      \"commands\": \"c++\"\n    }\n  },\n  \"Machine Information\": {\n    \"host\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    },\n    \"build\": {\n      \"cpu\": \"x86_64\",\n      \"family\": \"x86_64\",\n      \"endian\": \"little\",\n      \"system\": \"linux\"\n    }\n  },\n  \"Build Dependencies\": {\n    \"blas\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    },\n    \"lapack\": {\n      \"name\": \"scipy-openblas\",\n      \"found\": true,\n      \"version\": \"0.3.34.237.2\",\n      \"detection method\": \"pkgconfig\",\n      \"include directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/include\",\n      \"lib directory\": \"/opt/_internal/cpython-3.12.16/lib/python3.12/site-packages/scipy_openblas64/lib\",\n      \"openblas configuration\": \"OpenBLAS 0.3.34.237.2  USE64BITINT DYNAMIC_ARCH NO_AFFINITY SkylakeX MAX_THREADS=64\",\n      \"pc file directory\": \"/project/.openblas\"\n    }\n  },\n  \"Python Information\": {\n    \"path\": \"/tmp/build-env-zqq_wkgx/bin/python\",\n    \"version\": \"3.12\"\n  },\n  \"SIMD Extensions\": {\n    \"baseline\": [\n      \"X86_V2\"\n    ],\n    \"found\": [\n      \"X86_V3\",\n      \"X86_V4\",\n      \"AVX512_ICL\"\n    ],\n    \"not found\": [\n      \"AVX512_SPR\"\n    ]\n  }\n}\n",
+      "runtime_versions": {
+        "neuron": "9.0.2",
+        "numpy": "2.5.5",
+        "python": "3.12.16",
+        "scipy": "1.16.3",
+        "wall_seconds": 1353.4441307030002
+      },
+      "thread_environment": {
+        "BLIS_NUM_THREADS": "1",
+        "MKL_NUM_THREADS": "1",
+        "NUMEXPR_NUM_THREADS": "1",
+        "OMP_NUM_THREADS": "1",
+        "OPENBLAS_NUM_THREADS": "1",
+        "PYTHONHASHSEED": "0",
+        "VECLIB_MAXIMUM_THREADS": "1"
+      },
+      "threadpools": [
+        {
+          "diagnostic_error": "ModuleNotFoundError: No module named 'threadpoolctl'"
+        }
+      ]
+    }
+  },
+  "interpretation": [
+    "The two independently completed runs passed the same coverage and finite-DFT identity checks but did not construct identical bases.",
+    "Compare absolute differences together with scaled relative differences; relative differences can be exaggerated by residuals close to zero.",
+    "The repeated-run data are a CPU-dispatch sensitivity audit, not a bitwise replication claim.",
+    "Do not infer population-level or biological effects from these four individual passive linear-RC morphology cases."
+  ],
+  "matched_pair_keys": 12096,
+  "metric_differences": [
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 1.259616070898792e-05,
+      "median_absolute_difference": 5.681943838589948e-10,
+      "median_scaled_relative_difference": 0.11539245509274512,
+      "metric": "continuous_ac_zoh_weighted_error_pct",
+      "p90_absolute_difference": 4.1284303059232685e-08,
+      "p99_absolute_difference": 8.991072765091363e-07,
+      "p99_scaled_relative_difference": 0.8110087219455802,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 1.3122764833665974e-13,
+      "median_absolute_difference": 3.035831142022499e-17,
+      "median_scaled_relative_difference": 0.11539245509274512,
+      "metric": "continuous_ac_weighted_error_norm_v_s",
+      "p90_absolute_difference": 1.5095469785093162e-15,
+      "p99_absolute_difference": 1.4480553871485483e-14,
+      "p99_scaled_relative_difference": 0.8110087219455802,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 8.430719666975884e-08,
+      "median_absolute_difference": 3.199135666291215e-12,
+      "median_scaled_relative_difference": 0.018442589624139107,
+      "metric": "discrete_be_periodic_transfer_error_pct",
+      "p90_absolute_difference": 8.551711831486427e-10,
+      "p99_absolute_difference": 2.0356596749957547e-08,
+      "p99_scaled_relative_difference": 0.6510310757304996,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 3.2106199422648077e-09,
+      "median_absolute_difference": 2.703959819677638e-14,
+      "median_scaled_relative_difference": 0.018442589624139104,
+      "metric": "discrete_be_error_norm_v",
+      "p90_absolute_difference": 6.658532461991234e-12,
+      "p99_absolute_difference": 2.7757461109152005e-10,
+      "p99_scaled_relative_difference": 0.6510310757304996,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 8.062860154452996e-08,
+      "median_absolute_difference": 9.557446485780274e-12,
+      "median_scaled_relative_difference": 0.0008135364831014238,
+      "metric": "finite_transient_nrmse_pct",
+      "p90_absolute_difference": 1.5118843505383946e-10,
+      "p99_absolute_difference": 8.847125595313536e-09,
+      "p99_scaled_relative_difference": 0.22706728751779368,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 8.065232225684165e-08,
+      "median_absolute_difference": 1.0963396444676973e-11,
+      "median_scaled_relative_difference": 0.11740234537857233,
+      "metric": "perturbation_coordinate_transient_nrmse_pct",
+      "p90_absolute_difference": 3.401493395051834e-10,
+      "p99_absolute_difference": 9.288481305616685e-09,
+      "p99_scaled_relative_difference": 0.9311792520414108,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 2.1420607874913282e-09,
+      "median_absolute_difference": 6.81116102018071e-14,
+      "median_scaled_relative_difference": 0.11718508147421897,
+      "metric": "finite_error_dft_norm_v_samples",
+      "p90_absolute_difference": 2.0947894217255376e-12,
+      "p99_absolute_difference": 1.0878667703716694e-10,
+      "p99_scaled_relative_difference": 0.9311140521936319,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 3.210619942264811e-09,
+      "median_absolute_difference": 2.703959819677537e-14,
+      "median_scaled_relative_difference": 0.018442589624139125,
+      "metric": "periodic_transfer_component_norm_v_samples",
+      "p90_absolute_difference": 6.658532461991234e-12,
+      "p99_absolute_difference": 2.7757461109151927e-10,
+      "p99_scaled_relative_difference": 0.6510310757304996,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 2.7023546766482237e-09,
+      "median_absolute_difference": 2.5241984607680953e-14,
+      "median_scaled_relative_difference": 0.08821384417534972,
+      "metric": "terminal_boundary_component_norm_v_samples",
+      "p90_absolute_difference": 5.613968383080195e-12,
+      "p99_absolute_difference": 2.595856114050565e-10,
+      "p99_scaled_relative_difference": 0.9154682922934018,
+      "total_rows": 12096
+    },
+    {
+      "changed_rows": 12096,
+      "maximum_absolute_difference": 17226910.824369796,
+      "median_absolute_difference": 49.78441718750628,
+      "median_scaled_relative_difference": 0.14886309214791113,
+      "metric": "transfer_boundary_cross_term_pct",
+      "p90_absolute_difference": 5926.640276093054,
+      "p99_absolute_difference": 222220.13560743467,
+      "p99_scaled_relative_difference": 1.7055188562013157,
+      "total_rows": 12096
+    }
+  ],
+  "morphology_sensitivity_rows": 72,
+  "outputs": {
+    "metric_differences": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_metric_differences.csv",
+    "morphology_sensitivity": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_morphology_sensitivity.csv",
+    "rerun_case_metrics": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_case_metrics.csv",
+    "rerun_comparisons": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_layout_vs_seven_comparisons.csv",
+    "rerun_report": "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_rerun_455858_report.json"
+  },
+  "reference_run_id": 45585262246,
+  "rerun_run_id": 45585843464,
+  "schema_version": 1,
+  "status": "passed",
+  "trace_hash_comparison": {
+    "different": 144,
+    "equal": 72,
+    "total": 216
+  }
+}
