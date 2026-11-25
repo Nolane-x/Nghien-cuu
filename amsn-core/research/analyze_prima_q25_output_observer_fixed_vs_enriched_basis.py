@@ -134,7 +134,23 @@ def verify_pinned_runtime(primary_report: dict[str, Any]) -> dict[str, Any]:
     pools = [x for x in runtime.get("threadpools", []) if x.get("internal_api") == "openblas"]
     if not pools or {x.get("architecture") for x in pools} != {"Haswell"}:
         raise RuntimeError("primary report does not verify Haswell OpenBLAS")
-    return {"versions": observed_versions, "thread_environment": environment, "threadpools": pools}
+    current_targets = runtime.get("numpy_current_dispatch_targets", [])
+    if not current_targets:
+        raise RuntimeError("primary report lacks active NumPy SIMD dispatch diagnostics")
+    unsupported = [
+        target for target in current_targets
+        if "X86_V4" in str(target).upper() or "AVX512" in str(target).upper()
+    ]
+    if unsupported:
+        raise RuntimeError(
+            f"primary report contains unsupported NumPy SIMD targets: {unsupported!r}"
+        )
+    return {
+        "versions": observed_versions,
+        "thread_environment": environment,
+        "threadpools": pools,
+        "numpy_current_dispatch_targets": current_targets,
+    }
 
 
 def _basis_report_index(report: dict[str, Any]) -> dict[tuple[str, str, str], dict[str, str]]:
