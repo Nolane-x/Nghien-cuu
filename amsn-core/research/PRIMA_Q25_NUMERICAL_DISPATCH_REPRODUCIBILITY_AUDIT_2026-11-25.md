@@ -18,6 +18,10 @@ The two runs also differed materially in wall time (2,546.82 s versus 1,353.44 s
 
 This does not establish that CPU dispatch is the only cause of the observed changes. It does establish that the two runs did not share an identical recorded runtime-feature environment, so the second run cannot be represented as a bit-for-bit reproducibility check.
 
+There is one further instrumentation limitation: the two original reports show `ModuleNotFoundError: No module named 'threadpoolctl'` under their OpenBLAS runtime diagnostics. Their NumPy build configuration identifies the bundled SciPy OpenBLAS build as dynamic-architecture SkylakeX, but this is build metadata, not the actual CPU kernel selected at runtime. Therefore, the first two runs' active OpenBLAS architecture is **unknown**. It would be too strong to attribute the basis differences exclusively to NumPy SIMD dispatch. The defensible conclusion is that both NumPy's detected SIMD feature set and the unrecorded OpenBLAS runtime architecture are unresolved numerical-dispatch variables in the original pair.
+
+The corrected workflows now pin the Python/NumPy/SciPy/NEURON/threadpoolctl versions as well as the OpenBLAS core type and NumPy SIMD-disable environment, and verify the selected OpenBLAS architecture before launching the long run.
+
 ## 2. Direct comparison of the two raw case matrices
 
 Both artifacts contain exactly 12,096 case-metric rows, and all paired case keys match. Comparing all cases by morphology, scenario, layout, source, output, pulse and window:
