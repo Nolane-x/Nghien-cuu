@@ -20,6 +20,8 @@ on:
       - "amsn-core/tests/test_prima_q25_four_morphology_boundary_decomposition.py"
       - "amsn-core/tests/test_prima_q25_cross_morphology_boundary_preflight.py"
       - "amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json"
+      - "amsn-core/results/NMO_163775_PengControl_holdout/preflight.json"
+      - "amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json"
   workflow_dispatch:
 
 permissions:
