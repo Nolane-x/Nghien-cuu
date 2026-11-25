@@ -184,15 +184,16 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           stem="prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25"
+          # Job-level defaults set the shell cwd to amsn-core; git add paths are relative to that directory.
           git add \
-            "amsn-core/results/${stem}_case_metrics.csv" \
-            "amsn-core/results/${stem}_layout_vs_seven_comparisons.csv" \
-            "amsn-core/results/${stem}_source_summary.csv" \
-            "amsn-core/results/${stem}_morphology_summary.csv" \
-            "amsn-core/results/${stem}_finite_dft_identity.csv" \
-            "amsn-core/results/${stem}_basis_hashes.csv" \
-            "amsn-core/results/${stem}_report.json" \
-            "amsn-core/results/${stem}.time.txt"
+            "results/${stem}_case_metrics.csv" \
+            "results/${stem}_layout_vs_seven_comparisons.csv" \
+            "results/${stem}_source_summary.csv" \
+            "results/${stem}_morphology_summary.csv" \
+            "results/${stem}_finite_dft_identity.csv" \
+            "results/${stem}_basis_hashes.csv" \
+            "results/${stem}_report.json" \
+            "results/${stem}.time.txt"
           if ! git diff --cached --quiet; then
             git commit -m "results: archive q25 observer-only fixed versus enriched basis study"
             git fetch origin "${GITHUB_REF_NAME}"
