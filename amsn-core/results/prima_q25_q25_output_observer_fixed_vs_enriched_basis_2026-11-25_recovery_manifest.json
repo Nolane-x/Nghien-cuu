@@ -14,8 +14,10 @@
     "artifact_preservation_step": "success",
     "corrected_replay_run_id": 45625185575,
     "corrected_replay_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575",
-    "corrected_replay_status_at_recovery": "in_progress",
-    "caveat": "Do not mark the corrected archival replay as passed until its workflow completes successfully."
+    "corrected_replay_status_at_recovery": "completed_success",
+    "caveat": "Do not mark the corrected archival replay as passed until its workflow completes successfully.",
+    "corrected_results_commit": "8f971b74807ec715cff2f4db39ebc9db7398cf32",
+    "corrected_report_blob_sha1": "09c03edbce0cbb0661c2507cef3abcfdd308ce74"
   },
   "artifact": {
     "id": 15027601308,
@@ -122,5 +124,35 @@
     "No active channels, action potentials, synapses, plasticity, calcium signalling or biological validity are established.",
     "Full Hines remains canonical; no production solver or default changed."
   ],
-  "report_path": "amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md"
+  "report_path": "amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md",
+  "corrected_archive": {
+    "artifact_id": 15032389094,
+    "artifact_name": "prima-q25-output-observer-fixed-vs-enriched-basis",
+    "artifact_size_bytes": 1441661,
+    "artifact_zip_sha256": "8c82e3a4c43eabe98e95e482749ccf3f7af7a1c7145ba2ecf39f6f1e9a00f4d1",
+    "artifact_url": "https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575/artifacts/15032389094",
+    "results_commit": "8f971b74807ec715cff2f4db39ebc9db7398cf32",
+    "report_git_blob_sha1": "09c03edbce0cbb0661c2507cef3abcfdd308ce74",
+    "report_status": "passed",
+    "runtime_wall_seconds": 3617.8036603259998,
+    "max_finite_dft_identity_relative_error": 5.386622461553216e-12,
+    "tolerance": 2e-8,
+    "primary_basis_hash_rows_matched": 144,
+    "exact_numerical_csv_match_to_recovered_run": true,
+    "numerical_csvs_identical": [
+      "basis_hashes",
+      "finite_dft_identity",
+      "case_metrics",
+      "layout_vs_seven_comparisons",
+      "morphology_summary",
+      "source_summary"
+    ],
+    "differing_metadata_files": [
+      "report.json",
+      "time.txt"
+    ],
+    "interpretation": "The numerical data CSVs and basis hashes are bit-identical to the recovered original artifact. Only run-specific report/runtime metadata and timing differ. The corrected run is the canonical committed archive."
+  },
+  "recovery_status": "numerical_analysis_recovered_and_officially_archived",
+  "note": "The original failed run's artifact remains preserved as recovery evidence. Corrected run 45625185575 completed successfully, committed the observer matrices, and uploaded a fresh artifact. Use corrected run 45625185575 as the official source for branch-archived outputs."
 }
