@@ -1,0 +1,184 @@
+name: PRIMA q25 four-morphology finite-window boundary decomposition
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-four-morphology-boundary-decomposition.yml"
+      - "amsn-core/research/analyze_prima_q25_four_morphology_boundary_decomposition.py"
+      - "amsn-core/research/analyze_prima_q25_short_window_boundary_decomposition.py"
+      - "amsn-core/research/audit_prima_q25_basis_conditioning.py"
+      - "amsn-core/research/audit_prima_q25_extended_backward_euler.py"
+      - "amsn-core/examples/replay_nmo03524_prima_7v9port.py"
+      - "amsn-core/examples/replay_nmo162186_prima_7v9port.py"
+      - "amsn-core/examples/replay_nmo163775_four_layout_ablation.py"
+      - "amsn-core/examples/replay_nmo107159_four_layout_replication.py"
+      - "amsn-core/examples/human_fine_mesh_passive_dc_audit.py"
+      - "amsn-core/examples/human_prima_port_enrichment.py"
+      - "amsn-core/examples/neuron_cross_validation.py"
+      - "amsn-core/tests/test_prima_q25_four_morphology_boundary_decomposition.py"
+      - "amsn-core/tests/test_prima_q25_cross_morphology_boundary_preflight.py"
+      - "amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-morphology-boundary-decomposition
+  cancel-in-progress: false
+
+jobs:
+  four-morphology-boundary-decomposition:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install AMSN and pinned numerical runtime
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+      - name: Download and verify Allen standardized SWC
+        working-directory: amsn-core
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --connect-timeout 20 --max-time 180 \
+            --user-agent "AMSN-NeuroMorpho-Q25-Decomposition/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Run q25 mapping and four-morphology numerical regression tests
+        working-directory: amsn-core
+        run: |
+          python -m pytest -q \
+            tests/test_prima_q25_cross_morphology_boundary_preflight.py \
+            tests/test_prima_q25_four_morphology_boundary_decomposition.py
+      - name: Verify four pinned morphology preflight contracts
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts")
+          expected = {
+              "NMO_03524_JacobsControl.json": (
+                  "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+                  {272, 864},
+                  {1, 367, 583, 751, 866, 867, 868},
+              ),
+              "NMO_162186_AllenL23.json": (
+                  "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+                  {2713, 4488},
+                  {1, 515, 2261, 2304, 4180, 4262, 6608},
+              ),
+          }
+          for name, (digest, q25, shared) in expected.items():
+              payload = json.loads((root / name).read_text(encoding="utf-8"))
+              assert payload["status"] == "PASS", name
+              assert payload["source"]["source_sha256"] == digest, name
+              assert set(payload["amsn"]["q25_only_swc_node_ids"]) == q25, name
+              assert set(payload["amsn"]["seven_unique_port_node_ids"]) == shared, name
+              assert payload["neuron"]["segment_cap_um"] == 0.5, name
+          print("PASS: both newly added q25 holdout contracts are pinned and match the shared 0.5-um cap")
+          PY
+      - name: Run four-morphology exact finite-window decomposition
+        working-directory: amsn-core
+        run: |
+          /usr/bin/time -f 'elapsed_wall_seconds=%e\nuser_cpu_seconds=%U\nsystem_cpu_seconds=%S\nmax_rss_kb=%M\nexit_status=%x' \
+            -o results/prima_q25_four_morphology_boundary_decomposition_2026-11-25.time.txt \
+            python research/analyze_prima_q25_four_morphology_boundary_decomposition.py
+      - name: Assert four-morphology result coverage and identity tolerance
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+
+          stem = "prima_q25_four_morphology_boundary_decomposition_2026-11-25"
+          results = Path("results")
+          report = json.loads((results / f"{stem}_report.json").read_text(encoding="utf-8"))
+          assert report["status"] == "prima_q25_four_morphology_boundary_decomposition_passed"
+          assert len(report["scope"]["morphologies"]) == 4
+          assert report["validation"]["all_morphology_preflights_passed"] is True
+          assert report["validation"]["max_finite_identity_relative_error"] <= 2e-8
+          expected = {
+              "frequency_summary": 537768,
+              "case_metrics": 6048,
+              "nine_seven_comparisons": 3024,
+              "source_window_summary": 48,
+              "morphology_window_summary": 8,
+              "finite_dft_identity": 864,
+          }
+          suffix = {
+              "frequency_summary": "frequency_summary.csv",
+              "case_metrics": "case_metrics.csv",
+              "nine_seven_comparisons": "nine_seven_comparisons.csv",
+              "source_window_summary": "source_window_summary.csv",
+              "morphology_window_summary": "morphology_window_summary.csv",
+              "finite_dft_identity": "finite_dft_identity.csv",
+          }
+          for key, count in expected.items():
+              path = results / f"{stem}_{suffix[key]}"
+              with path.open(newline="", encoding="utf-8") as handle:
+                  observed = sum(1 for _ in csv.DictReader(handle))
+              assert observed == count, f"{key}: {observed} != {count}"
+          assert report["exact_coverage"]["csv_read_back"] == expected
+          print(json.dumps({
+              "status": report["status"],
+              "expected_rows": expected,
+              "actual_readback": report["exact_coverage"]["csv_read_back"],
+              "max_identity_relative_error": report["validation"]["max_finite_identity_relative_error"],
+              "morphologies": [m["morphology"] for m in report["scope"]["morphologies"]],
+              "runtime": report["runtime"],
+          }, indent=2, sort_keys=True))
+          PY
+      - name: Commit validated four-morphology numerical evidence
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/prima_q25_four_morphology_boundary_decomposition_2026-11-25_*.csv \
+                  amsn-core/results/prima_q25_four_morphology_boundary_decomposition_2026-11-25_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive four-morphology q25 boundary decomposition"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+      - name: Preserve complete raw result matrix and runtime evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-four-morphology-boundary-decomposition
+          path: |
+            amsn-core/data/human/allen_cell_types/770307286_transformed.CNG.swc
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_report.json
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_mapping.csv
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/*.json
+            amsn-core/results/prima_q25_four_morphology_boundary_decomposition_2026-11-25_*.csv
+            amsn-core/results/prima_q25_four_morphology_boundary_decomposition_2026-11-25_report.json
+            amsn-core/results/prima_q25_four_morphology_boundary_decomposition_2026-11-25.time.txt
+          if-no-files-found: error
+          retention-days: 90
