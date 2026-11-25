@@ -153,6 +153,18 @@ def verify_pinned_runtime(primary_report: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def q25_retained_role_map(
+    q25_node_ids: dict[str, int],
+    layout_node_ids: list[int],
+    role_order: tuple[str, ...] = ("basal_q25", "apical_q25"),
+) -> dict[str, bool]:
+    """Return whether each observer-only q25 readout is also a retained port."""
+    if set(q25_node_ids) != set(role_order):
+        raise ValueError("q25 node map does not match the declared observer roles")
+    retained = {int(node_id) for node_id in layout_node_ids}
+    return {role: int(q25_node_ids[role]) in retained for role in role_order}
+
+
 def assert_matching_numpy_dispatch(
     primary_dispatch: dict[str, Any],
     observer_runtime: dict[str, Any],
@@ -494,11 +506,9 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                 })
                 shared_output_basis = model.input_matrix[:, common_output_slots].T.copy()
                 q25_output_basis = model.basis[np.asarray(observer_tree_indices, dtype=np.int64), :].copy()
-                retained_node_ids = set(int(x) for x in layout["node_ids"])
-                q25_retained = {
-                    role: int(q25_ids[role]) in retained_node_ids
-                    for role in role_order
-                }
+                q25_retained = q25_retained_role_map(
+                    q25_ids, layout["node_ids"], role_order
+                )
                 for q_index, role in enumerate(role_order):
                     if q25_retained[role]:
                         q25_slot = int(layout["node_ids"].index(observer_node_ids[q_index]))
