@@ -106,6 +106,8 @@ def summarize_seed_rows(
         port_count = int(rows[0]["port_count"])
         if any(int(row["port_count"]) != port_count for row in rows):
             raise ValueError(f"{key}: port count changes between shifts")
+        if any(value > port_count for value in independent):
+            raise ValueError(f"{key}: independent seed rank exceeds retained port count")
         total = cumulative[-1]
         if total > MAX_ORDER:
             raise ValueError(f"{key}: initial seed rank {total} exceeds max order {MAX_ORDER}")
@@ -231,7 +233,9 @@ def run(output_dir: Path = RESULTS) -> dict[str, Any]:
                         "parameter_scenario": scenario_name,
                         "layout_id": layout_id,
                         "port_count": int(layout["port_count"]),
-                        **seed,
+                        "seed_shift_hz": float(seed["frequency_hz"]),
+                        "independent_seed_columns": int(seed["independent_seed_columns"]),
+                        "cumulative_seed_columns": int(seed["cumulative_seed_columns"]),
                     })
 
     model_rows, morphology_rows = summarize_seed_rows(
