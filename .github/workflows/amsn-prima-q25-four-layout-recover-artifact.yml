@@ -1,0 +1,156 @@
+name: Recover and archive validated PRIMA q25 four-layout results
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-four-layout-recover-artifact.yml"
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-layout-result-recovery
+  cancel-in-progress: false
+
+jobs:
+  recover-validated-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+      - name: Download the validated numerical artifact from run 45585262246
+        uses: actions/download-artifact@v4
+        with:
+          name: prima-q25-four-morphology-four-layout-boundary-ablation
+          github-token: ${{ github.token }}
+          repository: ${{ github.repository }}
+          run-id: 45585262246
+          path: recovered
+      - name: Verify report, checksums, exact coverage and finite-DFT identities
+        run: |
+          python - <<'PY'
+          import csv
+          import hashlib
+          import json
+          from pathlib import Path
+
+          root = Path("recovered")
+          results = root / "results"
+          stem = "prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+          expected = {
+              "frequency_summary": 1075536,
+              "case_metrics": 12096,
+              "layout_vs_seven_comparisons": 9072,
+              "source_layout_window_summary": 144,
+              "morphology_layout_window_summary": 24,
+              "finite_dft_identity": 1728,
+          }
+          suffixes = {
+              "frequency_summary": "frequency_summary.csv",
+              "case_metrics": "case_metrics.csv",
+              "layout_vs_seven_comparisons": "layout_vs_seven_comparisons.csv",
+              "source_layout_window_summary": "source_layout_window_summary.csv",
+              "morphology_layout_window_summary": "morphology_layout_window_summary.csv",
+              "finite_dft_identity": "finite_dft_identity.csv",
+          }
+          report_path = results / f"{stem}_report.json"
+          report = json.loads(report_path.read_text(encoding="utf-8"))
+          assert report["status"] == "prima_q25_four_morphology_four_layout_boundary_ablation_passed"
+          assert report["scope"]["basis_order"] == 168
+          assert report["scope"]["layouts"] == [
+              "seven", "eight_basal_q25", "eight_apical_q25", "nine_both_q25"
+          ]
+          assert len(report["scope"]["morphologies"]) == 4
+          assert report["validation"]["all_morphology_preflights_passed"] is True
+          assert report["validation"]["all_morphology_sha256_checked"] is True
+          max_identity = report["validation"]["max_finite_identity_relative_error"]
+          assert max_identity <= report["validation"]["finite_identity_relative_tolerance"] == 2e-8
+
+          actual = {}
+          file_hashes = {}
+          file_sizes = {}
+          for key, expected_rows in expected.items():
+              path = results / f"{stem}_{suffixes[key]}"
+              with path.open(newline="", encoding="utf-8") as handle:
+                  actual[key] = sum(1 for _ in csv.DictReader(handle))
+              assert actual[key] == expected_rows, (key, actual[key], expected_rows)
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              file_hashes[path.name] = digest
+              file_sizes[path.name] = path.stat().st_size
+          assert report["exact_coverage"]["csv_read_back"] == expected
+
+          allen_swc = root / "data/human/allen_cell_types/770307286_transformed.CNG.swc"
+          assert allen_swc.is_file()
+          allen_sha = hashlib.sha256(allen_swc.read_bytes()).hexdigest()
+          assert allen_sha == "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc"
+
+          manifest = {
+              "schema_version": 1,
+              "status": "verified",
+              "source_workflow_run_id": 45585262246,
+              "source_artifact_id": 15010408589,
+              "source_artifact_name": "prima-q25-four-morphology-four-layout-boundary-ablation",
+              "source_artifact_sha256": "3004c7686aae9e4c3f674396740f4ce191e72063b2a6552641c5c082a0f9766b",
+              "basis_order": 168,
+              "layouts": report["scope"]["layouts"],
+              "morphologies": [item["neuromorpho_id"] for item in report["scope"]["morphologies"]],
+              "expected_rows": expected,
+              "actual_rows": actual,
+              "max_finite_identity_relative_error": max_identity,
+              "finite_identity_relative_tolerance": 2e-8,
+              "result_file_sha256": file_hashes,
+              "result_file_sizes_bytes": file_sizes,
+              "allen_swc_sha256": allen_sha,
+              "frequency_summary_policy": "Retain the 1,075,536-row frequency CSV in the source Actions artifact; do not commit the 190-MB file to Git.",
+          }
+          (results / f"{stem}_artifact_archive_manifest.json").write_text(
+              json.dumps(manifest, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          print(json.dumps(manifest, indent=2, sort_keys=True))
+          PY
+      - name: Commit compact validated result tables
+        run: |
+          mkdir -p amsn-core/results
+          stem="prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25"
+          for suffix in \
+            case_metrics.csv \
+            layout_vs_seven_comparisons.csv \
+            source_layout_window_summary.csv \
+            morphology_layout_window_summary.csv \
+            finite_dft_identity.csv \
+            report.json \
+            artifact_archive_manifest.json \
+            time.txt; do
+            cp "recovered/results/${stem}_${suffix}" "amsn-core/results/${stem}_${suffix}"
+          done
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            "amsn-core/results/${stem}_case_metrics.csv" \
+            "amsn-core/results/${stem}_layout_vs_seven_comparisons.csv" \
+            "amsn-core/results/${stem}_source_layout_window_summary.csv" \
+            "amsn-core/results/${stem}_morphology_layout_window_summary.csv" \
+            "amsn-core/results/${stem}_finite_dft_identity.csv" \
+            "amsn-core/results/${stem}_report.json" \
+            "amsn-core/results/${stem}_artifact_archive_manifest.json" \
+            "amsn-core/results/${stem}_time.txt"
+          if ! git diff --cached --quiet; then
+            git commit -m "results: recover validated four-layout q25 matrices from Actions artifact"
+            git fetch origin "${GITHUB_REF_NAME}"
+            git rebase "origin/${GITHUB_REF_NAME}"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
+      - name: Preserve recovery manifest
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-four-layout-verified-recovery-manifest
+          path: recovered/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_artifact_archive_manifest.json
+          if-no-files-found: warn
+          retention-days: 90
