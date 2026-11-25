@@ -25,7 +25,7 @@ The study reuses the same four morphology SWCs, preflight checksums, q25 node ID
 - NMO_03524 Jacobs human Control.
 - NMO_162186 Allen human L2/3 epilepsy surgical specimen.
 
-All four layouts are evaluated at the same PRIMA order 168. The numerical dispatch is pinned to OPENBLAS_CORETYPE=Haswell and NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL; one-thread settings and exact package versions are checked before the calculation. The observer run refuses to continue unless its runtime matches the primary run and all 144 basis/G/C/input hashes reproduce exactly.
+All four layouts are evaluated at the same PRIMA order 168. The numerical dispatch is pinned to OPENBLAS_CORETYPE=Haswell and NPY_DISABLE_CPU_FEATURES=X86_V4,AVX512_ICL,AVX512_SPR; one-thread settings and exact package versions are checked before the calculation. The observer run refuses to continue unless its runtime matches the primary run and all 144 basis/G/C/input hashes reproduce exactly.
 
 The remainder is unchanged: nine passive parameter scenarios; source locations soma, basal-q75 and apical-q75; 10-pA pulses of 2 ms and 10 ms beginning at 2 ms; timestep 0.00625 ms; windows 20 ms and 40 ms; six rational-Krylov expansion shifts (0, 100, 1,000, 3,000, 6,000 and 10,000 Hz); NEURON segment cap 0.5 µm.
 
