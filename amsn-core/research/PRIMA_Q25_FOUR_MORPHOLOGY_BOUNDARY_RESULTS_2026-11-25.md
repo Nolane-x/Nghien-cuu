@@ -117,7 +117,7 @@ The most important descriptive result is morphology dependence: the combined q25
 
 Before recommending a port layout, test whether the observed q25 interaction is stable across PRIMA basis order. The present four-layout experiment fixes order 168; because the basis is regenerated for each retained-port set, a strong effect could be sensitive to approximation order as well as probe placement.
 
-The next study should therefore run a **basis-order convergence sweep** for all four layouts on the same four pinned morphologies, at least at orders 84, 120, 168, 224 and 280, retaining the existing expansion shifts, sources, passive scenarios and finite-window decomposition. Report:
+The next study is now implemented as a **basis-order convergence sweep** for all four layouts on the same four pinned morphologies, using the existing order-168 matrix plus fresh order-112 and order-224 runs. It retains the existing expansion shifts, sources, passive scenarios and finite-window decomposition. The [sweep driver](run_prima_q25_four_layout_basis_order_convergence.py), [tests](../tests/test_prima_q25_four_layout_basis_order_convergence.py) and [Actions workflow](../../../.github/workflows/amsn-prima-q25-basis-order-convergence.yml) are committed. A further order-280 run is reserved for the case where order 224 has not stabilized. Report:
 - convergence of absolute discrete-BE and perturbation-coordinate transient errors against the full-Hines reference;
 - whether basal-only, apical-only and combined interaction contrasts persist or collapse as order increases;
 - basis rank, orthogonality, conditioning and unique subspace hashes by morphology/layout/order;
