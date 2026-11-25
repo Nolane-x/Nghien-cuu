@@ -33,6 +33,16 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 - Paired post-analysis is marked passed: 3,024 matched case keys, 336 interaction summaries, 168 morphology summaries and 1,008 source summaries. Inputs match the archived primary-matrix hashes.
 - Detailed report: [PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_STRICT_DISPATCH_REPLAY_2026-11-25.md](amsn-core/research/PRIMA_Q25_FOUR_MORPHOLOGY_FOUR_LAYOUT_STRICT_DISPATCH_REPLAY_2026-11-25.md). Run-specific artifact manifest: [prima_q25_four_morphology_four_layout_strict_dispatch_replay_2026-11-25_manifest.json](amsn-core/results/prima_q25_four_morphology_four_layout_strict_dispatch_replay_2026-11-25_manifest.json). Research log: [RESEARCH_LOG_2026-11-25_PRIMA-Q25-STRICT-DISPATCH-FOUR-LAYOUT-REPLAY.md](research/RESEARCH_LOG_2026-11-25_PRIMA-Q25-STRICT-DISPATCH-FOUR-LAYOUT-REPLAY.md).
 
+### Recovered q25 output-observer numerical result — passed analysis, artifact preserved
+
+- Original run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) completed the full observer numerical analysis successfully. The job failed only in the later Git archival step; artifact preservation succeeded.
+- Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) was downloaded and its ZIP SHA-256 independently recomputed: `2391661263ef1c959d550e8a336c8fed89e1f1dfcc626ddab16b3db60bed8aa3`. Exact extracted CSV/report checksums and row counts are in [the recovery manifest](amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json).
+- The observer JSON declares **passed**, matches **144/144** primary basis/G/C/input hashes, and records max finite-DFT identity relative error `5.386622461553216e-12` against `2e-8`. Coverage: 3,456 case rows; 2,592 paired comparisons; 2,016 source summaries; 336 morphology summaries; 3,456 finite-DFT identity rows.
+- Scientific result: a q25 output can be evaluated from a full-compartment basis row without adding it to the retained input selector B. Retaining that q25 node often sharply improves its own readout versus the seven-port observer-only basis (especially Tamas, Allen and Peng), while leaving the other q25 node observation-only can increase its error. Retaining both q25 nodes can recover both outputs relative to the seven-port baseline, but the second retained q25 can worsen the first q25 output compared with its single-port basis. The effect is morphology-dependent; Jacobs apical is a notable near-neutral exception.
+- Ratios must be read with absolute deltas; a low seven-port q25 baseline error can make relative ratios unstable. The result remains passive linear-RC numerical evidence from four individual reconstructions, not biological validation.
+- Detailed analysis: [PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md](amsn-core/research/PRIMA_Q25_Q25_OUTPUT_OBSERVER_FIXED_VS_ENRICHED_BASIS_RESULTS_2026-11-25.md). Recovery manifest: [prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json](amsn-core/results/prima_q25_q25_output_observer_fixed_vs_enriched_basis_2026-11-25_recovery_manifest.json).
+- Corrected archival replay [45625185575](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45625185575) passed its preflight/reference gates and was still running the full numerical observer analysis at the last check. Do not mark the raw observer CSVs as committed until that replay or an equivalent verified artifact-recovery commit completes.
+
 ### Output-observer CI archival correction
 
 - Original observer run [45616908599](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599) passed runtime/dispatch, source checksum, regression tests, primary-reference gate and the numerical observer calculation (report status passed; reported run time 2,512.57 s). Artifact [15027601308](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45616908599/artifacts/15027601308) uploaded successfully.
@@ -49,7 +59,7 @@ Both transient coordinate conventions must remain in reports. The ratio is not a
 
 ### Current guardrails and next sequence
 
-1. Inspect corrected observer run 45625185575; confirm numerical status, row counts, corrected git add, rebase/push and artifact upload.
+1. Confirm corrected observer run 45625185575 completes the archival path; the earlier artifact and numerical report have already been recovered and SHA-256 verified.
 2. Finish and validate the 112/168/224 order sweep. Compare absolute errors and both transient coordinate metrics; report rank, conditioning, orthogonality, hashes, runtime and peak RSS.
 3. Treat the accepted strict-dispatch 7/8/8/9-port matrix as the order-168 anchor; compare fresh order-112/224 results against it and revisit source/weighting only if the q25 penalty persists.
 4. Reconcile all accepted matrices and update dated report/logs. Keep failed and cancelled attempts as history, never as accepted results.
