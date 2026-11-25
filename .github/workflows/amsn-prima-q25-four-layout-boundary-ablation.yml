@@ -103,7 +103,11 @@ jobs:
               assert observed == set(expected[key].values()), (key, observed)
               shared = payload["amsn"]["seven_unique_port_node_ids"]
               assert len(shared) == 7 and len(set(shared)) == 7, key
-              assert payload["neuron"]["segment_cap_um"] == 0.5, key
+              cap = payload["neuron"].get(
+                  "segment_cap_um",
+                  payload["neuron"].get("maximum_segment_length_cap_um"),
+              )
+              assert cap == 0.5, (key, cap)
           print("PASS: all four morphology-specific q25 IDs and shared-seven IDs are pinned")
           PY
       - name: Run four-morphology 7/8/8/9-port finite-window boundary ablation
