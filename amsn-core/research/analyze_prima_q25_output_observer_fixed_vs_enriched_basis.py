@@ -494,6 +494,11 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                 })
                 shared_output_basis = model.input_matrix[:, common_output_slots].T.copy()
                 q25_output_basis = model.basis[np.asarray(observer_tree_indices, dtype=np.int64), :].copy()
+                retained_node_ids = set(int(x) for x in layout["node_ids"])
+                q25_retained = {
+                    role: int(q25_ids[role]) in retained_node_ids
+                    for role in role_order
+                }
                 for q_index, role in enumerate(role_order):
                     if q25_retained[role]:
                         q25_slot = int(layout["node_ids"].index(observer_node_ids[q_index]))
@@ -508,10 +513,6 @@ def run(primary_results_dir: Path, output_dir: Path) -> dict[str, Any]:
                 output_basis = np.vstack((shared_output_basis, q25_output_basis))
                 if output_basis.shape != (9, model.order):
                     raise ValueError("observer output basis must expose seven shared and two q25 outputs")
-                q25_retained = {
-                    role: int(q25_ids[role]) in set(int(x) for x in layout["node_ids"])
-                    for role in role_order
-                }
                 reduced_trace, reduced_terminal = simulate_reduced_with_output_basis(
                     model, layout, output_basis, protocol, runner
                 )
