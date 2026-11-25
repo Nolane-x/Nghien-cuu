@@ -1,4 +1,4 @@
-name: PRIMA q25 four-layout post-analysis tests
+name: PRIMA q25 four-layout post-analysis tests and summaries
 
 on:
   push:
@@ -11,7 +11,11 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-layout-posthoc
+  cancel-in-progress: false
 
 jobs:
   post-analysis-tests:
@@ -28,3 +32,19 @@ jobs:
         run: python -m unittest discover -s tests -p "test_prima_q25_four_layout_posthoc.py" -v
       - name: Compile the post-analysis module and tests
         run: python -m py_compile research/summarize_prima_q25_four_layout_interactions.py tests/test_prima_q25_four_layout_posthoc.py
+      - name: Run paired post-analysis when primary matrix is committed
+        if: hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_case_metrics.csv', 'amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_layout_vs_seven_comparisons.csv') != ''
+        run: python research/summarize_prima_q25_four_layout_interactions.py
+      - name: Commit validated post-analysis summaries
+        if: success() && hashFiles('amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json') != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add amsn-core/results/prima_q25_four_morphology_four_layout_ablation_2026-11-25_posthoc_*.csv \
+                  amsn-core/results/prima_q25_four_morphology_four_layout_boundary_ablation_2026-11-25_posthoc_report.json
+          if ! git diff --cached --quiet; then
+            git commit -m "results: archive paired q25 basal apical interaction summaries"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
