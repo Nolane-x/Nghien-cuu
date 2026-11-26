@@ -534,6 +534,21 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
             "initial_input_seed_columns": enriched.diagnostics.initial_input_seed_columns,
             "initial_output_seed_columns": enriched.diagnostics.initial_output_seed_columns,
             "actual_order": model.order,
+            "shared_swc_node_ids": [int(node_id) for node_id in shared_node_ids],
+            "q25_swc_node_ids": {
+                role: int(node_id) for role, node_id in q25_node_ids.items()
+            },
+            "heldout_spatial_sites": [
+                {
+                    "output_role": site["output_role"],
+                    "output_label": site["output_label"],
+                    "swc_node_id": int(site["swc_node_id"]),
+                    "tree_index": int(site["tree_index"]),
+                    "branch_class": site["branch_class"],
+                    "path_distance_quantile": float(site["path_distance_quantile"]),
+                }
+                for site in heldout_sites
+            ],
             "basis_sha256": sha256_array(model.basis),
             "conductance_sha256": sha256_array(model.conductance_matrix_s),
             "capacitance_sha256": sha256_array(model.capacitance_matrix_f),
