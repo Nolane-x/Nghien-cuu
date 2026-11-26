@@ -172,3 +172,12 @@ Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/
 - Commits: `262c88198ea4362ff66f709cde7a16e7a2c23d72` and `00e389a478c81709476c563da9fffc2f7e4f8520`.
 - CI state at documentation update: legacy numerical run `45788056271` remains in its numerical sweep; run `45790064294` was superseded/cancelled by the newer branch push; the latest streaming-enabled numerical run is queued as `45791629647`. No numerical archive has yet been accepted.
 - The independent report-workflow regression run `45790113319` completed successfully (5 tests). This verifies report-generation mechanics only, not the scientific sweep.
+
+
+### Latest CI queue state — 26 Nov 2026, 09:25 UTC
+
+- `45791623532` (runner streaming code) and `45791629647` (streaming regression tests) were both cancelled while queued, because the next branch push replaced the pending run in the workflow concurrency group.
+- The docstring-only follow-up is included in the newest queued run `45791762970`: https://github.com/Nolane-x/Nghien-cuu/actions/runs/45791762970
+- Legacy run `45788056271` is still active in its numerical sweep. It predates live log streaming and checkpoint retention.
+- The next run, `45791762970`, includes the complete current runner, tests, bounded SIGSEGV retry, and failure checkpoint upload.
+- Report mechanics remain verified by `45790113319` (5/5 tests); no accepted numerical archive or scientific conclusion yet.
