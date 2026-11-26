@@ -138,6 +138,24 @@ def test_preflight_paths_resolve_from_amsn_core_independent_of_cwd():
     ).resolve()
 
 
+def test_worker_command_enables_python_faulthandler(monkeypatch, tmp_path):
+    captured = {}
+
+    def fake_run(command, **kwargs):
+        captured["command"] = command
+        return spatial_runner.subprocess.CompletedProcess(
+            command, 0, stdout=None, stderr=None
+        )
+
+    monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
+    spatial_runner.run_worker_with_sigsegv_retry(
+        ["python", "-X", "faulthandler", "worker.py"],
+        worker_label="NMO_TEST/nominal",
+        output_dir=tmp_path / "worker-output",
+    )
+    assert captured["command"][1:3] == ["-X", "faulthandler"]
+
+
 def test_worker_retries_only_sigsegv_and_cleans_partial_output(monkeypatch, tmp_path):
     output_dir = tmp_path / "worker-output"
     calls = []
