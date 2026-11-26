@@ -337,3 +337,22 @@ Numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/ru
 - Added basis construction cost/conditioning summaries: per-schedule accepted dual rank (median/range), median and P90 basis build time, max projected G/C condition numbers, and max basis orthogonality error over 36 morphology/scenario cells.
 - [Report CI #45799887740](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799887740) passed compile and **7/7 tests in 0.41 s**. The synthetic fixture includes all required metadata for the build-cost/conditioning section. Actual archive-dependent report generation remains skipped until the numerical sweep produces an accepted archive.
 - Numerical run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains active in its 36-worker sweep; no final matrices/artifact are available yet.
+
+
+## Independent q25 rerun and exact numerical reproducibility — 26 November 2026
+
+The faulthandler-enabled rerun [#45793076160](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160) completed successfully:
+- 36/36 worker groups completed; zero SIGSEGV retries; each worker required one process attempt.
+- All preflight, schedule/unit, exact-coverage, D0 parity, positive G/C, order-224, orthogonality and finite-record DFT steps passed.
+- Re-run archive commit: `e307f526114f2c185e68ac2289f97bdccb82fa66`; artifact ID `15106218185`, 595,050 bytes.
+- The re-run took 2,516.24 s wall; summed worker time 2,501.26 s; maximum worker 93.97 s. All 36 workers completed without retries.
+
+The re-run artifact was downloaded and independently checked:
+- All nine manifest files matched expected byte counts and SHA-256 hashes.
+- The six numerical CSVs (case metrics, group summary, morphology summary, scenario summary, pooled summary and finite DFT identity) are byte-for-byte identical to the earlier accepted archive from #45788056271.
+- Across all 144 schedule metadata rows, the following hashes/fields are also exactly identical: basis SHA-256, input SHA-256, reduced conductance SHA-256, reduced capacitance SHA-256, q25/edge/shared SWC maps, seed labels/indices, input/output seed counts, actual order, orthogonality, and G/C condition numbers.
+- The only per-row metadata field that differs is `wall_seconds`; report-level changes are runtime/provenance and CPU feature-detection diagnostics. Numerical outputs and reduced matrices are unchanged.
+
+Report workflow [#45801634554](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45801634554) passed 6/6 tests and regenerated the q25 result report with explicit source link to #45793076160.
+
+The earlier SIGSEGV in #45792818861 was therefore not reproduced in this complete rerun. This supports repeatability of the accepted numerical result on the pinned CI runtime; it does not identify the native crash's original cause.
