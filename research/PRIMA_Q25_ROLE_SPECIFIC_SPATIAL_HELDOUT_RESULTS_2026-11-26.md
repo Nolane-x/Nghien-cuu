@@ -3,7 +3,7 @@
 **Date:** 26 November 2026  
 **Status:** accepted numerical result; generated from case-level archive  
 **Basis order:** 224  
-**Workflow:** run ID not recorded in archive  
+**Source numerical workflow:** [run 45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271)  
 
 ## Executive summary
 
