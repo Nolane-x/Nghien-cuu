@@ -356,3 +356,37 @@ The re-run artifact was downloaded and independently checked:
 Report workflow [#45801634554](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45801634554) passed 6/6 tests and regenerated the q25 result report with explicit source link to #45793076160.
 
 The earlier SIGSEGV in #45792818861 was therefore not reproduced in this complete rerun. This supports repeatability of the accepted numerical result on the pinned CI runtime; it does not identify the native crash's original cause.
+
+## Final consolidated status — 26 November 2026
+
+### Earlier q25 spatial-heldout study: reproducibility confirmed
+
+The faulthandler-enabled q25 rerun [#45793076160](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160) completed successfully: all 36 morphology/scenario workers passed with zero SIGSEGV retries, all exact coverage checks passed, D0 production parity held, every order-224 reduced G/C pair passed Cholesky, the seven canonical input ports remained unchanged, and all 144 finite-record DFT identities passed.
+
+Artifact [15106218185](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160/artifacts/15106218185) was downloaded and independently verified against its nine-file manifest. The six numerical CSVs are byte-identical to the earlier accepted run #45788056271; all 144 basis/input/G/C hashes, node and seed maps, basis ranks, order, orthogonality and condition numbers also match exactly. Only worker timing and report runtime/provenance/CPU-diagnostic fields differ. The earlier native SIGSEGV was not reproduced; its original cause remains unknown.
+
+### q25-versus-edge multilocation study: accepted numerical archive
+
+Primary numerical run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) succeeded across 36/36 workers. The committed archive has exact coverage: 28,080 case metrics; 4,680 worker summaries; 520 morphology/window summaries; 1,170 scenario/window summaries; 130 pooled/window summaries; 180 finite-record DFT identities; 180 basis metadata rows; 28,080 unique case keys.
+
+Numerical gates: D0 exact production parity; all reduced G/C Cholesky-positive; all models order224; exactly seven unchanged input ports; maximum basis orthogonality error 2.220446049250313e-15. All DFT identities passed (maximum full-Hines residual 3.1660560529975156e-12; reduced residual 3.6403602430240796e-13; tolerance 2e-8). No SIGSEGV retries were required. Wall time was 3,010.96 s.
+
+The 752,900-byte archive artifact is [15109150731](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978/artifacts/15109150731). I downloaded it, checked all nine SHA-256 manifest entries and byte counts, and verified that the archive bytes correspond to the committed Git files.
+
+### Final interpretation
+
+The resource-matched strategies use two output-dual seeds each: Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K. BOTH_EDGES_10K uses four seeds and is a higher-budget condition, not a location-only comparison.
+
+Seed-target medians are much lower than D0 (candidate/D0 ratios: Q25_BOTH 0.004211; BASAL_EDGES 0.003165; APICAL_EDGES 0.008682; BOTH_EDGES 0.007064, the last with four seeds). This is a strong target-local effect.
+
+All available pooled unseeded-transfer families have median candidate/D0 ratio above one: Q25_BOTH_10K edge transfer 1.265 (1,728 pairs); BASAL_EDGES_10K q25 transfer 1.330 and opposite-branch edge transfer 1.087 (864 pairs each); APICAL_EDGES_10K q25 transfer 1.712 and opposite-branch edge transfer 1.614 (864 pairs each); BOTH_EDGES_10K q25 transfer 2.187 (864 pairs).
+
+There are morphology exceptions: Jacobs q25-seeded edge transfer has median ratio 0.9261, and Peng basal-edge-seeded apical-edge transfer has median ratio 0.5063. Thus the pooled evidence is consistent with target-local basis specialization rather than broad spatial generalization; the effect is heterogeneous across four individual reconstructions. Ratios are descriptive and near-floor absolute percentage-point deltas must also be read. No inferential significance or population-level biological claim is made.
+
+The final report is committed at research/PRIMA_Q25_MULTILOCATION_OUTPUT_DUAL_SEED_RESULTS_2026-11-26.md. Report workflow [#45815168477](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45815168477) passed compile, 7/7 tests in 0.58 s, full archive/hash/source-manifest validation, report generation and report commit. The analyzer independently checks the complete 28,080-row Cartesian design and the pinned source manifest hashes.
+
+### Duplicate-run note
+
+A later duplicate workflow run [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) completed its numerical and coverage steps but failed during the Git commit/rebase because the successful primary run had already added the same ten archive files, causing add/add conflicts. It did not invalidate or replace the accepted archive from #45796697978. Do not treat that duplicate push failure as a numerical failure.
+
+The PR remains Draft; no production solver/default has changed and no merge has been performed.
