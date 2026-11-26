@@ -92,3 +92,8 @@ Added research/analyze_prima_q25_spatial_heldout_results.py. It is intentionally
 The independent reporting workflow [45767963050](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767963050) completed **success**. Both reporter scripts passed compileall and all four unit tests passed, covering percentile interpolation, paired candidate/D0 absolute NRMSE summaries, four-morphology node-map shape, and fail-closed collision detection. The report-generation step was correctly skipped because no accepted numerical archive existed at this checkpoint.
 
 The report now includes median absolute D0 NRMSE and candidate NRMSE (not only ratios and deltas), and a held-out breakdown across all nine passive parameter scenarios. This avoids hiding near-zero denominators and makes parameter-specific regressions visible.
+
+
+## Report workflow validation — latest success
+
+Report workflow [45768111004](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768111004) completed **success** on the current branch head. Compileall passed and the four reporting tests passed. Its archive-completeness preflight correctly skipped report generation because the numerical result archive is not present yet. This is an expected successful validation of the reporting path, not a numerical-result claim.
