@@ -76,14 +76,18 @@ def percentile(values: list[float], q: float) -> float:
     return ordered[lower] * (1.0 - fraction) + ordered[upper] * fraction
 
 
-def summarize(values: list[tuple[float, float]]) -> dict[str, Any]:
-    ratios = [ratio for ratio, _delta in values]
-    deltas = [delta for _ratio, delta in values]
+def summarize(values: list[tuple[float, float, float, float]]) -> dict[str, Any]:
+    ratios = [ratio for ratio, _delta, _reference, _candidate in values]
+    deltas = [delta for _ratio, delta, _reference, _candidate in values]
+    references = [reference for _ratio, _delta, reference, _candidate in values]
+    candidates = [candidate for _ratio, _delta, _reference, candidate in values]
     return {
         "matched": len(values),
         "median_ratio": float(statistics.median(ratios)),
         "p90_ratio": percentile(ratios, 0.90),
         "worst_ratio": max(ratios),
+        "median_reference_nrmse_pct": float(statistics.median(references)),
+        "median_candidate_nrmse_pct": float(statistics.median(candidates)),
         "median_delta_pp": float(statistics.median(deltas)),
         "better": sum(delta < 0.0 for delta in deltas),
         "worse": sum(delta > 0.0 for delta in deltas),
@@ -231,9 +235,10 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         require(key not in baseline, f"duplicate D0 case key: {key}")
         baseline[key] = float(row["transient_nrmse_pct"])
 
-    grouped_output: dict[tuple[str, float, str], list[tuple[float, float]]] = defaultdict(list)
-    grouped_label: dict[tuple[str, float, str], list[tuple[float, float]]] = defaultdict(list)
-    grouped_morphology: dict[tuple[str, str, float, str], list[tuple[float, float]]] = defaultdict(list)
+    grouped_output: dict[tuple[str, float, str], list[tuple[float, float, float, float]]] = defaultdict(list)
+    grouped_label: dict[tuple[str, float, str], list[tuple[float, float, float, float]]] = defaultdict(list)
+    grouped_morphology: dict[tuple[str, str, float, str], list[tuple[float, float, float, float]]] = defaultdict(list)
+    grouped_scenario: dict[tuple[str, str, float, str], list[tuple[float, float, float, float]]] = defaultdict(list)
     for row in cases:
         schedule = row["schedule"]
         if schedule == "D0_none":
@@ -248,11 +253,12 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         reference = baseline[key]
         ratio = candidate / max(reference, 1e-30)
         delta = candidate - reference
-        pair = (ratio, delta)
+        pair = (ratio, delta, reference, candidate)
         window = float(row["window_ms"])
         grouped_output[(schedule, window, row["output_role"])].append(pair)
         grouped_label[(schedule, window, row["output_label"])].append(pair)
         grouped_morphology[(row["morphology"], schedule, window, row["output_label"])].append(pair)
+        grouped_scenario[(row["scenario"], schedule, window, row["output_label"])].append(pair)
 
     pooled_rows = []
     for label in OUTPUT_ORDER:
@@ -264,6 +270,8 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                         "median_ratio": 1.0,
                         "p90_ratio": 1.0,
                         "worst_ratio": 1.0,
+                        "median_reference_nrmse_pct": None,
+                        "median_candidate_nrmse_pct": None,
                         "median_delta_pp": 0.0,
                         "better": 0,
                         "worse": 0,
@@ -275,6 +283,8 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                     fmt_ratio(summary["median_ratio"]),
                     fmt_ratio(summary["p90_ratio"]),
                     fmt_ratio(summary["worst_ratio"]),
+                    "-" if summary["median_reference_nrmse_pct"] is None else fmt_ratio(summary["median_reference_nrmse_pct"]),
+                    "-" if summary["median_candidate_nrmse_pct"] is None else fmt_ratio(summary["median_candidate_nrmse_pct"]),
                     fmt_delta(summary["median_delta_pp"]),
                     f'{summary["better"]}/{summary["worse"]}',
                 ])
@@ -288,6 +298,8 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                     f"{window:g}", schedule, role, str(summary["matched"]),
                     fmt_ratio(summary["median_ratio"]),
                     fmt_ratio(summary["p90_ratio"]),
+                    fmt_ratio(summary["median_reference_nrmse_pct"]),
+                    fmt_ratio(summary["median_candidate_nrmse_pct"]),
                     fmt_delta(summary["median_delta_pp"]),
                     f'{summary["better"]}/{summary["worse"]}',
                 ])
@@ -309,6 +321,27 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                         morph_id, label, f"{window:g}", schedule,
                         fmt_ratio(summary["median_ratio"]),
                         fmt_ratio(summary["p90_ratio"]),
+                        fmt_ratio(summary["median_reference_nrmse_pct"]),
+                        fmt_ratio(summary["median_candidate_nrmse_pct"]),
+                        fmt_delta(summary["median_delta_pp"]),
+                        f'{summary["better"]}/{summary["worse"]}',
+                    ])
+
+    scenario_rows = []
+    scenario_names = report["fixed_protocol"]["passive_scenarios"]
+    for scenario in scenario_names:
+        for label in HELDOUT_LABELS:
+            for window in (20.0, 40.0):
+                for schedule in ("BASAL_10K", "APICAL_10K", "BOTH_10K"):
+                    summary = summarize(
+                        grouped_scenario[(scenario, schedule, window, label)]
+                    )
+                    scenario_rows.append([
+                        scenario, label, f"{window:g}", schedule,
+                        str(summary["matched"]),
+                        fmt_ratio(summary["median_ratio"]),
+                        fmt_ratio(summary["median_reference_nrmse_pct"]),
+                        fmt_ratio(summary["median_candidate_nrmse_pct"]),
                         fmt_delta(summary["median_delta_pp"]),
                         f'{summary["better"]}/{summary["worse"]}',
                     ])
@@ -369,25 +402,34 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "## Pooled q25 and spatial held-out readouts",
         "",
         markdown_table(
-            ["Output", "Window ms", "Schedule", "Cases", "Median ratio", "P90 ratio", "Worst ratio", "Median Δ NRMSE (pp)", "Better/Worse"],
+            ["Output", "Window ms", "Schedule", "Cases", "Median ratio", "P90 ratio", "Worst ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
             pooled_rows,
         ),
         "",
-        "The ratio for each case is candidate NRMSE divided by the D0 NRMSE for the same morphology, scenario, source, pulse width, window and output. Δ is candidate minus D0 in NRMSE percentage points. Negative Δ is better.",
+        "The ratio for each case is candidate NRMSE divided by the D0 NRMSE for the same morphology, scenario, source, pulse width, window and output. Δ is candidate minus D0 in NRMSE percentage points. Negative Δ is better. Both median absolute NRMSE values are shown so very small D0 denominators cannot be hidden by a large relative ratio.",
         "",
         "## Output-role aggregate",
         "",
         markdown_table(
-            ["Window ms", "Schedule", "Output role", "Cases", "Median ratio", "P90 ratio", "Median Δ NRMSE (pp)", "Better/Worse"],
+            ["Window ms", "Schedule", "Output role", "Cases", "Median ratio", "P90 ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
             role_rows,
         ),
         "",
         "## Held-out results by morphology",
         "",
         markdown_table(
-            ["Morphology", "Held-out output", "Window ms", "Schedule", "Median ratio", "P90 ratio", "Median Δ NRMSE (pp)", "Better/Worse"],
+            ["Morphology", "Held-out output", "Window ms", "Schedule", "Median ratio", "P90 ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
             morphology_rows,
         ),
+        "",
+        "## Held-out results by passive parameter scenario",
+        "",
+        markdown_table(
+            ["Scenario", "Held-out output", "Window ms", "Schedule", "Cases", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
+            scenario_rows,
+        ),
+        "",
+        "Each scenario cell contains 24 matched records (four morphology strata × three sources × two pulse widths). Scenario-specific improvement is checked alongside the four morphology-specific tables above.",
         "",
         "## Exact spatial node map",
         "",
