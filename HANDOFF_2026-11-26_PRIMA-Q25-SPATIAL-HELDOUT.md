@@ -96,3 +96,24 @@ The workflow now validates those maps in addition to the existing exact coverage
 - Reporting workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed: compileall and **5/5 tests in 0.28 s**.
 - The fifth test generates a full Markdown report from a synthetic complete archive with 22,464 cases, 144 basis/node maps and nine hash-manifest files. It exercises the real report generator, morphology-stratified output, all nine passive scenarios and absolute NRMSE columns.
 - This synthetic fixture validates the reporting pipeline only. It is not scientific simulation data; the real numerical run and archival-complete run remain pending.
+
+
+
+## Failure diagnosis and bounded recovery — 26 November 2026
+
+The previously running numerical attempts have now completed and their job logs are available:
+
+- [Run 45766414695](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45766414695) completed all 36/36 morphology/scenario workers (22,464 case rows and 3,744 worker summaries were produced inside the ephemeral runner), but failed during parent-process manifest assembly. The morphology registry stores preflight paths relative to `amsn-core`; the parent process ran from the repository root and incorrectly tried to read `results/...` relative to that root. No accepted result archive or artifact was committed/uploaded, so the temporary matrices from that failed runner must not be treated as a preserved scientific result.
+- [Run 45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643) failed in the first Peng/nominal subprocess with exit `-11` after the SWC-only layout completed and immediately upon entering production D0 PRIMA construction. The available stdout stage markers localize the failure to that call boundary; they do not establish the native root cause. Do not claim the cause is known.
+
+Code and regression changes now pushed:
+- `resolve_preflight_path(spec)` resolves registry paths against the absolute AMSN core checkout for both isolated workers and parent manifest assembly.
+- `run_worker_with_sigsegv_retry(...)` retries only subprocess exit `-11`, up to two additional clean attempts, deleting partial worker output before each retry. All other exit codes remain fail-fast with their stdout/stderr preserved. Attempt counts and retry counts are recorded in the run report.
+- New tests cover cwd-independent preflight resolution, successful retry after a simulated SIGSEGV with output cleanup, and immediate failure for other exit codes.
+
+Latest CI at this handoff revision:
+- [Numerical run 45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), runner-fix commit `32741e56b877fc00f0e16b426ca957336c2b026b`: environment, source verification, compileall and the then-current focused tests passed; the 36-group numerical step was in progress at last inspection.
+- [Numerical run 45788063611](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788063611), test commit `c3b47dcf4a9b80dd1dafc0a7687752e2e8492f2e): queued behind the first run and will execute the expanded regression suite plus the complete numerical workflow.
+- [Report workflow 45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed 5/5 reporter tests, including a synthetic full-archive fixture. This validates report generation only, not the scientific simulation.
+
+The PR remains Draft. No numerical archive is accepted until exact coverage, all numerical gates, node-map metadata, manifest SHA-256/byte counts, Git commit and Actions artifact upload all succeed. Full Hines remains the canonical reference; no production behavior is changed.
