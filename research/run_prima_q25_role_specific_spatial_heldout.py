@@ -1001,6 +1001,8 @@ def main() -> None:
             "worker_total_seconds": sum(float(x["wall_seconds"]) for x in worker_reports),
             "max_worker_seconds": max(float(x["wall_seconds"]) for x in worker_reports),
             "worker_processes": worker_count,
+            "github_actions_run_id": os.environ.get("GITHUB_RUN_ID"),
+            "github_actions_run_attempt": os.environ.get("GITHUB_RUN_ATTEMPT"),
             "worker_process_attempts": [
                 int(item.get("worker_process_attempts", 1)) for item in worker_reports
             ],
