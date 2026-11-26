@@ -287,3 +287,12 @@ Implementation:
 - Report workflow: [#45796600538](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796600538) passed compile and 5/5 tests; archive validation/report generation were correctly skipped because the numerical archive is not yet present.
 
 The older q25 faulthandler diagnostic #45793076160 remains active and the old focused rerun #45793084446 remains queued. They do not block the separate multilocation workflow, and the previously accepted q25 archive/report remain authoritative for the completed prior experiment.
+
+
+## Multilocation report integration tests — 26 November 2026
+
+- Added an end-to-end synthetic archive test with all five schedules, four morphologies, nine scenarios, 13 outputs and 28,080 paired cases.
+- The test exercises nine-file manifest hashing, exact D0 pairing, per-schedule seed label/node metadata validation, and the generated strategy/output/morphology/scenario report tables.
+- Report workflow [#45797384246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797384246) completed successfully: **6 tests passed in 0.44 s**. As expected, real archive validation/report generation were skipped because no accepted multilocation archive exists yet.
+- Analyzer independently checks actual CSV read-back counts for all five summary CSVs, not just the numerical report JSON.
+- The numerical workflow [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains in its numerical step. Its first predecessor #45796325682 failed on a corrected stale summary-loop constant after 11/11 tests and D0/full-Hines setup; the corrected runner is under execution. No multilocation result is accepted yet.
