@@ -147,6 +147,12 @@ def validate_metadata(rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
         expected_seeds = SCHEDULE_SEEDS[schedule]
         require(seed_labels == expected_seeds,
                 f"{morph_id}/{schedule}: seed labels {seed_labels} != {expected_seeds}")
+        accepted_seed_columns = int(row["initial_output_seed_columns"])
+        require(0 <= accepted_seed_columns <= len(expected_seeds),
+                f"{morph_id}/{schedule}: accepted dual rank exceeds requested seed count")
+        if schedule == "D0_none":
+            require(accepted_seed_columns == 0,
+                    f"{morph_id}: D0 unexpectedly retained output-dual columns")
         seed_swc = [int(x) for x in row.get("seed_swc_node_ids", [])]
         expected_swc = [
             q25[label] if label in q25 else edges[label]["swc_node_id"]
