@@ -134,3 +134,10 @@ The earlier runner's `finally` block deleted the temporary output from all compl
 A regression test exercises both cleanup states. The latest workflow commit is [94dd28d](https://github.com/Nolane-x/Nghien-cuu/commit/94dd28dd22f78e243ce398dca325fc132a48482c). Its run [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was pending behind earlier numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), which had not yet left the numerical sweep step at last inspection.
 
 This change improves reproducibility and failure diagnosis; it is not scientific evidence and does not relax any acceptance gate.
+
+
+## Checkpoint regression import correction — 26 November 2026
+
+A final source review found that the new checkpoint cleanup regression used `cleanup_worker_checkpoints` without importing it in the test module. The import is now explicit in commit [0568971](https://github.com/Nolane-x/Nghien-cuu/commit/056897139dd32da42cb6f4a87dfaaf06fad9260d). The earlier pending checkpoint workflow was superseded/cancelled by branch concurrency; corrected workflow [45789829523](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789829523) was pending behind active numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) at the last check.
+
+This correction is a test harness fix only. It does not change the numerical method or provide scientific simulation evidence.
