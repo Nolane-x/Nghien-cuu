@@ -14,7 +14,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: amsn-prima-q25-role-specific-spatial-heldout
+  group: amsn-prima-q25-role-specific-spatial-heldout-swc-only
   cancel-in-progress: false
 
 jobs:
