@@ -1,0 +1,53 @@
+name: PRIMA q25 spatial held-out archive report
+
+on:
+  push:
+    branches:
+      - research/prima-q25-spatial-heldout-generalization-2026-11-26
+    paths:
+      - ".github/workflows/amsn-prima-q25-spatial-heldout-report.yml"
+      - "research/analyze_prima_q25_spatial_heldout_results.py"
+      - "research/test_prima_q25_spatial_heldout_report.py"
+      - "amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-spatial-heldout-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.16"
+      - name: Compile reporting utilities
+        run: |
+          python -m compileall -q research/analyze_prima_q25_spatial_heldout_results.py
+          python -m compileall -q research/test_prima_q25_spatial_heldout_report.py
+      - name: Test paired-case statistics and node-map invariants
+        run: python -m pytest -q research/test_prima_q25_spatial_heldout_report.py
+      - name: Generate report from accepted archive
+        if: ${{ hashFiles('amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json') != '' }}
+        run: python research/analyze_prima_q25_spatial_heldout_results.py
+      - name: Commit generated Markdown report
+        if: ${{ hashFiles('amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json') != '' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/PRIMA_Q25_ROLE_SPECIFIC_SPATIAL_HELDOUT_RESULTS_2026-11-26.md
+          if git diff --cached --quiet; then
+            echo "Report unchanged; no commit needed."
+            exit 0
+          fi
+          git commit -m "report: archive q25 spatial held-out generalization results"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
