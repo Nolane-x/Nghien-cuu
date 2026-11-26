@@ -43,3 +43,12 @@ If the numerical worker fails:
 ## Scientific limits
 
 Four individual morphologies are not a population. This study is passive linear-RC only; it does not validate active channels, spikes, synapses, plasticity, calcium signalling, metabolism, cognition or biological function. Allen NMO_162186 is an epilepsy-surgery specimen; Peng NMO_163775 has no-diameter metadata. Keep absolute NRMSE and percentage-point deltas beside error ratios.
+
+
+## Worker-isolation update — 26 November 2026
+
+The initial PR #35 workflow run [45764442287](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45764442287) was launched before the SWC-only worker revision and is still tracked separately. The worker has since been changed to construct canonical seven-port and q25 node indices directly from the pinned SWC instead of calling NEURON Import3D. This removes a native subsystem that the CableTree numerical reduction does not need.
+
+Compatibility gates now pin the legacy q25 and spatial holdout node IDs for the three SWC files present in the repository (Peng, Tamas and Jacobs); Allen remains covered by runtime distinctness/collision checks and its pinned source checksum. The test suite now includes a synthetic branched SWC layout test. The workflow concurrency key was separated so the revised SWC-only run does not have to wait behind the older Import3D run.
+
+The revised run's full numerical result is still pending. Do not treat the older run or its partial execution state as accepted data.
