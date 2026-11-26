@@ -118,6 +118,18 @@ def run_worker_with_sigsegv_retry(
     raise AssertionError("unreachable worker retry state")
 
 
+def cleanup_worker_checkpoints(temp_root: Path, archive_completed: bool) -> None:
+    """Delete scratch workers only after a complete global archive was written."""
+    if archive_completed:
+        import shutil
+        shutil.rmtree(temp_root, ignore_errors=True)
+    else:
+        print(json.dumps({
+            "event": "partial_worker_checkpoints_preserved",
+            "worker_directories": sum(1 for item in temp_root.glob("*/*") if item.is_dir()),
+        }), flush=True)
+
+
 def seed_indices_for_role(
     q25_tree_indices: dict[str, int], seed_role: str
 ) -> tuple[int, ...]:
@@ -747,6 +759,7 @@ def main() -> None:
     group_summary_rows: list[dict[str, Any]] = []
     worker_reports: list[dict[str, Any]] = []
     worker_count = 0
+    archive_completed = False
     try:
         for spec in specs:
             morphology_id = spec["neuromorpho_id"]
@@ -1026,6 +1039,7 @@ def main() -> None:
         )
         verified_manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
         require(verified_manifest["status"] == "passed", "manifest read-back failed")
+        archive_completed = True
         print(json.dumps({
             "status": report["status"],
             "coverage": report["coverage"],
@@ -1034,9 +1048,10 @@ def main() -> None:
             "manifest": manifest_path.name,
         }, indent=2, sort_keys=True))
     finally:
-        # Keep worker logs out of results; the final global matrices are the archive.
-        import shutil
-        shutil.rmtree(temp_root, ignore_errors=True)
+        # Preserve completed worker CSV/JSON checkpoints when any later stage fails.
+        # The workflow uploads this directory on failure; remove it only after the
+        # global matrices and their checksum manifest have both been written.
+        cleanup_worker_checkpoints(temp_root, archive_completed)
 
 
 def parse_args() -> argparse.Namespace:
