@@ -117,3 +117,17 @@ Latest CI at this handoff revision:
 - [Report workflow 45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed 5/5 reporter tests, including a synthetic full-archive fixture. This validates report generation only, not the scientific simulation.
 
 The PR remains Draft. No numerical archive is accepted until exact coverage, all numerical gates, node-map metadata, manifest SHA-256/byte counts, Git commit and Actions artifact upload all succeed. Full Hines remains the canonical reference; no production behavior is changed.
+
+
+## Worker checkpoint preservation — 26 November 2026
+
+The current runner now retains the isolated worker directories until the complete global archive and its checksum manifest have been written and read back successfully. If any earlier stage raises, completed worker-level `case_metrics.csv`, `summary.csv` and `worker_report.json` files remain under the temporary worker root rather than being removed in `finally`. The workflow has a failure-only `upload-artifact` step that captures `/tmp/prima-q25-dual-seed-workers-*/` for 14 days. The scratch root is removed only once the global manifest is verified as `passed`.
+
+Regression coverage verifies both branches: failed/incomplete global archive retains worker checkpoints, while a complete archive permits cleanup.
+
+Implementation commits:
+- Runner checkpoint retention: [ae51876](https://github.com/Nolane-x/Nghien-cuu/commit/ae51876fd0b4bac2eaef27034aa3217130b88318)
+- Checkpoint cleanup regression: [c6f5975](https://github.com/Nolane-x/Nghien-cuu/commit/c6f5975fd8e9c993dbf412fdd260d91e76405403)
+- Failure-only checkpoint artifact: [94dd28d](https://github.com/Nolane-x/Nghien-cuu/commit/94dd28dd22f78e243ce398dca325fc132a48482c)
+
+At the latest inspection, numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), based on the earlier bounded-retry patch, was still in the four-morphology numerical step. The newer workflow [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was pending behind it and contains the checkpoint-preservation changes plus the regression tests. Do not infer numerical progress beyond the state reported by GitHub Actions.
