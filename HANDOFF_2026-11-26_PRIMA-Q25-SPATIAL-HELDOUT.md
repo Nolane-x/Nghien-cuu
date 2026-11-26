@@ -313,3 +313,18 @@ The analyzer independently validates that accepted seed rank is non-negative, ne
 - A follow-up sweep run [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) is queued with the protocol clarification and static stale-constant guard.
 
 No scientific result is claimed until one complete run passes all exact-coverage, D0 parity, matrix positivity, order, orthogonality, DFT, mapping and checksum gates and its artifact is inspected.
+
+
+## Final seed-target versus unseeded-transfer report semantics — 26 November 2026
+
+The multilocation analyzer was refined so each schedule has its own seed/transfer mask. It no longer reports all q25 outputs or all edge outputs as transfer for every schedule:
+- Q25_BOTH_10K: q25 rows are seed-target metrics; the four edge rows are unseeded transfer.
+- BASAL_EDGES_10K: the two basal edge rows are seed-target metrics; q25 and the two apical edge rows are unseeded transfer.
+- APICAL_EDGES_10K: the two apical edge rows are seed-target metrics; q25 and the two basal edge rows are unseeded transfer.
+- BOTH_EDGES_10K: all four edge rows are seed-target metrics; q25 rows are unseeded transfer.
+
+The strategy table reports seeded-pair counts and metrics separately from unseeded q25 and edge transfer counts/metrics. Morphology and scenario breakdowns use the same schedule-specific mask. A zero unseeded readout count is represented as “—”, not filled using a seeded output.
+
+Latest report CI [#45799248302](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799248302) passed compile and **7/7 tests in 0.42 s**. This includes a synthetic complete archive checking pairing, seed-budget columns, and exact transfer classification. The archive-dependent steps were correctly skipped because the real multilocation archive is not yet present.
+
+Numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) is still active; no multilocation numerical result is accepted yet.
