@@ -184,3 +184,19 @@ def test_worker_does_not_retry_non_sigsegv_failures(monkeypatch, tmp_path):
             max_sigsegv_retries=2,
         )
     assert len(calls) == 1
+
+
+
+def test_worker_checkpoints_are_retained_until_global_archive_is_complete(tmp_path):
+    retained = tmp_path / "retained"
+    retained.mkdir()
+    (retained / "worker").mkdir()
+    cleanup_worker_checkpoints(retained, archive_completed=False)
+    assert retained.exists()
+    assert (retained / "worker").is_dir()
+
+    removable = tmp_path / "removable"
+    removable.mkdir()
+    (removable / "worker").mkdir()
+    cleanup_worker_checkpoints(removable, archive_completed=True)
+    assert not removable.exists()
