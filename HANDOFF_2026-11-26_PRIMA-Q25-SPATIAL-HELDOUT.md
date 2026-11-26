@@ -89,3 +89,10 @@ The workflow now validates those maps in addition to the existing exact coverage
 - Report workflow [45768111004](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768111004) completed success: reporting code compiled, **4/4** tests passed, and the archive-completeness gate correctly skipped report generation because the numerical archive is not yet present.
 - The workflow will generate the paired-case Markdown report automatically when the complete 144-row node-map metadata and accepted result manifest are committed. It deliberately refuses to publish results from an incomplete earlier archive.
 - Numerical run [45766414695](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45766414695) remains in the four-morphology calculation step; archive-complete run [45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643) remains queued.
+
+
+## End-to-end report fixture — passed
+
+- Reporting workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed: compileall and **5/5 tests in 0.28 s**.
+- The fifth test generates a full Markdown report from a synthetic complete archive with 22,464 cases, 144 basis/node maps and nine hash-manifest files. It exercises the real report generator, morphology-stratified output, all nine passive scenarios and absolute NRMSE columns.
+- This synthetic fixture validates the reporting pipeline only. It is not scientific simulation data; the real numerical run and archival-complete run remain pending.
