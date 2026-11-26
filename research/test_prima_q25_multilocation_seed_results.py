@@ -41,6 +41,10 @@ def _metadata():
                     "schedule": schedule,
                     "seed_role": strategy,
                     "initial_output_seed_columns": len(seed_ids),
+                    "wall_seconds": 0.1 + 0.02 * len(labels),
+                    "conductance_condition_number": 10.0 + len(labels),
+                    "capacitance_condition_number": 20.0 + len(labels),
+                    "basis_orthogonality_max_abs": 1e-15,
                     "seed_site_labels": list(labels),
                     "seed_swc_node_ids": list(seed_ids),
                     "seed_node_indices": [] if schedule == "D0_none" else list(seed_ids),
@@ -242,7 +246,11 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
                         "APICAL_EDGES_10K": "apical_edges",
                         "BOTH_EDGES_10K": "both_edges",
                     }[schedule],
-                    "initial_output_seed_columns": len(labels),
+                    "initial_output_seed_columns": len(seed_ids),
+                    "wall_seconds": 0.1 + 0.02 * len(labels),
+                    "conductance_condition_number": 10.0 + len(labels),
+                    "capacitance_condition_number": 20.0 + len(labels),
+                    "basis_orthogonality_max_abs": 1e-15,
                     "seed_site_labels": list(labels),
                     "seed_swc_node_ids": [seed_maps[x] for x in labels],
                     "seed_node_indices": [] if schedule == "D0_none" else [seed_maps[x] for x in labels],
@@ -360,6 +368,7 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
     make_report(results, output)
     rendered = output.read_text(encoding="utf-8")
     assert "## Seed strategy comparison" in rendered
+    assert "## Basis construction cost and conditioning" in rendered
     assert "## Readout-specific seed-target and transfer results" in rendered
     assert "## Results by morphology" in rendered
     assert "## Results by passive parameter scenario" in rendered
