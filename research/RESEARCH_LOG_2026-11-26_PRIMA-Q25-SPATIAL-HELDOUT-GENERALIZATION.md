@@ -301,3 +301,29 @@ The artifact (ID `15106218185`, 595,050 bytes) was downloaded and verified. All 
 Runtime: 2,516.24 s wall; worker time 2,501.26 s; max worker 93.97 s. Zero retries. Earlier failed re-run #45792818861 had SIGSEGV on Peng/nominal at production D0; the successful full rerun shows that failure was not reproduced, though its original native root cause remains unknown.
 
 Report workflow [#45801634554](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45801634554) passed 6/6 tests and regenerated the report to point to source numerical run #45793076160.
+
+## 2026-11-26 — final accepted q25 reproducibility and multilocation result
+
+### q25 spatial-heldout rerun
+
+Run [#45793076160](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160) completed successfully with 36/36 workers, zero SIGSEGV retries and every numerical gate passing. Artifact [15106218185](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160/artifacts/15106218185) passed independent nine-file SHA-256/byte-count verification. The six numerical CSV files are byte-for-byte identical to the earlier accepted run #45788056271; all 144 model basis/input/G/C hashes and mapping/rank/conditioning/orthogonality metadata are identical. Only wall-time and runtime/provenance diagnostics differ. The original SIGSEGV cause remains unresolved because the successful rerun did not reproduce it.
+
+### Multilocation seed-transfer numerical run
+
+Run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) passed all 36 isolated workers and all numerical gates. Exact coverage: 28,080 case metrics; 4,680 worker summaries; 520 morphology/window summaries; 1,170 scenario/window summaries; 130 pooled/window summaries; 180 finite-record DFT identities; 180 basis metadata rows; 28,080 unique case keys.
+
+D0 exactly matched production multishift PRIMA. All models reached order224, retained exactly seven input ports, all reduced G/C passed Cholesky, maximum basis orthogonality error was 2.220446049250313e-15, and all DFT identities passed (max Full-Hines residual 3.1660560529975156e-12; max reduced residual 3.6403602430240796e-13; tolerance 2e-8). Runtime: 3,010.96 s wall; zero worker SIGSEGV retries.
+
+Artifact [15109150731](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978/artifacts/15109150731) (752,900 bytes) was downloaded and independently checked against all nine manifest SHA-256 hashes and byte counts; archive contents correspond to the committed Git files.
+
+### Interpreted result
+
+Three primary schedules use a matched two-coordinate seed budget: Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K. BOTH_EDGES_10K uses four coordinates and is interpreted as a higher-budget coverage condition.
+
+The seeded readout families show large reductions versus D0 (median candidate/D0 ratios 0.004211, 0.003165, 0.008682, and 0.007064 respectively; BOTH_EDGES is the four-seed condition). However, all available pooled unseeded-transfer families have median ratios above one: Q25_BOTH edge transfer 1.265; BASAL_EDGES q25 1.330 and opposite-edge 1.087; APICAL_EDGES q25 1.712 and opposite-edge 1.614; BOTH_EDGES q25 2.187.
+
+The morphology-stratified analysis prevents a universal statement: Jacobs has q25-to-edge transfer ratio 0.9261, and Peng has basal-edge-to-apical-edge transfer ratio 0.5063. The pooled pattern is consistent with target-local specialization rather than broad spatial generalization in this passive linear-RC setting. These are descriptive medians; absolute percentage-point changes matter because D0 residuals are often near the numerical floor.
+
+Final generated report: research/PRIMA_Q25_MULTILOCATION_OUTPUT_DUAL_SEED_RESULTS_2026-11-26.md. Report CI [#45815168477](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45815168477) passed 7/7 tests in 0.58 seconds, full manifest/source/hash validation, full Cartesian pairing check, generation and commit.
+
+A duplicate numerical workflow [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) passed its numerical/archive checks but failed only at a duplicate add/add Git rebase when it attempted to commit files already committed by primary run #45796697978. The primary run and its archive remain authoritative.
