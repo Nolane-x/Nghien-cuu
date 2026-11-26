@@ -150,3 +150,10 @@ The numerical runner now records the actual GitHub Actions run ID and attempt in
 The end-to-end reporter fixture now asserts the dynamic run URL and the complete basal-q10 D0 pooled row. Reporter run [45790090210](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790090210) completed success on the reporter-only revision; the archive gate skipped report generation as there is no accepted numerical archive yet. Updated reporter tests [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) were running at last inspection. Updated numerical run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) was pending behind numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271).
 
 This revision changes traceability and reporting only. It does not change the model, numerical protocol or acceptance criteria.
+
+
+## Latest reporter CI — passed
+
+The updated report workflow [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) completed success. Compileall passed and the complete report test module passed **5/5 in 0.42 s**. Its end-to-end synthetic archive test confirms that the output workflow link is derived from the report JSON run ID and that the D0 pooled row carries its median absolute baseline NRMSE. The real archive gate skipped generation correctly because no accepted numerical simulation archive exists yet.
+
+At the same observation point, numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still running the 36-group sweep, and the updated run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) remained pending behind it.
