@@ -19,6 +19,7 @@ from research.analyze_prima_q25_spatial_heldout_results import (
     RESULT_STEM,
     make_report,
     percentile,
+    source_workflow_line,
     summarize,
     validate_node_metadata,
 )
@@ -57,6 +58,17 @@ def _metadata_rows():
                 })
     assert len(rows) == 144
     return rows
+
+
+def test_source_workflow_line_prefers_archive_provenance_and_supports_legacy_fallback(monkeypatch):
+    monkeypatch.setenv("AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID", "45788056271")
+    fallback = source_workflow_line({})
+    assert "run 45788056271" in fallback
+    assert "actions/runs/45788056271" in fallback
+
+    from_archive = source_workflow_line({"github_actions_run_id": "987654321"})
+    assert "run 987654321" in from_archive
+    assert "45788056271" not in from_archive
 
 
 def test_percentile_uses_linear_interpolation_and_handles_singleton():
