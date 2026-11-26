@@ -198,3 +198,12 @@ D0 held-out median NRMSE values lie around `8.4e-9%` to `3.6e-8%` across labels/
 Run `45792818861` reached the first Peng/nominal worker's `before_production_d0` marker and then returned SIGSEGV (`-11`) on all three bounded attempts. No worker output directory had been completed. A later runner revision added Python `faulthandler`; run `45793076160` is examining the stack trace. This failure concerns repeatability of the current runner revision and does not alter the separately archived successful run `45788056271`.
 
 The reporting utility is being extended to publish both target-q25 and spatial-holdout aggregate summaries, avoiding a single pooled metric that could conceal branch-specific regressions.
+
+
+## 2026-11-26 — report generation accepted
+
+Report workflow [#45793176156](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793176156) completed: it accepted the archived metadata, generated the 552-line result report from the case-level archive, and reconciled the report commit. The report includes the descriptive aggregate schedule table, all 12 held-out output/schedule medians, q25-target summaries, morphology/scenario breakdowns, and node maps.
+
+Report workflow [#45793184489](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793184489) passed compile and all 5 reporting tests (0.38 s), including the new target-vs-spatial summary section checks. The report links to numerical source run #45788056271 because the accepted archive was generated before source Actions run IDs were recorded in its JSON metadata; this limitation is explicitly disclosed in the report.
+
+A later numerical retry run [#45792818861](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45792818861) failed reproducibly at Peng/nominal `before_production_d0` (SIGSEGV on three consecutive attempts). Python faulthandler is now enabled for child workers; diagnostic run #45793076160 is active and run #45793084446 is queued. The already accepted run #45788056271 and its checksummed archive remain the source of results.
