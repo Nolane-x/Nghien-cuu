@@ -177,7 +177,7 @@ def test_worker_does_not_retry_non_sigsegv_failures(monkeypatch, tmp_path):
         )
 
     monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
-    with pytest.raises(RuntimeError, match="exit=1 after 1 attempt"):
+    with pytest.raises(RuntimeError, match=r"exit=1.*after 1 attempt"):
         run_worker_with_sigsegv_retry(
             ["python", "worker.py"],
             worker_label="NMO_TEST/nominal",
