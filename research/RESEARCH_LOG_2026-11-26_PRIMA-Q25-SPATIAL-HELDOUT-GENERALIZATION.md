@@ -141,3 +141,12 @@ This change improves reproducibility and failure diagnosis; it is not scientific
 A final source review found that the new checkpoint cleanup regression used `cleanup_worker_checkpoints` without importing it in the test module. The import is now explicit in commit [0568971](https://github.com/Nolane-x/Nghien-cuu/commit/056897139dd32da42cb6f4a87dfaaf06fad9260d). The earlier pending checkpoint workflow was superseded/cancelled by branch concurrency; corrected workflow [45789829523](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789829523) was pending behind active numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) at the last check.
 
 This correction is a test harness fix only. It does not change the numerical method or provide scientific simulation evidence.
+
+
+## Report provenance and D0 baseline revision — 26 November 2026
+
+The numerical runner now records the actual GitHub Actions run ID and attempt in the global report JSON. The post-hoc Markdown reporter links to that archived run ID dynamically, removing the old static link to failed run 45767091643. Its pooled D0 rows now report the median absolute D0 NRMSE in both the reference and candidate columns (the two values match), instead of displaying blank values.
+
+The end-to-end reporter fixture now asserts the dynamic run URL and the complete basal-q10 D0 pooled row. Reporter run [45790090210](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790090210) completed success on the reporter-only revision; the archive gate skipped report generation as there is no accepted numerical archive yet. Updated reporter tests [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) were running at last inspection. Updated numerical run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) was pending behind numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271).
+
+This revision changes traceability and reporting only. It does not change the model, numerical protocol or acceptance criteria.
