@@ -23,6 +23,7 @@ from run_prima_q25_role_specific_spatial_heldout import (
     RESULT_STEM,
     ROLE_SPECIFIC_SCHEDULES,
     build_four_layouts_from_swc,
+    cleanup_worker_checkpoints,
     resolve_preflight_path,
     run_worker_with_sigsegv_retry,
     build_heldout_spatial_outputs,
