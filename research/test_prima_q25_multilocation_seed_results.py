@@ -112,6 +112,22 @@ def test_metadata_fails_closed_if_strategy_seed_list_is_not_exact():
         validate_metadata(rows)
 
 
+def test_requested_multilocation_seed_budgets_distinguish_matched_and_four_seed_conditions():
+
+    rows = _metadata()
+    for row in rows:
+        row["initial_output_seed_columns"] = len(row["seed_site_labels"])
+    seed_ranks = {}
+    for row in rows:
+        seed_ranks.setdefault(row["schedule"], set()).add(row["initial_output_seed_columns"])
+    assert seed_ranks["D0_none"] == {0}
+    assert seed_ranks["Q25_BOTH_10K"] == {2}
+    assert seed_ranks["BASAL_EDGES_10K"] == {2}
+    assert seed_ranks["APICAL_EDGES_10K"] == {2}
+    assert seed_ranks["BOTH_EDGES_10K"] == {4}
+
+
+
 def test_percentile_is_interpolated_and_handles_single_values():
     assert percentile([0.0, 10.0], 0.90) == pytest.approx(9.0)
     assert percentile([2.0], 0.90) == pytest.approx(2.0)
