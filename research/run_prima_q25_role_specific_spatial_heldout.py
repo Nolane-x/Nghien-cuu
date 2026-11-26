@@ -21,7 +21,6 @@ from pathlib import Path
 from typing import Any
 
 import numpy as np
-from amsn.ports import path_distances_um, quantile_node
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 AMSN_CORE = REPO_ROOT / "amsn-core"
@@ -29,6 +28,8 @@ AMSN_RESEARCH = AMSN_CORE / "research"
 for _path in (AMSN_CORE, AMSN_RESEARCH):
     if str(_path) not in sys.path:
         sys.path.insert(0, str(_path))
+
+from amsn.ports import path_distances_um, quantile_node
 
 from experimental_prima_output_aware_basis import build_output_aware_passive_basis
 from run_prima_q25_peng_output_aware_dual_seed_pilot import (
