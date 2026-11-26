@@ -36,11 +36,41 @@ jobs:
           python -m compileall -q research/test_prima_q25_spatial_heldout_report.py
       - name: Test paired-case statistics and node-map invariants
         run: python -m pytest -q research/test_prima_q25_spatial_heldout_report.py
-      - name: Generate report from accepted archive
+      - name: Check accepted archive metadata completeness
+        id: archive
         if: ${{ hashFiles('amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json') != '' }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          results = Path("amsn-core/results")
+          stem = "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26"
+          report = json.loads((results / f"{stem}_report.json").read_text())
+          metadata = json.loads((results / f"{stem}_basis_metadata.json").read_text())
+          manifest = json.loads((results / f"{stem}_manifest.json").read_text())
+          ready = (
+              report.get("status") == "passed"
+              and manifest.get("status") == "passed"
+              and len(manifest.get("files", [])) == 9
+              and len(metadata) == 144
+              and all(
+                  len(item.get("shared_swc_node_ids", [])) == 7
+                  and set(item.get("q25_swc_node_ids", {})) == {"basal_q25", "apical_q25"}
+                  and len(item.get("heldout_spatial_sites", [])) == 4
+                  for item in metadata
+              )
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"ready={'true' if ready else 'false'}\n")
+          print(json.dumps({"archive_ready_for_spatial_report": ready,
+                            "metadata_rows": len(metadata),
+                            "manifest_files": len(manifest.get("files", []))}))
+          PY
+      - name: Generate report from accepted archive
+        if: ${{ steps.archive.outputs.ready == 'true' }}
         run: python research/analyze_prima_q25_spatial_heldout_results.py
       - name: Commit generated Markdown report
-        if: ${{ hashFiles('amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json') != '' }}
+        if: ${{ steps.archive.outputs.ready == 'true' }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
