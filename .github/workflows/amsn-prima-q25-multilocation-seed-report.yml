@@ -1,0 +1,80 @@
+name: PRIMA q25-versus-edge multilocation seed results report
+
+on:
+  push:
+    branches:
+      - research/prima-q25-spatial-heldout-generalization-2026-11-26
+    paths:
+      - ".github/workflows/amsn-prima-q25-multilocation-seed-report.yml"
+      - "research/analyze_prima_q25_multilocation_seed_results.py"
+      - "research/test_prima_q25_multilocation_seed_results.py"
+      - "amsn-core/results/prima_q25_four_morphology_multilocation_output_dual_seed_order224_2026-11-26_*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-multilocation-seed-report
+  cancel-in-progress: false
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.16"
+      - name: Install test runner
+        run: python -m pip install "pytest>=7"
+      - name: Compile report analyzer and tests
+        run: |
+          python -m compileall -q research/analyze_prima_q25_multilocation_seed_results.py
+          python -m compileall -q research/test_prima_q25_multilocation_seed_results.py
+      - name: Test pairing, seed metadata and readout invariants
+        run: python -m pytest -q research/test_prima_q25_multilocation_seed_results.py
+      - name: Check for accepted multilocation archive
+        id: archive
+        if: ${{ hashFiles('amsn-core/results/prima_q25_four_morphology_multilocation_output_dual_seed_order224_2026-11-26_report.json') != '' }}
+        run: |
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          root = Path("amsn-core/results")
+          stem = "prima_q25_four_morphology_multilocation_output_dual_seed_order224_2026-11-26"
+          report = json.loads((root / f"{stem}_report.json").read_text())
+          manifest = json.loads((root / f"{stem}_manifest.json").read_text())
+          metadata = json.loads((root / f"{stem}_basis_metadata.json").read_text())
+          ready = (
+              report.get("status") == "passed"
+              and manifest.get("status") == "passed"
+              and len(manifest.get("files", [])) == 9
+              and len(metadata) == 180
+              and report.get("coverage", {}).get("case_metrics_read_back") == 28080
+          )
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"ready={'true' if ready else 'false'}\n")
+          print(json.dumps({"archive_ready": ready, "metadata_rows": len(metadata),
+                            "manifest_files": len(manifest.get("files", []))}))
+          PY
+      - name: Generate paired multilocation report
+        if: ${{ steps.archive.outputs.ready == 'true' }}
+        run: |
+          python research/analyze_prima_q25_multilocation_seed_results.py
+      - name: Commit generated multilocation report
+        if: ${{ steps.archive.outputs.ready == 'true' }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research/PRIMA_Q25_MULTILOCATION_OUTPUT_DUAL_SEED_RESULTS_2026-11-26.md
+          if git diff --cached --quiet; then
+            echo "Report unchanged; no commit needed."
+            exit 0
+          fi
+          git commit -m "report: publish q25-versus-edge multilocation seed results"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase origin/"$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
