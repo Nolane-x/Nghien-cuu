@@ -109,31 +109,75 @@ def validate_heldout_spatial_node_ids(
         raise ValueError("held-out spatial probes collide with shared or q25 target nodes")
 
 
+def reference_path_distances_um(morphology) -> dict[int, float]:
+    """Match the legacy fine-mesh mapper's NumPy path-length arithmetic exactly."""
+    distances = {morphology.root_id: 0.0}
+    stack = [morphology.root_id]
+    while stack:
+        parent_id = stack.pop()
+        parent = morphology.nodes[parent_id]
+        for child_id in morphology.children[parent_id]:
+            child = morphology.nodes[child_id]
+            distances[child_id] = distances[parent_id] + float(np.linalg.norm([
+                child.x_um - parent.x_um,
+                child.y_um - parent.y_um,
+                child.z_um - parent.z_um,
+            ]))
+            stack.append(child_id)
+    require(len(distances) == len(morphology.nodes),
+            "legacy-compatible path traversal missed SWC nodes")
+    return distances
+
+
+PINNED_SPATIAL_SITE_IDS = {
+    "NMO_163775": {
+        "basal_q10": 7, "basal_q95": 94,
+        "apical_q10": 3967, "apical_q95": 4042,
+    },
+    "NMO_107159": {
+        "basal_q10": 6739, "basal_q95": 7206,
+        "apical_q10": 4355, "apical_q95": 4820,
+    },
+    "NMO_03524": {
+        "basal_q10": 631, "basal_q95": 702,
+        "apical_q10": 863, "apical_q95": 869,
+    },
+}
+PINNED_Q25_NODE_IDS = {
+    "NMO_163775": {"basal_q25": 224, "apical_q25": 4096},
+    "NMO_107159": {"basal_q25": 6609, "apical_q25": 4404},
+    "NMO_03524": {"basal_q25": 272, "apical_q25": 864},
+}
+
+
 def build_four_layouts_from_swc(morphology, base_tree):
     """Build canonical seven inputs and q25 readouts directly from SWC.
 
-    Import3D only locates NEURON section segment centres; it is not needed by
+    The seven legacy ports use the exact NumPy path-length arithmetic from
+    the original fine-mesh mapper. The q25 targets use amsn.ports arithmetic,
+    matching the original output-enrichment mapper. Import3D is not needed by
     the passive CableTree reduction and is deliberately excluded here.
     """
-    distances = path_distances_um(morphology)
+    canonical_distances = reference_path_distances_um(morphology)
+    output_distances = path_distances_um(morphology)
     injections = [
         ("soma", morphology.root_id),
-        ("basal_q75", int(quantile_node(morphology, distances, 3, 0.75))),
-        ("apical_q75", int(quantile_node(morphology, distances, 4, 0.75))),
+        ("basal_q75", int(quantile_node(morphology, canonical_distances, 3, 0.75))),
+        ("apical_q75", int(quantile_node(morphology, canonical_distances, 4, 0.75))),
     ]
     probes = [
         ("soma", morphology.root_id),
-        ("basal_q50", int(quantile_node(morphology, distances, 3, 0.50))),
-        ("basal_q90", int(quantile_node(morphology, distances, 3, 0.90))),
-        ("apical_q50", int(quantile_node(morphology, distances, 4, 0.50))),
-        ("apical_q90", int(quantile_node(morphology, distances, 4, 0.90))),
+        ("basal_q50", int(quantile_node(morphology, canonical_distances, 3, 0.50))),
+        ("basal_q90", int(quantile_node(morphology, canonical_distances, 3, 0.90))),
+        ("apical_q50", int(quantile_node(morphology, canonical_distances, 4, 0.50))),
+        ("apical_q90", int(quantile_node(morphology, canonical_distances, 4, 0.90))),
     ]
     source_ids = {name: int(node_id) for name, node_id in injections}
     require(set(source_ids) == set(SOURCE_NAMES),
             f"SWC source locations are incomplete: {source_ids}")
     q25_node_ids = {
-        "basal_q25": int(quantile_node(morphology, distances, 3, 0.25)),
-        "apical_q25": int(quantile_node(morphology, distances, 4, 0.25)),
+        "basal_q25": int(quantile_node(morphology, output_distances, 3, 0.25)),
+        "apical_q25": int(quantile_node(morphology, output_distances, 4, 0.25)),
     }
     node_ids = list(dict.fromkeys(
         int(node_id) for _role, node_id in injections + probes
@@ -337,6 +381,17 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     heldout_sites = build_heldout_spatial_outputs(
         morphology, base_tree, list(shared_node_ids), q25_node_ids
     )
+    pinned_q25 = PINNED_Q25_NODE_IDS.get(morphology_id)
+    if pinned_q25 is not None:
+        require(q25_node_ids == pinned_q25,
+                f"{morphology_id}: q25 SWC mapping differs from pinned historical nodes: {q25_node_ids}")
+    pinned_spatial = PINNED_SPATIAL_SITE_IDS.get(morphology_id)
+    if pinned_spatial is not None:
+        observed_spatial = {
+            site["output_label"]: site["swc_node_id"] for site in heldout_sites
+        }
+        require(observed_spatial == pinned_spatial,
+                f"{morphology_id}: spatial holdout mapping changed: {observed_spatial}")
     output_tree_indices = (
         retained_indices
         + (q25_tree_indices["basal_q25"], q25_tree_indices["apical_q25"])
