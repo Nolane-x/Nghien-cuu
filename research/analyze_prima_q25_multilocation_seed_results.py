@@ -298,10 +298,9 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             baseline[baseline_key] = float(row["transient_nrmse_pct"])
     require(len(seen_case_keys) == 28080, "case identities are not complete")
 
-    grouped_output: dict[tuple[str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
     grouped_label: dict[tuple[str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
-    grouped_morph: dict[tuple[str, str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
-    grouped_scenario: dict[tuple[str, str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
+    grouped_morph_label: dict[tuple[str, str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
+    grouped_scenario_label: dict[tuple[str, str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
     for row in cases:
         schedule = row["schedule"]
         if schedule == "D0_none":
@@ -320,12 +319,10 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             reference,
             candidate,
         )
-        role = row["output_role"]
         label = row["output_label"]
-        grouped_output[(schedule, role)].append(pair)
         grouped_label[(schedule, label)].append(pair)
-        grouped_morph[(row["neuromorpho_id"], schedule, role)].append(pair)
-        grouped_scenario[(row["scenario"], schedule, role)].append(pair)
+        grouped_morph_label[(row["neuromorpho_id"], schedule, label)].append(pair)
+        grouped_scenario_label[(row["scenario"], schedule, label)].append(pair)
 
     metadata_by_schedule: dict[str, list[int]] = defaultdict(list)
     for row in metadata:
@@ -339,18 +336,35 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             require(all(x == 0 for x in metadata_by_schedule[schedule]),
                     "D0 unexpectedly retained output-dual columns")
 
+    def paired_summary_or_none(pairs):
+        return summarize(pairs) if pairs else None
+
+    def count_value(summary):
+        return f"{summary['matched']:,}" if summary is not None else "0"
+
+    def ratio_value(summary):
+        return fmt_ratio(summary["median_ratio"]) if summary is not None else "—"
+
+    def delta_value(summary):
+        return fmt_delta(summary["median_delta_pp"]) if summary is not None else "—"
+
+    def selected_pairs(schedule, labels):
+        return [
+            pair
+            for label in labels
+            for pair in grouped_label[(schedule, label)]
+        ]
+
     strategy_rows = []
     for schedule in CANDIDATES:
-        q25_summary = summarize([
-            pair for label in Q25_LABELS for pair in grouped_label[(schedule, label)]
-        ])
-        edge_summary = summarize([
-            pair for label in EDGE_LABELS for pair in grouped_label[(schedule, label)]
-        ])
-        shared_summary = summarize([
-            pair for label in SHARED_LABELS for pair in grouped_label[(schedule, label)]
-        ])
-        seed_labels = ", ".join(SCHEDULE_SEEDS[schedule])
+        seeded_labels = SCHEDULE_SEEDS[schedule]
+        seeded_set = set(seeded_labels)
+        unseeded_q25_labels = [x for x in Q25_LABELS if x not in seeded_set]
+        unseeded_edge_labels = [x for x in EDGE_LABELS if x not in seeded_set]
+        seeded_summary = paired_summary_or_none(selected_pairs(schedule, seeded_labels))
+        q25_transfer = paired_summary_or_none(selected_pairs(schedule, unseeded_q25_labels))
+        edge_transfer = paired_summary_or_none(selected_pairs(schedule, unseeded_edge_labels))
+        shared_summary = summarize(selected_pairs(schedule, SHARED_LABELS))
         accepted_rank_values = metadata_by_schedule[schedule]
         rank_label = (
             f"{statistics.median(accepted_rank_values):g} "
@@ -358,15 +372,17 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         )
         strategy_rows.append([
             schedule,
-            seed_labels,
-            str(len(SCHEDULE_SEEDS[schedule])),
+            ", ".join(seeded_labels),
+            str(len(seeded_labels)),
             rank_label,
-            f"{q25_summary['matched']:,}",
-            fmt_ratio(q25_summary["median_ratio"]),
-            fmt_delta(q25_summary["median_delta_pp"]),
-            f"{edge_summary['matched']:,}",
-            fmt_ratio(edge_summary["median_ratio"]),
-            fmt_delta(edge_summary["median_delta_pp"]),
+            count_value(seeded_summary),
+            ratio_value(seeded_summary),
+            count_value(q25_transfer),
+            ratio_value(q25_transfer),
+            delta_value(q25_transfer),
+            count_value(edge_transfer),
+            ratio_value(edge_transfer),
+            delta_value(edge_transfer),
             fmt_ratio(shared_summary["median_ratio"]),
             fmt_delta(shared_summary["median_delta_pp"]),
         ])
@@ -375,8 +391,9 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     for label in Q25_LABELS + EDGE_LABELS:
         for schedule in CANDIDATES:
             summary = summarize(grouped_label[(schedule, label)])
+            status = "Seed target" if label in SCHEDULE_SEEDS[schedule] else "Unseeded transfer"
             label_rows.append([
-                label, schedule, f"{summary['matched']:,}",
+                label, schedule, status, f"{summary['matched']:,}",
                 fmt_ratio(summary["median_ratio"]),
                 fmt_ratio(summary["median_d0_nrmse_pct"]),
                 fmt_ratio(summary["median_candidate_nrmse_pct"]),
@@ -387,27 +404,49 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     morphology_rows = []
     for morph_id in sorted(node_maps):
         for schedule in CANDIDATES:
-            for role in ("q25_output", "heldout_spatial_output", "shared_output"):
-                summary = summarize(grouped_morph[(morph_id, schedule, role)])
+            seeded = set(SCHEDULE_SEEDS[schedule])
+            families = (
+                ("Seeded readouts", [x for x in Q25_LABELS + EDGE_LABELS if x in seeded]),
+                ("Unseeded q25 transfer", [x for x in Q25_LABELS if x not in seeded]),
+                ("Unseeded edge transfer", [x for x in EDGE_LABELS if x not in seeded]),
+                ("Shared outputs", list(SHARED_LABELS)),
+            )
+            for family, labels in families:
+                pairs = [
+                    pair
+                    for label in labels
+                    for pair in grouped_morph_label[(morph_id, schedule, label)]
+                ]
+                summary = paired_summary_or_none(pairs)
                 morphology_rows.append([
-                    morph_id, schedule, role, f"{summary['matched']:,}",
-                    fmt_ratio(summary["median_ratio"]),
-                    fmt_ratio(summary["median_d0_nrmse_pct"]),
-                    fmt_ratio(summary["median_candidate_nrmse_pct"]),
-                    fmt_delta(summary["median_delta_pp"]),
-                    f"{summary['better']}/{summary['worse']}",
+                    morph_id, schedule, family, count_value(summary),
+                    ratio_value(summary),
+                    fmt_ratio(summary["median_d0_nrmse_pct"]) if summary else "—",
+                    fmt_ratio(summary["median_candidate_nrmse_pct"]) if summary else "—",
+                    delta_value(summary),
+                    f"{summary['better']}/{summary['worse']}" if summary else "—",
                 ])
 
     scenario_rows = []
     for scenario in protocol["passive_scenarios"]:
         for schedule in CANDIDATES:
-            for role in ("q25_output", "heldout_spatial_output"):
-                summary = summarize(grouped_scenario[(scenario, schedule, role)])
+            seeded = set(SCHEDULE_SEEDS[schedule])
+            families = (
+                ("Seeded readouts", [x for x in Q25_LABELS + EDGE_LABELS if x in seeded]),
+                ("Unseeded q25 transfer", [x for x in Q25_LABELS if x not in seeded]),
+                ("Unseeded edge transfer", [x for x in EDGE_LABELS if x not in seeded]),
+            )
+            for family, labels in families:
+                pairs = [
+                    pair
+                    for label in labels
+                    for pair in grouped_scenario_label[(scenario, schedule, label)]
+                ]
+                summary = paired_summary_or_none(pairs)
                 scenario_rows.append([
-                    scenario, schedule, role, f"{summary['matched']:,}",
-                    fmt_ratio(summary["median_ratio"]),
-                    fmt_delta(summary["median_delta_pp"]),
-                    f"{summary['better']}/{summary['worse']}",
+                    scenario, schedule, family, count_value(summary),
+                    ratio_value(summary), delta_value(summary),
+                    f"{summary['better']}/{summary['worse']}" if summary else "—",
                 ])
 
     runtime = report.get("runtime", {})
@@ -431,26 +470,27 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "",
         "This experiment reverses the seed placement from the prior q25 study. It compares q25-target seeds with basal/apical edge seeds, while measuring the same 13 readouts in every schedule. The seven input ports, primal shifts, numerical integrator and full-Hines reference remain unchanged.",
         "",
-        "The transfer directions differ by schedule: Q25_BOTH_10K seeds q25 and leaves four edge outputs unseeded; edge schedules seed two or four edge outputs and leave q25 outputs unseeded. A row used as a seed is not treated as a held-out validation for that schedule.",
+        "Every readout is measured in every schedule, but seed-target accuracy and unseeded transfer are reported separately. Q25_BOTH_10K seeds both q25 rows and tests edge transfer. BASAL_EDGES_10K and APICAL_EDGES_10K seed one branch's two edge rows and test q25 plus the opposite branch's edge rows. BOTH_EDGES_10K seeds all four edge rows and tests q25 transfer. No row used as a seed is counted as an unseeded transfer readout for that schedule.",
         "",
         "## Seed strategy comparison",
         "",
         markdown_table(
             ["Schedule", "Seed labels", "Requested sites", "Accepted initial dual columns\nmedian (min–max)",
-             "q25 pairs", "q25 median ratio", "q25 median Δ (pp)",
-             "edge pairs", "edge median ratio", "edge median Δ (pp)",
-             "shared median ratio", "shared median Δ (pp)"],
+             "Seeded pairs", "Seeded median ratio",
+             "Unseeded q25 pairs", "q25 transfer median ratio", "q25 transfer Δ (pp)",
+             "Unseeded edge pairs", "edge transfer median ratio", "edge transfer Δ (pp)",
+             "Shared median ratio", "Shared median Δ (pp)"],
             strategy_rows,
         ),
         "",
-        "Requested seed sites are the predeclared coordinate count; accepted initial dual columns are the observed independent directions retained after reorthogonalization (median and min–max over 36 morphology/scenario cells). The primary resource-matched comparisons are Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K (two requested sites each). BOTH_EDGES_10K requests four sites and is a higher-budget coverage condition, not a location-only comparison.",
+        "Requested seed sites are the predeclared coordinate count; accepted initial dual columns are the observed independent directions retained after reorthogonalization (median and min–max over 36 morphology/scenario cells). The primary resource-matched comparisons are Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K (two requested sites each). BOTH_EDGES_10K requests four sites and is a higher-budget coverage condition, not a location-only comparison. The q25/edge transfer columns exclude seed-target outputs for that schedule; a zero count is intentionally shown as no unseeded transfer readout.",
         "",
         "Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.",
         "",
-        "## Readout-specific transfer",
+        "## Readout-specific seed-target and transfer results",
         "",
         markdown_table(
-            ["Output", "Schedule", "Pairs", "Median ratio", "Median D0 NRMSE (%)",
+            ["Output", "Schedule", "Readout status", "Pairs", "Median ratio", "Median D0 NRMSE (%)",
              "Median candidate NRMSE (%)", "Median Δ (pp)", "Better/Worse"],
             label_rows,
         ),
@@ -458,7 +498,7 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "## Results by morphology",
         "",
         markdown_table(
-            ["Morphology", "Schedule", "Output role", "Pairs", "Median ratio",
+            ["Morphology", "Schedule", "Readout family", "Pairs", "Median ratio",
              "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ (pp)", "Better/Worse"],
             morphology_rows,
         ),
@@ -466,7 +506,7 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "## Results by passive parameter scenario",
         "",
         markdown_table(
-            ["Scenario", "Schedule", "Output role", "Pairs", "Median ratio",
+            ["Scenario", "Schedule", "Readout family", "Pairs", "Median ratio",
              "Median Δ (pp)", "Better/Worse"],
             scenario_rows,
         ),
