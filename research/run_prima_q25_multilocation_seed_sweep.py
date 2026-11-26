@@ -699,7 +699,7 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
             float(row["transient_nrmse_pct"])
         for row in case_rows if row["schedule"] == "D0_none"
     }
-    for schedule_name in ROLE_SPECIFIC_SCHEDULES:
+    for schedule_name in MULTILOCATION_SCHEDULES:
         for window_ms in WINDOWS_MS:
             for descriptor in output_descriptors:
                 output_role = descriptor["output_role"]
