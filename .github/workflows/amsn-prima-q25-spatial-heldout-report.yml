@@ -22,6 +22,10 @@ jobs:
   report:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      # The accepted legacy archive predates run-ID capture inside report.json.
+      # Newer archives record their own ID and take precedence in the analyzer.
+      AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID: "45788056271"
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python 3.12
