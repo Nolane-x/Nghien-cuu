@@ -301,7 +301,7 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
     assert "Median D0 NRMSE (%)" in rendered
     assert "NMO_A" in rendered and "NMO_D" in rendered
     assert (
-        "**Workflow:** [run 987654321]"
+        "**Source numerical workflow:** [run 987654321]"
         "(https://github.com/Nolane-x/Nghien-cuu/actions/runs/987654321)"
     ) in rendered
     assert (
