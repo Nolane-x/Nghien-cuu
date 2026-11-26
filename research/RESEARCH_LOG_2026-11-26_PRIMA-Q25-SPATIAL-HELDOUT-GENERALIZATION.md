@@ -252,3 +252,12 @@ Files added:
 First run [#45796325682](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796325682) passed preflight and 11 tests but hit a stale schedule-registry name in the worker summary loop, after D0/full-Hines construction. No outputs were accepted. Fixed the loop to use `MULTILOCATION_SCHEDULES`; added a static regression assertion. Corrected numerical run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) is in the numerical sweep, and regression run [#45796720006](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796720006) is queued.
 
 The dedicated report pipeline passed [#45796600538](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796600538): report analyzer/tests compile, 5/5 tests passed; archive validation and report generation were skipped because there is no accepted multilocation archive yet. Do not claim results until the full 28,080-case archive passes exact coverage, numerical and checksum gates.
+
+
+## 2026-11-26 — multilocation report end-to-end test
+
+Added a synthetic complete archive test covering all five seed schedules, four morphology strata, nine passive scenarios, 13 outputs and 28,080 paired case records. It builds a nine-file checksummed manifest and validates D0 pairing, exact per-schedule seed metadata and generated strategy/output/morphology/scenario report tables.
+
+Report workflow [#45797384246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797384246) passed compile and all six report tests in 0.44 seconds. Since no accepted multilocation numerical archive exists yet, archive-dependent generation was skipped. The analyzer now also reads and checks actual row counts from all five summary CSVs, rather than trusting JSON coverage values alone.
+
+Numerical workflow [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains in its numerical step; its predecessor #45796325682 exposed and localized a stale schedule registry name in a post-simulation summary loop. The corrected runner is executing. No multilocation scientific result has been accepted.
