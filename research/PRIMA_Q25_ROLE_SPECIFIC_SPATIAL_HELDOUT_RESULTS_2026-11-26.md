@@ -3,7 +3,7 @@
 **Date:** 26 November 2026  
 **Status:** accepted numerical result; generated from case-level archive  
 **Basis order:** 224  
-**Source numerical workflow:** [run #45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271); this accepted archive predates run-ID capture in its JSON provenance.  
+**Workflow:** run ID not recorded in archive  
 
 ## Executive summary
 
@@ -28,6 +28,25 @@ The q25 seed targets are summarized separately. Strong q25-only gains alongside 
 | BASAL_10K | 864 | 0.4407 | 1.491e-08 | 5.933e-11 | -9.9415e-10 | 618/246 |
 | APICAL_10K | 864 | 0.604 | 1.491e-08 | 7.508e-11 | -2.0115e-09 | 561/303 |
 | BOTH_10K | 864 | 0.004211 | 1.491e-08 | 2.053e-11 | -1.4867e-08 | 790/74 |
+
+## Held-out spatial aggregate by morphology
+
+| Morphology | Schedule | Pairs | Median ratio | Median D0 NRMSE (%) | Median candidate NRMSE (%) | Median Δ NRMSE (pp) | Better/Worse |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| NMO_03524 | BASAL_10K | 432 | 1.215 | 1.268e-11 | 1.57e-11 | +3.4772e-12 | 153/279 |
+| NMO_03524 | APICAL_10K | 432 | 1.242 | 1.268e-11 | 1.528e-11 | +2.4845e-12 | 165/267 |
+| NMO_03524 | BOTH_10K | 432 | 0.9261 | 1.268e-11 | 1.197e-11 | -8.9057e-13 | 234/198 |
+| NMO_107159 | BASAL_10K | 432 | 1.045 | 3.705e-08 | 4.445e-08 | +6.1989e-10 | 205/227 |
+| NMO_107159 | APICAL_10K | 432 | 1.259 | 3.705e-08 | 4.393e-08 | +4.0134e-09 | 180/252 |
+| NMO_107159 | BOTH_10K | 432 | 1.519 | 3.705e-08 | 6.193e-08 | +1.2358e-08 | 118/314 |
+| NMO_162186 | BASAL_10K | 432 | 1.08 | 8.993e-09 | 1.137e-08 | +2.9605e-11 | 196/236 |
+| NMO_162186 | APICAL_10K | 432 | 1.333 | 8.993e-09 | 1.177e-08 | +1.4966e-10 | 160/272 |
+| NMO_162186 | BOTH_10K | 432 | 1.614 | 8.993e-09 | 1.284e-08 | +4.7131e-10 | 136/296 |
+| NMO_163775 | BASAL_10K | 432 | 0.4748 | 2.333e-07 | 1.213e-07 | -6.4286e-08 | 325/107 |
+| NMO_163775 | APICAL_10K | 432 | 0.9065 | 2.333e-07 | 1.771e-07 | -5.9222e-09 | 237/195 |
+| NMO_163775 | BOTH_10K | 432 | 1.015 | 2.333e-07 | 2.146e-07 | +8.1358e-10 | 212/220 |
+
+This morphology aggregate pools only the four declared held-out locations and both windows within each reconstruction; each row contains 432 paired cases. It is descriptive and is not a population estimate.
 
 ## Held-out location summary across both windows
 
