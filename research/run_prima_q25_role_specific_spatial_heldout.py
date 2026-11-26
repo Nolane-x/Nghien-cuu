@@ -60,6 +60,64 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def resolve_preflight_path(spec: dict[str, Any]) -> Path:
+    """Resolve registry preflight paths against the AMSN core checkout.
+
+    Registry paths are relative to the AMSN core directory. The parent sweep
+    runs from the repository root, while isolated workers use AMSN core as cwd.
+    """
+    path = Path(spec["preflight"])
+    if not path.is_absolute():
+        path = AMSN_CORE / path
+    return path.resolve()
+
+
+def run_worker_with_sigsegv_retry(
+    command: list[str],
+    *,
+    worker_label: str,
+    output_dir: Path,
+    max_sigsegv_retries: int = 2,
+) -> tuple[subprocess.CompletedProcess[str], int]:
+    """Retry only an isolated worker terminated by SIGSEGV (exit -11).
+
+    Each retry starts with a clean output directory. Other non-zero exits
+    remain fail-fast and retain captured stdout/stderr for diagnosis.
+    """
+    require(max_sigsegv_retries >= 0, "max_sigsegv_retries must be non-negative")
+    for attempt in range(1, max_sigsegv_retries + 2):
+        if attempt > 1:
+            import shutil
+            shutil.rmtree(output_dir, ignore_errors=True)
+        completed = subprocess.run(
+            command,
+            cwd=AMSN_CORE,
+            env=os.environ.copy(),
+            text=True,
+            capture_output=True,
+            timeout=30 * 60,
+            check=False,
+        )
+        if completed.returncode == 0:
+            return completed, attempt
+        if completed.returncode == -11 and attempt <= max_sigsegv_retries:
+            print(json.dumps({
+                "event": "worker_sigsegv_retry",
+                "worker": worker_label,
+                "attempt": attempt,
+                "max_attempts": max_sigsegv_retries + 1,
+                "stdout_tail": completed.stdout[-3000:],
+                "stderr_tail": completed.stderr[-3000:],
+            }), flush=True)
+            continue
+        raise RuntimeError(
+            f"worker failed for {worker_label} (exit={completed.returncode})"
+            f" after {attempt} attempt(s)\nSTDOUT:\n{completed.stdout[-12000:]}\n"
+            f"STDERR:\n{completed.stderr[-18000:]}"
+        )
+    raise AssertionError("unreachable worker retry state")
+
+
 def seed_indices_for_role(
     q25_tree_indices: dict[str, int], seed_role: str
 ) -> tuple[int, ...]:
@@ -352,7 +410,7 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     source_sha = hashlib.sha256(module.SWC.read_bytes()).hexdigest()
     require(source_sha == spec["expected_sha256"],
             f"{morphology_id}: SWC checksum mismatch")
-    preflight_path = Path(spec["preflight"])
+    preflight_path = resolve_preflight_path(spec)
     preflight = json.loads(preflight_path.read_text(encoding="utf-8"))
     require(preflight.get("status") == "PASS", f"{morphology_id}: source preflight did not pass")
     require(preflight.get("source", {}).get("source_sha256") == source_sha,
@@ -700,21 +758,11 @@ def main() -> None:
                     "--worker", "--morphology", morphology_id,
                     "--scenario", scenario, "--output-dir", str(group_dir),
                 ]
-                completed = subprocess.run(
+                completed, worker_attempts = run_worker_with_sigsegv_retry(
                     command,
-                    cwd=AMSN_CORE,
-                    env=os.environ.copy(),
-                    text=True,
-                    capture_output=True,
-                    timeout=30 * 60,
-                    check=False,
+                    worker_label=f"{morphology_id}/{scenario}",
+                    output_dir=group_dir,
                 )
-                if completed.returncode != 0:
-                    raise RuntimeError(
-                        f"worker failed for {morphology_id}/{scenario} "
-                        f"(exit={completed.returncode})\nSTDOUT:\n{completed.stdout[-12000:]}\n"
-                        f"STDERR:\n{completed.stderr[-18000:]}"
-                    )
                 case_local = read_csv(group_dir / "case_metrics.csv")
                 summary_local = read_csv(group_dir / "summary.csv")
                 report_local = json.loads(
@@ -722,6 +770,7 @@ def main() -> None:
                 )
                 require(report_local["status"] == "passed",
                         f"{morphology_id}/{scenario}: worker report status not passed")
+                report_local["worker_process_attempts"] = worker_attempts
                 require(len(case_local) == 624 and len(summary_local) == 104,
                         f"{morphology_id}/{scenario}: worker read-back mismatch")
                 require(all(x["passed"] for x in report_local["finite_dft_identity"]),
@@ -833,7 +882,7 @@ def main() -> None:
 
         morphology_manifest = []
         for spec in specs:
-            pf = json.loads(Path(spec["preflight"]).read_text(encoding="utf-8"))
+            pf = json.loads(resolve_preflight_path(spec).read_text(encoding="utf-8"))
             morphology_manifest.append({
                 "name": spec["name"],
                 "neuromorpho_id": spec["neuromorpho_id"],
@@ -939,6 +988,13 @@ def main() -> None:
             "worker_total_seconds": sum(float(x["wall_seconds"]) for x in worker_reports),
             "max_worker_seconds": max(float(x["wall_seconds"]) for x in worker_reports),
             "worker_processes": worker_count,
+            "worker_process_attempts": [
+                int(item.get("worker_process_attempts", 1)) for item in worker_reports
+            ],
+            "worker_native_sigsegv_retries": sum(
+                max(0, int(item.get("worker_process_attempts", 1)) - 1)
+                for item in worker_reports
+            ),
             "numerical_runtime": core.numerical_runtime_diagnostics(),
         }
         report_path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n",
