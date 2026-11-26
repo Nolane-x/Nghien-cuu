@@ -8,6 +8,7 @@ import hashlib
 import json
 import os
 import statistics
+from math import isfinite
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
@@ -324,16 +325,32 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         grouped_morph_label[(row["neuromorpho_id"], schedule, label)].append(pair)
         grouped_scenario_label[(row["scenario"], schedule, label)].append(pair)
 
-    metadata_by_schedule: dict[str, list[int]] = defaultdict(list)
+    metadata_by_schedule: dict[str, list[dict[str, float]]] = defaultdict(list)
     for row in metadata:
-        metadata_by_schedule[str(row["schedule"])].append(
-            int(row["initial_output_seed_columns"])
-        )
+        schedule = str(row["schedule"])
+        metadata_by_schedule[schedule].append({
+            "accepted_output_rank": float(row["initial_output_seed_columns"]),
+            "basis_build_seconds": float(row["wall_seconds"]),
+            "conductance_condition_number": float(row["conductance_condition_number"]),
+            "capacitance_condition_number": float(row["capacitance_condition_number"]),
+            "basis_orthogonality_max_abs": float(row["basis_orthogonality_max_abs"]),
+        })
     for schedule in SCHEDULES:
-        require(len(metadata_by_schedule[schedule]) == 36,
-                f"{schedule}: expected 36 observed seed-rank entries")
+        entries = metadata_by_schedule[schedule]
+        require(len(entries) == 36,
+                f"{schedule}: expected 36 observed seed-rank/runtime entries")
+        for entry in entries:
+            require(
+                all(isfinite(value) for value in entry.values()),
+                f"{schedule}: non-finite basis cost/conditioning metadata",
+            )
+            require(entry["basis_build_seconds"] >= 0.0,
+                    f"{schedule}: negative basis construction time")
+            require(entry["conductance_condition_number"] >= 1.0
+                    and entry["capacitance_condition_number"] >= 1.0,
+                    f"{schedule}: invalid reduced-matrix condition number")
         if schedule == "D0_none":
-            require(all(x == 0 for x in metadata_by_schedule[schedule]),
+            require(all(x["accepted_output_rank"] == 0 for x in entries),
                     "D0 unexpectedly retained output-dual columns")
 
     def paired_summary_or_none(pairs):
@@ -365,10 +382,12 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         q25_transfer = paired_summary_or_none(selected_pairs(schedule, unseeded_q25_labels))
         edge_transfer = paired_summary_or_none(selected_pairs(schedule, unseeded_edge_labels))
         shared_summary = summarize(selected_pairs(schedule, SHARED_LABELS))
-        accepted_rank_values = metadata_by_schedule[schedule]
+        accepted_rank_values = [
+            x["accepted_output_rank"] for x in metadata_by_schedule[schedule]
+        ]
         rank_label = (
             f"{statistics.median(accepted_rank_values):g} "
-            f"({min(accepted_rank_values)}–{max(accepted_rank_values)})"
+            f"({min(accepted_rank_values):g}–{max(accepted_rank_values):g})"
         )
         strategy_rows.append([
             schedule,
@@ -385,6 +404,25 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             delta_value(edge_transfer),
             fmt_ratio(shared_summary["median_ratio"]),
             fmt_delta(shared_summary["median_delta_pp"]),
+        ])
+
+    basis_cost_rows = []
+    for schedule in SCHEDULES:
+        entries = metadata_by_schedule[schedule]
+        build_times = [x["basis_build_seconds"] for x in entries]
+        cond_g = [x["conductance_condition_number"] for x in entries]
+        cond_c = [x["capacitance_condition_number"] for x in entries]
+        ortho = [x["basis_orthogonality_max_abs"] for x in entries]
+        ranks = [x["accepted_output_rank"] for x in entries]
+        basis_cost_rows.append([
+            schedule,
+            str(len(SCHEDULE_SEEDS[schedule])),
+            f"{statistics.median(ranks):g} ({min(ranks):g}–{max(ranks):g})",
+            f"{statistics.median(build_times):.4g}",
+            f"{percentile(build_times, 0.90):.4g}",
+            f"{max(cond_g):.4g}",
+            f"{max(cond_c):.4g}",
+            f"{max(ortho):.4e}",
         ])
 
     label_rows = []
@@ -486,6 +524,17 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "Requested seed sites are the predeclared coordinate count; accepted initial dual columns are the observed independent directions retained after reorthogonalization (median and min–max over 36 morphology/scenario cells). The primary resource-matched comparisons are Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K (two requested sites each). BOTH_EDGES_10K requests four sites and is a higher-budget coverage condition, not a location-only comparison. The q25/edge transfer columns exclude seed-target outputs for that schedule; a zero count is intentionally shown as no unseeded transfer readout.",
         "",
         "Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.",
+        "",
+        "## Basis construction cost and conditioning",
+        "",
+        markdown_table(
+            ["Schedule", "Requested seed sites", "Accepted output-dual rank\nmedian (min–max)",
+             "Basis build median (s)", "Basis build P90 (s)", "Max cond(G)", "Max cond(C)",
+             "Max basis orthogonality error"],
+            basis_cost_rows,
+        ),
+        "",
+        "Build time and conditioning are summarized over the 36 morphology/scenario cells per schedule. Condition numbers are descriptive; the numerical acceptance gates still require positive-definite projected G/C and the stated orthogonality tolerance.",
         "",
         "## Readout-specific seed-target and transfer results",
         "",
