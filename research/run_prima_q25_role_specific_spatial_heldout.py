@@ -94,7 +94,8 @@ def run_worker_with_sigsegv_retry(
             cwd=AMSN_CORE,
             env=os.environ.copy(),
             text=True,
-            capture_output=True,
+            # Inherit stdout/stderr so worker stage markers stream live to Actions.
+            # Capturing the full child output hid all progress until a worker exited.
             timeout=30 * 60,
             check=False,
         )
@@ -106,14 +107,23 @@ def run_worker_with_sigsegv_retry(
                 "worker": worker_label,
                 "attempt": attempt,
                 "max_attempts": max_sigsegv_retries + 1,
-                "stdout_tail": completed.stdout[-3000:],
-                "stderr_tail": completed.stderr[-3000:],
+                "output_mode": "worker stdout/stderr streamed directly to the Actions log",
             }), flush=True)
             continue
+        stdout_tail = (
+            completed.stdout[-12000:]
+            if isinstance(completed.stdout, str)
+            else "(streamed directly to the Actions log)"
+        )
+        stderr_tail = (
+            completed.stderr[-18000:]
+            if isinstance(completed.stderr, str)
+            else "(streamed directly to the Actions log)"
+        )
         raise RuntimeError(
             f"worker failed for {worker_label} (exit={completed.returncode})"
-            f" after {attempt} attempt(s)\nSTDOUT:\n{completed.stdout[-12000:]}\n"
-            f"STDERR:\n{completed.stderr[-18000:]}"
+            f" after {attempt} attempt(s)\nSTDOUT:\n{stdout_tail}\n"
+            f"STDERR:\n{stderr_tail}"
         )
     raise AssertionError("unreachable worker retry state")
 
@@ -404,6 +414,7 @@ def summarize_paired_rows(
 
 def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     """Run one morphology/parameter-scenario group in a clean process."""
+    worker_started = time.perf_counter()
     import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
     import audit_prima_q25_basis_conditioning as conditioning
     import audit_prima_q25_extended_backward_euler as tail
@@ -514,8 +525,6 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     schedule_metadata: list[dict[str, Any]] = []
     models: dict[str, Any] = {}
     model_traces: dict[str, Any] = {}
-    worker_started = time.perf_counter()
-
     for schedule_name, (seed_role, dual_frequencies) in ROLE_SPECIFIC_SCHEDULES.items():
         schedule_started = time.perf_counter()
         seed_indices = seed_indices_for_role(q25_tree_indices, seed_role)
@@ -771,6 +780,12 @@ def main() -> None:
                     "--worker", "--morphology", morphology_id,
                     "--scenario", scenario, "--output-dir", str(group_dir),
                 ]
+                print(json.dumps({
+                    "worker_started": worker_count,
+                    "total_workers": len(specs) * len(scenario_names),
+                    "morphology": morphology_id,
+                    "scenario": scenario,
+                }), flush=True)
                 completed, worker_attempts = run_worker_with_sigsegv_retry(
                     command,
                     worker_label=f"{morphology_id}/{scenario}",
