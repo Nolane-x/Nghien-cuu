@@ -91,5 +91,5 @@ def test_node_metadata_fails_closed_on_holdout_or_target_collisions():
 
     rows = _metadata_rows()
     rows[0]["heldout_spatial_sites"][0]["swc_node_id"] = 11
-    with pytest.raises(ValueError, match="unique"):
+    with pytest.raises(ValueError, match="distinct"):
         validate_node_metadata(rows)
