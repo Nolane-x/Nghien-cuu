@@ -230,3 +230,25 @@ The report workflow now gets a legacy source-run fallback from `AMSN_PRIMA_ARCHI
 Report workflow [#45794211911](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45794211911) passed. Six tests passed in 0.31 s; archive completeness, report generation and report commit steps succeeded. The generated Markdown now carries the explicit source link to numerical run #45788056271 and the four-morphology aggregate table. The analyzer prefers a `github_actions_run_id` embedded in future numerical archives and uses the workflow-provided legacy source-run fallback only when absent. Tests cover both paths.
 
 The independent numerical runner diagnostic #45793076160 is still active; latest runner-focused test #45793084446 remains queued. The accepted 36-worker archive is unchanged and remains the authoritative scientific data.
+
+
+## 2026-11-26 — q25-versus-edge multilocation seed transfer experiment
+
+A separate protocol and runner were added to test whether edge-location dual seeds transfer inward to q25 readouts, and whether q25 seeds transfer outward to the four edge readouts. The seven input ports, six primal shifts, order224 basis, full-Hines reference, 13 outputs and all simulation dimensions are unchanged.
+
+Locked schedules (all non-D0 dual shifts = 10 kHz): D0_none; Q25_BOTH_10K; BASAL_EDGES_10K; APICAL_EDGES_10K; BOTH_EDGES_10K. Edge seed coordinates are the existing pinned q10/q95 SWC readout mappings; q25 coordinates are the existing pinned q25 map. No schedule is selected post hoc.
+
+Exact expected coverage: 36 workers; 28,080 case rows; 4,680 worker summaries; 520 morphology/window summaries; 1,170 scenario/window summaries; 130 pooled/window summaries; 180 finite-record DFT identities; 180 basis metadata rows.
+
+Files added:
+- `research/PRIMA_Q25_MULTILOCATION_OUTPUT_DUAL_SEED_PROTOCOL_2026-11-26.md`
+- `research/run_prima_q25_multilocation_seed_sweep.py`
+- `research/test_prima_q25_multilocation_seed_sweep.py`
+- `research/analyze_prima_q25_multilocation_seed_results.py`
+- `research/test_prima_q25_multilocation_seed_results.py`
+- `.github/workflows/amsn-prima-q25-multilocation-seed-sweep.yml`
+- `.github/workflows/amsn-prima-q25-multilocation-seed-report.yml`
+
+First run [#45796325682](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796325682) passed preflight and 11 tests but hit a stale schedule-registry name in the worker summary loop, after D0/full-Hines construction. No outputs were accepted. Fixed the loop to use `MULTILOCATION_SCHEDULES`; added a static regression assertion. Corrected numerical run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) is in the numerical sweep, and regression run [#45796720006](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796720006) is queued.
+
+The dedicated report pipeline passed [#45796600538](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796600538): report analyzer/tests compile, 5/5 tests passed; archive validation and report generation were skipped because there is no accepted multilocation archive yet. Do not claim results until the full 28,080-case archive passes exact coverage, numerical and checksum gates.
