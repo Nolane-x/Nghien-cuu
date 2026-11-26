@@ -265,13 +265,23 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         for window in (20.0, 40.0):
             for schedule in ("D0_none", "BASAL_10K", "APICAL_10K", "BOTH_10K"):
                 if schedule == "D0_none":
+                    baseline_values = [
+                        float(row["transient_nrmse_pct"])
+                        for row in cases
+                        if row["schedule"] == "D0_none"
+                        and row["output_label"] == label
+                        and float(row["window_ms"]) == window
+                    ]
+                    require(bool(baseline_values),
+                            f"missing D0 baseline values for {label}/{window:g} ms")
+                    median_baseline = float(statistics.median(baseline_values))
                     summary = {
-                        "matched": 216,
+                        "matched": len(baseline_values),
                         "median_ratio": 1.0,
                         "p90_ratio": 1.0,
                         "worst_ratio": 1.0,
-                        "median_reference_nrmse_pct": None,
-                        "median_candidate_nrmse_pct": None,
+                        "median_reference_nrmse_pct": median_baseline,
+                        "median_candidate_nrmse_pct": median_baseline,
                         "median_delta_pp": 0.0,
                         "better": 0,
                         "worse": 0,
@@ -350,13 +360,21 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     gates = report["numerical_gates"]
     dft = report["dft_identity"]
     runtime = report.get("runtime", {})
+    workflow_run_id = runtime.get("github_actions_run_id")
+    if isinstance(workflow_run_id, (str, int)) and str(workflow_run_id).isdigit():
+        workflow_line = (
+            f"**Workflow:** [run {workflow_run_id}]"
+            f"(https://github.com/Nolane-x/Nghien-cuu/actions/runs/{workflow_run_id})  "
+        )
+    else:
+        workflow_line = "**Workflow:** run ID not recorded in archive  "
     lines = [
         "# PRIMA q25 role-specific seeds — held-out spatial generalization results",
         "",
         "**Date:** 26 November 2026  ",
         "**Status:** accepted numerical result; generated from case-level archive  ",
         "**Basis order:** 224  ",
-        "**Workflow:** [run 45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643)  ",
+        workflow_line,
         "",
         "## Executive summary",
         "",
