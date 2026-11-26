@@ -355,6 +355,15 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
     assert len(file_rows) == 9
     manifest = {
         "status": "passed",
+        "source_manifest": [
+            {
+                "neuromorpho_id": morph_id,
+                "expected_swc_sha256": "f" * 64,
+                "preflight_source_sha256": "f" * 64,
+                "preflight_status": "PASS",
+            }
+            for morph_id, _name in morphologies
+        ],
         "files": [
             {
                 "path": path.name,
