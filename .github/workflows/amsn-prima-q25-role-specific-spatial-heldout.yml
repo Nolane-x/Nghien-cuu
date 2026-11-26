@@ -123,6 +123,14 @@ jobs:
             ../research/test_prima_q25_role_specific_spatial_heldout.py
       - name: Run four-morphology q25 schedule with independent spatial readouts
         run: python research/run_prima_q25_role_specific_spatial_heldout.py
+      - name: Preserve completed worker checkpoints if the numerical sweep fails
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-spatial-heldout-worker-checkpoints-${{ github.run_id }}
+          path: /tmp/prima-q25-dual-seed-workers-*/
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Verify exact coverage, numerical gates and DFT identities
         run: |
           python - <<'PY'
