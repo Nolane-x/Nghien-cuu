@@ -25,6 +25,19 @@ Requested seed sites are the predeclared coordinate count; accepted initial dual
 
 Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.
 
+## Pooled transfer interpretation
+
+Every available pooled unseeded-transfer family has a median candidate/D0 ratio above 1. This is consistent with target-local specialization rather than broad spatial transfer in the pooled four-morphology result.
+
+- **Q25_BOTH_10K:** unseeded edge median ratio 1.265, Δ +2.7403e-11 pp (700/1028 better/worse)
+- **BASAL_EDGES_10K:** unseeded q25 median ratio 1.33, Δ +2.0502e-11 pp (331/533 better/worse) unseeded edge median ratio 1.087, Δ +1.8588e-12 pp (413/451 better/worse)
+- **APICAL_EDGES_10K:** unseeded q25 median ratio 1.712, Δ +6.8412e-10 pp (258/606 better/worse) unseeded edge median ratio 1.614, Δ +1.9283e-10 pp (284/580 better/worse)
+- **BOTH_EDGES_10K:** unseeded q25 median ratio 2.187, Δ +6.8666e-09 pp (195/669 better/worse)
+
+Morphology-level exceptions with median transfer ratio below 1: NMO_03524/Q25_BOTH_10K unseeded edge: median ratio 0.9261; NMO_163775/BASAL_EDGES_10K unseeded edge: median ratio 0.5063.
+
+The ratios are descriptive medians over paired cases; they are not significance tests. Absolute percentage-point deltas must be read alongside the ratios because several D0 errors are close to the numerical floor.
+
 ## Schedule runtime and conditioning
 
 | Schedule | Requested seed sites | Accepted output-dual rank
