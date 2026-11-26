@@ -270,3 +270,16 @@ The analysis protocol now identifies Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_ED
 The result analyzer reports both requested sites and observed accepted initial dual columns (median/min–max over 36 morphology/scenario cells), validates that accepted rank does not exceed requested sites, and requires zero accepted output-dual columns for D0.
 
 Synthetic archive report workflows [#45797853943](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797853943) and [#45797861246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797861246) both passed 7/7 tests (0.43 s and 0.47 s respectively). The numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains active; queued rerun [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) includes protocol and static-regression updates. No accepted multilocation archive yet.
+
+
+## 2026-11-26 — schedule-specific seed-target/transfer split
+
+The multilocation analyzer now applies the exact per-schedule seed mask before constructing transfer aggregates:
+- q25 seeds → q25 is reported as seed-target accuracy and all four edges as unseeded transfer.
+- basal edge seeds → basal edge rows are seed-target accuracy; q25 and apical edges are unseeded transfer.
+- apical edge seeds → apical edge rows are seed-target accuracy; q25 and basal edges are unseeded transfer.
+- four-edge seeds → all edge rows are seed-target accuracy; q25 is unseeded transfer.
+
+This avoids treating an output as a holdout for the same schedule that used it to construct dual seeds. Seeded and unseeded medians/counts now appear separately in the strategy, morphology and scenario tables. Empty transfer families display zero count and an em dash for metrics.
+
+Report workflow [#45799248302](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799248302) passed 7/7 tests (0.42 s), including a synthetic full archive with exact schedule-specific transfer row assertions. Actual archive report generation was skipped because no numerical archive is present. Numerical run #45796697978 remains active.
