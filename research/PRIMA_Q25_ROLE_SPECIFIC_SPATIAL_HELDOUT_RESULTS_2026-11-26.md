@@ -3,7 +3,7 @@
 **Date:** 26 November 2026  
 **Status:** accepted numerical result; generated from case-level archive  
 **Basis order:** 224  
-**Source numerical workflow:** [run 45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271)  
+**Source numerical workflow:** [run 45793076160](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160)  
 
 ## Executive summary
 
@@ -97,7 +97,7 @@ All comparisons are paired at the morphology, passive scenario, window, input so
 - Seven input ports unchanged: True.
 - Maximum basis orthogonality error: 1.9984e-15.
 - All DFT identities passed: True; maximum full-Hines residual 3.1661e-12; maximum reduced residual 3.5918e-13; tolerance 2.0e-08.
-- Runtime: 1667.5 s wall; 36 isolated workers.
+- Runtime: 2516.2 s wall; 36 isolated workers.
 
 ## Pooled q25 and spatial held-out readouts
 
