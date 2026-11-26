@@ -196,11 +196,14 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     require(preflight.get("source", {}).get("source_sha256") == source_sha,
             f"{morphology_id}: preflight checksum mismatch")
 
+    print(json.dumps({"stage":"before_neuron_swc_import","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     reader, sections = reference.import_swc_with_neuron()
+    print(json.dumps({"stage":"after_neuron_swc_import","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     base_tree = morphology.to_cable_tree()
     layouts, shared_node_ids, q25_node_ids = module.build_four_layouts(
         morphology, reader, sections, base_tree
     )
+    print(json.dumps({"stage":"after_layout_build","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     require(set(layouts) >= {"seven"}, f"{morphology_id}: seven-port layout missing")
     seven_layout = layouts["seven"]
     retained_indices = tuple(int(x) for x in seven_layout["ports"])
@@ -224,18 +227,24 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
             f"{morphology_id}: output observation sites must be distinct")
 
     target = conditioning.build_target_tree(module, base_tree, scenarios[scenario_name])
-    hines_factor = tail.build_tree_hines_be_factor(target, DT_S)
-    full_trace, full_terminal_states, protocol = core.simulate_full_hines_perturbation_windows(
-        target, hines_factor, source_tree_indices, list(output_tree_indices)
-    )
     source_slots = {
         source: int(seven_layout["source_indices"][source]) for source in SOURCE_NAMES
     }
 
+    # Build and verify the canonical D0 model before invoking native full-Hines.
+    print(json.dumps({"stage":"before_production_d0","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     production_d0 = baseline.prima_reduce_passive_cable_multishift(
         target, list(retained_indices), ORDER, conditioning.SHIFTS_HZ,
         relative_tolerance=conditioning.RELATIVE_TOLERANCE,
     )
+    print(json.dumps({"stage":"after_production_d0","morphology":morphology_id,"scenario":scenario_name}), flush=True)
+
+    hines_factor = tail.build_tree_hines_be_factor(target, DT_S)
+    print(json.dumps({"stage":"before_full_hines","morphology":morphology_id,"scenario":scenario_name}), flush=True)
+    full_trace, full_terminal_states, protocol = core.simulate_full_hines_perturbation_windows(
+        target, hines_factor, source_tree_indices, list(output_tree_indices)
+    )
+    print(json.dumps({"stage":"after_full_hines","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     case_rows: list[dict[str, Any]] = []
     summary_rows: list[dict[str, Any]] = []
     schedule_metadata: list[dict[str, Any]] = []
