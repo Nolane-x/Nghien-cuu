@@ -241,6 +241,7 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
                         "APICAL_EDGES_10K": "apical_edges",
                         "BOTH_EDGES_10K": "both_edges",
                     }[schedule],
+                    "initial_output_seed_columns": len(labels),
                     "seed_site_labels": list(labels),
                     "seed_swc_node_ids": [seed_maps[x] for x in labels],
                     "seed_node_indices": [] if schedule == "D0_none" else [seed_maps[x] for x in labels],
