@@ -247,3 +247,14 @@ This makes the heterogeneity explicit: both Tamas and Allen have ratios above 1 
 ### Report provenance correction
 
 The report regeneration workflow had overwritten a manually corrected source-run link because the legacy numerical report JSON has no `github_actions_run_id`. The report workflow now supplies `AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID=45788056271` as an explicit fallback; IDs recorded in future numerical archives take precedence. Regression tests cover both cases. A test assertion was also updated to the new “Source numerical workflow” label. Latest provenance/test update commits: `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`.
+
+
+## Final report pipeline pass — 26 November 2026, 09:41 UTC
+
+- Report workflow [#45794211911](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45794211911) completed successfully.
+- All six report tests passed in 0.31 s; archive metadata preflight, complete case-level report generation, and generated-report commit steps all succeeded.
+- Verified the generated report now links to source numerical run [#45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), rather than displaying a missing-run fallback.
+- The report now contains the morphology aggregate table and explicit source-run provenance. Report helper prefers a future archive's embedded `github_actions_run_id`, falling back to `AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID` only for this legacy archive.
+- Report generator/test/workflow changes are in commits `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`; report was regenerated and reconciled by the workflow.
+
+The separate numerical reliability diagnostic run #45793076160 remains in progress at its isolated numerical step; the queued latest focused runner test run #45793084446 has not started. The accepted archive from #45788056271 remains authoritative unless a new run finishes and independently clears every gate.
