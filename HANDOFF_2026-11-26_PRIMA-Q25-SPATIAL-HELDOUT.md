@@ -258,3 +258,32 @@ The report regeneration workflow had overwritten a manually corrected source-run
 - Report generator/test/workflow changes are in commits `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`; report was regenerated and reconciled by the workflow.
 
 The separate numerical reliability diagnostic run #45793076160 remains in progress at its isolated numerical step; the queued latest focused runner test run #45793084446 has not started. The accepted archive from #45788056271 remains authoritative unless a new run finishes and independently clears every gate.
+
+
+## Follow-on experiment: q25-versus-edge multilocation seed transfer — 26 November 2026
+
+A new preregistered experiment has been added to test the reverse transfer direction. It holds the seven canonical input ports, six primal shifts, order-224 cap, full-Hines reference, four morphologies, nine passive scenarios, sources, pulse widths, windows and all 13 outputs fixed. Only the set of output-dual seed coordinates changes.
+
+New protocol: `research/PRIMA_Q25_MULTILOCATION_OUTPUT_DUAL_SEED_PROTOCOL_2026-11-26.md`.
+
+Five locked schedules:
+- D0_none: no output-dual vectors.
+- Q25_BOTH_10K: basal/apical q25 seeds.
+- BASAL_EDGES_10K: basal q10/q95 seeds.
+- APICAL_EDGES_10K: apical q10/q95 seeds.
+- BOTH_EDGES_10K: all four q10/q95 edge seeds.
+
+All non-D0 schedules use the same 10-kHz dual shift. The same 13 measured outputs are retained in every schedule. A row is treated as an unseeded transfer readout only for schedules that do not seed it.
+
+Expected coverage: 36 workers; 28,080 case rows; 4,680 group summaries; 520 morphology/window summaries; 1,170 scenario/window summaries; 130 pooled/window summaries; 180 finite-record DFT identities; 180 basis metadata rows. The new runner writes a separate result stem, leaving the accepted q25 spatial archive unchanged.
+
+Implementation:
+- Runner: `research/run_prima_q25_multilocation_seed_sweep.py`.
+- Unit tests: `research/test_prima_q25_multilocation_seed_sweep.py`.
+- Numerical workflow: [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978), currently in its numerical sweep.
+- Extra regression run: [#45796720006](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796720006), queued after adding a static guard against stale schedule-registry references.
+- First execution [#45796325682](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796325682) passed all preflights and 11 tests, built the first Peng/nominal tree, D0 PRIMA model and full-Hines trace, then stopped on one stale `ROLE_SPECIFIC_SCHEDULES` reference in a later summary loop. The reference was corrected to `MULTILOCATION_SCHEDULES`; this run produced no accepted matrices.
+- Report analyzer: `research/analyze_prima_q25_multilocation_seed_results.py`; report tests: `research/test_prima_q25_multilocation_seed_results.py`.
+- Report workflow: [#45796600538](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796600538) passed compile and 5/5 tests; archive validation/report generation were correctly skipped because the numerical archive is not yet present.
+
+The older q25 faulthandler diagnostic #45793076160 remains active and the old focused rerun #45793084446 remains queued. They do not block the separate multilocation workflow, and the previously accepted q25 archive/report remain authoritative for the completed prior experiment.
