@@ -229,3 +229,21 @@ The report generator now separates q25-target specialization from spatial holdou
 - Generated report: [PRIMA q25 spatial held-out results](https://github.com/Nolane-x/Nghien-cuu/blob/research/prima-q25-spatial-heldout-generalization-2026-11-26/research/PRIMA_Q25_ROLE_SPECIFIC_SPATIAL_HELDOUT_RESULTS_2026-11-26.md). It includes pooled schedule results, 12 heldout-label/schedule summaries, four morphology strata, nine passive scenarios, exact node maps, and explicit scientific limits.
 - The original successful archive predates recording `GITHUB_RUN_ID` inside its report JSON. The generated Markdown now links explicitly to source numerical run #45788056271 and discloses this provenance limitation; the source run is verified by its GitHub Actions page and artifact.
 - Native-crash follow-up: run #45792818861 reproduced a SIGSEGV at the first Peng/nominal production-D0 stage on all three attempts. Python faulthandler was enabled in subprocess invocation. Diagnostic run #45793076160 is active in the numerical step; run #45793084446 is queued with the latest focused tests. Do not replace the accepted archive with an unverified rerun.
+
+
+## Morphology-level heterogeneity — 26 November 2026
+
+The generated report now adds a direct morphology aggregate: four held-out sites × both windows = 432 paired cases per morphology/schedule.
+
+| Morphology | BASAL_10K median ratio | APICAL_10K median ratio | BOTH_10K median ratio |
+| --- | ---: | ---: | ---: |
+| NMO_03524 (Jacobs) | 1.215 | 1.242 | 0.9261 |
+| NMO_107159 (Tamas) | 1.045 | 1.259 | 1.519 |
+| NMO_162186 (Allen) | 1.080 | 1.333 | 1.614 |
+| NMO_163775 (Peng) | 0.4748 | 0.9065 | 1.015 |
+
+This makes the heterogeneity explicit: both Tamas and Allen have ratios above 1 for all three candidate schedules; Jacobs improves only under BOTH_10K; Peng improves under the single-branch seed schedules but not the joint schedule. These are per-reconstruction descriptive aggregates, not biological population estimates. The result therefore does not support morphology-independent spatial generalization.
+
+### Report provenance correction
+
+The report regeneration workflow had overwritten a manually corrected source-run link because the legacy numerical report JSON has no `github_actions_run_id`. The report workflow now supplies `AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID=45788056271` as an explicit fallback; IDs recorded in future numerical archives take precedence. Regression tests cover both cases. A test assertion was also updated to the new “Source numerical workflow” label. Latest provenance/test update commits: `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`.
