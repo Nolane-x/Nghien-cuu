@@ -9,6 +9,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import statistics
 from collections import defaultdict
 from pathlib import Path
@@ -163,6 +164,19 @@ def fmt_ratio(value: float) -> str:
 
 def fmt_delta(value: float) -> str:
     return f"{value:+.4e}"
+
+
+def source_workflow_line(runtime: dict[str, Any]) -> str:
+    """Link the archive-producing run, preferring provenance stored in the archive."""
+    run_id = runtime.get("github_actions_run_id") or os.environ.get(
+        "AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID"
+    )
+    if isinstance(run_id, (str, int)) and str(run_id).isdigit():
+        return (
+            f"**Source numerical workflow:** [run {run_id}]"
+            f"(https://github.com/Nolane-x/Nghien-cuu/actions/runs/{run_id})  "
+        )
+    return "**Workflow:** run ID not recorded in archive  "
 
 
 def make_report(results_dir: Path, output_path: Path) -> None:
@@ -443,14 +457,7 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     gates = report["numerical_gates"]
     dft = report["dft_identity"]
     runtime = report.get("runtime", {})
-    workflow_run_id = runtime.get("github_actions_run_id")
-    if isinstance(workflow_run_id, (str, int)) and str(workflow_run_id).isdigit():
-        workflow_line = (
-            f"**Workflow:** [run {workflow_run_id}]"
-            f"(https://github.com/Nolane-x/Nghien-cuu/actions/runs/{workflow_run_id})  "
-        )
-    else:
-        workflow_line = "**Workflow:** run ID not recorded in archive  "
+    workflow_line = source_workflow_line(runtime)
     lines = [
         "# PRIMA q25 role-specific seeds — held-out spatial generalization results",
         "",
