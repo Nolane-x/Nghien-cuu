@@ -161,3 +161,14 @@ These changes improve archive traceability and reporting clarity only; they do n
 Report workflow [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) completed success on the dynamic workflow-provenance and D0-baseline report revision. Job logs confirm compileall and **5/5 tests passed in 0.42 s**. The end-to-end test verified a generated report links to the run ID in its synthetic archive and displays the D0 basal-q10 absolute NRMSE row. Archive-specific report generation was correctly skipped because there is still no accepted numerical archive.
 
 Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still at the 36-group calculation step; updated numerical run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294), which records its own Actions run ID, was queued behind it.
+
+
+## 2026-11-26 — live worker telemetry and runtime accounting
+
+- Reviewed the in-flight numerical job and identified why it appeared silent: the parent runner used `subprocess.run(capture_output=True)`, so each worker's existing flushed stage markers were buffered until that entire worker exited.
+- Updated `research/run_prima_q25_role_specific_spatial_heldout.py` to inherit the Actions job's stdout/stderr for live stage telemetry, emit an explicit worker-start record, and retain useful retry/failure messages when output is inherited rather than captured.
+- Moved the worker stopwatch to the beginning of `worker()`. Previously its `wall_seconds` started only after D0 construction and the full-Hines reference run, understating per-worker elapsed time.
+- Added regression tests for inherited output, absence of output capture, timeout configuration, and failure handling when `CompletedProcess.stdout/stderr` are `None`.
+- Commits: `262c88198ea4362ff66f709cde7a16e7a2c23d72` and `00e389a478c81709476c563da9fffc2f7e4f8520`.
+- CI state at documentation update: legacy numerical run `45788056271` remains in its numerical sweep; run `45790064294` was superseded/cancelled by the newer branch push; the latest streaming-enabled numerical run is queued as `45791629647`. No numerical archive has yet been accepted.
+- The independent report-workflow regression run `45790113319` completed successfully (5 tests). This verifies report-generation mechanics only, not the scientific sweep.
