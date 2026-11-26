@@ -75,3 +75,8 @@ The repository-resident SWC files were independently re-read and the determinist
 | Jacobs NMO_03524 | 816 | 8 | 272 / 864 | 631 / 702 | 863 / 869 |
 
 For all three files, all four q10/q95 nodes are distinct from one another, the seven canonical shared nodes, and both q25 targets. Jacobs has only eight type-4 nodes; its apical q10/q95 values are therefore discrete node-rank endpoints within a very small apical sample, not dense spatial coverage. These identifiers are now enforced as compatibility pins in the runner. The Allen SWC is fetched by CI and is validated at runtime against its pinned SHA-256 and fail-closed node-collision gates.
+
+
+## Interpretation gates locked before results
+
+The protocol now makes absolute NRMSE percentage-point deltas primary when D0 is near the numerical floor; candidate/D0 ratios are secondary. Basal/apical and q10/q95 readouts must remain separate. A pooled median alone is explicitly insufficient: the interpretation must inspect all four morphology strata and both branch classes. A result that improves only q25 targets is target-local basis specialization, not spatial generalization.
