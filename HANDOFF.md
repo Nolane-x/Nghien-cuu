@@ -1,15 +1,13 @@
 # HANDOFF — Nolane-x Research
 
-## Four-morphology role-specific q25 seed sweep — running
+## Four-morphology role-specific q25 seed sweep — failed; no result accepted
 
-- Pre-registered protocol: [PRIMA_Q25_FOUR_MORPHOLOGY_ROLE_SPECIFIC_SEED_SWEEP_PROTOCOL_2026-11-26.md](research/PRIMA_Q25_FOUR_MORPHOLOGY_ROLE_SPECIFIC_SEED_SWEEP_PROTOCOL_2026-11-26.md).
-- Dedicated runner: [run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py](research/run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py); focused tests: [test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py](research/test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py).
-- Current workflow [45760007155](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45760007155), head `831d0892e587b9c5a51f6347b54ba5d155ac157f`, is in the numerical sweep step. Source preflights, pinned runtime, NumPy SIMD preflight, compile and 11/11 focused tests passed. No cross-morphology numerical result has been accepted yet.
-- Four predeclared schedules: D0_none, BASAL_10K, APICAL_10K and BOTH_10K. Fixed basis order224, seven original input ports, nine observed rows, four individual morphologies × nine passive scenarios.
-- Expected coverage: 36 workers, 15,552 case rows, 2,592 group summaries, 288 morphology summaries, 648 scenario summaries, 72 pooled summaries, 144 finite-DFT identities and 144 basis metadata rows.
-- The first attempt [45759776685](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45759776685) failed in the first Peng worker with native exit -11 before any stage log. The runner was revised to construct the canonical D0 model before full-Hines and to emit stage markers around NEURON import, layout, D0 and Hines. The current run is the first replay with these diagnostics.
-- Keep full Hines canonical and do not promote any role-specific seed to a production default. The study remains passive linear-RC numerical evidence, not biological validation.
-
+- Workflow [45760007155](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45760007155), head `831d0892e587b9c5a51f6347b54ba5d155ac157f`, completed **failure** in the numerical sweep step.
+- The pinned Python/NEURON/NumPy/SciPy environment, all four morphology source checksums/preflights, NumPy SIMD preflight, compileall, and 11/11 focused tests passed before the numerical worker failed.
+- No global result matrix passed its read-back gates; no result commit or artifact was produced. Do not treat this run as partial accepted scientific evidence.
+- Earlier attempt [45759776685](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45759776685) also failed in the first Peng worker with native exit `-11` before any stage marker. The revised [45760007155](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45760007155) added explicit stage markers and moved D0 construction before full-Hines, but still failed in the numerical sweep. Detailed job logs were not retrievable in this session, so the precise failing native call is not asserted.
+- Next reliability step: avoid NEURON Import3D in a CableTree-only reduction experiment. The separate spatial-generalization follow-up is tracked in [PR #35](https://github.com/Nolane-x/Nghien-cuu/pull/35), where the seven legacy SWC ports and q25 output nodes are rebuilt directly from SWC with node-identity compatibility checks.
+- Preserve full Hines as the canonical reference. No production solver/default change is permitted based on this failed run.
 
 ## Session continuation update — 25 November 2026
 
