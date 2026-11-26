@@ -49,3 +49,16 @@ Four individual morphology reconstructions are not a biological population. The 
 ## Next step
 
 Inspect the dedicated Actions run, repair any failed mapping or numerical gate with a documented code/test change, then publish the validated result report and update HANDOFF.md only after the result is accepted.
+
+
+## Worker isolation revision — 26 November 2026
+
+Inspection showed that the q25 experiment only needs SWC node identities and the exact passive CableTree. NEURON Import3D section/segment locations are not consumed by the CableTree Hines or reduced-state calculation. The runner has therefore been revised to build the canonical seven input nodes and q25 observation nodes directly from the pinned SWC, avoiding native Import3D instantiation in every morphology/scenario worker.
+
+Compatibility is preserved deliberately:
+- The seven legacy source/probe nodes use the same NumPy path-length arithmetic as the existing fine-mesh mapper.
+- The q25 target nodes use the amsn.ports path-distance/quantile implementation used by the original q25 enrichment mapper.
+- Three available SWC files have pinned q25 and q10/q95 node identities. The fourth (Allen) is still checked by fail-closed uniqueness/collision guards at runtime.
+- An additional synthetic SWC test exercises canonical seven-port mapping and all four held-out output rows without NEURON.
+
+This change narrows the native code surface; it does not change the passive electrical model, input selector, basis construction, stimulation protocol, or numerical gates. The first pre-revision run remains separate and must not be combined with a rerun.
