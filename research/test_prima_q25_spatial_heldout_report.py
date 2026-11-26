@@ -239,7 +239,7 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
             "max_reduced_relative_error": 1e-12,
             "tolerance": 2e-8,
         },
-        "runtime": {"wall_seconds": 10.0, "worker_processes": 36},
+        "runtime": {"wall_seconds": 10.0, "worker_processes": 36, "github_actions_run_id": "987654321"},
     }
     report_path_json = results_dir / f"{RESULT_STEM}_report.json"
     report_path_json.write_text(json.dumps(report), encoding="utf-8")
@@ -283,3 +283,11 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
     assert "## Held-out results by passive parameter scenario" in rendered
     assert "Median D0 NRMSE (%)" in rendered
     assert "NMO_A" in rendered and "NMO_D" in rendered
+    assert (
+        "**Workflow:** [run 987654321]"
+        "(https://github.com/Nolane-x/Nghien-cuu/actions/runs/987654321)"
+    ) in rendered
+    assert (
+        "| basal_q10 | 20 | D0_none | 216 | 1 | 1 | 1 | "
+        "0.9 | 0.9 | +0.0000e+00 | 0/0 |"
+    ) in rendered
