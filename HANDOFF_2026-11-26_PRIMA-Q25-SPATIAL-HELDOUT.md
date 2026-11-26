@@ -65,3 +65,13 @@ The repository-resident SWC files were independently re-read and the determinist
 | Jacobs NMO_03524 | 816 | 8 | 272 / 864 | 631 / 702 | 863 / 869 |
 
 For all three files, all four q10/q95 nodes are distinct from one another, the seven canonical shared nodes, and both q25 targets. Jacobs has only eight type-4 nodes; its apical q10/q95 values are therefore discrete node-rank endpoints within a very small apical sample, not dense spatial coverage. These identifiers are now enforced as compatibility pins in the runner. The Allen SWC is fetched by CI and is validated at runtime against its pinned SHA-256 and fail-closed node-collision gates.
+
+
+## Archive completeness update — 26 November 2026
+
+The result metadata schema has been strengthened to record, for every morphology/scenario/schedule basis:
+- the exact seven shared SWC node IDs;
+- both q25 target node IDs;
+- all four held-out SWC node IDs, electrical tree indices, branch labels and path-distance quantiles.
+
+The workflow now validates those maps in addition to the existing exact coverage, D0 parity, Cholesky, orthogonality and DFT gates. Run [45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643) is queued behind the in-progress first SWC-only computation [45766414695](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45766414695). The in-progress run does not contain this final metadata-schema extension; the queued run is the archival-complete version.
