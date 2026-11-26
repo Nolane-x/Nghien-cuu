@@ -75,3 +75,10 @@ The result metadata schema has been strengthened to record, for every morphology
 - all four held-out SWC node IDs, electrical tree indices, branch labels and path-distance quantiles.
 
 The workflow now validates those maps in addition to the existing exact coverage, D0 parity, Cholesky, orthogonality and DFT gates. Run [45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643) is queued behind the in-progress first SWC-only computation [45766414695](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45766414695). The in-progress run does not contain this final metadata-schema extension; the queued run is the archival-complete version.
+
+
+## Reporter utility validation — passed
+
+- Independent report workflow [45767963050](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767963050) completed success: compileall plus **4/4 tests** passed.
+- The reporter verifies all nine manifest file hashes/byte counts, accepted numerical gates, exact case keys, 144 basis/node maps, and paired D0 joins. Its output includes absolute median D0/candidate NRMSE, paired percentage-point deltas, morphology strata, and all nine passive scenarios.
+- Report-generation is intentionally skipped until the accepted numerical archive is committed. The numerical matrix and archival-complete run remain pending.
