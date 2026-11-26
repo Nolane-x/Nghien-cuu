@@ -360,7 +360,30 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     heldout_schedule_rows = []
     q25_schedule_rows = []
     heldout_label_schedule_rows = []
+    heldout_morphology_rows = []
     heldout_median_ratio_below_one = 0
+
+    for morph_id in sorted(node_maps):
+        morph_name = morphology_name_by_id.get(morph_id)
+        require(morph_name is not None, f"missing morphology name for {morph_id}")
+        for schedule in candidate_schedules:
+            pairs = [
+                pair
+                for label in HELDOUT_LABELS
+                for window in (20.0, 40.0)
+                for pair in grouped_morphology[(morph_name, schedule, window, label)]
+            ]
+            summary = summarize(pairs)
+            heldout_morphology_rows.append([
+                morph_id,
+                schedule,
+                f'{summary["matched"]:,}',
+                fmt_ratio(summary["median_ratio"]),
+                fmt_ratio(summary["median_reference_nrmse_pct"]),
+                fmt_ratio(summary["median_candidate_nrmse_pct"]),
+                fmt_delta(summary["median_delta_pp"]),
+                f'{summary["better"]}/{summary["worse"]}',
+            ])
 
     for schedule in candidate_schedules:
         heldout_pairs = [
@@ -457,6 +480,15 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             ["Schedule", "q25 pairs", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
             q25_schedule_rows,
         ),
+        "",
+        "## Held-out spatial aggregate by morphology",
+        "",
+        markdown_table(
+            ["Morphology", "Schedule", "Pairs", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
+            heldout_morphology_rows,
+        ),
+        "",
+        "This morphology aggregate pools only the four declared held-out locations and both windows within each reconstruction; each row contains 432 paired cases. It is descriptive and is not a population estimate.",
         "",
         "## Held-out location summary across both windows",
         "",
