@@ -283,3 +283,10 @@ The multilocation analyzer now applies the exact per-schedule seed mask before c
 This avoids treating an output as a holdout for the same schedule that used it to construct dual seeds. Seeded and unseeded medians/counts now appear separately in the strategy, morphology and scenario tables. Empty transfer families display zero count and an em dash for metrics.
 
 Report workflow [#45799248302](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799248302) passed 7/7 tests (0.42 s), including a synthetic full archive with exact schedule-specific transfer row assertions. Actual archive report generation was skipped because no numerical archive is present. Numerical run #45796697978 remains active.
+
+
+## 2026-11-26 — final analyzer tests for transfer masking and build cost
+
+The report generator now applies the schedule-specific seed mask to every aggregate: seed targets are reported separately, and only unseeded q25/edge outputs enter transfer summaries. Morphology/scenario tables use the same split. It also reports accepted initial dual rank, median/P90 basis construction time, maximum reduced G/C condition numbers and orthogonality error by schedule.
+
+Report workflow [#45799887740](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799887740) passed all 7 tests in 0.41 seconds after adding the synthetic archive metadata. Report generation from real numerical data was correctly skipped because the new archive is still pending. Numerical run #45796697978 remains active.
