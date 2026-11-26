@@ -82,7 +82,7 @@ def run_worker_with_sigsegv_retry(
     """Retry only an isolated worker terminated by SIGSEGV (exit -11).
 
     Each retry starts with a clean output directory. Other non-zero exits
-    remain fail-fast and retain captured stdout/stderr for diagnosis.
+    remain fail-fast; child stdout/stderr stream directly to the Actions log.
     """
     require(max_sigsegv_retries >= 0, "max_sigsegv_retries must be non-negative")
     for attempt in range(1, max_sigsegv_retries + 2):
