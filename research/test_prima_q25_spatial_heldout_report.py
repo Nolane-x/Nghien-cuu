@@ -279,6 +279,9 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
     make_report(results_dir, report_path)
     rendered = report_path.read_text(encoding="utf-8")
     assert "## Pooled q25 and spatial held-out readouts" in rendered
+    assert "## Spatial generalization verdict (descriptive, not a significance test)" in rendered
+    assert "## Held-out location summary across both windows" in rendered
+    assert "12/12" in rendered
     assert "## Held-out results by morphology" in rendered
     assert "## Held-out results by passive parameter scenario" in rendered
     assert "Median D0 NRMSE (%)" in rendered
