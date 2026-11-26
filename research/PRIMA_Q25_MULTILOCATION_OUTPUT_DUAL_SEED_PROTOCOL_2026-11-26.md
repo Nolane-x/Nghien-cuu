@@ -78,7 +78,13 @@ The finite-record DFT identity is evaluated on the established soma / 2-ms pulse
 - CSV read-backs, exact row counts, unique paired keys and nine-file SHA-256 manifest all pass.
 - Report all seed rows and unseeded readout rows separately, by output, morphology and passive scenario.
 
-## 7. Primary analysis and interpretation
+## 7. Seed-budget control and primary analysis
+
+The resource-matched primary comparisons are:
+- Q25_BOTH_10K versus BASAL_EDGES_10K versus APICAL_EDGES_10K: each requests two output-dual coordinates and uses the same 10-kHz shift.
+- These three schedules test whether moving a two-coordinate dual-seed budget from q25 to one branch's edge locations changes cross-location transfer.
+
+BOTH_EDGES_10K requests four coordinates. It is a higher-budget coverage condition, not a matched-budget comparison. If it outperforms a two-seed schedule, the difference cannot be attributed to seed location alone; it may also reflect the larger seed budget. Record both requested coordinate count and the actual number of independent initial output-dual columns retained after orthogonalization for each morphology/scenario/schedule.
 
 For every candidate/D0 pairing, compute:
 - transient NRMSE (%);
