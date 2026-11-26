@@ -131,3 +131,10 @@ Implementation commits:
 - Failure-only checkpoint artifact: [94dd28d](https://github.com/Nolane-x/Nghien-cuu/commit/94dd28dd22f78e243ce398dca325fc132a48482c)
 
 At the latest inspection, numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), based on the earlier bounded-retry patch, was still in the four-morphology numerical step. The newer workflow [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was pending behind it and contains the checkpoint-preservation changes plus the regression tests. Do not infer numerical progress beyond the state reported by GitHub Actions.
+
+
+### Checkpoint test import correction — 26 November 2026
+
+Reviewing the new checkpoint cleanup regression exposed a missing import of `cleanup_worker_checkpoints` in the test module. The test itself and helper were present, but the test would have raised `NameError`. This has been corrected in commit [0568971](https://github.com/Nolane-x/Nghien-cuu/commit/056897139dd32da42cb6f4a87dfaaf06fad9260d). Latest workflow [45789829523](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789829523) was pending at the last check and includes the import fix. The preceding run [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was cancelled by GitHub's branch concurrency policy when the corrected test commit superseded it.
+
+The earlier numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still in progress in its numerical sweep step. Do not treat it as a result for the latest code revision.
