@@ -15,12 +15,16 @@ for item in (ROOT / "research", AMSN_CORE, AMSN_RESEARCH):
 
 from amsn.morphology import SWCMorphology
 
+import run_prima_q25_role_specific_spatial_heldout as spatial_runner
+
 from run_prima_q25_role_specific_spatial_heldout import (
     HELDOUT_SPATIAL_SITES,
     IDENTITY_SCHEDULES,
     RESULT_STEM,
     ROLE_SPECIFIC_SCHEDULES,
     build_four_layouts_from_swc,
+    resolve_preflight_path,
+    run_worker_with_sigsegv_retry,
     build_heldout_spatial_outputs,
     seed_indices_for_role,
     validate_heldout_spatial_node_ids,
@@ -123,3 +127,60 @@ def test_swc_only_layout_matches_preregistered_seven_port_and_spatial_holdouts()
     assert len(heldout_ids) == 4
     assert not heldout_ids.intersection(shared_node_ids)
     assert not heldout_ids.intersection(q25_node_ids.values())
+
+
+
+def test_preflight_paths_resolve_from_amsn_core_independent_of_cwd():
+    spec = {"preflight": Path("results/example/preflight.json")}
+    assert resolve_preflight_path(spec) == (
+        AMSN_CORE / "results/example/preflight.json"
+    ).resolve()
+
+
+def test_worker_retries_only_sigsegv_and_cleans_partial_output(monkeypatch, tmp_path):
+    output_dir = tmp_path / "worker-output"
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        if len(calls) == 1:
+            output_dir.mkdir(parents=True)
+            (output_dir / "partial.csv").write_text("partial")
+            return spatial_runner.subprocess.CompletedProcess(
+                command, -11, stdout="segfault stage", stderr="native crash"
+            )
+        assert not output_dir.exists()
+        return spatial_runner.subprocess.CompletedProcess(
+            command, 0, stdout="worker passed", stderr=""
+        )
+
+    monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
+    completed, attempts = run_worker_with_sigsegv_retry(
+        ["python", "worker.py"],
+        worker_label="NMO_TEST/nominal",
+        output_dir=output_dir,
+        max_sigsegv_retries=1,
+    )
+    assert completed.returncode == 0
+    assert attempts == 2
+    assert len(calls) == 2
+
+
+def test_worker_does_not_retry_non_sigsegv_failures(monkeypatch, tmp_path):
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(command)
+        return spatial_runner.subprocess.CompletedProcess(
+            command, 1, stdout="validation failed", stderr="bad input"
+        )
+
+    monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
+    with pytest.raises(RuntimeError, match="exit=1 after 1 attempt"):
+        run_worker_with_sigsegv_retry(
+            ["python", "worker.py"],
+            worker_label="NMO_TEST/nominal",
+            output_dir=tmp_path / "worker-output",
+            max_sigsegv_retries=2,
+        )
+    assert len(calls) == 1
