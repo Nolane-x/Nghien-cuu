@@ -82,3 +82,10 @@ The workflow now validates those maps in addition to the existing exact coverage
 - Independent report workflow [45767963050](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767963050) completed success: compileall plus **4/4 tests** passed.
 - The reporter verifies all nine manifest file hashes/byte counts, accepted numerical gates, exact case keys, 144 basis/node maps, and paired D0 joins. Its output includes absolute median D0/candidate NRMSE, paired percentage-point deltas, morphology strata, and all nine passive scenarios.
 - Report-generation is intentionally skipped until the accepted numerical archive is committed. The numerical matrix and archival-complete run remain pending.
+
+
+## Current reporting infrastructure status
+
+- Report workflow [45768111004](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768111004) completed success: reporting code compiled, **4/4** tests passed, and the archive-completeness gate correctly skipped report generation because the numerical archive is not yet present.
+- The workflow will generate the paired-case Markdown report automatically when the complete 144-row node-map metadata and accepted result manifest are committed. It deliberately refuses to publish results from an incomplete earlier archive.
+- Numerical run [45766414695](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45766414695) remains in the four-morphology calculation step; archive-complete run [45767091643](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767091643) remains queued.
