@@ -154,3 +154,10 @@ The pooled D0 rows now show median absolute D0 NRMSE in both the reference and c
 - Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) remained in its 36-group sweep. The updated full numerical workflow [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) was queued behind it.
 
 These changes improve archive traceability and reporting clarity only; they do not change the passive PRIMA numerical method or any scientific acceptance gate.
+
+
+### Latest reporter CI validation — passed
+
+Report workflow [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) completed success on the dynamic workflow-provenance and D0-baseline report revision. Job logs confirm compileall and **5/5 tests passed in 0.42 s**. The end-to-end test verified a generated report links to the run ID in its synthetic archive and displays the D0 basal-q10 absolute NRMSE row. Archive-specific report generation was correctly skipped because there is still no accepted numerical archive.
+
+Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still at the 36-group calculation step; updated numerical run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294), which records its own Actions run ID, was queued behind it.
