@@ -221,6 +221,19 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             else int(report["coverage"][key])
         require(observed == expected, f"{key}: expected {expected}, got {observed}")
 
+    actual_csv_counts = {
+        "group_summary": 4680,
+        "morphology_summary": 520,
+        "scenario_summary": 1170,
+        "pooled_summary": 130,
+        "finite_dft_identity": 180,
+    }
+    for suffix, expected in actual_csv_counts.items():
+        path = results_dir / f"{RESULT_STEM}_{suffix}.csv"
+        observed = len(read_csv(path))
+        require(observed == expected,
+                f"{suffix} CSV: expected {expected} rows, got {observed}")
+
     gates = report["numerical_gates"]
     for name in (
         "d0_exact_production_parity_all_scenarios",
