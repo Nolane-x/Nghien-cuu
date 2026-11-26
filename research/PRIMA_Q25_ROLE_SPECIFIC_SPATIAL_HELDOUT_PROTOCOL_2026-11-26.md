@@ -74,7 +74,17 @@ The finite-record DFT identity is recomputed over all 13 observed rows for the d
 - All 144 finite-record identities pass the 2e-8 relative tolerance.
 - All CSV read-backs, uniqueness checks and exact coverage counts pass.
 
-## 7. Scientific limits
+
+## 7. Interpretation rules
+
+- Treat the paired absolute NRMSE delta (percentage points) as the primary practical effect size when the D0 denominator is near the numerical floor; report candidate/D0 ratios as a secondary scale-free view.
+- Report basal q10, basal q95, apical q10 and apical q95 separately. Do not hide a branch-specific regression inside a pooled average.
+- A pooled median below 1 is not sufficient evidence of spatial generalization by itself. Inspect direction and absolute magnitude separately in all four morphology strata and at both path-distance extremes.
+- If q25 target errors improve but all four held-out outputs remain unchanged or worsen, interpret the result as target-local basis specialization rather than broad spatial generalization.
+- If held-out outputs improve consistently across both branch classes and most morphology strata without material regression in the seven shared outputs, this supports spatial generalization within this passive linear-RC model family only.
+- Any improvement remains a numerical model-reduction result; it does not establish active-neuron, synaptic, cellular or biological generalization.
+
+## 8. Scientific limits
 
 This is a numerical spatial-generalization test on four individual morphology reconstructions under a passive linear-RC model. It does not establish population-level generalization, active-channel or action-potential fidelity, synaptic computation, plasticity, calcium signalling, metabolism, cognition, or biological validity. Allen NMO_162186 is an epilepsy-surgery specimen; Peng NMO_163775 has no-diameter metadata and must not be described as measured-diameter data.
 
