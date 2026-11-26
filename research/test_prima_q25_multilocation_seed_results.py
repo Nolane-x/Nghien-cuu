@@ -246,7 +246,7 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
                         "APICAL_EDGES_10K": "apical_edges",
                         "BOTH_EDGES_10K": "both_edges",
                     }[schedule],
-                    "initial_output_seed_columns": len(seed_ids),
+                    "initial_output_seed_columns": len(labels),
                     "wall_seconds": 0.1 + 0.02 * len(labels),
                     "conductance_condition_number": 10.0 + len(labels),
                     "capacitance_condition_number": 20.0 + len(labels),
