@@ -308,6 +308,9 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
                 for morph_id, name in morphologies
             ],
             "passive_scenarios": scenarios,
+            "windows_ms": [20.0, 40.0],
+            "sources": ["soma", "basal_q75", "apical_q75"],
+            "pulse_widths_ms": [2.0, 10.0],
         },
         "coverage": counts,
         "numerical_gates": {
