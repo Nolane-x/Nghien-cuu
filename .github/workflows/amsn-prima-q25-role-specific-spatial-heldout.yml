@@ -172,6 +172,19 @@ jobs:
           assert len(metadata) == 144
           assert all(item["actual_order"] == 224 for item in metadata)
           assert all(item["seven_input_ports_unchanged"] for item in metadata)
+          expected_heldout = {"basal_q10", "basal_q95", "apical_q10", "apical_q95"}
+          for item in metadata:
+              assert len(item["shared_swc_node_ids"]) == 7
+              assert set(item["q25_swc_node_ids"]) == {"basal_q25", "apical_q25"}
+              heldout_sites = item["heldout_spatial_sites"]
+              assert {site["output_label"] for site in heldout_sites} == expected_heldout
+              shared = set(item["shared_swc_node_ids"])
+              q25 = set(item["q25_swc_node_ids"].values())
+              heldout = {site["swc_node_id"] for site in heldout_sites}
+              assert len(heldout) == 4
+              assert not shared.intersection(q25 | heldout)
+              assert not q25.intersection(heldout)
+              assert len(shared | q25 | heldout) == 13
           expected_roles = {"D0_none": "none", "BASAL_10K": "basal",
                             "APICAL_10K": "apical", "BOTH_10K": "both"}
           assert {item["schedule"]: item["seed_role"] for item in metadata
