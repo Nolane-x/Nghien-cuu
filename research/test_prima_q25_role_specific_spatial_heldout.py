@@ -188,6 +188,43 @@ def test_worker_does_not_retry_non_sigsegv_failures(monkeypatch, tmp_path):
 
 
 
+def test_worker_subprocess_streams_live_output_instead_of_capturing_it(monkeypatch, tmp_path):
+    observed = {}
+
+    def fake_run(command, **kwargs):
+        observed.update(kwargs)
+        return spatial_runner.subprocess.CompletedProcess(
+            command, 0, stdout=None, stderr=None
+        )
+
+    monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
+    completed, attempts = run_worker_with_sigsegv_retry(
+        ["python", "worker.py"],
+        worker_label="NMO_TEST/nominal",
+        output_dir=tmp_path / "worker-output",
+    )
+    assert completed.returncode == 0
+    assert attempts == 1
+    assert "capture_output" not in observed
+    assert "stdout" not in observed and "stderr" not in observed
+    assert observed["timeout"] == 30 * 60
+
+
+def test_worker_failure_handles_inherited_streams_without_captured_text(monkeypatch, tmp_path):
+    def fake_run(command, **kwargs):
+        return spatial_runner.subprocess.CompletedProcess(
+            command, 7, stdout=None, stderr=None
+        )
+
+    monkeypatch.setattr(spatial_runner.subprocess, "run", fake_run)
+    with pytest.raises(RuntimeError, match="streamed directly to the Actions log"):
+        run_worker_with_sigsegv_retry(
+            ["python", "worker.py"],
+            worker_label="NMO_TEST/nominal",
+            output_dir=tmp_path / "worker-output",
+        )
+
+
 def test_worker_checkpoints_are_retained_until_global_archive_is_complete(tmp_path):
     retained = tmp_path / "retained"
     retained.mkdir()
