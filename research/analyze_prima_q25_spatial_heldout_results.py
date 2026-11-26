@@ -41,6 +41,16 @@ def require(condition: bool, message: str) -> None:
         raise ValueError(message)
 
 
+def sha256_file(path: Path) -> str:
+    import hashlib
+
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
 def read_json(path: Path) -> dict[str, Any]:
     value = json.loads(path.read_text(encoding="utf-8"))
     require(isinstance(value, dict), f"expected JSON object: {path}")
@@ -163,6 +173,30 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
     require(report.get("status") == "passed", "numerical report status is not passed")
     require(manifest.get("status") == "passed", "archive manifest status is not passed")
+    require(report["dft_identity"]["all_rows_passed"],
+            "not all finite-record DFT identities passed")
+    require(report["dft_identity"]["max_full_hines_relative_error"]
+            < report["dft_identity"]["tolerance"],
+            "full-Hines finite-record identity exceeded tolerance")
+    require(report["dft_identity"]["max_reduced_relative_error"]
+            < report["dft_identity"]["tolerance"],
+            "reduced finite-record identity exceeded tolerance")
+    for gate in (
+        "d0_exact_production_parity_all_scenarios",
+        "all_reduced_g_c_cholesky_positive",
+        "all_models_reached_order_224",
+        "seven_input_ports_unchanged_all_models",
+    ):
+        require(report["numerical_gates"][gate] is True, f"numerical gate failed: {gate}")
+    require(len(manifest.get("files", [])) == 9,
+            "archive manifest must cover all nine result files")
+    for entry in manifest["files"]:
+        path = results_dir / entry["path"]
+        require(path.is_file(), f"manifest file is missing: {path}")
+        require(path.stat().st_size == entry["bytes"],
+                f"manifest byte count mismatch: {path.name}")
+        require(sha256_file(path) == entry["sha256"],
+                f"manifest SHA-256 mismatch: {path.name}")
     for key, expected in EXPECTED_COUNTS.items():
         observed = (
             len(cases) if key in {"case_metrics_read_back", "unique_case_keys"}
@@ -177,6 +211,14 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     ) for row in cases}) == len(cases), "case-level identities are not unique")
 
     node_maps = validate_node_metadata(metadata)
+    morphology_hashes = {
+        item["neuromorpho_id"]: item["expected_swc_sha256"]
+        for item in report["fixed_protocol"]["morphologies"]
+    }
+    require(set(node_maps) == set(morphology_hashes),
+            "basis metadata morphologies differ from the pinned source manifest")
+    for morph_id, mapping in node_maps.items():
+        mapping["swc_sha256"] = morphology_hashes[morph_id]
     baseline: dict[tuple[Any, ...], float] = {}
     for row in cases:
         if row["schedule"] != "D0_none":
