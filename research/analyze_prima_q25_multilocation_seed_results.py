@@ -525,6 +525,85 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                     f"{summary['better']}/{summary['worse']}" if summary else "—",
                 ])
 
+    transfer_finding_lines = []
+    available_transfer_summaries = []
+    for schedule in CANDIDATES:
+        seeded = set(SCHEDULE_SEEDS[schedule])
+        q25_labels = [x for x in Q25_LABELS if x not in seeded]
+        edge_labels = [x for x in EDGE_LABELS if x not in seeded]
+        q25_summary = paired_summary_or_none(selected_pairs(schedule, q25_labels))
+        edge_summary = paired_summary_or_none(selected_pairs(schedule, edge_labels))
+        fragments = [f"- **{schedule}:**"]
+        if q25_summary is not None:
+            available_transfer_summaries.append(q25_summary)
+            fragments.append(
+                f"unseeded q25 median ratio {q25_summary['median_ratio']:.4g}, "
+                f"Δ {q25_summary['median_delta_pp']:+.4e} pp "
+                f"({q25_summary['better']}/{q25_summary['worse']} better/worse)"
+            )
+        if edge_summary is not None:
+            available_transfer_summaries.append(edge_summary)
+            fragments.append(
+                f"unseeded edge median ratio {edge_summary['median_ratio']:.4g}, "
+                f"Δ {edge_summary['median_delta_pp']:+.4e} pp "
+                f"({edge_summary['better']}/{edge_summary['worse']} better/worse)"
+            )
+        if len(fragments) == 1:
+            fragments.append("no unseeded transfer readouts for this schedule")
+        transfer_finding_lines.append(" ".join(fragments))
+
+    transfer_exceptions = []
+    for morph_id in sorted(node_maps):
+        for schedule in CANDIDATES:
+            seeded = set(SCHEDULE_SEEDS[schedule])
+            families = (
+                ("unseeded q25", [x for x in Q25_LABELS if x not in seeded]),
+                ("unseeded edge", [x for x in EDGE_LABELS if x not in seeded]),
+            )
+            for family, labels in families:
+                if not labels:
+                    continue
+                pairs = [
+                    pair
+                    for label in labels
+                    for pair in grouped_morph_label[(morph_id, schedule, label)]
+                ]
+                summary = paired_summary_or_none(pairs)
+                if summary is not None and summary["median_ratio"] < 1.0:
+                    transfer_exceptions.append(
+                        f"{morph_id}/{schedule} {family}: "
+                        f"median ratio {summary['median_ratio']:.4g}"
+                    )
+
+    if available_transfer_summaries and all(
+        x["median_ratio"] > 1.0 for x in available_transfer_summaries
+    ):
+        pooled_verdict = (
+            "Every available pooled unseeded-transfer family has a median candidate/D0 "
+            "ratio above 1. This is consistent with target-local specialization rather "
+            "than broad spatial transfer in the pooled four-morphology result."
+        )
+    elif available_transfer_summaries and all(
+        x["median_ratio"] < 1.0 for x in available_transfer_summaries
+    ):
+        pooled_verdict = (
+            "Every available pooled unseeded-transfer family has a median candidate/D0 "
+            "ratio below 1, indicating a consistent descriptive transfer pattern in this "
+            "four-morphology study."
+        )
+    else:
+        pooled_verdict = (
+            "The available pooled unseeded-transfer families are mixed: there is no single "
+            "direction of transfer shared by all seed strategies."
+        )
+    transfer_exception_text = (
+        "Morphology-level exceptions with median transfer ratio below 1: "
+        + "; ".join(transfer_exceptions)
+        + "."
+        if transfer_exceptions
+        else "No morphology-level unseeded-transfer median ratio fell below 1."
+    )
+
     scenario_rows = []
     for scenario in protocol["passive_scenarios"]:
         for schedule in CANDIDATES:
@@ -584,6 +663,16 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "Requested seed sites are the predeclared coordinate count; accepted initial dual columns are the observed independent directions retained after reorthogonalization (median and min–max over 36 morphology/scenario cells). The primary resource-matched comparisons are Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K (two requested sites each). BOTH_EDGES_10K requests four sites and is a higher-budget coverage condition, not a location-only comparison. The q25/edge transfer columns exclude seed-target outputs for that schedule; a zero count is intentionally shown as no unseeded transfer readout.",
         "",
         "Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.",
+        "",
+        "## Pooled transfer interpretation",
+        "",
+        pooled_verdict,
+        "",
+        *transfer_finding_lines,
+        "",
+        transfer_exception_text,
+        "",
+        "The ratios are descriptive medians over paired cases; they are not significance tests. Absolute percentage-point deltas must be read alongside the ratios because several D0 errors are close to the numerical floor.",
         "",
         "## Schedule runtime and conditioning",
         "",
