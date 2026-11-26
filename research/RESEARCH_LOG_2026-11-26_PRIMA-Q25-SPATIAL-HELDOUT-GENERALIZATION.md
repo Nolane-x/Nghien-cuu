@@ -261,3 +261,12 @@ Added a synthetic complete archive test covering all five seed schedules, four m
 Report workflow [#45797384246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797384246) passed compile and all six report tests in 0.44 seconds. Since no accepted multilocation numerical archive exists yet, archive-dependent generation was skipped. The analyzer now also reads and checks actual row counts from all five summary CSVs, rather than trusting JSON coverage values alone.
 
 Numerical workflow [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains in its numerical step; its predecessor #45796325682 exposed and localized a stale schedule registry name in a post-simulation summary loop. The corrected runner is executing. No multilocation scientific result has been accepted.
+
+
+## 2026-11-26 — matched seed-budget controls and analyzer regression tests
+
+The analysis protocol now identifies Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K as the primary resource-matched comparison: two requested dual sites, one 10-kHz shift. BOTH_EDGES_10K requests four sites and must be interpreted as a higher-budget coverage condition rather than a pure seed-location comparison.
+
+The result analyzer reports both requested sites and observed accepted initial dual columns (median/min–max over 36 morphology/scenario cells), validates that accepted rank does not exceed requested sites, and requires zero accepted output-dual columns for D0.
+
+Synthetic archive report workflows [#45797853943](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797853943) and [#45797861246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797861246) both passed 7/7 tests (0.43 s and 0.47 s respectively). The numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains active; queued rerun [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) includes protocol and static-regression updates. No accepted multilocation archive yet.
