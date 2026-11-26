@@ -13,11 +13,15 @@ for item in (ROOT / "research", AMSN_CORE, AMSN_RESEARCH):
     if str(item) not in sys.path:
         sys.path.insert(0, str(item))
 
+from amsn.morphology import SWCMorphology
+
 from run_prima_q25_role_specific_spatial_heldout import (
     HELDOUT_SPATIAL_SITES,
     IDENTITY_SCHEDULES,
     RESULT_STEM,
     ROLE_SPECIFIC_SCHEDULES,
+    build_four_layouts_from_swc,
+    build_heldout_spatial_outputs,
     seed_indices_for_role,
     validate_heldout_spatial_node_ids,
 )
@@ -81,3 +85,41 @@ def test_exact_worker_and_global_coverage_for_thirteen_output_rows():
     assert scenarios * 2 * schedules * outputs == 936
     assert 2 * schedules * outputs == 104
     assert RESULT_STEM.endswith("2026-11-26")
+
+
+
+def test_swc_only_layout_matches_preregistered_seven_port_and_spatial_holdouts():
+    rows = ["1 1 0 0 0 5 -1"]
+    previous = 1
+    for index in range(1, 12):
+        node_id = index + 1
+        rows.append(f"{node_id} 3 {index * 10} 0 0 1 {previous}")
+        previous = node_id
+    previous = 1
+    for index in range(1, 12):
+        node_id = index + 12
+        rows.append(f"{node_id} 4 0 {index * 10} 0 1 {previous}")
+        previous = node_id
+
+    morphology = SWCMorphology.from_text("\n".join(rows))
+    tree = morphology.to_cable_tree()
+    layouts, shared_node_ids, q25_node_ids = build_four_layouts_from_swc(
+        morphology, tree
+    )
+    assert set(layouts) == {"seven"}
+    seven = layouts["seven"]
+    assert len(shared_node_ids) == len(set(shared_node_ids)) == 7
+    assert len(seven["ports"]) == len(set(seven["ports"])) == 7
+    assert set(seven["source_indices"]) == {"soma", "basal_q75", "apical_q75"}
+    assert set(q25_node_ids) == {"basal_q25", "apical_q25"}
+
+    heldout = build_heldout_spatial_outputs(
+        morphology, tree, shared_node_ids, q25_node_ids
+    )
+    assert [item["output_label"] for item in heldout] == [
+        "basal_q10", "basal_q95", "apical_q10", "apical_q95"
+    ]
+    heldout_ids = {item["swc_node_id"] for item in heldout}
+    assert len(heldout_ids) == 4
+    assert not heldout_ids.intersection(shared_node_ids)
+    assert not heldout_ids.intersection(q25_node_ids.values())
