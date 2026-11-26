@@ -296,3 +296,20 @@ The older q25 faulthandler diagnostic #45793076160 remains active and the old fo
 - Report workflow [#45797384246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797384246) completed successfully: **6 tests passed in 0.44 s**. As expected, real archive validation/report generation were skipped because no accepted multilocation archive exists yet.
 - Analyzer independently checks actual CSV read-back counts for all five summary CSVs, not just the numerical report JSON.
 - The numerical workflow [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains in its numerical step. Its first predecessor #45796325682 failed on a corrected stale summary-loop constant after 11/11 tests and D0/full-Hines setup; the corrected runner is under execution. No multilocation result is accepted yet.
+
+
+## Resource-matched seed-budget interpretation and report CI — 26 November 2026
+
+The multilocation analysis now makes the seed-budget control explicit:
+- Primary resource-matched comparisons: Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K. Each requests two output-dual sites at the same 10-kHz shift.
+- BOTH_EDGES_10K requests four locations and is a higher-budget coverage condition. A gain over the two-seed schedules must not be attributed to location alone.
+- The report displays requested seed-site count and the observed number of independent initial output-dual columns retained after orthogonalization (median/min–max over 36 morphology/scenario cells).
+
+The analyzer independently validates that accepted seed rank is non-negative, never exceeds the requested coordinate count, and is exactly zero for D0. The synthetic full-archive test covers the seed-budget distinction and report row labels.
+
+- [Report CI #45797853943](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797853943): 7/7 tests passed (0.43 s).
+- [Report CI #45797861246](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797861246): 7/7 tests passed (0.47 s).
+- Numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains active in its numerical step; no accepted multilocation archive exists.
+- A follow-up sweep run [#45797716852](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45797716852) is queued with the protocol clarification and static stale-constant guard.
+
+No scientific result is claimed until one complete run passes all exact-coverage, D0 parity, matrix positivity, order, orthogonality, DFT, mapping and checksum gates and its artifact is inspected.
