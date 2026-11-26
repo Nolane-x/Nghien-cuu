@@ -181,3 +181,42 @@ Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/
 - Legacy run `45788056271` is still active in its numerical sweep. It predates live log streaming and checkpoint retention.
 - The next run, `45791762970`, includes the complete current runner, tests, bounded SIGSEGV retry, and failure checkpoint upload.
 - Report mechanics remain verified by `45790113319` (5/5 tests); no accepted numerical archive or scientific conclusion yet.
+
+
+## Accepted numerical archive — 26 November 2026
+
+Source execution: [GitHub Actions run #45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), conclusion `success`. The 36 isolated morphology/scenario workers completed with zero native SIGSEGV retries. Wall time was 1,667.54 seconds; worker-process time totaled 1,593.98 seconds (maximum worker 58.74 seconds).
+
+The workflow committed the complete archive as commit `b49a53d5aa31574ce3ae73d68d1a30a1bac17168` and uploaded artifact `prima-q25-role-specific-spatial-heldout-order224` (artifact ID `15102807205`, 595,032 bytes; retained through 24 February 2027). The artifact was downloaded and independently inspected. All nine archive files matched their manifest byte counts and SHA-256 digests.
+
+### Numerical integrity
+
+- 36/36 worker groups; 22,464/22,464 unique case rows.
+- 3,744 worker summaries; 416 morphology/window summaries; 936 scenario/window summaries; 104 pooled/window summaries.
+- 144/144 finite-record DFT identities; 144 basis metadata rows; 13 distinct observed nodes per morphology.
+- D0 exact production-basis parity: passed for every scenario.
+- All reduced conductance/capacitance matrices Cholesky-positive; every model reached order 224; seven input ports unchanged.
+- Maximum basis orthogonality error: `1.9984014443252818e-15` (< `2e-12`).
+- Maximum full-Hines finite-record identity residual: `3.1660560529975156e-12`; reduced residual: `3.591793134473286e-13` (tolerance `2e-8`).
+
+### Descriptive scientific result
+
+Across the four spatial holdouts and both windows, each seed schedule has 1,728 paired cases:
+
+| Schedule | Median candidate/D0 ratio | Median D0 NRMSE (%) | Median candidate NRMSE (%) | Median delta (pp) | Better / worse |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| BASAL_10K | 0.9789 | 1.9135e-8 | 1.6922e-8 | -4.4300e-13 | 879 / 849 |
+| APICAL_10K | 1.1805 | 1.9135e-8 | 2.0869e-8 | +5.8267e-12 | 742 / 986 |
+| BOTH_10K | 1.2647 | 1.9135e-8 | 2.2848e-8 | +2.7403e-11 | 700 / 1,028 |
+
+Only 3 of the 12 held-out-label × schedule medians (four locations × three candidate schedules) are below 1. Basal q10 has some median improvement for basal/joint seeds; basal q95, apical q10 and much of apical q95 are mixed or worse, with the joint schedule showing the clearest spatial regressions. Results are not consistent across branch classes or morphology strata.
+
+At the q25 target outputs, matched medians improve substantially under their corresponding role-specific seeds: basal-q25 median ratio is about 0.00203 for BASAL_10K and 0.00228 for BOTH_10K; apical-q25 is about 0.00566 for APICAL_10K and 0.00667 for BOTH_10K. This is evidence of target-local basis specialization in this passive model, not broad spatial transfer.
+
+The D0 held-out median errors are already very small (approximately `8.4e-9%` to `3.6e-8%` across the four labels/windows). Thus ratios can be numerically sensitive; absolute candidate/D0 percentage-point deltas and morphology-specific breakdowns must be considered. No inferential significance or population-level effect is claimed.
+
+### Follow-up engineering status
+
+The latest logging-enabled run `45792818861` showed a repeatable SIGSEGV boundary in the first Peng/nominal worker: it reached `before_production_d0`, then exited `-11` on all three attempts. The failed run had zero completed worker directories, so there was no partial archive to salvage. A subsequent runner revision enables Python `faulthandler`; run `45793076160` is testing that diagnostic change. The successful archive above remains the accepted result; this later failure does not invalidate it, but the current runner's reliability change is not yet cleared.
+
+The report generator now separates q25-target specialization from spatial holdout transfer and computes pooled paired summaries over all four holdouts and both windows. Report workflow runs `45793176156` and `45793184489` are validating report generation and its new assertions.
