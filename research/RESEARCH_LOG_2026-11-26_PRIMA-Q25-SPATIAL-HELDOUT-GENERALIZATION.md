@@ -102,3 +102,26 @@ Report workflow [45768111004](https://github.com/Nolane-x/Nghien-cuu/actions/run
 ## End-to-end reporting archive fixture — passed
 
 Reporting workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) completed success. Compileall passed and **5/5 tests passed in 0.28 s**. The added fifth test builds a full synthetic archive with 22,464 paired case rows, 144 basis/node metadata rows and nine hash-manifest entries, then executes the full Markdown report generator. It verifies pooled, morphology-stratified and nine-scenario tables, plus the absolute D0/candidate NRMSE columns. This validates report mechanics only; it is not a simulated-neuron result.
+
+
+
+## Failure diagnosis and recovery patch — 26 November 2026
+
+The completed job logs clarified two independent failures:
+
+1. **Run 45766414695** finished all 36/36 isolated workers, each with 624 case rows and 104 worker summaries. It then raised `FileNotFoundError` while building the global morphology manifest because registry `preflight` paths are relative to `amsn-core`, but the parent process reads them while running from the repository root. The matrices were only in an ephemeral Actions workspace and were neither archived nor uploaded. They are not an accepted or retrievable numerical archive.
+2. **Run 45767091643** exited `-11` in `NMO_163775/nominal`. Stage markers show SWC-only layout construction completed and the crash occurred after entering the production D0 PRIMA construction call. This localizes the failing boundary but does not identify why native execution terminated; no backtrace was available, so the underlying cause remains unproven.
+
+### Implemented fixes
+
+- Added a single cwd-independent preflight resolver that anchors all relative registry paths to the absolute `AMSN_CORE` directory. Both worker preflight loading and parent manifest assembly use it.
+- Added bounded retry for isolated workers that return exactly `-11`: at most two retries after the initial attempt, with the worker output directory deleted before each retry. Non-SIGSEGV exit codes still fail immediately and preserve diagnostic stdout/stderr. Per-worker attempts and total retries are included in the numerical report.
+- Added regression tests for cwd-independent resolution, cleanup/retry after a simulated SIGSEGV, and fail-fast behavior for an ordinary nonzero worker exit.
+
+### Validation after the patch
+
+- Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) checked out runner-fix commit `32741e56b877fc00f0e16b426ca957336c2b026b`. At the last inspection, setup, pinned source/checksum validation, SIMD preflight, compileall and the then-current focused test step had passed; the four-morphology numerical sweep was still running.
+- Numerical run [45788063611](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788063611) was queued for the subsequent test commit `c3b47dcf4a9b80dd1dafc0a7687752e2e8492f2e`, which adds the three reliability regression tests.
+- The report workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed 5/5 tests using a synthetic complete archive. It confirms reporter mechanics only and must not be represented as neuron simulation evidence.
+
+No spatial-generalization result has been accepted. The next acceptance checkpoint remains exact coverage and case-key uniqueness; D0 production parity; Cholesky positive definiteness; order-224 basis and orthogonality; all 144 finite-record DFT identities; exact 144-row SWC node metadata; nine-file manifest hashes; Git archive commit; Actions artifact upload; and successful generation of the report from the actual archive. PR #35 must remain Draft until all are verified.
