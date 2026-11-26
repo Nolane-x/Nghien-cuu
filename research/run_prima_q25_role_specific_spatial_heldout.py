@@ -755,7 +755,7 @@ def main() -> None:
                 "morphology_summary_expected": 416,
                 "morphology_summary_read_back": readbacks[morphology_summary_path.name],
                 "scenario_summary_expected": 936,
-                "scenario_summary_read_back": readbacks[scenario_path.name],
+                "scenario_summary_read_back": readbacks[scenario_summary_path.name],
                 "pooled_summary_expected": 104,
                 "pooled_summary_read_back": readbacks[pooled_summary_path.name],
                 "finite_dft_identity_expected": 144,
