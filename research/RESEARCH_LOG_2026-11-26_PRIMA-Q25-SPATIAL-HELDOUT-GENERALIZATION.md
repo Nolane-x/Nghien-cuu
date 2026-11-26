@@ -85,3 +85,10 @@ The protocol now makes absolute NRMSE percentage-point deltas primary when D0 is
 ## Post-hoc reporting utility
 
 Added research/analyze_prima_q25_spatial_heldout_results.py. It is intentionally separate from the numerical runner. It verifies the archive manifest's byte counts and SHA-256 digests, re-pairs every candidate case to its exact D0 key, recomputes medians/P90/worst ratios and absolute NRMSE deltas, validates the archived SWC node map, and writes a morphology-stratified Markdown results report. The reporting workflow will be activated only after the archival-complete numerical run has produced the required metadata.
+
+
+## Report utility CI — passed
+
+The independent reporting workflow [45767963050](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45767963050) completed **success**. Both reporter scripts passed compileall and all four unit tests passed, covering percentile interpolation, paired candidate/D0 absolute NRMSE summaries, four-morphology node-map shape, and fail-closed collision detection. The report-generation step was correctly skipped because no accepted numerical archive existed at this checkpoint.
+
+The report now includes median absolute D0 NRMSE and candidate NRMSE (not only ratios and deltas), and a held-out breakdown across all nine passive parameter scenarios. This avoids hiding near-zero denominators and makes parameter-specific regressions visible.
