@@ -365,9 +365,9 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
     assert "## Results by passive parameter scenario" in rendered
     assert "## Exact coverage and numerical gates" in rendered
     assert "Source run 987654321" in rendered or "run 987654321" in rendered
-    assert "| Q25_BOTH_10K | basal_q25, apical_q25 | 2 | 2 (2–2) | 864 | 0 | — | — | 1,728 |" in rendered
-    assert "| BASAL_EDGES_10K | basal_q10, basal_q95 | 2 | 2 (2–2) | 432 | 864 |" in rendered
-    assert "| APICAL_EDGES_10K | apical_q10, apical_q95 | 2 | 2 (2–2) | 432 | 864 |" in rendered
-    assert "| BOTH_EDGES_10K | basal_q10, basal_q95, apical_q10, apical_q95 | 4 | 4 (4–4) | 864 | 864 | 864 |" in rendered
+    assert "| Q25_BOTH_10K | basal_q25, apical_q25 | 2 | 2 (2–2) | 864 | 0.25 | 0 | — | — | 1,728 |" in rendered
+    assert "| BASAL_EDGES_10K | basal_q10, basal_q95 | 2 | 2 (2–2) | 432 | 0.5 | 864 |" in rendered
+    assert "| APICAL_EDGES_10K | apical_q10, apical_q95 | 2 | 2 (2–2) | 432 | 0.5 | 864 |" in rendered
+    assert "| BOTH_EDGES_10K | basal_q10, basal_q95, apical_q10, apical_q95 | 4 | 4 (4–4) | 864 | 0.375 | 864 | 0.625 | 0 | — | — |" in rendered
     assert "Unseeded transfer" in rendered
     assert "Seed target" in rendered
