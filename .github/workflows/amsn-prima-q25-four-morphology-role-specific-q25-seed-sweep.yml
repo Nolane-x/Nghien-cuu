@@ -1,0 +1,221 @@
+name: Research-only PRIMA four-morphology role-specific q25 seed sweep
+
+on:
+  push:
+    branches:
+      - research/prima-q25-cross-morphology-boundary-replication-2026-11-25
+    paths:
+      - ".github/workflows/amsn-prima-q25-four-morphology-role-specific-q25-seed-sweep.yml"
+      - "research/run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py"
+      - "research/test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: amsn-prima-q25-four-morphology-role-specific-q25-seed-sweep
+  cancel-in-progress: false
+
+jobs:
+  role-specific-q25-seed-sweep:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    env:
+      NEURON_NOGUI: "1"
+      AMSN_NEURON_MAX_SEGMENT_UM: "0.5"
+      OPENBLAS_NUM_THREADS: "1"
+      OPENBLAS_CORETYPE: "Haswell"
+      OMP_NUM_THREADS: "1"
+      MKL_NUM_THREADS: "1"
+      BLIS_NUM_THREADS: "1"
+      VECLIB_MAXIMUM_THREADS: "1"
+      NUMEXPR_NUM_THREADS: "1"
+      PYTHONHASHSEED: "0"
+      NPY_DISABLE_CPU_FEATURES: "X86_V4,AVX512_ICL,AVX512_SPR"
+      AMSN_PRIMA_BASIS_ORDER: "224"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12.16"
+          cache: pip
+          cache-dependency-path: amsn-core/pyproject.toml
+      - name: Install pinned AMSN numerical runtime
+        working-directory: amsn-core
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[test]"
+          python -m pip install --only-binary=numpy numpy==2.5.5
+          python -m pip install --only-binary=neuron neuron==9.0.2
+          python -m pip install --only-binary=scipy scipy==1.16.3
+          python -m pip install threadpoolctl==3.6.0
+      - name: Download and verify Allen standardized SWC required by shared morphology registry
+        working-directory: amsn-core
+        run: |
+          mkdir -p data/human/allen_cell_types
+          curl --fail --location --retry 4 --retry-delay 3 \
+            --user-agent "AMSN-NeuroMorpho-Q25-RoleSpecific/0.1" \
+            "https://neuromorpho.org/dableFiles/allen%20cell%20types/CNG%20version/770307286_transformed.CNG.swc" \
+            --output data/human/allen_cell_types/770307286_transformed.CNG.swc
+          echo "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc  data/human/allen_cell_types/770307286_transformed.CNG.swc" | sha256sum --check -
+      - name: Verify four morphology sources and nine passive scenarios
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import hashlib, json, sys
+          from pathlib import Path
+          sys.path.insert(0, "research")
+          import analyze_prima_q25_four_morphology_four_layout_boundary_ablation as core
+          expected_ids = {"NMO_03524", "NMO_162186", "NMO_107159", "NMO_163775"}
+          assert {item["neuromorpho_id"] for item in core.MORPHOLOGIES} == expected_ids
+          scenarios = list(core.SCENARIO_NAMES)
+          assert len(scenarios) == 9
+          sources = []
+          for spec in core.MORPHOLOGIES:
+              path = Path(spec["module"].SWC)
+              digest = hashlib.sha256(path.read_bytes()).hexdigest()
+              assert digest == spec["expected_sha256"], (spec["neuromorpho_id"], digest)
+              preflight = json.loads(Path(spec["preflight"]).read_text())
+              assert preflight["status"] == "PASS"
+              assert preflight["source"]["source_sha256"] == digest
+              assert list(spec["module"].baseline.parameter_cases()) == scenarios
+              sources.append({
+                  "neuromorpho_id": spec["neuromorpho_id"],
+                  "name": spec["name"],
+                  "records": spec["expected_records"],
+                  "swc_sha256": digest,
+                  "preflight": preflight["status"],
+              })
+          print(json.dumps({"morphologies": sources, "scenarios": scenarios}, indent=2))
+          PY
+      - name: Preflight and export active NumPy SIMD dispatch targets
+        working-directory: amsn-core
+        run: |
+          python - <<'PY'
+          import json, os, sys
+          sys.path.insert(0, "research")
+          from analyze_prima_q25_four_morphology_four_layout_boundary_ablation import (
+              numpy_current_dispatch_targets,
+          )
+          targets = numpy_current_dispatch_targets()
+          assert targets, "no active NumPy SIMD targets detected"
+          unsupported = [
+              item for item in targets
+              if "X86_V4" in item.upper() or "AVX512" in item.upper()
+          ]
+          assert not unsupported, unsupported
+          with open(os.environ["GITHUB_ENV"], "a", encoding="utf-8") as handle:
+              handle.write("AMSN_NUMPY_ACTIVE_DISPATCH_TARGETS_JSON=" + json.dumps(targets) + chr(10))
+          print(json.dumps({"active_numpy_dispatch_targets": targets}, indent=2))
+          PY
+      - name: Compile role-specific sweep and focused tests
+        run: |
+          python -m compileall -q research/run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py
+          python -m compileall -q research/test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py
+      - name: Run output-aware basis and role-specific schedule invariants
+        working-directory: amsn-core
+        run: |
+          python -m pytest -q \
+            tests/test_prima_q25_output_aware_dual_seed_basis.py \
+            ../research/test_prima_q25_jacobs_role_specific_seed_allocation.py \
+            ../research/test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py
+      - name: Run four-morphology, nine-scenario role-specific sweep
+        run: python research/run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py
+      - name: Verify exact coverage, numerical gates and DFT identities
+        run: |
+          python - <<'PY'
+          import csv, json
+          from pathlib import Path
+          stem = "prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26"
+          results = Path("amsn-core/results")
+          report = json.loads((results / f"{stem}_report.json").read_text())
+          assert report["status"] == "passed"
+          expected = {
+              "worker_groups_passed": 36,
+              "case_metrics_read_back": 15552,
+              "group_summary_read_back": 2592,
+              "morphology_summary_read_back": 288,
+              "scenario_summary_read_back": 648,
+              "pooled_summary_read_back": 72,
+              "finite_dft_identity_read_back": 144,
+              "basis_metadata_rows": 144,
+              "unique_case_keys": 15552,
+          }
+          for key, value in expected.items():
+              assert report["coverage"][key] == value, (key, report["coverage"].get(key))
+          gates = report["numerical_gates"]
+          assert gates["d0_exact_production_parity_all_scenarios"] is True
+          assert gates["all_reduced_g_c_cholesky_positive"] is True
+          assert gates["all_models_reached_order_224"] is True
+          assert gates["seven_input_ports_unchanged_all_models"] is True
+          assert gates["max_basis_orthogonality_abs"] < 2e-12
+          assert report["dft_identity"]["all_rows_passed"] is True
+          assert report["dft_identity"]["max_full_hines_relative_error"] < 2e-8
+          assert report["dft_identity"]["max_reduced_relative_error"] < 2e-8
+          counts = {
+              "case_metrics": 15552,
+              "group_summary": 2592,
+              "morphology_summary": 288,
+              "scenario_summary": 648,
+              "pooled_summary": 72,
+              "finite_dft_identity": 144,
+          }
+          for suffix, count in counts.items():
+              path = results / f"{stem}_{suffix}.csv"
+              with path.open(newline="") as handle:
+                  assert len(list(csv.DictReader(handle))) == count, path
+          metadata = json.loads((results / f"{stem}_basis_metadata.json").read_text())
+          assert len(metadata) == 144
+          assert all(item["actual_order"] == 224 for item in metadata)
+          assert all(item["seven_input_ports_unchanged"] for item in metadata)
+          expected_roles = {"D0_none": "none", "BASAL_10K": "basal",
+                            "APICAL_10K": "apical", "BOTH_10K": "both"}
+          assert {item["schedule"]: item["seed_role"] for item in metadata
+                  if item["scenario"] == "nominal" and item["neuromorpho_id"] == "NMO_03524"} == expected_roles
+          manifest = json.loads((results / f"{stem}_manifest.json").read_text())
+          assert manifest["status"] == "passed"
+          assert len(manifest["files"]) == 9
+          print(json.dumps({
+              "status": report["status"],
+              "coverage": report["coverage"],
+              "numerical_gates": gates,
+              "dft_identity": report["dft_identity"],
+          }, indent=2))
+          PY
+      - name: Commit verified matrices and diagnostics
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_case_metrics.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_group_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_morphology_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_scenario_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_pooled_summary.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_finite_dft_identity.csv \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_basis_metadata.json \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_report.json \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26.time.txt \
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_manifest.json
+          git commit -m "results: archive four-morphology role-specific q25 seed sweep"
+          git fetch origin "$GITHUB_REF_NAME"
+          git rebase "origin/$GITHUB_REF_NAME"
+          git push origin "HEAD:$GITHUB_REF_NAME"
+      - name: Preserve numerical matrices and reproducibility evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: prima-q25-four-morphology-role-specific-q25-seed-order224
+          path: |
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_*.csv
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_basis_metadata.json
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_report.json
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26_manifest.json
+            amsn-core/results/prima_q25_four_morphology_role_specific_q25_seed_order224_2026-11-26.time.txt
+            amsn-core/results/NMO_163775_PengControl_holdout/preflight.json
+            amsn-core/results/NMO_107159_TamasHumanPyramidalControl_holdout/preflight.json
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_03524_JacobsControl.json
+            amsn-core/results/prima_q25_cross_morphology_boundary_preflight_2026-11-25_holdouts/NMO_162186_AllenL23.json
+          if-no-files-found: error
+          retention-days: 90
