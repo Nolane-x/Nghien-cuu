@@ -321,6 +321,18 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         grouped_morph[(row["neuromorpho_id"], schedule, role)].append(pair)
         grouped_scenario[(row["scenario"], schedule, role)].append(pair)
 
+    metadata_by_schedule: dict[str, list[int]] = defaultdict(list)
+    for row in metadata:
+        metadata_by_schedule[str(row["schedule"])].append(
+            int(row["initial_output_seed_columns"])
+        )
+    for schedule in SCHEDULES:
+        require(len(metadata_by_schedule[schedule]) == 36,
+                f"{schedule}: expected 36 observed seed-rank entries")
+        if schedule == "D0_none":
+            require(all(x == 0 for x in metadata_by_schedule[schedule]),
+                    "D0 unexpectedly retained output-dual columns")
+
     strategy_rows = []
     for schedule in CANDIDATES:
         q25_summary = summarize([
@@ -333,9 +345,16 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             pair for label in SHARED_LABELS for pair in grouped_label[(schedule, label)]
         ])
         seed_labels = ", ".join(SCHEDULE_SEEDS[schedule])
+        accepted_rank_values = metadata_by_schedule[schedule]
+        rank_label = (
+            f"{statistics.median(accepted_rank_values):g} "
+            f"({min(accepted_rank_values)}–{max(accepted_rank_values)})"
+        )
         strategy_rows.append([
             schedule,
             seed_labels,
+            str(len(SCHEDULE_SEEDS[schedule])),
+            rank_label,
             f"{q25_summary['matched']:,}",
             fmt_ratio(q25_summary["median_ratio"]),
             fmt_delta(q25_summary["median_delta_pp"]),
@@ -411,11 +430,14 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "## Seed strategy comparison",
         "",
         markdown_table(
-            ["Schedule", "Seed labels", "q25 pairs", "q25 median ratio", "q25 median Δ (pp)",
+            ["Schedule", "Seed labels", "Requested sites", "Accepted initial dual columns\nmedian (min–max)",
+             "q25 pairs", "q25 median ratio", "q25 median Δ (pp)",
              "edge pairs", "edge median ratio", "edge median Δ (pp)",
              "shared median ratio", "shared median Δ (pp)"],
             strategy_rows,
         ),
+        "",
+        "Requested seed sites are the predeclared coordinate count; accepted initial dual columns are the observed independent directions retained after reorthogonalization (median and min–max over 36 morphology/scenario cells). The primary resource-matched comparisons are Q25_BOTH_10K, BASAL_EDGES_10K and APICAL_EDGES_10K (two requested sites each). BOTH_EDGES_10K requests four sites and is a higher-budget coverage condition, not a location-only comparison.",
         "",
         "Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.",
         "",
