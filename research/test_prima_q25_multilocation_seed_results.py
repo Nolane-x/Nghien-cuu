@@ -371,7 +371,8 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
     make_report(results, output)
     rendered = output.read_text(encoding="utf-8")
     assert "## Seed strategy comparison" in rendered
-    assert "## Basis construction cost and conditioning" in rendered
+    assert "## Schedule runtime and conditioning" in rendered
+    assert "not an isolated basis-builder timing" in rendered
     assert "## Readout-specific seed-target and transfer results" in rendered
     assert "## Results by morphology" in rendered
     assert "## Results by passive parameter scenario" in rendered
