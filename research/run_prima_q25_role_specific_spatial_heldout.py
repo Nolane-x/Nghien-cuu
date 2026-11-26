@@ -108,6 +108,68 @@ def validate_heldout_spatial_node_ids(
         raise ValueError("held-out spatial probes collide with shared or q25 target nodes")
 
 
+def build_four_layouts_from_swc(morphology, base_tree):
+    """Build canonical seven inputs and q25 readouts directly from SWC.
+
+    Import3D only locates NEURON section segment centres; it is not needed by
+    the passive CableTree reduction and is deliberately excluded here.
+    """
+    distances = path_distances_um(morphology)
+    injections = [
+        ("soma", morphology.root_id),
+        ("basal_q75", int(quantile_node(morphology, distances, 3, 0.75))),
+        ("apical_q75", int(quantile_node(morphology, distances, 4, 0.75))),
+    ]
+    probes = [
+        ("soma", morphology.root_id),
+        ("basal_q50", int(quantile_node(morphology, distances, 3, 0.50))),
+        ("basal_q90", int(quantile_node(morphology, distances, 3, 0.90))),
+        ("apical_q50", int(quantile_node(morphology, distances, 4, 0.50))),
+        ("apical_q90", int(quantile_node(morphology, distances, 4, 0.90))),
+    ]
+    source_ids = {name: int(node_id) for name, node_id in injections}
+    require(set(source_ids) == set(SOURCE_NAMES),
+            f"SWC source locations are incomplete: {source_ids}")
+    q25_node_ids = {
+        "basal_q25": int(quantile_node(morphology, distances, 3, 0.25)),
+        "apical_q25": int(quantile_node(morphology, distances, 4, 0.25)),
+    }
+    node_ids = list(dict.fromkeys(
+        int(node_id) for _role, node_id in injections + probes
+    ))
+    require(len(node_ids) == 7 and len(set(node_ids)) == 7,
+            f"canonical shared SWC selector must contain seven distinct nodes: {node_ids}")
+    require(len(set(q25_node_ids.values())) == 2,
+            f"q25 SWC target nodes are not distinct: {q25_node_ids}")
+    require(not set(node_ids).intersection(q25_node_ids.values()),
+            "q25 SWC target nodes collide with the canonical seven")
+    electrical_map = morphology.electrical_node_mapping()
+    ports = [
+        int(base_tree.index[f"swc_{electrical_map[node_id]}"])
+        for node_id in node_ids
+    ]
+    require(len(set(ports)) == 7,
+            "canonical seven SWC nodes do not map to seven distinct electrical ports")
+    source_indices = {
+        source_name: node_ids.index(node_id)
+        for source_name, node_id in source_ids.items()
+    }
+    roles: dict[int, list[str]] = {node_id: [] for node_id in node_ids}
+    for role, node_id in injections + probes:
+        if role not in roles[int(node_id)]:
+            roles[int(node_id)].append(role)
+    seven_layout = {
+        "layout_id": "seven",
+        "port_count": 7,
+        "node_ids": node_ids,
+        "ports": ports,
+        "roles": roles,
+        "source_ids": source_ids,
+        "source_indices": source_indices,
+    }
+    return {"seven": seven_layout}, node_ids, q25_node_ids
+
+
 def build_heldout_spatial_outputs(
     morphology,
     base_tree,
@@ -236,9 +298,6 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     spec = specs[0]
     module = spec["module"]
     baseline = module.baseline
-    reference = baseline.reference
-    reference.DATA = module.SWC
-    reference.MAX_NEURON_SEGMENT_UM = 0.5
 
     scenarios = baseline.parameter_cases()
     require(scenario_name in scenarios, f"{morphology_id}: unknown scenario {scenario_name}")
@@ -254,14 +313,12 @@ def worker(morphology_id: str, scenario_name: str, output_dir: Path) -> None:
     require(preflight.get("source", {}).get("source_sha256") == source_sha,
             f"{morphology_id}: preflight checksum mismatch")
 
-    print(json.dumps({"stage":"before_neuron_swc_import","morphology":morphology_id,"scenario":scenario_name}), flush=True)
-    reader, sections = reference.import_swc_with_neuron()
-    print(json.dumps({"stage":"after_neuron_swc_import","morphology":morphology_id,"scenario":scenario_name}), flush=True)
+    print(json.dumps({"stage":"before_swc_only_layout","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     base_tree = morphology.to_cable_tree()
-    layouts, shared_node_ids, q25_node_ids = module.build_four_layouts(
-        morphology, reader, sections, base_tree
+    layouts, shared_node_ids, q25_node_ids = build_four_layouts_from_swc(
+        morphology, base_tree
     )
-    print(json.dumps({"stage":"after_layout_build","morphology":morphology_id,"scenario":scenario_name}), flush=True)
+    print(json.dumps({"stage":"after_swc_only_layout","morphology":morphology_id,"scenario":scenario_name}), flush=True)
     require(set(layouts) >= {"seven"}, f"{morphology_id}: seven-port layout missing")
     seven_layout = layouts["seven"]
     retained_indices = tuple(int(x) for x in seven_layout["ports"])
