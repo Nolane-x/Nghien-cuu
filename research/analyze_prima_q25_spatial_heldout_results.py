@@ -356,6 +356,66 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                         f'{summary["better"]}/{summary["worse"]}',
                     ])
 
+    candidate_schedules = ("BASAL_10K", "APICAL_10K", "BOTH_10K")
+    heldout_schedule_rows = []
+    q25_schedule_rows = []
+    heldout_label_schedule_rows = []
+    heldout_median_ratio_below_one = 0
+
+    for schedule in candidate_schedules:
+        heldout_pairs = [
+            pair
+            for label in HELDOUT_LABELS
+            for window in (20.0, 40.0)
+            for pair in grouped_label[(schedule, window, label)]
+        ]
+        heldout_summary = summarize(heldout_pairs)
+        heldout_schedule_rows.append([
+            schedule,
+            f'{heldout_summary["matched"]:,}',
+            fmt_ratio(heldout_summary["median_ratio"]),
+            fmt_ratio(heldout_summary["median_reference_nrmse_pct"]),
+            fmt_ratio(heldout_summary["median_candidate_nrmse_pct"]),
+            fmt_delta(heldout_summary["median_delta_pp"]),
+            f'{heldout_summary["better"]}/{heldout_summary["worse"]}',
+        ])
+
+        q25_pairs = [
+            pair
+            for label in Q25_LABELS
+            for window in (20.0, 40.0)
+            for pair in grouped_label[(schedule, window, label)]
+        ]
+        q25_summary = summarize(q25_pairs)
+        q25_schedule_rows.append([
+            schedule,
+            f'{q25_summary["matched"]:,}',
+            fmt_ratio(q25_summary["median_ratio"]),
+            fmt_ratio(q25_summary["median_reference_nrmse_pct"]),
+            fmt_ratio(q25_summary["median_candidate_nrmse_pct"]),
+            fmt_delta(q25_summary["median_delta_pp"]),
+            f'{q25_summary["better"]}/{q25_summary["worse"]}',
+        ])
+
+        for label in HELDOUT_LABELS:
+            label_pairs = [
+                pair
+                for window in (20.0, 40.0)
+                for pair in grouped_label[(schedule, window, label)]
+            ]
+            summary = summarize(label_pairs)
+            heldout_median_ratio_below_one += int(summary["median_ratio"] < 1.0)
+            heldout_label_schedule_rows.append([
+                label,
+                schedule,
+                f'{summary["matched"]:,}',
+                fmt_ratio(summary["median_ratio"]),
+                fmt_ratio(summary["median_reference_nrmse_pct"]),
+                fmt_ratio(summary["median_candidate_nrmse_pct"]),
+                fmt_delta(summary["median_delta_pp"]),
+                f'{summary["better"]}/{summary["worse"]}',
+            ])
+
     protocol = report["fixed_protocol"]
     gates = report["numerical_gates"]
     dft = report["dft_identity"]
@@ -381,6 +441,31 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "This study compares D0 with basal-only, apical-only and joint 10-kHz q25 output-dual seeds at four dendritic observation sites that were not used to construct the dual seeds. The canonical seven input ports remain unchanged. Results below are recomputed from paired case-level NRMSE values, not from ratios of aggregate medians.",
         "",
         "A pooled median error ratio below 1 is not sufficient evidence of spatial generalization by itself. Interpret the four held-out labels and four morphology strata separately, and read absolute percentage-point deltas alongside ratios when D0 is near the numerical floor.",
+        "",
+        f"Across all four unseeded spatial locations and both windows, each candidate schedule has {heldout_schedule_rows[0][1]} paired cases. Only {heldout_median_ratio_below_one}/12 held-out-label-by-schedule combinations have a pooled median candidate/D0 ratio below 1. This is a mixed pattern, not consistent evidence of broad spatial transfer; the morphology-stratified and scenario-stratified results below remain decisive.",
+        "",
+        "## Spatial generalization verdict (descriptive, not a significance test)",
+        "",
+        markdown_table(
+            ["Schedule", "Held-out pairs", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
+            heldout_schedule_rows,
+        ),
+        "",
+        "The q25 seed targets are summarized separately. Strong q25-only gains alongside mixed unseeded-location results indicate target-local basis specialization rather than demonstrated broad spatial generalization.",
+        "",
+        markdown_table(
+            ["Schedule", "q25 pairs", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
+            q25_schedule_rows,
+        ),
+        "",
+        "## Held-out location summary across both windows",
+        "",
+        markdown_table(
+            ["Held-out output", "Schedule", "Pairs", "Median ratio", "Median D0 NRMSE (%)", "Median candidate NRMSE (%)", "Median Δ NRMSE (pp)", "Better/Worse"],
+            heldout_label_schedule_rows,
+        ),
+        "",
+        "All comparisons are paired at the morphology, passive scenario, window, input source and pulse-width level. Counts are descriptive; no inferential p-value or population-level claim is made. Several D0 medians are extremely small, so ratios can be unstable and absolute NRMSE and percentage-point deltas must be read together.",
         "",
         "## Fixed protocol",
         "",
