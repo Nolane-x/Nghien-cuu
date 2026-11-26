@@ -138,3 +138,19 @@ At the latest inspection, numerical run [45788056271](https://github.com/Nolane-
 Reviewing the new checkpoint cleanup regression exposed a missing import of `cleanup_worker_checkpoints` in the test module. The test itself and helper were present, but the test would have raised `NameError`. This has been corrected in commit [0568971](https://github.com/Nolane-x/Nghien-cuu/commit/056897139dd32da42cb6f4a87dfaaf06fad9260d). Latest workflow [45789829523](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789829523) was pending at the last check and includes the import fix. The preceding run [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was cancelled by GitHub's branch concurrency policy when the corrected test commit superseded it.
 
 The earlier numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still in progress in its numerical sweep step. Do not treat it as a result for the latest code revision.
+
+
+## Report provenance and baseline display — 26 November 2026
+
+The global numerical archive now records the live GitHub Actions `GITHUB_RUN_ID` and attempt number. The Markdown reporter uses the archived run ID for its workflow provenance link rather than a hard-coded historical run ID. This prevents a future accepted report from linking to an earlier failed attempt.
+
+The pooled D0 rows now show median absolute D0 NRMSE in both the reference and candidate columns, rather than leaving those fields blank. The end-to-end synthetic reporter fixture asserts the dynamic run URL and an explicit D0 baseline row.
+
+- Runner runtime provenance commit: [ef7b1cb](https://github.com/Nolane-x/Nghien-cuu/commit/ef7b1cb15a415277e98b1680ff52ae78f1893347)
+- Reporter correction: [546e67d](https://github.com/Nolane-x/Nghien-cuu/commit/546e67d41a0af019deed041bbfab9ea7b5b62a1c)
+- End-to-end regression update: [d49f727](https://github.com/Nolane-x/Nghien-cuu/commit/d49f727395729459e32d6000479af68f1e51aedd)
+- Report workflow [45790090210](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790090210) passed the reporter suite at the reporter-only revision; archive-specific report generation was correctly skipped because no accepted numerical archive was present.
+- Latest report workflow [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) was running the updated end-to-end tests at last inspection.
+- Numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) remained in its 36-group sweep. The updated full numerical workflow [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) was queued behind it.
+
+These changes improve archive traceability and reporting clarity only; they do not change the passive PRIMA numerical method or any scientific acceptance gate.
