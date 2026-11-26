@@ -97,3 +97,8 @@ The report now includes median absolute D0 NRMSE and candidate NRMSE (not only r
 ## Report workflow validation — latest success
 
 Report workflow [45768111004](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768111004) completed **success** on the current branch head. Compileall passed and the four reporting tests passed. Its archive-completeness preflight correctly skipped report generation because the numerical result archive is not present yet. This is an expected successful validation of the reporting path, not a numerical-result claim.
+
+
+## End-to-end reporting archive fixture — passed
+
+Reporting workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) completed success. Compileall passed and **5/5 tests passed in 0.28 s**. The added fifth test builds a full synthetic archive with 22,464 paired case rows, 144 basis/node metadata rows and nine hash-manifest entries, then executes the full Markdown report generator. It verifies pooled, morphology-stratified and nine-scenario tables, plus the absolute D0/candidate NRMSE columns. This validates report mechanics only; it is not a simulated-neuron result.
