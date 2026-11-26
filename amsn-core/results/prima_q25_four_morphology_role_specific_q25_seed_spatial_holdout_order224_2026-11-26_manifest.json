@@ -39,19 +39,19 @@
       "sha256": "de3ae50ead5b78ad6f9457af9790348368690a8b3c9baa18d7168e639a2866c2"
     },
     {
-      "bytes": 332148,
+      "bytes": 332151,
       "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_basis_metadata.json",
-      "sha256": "30849e981cd83fcb6f4986fe8198897e1bd9675aa76ac266ebfb57e69597164d"
+      "sha256": "37e54cac697b6f551a2a4f0accf7a811662bc14c38c78a5ecca275deb96e5e04"
     },
     {
-      "bytes": 12274,
+      "bytes": 12374,
       "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json",
-      "sha256": "a208560f20947ac14e1bc77da204e63cf9cfbbeafa44a08c01e3c444019aca9c"
+      "sha256": "0ca26d499fc2742b559a7e070c551ff31eab99a0a7e18b8850422b4eaff3e3e3"
     },
     {
       "bytes": 96,
       "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26.time.txt",
-      "sha256": "d7555a3907edc42fd97ad40a8611458e67731e5a9d27cf2b98a4b9a4341aba52"
+      "sha256": "81436f341f6aa6724d9e6104359969078a5ec16253ebf4a41b213288ca64eed0"
     }
   ],
   "source_manifest": [
