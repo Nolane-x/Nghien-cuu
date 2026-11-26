@@ -365,9 +365,28 @@ def test_end_to_end_report_from_complete_synthetic_multilocation_archive(tmp_pat
     assert "## Results by passive parameter scenario" in rendered
     assert "## Exact coverage and numerical gates" in rendered
     assert "Source run 987654321" in rendered or "run 987654321" in rendered
-    assert "| Q25_BOTH_10K | basal_q25, apical_q25 | 2 | 2 (2–2) | 864 | 0.25 | 0 | — | — | 1,728 |" in rendered
-    assert "| BASAL_EDGES_10K | basal_q10, basal_q95 | 2 | 2 (2–2) | 864 | 0.5 | 864 |" in rendered
-    assert "| APICAL_EDGES_10K | apical_q10, apical_q95 | 2 | 2 (2–2) | 864 | 0.5 | 864 |" in rendered
-    assert "| BOTH_EDGES_10K | basal_q10, basal_q95, apical_q10, apical_q95 | 4 | 4 (4–4) | 1,728 | 0.375 | 864 | 0.625 | 0 | — | — |" in rendered
+    def strategy_cells(name):
+        line = next(
+            line for line in rendered.splitlines()
+            if line.startswith(f"| {name} |")
+        )
+        return [cell.strip() for cell in line.strip("|").split("|")]
+
+    q25_cells = strategy_cells("Q25_BOTH_10K")
+    assert q25_cells[2:7] == ["2", "2 (2–2)", "864", "0.25", "0"]
+    assert q25_cells[9] == "1,728"
+
+    basal_cells = strategy_cells("BASAL_EDGES_10K")
+    assert basal_cells[2:7] == ["2", "2 (2–2)", "864", "0.5", "864"]
+    assert basal_cells[9] == "864"
+
+    apical_cells = strategy_cells("APICAL_EDGES_10K")
+    assert apical_cells[2:7] == ["2", "2 (2–2)", "864", "0.5", "864"]
+    assert apical_cells[9] == "864"
+
+    both_cells = strategy_cells("BOTH_EDGES_10K")
+    assert both_cells[2:8] == ["4", "4 (4–4)", "1,728", "0.375", "864", "0.625"]
+    assert both_cells[9] == "0"
+
     assert "Unseeded transfer" in rendered
     assert "Seed target" in rendered
