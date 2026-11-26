@@ -1,5 +1,16 @@
 # HANDOFF — Nolane-x Research
 
+## Four-morphology role-specific q25 seed sweep — running
+
+- Pre-registered protocol: [PRIMA_Q25_FOUR_MORPHOLOGY_ROLE_SPECIFIC_SEED_SWEEP_PROTOCOL_2026-11-26.md](research/PRIMA_Q25_FOUR_MORPHOLOGY_ROLE_SPECIFIC_SEED_SWEEP_PROTOCOL_2026-11-26.md).
+- Dedicated runner: [run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py](research/run_prima_q25_four_morphology_role_specific_q25_seed_sweep.py); focused tests: [test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py](research/test_prima_q25_four_morphology_role_specific_q25_seed_sweep.py).
+- Current workflow [45760007155](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45760007155), head `831d0892e587b9c5a51f6347b54ba5d155ac157f`, is in the numerical sweep step. Source preflights, pinned runtime, NumPy SIMD preflight, compile and 11/11 focused tests passed. No cross-morphology numerical result has been accepted yet.
+- Four predeclared schedules: D0_none, BASAL_10K, APICAL_10K and BOTH_10K. Fixed basis order224, seven original input ports, nine observed rows, four individual morphologies × nine passive scenarios.
+- Expected coverage: 36 workers, 15,552 case rows, 2,592 group summaries, 288 morphology summaries, 648 scenario summaries, 72 pooled summaries, 144 finite-DFT identities and 144 basis metadata rows.
+- The first attempt [45759776685](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45759776685) failed in the first Peng worker with native exit -11 before any stage log. The runner was revised to construct the canonical D0 model before full-Hines and to emit stage markers around NEURON import, layout, D0 and Hines. The current run is the first replay with these diagnostics.
+- Keep full Hines canonical and do not promote any role-specific seed to a production default. The study remains passive linear-RC numerical evidence, not biological validation.
+
+
 ## Session continuation update — 25 November 2026
 
 This update supersedes older status statements below when they refer to the same workflow or result. Earlier checkpoint sections are retained as historical records.
