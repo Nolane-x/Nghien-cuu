@@ -168,3 +168,8 @@ A timing review also found that the per-worker stopwatch began after D0 producti
 Regression tests were added for the inherited-output execution contract and no-captured-stream failure path. Commits: `262c88198ea4362ff66f709cde7a16e7a2c23d72`, `00e389a478c81709476c563da9fffc2f7e4f8520`.
 
 Current execution record: legacy run `45788056271` is still in the numerical step; superseded run `45790064294` is cancelled; streaming-enabled run `45791629647` is pending behind the active run. Report workflow `45790113319` passed 5/5 report tests, but no scientific result is accepted until the full 36-worker archive passes all coverage, parity, positivity, orthogonality, DFT, and checksum gates.
+
+
+### Latest CI queue state — 26 November 2026, 09:25 UTC
+
+The two intermediate queued pushes (`45791623532` and `45791629647`) were superseded before start by a subsequent runner-docstring correction. The latest complete code/test revision is queued in `45791762970`. Legacy numerical run `45788056271` remains active and predates live streaming/checkpoint retention. Report mechanics pass in `45790113319` (5/5). No scientific archive has been accepted.
