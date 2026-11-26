@@ -776,7 +776,8 @@ def main() -> None:
                 worker_count += 1
                 group_dir = temp_root / morphology_id / scenario
                 command = [
-                    sys.executable, str(Path(__file__).resolve()),
+                    sys.executable, "-X", "faulthandler",
+                    str(Path(__file__).resolve()),
                     "--worker", "--morphology", morphology_id,
                     "--scenario", scenario, "--output-dir", str(group_dir),
                 ]
