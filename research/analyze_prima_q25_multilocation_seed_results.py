@@ -276,6 +276,7 @@ def make_report(results_dir: Path, output_path: Path) -> None:
     }
     seen_case_keys: set[tuple[Any, ...]] = set()
     baseline: dict[tuple[Any, ...], float] = {}
+    case_schedule_counts: dict[str, int] = defaultdict(int)
     for row in cases:
         require(row["schedule"] in SCHEDULES, f"unknown case schedule: {row['schedule']}")
         label = row["output_label"]
@@ -289,6 +290,10 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         )
         require(key not in seen_case_keys, f"duplicate case key: {key}")
         seen_case_keys.add(key)
+        case_schedule_counts[row["schedule"]] += 1
+        value = float(row["transient_nrmse_pct"])
+        require(isfinite(value) and value >= 0.0,
+                f"{row['schedule']}/{label}: invalid transient NRMSE value")
         if row["schedule"] == "D0_none":
             baseline_key = (
                 row["morphology"], row["neuromorpho_id"], row["scenario"],
@@ -296,8 +301,40 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                 float(row["pulse_width_ms"]), label,
             )
             require(baseline_key not in baseline, f"duplicate D0 key: {baseline_key}")
-            baseline[baseline_key] = float(row["transient_nrmse_pct"])
+            baseline[baseline_key] = value
     require(len(seen_case_keys) == 28080, "case identities are not complete")
+    require(
+        case_schedule_counts == {schedule: 5616 for schedule in SCHEDULES},
+        f"case rows are not balanced across the five schedules: {dict(case_schedule_counts)}",
+    )
+    require(len(baseline) == 5616, "D0 paired baseline coverage is incomplete")
+
+    # Verify the complete Cartesian design, not only the global row count.
+    expected_morphologies = {
+        item["neuromorpho_id"]: item["name"]
+        for item in report["fixed_protocol"]["morphologies"]
+    }
+    expected_scenarios = tuple(report["fixed_protocol"]["passive_scenarios"])
+    expected_windows = tuple(float(x) for x in report["fixed_protocol"]["windows_ms"])
+    expected_sources = tuple(report["fixed_protocol"]["sources"])
+    expected_pulses = tuple(float(x) for x in report["fixed_protocol"]["pulse_widths_ms"])
+    expected_case_keys = {
+        (
+            morphology_name, morph_id, scenario, schedule, window, source, pulse, label
+        )
+        for morph_id, morphology_name in expected_morphologies.items()
+        for scenario in expected_scenarios
+        for schedule in SCHEDULES
+        for window in expected_windows
+        for source in expected_sources
+        for pulse in expected_pulses
+        for label in OUTPUT_LABELS
+    }
+    require(
+        seen_case_keys == expected_case_keys,
+        f"case Cartesian product mismatch: missing={len(expected_case_keys - seen_case_keys)}, "
+        f"unexpected={len(seen_case_keys - expected_case_keys)}",
+    )
 
     grouped_label: dict[tuple[str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
     grouped_morph_label: dict[tuple[str, str, str], list[tuple[float, float, float, float]]] = defaultdict(list)
@@ -314,6 +351,9 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         require(baseline_key in baseline, f"missing exact paired D0 row: {baseline_key}")
         candidate = float(row["transient_nrmse_pct"])
         reference = baseline[baseline_key]
+        require(isfinite(candidate) and isfinite(reference)
+                and candidate >= 0.0 and reference >= 0.0,
+                f"{schedule}/{row['output_label']}: invalid paired NRMSE values")
         pair = (
             candidate / max(reference, 1e-30),
             candidate - reference,
@@ -324,6 +364,13 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         grouped_label[(schedule, label)].append(pair)
         grouped_morph_label[(row["neuromorpho_id"], schedule, label)].append(pair)
         grouped_scenario_label[(row["scenario"], schedule, label)].append(pair)
+
+    for schedule in CANDIDATES:
+        for label in OUTPUT_LABELS:
+            require(
+                len(grouped_label[(schedule, label)]) == 432,
+                f"{schedule}/{label}: expected 432 paired cases",
+            )
 
     metadata_by_schedule: dict[str, list[dict[str, float]]] = defaultdict(list)
     for row in metadata:
