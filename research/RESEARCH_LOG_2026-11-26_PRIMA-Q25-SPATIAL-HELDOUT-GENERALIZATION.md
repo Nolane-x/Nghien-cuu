@@ -207,3 +207,19 @@ Report workflow [#45793176156](https://github.com/Nolane-x/Nghien-cuu/actions/ru
 Report workflow [#45793184489](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793184489) passed compile and all 5 reporting tests (0.38 s), including the new target-vs-spatial summary section checks. The report links to numerical source run #45788056271 because the accepted archive was generated before source Actions run IDs were recorded in its JSON metadata; this limitation is explicitly disclosed in the report.
 
 A later numerical retry run [#45792818861](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45792818861) failed reproducibly at Peng/nominal `before_production_d0` (SIGSEGV on three consecutive attempts). Python faulthandler is now enabled for child workers; diagnostic run #45793076160 is active and run #45793084446 is queued. The already accepted run #45788056271 and its checksummed archive remain the source of results.
+
+
+## 2026-11-26 — morphology-level heterogeneity and report provenance
+
+The generated report now explicitly aggregates the four unseeded spatial outputs across both windows by morphology, 432 paired cases per schedule:
+
+| Morphology | BASAL_10K median ratio | APICAL_10K median ratio | BOTH_10K median ratio |
+| --- | ---: | ---: | ---: |
+| NMO_03524 (Jacobs) | 1.215 | 1.242 | 0.9261 |
+| NMO_107159 (Tamas) | 1.045 | 1.259 | 1.519 |
+| NMO_162186 (Allen) | 1.080 | 1.333 | 1.614 |
+| NMO_163775 (Peng) | 0.4748 | 0.9065 | 1.015 |
+
+Both Tamas and Allen worsen under every candidate schedule. Jacobs improves only with BOTH_10K. Peng improves with its single-branch schedules, but not the joint schedule. This is strong morphology dependence within the tested reconstructions and rules out a morphology-independent generalization claim. These aggregates are descriptive, not inferential or population-level.
+
+The report workflow now gets a legacy source-run fallback from `AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID=45788056271`, while preferring an Actions run ID present in future archive JSON. This is necessary because the accepted archive predates run-ID capture. Added tests for that fallback and updated the rendered-label assertion. Commits: `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`.
