@@ -112,7 +112,9 @@ def test_node_metadata_fails_closed_on_holdout_or_target_collisions():
         validate_node_metadata(rows)
 
 
-def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
+def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path, monkeypatch):
+    # An archive-embedded source run must win over the legacy report-workflow fallback.
+    monkeypatch.setenv("AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID", "123456789")
     results_dir = tmp_path / "amsn-core" / "results"
     report_path = tmp_path / "research" / "results.md"
     results_dir.mkdir(parents=True)
@@ -304,6 +306,7 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
         "**Source numerical workflow:** [run 987654321]"
         "(https://github.com/Nolane-x/Nghien-cuu/actions/runs/987654321)"
     ) in rendered
+    assert "actions/runs/123456789" not in rendered
     assert (
         "| basal_q10 | 20 | D0_none | 216 | 1 | 1 | 1 | "
         "0.9 | 0.9 | +0.0000e+00 | 0/0 |"
