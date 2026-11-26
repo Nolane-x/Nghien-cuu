@@ -223,3 +223,10 @@ The generated report now explicitly aggregates the four unseeded spatial outputs
 Both Tamas and Allen worsen under every candidate schedule. Jacobs improves only with BOTH_10K. Peng improves with its single-branch schedules, but not the joint schedule. This is strong morphology dependence within the tested reconstructions and rules out a morphology-independent generalization claim. These aggregates are descriptive, not inferential or population-level.
 
 The report workflow now gets a legacy source-run fallback from `AMSN_PRIMA_ARCHIVE_SOURCE_RUN_ID=45788056271`, while preferring an Actions run ID present in future archive JSON. This is necessary because the accepted archive predates run-ID capture. Added tests for that fallback and updated the rendered-label assertion. Commits: `48ef2d0`, `fb24e7d`, `4226bab`, `da76722`.
+
+
+## 2026-11-26 09:41 UTC — final report pipeline acceptance
+
+Report workflow [#45794211911](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45794211911) passed. Six tests passed in 0.31 s; archive completeness, report generation and report commit steps succeeded. The generated Markdown now carries the explicit source link to numerical run #45788056271 and the four-morphology aggregate table. The analyzer prefers a `github_actions_run_id` embedded in future numerical archives and uses the workflow-provided legacy source-run fallback only when absent. Tests cover both paths.
+
+The independent numerical runner diagnostic #45793076160 is still active; latest runner-focused test #45793084446 remains queued. The accepted 36-worker archive is unchanged and remains the authoritative scientific data.
