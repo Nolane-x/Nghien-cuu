@@ -290,3 +290,14 @@ Report workflow [#45799248302](https://github.com/Nolane-x/Nghien-cuu/actions/ru
 The report generator now applies the schedule-specific seed mask to every aggregate: seed targets are reported separately, and only unseeded q25/edge outputs enter transfer summaries. Morphology/scenario tables use the same split. It also reports accepted initial dual rank, median/P90 basis construction time, maximum reduced G/C condition numbers and orthogonality error by schedule.
 
 Report workflow [#45799887740](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799887740) passed all 7 tests in 0.41 seconds after adding the synthetic archive metadata. Report generation from real numerical data was correctly skipped because the new archive is still pending. Numerical run #45796697978 remains active.
+
+
+## 2026-11-26 — independent q25 rerun reproduces exact numerical archive
+
+Faulthandler-enabled numerical run [#45793076160](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45793076160) completed successfully: 36/36 workers, zero native SIGSEGV retries, one process attempt per worker. All exact coverage, D0 production parity, reduced G/C positivity, order 224, seven-port invariance, basis orthogonality and 144 DFT identity gates passed.
+
+The artifact (ID `15106218185`, 595,050 bytes) was downloaded and verified. All nine manifest files match their exact SHA-256/byte counts. Crucially, all six numerical CSVs are byte-identical to the earlier accepted archive from #45788056271. Across all 144 metadata rows, basis/input/reduced-G/reduced-C hashes, node maps, seed metadata, actual order, orthogonality and condition numbers are also identical. Only per-worker `wall_seconds` changed; report JSON changed in runtime/provenance/CPU diagnostic fields.
+
+Runtime: 2,516.24 s wall; worker time 2,501.26 s; max worker 93.97 s. Zero retries. Earlier failed re-run #45792818861 had SIGSEGV on Peng/nominal at production D0; the successful full rerun shows that failure was not reproduced, though its original native root cause remains unknown.
+
+Report workflow [#45801634554](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45801634554) passed 6/6 tests and regenerated the report to point to source numerical run #45793076160.
