@@ -264,6 +264,19 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         item["neuromorpho_id"]: item["expected_swc_sha256"]
         for item in protocol["morphologies"]
     }
+    source_manifest = manifest.get("source_manifest", [])
+    require(len(source_manifest) == 4,
+            "integrity manifest must pin all four morphology sources")
+    source_by_id = {item["neuromorpho_id"]: item for item in source_manifest}
+    require(set(source_by_id) == set(morphology_hashes),
+            "integrity manifest morphology IDs differ from the protocol")
+    for morph_id, expected_hash in morphology_hashes.items():
+        source = source_by_id[morph_id]
+        require(source.get("preflight_status") == "PASS",
+                f"{morph_id}: source preflight did not pass")
+        require(source.get("expected_swc_sha256") == expected_hash
+                and source.get("preflight_source_sha256") == expected_hash,
+                f"{morph_id}: source manifest SWC hashes do not match the protocol")
     require(set(node_maps) == set(morphology_hashes),
             "metadata morphologies differ from the pinned source manifest")
     for morph_id, mapping in node_maps.items():
