@@ -170,3 +170,11 @@ def test_multilocation_case_and_metadata_coverage_is_exact():
     assert scenarios * 2 * schedules * outputs == 1170
     assert 2 * schedules * outputs == 130
     assert workers * schedules == 180
+
+
+def test_worker_summary_loop_uses_the_registered_multilocation_schedule_table():
+    source = (ROOT / "research" / "run_prima_q25_multilocation_seed_sweep.py").read_text(
+        encoding="utf-8"
+    )
+    assert "for schedule_name in MULTILOCATION_SCHEDULES:" in source
+    assert "ROLE_SPECIFIC_SCHEDULES" not in source
