@@ -125,3 +125,12 @@ The completed job logs clarified two independent failures:
 - The report workflow [45768511692](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45768511692) passed 5/5 tests using a synthetic complete archive. It confirms reporter mechanics only and must not be represented as neuron simulation evidence.
 
 No spatial-generalization result has been accepted. The next acceptance checkpoint remains exact coverage and case-key uniqueness; D0 production parity; Cholesky positive definiteness; order-224 basis and orthogonality; all 144 finite-record DFT identities; exact 144-row SWC node metadata; nine-file manifest hashes; Git archive commit; Actions artifact upload; and successful generation of the report from the actual archive. PR #35 must remain Draft until all are verified.
+
+
+## Worker checkpoint preservation revision — 26 November 2026
+
+The earlier runner's `finally` block deleted the temporary output from all completed worker processes even when a subsequent worker or the parent archive stage failed. This created an avoidable loss of evidence. The runner now retains its per-worker CSV and JSON files whenever global archive creation does not complete. A failure-only Actions artifact step uploads any retained worker checkpoints for 14 days. Once the global CSVs, report and manifest are written and the manifest is read back with `status == "passed"`, the scratch directory is removed.
+
+A regression test exercises both cleanup states. The latest workflow commit is [94dd28d](https://github.com/Nolane-x/Nghien-cuu/commit/94dd28dd22f78e243ce398dca325fc132a48482c). Its run [45789499169](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45789499169) was pending behind earlier numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271), which had not yet left the numerical sweep step at last inspection.
+
+This change improves reproducibility and failure diagnosis; it is not scientific evidence and does not relax any acceptance gate.
