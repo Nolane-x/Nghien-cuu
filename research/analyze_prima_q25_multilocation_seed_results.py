@@ -377,7 +377,7 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         schedule = str(row["schedule"])
         metadata_by_schedule[schedule].append({
             "accepted_output_rank": float(row["initial_output_seed_columns"]),
-            "basis_build_seconds": float(row["wall_seconds"]),
+            "schedule_wall_seconds": float(row["wall_seconds"]),
             "conductance_condition_number": float(row["conductance_condition_number"]),
             "capacitance_condition_number": float(row["capacitance_condition_number"]),
             "basis_orthogonality_max_abs": float(row["basis_orthogonality_max_abs"]),
@@ -391,8 +391,8 @@ def make_report(results_dir: Path, output_path: Path) -> None:
                 all(isfinite(value) for value in entry.values()),
                 f"{schedule}: non-finite basis cost/conditioning metadata",
             )
-            require(entry["basis_build_seconds"] >= 0.0,
-                    f"{schedule}: negative basis construction time")
+            require(entry["schedule_wall_seconds"] >= 0.0,
+                    f"{schedule}: negative schedule wall time")
             require(entry["conductance_condition_number"] >= 1.0
                     and entry["capacitance_condition_number"] >= 1.0,
                     f"{schedule}: invalid reduced-matrix condition number")
@@ -453,20 +453,20 @@ def make_report(results_dir: Path, output_path: Path) -> None:
             fmt_delta(shared_summary["median_delta_pp"]),
         ])
 
-    basis_cost_rows = []
+    schedule_runtime_rows = []
     for schedule in SCHEDULES:
         entries = metadata_by_schedule[schedule]
-        build_times = [x["basis_build_seconds"] for x in entries]
+        schedule_wall_times = [x["schedule_wall_seconds"] for x in entries]
         cond_g = [x["conductance_condition_number"] for x in entries]
         cond_c = [x["capacitance_condition_number"] for x in entries]
         ortho = [x["basis_orthogonality_max_abs"] for x in entries]
         ranks = [x["accepted_output_rank"] for x in entries]
-        basis_cost_rows.append([
+        schedule_runtime_rows.append([
             schedule,
             str(len(SCHEDULE_SEEDS[schedule])),
             f"{statistics.median(ranks):g} ({min(ranks):g}–{max(ranks):g})",
-            f"{statistics.median(build_times):.4g}",
-            f"{percentile(build_times, 0.90):.4g}",
+            f"{statistics.median(schedule_wall_times):.4g}",
+            f"{percentile(schedule_wall_times, 0.90):.4g}",
             f"{max(cond_g):.4g}",
             f"{max(cond_c):.4g}",
             f"{max(ortho):.4e}",
@@ -572,16 +572,16 @@ def make_report(results_dir: Path, output_path: Path) -> None:
         "",
         "Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.",
         "",
-        "## Basis construction cost and conditioning",
+        "## Schedule runtime and conditioning",
         "",
         markdown_table(
             ["Schedule", "Requested seed sites", "Accepted output-dual rank\nmedian (min–max)",
-             "Basis build median (s)", "Basis build P90 (s)", "Max cond(G)", "Max cond(C)",
-             "Max basis orthogonality error"],
-            basis_cost_rows,
+             "Schedule total wall median (s)", "Schedule total wall P90 (s)",
+             "Max cond(G)", "Max cond(C)", "Max basis orthogonality error"],
+            schedule_runtime_rows,
         ),
         "",
-        "Build time and conditioning are summarized over the 36 morphology/scenario cells per schedule. Condition numbers are descriptive; the numerical acceptance gates still require positive-definite projected G/C and the stated orthogonality tolerance.",
+        "The recorded schedule wall time starts before basis construction and ends after reduced simulations and per-case metric generation. It is not an isolated basis-builder timing, so it is shown only as a broad schedule-runtime diagnostic. Condition numbers are descriptive; the numerical acceptance gates still require positive-definite projected G/C and the stated orthogonality tolerance.",
         "",
         "## Readout-specific seed-target and transfer results",
         "",
