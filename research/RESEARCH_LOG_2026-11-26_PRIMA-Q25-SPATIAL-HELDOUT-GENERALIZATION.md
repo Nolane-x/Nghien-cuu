@@ -62,3 +62,16 @@ Compatibility is preserved deliberately:
 - An additional synthetic SWC test exercises canonical seven-port mapping and all four held-out output rows without NEURON.
 
 This change narrows the native code surface; it does not change the passive electrical model, input selector, basis construction, stimulation protocol, or numerical gates. The first pre-revision run remains separate and must not be combined with a rerun.
+
+
+## SWC mapping audit — pinned node identities
+
+The repository-resident SWC files were independently re-read and the deterministic node maps were recomputed using the same parent-to-child path-distance accumulation and Python rank-rounding convention as the runner.
+
+| Morphology | Type-3 nodes | Type-4 nodes | Basal q25 / apical q25 | Basal q10 / q95 | Apical q10 / q95 |
+|---|---:|---:|---|---|---|
+| Peng NMO_163775 | 306 | 298 | 224 / 4096 | 7 / 94 | 3967 / 4042 |
+| Tamas NMO_107159 | 1,767 | 1,428 | 6609 / 4404 | 6739 / 7206 | 4355 / 4820 |
+| Jacobs NMO_03524 | 816 | 8 | 272 / 864 | 631 / 702 | 863 / 869 |
+
+For all three files, all four q10/q95 nodes are distinct from one another, the seven canonical shared nodes, and both q25 targets. Jacobs has only eight type-4 nodes; its apical q10/q95 values are therefore discrete node-rank endpoints within a very small apical sample, not dense spatial coverage. These identifiers are now enforced as compatibility pins in the runner. The Allen SWC is fetched by CI and is validated at runtime against its pinned SHA-256 and fail-closed node-collision gates.
