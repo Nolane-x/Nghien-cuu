@@ -281,6 +281,8 @@ def test_end_to_end_report_generation_from_complete_synthetic_archive(tmp_path):
     assert "## Pooled q25 and spatial held-out readouts" in rendered
     assert "## Spatial generalization verdict (descriptive, not a significance test)" in rendered
     assert "## Held-out location summary across both windows" in rendered
+    assert "## Held-out spatial aggregate by morphology" in rendered
+    assert "| NMO_A | BASAL_10K | 432 |" in rendered
     assert "12/12" in rendered
     assert "## Held-out results by morphology" in rendered
     assert "## Held-out results by passive parameter scenario" in rendered
