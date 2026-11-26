@@ -157,3 +157,14 @@ This revision changes traceability and reporting only. It does not change the mo
 The updated report workflow [45790113319](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790113319) completed success. Compileall passed and the complete report test module passed **5/5 in 0.42 s**. Its end-to-end synthetic archive test confirms that the output workflow link is derived from the report JSON run ID and that the D0 pooled row carries its median absolute baseline NRMSE. The real archive gate skipped generation correctly because no accepted numerical simulation archive exists yet.
 
 At the same observation point, numerical run [45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) was still running the 36-group sweep, and the updated run [45790064294](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45790064294) remained pending behind it.
+
+
+## 2026-11-26 — execution observability and timing correction
+
+The numerical runner previously used captured child-process output. Although each worker emitted flushed stage markers, the parent hid them from the Actions log until a subprocess completed. The worker runner now inherits stdout/stderr so stage markers appear live in the workflow, prints an explicit worker-start record, and formats failure diagnostics correctly when output was streamed instead of captured.
+
+A timing review also found that the per-worker stopwatch began after D0 production reduction and the full-Hines reference solve. It now begins at entry to `worker()`, making the reported worker duration include setup, morphology conversion, D0, Hines, enriched-basis construction, and reduced simulations.
+
+Regression tests were added for the inherited-output execution contract and no-captured-stream failure path. Commits: `262c88198ea4362ff66f709cde7a16e7a2c23d72`, `00e389a478c81709476c563da9fffc2f7e4f8520`.
+
+Current execution record: legacy run `45788056271` is still in the numerical step; superseded run `45790064294` is cancelled; streaming-enabled run `45791629647` is pending behind the active run. Report workflow `45790113319` passed 5/5 report tests, but no scientific result is accepted until the full 36-worker archive passes all coverage, parity, positivity, orthogonality, DFT, and checksum gates.
