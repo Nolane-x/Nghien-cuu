@@ -328,3 +328,12 @@ The strategy table reports seeded-pair counts and metrics separately from unseed
 Latest report CI [#45799248302](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799248302) passed compile and **7/7 tests in 0.42 s**. This includes a synthetic complete archive checking pairing, seed-budget columns, and exact transfer classification. The archive-dependent steps were correctly skipped because the real multilocation archive is not yet present.
 
 Numerical sweep [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) is still active; no multilocation numerical result is accepted yet.
+
+
+## Latest multilocation analyzer acceptance — 26 November 2026
+
+- The report now separates per-schedule seed-target performance from only those unseeded q25/edge readouts that can legitimately be called transfer.
+- Morphology and passive-scenario breakdowns use the same seed mask; zero eligible transfer rows display zero/“—” rather than being replaced by seeded target metrics.
+- Added basis construction cost/conditioning summaries: per-schedule accepted dual rank (median/range), median and P90 basis build time, max projected G/C condition numbers, and max basis orthogonality error over 36 morphology/scenario cells.
+- [Report CI #45799887740](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45799887740) passed compile and **7/7 tests in 0.41 s**. The synthetic fixture includes all required metadata for the build-cost/conditioning section. Actual archive-dependent report generation remains skipped until the numerical sweep produces an accepted archive.
+- Numerical run [#45796697978](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45796697978) remains active in its 36-worker sweep; no final matrices/artifact are available yet.
