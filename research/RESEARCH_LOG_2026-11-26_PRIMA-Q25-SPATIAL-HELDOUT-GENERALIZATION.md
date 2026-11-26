@@ -173,3 +173,28 @@ Current execution record: legacy run `45788056271` is still in the numerical ste
 ### Latest CI queue state — 26 November 2026, 09:25 UTC
 
 The two intermediate queued pushes (`45791623532` and `45791629647`) were superseded before start by a subsequent runner-docstring correction. The latest complete code/test revision is queued in `45791762970`. Legacy numerical run `45788056271` remains active and predates live streaming/checkpoint retention. Report mechanics pass in `45790113319` (5/5). No scientific archive has been accepted.
+
+
+## 2026-11-26 — accepted q25 spatial holdout numerical archive
+
+### Provenance and acceptance
+
+GitHub Actions run [#45788056271](https://github.com/Nolane-x/Nghien-cuu/actions/runs/45788056271) completed successfully. All 36 isolated morphology/scenario workers completed with zero SIGSEGV retries. Runtime: 1,667.54 s wall, 1,593.98 s summed worker time, maximum worker 58.74 s. The run committed archive commit `b49a53d5aa31574ce3ae73d68d1a30a1bac17168` and uploaded artifact ID `15102807205` (595,032 bytes).
+
+The artifact was downloaded for independent inspection. Its nine files all match the manifest's exact byte counts and SHA-256 values. Exact coverage: 36/36 workers; 22,464 unique case rows; 3,744 group summaries; 416 morphology/window summaries; 936 scenario/window summaries; 104 pooled/window summaries; 144 DFT identities; 144 basis metadata rows.
+
+Numerical gates passed: D0 production parity on all scenarios; positive-definite reduced G/C by Cholesky; order 224 everywhere; seven input ports unchanged; maximum basis orthogonality error `1.9984014443252818e-15`; all DFT identities pass with max full-Hines residual `3.1660560529975156e-12` and max reduced residual `3.591793134473286e-13`, versus tolerance `2e-8`.
+
+### Main observation
+
+Across all four independent spatial holdouts and both windows there are 1,728 paired candidate/D0 cases per schedule. BASAL_10K has median ratio 0.9789, median absolute delta `-4.4300e-13` percentage points, 879 better / 849 worse. APICAL_10K has median ratio 1.1805, median delta `+5.8267e-12` pp, 742 better / 986 worse. BOTH_10K has median ratio 1.2647, median delta `+2.7403e-11` pp, 700 better / 1,028 worse. Only 3/12 held-out-label × schedule medians are below 1. Improvement is not consistent across basal/apical branch classes, four morphology strata, or candidate seed roles.
+
+At the q25 target locations themselves, role-specific seeding is strongly specialized: basal-q25 median ratio about 0.00203 under BASAL_10K and 0.00228 under BOTH_10K; apical-q25 about 0.00566 under APICAL_10K and 0.00667 under BOTH_10K. The contrast supports target-local basis enrichment, not broad spatial generalization.
+
+D0 held-out median NRMSE values lie around `8.4e-9%` to `3.6e-8%` across labels/windows. Because this is already a very small error range, ratios should not be used alone; paired absolute deltas and strata must be read together. This descriptive experiment provides no inferential p-values or population-level biological claim.
+
+### Later runner diagnostic
+
+Run `45792818861` reached the first Peng/nominal worker's `before_production_d0` marker and then returned SIGSEGV (`-11`) on all three bounded attempts. No worker output directory had been completed. A later runner revision added Python `faulthandler`; run `45793076160` is examining the stack trace. This failure concerns repeatability of the current runner revision and does not alter the separately archived successful run `45788056271`.
+
+The reporting utility is being extended to publish both target-q25 and spatial-holdout aggregate summaries, avoiding a single pooled metric that could conceal branch-specific regressions.
