@@ -1,0 +1,93 @@
+{
+  "coverage": {
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_case_metrics.csv": 22464,
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_finite_dft_identity.csv": 144,
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_group_summary.csv": 3744,
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_morphology_summary.csv": 416,
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_pooled_summary.csv": 104,
+    "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_scenario_summary.csv": 936
+  },
+  "files": [
+    {
+      "bytes": 3309479,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_case_metrics.csv",
+      "sha256": "048797a0307fad272f6c85bc7b8a00e6b587c2fcfa9f2add8aac3390c2d19a51"
+    },
+    {
+      "bytes": 669712,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_group_summary.csv",
+      "sha256": "0cf35340b2d1caf9c3b0a0fd48ede5add8e8bde1372784395df53e2943f9e795"
+    },
+    {
+      "bytes": 66750,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_morphology_summary.csv",
+      "sha256": "ce50836513fa92d536414559048609d11759edffa0ee8ad1686d4c0641709e9b"
+    },
+    {
+      "bytes": 132146,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_scenario_summary.csv",
+      "sha256": "d1be4925fdfaeabd35c7820b72e6bce6a4d2d46c74456fab42fcc267c10631b5"
+    },
+    {
+      "bytes": 14071,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_pooled_summary.csv",
+      "sha256": "22867f18989ac730f35420fc834abd076205b225972df0d607603e393f330495"
+    },
+    {
+      "bytes": 31236,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_finite_dft_identity.csv",
+      "sha256": "de3ae50ead5b78ad6f9457af9790348368690a8b3c9baa18d7168e639a2866c2"
+    },
+    {
+      "bytes": 332148,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_basis_metadata.json",
+      "sha256": "30849e981cd83fcb6f4986fe8198897e1bd9675aa76ac266ebfb57e69597164d"
+    },
+    {
+      "bytes": 12274,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26_report.json",
+      "sha256": "a208560f20947ac14e1bc77da204e63cf9cfbbeafa44a08c01e3c444019aca9c"
+    },
+    {
+      "bytes": 96,
+      "path": "prima_q25_four_morphology_role_specific_q25_seed_spatial_holdout_order224_2026-11-26.time.txt",
+      "sha256": "d7555a3907edc42fd97ad40a8611458e67731e5a9d27cf2b98a4b9a4341aba52"
+    }
+  ],
+  "source_manifest": [
+    {
+      "expected_records": 4209,
+      "expected_swc_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+      "name": "NMO_163775_Peng_mouse_Control",
+      "neuromorpho_id": "NMO_163775",
+      "preflight_source_sha256": "94eb448c2d70b6dfa78322df8a18013d0899e0908cd203b79c4a7a9a954dd00f",
+      "preflight_status": "PASS"
+    },
+    {
+      "expected_records": 7228,
+      "expected_swc_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+      "name": "NMO_107159_Tamas_human_pyramidal_Control",
+      "neuromorpho_id": "NMO_107159",
+      "preflight_source_sha256": "6b3b00905fe3659132dbda67ad4f0f30287984e75d5bde41ba79f61b6d479023",
+      "preflight_status": "PASS"
+    },
+    {
+      "expected_records": 869,
+      "expected_swc_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+      "name": "NMO_03524_JacobsControl",
+      "neuromorpho_id": "NMO_03524",
+      "preflight_source_sha256": "6850378b0c451fdcb4a2649c8d93999973a4a7078dcd032037887b4b39160748",
+      "preflight_status": "PASS"
+    },
+    {
+      "expected_records": 7287,
+      "expected_swc_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+      "name": "NMO_162186_AllenL23",
+      "neuromorpho_id": "NMO_162186",
+      "preflight_source_sha256": "a05ad0770e857676b6be415f6f81a7548d69ccf74f62c7418756429c6a4105cc",
+      "preflight_status": "PASS"
+    }
+  ],
+  "status": "passed",
+  "workflow_scope": "Four-morphology role-specific q25 output-dual seed sweep"
+}
