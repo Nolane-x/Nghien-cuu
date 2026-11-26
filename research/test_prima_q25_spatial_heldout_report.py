@@ -61,14 +61,16 @@ def test_percentile_uses_linear_interpolation_and_handles_singleton():
 
 def test_paired_summary_keeps_absolute_deltas_and_direction_counts():
     result = summarize([
-        (0.5, -0.2),
-        (1.2, 0.1),
-        (0.8, -0.05),
-        (1.0, 0.0),
+        (0.5, -0.2, 0.4, 0.2),
+        (1.2, 0.1, 0.4, 0.5),
+        (0.8, -0.05, 0.4, 0.35),
+        (1.0, 0.0, 0.4, 0.4),
     ])
     assert result["matched"] == 4
     assert result["median_ratio"] == pytest.approx(0.9)
     assert result["median_delta_pp"] == pytest.approx(-0.025)
+    assert result["median_reference_nrmse_pct"] == pytest.approx(0.4)
+    assert result["median_candidate_nrmse_pct"] == pytest.approx(0.375)
     assert result["better"] == 2
     assert result["worse"] == 1
     assert result["unchanged"] == 1
