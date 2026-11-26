@@ -25,10 +25,10 @@ Requested seed sites are the predeclared coordinate count; accepted initial dual
 
 Ratios compare candidate NRMSE with the exact paired D0 case. Negative percentage-point deltas indicate lower candidate error. Read both because D0 may be close to the numerical floor.
 
-## Basis construction cost and conditioning
+## Schedule runtime and conditioning
 
 | Schedule | Requested seed sites | Accepted output-dual rank
-median (min–max) | Basis build median (s) | Basis build P90 (s) | Max cond(G) | Max cond(C) | Max basis orthogonality error |
+median (min–max) | Schedule total wall median (s) | Schedule total wall P90 (s) | Max cond(G) | Max cond(C) | Max basis orthogonality error |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | D0_none | 0 | 0 (0–0) | 2.851 | 3.346 | 3.958e+06 | 333.2 | 1.5543e-15 |
 | Q25_BOTH_10K | 2 | 2 (2–2) | 3.009 | 3.569 | 4.181e+06 | 337.5 | 1.7764e-15 |
@@ -36,7 +36,7 @@ median (min–max) | Basis build median (s) | Basis build P90 (s) | Max cond(G) 
 | APICAL_EDGES_10K | 2 | 2 (2–2) | 3.008 | 3.551 | 3.976e+06 | 335.6 | 1.4433e-15 |
 | BOTH_EDGES_10K | 4 | 4 (4–4) | 2.909 | 3.443 | 3.515e+06 | 328.5 | 2.2204e-15 |
 
-Build time and conditioning are summarized over the 36 morphology/scenario cells per schedule. Condition numbers are descriptive; the numerical acceptance gates still require positive-definite projected G/C and the stated orthogonality tolerance.
+The recorded schedule wall time starts before basis construction and ends after reduced simulations and per-case metric generation. It is not an isolated basis-builder timing, so it is shown only as a broad schedule-runtime diagnostic. Condition numbers are descriptive; the numerical acceptance gates still require positive-definite projected G/C and the stated orthogonality tolerance.
 
 ## Readout-specific seed-target and transfer results
 
